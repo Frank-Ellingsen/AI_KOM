@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kristiansand Kommune — Control Office Hub</title>
+    <style>
+        /* ==========================================================================
+           EDWARD TUFTE DATA-INK RATIO DESIGN SYSTEM
+           Ingen vertikale tabellinjer, ingen tunge skygger, dempede farger,
+           høyrejusterte tall, venstrejustert tekst, kun rød/amber for aktive avvik.
+           ========================================================================== */
+        :root {
+            --bg-page: #fbfbfb;
+            --bg-surface: #ffffff;
+            --text-primary: #1c1c1c;
+            --text-secondary: #555555;
+            --text-muted: #777777;
+            --navy-dark: #1b365d;
+            --navy-light: #2c3e50;
+            --border-light: #e0e0e0;
+            --border-subtle: #eeeeee;
+            --alert-red: #c0392b;
+            --alert-red-bg: #fdf2f2;
+            --alert-amber: #d35400;
+            --success-green: #27ae60;
+            --success-green-bg: #f0fdf4;
+            --accent-blue: #0056b3;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 14px;
+            padding: 24px 32px;
+        }
+
+        /* Masthead / Header */
+        header.hub-header {
+            border-bottom: 2px solid var(--navy-dark);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .hub-title h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hub-title p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .hub-meta {
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .hub-meta strong {
+            color: var(--text-primary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: var(--success-green-bg);
+            color: var(--success-green);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 11px;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        /* Action Toolbar */
+        .hub-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .btn:hover {
+            background: #f0f0f0;
+            border-color: #cccccc;
+        }
+
+        .btn-primary {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+
+        .btn-primary:hover {
+            background: #142845;
+            border-color: #142845;
+        }
+
+        /* Årshjul Timeline */
+        .timeline-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--navy-dark);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quarters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .quarter-box {
+            padding: 12px 14px;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+            border-top: 3px solid var(--navy-light);
+            background: #fafafa;
+            font-size: 12px;
+        }
+
+        .quarter-box.active {
+            border-top: 3px solid var(--success-green);
+            background: var(--success-green-bg);
+            border-color: rgba(39, 174, 96, 0.4);
+        }
+
+        .quarter-box h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .quarter-box ul {
+            list-style: none;
+            margin-top: 6px;
+        }
+
+        .quarter-box li {
+            padding: 2px 0;
+            color: var(--text-secondary);
+        }
+
+        /* KPI / Metric Cards (Tufte style - no drop shadows, plain metrics) */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            padding: 12px 16px;
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .kpi-value {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 2px;
+        }
+
+        .kpi-subtext {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .kpi-alert {
+            color: var(--alert-red);
+            font-weight: 600;
+        }
+
+        /* Two-Column Workspace Layout */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 16px 20px;
+        }
+
+        /* Tables (Strict Tufte Data-Ink Rules: No vertical lines, text left, numbers right) */
+        table.tufte-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        table.tufte-table th {
+            text-align: left;
+            padding: 8px 10px;
+            font-weight: 600;
+            color: var(--navy-dark);
+            border-bottom: 1.5px solid var(--navy-dark);
+            background: transparent;
+        }
+
+        table.tufte-table th.num, table.tufte-table td.num {
+            text-align: right;
+            font-family: var(--font-mono);
+        }
+
+        table.tufte-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+
+        table.tufte-table tr.alert-row td {
+            background-color: var(--alert-red-bg);
+            color: var(--alert-red);
+            font-weight: 600;
+        }
+
+        table.tufte-table tr.summary-row td {
+            border-top: 1.5px solid var(--navy-dark);
+            border-bottom: 2px solid var(--navy-dark);
+            font-weight: 700;
+        }
+
+        /* AI RAG Box & Prompt Section */
+        .rag-search-box {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0 16px 0;
+        }
+
+        .rag-input {
+            flex: 1;
+            padding: 9px 12px;
+            font-size: 13px;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            font-family: var(--font-sans);
+        }
+
+        .rag-input:focus {
+            outline: none;
+            border-color: var(--navy-dark);
+        }
+
+        .quick-queries {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .query-chip {
+            background: #f2f4f7;
+            border: 1px solid #e1e4e8;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: var(--navy-dark);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .query-chip:hover {
+            background: #e4e7eb;
+        }
+
+        .rag-response-card {
+            border-left: 3px solid var(--navy-dark);
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-radius: 2px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .rag-response-card strong {
+            color: var(--navy-dark);
+        }
+
+        .audit-meta-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 8px;
+            margin-top: 10px;
+            font-family: var(--font-mono);
+        }
+
+        /* Human-in-the-Loop Sign-Off Zone */
+        .hitl-zone {
+            background: #fafbfc;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin-top: 14px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0 14px 0;
+            font-size: 12px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .textarea-box {
+            width: 100%;
+            height: 70px;
+            padding: 8px 12px;
+            font-family: var(--font-sans);
+            font-size: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            margin-bottom: 12px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer.hub-footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. MASTHEAD / TOPPEN -->
+    <header class="hub-header">
+        <div class="hub-title">
+            <h1>🏛️ KRISTIANSAND KOMMUNE — CONTROL OFFICE HUB</h1>
+            <p>Økonomi og Virksomhetsstyring | Beslutningsstøtte, KOSTRA-avstemming og Stage-Gate AI-styring</p>
+        </div>
+        <div class="hub-meta">
+            <div>Bruker: <strong>Frank Ellingsen (Senior Controller)</strong></div>
+            <div style="margin-top: 4px;">
+                <span class="status-badge">Port 4 & 9 Aktiv</span> | 
+                Motor: <strong id="active-engine-label">Gemini 3.8 Flash (0 % CPU)</strong>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. HURTIG-HANDLINGER / TOOLBAR -->
+    <div class="hub-toolbar">
+        <a href="http://localhost:8501" target="_blank" class="btn btn-primary">
+            🚀 Åpne Streamlit Fullskjerm (Port 8501)
+        </a>
+        <button class="btn" onclick="exportAuditTrail()">
+            📥 Eksporter SHA-256 Audit Log (JSON)
+        </button>
+        <button class="btn" onclick="filterEntity('ALL')">
+            🏛️ Alle Enheter
+        </button>
+        <button class="btn" onclick="filterEntity('SKOLE')">
+            🏫 Kommunal Skole
+        </button>
+        <button class="btn" onclick="filterEntity('BO')">
+            🏥 Kommunal Boenhet
+        </button>
+        <button class="btn" onclick="toggleEngine()" id="engine-btn">
+            🔄 Bytt Motor (Gemini / Ollama)
+        </button>
+    </div>
+
+    <!-- 3. ÅRSHJUL & KRITISKE FRISTER -->
+    <section class="timeline-section">
+        <div class="section-header">
+            <span>📅 Kommunalt Styringsårshjul & Kritiske Frister (2026)</span>
+            <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Synkronisert med Plandisc & Teams</span>
+        </div>
+        <div class="quarters-grid">
+            <div class="quarter-box">
+                <h3>Q1: KOSTRA & Regnskap <span>Jan–Mar</span></h3>
+                <ul>
+                    <li>• 15. jan / 23. feb: KOSTRA-rapportering</li>
+                    <li>• 09. mars: Regnskapsavslutning</li>
+                    <li>• 31. mars: Årsregnskap fremlegges</li>
+                </ul>
+            </div>
+            <div class="quarter-box">
+                <h3>Q2: 1. Tertial (T1) <span>Apr–Jun</span></h3>
+                <ul>
+                    <li>• 15. apr: Revisjonsberetning</li>
+                    <li>• 25. mai: 1. tertial til Bystyret</li>
+                    <li>• 02. juni: RNB & KOSTRA-tall</li>
+                </ul>
+            </div>
+            <div class="quarter-box active">
+                <h3>Q3: 2. Tertial (T2) ⭐ AKTIV <span>Jul–Sep</span></h3>
+                <ul>
+                    <li>• 15. aug: Innspill ny HØP</li>
+                    <li>• 23. sep: Kommunedirektørens HØP</li>
+                    <li>• <strong>28. sep: 2. tertial i Formannskapet</strong></li>
+                </ul>
+            </div>
+            <div class="quarter-box">
+                <h3>Q4: HØP & Budsjettvedtak <span>Okt–Des</span></h3>
+                <ul>
+                    <li>• 07. okt: Statsbudsjettet</li>
+                    <li>• 25. nov: Formannskapets innstilling</li>
+                    <li>• 18. des: Bystyrets endelige vedtak</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. NØKKELTALL (EVM / PROJECT CONTROLLING) -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Planlagt Verdi (PV YTD)</div>
+            <div class="kpi-value">71 633 784 kr</div>
+            <div class="kpi-subtext">Akkumulert periodisert ramme</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Påløpt Kostnad (AC YTD)</div>
+            <div class="kpi-value">83 506 244 kr</div>
+            <div class="kpi-subtext">Faktisk regnskapsført forbruk</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Kostnadsavvik (CV)</div>
+            <div class="kpi-value kpi-alert">-11 872 460 kr</div>
+            <div class="kpi-subtext kpi-alert">Merforbruk mot planlagt takt</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Kostnadsindeks (CPI)</div>
+            <div class="kpi-value kpi-alert">0.858</div>
+            <div class="kpi-subtext">Mål: 1.000 (Forbrukseffektivitet)</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Sluttprognose (EAC)</div>
+            <div class="kpi-value">98 105 071 kr</div>
+            <div class="kpi-subtext kpi-alert">+14.17M kr est. sluttoverskridelse</div>
+        </div>
+    </div>
+
+    <!-- 5. TO-KOLONNERS ARBEIDSFLATE -->
+    <div class="workspace-grid">
+        
+        <!-- VENSTRE KOLONNE: AVVIKSANALYSE & TABELLER (TUFTE) -->
+        <div class="panel">
+            <div class="section-header">
+                <span>🚨 Kritiske Kostnadsavvik på KOSTRA Art (Golden Record)</span>
+                <span id="active-entity-filter" style="font-size: 11px; font-weight: normal; color: var(--navy-dark);">Viser: Alle Enheter</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                Avvik beregnes som <em>Budsjett - Regnskap</em>. Negativt tall indikerer merforbruk.
+            </p>
+
+            <table class="tufte-table" id="variances-table">
+                <thead>
+                    <tr>
+                        <th>KOSTRA Art / Post</th>
+                        <th>Enhet</th>
+                        <th class="num">Budsjett</th>
+                        <th class="num">Regnskap</th>
+                        <th class="num">Avvik (NOK)</th>
+                        <th class="num">Avvik %</th>
+                    </tr>
+                </thead>
+                <tbody id="variances-tbody">
+                    <tr class="alert-row">
+                        <td>SKOLE_FASTLØNNLÆRE Fast lønn lærere</td>
+                        <td>Kommunal Skole</td>
+                        <td class="num">15 729 000</td>
+                        <td class="num">18 197 000</td>
+                        <td class="num">-2 468 000</td>
+                        <td class="num">-15.7 %</td>
+                    </tr>
+                    <tr class="alert-row">
+                        <td>SKOLE_LØNNTILVIKAR Lønn til vikarer</td>
+                        <td>Kommunal Skole</td>
+                        <td class="num">202 000</td>
+                        <td class="num">847 000</td>
+                        <td class="num">-645 000</td>
+                        <td class="num">-319.3 %</td>
+                    </tr>
+                    <tr class="alert-row">
+                        <td>SKOLE_ARBEIDSGIVER Arbeidsgiveravgift</td>
+                        <td>Kommunal Skole</td>
+                        <td class="num">3 785 000</td>
+                        <td class="num">4 216 000</td>
+                        <td class="num">-431 000</td>
+                        <td class="num">-11.4 %</td>
+                    </tr>
+                    <tr class="alert-row">
+                        <td>1270 Kjøp fra private / konsulenter</td>
+                        <td>Kommunal Boenhet</td>
+                        <td class="num">0</td>
+                        <td class="num">382 656</td>
+                        <td class="num">-382 656</td>
+                        <td class="num">Ubudsjettert</td>
+                    </tr>
+                    <tr class="alert-row">
+                        <td>SKOLE_OVERTIDSLØNN Overtidslønn</td>
+                        <td>Kommunal Skole</td>
+                        <td class="num">57 000</td>
+                        <td class="num">436 000</td>
+                        <td class="num">-379 000</td>
+                        <td class="num">-664.9 %</td>
+                    </tr>
+                    <tr class="summary-row">
+                        <td>TOTALT TOPP 5 KRITISKE AVVIK</td>
+                        <td>Flere</td>
+                        <td class="num">19 773 000</td>
+                        <td class="num">24 078 656</td>
+                        <td class="num">-4 305 656</td>
+                        <td class="num">-21.8 %</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
+                Data-Ink merknad: Vertikale rutenett fjernet. Tall høyrejustert og formatert i hele kroner.
+            </div>
+        </div>
+
+        <!-- HØYRE KOLONNE: RAG REGELVERK & HITL SIGN-OFF -->
+        <div class="panel">
+            <div class="section-header">
+                <span>🤖 RAG Regelverksassistent & Juss</span>
+                <span class="status-badge">Glass-Box (§)</span>
+            </div>
+
+            <div class="quick-queries">
+                <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?')">
+                    § 14-5 Budsjettendring
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvordan skal vikarutgifter og sykepenger periodiseres i KOSTRA?')">
+                    KOSTRA Vikarer
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvilke fullmakter har kommunedirektøren for omdisponering?')">
+                    Delegasjon fullmakt
+                </span>
+            </div>
+
+            <div class="rag-search-box">
+                <input type="text" id="rag-input" class="rag-input" placeholder="Still et spørsmål om lovverk eller økonomireglement..." 
+                       value="Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?">
+                <button class="btn btn-primary" onclick="executeMockRAG()">🔍 Søk</button>
+            </div>
+
+            <div class="rag-response-card" id="rag-output">
+                <strong>Vurdering jf. Kommuneloven § 14-5:</strong><br/>
+                Dersom det i løpet av budsjettåret oppstår vesentlige avvik som truer budsjettmessig balanse eller realismekravet, plikter kommunedirektøren å fremme sak om endring av årsbudsjettet for Bystyret.<br/><br/>
+                For Oppvekst og utdanning må det avklares om merforbruket på vikarer (-645 000 kr) og overtid (-379 000 kr) kan dekkes ved omdisponering innenfor rammen, eller om det kreves inndekning via kommunens disposisjonsfond.
+                <div class="audit-meta-row">
+                    <span>Kilde: Kommuneloven § 14-5, Økonomireglementet § 3-1</span>
+                    <span id="audit-hash-display">SHA-256: 7f8a9b2c...3d4e</span>
+                </div>
+            </div>
+
+            <!-- HUMAN-IN-THE-LOOP SAKSBEHANDLING (PORT 9) -->
+            <div class="hitl-zone">
+                <div style="font-weight: 700; font-size: 12px; color: var(--navy-dark); margin-bottom: 6px;">
+                    🛡️ Stage-Gate Port 9: Menneskelig Overprøving (HITL Sign-Off)
+                </div>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="APPROVED" checked> 🟢 APPROVED (Godkjenn)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="MODIFIED"> 🟡 MODIFIED (Endre)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="REJECTED"> 🔴 REJECTED (Avvis)
+                    </label>
+                </div>
+                <textarea class="textarea-box" id="hitl-notes" placeholder="Saksbehandlers begrunnelse...">Reelt merforbruk bekreftet i Visma ERP. Foreslås dekket ved omdisponering i sak til Bystyret 28. september.</textarea>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="signAndSaveAudit()">
+                    🔒 Signer & Registrer med SHA-256 Stempel
+                </button>
+                <div id="sign-confirmation" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-weight: 600;">
+                    ✓ Signert og arkivert i Audit_AI_Actions!
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 6. BUNNLINJE / FOOTER -->
+    <footer class="hub-footer">
+        <div>Kristiansand Kommune — Økonomi og Virksomhetsstyring | Utviklet av Frank Ellingsen</div>
+        <div>Standarder: ISO 21508 EVM | Edward Tufte Data-Ink | Eurocities Algorithmic Transparency</div>
+        <div>Lokal SQLite DB: <code>kommune_golden_record.db</code></div>
+    </footer>
+
+    <!-- INTERAKTIVITET OG SHA-256 HASHING -->
+    <script>
+        let currentEngine = "Gemini 3.8 Flash (0 % CPU)";
+        let auditLogEntries = [
+            {
+                timestamp: new Date().toISOString(),
+                query: "Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?",
+                action: "APPROVED",
+                user: "Frank Ellingsen",
+                hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+        ];
+
+        function setQuery(text) {
+            document.getElementById("rag-input").value = text;
+            executeMockRAG();
+        }
+
+        async function computeSHA256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function executeMockRAG() {
+            const query = document.getElementById("rag-input").value;
+            const outputCard = document.getElementById("rag-output");
+            const hashDisplay = document.getElementById("audit-hash-display");
+
+            outputCard.style.opacity = "0.5";
+            
+            setTimeout(async () => {
+                outputCard.style.opacity = "1";
+                const hash = await computeSHA256(query + "|" + new Date().toISOString());
+                hashDisplay.innerText = "SHA-256: " + hash.substring(0, 16) + "...";
+            }, 300);
+        }
+
+        async function signAndSaveAudit() {
+            const query = document.getElementById("rag-input").value;
+            const notes = document.getElementById("hitl-notes").value;
+            const status = document.querySelector('input[name="hitl_status"]:checked').value;
+            const now = new Date().toISOString();
+            
+            const payload = `Frank Ellingsen|${query}|${status}|${notes}|${now}`;
+            const hash = await computeSHA256(payload);
+
+            auditLogEntries.push({
+                timestamp: now,
+                query: query,
+                action: status,
+                user: "Frank Ellingsen",
+                notes: notes,
+                hash: hash
+            });
+
+            const confirmBox = document.getElementById("sign-confirmation");
+            confirmBox.innerText = `✓ Signert og arkivert! SHA-256: ${hash.substring(0, 24)}...`;
+            confirmBox.style.display = "block";
+
+            setTimeout(() => {
+                confirmBox.style.display = "none";
+            }, 5000);
+        }
+
+        function exportAuditTrail() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(auditLogEntries, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "audit_log_kristiansand_office_hub.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function toggleEngine() {
+            if (currentEngine.includes("Gemini")) {
+                currentEngine = "Lokal Ollama (Høy CPU-last)";
+            } else {
+                currentEngine = "Gemini 3.8 Flash (0 % CPU)";
+            }
+            document.getElementById("active-engine-label").innerText = currentEngine;
+            document.getElementById("engine-btn").innerText = `🔄 Bytt Motor (Aktiv: ${currentEngine.split(' ')[0]})`;
+        }
+
+        function filterEntity(entity) {
+            const label = document.getElementById("active-entity-filter");
+            const rows = document.querySelectorAll("#variances-tbody tr");
+
+            if (entity === 'SKOLE') {
+                label.innerText = "Viser: Kommunal Skole (Oppvekst)";
+                rows[0].style.display = "";
+                rows[1].style.display = "";
+                rows[2].style.display = "";
+                rows[3].style.display = "none";
+                rows[4].style.display = "";
+                rows[5].style.display = "";
+            } else if (entity === 'BO') {
+                label.innerText = "Viser: Kommunal Boenhet (Helse & Mestring)";
+                rows[0].style.display = "none";
+                rows[1].style.display = "none";
+                rows[2].style.display = "none";
+                rows[3].style.display = "";
+                rows[4].style.display = "none";
+                rows[5].style.display = "";
+            } else {
+                label.innerText = "Viser: Alle Enheter";
+                rows.forEach(r => r.style.display = "");
+            }
+        }
+    </script>
+</body>
+</html>

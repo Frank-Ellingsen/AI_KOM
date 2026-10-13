@@ -1,0 +1,33 @@
+name: CI - Kommune AI Guardrails Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Sjekk ut kode
+      uses: actions/checkout@v4
+
+    - name: Sett opp Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+        cache-dependency-path: 'kommune-ai-guardrails/requirements.txt'
+
+    - name: Installer avhengigheter
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r kommune-ai-guardrails/requirements.txt
+        pip install pytest
+
+    - name: Kjør Stage-Gate og RAG Tester
+      run: |
+        export PYTHONPATH=kommune-ai-guardrails/src
+        pytest kommune-ai-guardrails/tests/ -v

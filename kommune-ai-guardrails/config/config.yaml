@@ -1,0 +1,15 @@
+llm:
+  provider: gemini
+  model: gemini-3.8-flash
+  temperature: 0.1
+
+ollama:
+  model: llama3.1
+  temperature: 0.1
+
+paths:
+  db: data/db/kommune_rag_store.db
+
+rag:
+  top_k: 4
+  k_constant: 60

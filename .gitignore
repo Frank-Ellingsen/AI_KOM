@@ -1,0 +1,58 @@
+# ==============================================================================
+# GITIGNORE FOR AI_KOM / KOMMUNE AI GUARDRAILS
+# ==============================================================================
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Secrets & Environment variables (KRITISK: Skal ALDRI sjekkes inn!)
+.env
+*.env
+*.env.local
+*.env.*.local
+*.pem
+*.key
+*.cert
+credentials.json
+
+# IDEer, Editorer og OS-filer
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test, linting og cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Packaging & build artifacts
+*.egg-info/
+*.egg-info
+*.egg
+build/
+dist/
+
+# Lokale midlertidige mapper
+scratch/
+out/
+*.tmp
+*.log
