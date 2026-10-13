@@ -15,7 +15,11 @@ kristiansand_epm_rammeverk_norsk/
 │   ├── 05_etikk_styring_portvakt_agent.md            <- Kommuneloven & EU AI Act (FRIA)
 │   ├── 06_ledelsesrapport_skribent_agent.md          <- Saksfremlegg og tertialnotater
 │   ├── 07_excel_powerbi_rapportering_agent.md        <- Tufte/IBCS dashboard-design
-│   └── 08_flerniva_interessent_rapportering_agent.md <- Rollebasert interessentrapportering
+│   ├── 08_flerniva_interessent_rapportering_agent.md <- Rollebasert interessentrapportering
+│   ├── 09_prosjektcontroller_eac_etc_agent.md        <- Prosjektcontroller, EVM & EAC/ETC
+│   ├── 10_likviditet_finans_renteeksponering_agent.md<- Likviditet, Finansforskriften & NIBOR
+│   ├── 11_selvkost_gebyr_kalkyle_agent.md            <- Selvkostforskriften & fondsberegning
+│   └── 12_revisjon_internkontroll_sporbarhet_agent.md<- Internkontroll, FOA terskler & SHA-256
 ├── dokumentasjon/                                    <- Systemdokumentasjon, saksfremlegg og analyser
 │   ├── antigravity_brukstilfelle_epm.md              <- Fullstendig teknisk arkitekturbeskrivelse
 │   ├── dax_kostra_kpi_pakke.md                       <- Full KOSTRA DAX-pakke

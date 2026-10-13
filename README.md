@@ -112,14 +112,30 @@ AI_KOM/
 ├── agenter/                       # 12 operative personas for økonomi- og prosjektstyring
 │   ├── 01_dataintegrasjon_etl_agent.md ... 12_revisjon_internkontroll_sporbarhet_agent.md
 │   └── README.md                  # Samlende agentmatrise og arbeidsflyt
-├── bruker-guides/                 # Brukerveiledninger, oppstartsguider og årshjul
-│   ├── BRUKERGUIDE.md, OPPSTARTSVEILEDER_STARTKNAPP.md, STYRINGSKALENDER_OG_ARSHJUL_2026.md
-│   ├── rag_forklaring.md, stage_gate_rammeverk.md
-│   └── README.md                  # Guide-indeks
+├── reports/                       # Ledelsesrapporter, Tufte IBCS-visualiseringer og modeller
+│   ├── chart_netzero_waterfall.png, sektor_faktisk_vs_budsjett_bullet.png, visma_stoy_waterfall_chart.png
+│   ├── Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pdf/.pptx, epm_presentasjon_okonomidirektor_v2.pptx
+│   └── kristiansand_epm_modell_v4_interactive.xlsx, Kommune_Project_Controller_Reporting_2026.xlsx
+├── kristiansand_epm_rammeverk_norsk/ # Komplett norsk EPM & AI rammeverk
+│   ├── README_NO.md, dokumentasjon/ (saksfremlegg, AI-rapport, KOSTRA DAX-pakke, RAG-spec)
+│   ├── kildekode/ (datalinje/epm_agent_pipeline.py, sikkerhet/pii_scrubber.py, brukergrensesnitt/)
+│   └── data/ (kontor_oversikt_og_arshjul.xlsx, kristiansand_golden_record.db)
+├── docs/                          # Arkitektur, forvaltningsdokumentasjon og kildedokumenter
+│   ├── epm_full_workflow_documentation.md, antigravity_usecase_epm.md, dax_kostra_kpi_package.md
+│   ├── framsikt_epm_integrasjon_spesifikasjon.md, visual_storytelling_og_stakeholder_design.md
+│   └── references/ (1.-tertialrapport-2026, økonomiplan 2027-2030, økonomireglement, nøkkeltall)
+├── powerbi/                       # Power BI Fabric arkitektur, DAX-bibliotek og TMDL
+│   ├── 02_DAX_Measures_Library.dax, 04_KOSTRA_DAX_KPI_Package.dax, 01_PowerQuery_M_Code.pq
+│   ├── fxOpenAI_RAG.m, 03_PowerBI_Model_Architecture.md, generate_excel_powerbi_model.py
+│   └── projects/Skole enhet project.SemanticModel/ (PBIP TMDL definisjoner for _Measures, Fact, Dim)
 ├── revisjon-og-kontroll/          # Sjekklister, kontrollnotater og politiske saksfremlegg
 │   ├── KOMMUNEREVISJONEN_AUDIT_CHECKLIST.md, NOTAT_TIL_KONTROLLUTVALGET_OG_REVISJONEN.md
 │   ├── CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md, TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md
 │   └── README.md                  # Revisjonsindeks
+├── bruker-guides/                 # Brukerveiledninger, oppstartsguider og årshjul
+│   ├── BRUKERGUIDE.md, OPPSTARTSVEILEDER_STARTKNAPP.md, STYRINGSKALENDER_OG_ARSHJUL_2026.md
+│   ├── rag_forklaring.md, stage_gate_rammeverk.md
+│   └── README.md                  # Guide-indeks
 ├── spesifikasjoner/               # Arkitektur, prediktive modeller og MLOps-rigg
 │   ├── PREDICTIVE_AI_FORECASTING_SPEC.md, SKILL_PREDICTIVE_FORECASTING_AI.md
 │   ├── OFFICE_DASHBOARD_HUB_SPEC.md, DOCKER_AND_MLOPS_DEPLOYMENT.md
@@ -127,7 +143,7 @@ AI_KOM/
 ├── mvp-pilot/                     # Operativ pilot for Bo og Miljø (Streamlit, DuckDB, SQLite)
 │   ├── app_ui.py, etl.py, eac_forecasting.py, hitl_governance.py, run_pilot.py
 │   └── README.md
-├── kommune-ai-guardrails/         # Kjerne RAG-motor, PII-vasker og sqlite-vec
+├── kommune-ai-guardrails/         # Kjerne RAG-motor, PII-vasker, Control Office Hub & sqlite-vec
 ├── tools/                         # Hjelpeverktøy og API-servere
 ├── start_kommune_ai.bat           # Hovedoppstartskript for Control Office Hub
 ├── oppdater_vektor_db.bat         # Reindeksering av RAG-vektordatabase

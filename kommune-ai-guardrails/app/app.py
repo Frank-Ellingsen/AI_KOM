@@ -315,46 +315,112 @@ st.sidebar.markdown(
 WORKSPACE_ROOT = PROJECT_ROOT.parent
 
 DOCUMENTS_MENU = {
-    "📖 Brukerveiledninger & Årshjul": [
-        ("Brukerveiledning Control Office Hub", WORKSPACE_ROOT / "bruker-guides" / "BRUKERGUIDE.md", "Operativ veiledning for controllere"),
-        ("Ett-klikks Oppstartsveileder", WORKSPACE_ROOT / "bruker-guides" / "OPPSTARTSVEILEDER_STARTKNAPP.md", "Instruksjoner for oppstart og drift"),
-        ("Styringskalender & Årshjul 2026", WORKSPACE_ROOT / "bruker-guides" / "STYRINGSKALENDER_OG_ARSHJUL_2026.md", "Periodelukking og tertialfrister"),
-        ("RAG-arkitektur & Semantisk søk", WORKSPACE_ROOT / "bruker-guides" / "rag_forklaring.md", "Teknisk og pedagogisk forklaring"),
-        ("10 Stage-Gate Rammeverk", WORKSPACE_ROOT / "bruker-guides" / "stage_gate_rammeverk.md", "AI Governance fra Gate 1 til 10")
+    "📊 Ledelsesrapporter & Diagrammer (reports/)": [
+        ("Net Zero Waterfall Avviksanalyse (PNG)", WORKSPACE_ROOT / "reports" / "chart_netzero_waterfall.png", "Visuell avviksanalyse fra budsjett til net zero sluttavvik"),
+        ("Bo og Miljø Månedlig Avviksprofil (PNG)", WORKSPACE_ROOT / "reports" / "chart_bomiljo_monthly.png", "Månedlig budsjett vs regnskapsavvik for enhet 5200"),
+        ("Kommunale Skoler Enhetsanalyse (PNG)", WORKSPACE_ROOT / "reports" / "chart_komskole_units.png", "Avviksfordeling per skoleenhet (funksjon 202)"),
+        ("Sektor Faktisk vs Budsjett Bullet Chart (PNG)", WORKSPACE_ROOT / "reports" / "sektor_faktisk_vs_budsjett_bullet.png", "Tufte bullet graph for kommunalsjefområdene"),
+        ("Visma Regnskapsstøy Waterfall (PNG)", WORKSPACE_ROOT / "reports" / "visma_stoy_waterfall_chart.png", "Dekomponering av støy og tidsforskyvninger i Visma"),
+        ("EPM Status- og Tiltaksrapport (PDF)", WORKSPACE_ROOT / "reports" / "Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pdf", "Offisiell ledelsesrapport med prognoser og tiltak"),
+        ("EPM Status og Tiltak Presentasjon (PPTX)", WORKSPACE_ROOT / "reports" / "Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx", "Styringsdeck for ledergruppen"),
+        ("Presentasjon for Økonomidirektør (PPTX)", WORKSPACE_ROOT / "reports" / "epm_presentasjon_okonomidirektor_v2.pptx", "Strategisk EPM-presentasjon v2"),
+        ("Kristiansand EPM Interaktiv Modell (Excel)", WORKSPACE_ROOT / "reports" / "kristiansand_epm_modell_v4_interactive.xlsx", "Interaktiv EPM styringsmodell"),
+        ("Prosjektcontroller Modell 2026 (Excel)", WORKSPACE_ROOT / "reports" / "Kommune_Project_Controller_Reporting_2026.xlsx", "Project Controller investerings- og porteføljemodell")
     ],
-    "🛡️ Revisjon, Kontroll & Notater": [
+    "🇳🇴 Norsk EPM Rammeverk & Datalinje (kristiansand_epm_rammeverk_norsk/)": [
+        ("EPM Rammeverk Hovedoversikt (README)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "README_NO.md", "Norsk introduksjon og arkitektursammendrag"),
+        ("EPM Fullstendig Arbeidsflyt", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "epm_fullstendig_arbeidsflyt.md", "End-to-end kommunal økonomistyringsflyt"),
+        ("DAX KOSTRA KPI-pakke (Norsk)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "dax_kostra_kpi_pakke.md", "Formelpakke for Power BI og Fabric"),
+        ("Antigravity EPM Brukstilfelle", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "antigravity_brukstilfelle_epm.md", "Use-case analyse for Kristiansand kommune"),
+        ("RAG Kunnskapsbase Spesifikasjon", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "rag_kunnskapsbase_spesifikasjon.md", "Spesifikasjon for juridisk vektorindeks"),
+        ("EPM Sammendragsrapport (PDF)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "epm_sammendrag_kristiansand.pdf", "Sammendragsnotat"),
+        ("Formelt Saksfremlegg Økonomidirektør (Word)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "saksfremlegg_epm_okonomidirektor.docx", "Word-mal for politisk fremlegg"),
+        ("Innføring AI i Offentlig Sektor Rapport (Word)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "Rapport om innføring AI i offentlig sektor.docx", "Risiko-, etikk- og styringsrapport"),
+        ("Stage-Gate Sjekkliste for AI (Word)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "sjekkliste_stage_gate_ai_kristiansand.docx", "10-stegs styringssjekkliste"),
+        ("Tildelingsskjema AI Anbud (Excel)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "dokumentasjon" / "tildelingsskjema_ai_anbud.xlsx", "Vurderingsskjema for anskaffelser"),
+        ("Årshjul & Kontoroversikt (Excel)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "data" / "kontor_oversikt_og_arshjul.xlsx", "Prosessoversikt og årshjul for økonomistyring"),
+        ("Power Query M RAG-integrasjon (Code)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "kildekode" / "powerbi" / "fxOpenAI_RAG.m", "M-funksjon for Power BI"),
+        ("Datalinje & Pipeline (Python)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "kildekode" / "datalinje" / "epm_agent_pipeline.py", "ETL og agent-datalinje"),
+        ("PII Vasker & Sikkerhet (Python)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "kildekode" / "sikkerhet" / "pii_scrubber.py", "Klientside personvernskjold"),
+        ("HITL Skriveback UI (Python)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "kildekode" / "brukergrensesnitt" / "hitl_skriveback_ui.py", "Streamlit Glass-Box Controller UI"),
+        ("EPM Arbeidsflytdiagram (PNG)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "ressurser" / "epm_arbeidsflyt_diagram.png", "Systemarkitektur og dataflyt"),
+        ("Kontor Arbeidsflytdiagram (PNG)", WORKSPACE_ROOT / "kristiansand_epm_rammeverk_norsk" / "ressurser" / "kontor_arbeidsflyt_diagram.png", "Kontorarbeidsflyt for økonomi")
+    ],
+    "📚 EPM Arkitektur & Dokumentasjon (docs/)": [
+        ("EPM Use-Case & Styringssirkel", WORKSPACE_ROOT / "docs" / "antigravity_usecase_epm.md", "Metodikk for treplans styringssløyfe"),
+        ("Full EPM Arbeidsflyt Dokumentasjon", WORKSPACE_ROOT / "docs" / "epm_full_workflow_documentation.md", "Omfattende forvaltningsdokumentasjon"),
+        ("DAX & KOSTRA Formelpakke", WORKSPACE_ROOT / "docs" / "dax_kostra_kpi_package.md", "Fullstendig DAX-bibliotek"),
+        ("Framsikt EPM Integrasjonsspesifikasjon", WORKSPACE_ROOT / "docs" / "framsikt_epm_integrasjon_spesifikasjon.md", "API- og tabellkartlegging mot Framsikt"),
+        ("Master EPM Samlerapport", WORKSPACE_ROOT / "docs" / "kristiansand_epm_master_samlerapport.md", "Konsolidert styringsdokument"),
+        ("Visual Storytelling & Tufte Design", WORKSPACE_ROOT / "docs" / "visual_storytelling_og_stakeholder_design.md", "Retningslinjer for datavisualisering"),
+        ("Power BI & Excel Spesifikasjon", WORKSPACE_ROOT / "docs" / "powerbi_excel_native_spesifikasjon.md", "FAST Standard og VertiPaq-arkitektur"),
+        ("EPM & AI Utviklingsbacklog", WORKSPACE_ROOT / "docs" / "epm_og_ai_backlog.md", "Milepæler og oppgaver"),
+        ("Saksfremlegg Økonomidirektør (Word)", WORKSPACE_ROOT / "docs" / "saksfremlegg_epm_okonomidirektor.docx", "Word-saksfremlegg"),
+        ("Use-Case Kristiansand Kommune v4 (Word)", WORKSPACE_ROOT / "docs" / "use_case_kristiansand_kommune-v4.docx", "Word use-case spesifikasjon"),
+        ("Stage-Gate Sjekkliste (Word)", WORKSPACE_ROOT / "docs" / "sjekkliste_stage_gate_ai_kristiansand.docx", "10-stegs sjekkliste"),
+        ("EPM Arkitekturdiagram (PNG)", WORKSPACE_ROOT / "docs" / "epm_workflow_diagram.png", "Høyoppløselig arkitekturdiagram")
+    ],
+    "🏛️ Kommunale Kildereferanser & Tertialrapporter (docs/references/)": [
+        ("1. Tertialrapport 2026 Kristiansand (PDF)", WORKSPACE_ROOT / "docs" / "references" / "1.-tertialrapport-2026---kristiansand-kommune.pdf", "Offisiell 1. tertialrapport for Kristiansand kommune"),
+        ("Forslag Økonomiplan 2027-2030 (PDF)", WORKSPACE_ROOT / "docs" / "references" / "kommunedirektorens-forslag-til-okonomiplan-2027-2030.pdf", "Kommunedirektørens forslag til handlings- og økonomiplan"),
+        ("Økonomireglement for Kristiansand (PDF)", WORKSPACE_ROOT / "docs" / "references" / "okonomireglement-for-kristiansand-kommune.pdf", "Gjeldende økonomireglement og fullmaktsstruktur"),
+        ("Nøkkeltall Kristiansand Kommune (PDF)", WORKSPACE_ROOT / "docs" / "references" / "Nøkkeltall _Kristiansand_Kommune.pdf", "Offisiell samling over kommunens nøkkeltall"),
+        ("Operationalizing GenAI in Kristiansand (PDF)", WORKSPACE_ROOT / "docs" / "references" / "Operationalizing_GenAI_in_Kristiansand.pdf", "Strategisk rapport for GenAI i forvaltningen"),
+        ("Rådgiver Økonomistyring Kravprofil (PDF)", WORKSPACE_ROOT / "docs" / "references" / "Rådgiver økonomistyring Kristiansand Kommune - arbeidsplassen.no.pdf", "Kompetansekrav og ansvarsområder")
+    ],
+    "📈 Power BI Modeller, DAX & TMDL (powerbi/)": [
+        ("Komplett DAX Måltallsbibliotek (DAX)", WORKSPACE_ROOT / "powerbi" / "02_DAX_Measures_Library.dax", "Over 50 formelle DAX-mål for kommunal økonomistyring"),
+        ("Offisiell KOSTRA DAX KPI-pakke (DAX)", WORKSPACE_ROOT / "powerbi" / "04_KOSTRA_DAX_KPI_Package.dax", "KOSTRA KPIer for netto driftsresultat, premieavvik og handlingsregler"),
+        ("Power Query M Kildekode (PQ)", WORKSPACE_ROOT / "powerbi" / "01_PowerQuery_M_Code.pq", "Avansert M-spørring for datainnhenting og vasking"),
+        ("Power Query OpenAI RAG Funksjon (Code)", WORKSPACE_ROOT / "powerbi" / "fxOpenAI_RAG.m", "M-funksjon for Power BI"),
+        ("Power BI Modellarkitektur (Markdown)", WORKSPACE_ROOT / "powerbi" / "03_PowerBI_Model_Architecture.md", "Stjerneskjema og relasjonsdesign"),
+        ("Python Modellbygger (Python)", WORKSPACE_ROOT / "powerbi" / "generate_excel_powerbi_model.py", "Skript for generering av Excel/Power BI-modell"),
+        ("Enterprise Measures (_Measures.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "_Measures.tmdl", "Samtlige formelle DAX-mål for skolesektoren i PBIP TMDL"),
+        ("Hovedbok Transaksjoner (Fact_Regnskap.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Fact_Regnskap.tmdl", "TMDL tabellstruktur for regnskap"),
+        ("Revisjonslogg (Audit_AI_Actions.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Audit_AI_Actions.tmdl", "TMDL for SHA-256 revisjonslogg"),
+        ("Ansvarsdimensjon (Dim_Ansvar.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Dim_Ansvar.tmdl", "TMDL for organisasjon og skoler"),
+        ("KOSTRA Artsdimensjon (Dim_Art.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Dim_Art.tmdl", "TMDL for artskontoplanen"),
+        ("KOSTRA Funksjonsdimensjon (Dim_Funksjon.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Dim_Funksjon.tmdl", "TMDL for tjenesteområder"),
+        ("Tidskalender (Dim_Dato.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Dim_Dato.tmdl", "TMDL tidshierarki"),
+        ("Framsikt Deflator (Framsikt_Deflator.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Framsikt_Deflator.tmdl", "TMDL for pris- og lønnsvekst"),
+        ("Fraværsreduksjon (Fravaer_Reduksjon.tmdl)", WORKSPACE_ROOT / "powerbi" / "projects" / "Skole enhet project.SemanticModel" / "definition" / "tables" / "Fravaer_Reduksjon.tmdl", "TMDL for vikareffekter")
+    ],
+    "🛡️ Revisjon, Kontroll & Sjekklister (revisjon-og-kontroll/)": [
         ("Periodelukkingssjekkliste", WORKSPACE_ROOT / "revisjon-og-kontroll" / "CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md", "Månedlig avstemming for controller"),
         ("Kommunerevisjonens Sjekkliste", WORKSPACE_ROOT / "revisjon-og-kontroll" / "KOMMUNEREVISJONEN_AUDIT_CHECKLIST.md", "Revisjonsspor & SHA-256 kontroll"),
         ("Notat til Kontrollutvalget", WORKSPACE_ROOT / "revisjon-og-kontroll" / "NOTAT_TIL_KONTROLLUTVALGET_OG_REVISJONEN.md", "Sikkerhet, HITL og personvern"),
-        ("Mal for Saksfremlegg (Kommuneloven § 14-5)", WORKSPACE_ROOT / "revisjon-og-kontroll" / "TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md", "Politisk saksbehandlingsmal")
+        ("Mal for Saksfremlegg (Kommuneloven § 14-5)", WORKSPACE_ROOT / "revisjon-og-kontroll" / "TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md", "Politisk saksbehandlingsmal"),
+        ("Revisjonsarkiv Oversikt (README)", WORKSPACE_ROOT / "revisjon-og-kontroll" / "README.md", "Indeks over kontroll- og revisjonsnotater")
     ],
-    "🤖 Operative Agenter (1–12)": [
-        ("Agent 09: Prosjektcontroller & Capex", WORKSPACE_ROOT / "agenter" / "09_prosjektcontroller_eac_etc_agent.md", "EVM, S-kurver og usikkerhetsstyring"),
+    "🤖 Operative Agenter (1–12) (agenter/)": [
+        ("Agent 09: Prosjektcontroller & Capex (EAC/ETC)", WORKSPACE_ROOT / "agenter" / "09_prosjektcontroller_eac_etc_agent.md", "EVM, S-kurver og usikkerhetsstyring"),
         ("Agent 10: Likviditet & Rentefølsomhet", WORKSPACE_ROOT / "agenter" / "10_likviditet_finans_renteeksponering_agent.md", "Finansforskriften, NIBOR og gjeldstak"),
         ("Agent 11: Selvkost & Gebyrregulativ", WORKSPACE_ROOT / "agenter" / "11_selvkost_gebyr_kalkyle_agent.md", "Selvkostfond og kalkylerente"),
         ("Agent 12: Revisjon & Mislighetskontroll", WORKSPACE_ROOT / "agenter" / "12_revisjon_internkontroll_sporbarhet_agent.md", "Terskelverdier, Benfords lov og SHA-256"),
         ("Agent 01: ETL & Golden Record", WORKSPACE_ROOT / "agenter" / "01_dataintegrasjon_etl_agent.md", "Datainntak og validering"),
         ("Agent 02: Power BI & DAX Modellerer", WORKSPACE_ROOT / "agenter" / "02_bi_dax_modellering_agent.md", "Stjerneskjema og ytelse"),
         ("Agent 03: Prediktiv Anomali", WORKSPACE_ROOT / "agenter" / "03_prediktiv_anomali_agent.md", "Tidligvarsling 60-90 dager før"),
-        ("Agent 04: Preskriptiv HITL", WORKSPACE_ROOT / "agenter" / "04_preskriptiv_hitl_agent.md", "Tiltaksmeny og delegasjonsreglement"),
+        ("Agent 04: Preskriptiv HITL", WORKSPACE_ROOT / "agenter" / "04_preskriptil_hitl_agent.md" if (WORKSPACE_ROOT / "agenter" / "04_preskriptil_hitl_agent.md").exists() else WORKSPACE_ROOT / "agenter" / "04_preskriptiv_hitl_agent.md", "Tiltaksmeny og delegasjonsreglement"),
         ("Agent 05: Etikk & Styring Portvakt", WORKSPACE_ROOT / "agenter" / "05_etikk_styring_portvakt_agent.md", "Stage-Gate og FRIA/DPIA"),
         ("Agent 06: Ledelsesrapport Skribent", WORKSPACE_ROOT / "agenter" / "06_ledelsesrapport_skribent_agent.md", "Executive saksfremlegg"),
         ("Agent 07: Excel & Power BI Rapportør", WORKSPACE_ROOT / "agenter" / "07_excel_powerbi_rapportering_agent.md", "FAST Standard og visualisering"),
-        ("Agent 08: Flernivå Interessentrapportering", WORKSPACE_ROOT / "agenter" / "08_flerniva_interessent_rapportering_agent.md", "Nivå 1–5 tilpasning")
+        ("Agent 08: Flernivå Interessentrapportering", WORKSPACE_ROOT / "agenter" / "08_flerniva_interessent_rapportering_agent.md", "Nivå 1–5 tilpasning"),
+        ("Agentmatrise Oversikt (README)", WORKSPACE_ROOT / "agenter" / "README.md", "Totaloversikt over alle 12 agenter")
     ],
-    "⚙️ Tekniske Spesifikasjoner": [
+    "📖 Brukerveiledninger & Årshjul (bruker-guides/)": [
+        ("Brukerveiledning Control Office Hub", WORKSPACE_ROOT / "bruker-guides" / "BRUKERGUIDE.md", "Operativ veiledning for controllere"),
+        ("Ett-klikks Oppstartsveileder", WORKSPACE_ROOT / "bruker-guides" / "OPPSTARTSVEILEDER_STARTKNAPP.md", "Instruksjoner for oppstart og drift"),
+        ("Styringskalender & Årshjul 2026", WORKSPACE_ROOT / "bruker-guides" / "STYRINGSKALENDER_OG_ARSHJUL_2026.md", "Periodelukking og tertialfrister"),
+        ("RAG-arkitektur & Semantisk søk", WORKSPACE_ROOT / "bruker-guides" / "rag_forklaring.md", "Teknisk og pedagogisk forklaring"),
+        ("10 Stage-Gate Rammeverk", WORKSPACE_ROOT / "bruker-guides" / "stage_gate_rammeverk.md", "AI Governance fra Gate 1 til 10"),
+        ("Guide-arkiv Oversikt (README)", WORKSPACE_ROOT / "bruker-guides" / "README.md", "Indeks over veiledninger")
+    ],
+    "⚙️ Tekniske Spesifikasjoner (spesifikasjoner/)": [
         ("Prognosespesifikasjon (EAC/ETC)", WORKSPACE_ROOT / "spesifikasjoner" / "PREDICTIVE_AI_FORECASTING_SPEC.md", "Matematisk modell og sesongfiltre"),
         ("Skill: Prediktiv Prognostisering", WORKSPACE_ROOT / "spesifikasjoner" / "SKILL_PREDICTIVE_FORECASTING_AI.md", "Skill-definisjon"),
         ("Control Office Hub Spesifikasjon", WORKSPACE_ROOT / "spesifikasjoner" / "OFFICE_DASHBOARD_HUB_SPEC.md", "UI og API arkitektur"),
-        ("Docker & MLOps Deployment", WORKSPACE_ROOT / "spesifikasjoner" / "DOCKER_AND_MLOPS_DEPLOYMENT.md", "Kontainerdrift og evaluering")
-    ],
-    "📊 Modeller & Rapporter (Excel/PDF)": [
-        ("Rapport Enhet Bo og Miljø.xlsx", WORKSPACE_ROOT / "mvp-pilot" / "Rapport Enhet Bo og Miljø.xlsx", "Excel-arbeidsbok for pilot"),
-        ("Project Controller Reporting 2026.xlsx", WORKSPACE_ROOT / "reports" / "Kommune_Project_Controller_Reporting_2026.xlsx", "Prosjektstyringsmodell"),
-        ("Mini Case Bo og Miljø.xlsx", WORKSPACE_ROOT / "mvp-pilot" / "Mini_case_AI_kommunal_okonomistyring.xlsx", "Kilderegnskap Bo og Miljø"),
-        ("Kommuneloven (Lovdata PDF)", PROJECT_ROOT / "data" / "raw" / "Lov om kommuner og fylkeskommuner (kommuneloven) - Lovdata.pdf", "Kommunelovens femte del"),
-        ("1. Tertialrapport 2026 Kristiansand", PROJECT_ROOT / "data" / "raw" / "1.-tertialrapport-2026---kristiansand-kommune.pdf", "Offisiell tertialrapport"),
-        ("KOSTRA Kontoplanveileder 2026", PROJECT_ROOT / "data" / "raw" / "veileder-til-kontoplanen-i-kostra-for-2026.pdf", "SSB / KOSTRA veiledning")
+        ("Docker & MLOps Deployment", WORKSPACE_ROOT / "spesifikasjoner" / "DOCKER_AND_MLOPS_DEPLOYMENT.md", "Kontainerdrift og evaluering"),
+        ("Spesifikasjonsarkiv Oversikt (README)", WORKSPACE_ROOT / "spesifikasjoner" / "README.md", "Indeks over tekniske spesifikasjoner")
     ]
 }
 
@@ -379,30 +445,55 @@ if selected_quick_doc != "-- Velg et dokument for visning --":
     doc_path, doc_desc = all_docs_flat[selected_quick_doc]
     if doc_path.exists():
         st.sidebar.info(f"ℹ️ {doc_desc}")
-        if doc_path.suffix.lower() == ".md":
+        ext = doc_path.suffix.lower()
+        if ext == ".md":
             with st.sidebar.expander("📖 Forhåndsvisning i sidebar", expanded=True):
-                content = doc_path.read_text(encoding="utf-8")
-                # Vis et kort utdrag eller full tekst med nedlastingsknapp
+                content = doc_path.read_text(encoding="utf-8", errors="replace")
                 st.markdown(content[:1500] + ("\n\n*(Fortsetter... se hele i fane 'Dokumentarkiv')*" if len(content) > 1500 else ""))
                 st.download_button(
                     label=f"⬇️ Last ned {doc_path.name}",
                     data=content,
                     file_name=doc_path.name,
                     mime="text/markdown",
-                    key=f"dl_sb_{doc_path.name}"
+                    key=f"dl_sb_{doc_path.stem}"
                 )
                 if st.button("👁️ Vis i full bredde i hovedvindu", key=f"sb_view_full_{doc_path.stem}"):
                     st.session_state["active_doc_path"] = str(doc_path)
                     st.session_state["active_doc_title"] = selected_quick_doc
+        elif ext in [".png", ".jpg", ".jpeg"]:
+            with st.sidebar.expander("🖼️ Forhåndsvis bilde", expanded=True):
+                st.image(str(doc_path), caption=doc_path.name, use_container_width=True)
+                with open(doc_path, "rb") as fb:
+                    st.download_button(f"⬇️ Last ned bilde", data=fb.read(), file_name=doc_path.name, mime=f"image/{ext.strip('.')}", key=f"dl_sb_img_{doc_path.stem}")
+                if st.button("👁️ Vis i full bredde", key=f"sb_view_img_{doc_path.stem}"):
+                    st.session_state["active_doc_path"] = str(doc_path)
+                    st.session_state["active_doc_title"] = selected_quick_doc
+        elif ext in [".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
+            with st.sidebar.expander("💻 Kildekodevisning", expanded=True):
+                code_content = doc_path.read_text(encoding="utf-8", errors="replace")
+                code_lang = "dax" if ext in [".dax", ".tmdl"] else ("powerquery" if ext in [".pq", ".m"] else ("python" if ext == ".py" else ("sql" if ext == ".sql" else "text")))
+                st.code(code_content[:1200] + ("\n\n# ... se resten i fane 'Dokumentarkiv'" if len(code_content) > 1200 else ""), language=code_lang)
+                st.download_button(f"⬇️ Last ned {doc_path.name}", data=code_content, file_name=doc_path.name, mime="text/plain", key=f"dl_sb_code_{doc_path.stem}")
+                if st.button("👁️ Vis i full bredde", key=f"sb_view_code_{doc_path.stem}"):
+                    st.session_state["active_doc_path"] = str(doc_path)
+                    st.session_state["active_doc_title"] = selected_quick_doc
         else:
-            with open(doc_path, "rb") as f:
-                st.sidebar.download_button(
-                    label=f"⬇️ Last ned {doc_path.name}",
-                    data=f.read(),
-                    file_name=doc_path.name,
-                    mime="application/octet-stream",
-                    key=f"dl_sb_{doc_path.name}"
-                )
+            with st.sidebar.expander(f"📦 Filinfo ({ext.upper()})", expanded=True):
+                size_kb = doc_path.stat().st_size / 1024
+                size_str = f"{size_kb / 1024:.2f} MB" if size_kb > 1024 else f"{size_kb:.1f} KB"
+                st.markdown(f"**Fil:** `{doc_path.name}`  \n**Størrelse:** `{size_str}`")
+                with open(doc_path, "rb") as f:
+                    mime = "application/pdf" if ext == ".pdf" else "application/octet-stream"
+                    st.download_button(
+                        label=f"⬇️ Last ned {doc_path.name}",
+                        data=f.read(),
+                        file_name=doc_path.name,
+                        mime=mime,
+                        key=f"dl_sb_{doc_path.stem}"
+                    )
+                if st.button("👁️ Åpne infokort i hovedvindu", key=f"sb_view_bin_{doc_path.stem}"):
+                    st.session_state["active_doc_path"] = str(doc_path)
+                    st.session_state["active_doc_title"] = selected_quick_doc
     else:
         st.sidebar.warning(f"Fil ikke funnet: {doc_path.name}")
 
@@ -415,16 +506,17 @@ for cat_title, items in DOCUMENTS_MENU.items():
             if path.exists():
                 col_btn1, col_btn2 = st.columns([1, 1])
                 with col_btn1:
-                    if path.suffix.lower() == ".md":
-                        if st.button("Åpne 📄", key=f"open_sb_{path.stem}"):
-                            st.session_state["active_doc_path"] = str(path)
-                            st.session_state["active_doc_title"] = label
+                    if st.button("Åpne 📄", key=f"open_sb_{path.stem}_{cat_title[:4]}"):
+                        st.session_state["active_doc_path"] = str(path)
+                        st.session_state["active_doc_title"] = label
                 with col_btn2:
-                    if path.suffix.lower() == ".md":
-                        st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8"), file_name=path.name, mime="text/markdown", key=f"dl_exp_{path.stem}")
+                    ext = path.suffix.lower()
+                    if ext in [".md", ".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
+                        st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8", errors="replace"), file_name=path.name, mime="text/plain", key=f"dl_exp_{path.stem}_{cat_title[:4]}")
                     else:
                         with open(path, "rb") as fb:
-                            st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime="application/octet-stream", key=f"dl_exp_bin_{path.stem}")
+                            mime = "application/pdf" if ext == ".pdf" else "application/octet-stream"
+                            st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime=mime, key=f"dl_exp_bin_{path.stem}_{cat_title[:4]}")
             st.markdown("---")
 
 # ==========================================
@@ -705,6 +797,50 @@ with tab_controller:
         else:
             st.info("Ingen negative avvik funnet for det valgte filteret.")
 
+        st.markdown("---")
+        st.subheader("📈 Executive Styringsvisualiseringer (Tufte IBCS & Avviksanalyser fra reports/)")
+        st.caption("Ferdiggenererte høyoppløselige grafer for Formannskapet og ledergruppen, forankret i Edward Tuftes prinsipper.")
+
+        rep_dir = WORKSPACE_ROOT / "reports"
+        chart_gallery = {
+            "Net Zero Waterfall Avviksanalyse": (
+                rep_dir / "chart_netzero_waterfall.png",
+                "Viser hvordan samlet avvik dekomponeres fra vedtatt budsjett til net zero sluttavvik via lønnsvekst, vikarpress, overtid og refusjoner."
+            ),
+            "Sektorvis Budsjett vs Faktisk Bullet Chart": (
+                rep_dir / "sektor_faktisk_vs_budsjett_bullet.png",
+                "Tufte bullet-grafer som sammenligner faktisk forbruk mot periodisert budsjett og prognose for hvert kommunalsjefområde."
+            ),
+            "Visma Regnskapsstøy Waterfall": (
+                rep_dir / "visma_stoy_waterfall_chart.png",
+                "Dekomponerer periodiseringsstøy, fakturaetterslep og engangsposter i Visma ERP for å isolere underliggende driftstrend."
+            ),
+            "Kommunale Skoler Enhetsanalyse": (
+                rep_dir / "chart_komskole_units.png",
+                "Enhetsfordeling av driftsavvik på tvers av grunnskolene i Kristiansand (funksjon 202 Grunnskole)."
+            ),
+            "Bo og Miljø Månedlig Avviksprofil": (
+                rep_dir / "chart_bomiljo_monthly.png",
+                "Månedlig profil for budsjett vs regnskap med sesongjustert vikarpress for enhet 5200 Bo og Miljø."
+            )
+        }
+
+        sel_chart_name = st.selectbox("Velg styringsgraf for visning i høyoppløsning:", options=list(chart_gallery.keys()), index=0)
+        c_path, c_desc = chart_gallery[sel_chart_name]
+        if c_path.exists():
+            st.info(f"ℹ️ **Controller-analyse:** {c_desc}")
+            st.image(str(c_path), caption=sel_chart_name, use_container_width=True)
+            with open(c_path, "rb") as cf:
+                st.download_button(
+                    label=f"⬇️ Last ned {c_path.name} til presentasjon / saksutredning",
+                    data=cf.read(),
+                    file_name=c_path.name,
+                    mime="image/png",
+                    key=f"dl_chart_t3_{c_path.stem}"
+                )
+        else:
+            st.warning(f"Fant ikke diagramfilen: {c_path.name}")
+
 
 # -------------------------------------------------------------
 # FANE 4: SAKSFREMLEGG & HITL SIGN-OFF
@@ -794,44 +930,71 @@ with tab_docs:
     st.markdown("### 📁 Dokumentarkiv, Spesifikasjoner & Ressursbibliotek")
     st.caption("Sentralt bibliotek for alle styringsdokumenter, veiledninger, agentroller og modeller for Kristiansand kommune.")
 
-    # Hvis et dokument er valgt fra sidebaren, vis det i fokus
+    # Hvis et dokument er valgt fra sidebaren eller katalogen, vis det i fokus
     if "active_doc_path" in st.session_state and Path(st.session_state["active_doc_path"]).exists():
         p = Path(st.session_state["active_doc_path"])
+        ext = p.suffix.lower()
         st.markdown(f"#### 📖 Aktivt dokument: {st.session_state.get('active_doc_title', p.name)}")
         
         c_act1, c_act2 = st.columns([3, 1])
+        with c_act1:
+            try:
+                rel_path = p.relative_to(WORKSPACE_ROOT)
+            except ValueError:
+                rel_path = p.name
+            st.caption(f"📁 Plassering: `{rel_path}` | Format: `{ext.upper()}`")
         with c_act2:
-            if p.suffix.lower() == ".md":
-                doc_text = p.read_text(encoding="utf-8")
+            if ext in [".md", ".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
+                doc_text = p.read_text(encoding="utf-8", errors="replace")
                 st.download_button(
-                    label="⬇️ Last ned dette dokumentet (.md)",
+                    label=f"⬇️ Last ned {p.name}",
                     data=doc_text,
                     file_name=p.name,
-                    mime="text/markdown",
+                    mime="text/markdown" if ext == ".md" else "text/plain",
                     key="dl_tab_doc_btn"
                 )
             else:
                 with open(p, "rb") as fb:
+                    mime_map = {
+                        ".pdf": "application/pdf",
+                        ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                        ".png": "image/png",
+                        ".jpg": "image/jpeg"
+                    }
                     st.download_button(
                         label=f"⬇️ Last ned {p.name}",
                         data=fb.read(),
                         file_name=p.name,
-                        mime="application/octet-stream",
+                        mime=mime_map.get(ext, "application/octet-stream"),
                         key="dl_tab_bin_btn"
                     )
-            if st.button("❌ Lukk og gå til katalog"):
+            if st.button("❌ Lukk forhåndsvisning"):
                 del st.session_state["active_doc_path"]
                 if "active_doc_title" in st.session_state:
                     del st.session_state["active_doc_title"]
                 st.rerun()
 
-        if p.suffix.lower() == ".md":
-            st.markdown("---")
-            st.markdown(p.read_text(encoding="utf-8"))
-            st.markdown("---")
+        st.markdown("---")
+        if ext == ".md":
+            st.markdown(p.read_text(encoding="utf-8", errors="replace"))
+        elif ext in [".png", ".jpg", ".jpeg"]:
+            st.image(str(p), caption=st.session_state.get('active_doc_title', p.name), use_container_width=True)
+        elif ext in [".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
+            code_lang = "dax" if ext in [".dax", ".tmdl"] else ("powerquery" if ext in [".pq", ".m"] else ("python" if ext == ".py" else ("sql" if ext == ".sql" else "text")))
+            st.code(p.read_text(encoding="utf-8", errors="replace"), language=code_lang)
         else:
-            st.info(f"Dette er en binær fil ({p.suffix.upper()}). Klikk på 'Last ned' over for å åpne i Excel/PDF-leser.")
-            st.markdown("---")
+            size_kb = p.stat().st_size / 1024
+            size_str = f"{size_kb / 1024:.2f} MB" if size_kb > 1024 else f"{size_kb:.1f} KB"
+            type_names = {
+                ".pdf": "PDF Forvaltningsdokument / Styringsnotat",
+                ".xlsx": "Excel Arbeidsbok / Økonomistyringsmodell",
+                ".docx": "Word Saksdokument / Saksfremlegg",
+                ".pptx": "PowerPoint Presentasjonsdeck"
+            }
+            st.info(f"📄 **Filtype:** {type_names.get(ext, 'Binært forvaltningsdokument')}  \n💾 **Filstørrelse:** {size_str}  \n📍 **Bruk:** Dette dokumentet er klart for direkte nedlasting til lokal saksbehandling, analyse eller presentasjon.")
+        st.markdown("---")
 
     # Søk og filter på tvers av biblioteket
     st.markdown("#### 🔍 Utforsk Dokumentkatalogen")
@@ -850,16 +1013,18 @@ with tab_docs:
                     status_icon = "🟢" if path.exists() else "🔴"
                     st.markdown(f"{status_icon} **{label}**  \n`{path.name}` — *{desc}*")
                 with col_d2:
-                    if path.exists() and path.suffix.lower() == ".md":
-                        if st.button("Åpne her 👁️", key=f"open_tab_{path.stem}"):
+                    if path.exists():
+                        if st.button("Åpne her 👁️", key=f"open_tab_{path.stem}_{cat_title[:4]}"):
                             st.session_state["active_doc_path"] = str(path)
                             st.session_state["active_doc_title"] = label
                             st.rerun()
                 with col_d3:
                     if path.exists():
-                        if path.suffix.lower() == ".md":
-                            st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8"), file_name=path.name, mime="text/markdown", key=f"dl_tab_{path.stem}")
+                        ext = path.suffix.lower()
+                        if ext in [".md", ".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
+                            st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8", errors="replace"), file_name=path.name, mime="text/plain", key=f"dl_tab_{path.stem}_{cat_title[:4]}")
                         else:
                             with open(path, "rb") as fb:
-                                st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime="application/octet-stream", key=f"dl_tab_bin_{path.stem}")
+                                mime = "application/pdf" if ext == ".pdf" else ("image/png" if ext == ".png" else "application/octet-stream")
+                                st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime=mime, key=f"dl_tab_bin_{path.stem}_{cat_title[:4]}")
             st.markdown("---")
