@@ -135,6 +135,93 @@
             border-color: #142845;
         }
 
+        .btn-accent {
+            background: #0056b3;
+            color: #ffffff;
+            border-color: #0056b3;
+        }
+
+        .btn-accent:hover {
+            background: #004085;
+            border-color: #004085;
+        }
+
+        .btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        /* Vektordatabase Status & Progress (Tufte Data-Ink Standard) */
+        .vectordb-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--navy-dark);
+            border-radius: 3px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .vectordb-panel.running {
+            border-left-color: var(--accent-blue);
+            background: #fbfdff;
+        }
+
+        .vectordb-panel.success {
+            border-left-color: var(--success-green);
+            background: var(--success-green-bg);
+        }
+
+        .vectordb-panel.error {
+            border-left-color: var(--alert-red);
+            background: var(--alert-red-bg);
+        }
+
+        .vectordb-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .vdb-progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #edf0f2;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .vdb-progress-bar {
+            height: 100%;
+            background: var(--navy-dark);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .vectordb-panel.running .vdb-progress-bar {
+            background: var(--accent-blue);
+        }
+
+        .vectordb-panel.success .vdb-progress-bar {
+            background: var(--success-green);
+        }
+
+        .vectordb-panel.error .vdb-progress-bar {
+            background: var(--alert-red);
+        }
+
+        .vdb-status-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
         /* Årshjul Timeline */
         .timeline-section {
             background: var(--bg-surface);
@@ -428,6 +515,7 @@
         <div class="hub-meta">
             <div>Bruker: <strong>Frank Ellingsen (Senior Controller)</strong></div>
             <div style="margin-top: 4px;">
+                <span class="status-badge" id="vdb-badge-header">Vektor-DB: 2 842 biter</span> | 
                 <span class="status-badge">Port 4 & 9 Aktiv</span> | 
                 Motor: <strong id="active-engine-label">Gemini 3.8 Flash (0 % CPU)</strong>
             </div>
@@ -439,6 +527,9 @@
         <a href="http://localhost:8501" target="_blank" class="btn btn-primary">
             🚀 Åpne Streamlit Fullskjerm (Port 8501)
         </a>
+        <button class="btn btn-accent" id="btn-update-vectordb" onclick="triggerVectorDbUpdate()">
+            ⚡ Oppdater Vektor-DB
+        </button>
         <button class="btn" onclick="exportAuditTrail()">
             📥 Eksporter SHA-256 Audit Log (JSON)
         </button>
@@ -454,6 +545,29 @@
         <button class="btn" onclick="toggleEngine()" id="engine-btn">
             🔄 Bytt Motor (Gemini / Ollama)
         </button>
+    </div>
+
+    <!-- VEKTORDATABASE STATUS & PROGRESS PANEL (TUFTE DATA-INK) -->
+    <div id="vectordb-panel" class="vectordb-panel" style="display: none;">
+        <div class="vectordb-panel-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="vdb-status-icon">⚡</span>
+                <strong id="vdb-status-title">Oppdatering av Vektordatabase (sqlite-vec)</strong>
+                <span id="vdb-status-badge" class="status-badge">Klar</span>
+            </div>
+            <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary);" id="vdb-time-label">
+                Tid: 0.0s
+            </div>
+        </div>
+        <div class="vdb-progress-bar-container">
+            <div id="vdb-progress-bar" class="vdb-progress-bar" style="width: 0%;"></div>
+        </div>
+        <div class="vdb-status-details">
+            <div id="vdb-status-msg" style="color: var(--text-primary); font-weight: 500;">Klar til å starte indeksering av data/raw...</div>
+            <div id="vdb-stats-meta" style="color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px;">
+                data/raw: 24 filer | DB: 2 842 biter
+            </div>
+        </div>
     </div>
 
     <!-- 3. ÅRSHJUL & KRITISKE FRISTER -->
@@ -790,6 +904,159 @@
                 rows.forEach(r => r.style.display = "");
             }
         }
+
+        /* ==========================================================================
+           VEKTORDATABASE OPPDATERING & PROGRESS API
+           Kobler opp mot lokal http://127.0.0.1:8766/api/status og /update-vectordb
+           ========================================================================== */
+        const API_BASE = "http://127.0.0.1:8766";
+        let pollInterval = null;
+
+        async function fetchVectorDbStatus() {
+            try {
+                const res = await fetch(`${API_BASE}/api/status`);
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data.ok && data.db_stats) {
+                    const stats = data.db_stats;
+                    const badge = document.getElementById("vdb-badge-header");
+                    if (badge && stats.chunks_count) {
+                        badge.innerText = `Vektor-DB: ${stats.chunks_count.toLocaleString("no-NO")} biter (${stats.source_files_count} dok)`;
+                    }
+                    const meta = document.getElementById("vdb-stats-meta");
+                    if (meta) {
+                        meta.innerText = `data/raw: ${stats.raw_files_count} filer | DB: ${stats.chunks_count.toLocaleString("no-NO")} biter (${stats.source_files_count} indeksert)`;
+                    }
+
+                    // Dersom indeksering allerede pågår i bakgrunnen
+                    if (data.update_state && data.update_state.is_updating) {
+                        const panel = document.getElementById("vectordb-panel");
+                        if (panel) panel.style.display = "block";
+                        startPollingProgress();
+                    }
+                }
+            } catch (err) {
+                // Hub API ikke tilkoblet ennå
+                console.log("Hub API venter:", err.message);
+            }
+        }
+
+        async function triggerVectorDbUpdate() {
+            const btn = document.getElementById("btn-update-vectordb");
+            const panel = document.getElementById("vectordb-panel");
+            const badge = document.getElementById("vdb-status-badge");
+            const msg = document.getElementById("vdb-status-msg");
+            const pbar = document.getElementById("vdb-progress-bar");
+            const timeLabel = document.getElementById("vdb-time-label");
+
+            panel.className = "vectordb-panel running";
+            panel.style.display = "block";
+            btn.disabled = true;
+            btn.innerHTML = "⏳ Starter...";
+            badge.className = "status-badge";
+            badge.innerText = "Pågår";
+            badge.style.color = "var(--accent-blue)";
+            badge.style.borderColor = "var(--accent-blue)";
+            msg.innerText = "Kobler til lokal oppdateringstjeneste (port 8765)...";
+            pbar.style.width = "5%";
+            timeLabel.innerText = "Tid: 0.0s";
+
+            try {
+                const res = await fetch(`${API_BASE}/api/update-vectordb`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                const data = await res.json();
+                if (!res.ok && res.status !== 409) {
+                    throw new Error(data.error || "Kunne ikke starte indeksering.");
+                }
+
+                btn.innerHTML = "⚡ Indekserer...";
+                startPollingProgress();
+
+            } catch (err) {
+                console.error("Oppdateringsfeil:", err);
+                panel.className = "vectordb-panel error";
+                badge.innerText = "Tilkoblingsfeil";
+                badge.style.color = "var(--alert-red)";
+                badge.style.borderColor = "var(--alert-red)";
+                msg.innerHTML = `⚠️ Lokal bakgrunnstjeneste svarer ikke på port 8765.<br>
+                <strong>Løsning:</strong> Dobbelklikk på <code>oppdater_vektor_db.bat</code> i prosjektmappen, eller start <code>start_kommune_ai.bat</code>.<br>
+                <div style="margin-top: 8px;">
+                    <button class="btn" onclick="triggerVectorDbUpdate()">🔄 Prøv på nytt</button>
+                </div>`;
+                btn.disabled = false;
+                btn.innerHTML = "⚡ Oppdater Vektor-DB";
+            }
+        }
+
+        function startPollingProgress() {
+            if (pollInterval) clearInterval(pollInterval);
+            const btn = document.getElementById("btn-update-vectordb");
+            const panel = document.getElementById("vectordb-panel");
+            const badge = document.getElementById("vdb-status-badge");
+            const msg = document.getElementById("vdb-status-msg");
+            const pbar = document.getElementById("vdb-progress-bar");
+            const timeLabel = document.getElementById("vdb-time-label");
+            const meta = document.getElementById("vdb-stats-meta");
+
+            pollInterval = setInterval(async () => {
+                try {
+                    const res = await fetch(`${API_BASE}/api/progress`);
+                    if (!res.ok) return;
+                    const json = await res.json();
+                    const p = json.progress;
+
+                    if (!p) return;
+
+                    pbar.style.width = Math.max(5, p.percent) + "%";
+                    timeLabel.innerText = `Tid: ${p.elapsed_seconds || 0}s`;
+                    msg.innerText = p.message || "Arbeider med indeksering...";
+
+                    if (p.current_file) {
+                        meta.innerText = `Behandler: ${p.current_file} (${p.files_done || 0}/${p.total_files || 0} filer)`;
+                    }
+
+                    if (!p.is_updating && p.state === "done") {
+                        clearInterval(pollInterval);
+                        pollInterval = null;
+                        pbar.style.width = "100%";
+                        panel.className = "vectordb-panel success";
+                        badge.innerText = "Fullført";
+                        badge.style.color = "var(--success-green)";
+                        badge.style.borderColor = "var(--success-green)";
+                        msg.innerHTML = `✅ <strong>Indeksering fullført!</strong> Vektordatabasen er oppdatert med nye dokumenter fra <code>data/raw</code>.`;
+                        
+                        btn.disabled = false;
+                        btn.innerHTML = "⚡ Oppdater Vektor-DB (Fullført)";
+                        fetchVectorDbStatus();
+
+                        setTimeout(() => {
+                            btn.innerHTML = "⚡ Oppdater Vektor-DB";
+                        }, 6000);
+                    } else if (!p.is_updating && p.state === "error") {
+                        clearInterval(pollInterval);
+                        pollInterval = null;
+                        panel.className = "vectordb-panel error";
+                        badge.innerText = "Feil";
+                        badge.style.color = "var(--alert-red)";
+                        badge.style.borderColor = "var(--alert-red)";
+                        msg.innerText = `❌ Feil under indeksering: ${p.error}`;
+                        btn.disabled = false;
+                        btn.innerHTML = "⚡ Oppdater Vektor-DB";
+                    }
+                } catch (e) {
+                    console.warn("Fremdriftspolling feilet:", e);
+                }
+            }, 800);
+        }
+
+        // Hent status ved oppstart
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchVectorDbStatus();
+        });
+        setTimeout(fetchVectorDbStatus, 500);
     </script>
 </body>
 </html>

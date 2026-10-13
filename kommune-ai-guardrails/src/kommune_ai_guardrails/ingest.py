@@ -252,12 +252,25 @@ def ingest_all(
     data_dir: Path | None = None,
     db_path: Path | None = None,
     embedding_model: Any | None = None,
+    progress_callback: Any | None = None,
 ) -> int:
     """Leser inn alle råfiler fra data_dir og lagrer i db_path."""
     settings = get_settings()
     base_dir = Path(__file__).resolve().parents[2]
-    data_dir = data_dir or (base_dir / "data" / "raw")
-    db_path = db_path or Path(settings["db_path"])
+    
+    if data_dir is None:
+        data_dir = base_dir / "data" / "raw"
+    elif not isinstance(data_dir, Path):
+        data_dir = Path(data_dir)
+    if not data_dir.is_absolute():
+        data_dir = (base_dir / data_dir).resolve()
+
+    if db_path is None:
+        db_path = Path(settings["db_path"])
+    elif not isinstance(db_path, Path):
+        db_path = Path(db_path)
+    if not db_path.is_absolute():
+        db_path = (base_dir / db_path).resolve()
 
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(db_path))
@@ -271,26 +284,40 @@ def ingest_all(
     # Finn alle filer
     all_chunks: list[dict[str, str]] = []
     print(f"📂 Søker etter dokumenter i {data_dir}...")
+    if progress_callback:
+        progress_callback({"step": "scanning", "message": f"Søker etter dokumenter i {data_dir.name}..."})
 
-    raw_files = list(data_dir.glob("*"))
-    for file_path in raw_files:
-        if file_path.is_file():
-            ext = file_path.suffix.lower()
-            if ext == ".md":
-                parsed = parse_markdown_file(file_path)
-                all_chunks.extend(parsed)
-                print(f"  ✓ {file_path.name}: {len(parsed)} biter")
-            elif ext == ".csv":
-                parsed = parse_csv_file(file_path)
-                all_chunks.extend(parsed)
-                print(f"  ✓ {file_path.name}: {len(parsed)} biter")
-            elif ext == ".pdf":
-                parsed = parse_pdf_file(file_path)
-                all_chunks.extend(parsed)
-                print(f"  ✓ {file_path.name}: {len(parsed)} biter")
+    raw_files = [f for f in data_dir.glob("*") if f.is_file()]
+    total_files = len(raw_files)
+
+    for idx, file_path in enumerate(raw_files, start=1):
+        ext = file_path.suffix.lower()
+        parsed: list[dict[str, str]] = []
+        if ext == ".md":
+            parsed = parse_markdown_file(file_path)
+        elif ext == ".csv":
+            parsed = parse_csv_file(file_path)
+        elif ext == ".pdf":
+            parsed = parse_pdf_file(file_path)
+
+        if parsed:
+            all_chunks.extend(parsed)
+            print(f"  ✓ {file_path.name}: {len(parsed)} biter")
+
+        if progress_callback:
+            progress_callback({
+                "step": "parsing",
+                "file": file_path.name,
+                "current_file_idx": idx,
+                "total_files": total_files,
+                "chunks_found": len(all_chunks),
+                "message": f"Parser [{idx}/{total_files}] {file_path.name} ({len(parsed)} biter)"
+            })
 
     if not all_chunks:
         print("⚠️ Ingen dokumentbiter funnet for indeksering.")
+        if progress_callback:
+            progress_callback({"step": "error", "message": "Ingen dokumentbiter funnet for indeksering."})
         conn.close()
         return 0
 
@@ -299,6 +326,8 @@ def ingest_all(
     # Last inn embedding-modell dersom den ikke er oppgitt
     if embedding_model is None and SentenceTransformer is not None:
         print("⏳ Laster embedding-modell intfloat/multilingual-e5-small...")
+        if progress_callback:
+            progress_callback({"step": "loading_model", "message": "Laster semantisk modell intfloat/multilingual-e5-small..."})
         embedding_model = SentenceTransformer("intfloat/multilingual-e5-small")
 
     cursor = conn.cursor()
@@ -310,6 +339,8 @@ def ingest_all(
         cursor.execute("DELETE FROM vec_legal_chunks")
 
     print("💾 Lagrer og indekserer i SQLite...")
+    if progress_callback:
+        progress_callback({"step": "inserting_text", "message": f"Lagrer {len(all_chunks)} tekstbiter og FTS5-indeks..."})
     
     # 1. Sett inn i legal_chunks og legal_fts først for å få chunk_ids
     chunk_records = []
@@ -343,6 +374,9 @@ def ingest_all(
     # 2. Beregn vektorer i batches for maksimal ytelse (130+ biter/sek)
     if embedding_model is not None and sqlite_vec is not None:
         print(f"⏳ Beregner semantiske vektorer for {len(chunk_records)} biter (batch-størrelse 64)...")
+        if progress_callback:
+            progress_callback({"step": "embedding", "total_chunks": len(chunk_records), "message": f"Beregner 384D semantiske vektorer for {len(chunk_records)} biter..."})
+
         texts_to_embed = [
             f"passage: {c['title']} {c['section_ref']} {c['content']}"
             for _, c in chunk_records
@@ -357,6 +391,9 @@ def ingest_all(
         )
 
         print("⚡ Skriver vektorer til vec_legal_chunks...")
+        if progress_callback:
+            progress_callback({"step": "writing_vectors", "message": "Skriver vektorer til sqlite-vec..."})
+
         vec_rows = []
         for (chunk_id, _), emb_vec in zip(chunk_records, embeddings):
             emb_blob = sqlite_vec.serialize_float32(emb_vec)
@@ -371,10 +408,17 @@ def ingest_all(
         )
         conn.commit()
 
-
     conn.commit()
     conn.close()
     print(f"🎉 Fullført! {len(all_chunks)} biter indeksert i {db_path}")
+    if progress_callback:
+        progress_callback({
+            "step": "done",
+            "total_chunks": len(all_chunks),
+            "total_files": total_files,
+            "db_path": str(db_path),
+            "message": f"Fullført! {len(all_chunks)} biter indeksert fra {total_files} dokumenter."
+        })
     return len(all_chunks)
 
 
