@@ -108,36 +108,30 @@ docker compose ps
 ## 📂 Prosjektstruktur
 
 ```text
-kommune-ai-guardrails/
-├── app/
-│   └── app.py                      # Streamlit Control Office Hub Web UI (Tufte-style)
-├── config/
-│   └── config.yaml                 # Systemkonfigurasjon (vektorer, modeller, stier)
-├── data/
-│   ├── raw/                        # Innleste PDF-er, CSV-er fra Visma/Framsikt
-│   └── processed/                  # Bearbeidede vektorer og SQLite db
-├── docs/                           # Fullstendig rammeverksdokumentasjon
-│   ├── README.md                   # Prosjektoversikt
-│   ├── STAGE_GATE_FRAMEWORK.md     # 10-stegs kommunal styringsmodell
-│   ├── RAG_ARCHITECTURE_SPEC.md    # Hybrid saks- og regelsøksspesifikasjon
-│   ├── SQLITE_DATA_ARCHITECTURE_SPEC.md # Star Schema datamodell
-│   ├── SKILLS_AND_TOOLS_CATALOG.md # Agent & Tool Skills katalog
-│   ├── KOMMUNEREVISJONEN_AUDIT_CHECKLIST.md # Revisjons- og kontrollutvalgssjekkliste
-│   ├── OFFICE_DASHBOARD_HUB_SPEC.md # Control Office Hub UI spesifikasjon
-│   ├── OPPSTARTSVEILEDER_STARTKNAPP.md # Startknapp og intranettlaunching
-│   ├── DOCKER_AND_MLOPS_DEPLOYMENT.md # Docker & MLOps eval-guide
-│   └── USER_GUIDE_SOP.md           # Operativ brukerveiledning
-├── src/
-│   └── kommune_ai_guardrails/
-│       ├── database/               # SQLite, FTS5 & sqlite-vec drivere
-│       ├── guardrails/             # PII-maskering og SHA-256 audit-logging
-│       ├── ingestion/              # ETL pipeline fra Visma/Framsikt til Star Schema
-│       └── rag/                    # Hybrid BM25/Vector RRF-søkemotor
-├── tests/
-│   └── test_rag_eval.py            # Automated RAG Golden Evaluation Suite
-├── Dockerfile                      # App-kontainer spesifikasjon
-├── docker-compose.yml              # Multi-container orkestrering
-└── start_app.bat                   # Enkel Windows-startknapp
+AI_KOM/
+├── agenter/                       # 12 operative personas for økonomi- og prosjektstyring
+│   ├── 01_dataintegrasjon_etl_agent.md ... 12_revisjon_internkontroll_sporbarhet_agent.md
+│   └── README.md                  # Samlende agentmatrise og arbeidsflyt
+├── bruker-guides/                 # Brukerveiledninger, oppstartsguider og årshjul
+│   ├── BRUKERGUIDE.md, OPPSTARTSVEILEDER_STARTKNAPP.md, STYRINGSKALENDER_OG_ARSHJUL_2026.md
+│   ├── rag_forklaring.md, stage_gate_rammeverk.md
+│   └── README.md                  # Guide-indeks
+├── revisjon-og-kontroll/          # Sjekklister, kontrollnotater og politiske saksfremlegg
+│   ├── KOMMUNEREVISJONEN_AUDIT_CHECKLIST.md, NOTAT_TIL_KONTROLLUTVALGET_OG_REVISJONEN.md
+│   ├── CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md, TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md
+│   └── README.md                  # Revisjonsindeks
+├── spesifikasjoner/               # Arkitektur, prediktive modeller og MLOps-rigg
+│   ├── PREDICTIVE_AI_FORECASTING_SPEC.md, SKILL_PREDICTIVE_FORECASTING_AI.md
+│   ├── OFFICE_DASHBOARD_HUB_SPEC.md, DOCKER_AND_MLOPS_DEPLOYMENT.md
+│   └── README.md                  # Spesifikasjonsindeks
+├── mvp-pilot/                     # Operativ pilot for Bo og Miljø (Streamlit, DuckDB, SQLite)
+│   ├── app_ui.py, etl.py, eac_forecasting.py, hitl_governance.py, run_pilot.py
+│   └── README.md
+├── kommune-ai-guardrails/         # Kjerne RAG-motor, PII-vasker og sqlite-vec
+├── tools/                         # Hjelpeverktøy og API-servere
+├── start_kommune_ai.bat           # Hovedoppstartskript for Control Office Hub
+├── oppdater_vektor_db.bat         # Reindeksering av RAG-vektordatabase
+└── README.md                      # Hovedprosjektoversikt
 ```
 
 ---
