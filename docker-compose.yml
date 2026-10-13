@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: kommune_ai_ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+
+  kommune_ai_app:
+    build:
+      context: ./kommune-ai-guardrails
+      dockerfile: Dockerfile
+    container_name: kommune_ai_app
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./kommune-ai-guardrails/data:/app/data
+      - ./kommune-ai-guardrails/config:/app/config
+      - ./erp_data:/app/erp_data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_storage:
