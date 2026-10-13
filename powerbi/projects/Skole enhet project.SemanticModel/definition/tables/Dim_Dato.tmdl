@@ -1,0 +1,34 @@
+table Dim_Dato
+
+	column dato
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: dato
+
+	column ar
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: ar
+
+	column maned
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: maned
+
+	column manedsnavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: manedsnavn
+		sortByColumn: maned
+
+	column tertial
+		dataType: string
+		summarizeBy: none
+		sourceColumn: tertial
+
+	partition Dim_Dato = m
+		mode: import
+		source =
+				let Source = Fact_Regnskap, Selected = Table.SelectColumns(Source, {"dato", "Tertial"}), Rename = Table.RenameColumns(Selected, {{"Tertial", "tertial"}}), Unique = Table.Distinct(Rename), AddYear = Table.AddColumn(Unique, "ar", each Date.Year([dato]), Int64.Type), AddMonth = Table.AddColumn(AddYear, "maned", each Date.Month([dato]), Int64.Type), AddName = Table.AddColumn(AddMonth, "manedsnavn", each Date.ToText([dato], "MMMM", "nb-NO"), type text) in AddName
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,64 @@
+table _Measures
+
+	column Placeholder
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Placeholder = Int64.Type], {{1}})
+
+	measure 'Regnskap YTD' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Dim_Dato[maned] <= 8)
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Budsjett YTD' = CALCULATE(SUM(Fact_Regnskap[Budsjett]), Dim_Dato[maned] <= 8)
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Avvik YTD' = [Regnskap YTD] - [Budsjett YTD]
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Avvik YTD %' = DIVIDE([Avvik YTD], ABS([Budsjett YTD]), 0)
+		formatString: 0.0%
+
+	measure 'Merforbruk YTD' = MAX([Avvik YTD], 0)
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Mindreforbruk YTD' = MAX(-[Avvik YTD], 0)
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Vedtatt Årsbudsjett' = CALCULATE(SUM(Fact_Regnskap[Aarsbudsjett]), REMOVEFILTERS(Dim_Dato))
+		formatString: #,##0.0 "kNOK"
+
+	measure 'EOY Rullende Prognose' = VAR AnnualBudget = [Vedtatt Årsbudsjett] VAR RemainingBudget = MAX(AnnualBudget - [Budsjett YTD], 0) RETURN [Regnskap YTD] + RemainingBudget + MAX([Avvik YTD], 0) * 0.5
+		formatString: #,##0.0 "kNOK"
+
+	measure 'EOY Forventet Årsavvik' = [EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Brutto Driftsresultat' = CALCULATE([Regnskap YTD], Fact_Regnskap[Hovedgruppe] = "3 Inntekter") - CALCULATE([Regnskap YTD], Fact_Regnskap[Hovedgruppe] IN {"1 Lønn", "2 Utgifter"})
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Brutto Driftsresultat %' = DIVIDE([Brutto Driftsresultat], ABS(CALCULATE([Regnskap YTD], Fact_Regnskap[Hovedgruppe] = "3 Inntekter")), 0)
+		formatString: 0.0%
+
+	measure 'Tufte_Avvik_Farge_HEX' = SWITCH(TRUE(), [Avvik YTD %] > 0.02, "#C53030", [Avvik YTD %] > 0, "#D69E2E", "#2F855A")
+
+	measure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] - [Planlagt Tiltakseffekt T3]
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Planlagt Tiltakseffekt T3' = SWITCH(SELECTEDVALUE(Dim_Ansvar[ansvar_kode]), "2540", 1928421, "2020", 863000, 2791421)
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Framsikt Deflator Value' = SELECTEDVALUE(Framsikt_Deflator[Value], 0.041)
+		formatString: 0.0%
+
+	measure 'Fraværstiltak Effektreduksjon Value' = SELECTEDVALUE(Fravaer_Reduksjon[Value], 0.015)
+		formatString: 0.0%
+
+	measure 'Simulert EOY Netto Driftsresultat' = VAR DeflatorAddition = [Vedtatt Årsbudsjett] * [Framsikt Deflator Value] VAR VikarBase = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020") VAR VikarSavings = VikarBase * [Fraværstiltak Effektreduksjon Value] RETURN [EOY Rullende Prognose] + DeflatorAddition + VikarSavings
+		formatString: #,##0.0 "kNOK"
+
+	measure 'Simulert EOY Forventet Avvik' = [Simulert EOY Netto Driftsresultat] - [Vedtatt Årsbudsjett]
+		formatString: #,##0.0 "kNOK"

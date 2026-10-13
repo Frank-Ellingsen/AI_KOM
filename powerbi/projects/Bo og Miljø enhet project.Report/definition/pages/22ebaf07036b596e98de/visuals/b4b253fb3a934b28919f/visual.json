@@ -1,0 +1,121 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "b4b253fb3a934b28919f",
+  "position": {
+    "x": 950,
+    "y": 0,
+    "z": 2,
+    "width": 620,
+    "height": 700,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Art"
+                    }
+                  },
+                  "Property": "Kontonavn"
+                }
+              },
+              "queryRef": "Dim_Art.Kontonavn",
+              "nativeQueryRef": "Kontonavn",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Art"
+                    }
+                  },
+                  "Property": "Hovedgruppe"
+                }
+              },
+              "queryRef": "Dim_Art.Hovedgruppe",
+              "nativeQueryRef": "Hovedgruppe",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Regnskap YTD"
+                }
+              },
+              "queryRef": "_Measures.Regnskap YTD",
+              "nativeQueryRef": "Regnskap YTD",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Budsjett YTD"
+                }
+              },
+              "queryRef": "_Measures.Budsjett YTD",
+              "nativeQueryRef": "Budsjett YTD",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik YTD"
+                }
+              },
+              "queryRef": "_Measures.Avvik YTD",
+              "nativeQueryRef": "Avvik YTD",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Kontodrivere'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

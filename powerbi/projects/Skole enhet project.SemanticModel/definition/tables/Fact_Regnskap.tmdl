@@ -1,0 +1,133 @@
+table Fact_Regnskap
+
+	column dato
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: dato
+
+	column maned
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: maned
+
+	column manedsnavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: manedsnavn
+
+	column Tertial
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Tertial
+
+	column Status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Status
+
+	column ansvar_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_kode
+
+	column ansvar_navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_navn
+
+	column kommunalsjefomrade
+		dataType: string
+		summarizeBy: none
+		sourceColumn: kommunalsjefomrade
+
+	column funksjon_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: funksjon_kode
+
+	column art_key
+		dataType: string
+		summarizeBy: none
+		sourceColumn: art_key
+
+	column Hovedgruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Hovedgruppe
+
+	column Undergruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Undergruppe
+
+	column KOSTRA_Art
+		dataType: string
+		summarizeBy: none
+		sourceColumn: KOSTRA_Art
+
+	column Kontokode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontokode
+
+	column Kontonavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontonavn
+
+	column Budsjett
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Budsjett
+
+	column Regnskap
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Regnskap
+
+	column Avvik
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Avvik
+
+	column Merforbruk
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Merforbruk
+
+	column Aarsbudsjett
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Aarsbudsjett
+
+	partition Fact_Regnskap = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "Komskole.csv"), [Delimiter=",", Encoding=1252, QuoteStyle=QuoteStyle.Csv]),
+				    DataRows = Table.Skip(Source, 2),
+				    Headers = Table.PromoteHeaders(DataRows, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"Art", type text}, {"Regnskap hiå.", type number}, {"Budsjett hiå.", type number}, {"Avvik i kr", type number}, {"Årsbudsjett", type number}, {"Regnskap i fjor", type number}}, "en-US"),
+				    AddDate = Table.AddColumn(Typed, "dato", each #date(2000 + Number.FromText(Text.End([#"Periode (year to date)"], 2)), 8, 1), type date),
+				    AddResponsibility = Table.AddColumn(AddDate, "ansvar_kode", each "2020", type text),
+				    AddResponsibilityName = Table.AddColumn(AddResponsibility, "ansvar_navn", each [#"Ansvar/Enhet"], type text),
+				    AddFunction = Table.AddColumn(AddResponsibilityName, "funksjon_kode", each Text.From([Art]), type text),
+				    AddDateMonth = Table.AddColumn(AddFunction, "maned", each Date.Month([dato]), Int64.Type),
+				    AddMonthName = Table.AddColumn(AddDateMonth, "manedsnavn", each Date.ToText([dato], "MMMM", "nb-NO"), type text),
+				    AddTertial = Table.AddColumn(AddMonthName, "Tertial", each "T2", type text),
+				    AddStatus = Table.AddColumn(AddTertial, "Status", each "Bokført", type text),
+				    AddCategory = Table.AddColumn(AddStatus, "Hovedgruppe", each [Kontotype], type text),
+				    AddSubcategory = Table.AddColumn(AddCategory, "Undergruppe", each [Kontotype], type text),
+				    AddArtKey = Table.AddColumn(AddSubcategory, "art_key", each Text.From([Art]) & "|" & Text.From([Kontotype]) & "|" & Text.From([Post]), type text),
+				    AddAccountCode = Table.AddColumn(AddArtKey, "KOSTRA_Art", each null, type text),
+				    AddBudget = Table.AddColumn(AddAccountCode, "Budsjett", each [#"Budsjett hiå."], type number),
+				    AddActual = Table.AddColumn(AddBudget, "Regnskap", each [#"Regnskap hiå."], type number),
+				    AddVariance = Table.AddColumn(AddActual, "Avvik", each [#"Regnskap hiå."] - [#"Budsjett hiå."], type number),
+				    AddOverrun = Table.AddColumn(AddVariance, "Merforbruk", each [Avvik], type number),
+				    AddSector = Table.AddColumn(AddOverrun, "kommunalsjefomrade", each "Oppvekst", type text),
+				    Rename = Table.RenameColumns(AddSector, {{"Post", "Kontonavn"}, {"Kontotype", "Kontokode"}, {"Årsbudsjett", "Aarsbudsjett"}}),
+				    Keep = Table.SelectColumns(Rename, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"})
+				in
+				    Keep
+
+	annotation PBI_ResultType = Table

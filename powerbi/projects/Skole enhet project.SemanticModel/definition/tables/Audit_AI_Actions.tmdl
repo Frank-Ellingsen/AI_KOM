@@ -1,0 +1,48 @@
+table Audit_AI_Actions
+
+	column Tidsstempel
+		dataType: dateTime
+		summarizeBy: sum
+		sourceColumn: Tidsstempel
+
+	column Enhetskode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Enhetskode
+
+	column ansvar_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_kode
+
+	column AI_Tiltak
+		dataType: string
+		summarizeBy: none
+		sourceColumn: AI_Tiltak
+
+	column Konfidens
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Konfidens
+
+	column Leder_Beslutning
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Leder_Beslutning
+
+	column Saksbehandler
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Saksbehandler
+
+	column Begrunnelse
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Begrunnelse
+
+	partition Audit_AI_Actions = m
+		mode: import
+		source =
+				let Source = #table(type table [Tidsstempel = datetime, Enhetskode = text, ansvar_kode = text, AI_Tiltak = text, Konfidens = number, Leder_Beslutning = text, Saksbehandler = text, Begrunnelse = text], {}) in Source
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "5751e3b839f04d10a66a",
+  "position": {
+    "x": 0,
+    "y": 850,
+    "z": 6,
+    "width": 300,
+    "height": 45,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "slicer",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Dato"
+                    }
+                  },
+                  "Property": "ar"
+                }
+              },
+              "queryRef": "Dim_Dato.ar",
+              "nativeQueryRef": "ar",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'År'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Skole enhet project"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "41f1b8b8-168d-4867-a3a0-43dedd2a7f3c"
+  }
+}

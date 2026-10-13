@@ -1,0 +1,22 @@
+role Enhetsleder_Skole
+	modelPermission: read
+	tablePermission Dim_Ansvar
+		filterExpression: [ansvar_kode] = "2020"
+
+role Enhetsleder_Boenhet
+	modelPermission: read
+	tablePermission Dim_Ansvar
+		filterExpression: [ansvar_kode] = "2540"
+
+role Kommunalsjef_Oppvekst
+	modelPermission: read
+	tablePermission Dim_Ansvar
+		filterExpression: [kommunalsjefomrade] = "Oppvekst"
+
+role Kommunalsjef_Helse
+	modelPermission: read
+	tablePermission Dim_Ansvar
+		filterExpression: [kommunalsjefomrade] = "Helse og mestring"
+
+role Konsern_Okonomi
+	modelPermission: read

@@ -309,15 +309,133 @@ st.sidebar.markdown(
 """
 )
 
+# ==========================================
+# 4.B SIDEMENY: DOKUMENTARKIV & HURTIGLENKER
+# ==========================================
+WORKSPACE_ROOT = PROJECT_ROOT.parent
+
+DOCUMENTS_MENU = {
+    "📖 Brukerveiledninger & Årshjul": [
+        ("Brukerveiledning Control Office Hub", WORKSPACE_ROOT / "bruker-guides" / "BRUKERGUIDE.md", "Operativ veiledning for controllere"),
+        ("Ett-klikks Oppstartsveileder", WORKSPACE_ROOT / "bruker-guides" / "OPPSTARTSVEILEDER_STARTKNAPP.md", "Instruksjoner for oppstart og drift"),
+        ("Styringskalender & Årshjul 2026", WORKSPACE_ROOT / "bruker-guides" / "STYRINGSKALENDER_OG_ARSHJUL_2026.md", "Periodelukking og tertialfrister"),
+        ("RAG-arkitektur & Semantisk søk", WORKSPACE_ROOT / "bruker-guides" / "rag_forklaring.md", "Teknisk og pedagogisk forklaring"),
+        ("10 Stage-Gate Rammeverk", WORKSPACE_ROOT / "bruker-guides" / "stage_gate_rammeverk.md", "AI Governance fra Gate 1 til 10")
+    ],
+    "🛡️ Revisjon, Kontroll & Notater": [
+        ("Periodelukkingssjekkliste", WORKSPACE_ROOT / "revisjon-og-kontroll" / "CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md", "Månedlig avstemming for controller"),
+        ("Kommunerevisjonens Sjekkliste", WORKSPACE_ROOT / "revisjon-og-kontroll" / "KOMMUNEREVISJONEN_AUDIT_CHECKLIST.md", "Revisjonsspor & SHA-256 kontroll"),
+        ("Notat til Kontrollutvalget", WORKSPACE_ROOT / "revisjon-og-kontroll" / "NOTAT_TIL_KONTROLLUTVALGET_OG_REVISJONEN.md", "Sikkerhet, HITL og personvern"),
+        ("Mal for Saksfremlegg (Kommuneloven § 14-5)", WORKSPACE_ROOT / "revisjon-og-kontroll" / "TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md", "Politisk saksbehandlingsmal")
+    ],
+    "🤖 Operative Agenter (1–12)": [
+        ("Agent 09: Prosjektcontroller & Capex", WORKSPACE_ROOT / "agenter" / "09_prosjektcontroller_eac_etc_agent.md", "EVM, S-kurver og usikkerhetsstyring"),
+        ("Agent 10: Likviditet & Rentefølsomhet", WORKSPACE_ROOT / "agenter" / "10_likviditet_finans_renteeksponering_agent.md", "Finansforskriften, NIBOR og gjeldstak"),
+        ("Agent 11: Selvkost & Gebyrregulativ", WORKSPACE_ROOT / "agenter" / "11_selvkost_gebyr_kalkyle_agent.md", "Selvkostfond og kalkylerente"),
+        ("Agent 12: Revisjon & Mislighetskontroll", WORKSPACE_ROOT / "agenter" / "12_revisjon_internkontroll_sporbarhet_agent.md", "Terskelverdier, Benfords lov og SHA-256"),
+        ("Agent 01: ETL & Golden Record", WORKSPACE_ROOT / "agenter" / "01_dataintegrasjon_etl_agent.md", "Datainntak og validering"),
+        ("Agent 02: Power BI & DAX Modellerer", WORKSPACE_ROOT / "agenter" / "02_bi_dax_modellering_agent.md", "Stjerneskjema og ytelse"),
+        ("Agent 03: Prediktiv Anomali", WORKSPACE_ROOT / "agenter" / "03_prediktiv_anomali_agent.md", "Tidligvarsling 60-90 dager før"),
+        ("Agent 04: Preskriptiv HITL", WORKSPACE_ROOT / "agenter" / "04_preskriptiv_hitl_agent.md", "Tiltaksmeny og delegasjonsreglement"),
+        ("Agent 05: Etikk & Styring Portvakt", WORKSPACE_ROOT / "agenter" / "05_etikk_styring_portvakt_agent.md", "Stage-Gate og FRIA/DPIA"),
+        ("Agent 06: Ledelsesrapport Skribent", WORKSPACE_ROOT / "agenter" / "06_ledelsesrapport_skribent_agent.md", "Executive saksfremlegg"),
+        ("Agent 07: Excel & Power BI Rapportør", WORKSPACE_ROOT / "agenter" / "07_excel_powerbi_rapportering_agent.md", "FAST Standard og visualisering"),
+        ("Agent 08: Flernivå Interessentrapportering", WORKSPACE_ROOT / "agenter" / "08_flerniva_interessent_rapportering_agent.md", "Nivå 1–5 tilpasning")
+    ],
+    "⚙️ Tekniske Spesifikasjoner": [
+        ("Prognosespesifikasjon (EAC/ETC)", WORKSPACE_ROOT / "spesifikasjoner" / "PREDICTIVE_AI_FORECASTING_SPEC.md", "Matematisk modell og sesongfiltre"),
+        ("Skill: Prediktiv Prognostisering", WORKSPACE_ROOT / "spesifikasjoner" / "SKILL_PREDICTIVE_FORECASTING_AI.md", "Skill-definisjon"),
+        ("Control Office Hub Spesifikasjon", WORKSPACE_ROOT / "spesifikasjoner" / "OFFICE_DASHBOARD_HUB_SPEC.md", "UI og API arkitektur"),
+        ("Docker & MLOps Deployment", WORKSPACE_ROOT / "spesifikasjoner" / "DOCKER_AND_MLOPS_DEPLOYMENT.md", "Kontainerdrift og evaluering")
+    ],
+    "📊 Modeller & Rapporter (Excel/PDF)": [
+        ("Rapport Enhet Bo og Miljø.xlsx", WORKSPACE_ROOT / "mvp-pilot" / "Rapport Enhet Bo og Miljø.xlsx", "Excel-arbeidsbok for pilot"),
+        ("Project Controller Reporting 2026.xlsx", WORKSPACE_ROOT / "reports" / "Kommune_Project_Controller_Reporting_2026.xlsx", "Prosjektstyringsmodell"),
+        ("Mini Case Bo og Miljø.xlsx", WORKSPACE_ROOT / "mvp-pilot" / "Mini_case_AI_kommunal_okonomistyring.xlsx", "Kilderegnskap Bo og Miljø"),
+        ("Kommuneloven (Lovdata PDF)", PROJECT_ROOT / "data" / "raw" / "Lov om kommuner og fylkeskommuner (kommuneloven) - Lovdata.pdf", "Kommunelovens femte del"),
+        ("1. Tertialrapport 2026 Kristiansand", PROJECT_ROOT / "data" / "raw" / "1.-tertialrapport-2026---kristiansand-kommune.pdf", "Offisiell tertialrapport"),
+        ("KOSTRA Kontoplanveileder 2026", PROJECT_ROOT / "data" / "raw" / "veileder-til-kontoplanen-i-kostra-for-2026.pdf", "SSB / KOSTRA veiledning")
+    ]
+}
+
+st.sidebar.markdown("---")
+st.sidebar.header("📁 Dokumentarkiv & Ressurser")
+st.sidebar.caption("Hurtigtilgang til styringsdokumenter, veiledninger og regnskapsmodeller.")
+
+# Flate opp dokumenter for nedtrekksmeny / hurtigviser
+all_docs_flat = {}
+for cat, doc_list in DOCUMENTS_MENU.items():
+    prefix = cat.split()[0]
+    for label, path, desc in doc_list:
+        all_docs_flat[f"{prefix} {label}"] = (path, desc)
+
+selected_quick_doc = st.sidebar.selectbox(
+    "🔍 Åpne / forhåndsvis dokument:",
+    options=["-- Velg et dokument for visning --"] + list(all_docs_flat.keys()),
+    index=0
+)
+
+if selected_quick_doc != "-- Velg et dokument for visning --":
+    doc_path, doc_desc = all_docs_flat[selected_quick_doc]
+    if doc_path.exists():
+        st.sidebar.info(f"ℹ️ {doc_desc}")
+        if doc_path.suffix.lower() == ".md":
+            with st.sidebar.expander("📖 Forhåndsvisning i sidebar", expanded=True):
+                content = doc_path.read_text(encoding="utf-8")
+                # Vis et kort utdrag eller full tekst med nedlastingsknapp
+                st.markdown(content[:1500] + ("\n\n*(Fortsetter... se hele i fane 'Dokumentarkiv')*" if len(content) > 1500 else ""))
+                st.download_button(
+                    label=f"⬇️ Last ned {doc_path.name}",
+                    data=content,
+                    file_name=doc_path.name,
+                    mime="text/markdown",
+                    key=f"dl_sb_{doc_path.name}"
+                )
+                if st.button("👁️ Vis i full bredde i hovedvindu", key=f"sb_view_full_{doc_path.stem}"):
+                    st.session_state["active_doc_path"] = str(doc_path)
+                    st.session_state["active_doc_title"] = selected_quick_doc
+        else:
+            with open(doc_path, "rb") as f:
+                st.sidebar.download_button(
+                    label=f"⬇️ Last ned {doc_path.name}",
+                    data=f.read(),
+                    file_name=doc_path.name,
+                    mime="application/octet-stream",
+                    key=f"dl_sb_{doc_path.name}"
+                )
+    else:
+        st.sidebar.warning(f"Fil ikke funnet: {doc_path.name}")
+
+# Kategoriserte expandere i sidebaren
+for cat_title, items in DOCUMENTS_MENU.items():
+    with st.sidebar.expander(cat_title, expanded=False):
+        for label, path, desc in items:
+            exists_indicator = "✅" if path.exists() else "⚠️"
+            st.markdown(f"**{exists_indicator} {label}**  \n*{desc}*")
+            if path.exists():
+                col_btn1, col_btn2 = st.columns([1, 1])
+                with col_btn1:
+                    if path.suffix.lower() == ".md":
+                        if st.button("Åpne 📄", key=f"open_sb_{path.stem}"):
+                            st.session_state["active_doc_path"] = str(path)
+                            st.session_state["active_doc_title"] = label
+                with col_btn2:
+                    if path.suffix.lower() == ".md":
+                        st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8"), file_name=path.name, mime="text/markdown", key=f"dl_exp_{path.stem}")
+                    else:
+                        with open(path, "rb") as fb:
+                            st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime="application/octet-stream", key=f"dl_exp_bin_{path.stem}")
+            st.markdown("---")
 
 # ==========================================
 # 5. HOVEDFLATE: MULTI-TAB CONTROL OFFICE HUB
 # ==========================================
-tab_rag, tab_calendar, tab_controller, tab_saksfremlegg = st.tabs([
+tab_rag, tab_calendar, tab_controller, tab_saksfremlegg, tab_docs = st.tabs([
     "💬 RAG Regelverksassistent",
     "📅 Årshjul & Kritiske Frister",
     "📊 Økonomikontroll & Avvik (EVM)",
-    "📝 Saksfremlegg & HITL Sign-Off"
+    "📝 Saksfremlegg & HITL Sign-Off",
+    "📁 Dokumentarkiv & Ressurser"
 ])
 
 
@@ -667,3 +785,81 @@ with tab_saksfremlegg:
             st.success(f"✅ Saksnotatet er signert og uforanderlig arkivert i Audit_AI_Actions! SHA-256: `{audit_hash}`")
         except Exception as e:
             st.error(f"Feil ved lagring av audit-hendelse: {e}")
+
+
+# -------------------------------------------------------------
+# FANE 5: DOKUMENTARKIV & RESSURSER
+# -------------------------------------------------------------
+with tab_docs:
+    st.markdown("### 📁 Dokumentarkiv, Spesifikasjoner & Ressursbibliotek")
+    st.caption("Sentralt bibliotek for alle styringsdokumenter, veiledninger, agentroller og modeller for Kristiansand kommune.")
+
+    # Hvis et dokument er valgt fra sidebaren, vis det i fokus
+    if "active_doc_path" in st.session_state and Path(st.session_state["active_doc_path"]).exists():
+        p = Path(st.session_state["active_doc_path"])
+        st.markdown(f"#### 📖 Aktivt dokument: {st.session_state.get('active_doc_title', p.name)}")
+        
+        c_act1, c_act2 = st.columns([3, 1])
+        with c_act2:
+            if p.suffix.lower() == ".md":
+                doc_text = p.read_text(encoding="utf-8")
+                st.download_button(
+                    label="⬇️ Last ned dette dokumentet (.md)",
+                    data=doc_text,
+                    file_name=p.name,
+                    mime="text/markdown",
+                    key="dl_tab_doc_btn"
+                )
+            else:
+                with open(p, "rb") as fb:
+                    st.download_button(
+                        label=f"⬇️ Last ned {p.name}",
+                        data=fb.read(),
+                        file_name=p.name,
+                        mime="application/octet-stream",
+                        key="dl_tab_bin_btn"
+                    )
+            if st.button("❌ Lukk og gå til katalog"):
+                del st.session_state["active_doc_path"]
+                if "active_doc_title" in st.session_state:
+                    del st.session_state["active_doc_title"]
+                st.rerun()
+
+        if p.suffix.lower() == ".md":
+            st.markdown("---")
+            st.markdown(p.read_text(encoding="utf-8"))
+            st.markdown("---")
+        else:
+            st.info(f"Dette er en binær fil ({p.suffix.upper()}). Klikk på 'Last ned' over for å åpne i Excel/PDF-leser.")
+            st.markdown("---")
+
+    # Søk og filter på tvers av biblioteket
+    st.markdown("#### 🔍 Utforsk Dokumentkatalogen")
+    search_query = st.text_input("Søk etter tittel, emneord eller kategori:", value="")
+
+    for cat_title, items in DOCUMENTS_MENU.items():
+        filtered_items = [
+            (label, path, desc) for label, path, desc in items
+            if not search_query or search_query.lower() in label.lower() or search_query.lower() in desc.lower() or search_query.lower() in cat_title.lower()
+        ]
+        if filtered_items:
+            st.markdown(f"##### {cat_title}")
+            for label, path, desc in filtered_items:
+                col_d1, col_d2, col_d3 = st.columns([3, 1, 1])
+                with col_d1:
+                    status_icon = "🟢" if path.exists() else "🔴"
+                    st.markdown(f"{status_icon} **{label}**  \n`{path.name}` — *{desc}*")
+                with col_d2:
+                    if path.exists() and path.suffix.lower() == ".md":
+                        if st.button("Åpne her 👁️", key=f"open_tab_{path.stem}"):
+                            st.session_state["active_doc_path"] = str(path)
+                            st.session_state["active_doc_title"] = label
+                            st.rerun()
+                with col_d3:
+                    if path.exists():
+                        if path.suffix.lower() == ".md":
+                            st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8"), file_name=path.name, mime="text/markdown", key=f"dl_tab_{path.stem}")
+                        else:
+                            with open(path, "rb") as fb:
+                                st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime="application/octet-stream", key=f"dl_tab_bin_{path.stem}")
+            st.markdown("---")

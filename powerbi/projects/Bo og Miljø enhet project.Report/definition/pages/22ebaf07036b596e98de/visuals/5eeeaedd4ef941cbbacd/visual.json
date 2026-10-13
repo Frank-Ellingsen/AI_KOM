@@ -1,0 +1,125 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "5eeeaedd4ef941cbbacd",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "width": 920,
+    "height": 820,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "decompositionTree",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Analyze": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik YTD"
+                }
+              },
+              "queryRef": "_Measures.Avvik YTD",
+              "nativeQueryRef": "Avvik YTD",
+              "active": true
+            }
+          ]
+        },
+        "ExplainBy": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "kommunalsjefomrade"
+                }
+              },
+              "queryRef": "Dim_Ansvar.kommunalsjefomrade",
+              "nativeQueryRef": "kommunalsjefomrade",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Funksjon"
+                    }
+                  },
+                  "Property": "funksjon_kode"
+                }
+              },
+              "queryRef": "Dim_Funksjon.funksjon_kode",
+              "nativeQueryRef": "funksjon_kode",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "ansvar_navn"
+                }
+              },
+              "queryRef": "Dim_Ansvar.ansvar_navn",
+              "nativeQueryRef": "ansvar_navn",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Art"
+                    }
+                  },
+                  "Property": "KOSTRA_Art"
+                }
+              },
+              "queryRef": "Dim_Art.KOSTRA_Art",
+              "nativeQueryRef": "KOSTRA_Art",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dekomponering av YTD-avvik'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

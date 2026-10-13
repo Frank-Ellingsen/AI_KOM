@@ -1,0 +1,114 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "a03efa132bca4b79b0ca",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "width": 1050,
+    "height": 650,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Dato"
+                    }
+                  },
+                  "Property": "manedsnavn"
+                }
+              },
+              "queryRef": "Dim_Dato.manedsnavn",
+              "nativeQueryRef": "manedsnavn",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Regnskap YTD"
+                }
+              },
+              "queryRef": "_Measures.Regnskap YTD",
+              "nativeQueryRef": "Regnskap YTD",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Budsjett YTD"
+                }
+              },
+              "queryRef": "_Measures.Budsjett YTD",
+              "nativeQueryRef": "Budsjett YTD",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Dato"
+                    }
+                  },
+                  "Property": "ar"
+                }
+              },
+              "queryRef": "Dim_Dato.ar",
+              "nativeQueryRef": "ar",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Regnskap og budsjett over tid'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+table Dim_Art
+
+	column art_key
+		dataType: string
+		summarizeBy: none
+		sourceColumn: art_key
+
+	column KOSTRA_Art
+		dataType: string
+		summarizeBy: none
+		sourceColumn: KOSTRA_Art
+
+	column Kontokode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontokode
+
+	column Kontonavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontonavn
+
+	column Hovedgruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Hovedgruppe
+
+	column Undergruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Undergruppe
+
+	partition Dim_Art = m
+		mode: import
+		source =
+				let Source = Fact_Regnskap, Selected = Table.SelectColumns(Source, {"art_key", "KOSTRA_Art", "Kontokode", "Kontonavn", "Hovedgruppe", "Undergruppe"}), Unique = Table.Distinct(Selected) in Unique
+
+	annotation PBI_ResultType = Table

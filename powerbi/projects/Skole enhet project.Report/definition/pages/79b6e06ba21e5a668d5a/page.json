@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "79b6e06ba21e5a668d5a",
+  "displayName": "Ansvarlig AI og audit trail",
+  "displayOption": "FitToPage",
+  "height": 900,
+  "width": 1600
+}

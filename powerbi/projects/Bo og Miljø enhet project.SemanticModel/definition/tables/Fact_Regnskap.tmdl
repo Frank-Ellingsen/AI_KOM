@@ -1,0 +1,122 @@
+table Fact_Regnskap
+
+	column dato
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: dato
+
+	column maned
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: maned
+
+	column manedsnavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: manedsnavn
+
+	column Tertial
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Tertial
+
+	column Status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Status
+
+	column ansvar_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_kode
+
+	column ansvar_navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_navn
+
+	column kommunalsjefomrade
+		dataType: string
+		summarizeBy: none
+		sourceColumn: kommunalsjefomrade
+
+	column funksjon_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: funksjon_kode
+
+	column art_key
+		dataType: string
+		summarizeBy: none
+		sourceColumn: art_key
+
+	column Hovedgruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Hovedgruppe
+
+	column Undergruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Undergruppe
+
+	column KOSTRA_Art
+		dataType: string
+		summarizeBy: none
+		sourceColumn: KOSTRA_Art
+
+	column Kontokode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontokode
+
+	column Kontonavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontonavn
+
+	column Budsjett
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Budsjett
+
+	column Regnskap
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Regnskap
+
+	column Avvik
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Avvik
+
+	column Merforbruk
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Merforbruk
+
+	column Aarsbudsjett
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Aarsbudsjett
+
+	partition Fact_Regnskap = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "BoMiljø.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"Måned_Nr", Int64.Type}, {"KOSTRA_Funksjon", type text}, {"Tjenesteområde", type text}, {"KOSTRA_Art", type text}, {"Kontokode", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}, {"Merforbruk", type number}}, "en-US"),
+				    AddDate = Table.AddColumn(Typed, "dato", each Date.FromText([Periode] & "-01"), type date),
+				    AddResponsibility = Table.AddColumn(AddDate, "ansvar_kode", each "2540", type text),
+				    AddResponsibilityName = Table.AddColumn(AddResponsibility, "ansvar_navn", each [Lokasjon], type text),
+				    AddFunction = Table.AddColumn(AddResponsibilityName, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),
+				    AddSector = Table.AddColumn(AddFunction, "kommunalsjefomrade", each [Tjenesteområde], type text),
+				    AddArtKey = Table.AddColumn(AddSector, "art_key", each Text.From([KOSTRA_Art]) & "|" & Text.From([Kontokode]) & "|" & Text.From([Kontonavn]), type text),
+				    AddAnnualBudget = Table.AddColumn(AddArtKey, "Aarsbudsjett", each [Budsjett], type number),
+				    Rename = Table.RenameColumns(AddAnnualBudget, {{"Måned_Nr", "maned"}, {"Måned", "manedsnavn"}}),
+				    Keep = Table.SelectColumns(Rename, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"})
+				in
+				    Keep
+
+	annotation PBI_ResultType = Table

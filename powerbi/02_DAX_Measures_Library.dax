@@ -1,0 +1,402 @@
+// ==============================================================================
+// KRISTIANSAND KOMMUNE - DAX MEASURES LIBRARY FOR POWER BI
+// ==============================================================================
+// Implementerer beregninger i henhold til antigravity_usecase_epm.md,
+// Edward Tuftes Data-Ink standarder og Kommunelovens § 14-5.
+// Opprettes i en dedikert tabell: '_Measures'
+// ==============================================================================
+
+// ------------------------------------------------------------------------------
+// 1. KJERNE REGNSKAP- OG BUDSJETTMÅL
+// ------------------------------------------------------------------------------
+
+[Regnskap YTD] = 
+CALCULATE(
+    SUM(Fact_Regnskap[Regnskap]),
+    Dim_Dato[maned] <= 8
+)
+/* Beskrivelse: Akkumulert faktisk bokført regnskap YTD (per T2 / august). */
+
+
+[Budsjett YTD] = 
+CALCULATE(
+    SUM(Fact_Regnskap[Budsjett]),
+    Dim_Dato[maned] <= 8
+)
+/* Beskrivelse: Akkumulert periodisert budsjett YTD (per T2 / august). */
+
+
+[Avvik YTD] = 
+[Regnskap YTD] - [Budsjett YTD]
+/* Beskrivelse: Avvik i kroner. Positiv verdi = Merforbruk (sprekk). Negativ verdi = Mindreforbruk. */
+
+
+[Avvik YTD %] = 
+DIVIDE([Avvik YTD], [Budsjett YTD], 0)
+/* Format: Prosent (0.0 %) */
+
+
+[Merforbruk YTD] = 
+IF([Avvik YTD] > 0, [Avvik YTD], 0)
+/* Format: Valuta (#,##0 kr) */
+
+
+[Mindreforbruk YTD] = 
+IF([Avvik YTD] < 0, ABS([Avvik YTD]), 0)
+/* Format: Valuta (#,##0 kr) */
+
+
+// ------------------------------------------------------------------------------
+// 2. PREDICTIVE RE-FORECASTING (RULLENDE EOY-PROGNOSE)
+// ------------------------------------------------------------------------------
+
+[Vedtatt Årsbudsjett] = 
+CALCULATE(
+    SUM(Fact_Regnskap[Budsjett]),
+    ALL(Dim_Dato[tertial], Dim_Dato[manedsnavn], Dim_Dato[maned], Dim_Dato[ar_maned])
+)
+/* Beskrivelse: Kommunestyrets/Bystyrets totalt vedtatte årsramme. */
+
+
+[Budsjett Gjenstående] = 
+CALCULATE(
+    SUM(Fact_Regnskap[Budsjett]),
+    Dim_Dato[maned] > 8
+)
+/* Beskrivelse: Gjenstående periodisert budsjett for T3 (september-desember). */
+
+
+[Trendjustert Merforbruk] = 
+VAR Avvik = [Avvik YTD]
+RETURN
+    IF(Avvik > 0, Avvik * 0.50, 0)
+/* Beskrivelse: Konservativ tapsavsetning (50 % av YTD merforbruk antas å vedvare ut året uten tiltak). */
+
+
+[EOY Rullende Prognose] = 
+[Regnskap YTD] + [Budsjett Gjenstående] + [Trendjustert Merforbruk]
+/* Beskrivelse: Forventet årsregnskap ved årsslutt (End of Year). */
+
+
+[EOY Forventet Årsavvik] = 
+[EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
+/* Beskrivelse: Forventet årsavvik mot vedtatt ramme (Varslingsgrunnlag for Bystyret jf. § 14-5). */
+
+
+// ------------------------------------------------------------------------------
+// 3. DIAGNOSTISKE DRIFTS- OG PERSONALDREVNE MÅL
+// ------------------------------------------------------------------------------
+
+[Lønnskostnader YTD] = 
+CALCULATE(
+    [Regnskap YTD],
+    Fact_Regnskap[KOSTRA_Art] IN {"1010", "1020", "1030", "1040", "1050", "1090"}
+)
+
+[Lønnsandel %] = 
+DIVIDE([Lønnskostnader YTD], [Regnskap YTD], 0)
+
+[Overtidskostnader YTD] = 
+CALCULATE(
+    [Regnskap YTD],
+    Fact_Regnskap[KOSTRA_Art] = "1040"
+)
+
+[Overtidsandel %] = 
+DIVIDE([Overtidskostnader YTD], [Lønnskostnader YTD], 0)
+
+[Vikarbyrå Eksternt YTD] = 
+CALCULATE(
+    [Regnskap YTD],
+    Fact_Regnskap[Kontokode] = "127040"
+)
+
+[Sykevikarer YTD] = 
+CALCULATE(
+    [Regnskap YTD],
+    Fact_Regnskap[KOSTRA_Art] = "1020"
+)
+
+[Samlet Vikarbelastning YTD] = 
+[Sykevikarer YTD] + [Vikarbyrå Eksternt YTD]
+
+[Vikarandel av Lønn %] = 
+DIVIDE([Samlet Vikarbelastning YTD], [Lønnskostnader YTD], 0)
+
+[NAV Refusjoner Bokført YTD] = 
+CALCULATE(
+    SUM(Fact_Regnskap[Regnskap]),
+    Fact_Regnskap[KOSTRA_Art] = "1690"
+)
+
+
+// ------------------------------------------------------------------------------
+// 4. DYNAMISK HIERARKI- OG MATRISEVISNING (ISINSCOPE)
+// ------------------------------------------------------------------------------
+
+[Matrise Avvik Visning] = 
+SWITCH(
+    TRUE(),
+    ISINSCOPE(Fact_Regnskap[Kontonavn]), [Avvik YTD],
+    ISINSCOPE(Fact_Regnskap[KOSTRA_Art]), [Avvik YTD],
+    ISINSCOPE(Dim_Funksjon[funksjon_navn]), [Avvik YTD],
+    ISINSCOPE(Dim_Ansvar[ansvar_navn]), [Avvik YTD],
+    [Avvik YTD]
+)
+
+[Matrise Status Tekst] = 
+VAR Avvik = [Avvik YTD]
+VAR Pct = [Avvik YTD %]
+RETURN
+    SWITCH(
+        TRUE(),
+        Avvik > 100000 && Pct > 0.05, "Kritisk Merforbruk",
+        Avvik > 0, "Merforbruk",
+        Avvik < 0, "Mindreforbruk",
+        "I Balanse"
+    )
+
+
+// ------------------------------------------------------------------------------
+// 5. FRAMSIKT-SPESIFIKKE MÅL (Inspirert av Visma/Framsikt dashboards)
+// ------------------------------------------------------------------------------
+
+[Framsikt Avvik YTD] = 
+[Budsjett YTD] - [Regnskap YTD]
+/* Framsikt fortegnsstandard: Negativt tall = Overforbruk / merforbruk (rødt flagg). */
+
+[Framsikt Avvik YTD %] = 
+DIVIDE([Framsikt Avvik YTD], [Budsjett YTD], 0)
+
+[Brukt hiå %] = 
+DIVIDE([Regnskap YTD], [Vedtatt Årsbudsjett], 0)
+/* Viser hvor stor andel av helårsrammen som er forbrukt per 2. tertial. */
+
+[Siste Måned Regnskap] = 
+CALCULATE(
+    SUM(Fact_Regnskap[Regnskap]),
+    Dim_Dato[maned] = 8
+)
+
+[Siste Måned Budsjett] = 
+CALCULATE(
+    SUM(Fact_Regnskap[Budsjett]),
+    Dim_Dato[maned] = 8
+)
+
+[Siste Måned Avvik] = 
+[Siste Måned Budsjett] - [Siste Måned Regnskap]
+
+[Siste Måned Avvik %] = 
+DIVIDE([Siste Måned Avvik], [Siste Måned Budsjett], 0)
+
+[Lønn Avvik Framsikt YTD] = 
+CALCULATE(
+    [Framsikt Avvik YTD],
+    Fact_Regnskap[Hovedgruppe] = "1 Lønn" || Fact_Regnskap[KOSTRA_Art] IN {"1010", "1020", "1030", "1040", "1050", "1090"}
+)
+
+[Utgifter Drift Avvik Framsikt YTD] = 
+CALCULATE(
+    [Framsikt Avvik YTD],
+    Fact_Regnskap[Hovedgruppe] = "2 Utgifter" || Fact_Regnskap[KOSTRA_Art] IN {"1110", "1130", "1150", "1200", "1270"}
+)
+
+[Refusjoner Inntekter Avvik Framsikt YTD] = 
+CALCULATE(
+    [Framsikt Avvik YTD],
+    Fact_Regnskap[KOSTRA_Art] = "1690" || Fact_Regnskap[Undergruppe] LIKE "%Refusjon%"
+)
+
+
+// ------------------------------------------------------------------------------
+// 6. NET ZERO TILTAKSEFFEKT & BALANSERT REGNSKAPSAVSLUTNING
+// ------------------------------------------------------------------------------
+
+[EOY Baseline RunRate] = 
+[Regnskap YTD] + ([Regnskap YTD] / 8) * 4
+/* Fremskriving av regnskap til 31.12 basert på faktisk månedlig gjennomsnitt Jan-Aug. */
+
+[EOY RunRate Avvik] = 
+[EOY Baseline RunRate] - [Vedtatt Årsbudsjett]
+/* Estimerte uavbøtte overforbruk ved årsslutt dersom ingen tiltak iverksettes. */
+
+[Nødvendig Tiltakseffekt T3] = 
+IF([EOY RunRate Avvik] > 0, [EOY RunRate Avvik], 0)
+/* Beløpet som MÅ spares inn i Sept-Des for å oppnå 0 i avvik ved årsslutt. */
+
+[Planlagt Tiltakseffekt T3] = 
+SWITCH(
+    SELECTEDVALUE(Dim_Ansvar[ansvar_kode]),
+    "2540", 1928421, // Kommunal Boenhet (Vikarstopp, turnusomlegging, ressurskrevende refusjon)
+    "2020", 863000,  // Kommunal Skole (Lærervikarstopp, IKT/innkjøpsfrys, refusjonsavstemming)
+    2791421          // Konsolidert sum
+)
+
+[EOY Balansert Regnskap Net Zero] = 
+[EOY Baseline RunRate] - [Planlagt Tiltakseffekt T3]
+/* Sluttprognose med iverksatte tiltak. Skal være eksakt lik [Vedtatt Årsbudsjett]. */
+
+[EOY Net Zero Sluttavvik] = 
+[EOY Balansert Regnskap Net Zero] - [Vedtatt Årsbudsjett]
+/* Målresultat: 0 kr. */
+
+
+// ------------------------------------------------------------------------------
+// 7. EDWARD TUFTE BETINGET FARGEFORMATERING & KPI-FLAGG
+// ------------------------------------------------------------------------------
+
+[Tufte_Avvik_Farge_HEX] = 
+VAR Avvik = [Avvik YTD]
+VAR Pct = [Avvik YTD %]
+RETURN
+    SWITCH(
+        TRUE(),
+        Avvik > 50000 && Pct > 0.03, "#DC2626", // Klar rød for vesentlig overforbruk
+        Avvik > 0, "#D97706",                   // Amber ved mildt overforbruk
+        "#2563EB"                               // Dempet blå/nøytral ved balanse
+    )
+
+[Tufte_KPI_Flagg] = 
+VAR Avvik = [Avvik YTD]
+RETURN
+    IF(Avvik > 50000, "🚩 Overforbruk", "✓ Under ramme")
+
+
+// ------------------------------------------------------------------------------
+// 8. LOVPÅLAGTE KOSTRA-NØKKELTALL & BYSTYRETS HANDLINGSREGLER
+// ------------------------------------------------------------------------------
+// Hjemmel: Kommuneloven § 14-9, SSB KOSTRA-standard og Bystyrets HØP 2026-2029
+
+[Brutto Driftsresultat] = 
+VAR Driftsinntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Fact_Regnskap[Hovedgruppe] = "3 Inntekter" || Fact_Regnskap[KOSTRA_Art] IN {"1600", "1620", "1650", "1690", "1700", "1770"}
+    )
+VAR Driftsutgifter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Fact_Regnskap[Hovedgruppe] IN {"1 Lønn", "2 Utgifter"} || Fact_Regnskap[KOSTRA_Art] IN {"1010", "1020", "1030", "1040", "1050", "1090", "1110", "1130", "1150", "1200", "1270"}
+    )
+RETURN
+    Driftsinntekter - Driftsutgifter
+/* Formel: Brutto driftsinntekter fratrukket brutto driftsutgifter */
+
+
+[Brutto Driftsresultat %] = 
+VAR TotaleInntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Fact_Regnskap[Hovedgruppe] = "3 Inntekter" || Fact_Regnskap[KOSTRA_Art] IN {"1600", "1620", "1650", "1690", "1700", "1770"}
+    )
+RETURN
+    DIVIDE([Brutto Driftsresultat], ABS(TotaleInntekter), 0)
+/* Handlingsregel Kristiansand kommune: Mål om minimum 1,7 % over tid */
+
+
+[Korrigert Netto Driftsresultat] = 
+VAR BruttoRes = [Brutto Driftsresultat]
+VAR FinansPoster = 
+    CALCULATE(
+        [Regnskap YTD],
+        Fact_Regnskap[Undergruppe] IN {"15 Finansutgifter", "19 Finansinntekter"}
+    )
+VAR Fondstrakninger = 
+    CALCULATE(
+        [Regnskap YTD],
+        Fact_Regnskap[Undergruppe] IN {"15 Avsetninger", "19 Bruk av fond"}
+    )
+RETURN
+    BruttoRes + FinansPoster + Fondstrakninger
+/* Målsetting jf. 1. tertialrapport 2026: >= 1,0 % */
+
+
+[Korrigert Netto Driftsresultat %] = 
+VAR TotaleInntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Fact_Regnskap[Hovedgruppe] = "3 Inntekter" || Fact_Regnskap[KOSTRA_Art] IN {"1600", "1620", "1650", "1690", "1700", "1770"}
+    )
+RETURN
+    DIVIDE([Korrigert Netto Driftsresultat], ABS(TotaleInntekter), 0)
+
+
+[Disposisjonsfond Grad %] = 
+VAR DisposisjonsfondSaldo = 
+    CALCULATE(
+        SUM(Fact_Regnskap[Regnskap]),
+        Fact_Regnskap[Kontoklasse] = "Balanse" || Fact_Regnskap[Undergruppe] = "2.80 Disposisjonsfond"
+    )
+VAR TotaleInntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Fact_Regnskap[Hovedgruppe] = "3 Inntekter" || Fact_Regnskap[KOSTRA_Art] IN {"1600", "1620", "1650", "1690", "1700", "1770"}
+    )
+RETURN
+    DIVIDE(ABS(DisposisjonsfondSaldo), ABS(TotaleInntekter), 0)
+/* Bufferkapital: Mål >= 5,0 % av brutto driftsinntekter */
+
+
+// ------------------------------------------------------------------------------
+// 9. TIME INTELLIGENCE & FJORÅRSAMMENLIGNING (YoY)
+// ------------------------------------------------------------------------------
+
+[Regnskap PY YTD] = 
+CALCULATE(
+    [Regnskap YTD],
+    SAMEPERIODLASTYEAR(Dim_Dato[full_dato])
+)
+/* Sammenligning med tilsvarende periode foregående regnskapsår */
+
+
+[Endring YoY Kr] = 
+[Regnskap YTD] - [Regnskap PY YTD]
+
+
+[Endring YoY %] = 
+DIVIDE([Endring YoY Kr], ABS([Regnskap PY YTD]), 0)
+
+
+// ------------------------------------------------------------------------------
+// 10. HIERARKI DRILL-DOWN & DYNAMISK KONTEKSTDETEKSJON (ISINSCOPE)
+// ------------------------------------------------------------------------------
+
+[Aktiv Hierarki Kontekst] = 
+SWITCH(
+    TRUE(),
+    ISINSCOPE(Dim_Art[art_navn]), "Detaljert Konto / Art",
+    ISINSCOPE(Dim_Funksjon[funksjon_navn]), "KOSTRA Funksjon",
+    ISINSCOPE(Dim_Ansvar[virksomhet_navn]), "Virksomhet / Enhet",
+    ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), "Kommunalsjefområde / Sektor",
+    "Kommunenivå (Totalt)"
+)
+
+[Smart Avviksvisning] = 
+IF(
+    ISINSCOPE(Dim_Art[art_navn]),
+    FORMAT([Avvik YTD], "#,##0 kr;(#,##0 kr);"-""),
+    FORMAT([Avvik YTD], "#,##0 kr;(#,##0 kr);"-"") & " (" & FORMAT([Avvik YTD %], "0.0 %") & ")"
+)
+
+[Avvik Status Farge] = 
+VAR AvvikPct = [Avvik YTD %]
+VAR VesentlighetsGrense = 0.05 -- 5 % terskel jf. Økonomireglementet
+RETURN
+    SWITCH(
+        TRUE(),
+        AvvikPct > VesentlighetsGrense, "#D9534F", -- Rød (Alvorlig merforbruk)
+        AvvikPct > 0.02, "#F0AD4E",                 -- Gul (Moderat merforbruk)
+        AvvikPct < -VesentlighetsGrense, "#337AB7", -- Blå (Mindreforbruk)
+        "#5CB85C"                                   -- Grønn (I henhold til budsjett)
+    )
+
+
+// ------------------------------------------------------------------------------
+// 11. ROW-LEVEL SECURITY (RLS) FOR ENHETSLEDERE OG SEKTORSJEFER
+// ------------------------------------------------------------------------------
+// Implementeres som DAX filteruttrykk på tabellen Dim_Ansvar:
+// [Leder_Epost] = USERPRINCIPALNAME() ||
+// LOOKUPVALUE(Dim_Ansvar[Sektorsjef_Epost], Dim_Ansvar[Sektorsjef_Epost], USERPRINCIPALNAME()) = USERPRINCIPALNAME()
+
+

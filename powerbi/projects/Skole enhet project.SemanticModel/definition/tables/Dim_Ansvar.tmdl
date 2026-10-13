@@ -1,0 +1,23 @@
+table Dim_Ansvar
+
+	column ansvar_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_kode
+
+	column ansvar_navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_navn
+
+	column kommunalsjefomrade
+		dataType: string
+		summarizeBy: none
+		sourceColumn: kommunalsjefomrade
+
+	partition Dim_Ansvar = m
+		mode: import
+		source =
+				let Source = Fact_Regnskap, Selected = Table.SelectColumns(Source, {"ansvar_kode", "ansvar_navn", "kommunalsjefomrade"}), Unique = Table.Distinct(Selected) in Unique
+
+	annotation PBI_ResultType = Table

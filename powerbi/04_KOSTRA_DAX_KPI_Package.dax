@@ -1,0 +1,221 @@
+// =============================================================================
+// FULL DAX-PAKKE FOR KOSTRA & KOMMUNAL ØKONOMISTYRING
+// Kristiansand Kommune — Enterprise Power BI Model & DAX Measure Library
+// Dokumentasjonskilde: docs/dax_kostra_kpi_package.md
+// Forankring: Kommuneloven § 14-9, SSB KOSTRA-standard og Bystyrets HØP 2026-2029
+// =============================================================================
+
+// =============================================================================
+// 1. GRUNNLEGGENDE REGNSKAPS- OG BUDSJETTMÅLTALL (BASE MEASURES)
+// =============================================================================
+
+// 1.1 Regnskap YTD (Påløpt Regnskap)
+Regnskap YTD = 
+CALCULATE(
+    SUM(Fact_Regnskap[korrigert_belop]),
+    KEEPFILTERS(Fact_Regnskap[kontoklasse_id] = 1) -- 1 = Driftsregnskap
+)
+
+// 1.2 Budsjett YTD (Periodisert Årsbudsjett)
+Budsjett YTD = 
+CALCULATE(
+    SUM(Fact_Regnskap[budsjett_belop]),
+    KEEPFILTERS(Fact_Regnskap[kontoklasse_id] = 1)
+)
+
+// 1.3 Avvik YTD i Kroner (Positivt = Merforbruk)
+Avvik YTD = 
+[Regnskap YTD] - [Budsjett YTD]
+
+// 1.4 Avvik YTD i Prosent
+Avvik YTD % = 
+DIVIDE(
+    [Avvik YTD],
+    ABS([Budsjett YTD]),
+    0
+)
+
+
+// =============================================================================
+// 2. LOVPÅLAGTE KOSTRA-NØKKELTALL (STATUTORY KPIS)
+// =============================================================================
+
+// 2.1 Brutto Driftsresultat i Kroner
+// Formel: Brutto Driftsinntekter (Art 6000-8900) - Brutto Driftsutgifter (Art 0000-5900)
+Brutto Driftsresultat = 
+VAR Driftsinntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Dim_KOSTRA_Kontoplan[Niva_1_Kode] = "Serie 6-8 Inntekter"
+    )
+VAR Driftsutgifter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Dim_KOSTRA_Kontoplan[Niva_1_Kode] IN {"Serie 0-1 Lønn", "Serie 2 Kjøp av varer/tjenester", "Serie 3/4 Overføringer"}
+    )
+RETURN
+    Driftsinntekter - Driftsutgifter
+
+// 2.2 Brutto Driftsresultat i % av Brutto Driftsinntekter
+// Handlingsregel Kristiansand kommune: Mål om minimum 1,7 % over tid
+Brutto Driftsresultat % = 
+VAR TotaleInntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Dim_KOSTRA_Kontoplan[Niva_1_Kode] = "Serie 6-8 Inntekter"
+    )
+RETURN
+    DIVIDE([Brutto Driftsresultat], ABS(TotaleInntekter), 0)
+
+// 2.3 Korrigert Netto Driftsresultat
+// Formel: Netto Driftsresultat korrigert for bruk/avsetning bundne fond
+// Ref: 1. tertialrapport 2026 Kristiansand kommune (Mål: >= 1,0 %)
+Korrigert Netto Driftsresultat = 
+VAR BruttoRes = [Brutto Driftsresultat]
+VAR FinansPoster = 
+    CALCULATE(
+        [Regnskap YTD],
+        Dim_KOSTRA_Kontoplan[Niva_2_Kode] IN {"50 Renter/Avdrag", "90 Renteinntekter/Utbytte"}
+    )
+VAR Fondstrakninger = 
+    CALCULATE(
+        [Regnskap YTD],
+        Dim_KOSTRA_Kontoplan[Niva_2_Kode] IN {"55 Avsetninger", "95 Bruk av fond"}
+    )
+RETURN
+    BruttoRes + FinansPoster + Fondstrakninger
+
+Korrigert Netto Driftsresultat % = 
+VAR TotaleInntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Dim_KOSTRA_Kontoplan[Niva_1_Kode] = "Serie 6-8 Inntekter"
+    )
+RETURN
+    DIVIDE([Korrigert Netto Driftsresultat], ABS(TotaleInntekter), 0)
+
+// 2.4 Disposisjonsfond i % av Brutto Driftsinntekter (Bufferkapital, mål >= 5,0 %)
+Disposisjonsfond Grad % = 
+VAR DisposisjonsfondSaldo = 
+    CALCULATE(
+        SUM(Fact_Regnskap[korrigert_belop]),
+        Fact_Regnskap[kontoklasse_id] = 3, -- Balanse
+        Dim_KOSTRA_Kontoplan[Niva_3_Kode] = "2.80 Disposisjonsfond"
+    )
+VAR TotaleInntekter = 
+    CALCULATE(
+        [Regnskap YTD],
+        Dim_KOSTRA_Kontoplan[Niva_1_Kode] = "Serie 6-8 Inntekter"
+    )
+RETURN
+    DIVIDE(ABS(DisposisjonsfondSaldo), ABS(TotaleInntekter), 0)
+
+
+// =============================================================================
+// 3. TIME INTELLIGENCE & RULLERENDE EOY-PROGNOSER (PREDICTIVE DAX)
+// =============================================================================
+
+// 3.1 Fjorår Samme Periode (Prior Year YTD)
+Regnskap PY YTD = 
+CALCULATE(
+    [Regnskap YTD],
+    SAMEPERIODLASTYEAR(Dim_Dato[full_dato])
+)
+
+// 3.2 Endring mot Fjorår (YoY Endring i Kr og %)
+Endring YoY Kr = [Regnskap YTD] - [Regnskap PY YTD]
+
+Endring YoY % = DIVIDE([Endring YoY Kr], ABS([Regnskap PY YTD]), 0)
+
+// 3.3 Dynamic Rolling EOY Forecast (End-of-Year Årsprognose)
+EOY Årsprognose = 
+VAR SisteRegistrerteDato = MAX(Fact_Regnskap[sist_oppdatert])
+VAR PåløptRegnskap = [Regnskap YTD]
+VAR GjenståendeBudsjett = 
+    CALCULATE(
+        [Budsjett YTD],
+        DATESBETWEEN(
+            Dim_Dato[full_dato],
+            NEXTDAY(SisteRegistrerteDato),
+            ENDOFYEAR(Dim_Dato[full_dato])
+        )
+    )
+RETURN
+    IF(
+        ISBLANK(PåløptRegnskap),
+        BLANK(),
+        PåløptRegnskap + GjenståendeBudsjett
+    )
+
+// 3.4 EOY Avvik mot Opprinnelig Årsbudsjett
+EOY Projisert Avvik = 
+VAR VedtattAarsbudsjett = 
+    CALCULATE(
+        [Budsjett YTD],
+        ALL(Dim_Dato[tertial]),
+        ALL(Dim_Dato[maned])
+    )
+RETURN
+    [EOY Årsprognose] - VedtattAarsbudsjett
+
+
+// =============================================================================
+// 4. MATRISESTYRING & DYNAMISK DRILL-DOWN (ISINSCOPE)
+// =============================================================================
+
+// 4.1 Hierarkisk Tittel- og Kontekstdetektor
+Aktiv Hierarki Kontekst = 
+SWITCH(
+    TRUE(),
+    ISINSCOPE(Dim_KOSTRA_Kontoplan[Niva_3_Navn]), "Detaljert Konto / Art",
+    ISINSCOPE(Dim_KOSTRA_Kontoplan[Niva_2_Navn]), "KOSTRA Funksjon",
+    ISINSCOPE(Dim_KOSTRA_Kontoplan[Niva_1_Navn]), "Hovedfunksjon / Sektor",
+    "Kommunenivå (Totalt)"
+)
+
+// 4.2 Dynamisk Smart Avviksvisning (Saldo og Prosent)
+Smart Avviksvisning = 
+IF(
+    ISINSCOPE(Dim_KOSTRA_Kontoplan[Niva_3_Navn]),
+    FORMAT([Avvik YTD], "#,##0 kr;(#,##0 kr);""-"""),
+    FORMAT([Avvik YTD], "#,##0 kr;(#,##0 kr);""-""") & " (" & FORMAT([Avvik YTD %], "0.0 %") & ")"
+)
+
+// 4.3 Visuelt Avviksflagg for Conditional Formatting (Fargekoding)
+Avvik Status Farge = 
+VAR AvvikPct = [Avvik YTD %]
+VAR VesentlighetsGrense = 0.05 -- 5 % terskel jf. Økonomireglementet § 4
+RETURN
+    SWITCH(
+        TRUE(),
+        AvvikPct > VesentlighetsGrense, "#D9534F", -- Rød (Alvorlig merforbruk)
+        AvvikPct > 0.02, "#F0AD4E",                 -- Gul (Moderat merforbruk)
+        AvvikPct < -VesentlighetsGrense, "#337AB7", -- Blå (Mindreforbruk)
+        "#5CB85C"                                   -- Grønn (I henhold til budsjett)
+    )
+
+
+// =============================================================================
+// 5. DYNAMISKE FORMATSTRENGER (DYNAMIC FORMAT STRINGS)
+// =============================================================================
+
+// Formatstreng for [Valgt KPI]
+Formatstreng Valgt KPI = 
+IF(
+    SELECTEDVALUE(Dim_Måleenhet[EnhetsType]) = "Prosent",
+    "0.0 %",
+    "#,##0 kr;(#,##0 kr);""-"""
+)
+
+
+// =============================================================================
+// 6. ORGANIZATIONAL HIERARCHY ROW-LEVEL SECURITY (RLS)
+// =============================================================================
+
+// RLS Filter på Dim_Ansvar (Azure AD / Entra ID UPN Lookup):
+// [Leder_Epost] = USERPRINCIPALNAME()
+// ||
+// LOOKUPVALUE(
+//     Dim_Ansvar[Sektorsjef_Epost],
+//     Dim_Ansvar[Sektorsjef_Epost], USERPRINCIPALNAME()
+// ) = USERPRINCIPALNAME()

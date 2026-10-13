@@ -1,0 +1,13 @@
+table Dim_Funksjon
+
+	column funksjon_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: funksjon_kode
+
+	partition Dim_Funksjon = m
+		mode: import
+		source =
+				let Source = Fact_Regnskap, Selected = Table.SelectColumns(Source, {"funksjon_kode"}), Unique = Table.Distinct(Selected) in Unique
+
+	annotation PBI_ResultType = Table

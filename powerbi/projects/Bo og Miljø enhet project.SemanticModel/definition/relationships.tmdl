@@ -1,0 +1,34 @@
+relationship FactDate
+	fromColumn: Fact_Regnskap.dato
+	toColumn: Dim_Dato.dato
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship FactAnsvar
+	fromColumn: Fact_Regnskap.ansvar_kode
+	toColumn: Dim_Ansvar.ansvar_kode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship FactFunksjon
+	fromColumn: Fact_Regnskap.funksjon_kode
+	toColumn: Dim_Funksjon.funksjon_kode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship FactArt
+	fromColumn: Fact_Regnskap.art_key
+	toColumn: Dim_Art.art_key
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship AuditResponsibility
+	fromColumn: Audit_AI_Actions.ansvar_kode
+	toColumn: Dim_Ansvar.ansvar_kode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection

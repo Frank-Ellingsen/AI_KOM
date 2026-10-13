@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "a6b87abb42d841358651",
+  "position": {
+    "x": 1100,
+    "y": 0,
+    "z": 2,
+    "width": 450,
+    "height": 210,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "card",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "EOY Net Zero Sluttavvik"
+                }
+              },
+              "queryRef": "_Measures.EOY Net Zero Sluttavvik",
+              "nativeQueryRef": "EOY Net Zero Sluttavvik",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Balansert sluttavvik'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

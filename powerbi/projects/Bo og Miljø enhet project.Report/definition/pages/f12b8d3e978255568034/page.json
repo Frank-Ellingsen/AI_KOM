@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "f12b8d3e978255568034",
+  "displayName": "Resultatoversikt",
+  "displayOption": "FitToPage",
+  "height": 900,
+  "width": 1600
+}

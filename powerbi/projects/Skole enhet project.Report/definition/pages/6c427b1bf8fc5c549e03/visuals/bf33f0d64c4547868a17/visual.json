@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "bf33f0d64c4547868a17",
+  "position": {
+    "x": 1100,
+    "y": 490,
+    "z": 4,
+    "width": 450,
+    "height": 180,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "card",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Simulert EOY Netto Driftsresultat"
+                }
+              },
+              "queryRef": "_Measures.Simulert EOY Netto Driftsresultat",
+              "nativeQueryRef": "Simulert EOY Netto Driftsresultat",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Simulert årsresultat'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

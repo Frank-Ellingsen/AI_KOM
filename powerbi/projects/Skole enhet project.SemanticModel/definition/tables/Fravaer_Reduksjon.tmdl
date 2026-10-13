@@ -1,0 +1,18 @@
+table Fravaer_Reduksjon
+
+	column Value
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Value
+
+	column Label
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Label
+
+	partition Fravaer_Reduksjon = m
+		mode: import
+		source =
+				let Values = List.Transform({0..30}, each Number.From(_) / 1000), Source = Table.FromList(Values, Splitter.SplitByNothing(), {"Value"}), AddLabel = Table.AddColumn(Source, "Label", each Number.ToText([Value], "0.0%"), type text) in AddLabel
+
+	annotation PBI_ResultType = Table

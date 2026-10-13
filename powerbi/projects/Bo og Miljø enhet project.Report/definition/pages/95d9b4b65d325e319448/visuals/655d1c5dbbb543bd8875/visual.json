@@ -1,0 +1,151 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "655d1c5dbbb543bd8875",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "width": 1570,
+    "height": 800,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "Tidsstempel"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.Tidsstempel",
+              "nativeQueryRef": "Tidsstempel",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "Enhetskode"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.Enhetskode",
+              "nativeQueryRef": "Enhetskode",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "AI_Tiltak"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.AI_Tiltak",
+              "nativeQueryRef": "AI_Tiltak",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "Konfidens"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.Konfidens",
+              "nativeQueryRef": "Konfidens",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "Leder_Beslutning"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.Leder_Beslutning",
+              "nativeQueryRef": "Leder_Beslutning",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "Saksbehandler"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.Saksbehandler",
+              "nativeQueryRef": "Saksbehandler",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "Begrunnelse"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.Begrunnelse",
+              "nativeQueryRef": "Begrunnelse",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Audit trail – data source not configured'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

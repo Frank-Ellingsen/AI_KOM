@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Bo og Miljø enhet project"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bb668ba6-ee40-48e2-9ee3-521d8a74958c"
+  }
+}
