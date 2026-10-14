@@ -14,6 +14,10 @@ def main() -> int:
     print(f"Using Ollama model: {settings['ollama_model']}")
 
     try:
+        import os
+        os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+        import transformers.utils.logging as hf_logging
+        hf_logging.disable_progress_bar()
         from sentence_transformers import SentenceTransformer
     except ModuleNotFoundError:
         print("SentenceTransformers is not installed. Run: pip install -r requirements.txt")

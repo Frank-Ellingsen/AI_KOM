@@ -7,6 +7,45 @@ import os
 from pathlib import Path
 import sqlite3
 import sys
+
+# Suppress progress bars and tokenizer warnings in web UI
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+# Windows & Python 3.14 I/O guard: catch OSError [Errno 22] on stream flush/write
+class SafeStreamWrapper:
+    """Wraps streams to prevent OSError [Errno 22] Invalid argument on flush in Windows/Streamlit."""
+    def __init__(self, target):
+        self._target = target
+
+    def write(self, data):
+        try:
+            return self._target.write(data)
+        except OSError as err:
+            if getattr(err, "errno", None) != 22:
+                raise
+
+    def flush(self):
+        try:
+            self._target.flush()
+        except OSError as err:
+            if getattr(err, "errno", None) != 22:
+                raise
+
+    def __getattr__(self, name):
+        return getattr(self._target, name)
+
+if sys.stderr is not None and not isinstance(sys.stderr, SafeStreamWrapper):
+    sys.stderr = SafeStreamWrapper(sys.stderr)
+if sys.stdout is not None and not isinstance(sys.stdout, SafeStreamWrapper):
+    sys.stdout = SafeStreamWrapper(sys.stdout)
+
+try:
+    import transformers.utils.logging as hf_logging
+    hf_logging.disable_progress_bar()
+except Exception:
+    pass
+
 import pandas as pd
 import streamlit as st
 
@@ -92,6 +131,11 @@ st.caption("Skjermet, lokal beslutningsstøtte for Økonomi og Virksomhetsstyrin
 # ==========================================
 @st.cache_resource(show_spinner=False)
 def load_embedding_model():
+    try:
+        import transformers.utils.logging as hf_logging
+        hf_logging.disable_progress_bar()
+    except Exception:
+        pass
     return SentenceTransformer("intfloat/multilingual-e5-small")
 
 with st.spinner("⏳ Laster lokal embedding-modell (multilingual-e5-small)..."):

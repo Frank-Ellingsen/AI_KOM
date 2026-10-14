@@ -267,6 +267,13 @@ if __name__ == "__main__":
     print("=" * 60)
 
     print("⏳ Laster embedding-modell for vektorsøk...")
+    try:
+        import os
+        os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+        import transformers.utils.logging as hf_logging
+        hf_logging.disable_progress_bar()
+    except Exception:
+        pass
     embedding_model = SentenceTransformer("intfloat/multilingual-e5-small")
 
     test_query = (

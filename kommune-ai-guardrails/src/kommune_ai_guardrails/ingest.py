@@ -396,6 +396,13 @@ def ingest_all(
         print("⏳ Laster embedding-modell intfloat/multilingual-e5-small...")
         if progress_callback:
             progress_callback({"step": "loading_model", "message": "Laster semantisk modell intfloat/multilingual-e5-small..."})
+        try:
+            import os
+            os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+            import transformers.utils.logging as hf_logging
+            hf_logging.disable_progress_bar()
+        except Exception:
+            pass
         embedding_model = SentenceTransformer("intfloat/multilingual-e5-small")
 
     # 1. Sett inn i legal_chunks og legal_fts
