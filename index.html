@@ -2412,6 +2412,7 @@
         </p>
 
         <!-- Sektorvelger Tabs -->
+        <!-- Sektorvelger Tabs -->
         <div class="sector-nav-bar" id="sector-nav-bar">
             <button class="sector-tab-btn active" id="sec-btn-all" onclick="selectSector('ALL')">
                 <span>🌐 Konsern (Alle områder)</span>
@@ -2419,27 +2420,27 @@
             </button>
             <button class="sector-tab-btn" id="sec-btn-helse" onclick="selectSector('HELSE')">
                 <span>🏥 1. Helse og mestring</span>
-                <span class="sector-tab-badge" style="background:var(--alert-amber); color:#fff;">+850k</span>
+                <span class="sector-tab-badge" style="background:var(--alert-amber); color:#fff;">-9.85M</span>
             </button>
             <button class="sector-tab-btn" id="sec-btn-oppvekst" onclick="selectSector('OPPVEKST')">
                 <span>🏫 2. Oppvekst</span>
-                <span class="sector-tab-badge" style="background:var(--alert-red); color:#fff;">+1.24M</span>
+                <span class="sector-tab-badge" style="background:var(--alert-red); color:#fff;">-11.87M</span>
             </button>
             <button class="sector-tab-btn" id="sec-btn-by" onclick="selectSector('BYUTVIKLING')">
                 <span>🏗️ 3. By- og stedsutvikling</span>
-                <span class="sector-tab-badge">VAR</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">940M</span>
             </button>
             <button class="sector-tab-btn" id="sec-btn-kultur" onclick="selectSector('KULTUR')">
                 <span>🎭 4. Kultur og innbyggerdialog</span>
-                <span class="sector-tab-badge">380M</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">380M</span>
             </button>
             <button class="sector-tab-btn" id="sec-btn-org" onclick="selectSector('ORG_TEK')">
                 <span>💻 5. Organisasjon og teknologi</span>
-                <span class="sector-tab-badge">IKT</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">460M</span>
             </button>
             <button class="sector-tab-btn" id="sec-btn-oko" onclick="selectSector('OKONOMI')">
                 <span>⚖️ 6. Økonomi og virksomhetsstyring</span>
-                <span class="sector-tab-badge">Finans</span>
+                <span class="sector-tab-badge" style="background:#dcfce7; color:#15803d;">+2.58M</span>
             </button>
         </div>
 
@@ -2450,31 +2451,159 @@
     </section>
 
     <!-- 4. NØKKELTALL (EVM / PROJECT CONTROLLING) -->
-    <div class="kpi-grid" id="kpi-seksjon">
-        <div class="kpi-card">
-            <div class="kpi-label"><span class="tufte-tip" data-tip="Planlagt Verdi (Planned Value): Akkumulert periodisert ramme fra Framsikt EPM frem til rapporteringsmåneden.">Planlagt Verdi (PV YTD) <span class="tip-badge">PV</span></span></div>
-            <div class="kpi-value">71 633 784 kr</div>
-            <div class="kpi-subtext">Akkumulert periodisert ramme</div>
+    <div style="margin-bottom: 24px;" id="kpi-seksjon-container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; font-weight:700; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
+                    📊 Totaltall per Virksomhetsområde (EVM): <span id="kpi-active-sector-title" style="color:var(--accent-blue);">Konsernoversikt (Alle 6 Områder)</span>
+                </span>
+                <span id="kpi-active-sector-badge" class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700; font-size:11px;">Totalramme: 7.25 Mrd</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <label for="kpi-sector-select" style="font-size:11px; color:var(--text-secondary); font-weight:600;">Velg Virksomhetsområde:</label>
+                <select id="kpi-sector-select" onchange="selectSector(this.value)" style="font-size:11.5px; padding:3px 8px; border:1px solid var(--border-light); border-radius:3px; background:#fff; color:var(--navy-dark); font-weight:600; cursor:pointer;">
+                    <option value="ALL">🌐 Konsern (Alle områder) — 7.25 Mrd</option>
+                    <option value="HELSE">🏥 1. Helse og mestring — 1.85 Mrd</option>
+                    <option value="OPPVEKST">🏫 2. Oppvekst — 2.12 Mrd</option>
+                    <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling — 940 MNOK</option>
+                    <option value="KULTUR">🎭 4. Kultur og innbyggerdialog — 380 MNOK</option>
+                    <option value="ORG_TEK">💻 5. Organisasjon og teknologi — 460 MNOK</option>
+                    <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring — 1.49 Mrd</option>
+                </select>
+                <button type="button" class="btn-tool" onclick="toggleSectorComparisonTable()" style="font-size:11px; padding:3px 10px;" id="btn-toggle-sector-comp">
+                    📋 Vis alle 6 områder tabell
+                </button>
+            </div>
         </div>
-        <div class="kpi-card">
-            <div class="kpi-label"><span class="tufte-tip" data-tip="Påløpt Kostnad (Actual Cost): Faktisk regnskapsført forbruk fra Visma Enterprise ERP.">Påløpt Kostnad (AC YTD) <span class="tip-badge">AC</span></span></div>
-            <div class="kpi-value">83 506 244 kr</div>
-            <div class="kpi-subtext">Faktisk regnskapsført forbruk</div>
+
+        <div class="kpi-grid" id="kpi-seksjon">
+            <div class="kpi-card">
+                <div class="kpi-label"><span class="tufte-tip" data-tip="Planlagt Verdi (Planned Value): Akkumulert periodisert ramme fra Framsikt EPM frem til rapporteringsmåneden for valgt virksomhetsområde.">Planlagt Verdi (PV YTD) <span class="tip-badge">PV</span></span></div>
+                <div class="kpi-value" id="kpi-val-pv">4 846 872 460 kr</div>
+                <div class="kpi-subtext" id="kpi-sub-pv">Akkumulert periodisert ramme</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label"><span class="tufte-tip" data-tip="Påløpt Kostnad (Actual Cost): Faktisk regnskapsført forbruk fra Visma Enterprise ERP for valgt virksomhetsområde.">Påløpt Kostnad (AC YTD) <span class="tip-badge">AC</span></span></div>
+                <div class="kpi-value" id="kpi-val-ac">4 865 872 460 kr</div>
+                <div class="kpi-subtext" id="kpi-sub-ac">Faktisk regnskapsført forbruk</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label"><span class="tufte-tip" data-tip="Kostnadsavvik (Cost Variance = PV - AC): Avvik mot periodisert budsjett. Negativt tall indikerer merforbruk (rød alarm).">Kostnadsavvik (CV) <span class="tip-badge">CV</span></span></div>
+                <div class="kpi-value kpi-alert" id="kpi-val-cv">-19 000 000 kr</div>
+                <div class="kpi-subtext kpi-alert" id="kpi-sub-cv">Samlet merforbruk før tiltak</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label"><span class="tufte-tip" data-tip="Kostnadsindeks (CPI = PV / AC): Forbrukseffektivitet for virksomhetsområdet. Under 1.000 betyr at kronene renner ut raskere enn budsjettert takt (mål: 1.000).">Kostnadsindeks (CPI) <span class="tip-badge">CPI</span></span></div>
+                <div class="kpi-value kpi-alert" id="kpi-val-cpi">0.996</div>
+                <div class="kpi-subtext" id="kpi-sub-cpi">Mål: 1.000 (Forbrukseffektivitet)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label"><span class="tufte-tip" data-tip="Sluttprognose (Estimate at Completion = AC + ETC): Forventet regnskapsresultat per 31.12 for virksomhetsområdet basert på nåværende forbrukstakt og planlagte tiltak.">Sluttprognose (EAC) <span class="tip-badge">EAC</span></span></div>
+                <div class="kpi-value" id="kpi-val-eac">7 268 450 000 kr</div>
+                <div class="kpi-subtext kpi-alert" id="kpi-sub-eac">+28.45M kr est. konsernavvik</div>
+            </div>
         </div>
-        <div class="kpi-card">
-            <div class="kpi-label"><span class="tufte-tip" data-tip="Kostnadsavvik (Cost Variance = PV - AC): Avvik mot periodisert budsjett. Negativt tall indikerer merforbruk (rød alarm).">Kostnadsavvik (CV) <span class="tip-badge">CV</span></span></div>
-            <div class="kpi-value kpi-alert">-11 872 460 kr</div>
-            <div class="kpi-subtext kpi-alert">Merforbruk mot planlagt takt</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-label"><span class="tufte-tip" data-tip="Kostnadsindeks (CPI = PV / AC): Forbrukseffektivitet. Under 1.000 betyr at kronene renner ut raskere enn budsjettert takt (mål: 1.000).">Kostnadsindeks (CPI) <span class="tip-badge">CPI</span></span></div>
-            <div class="kpi-value kpi-alert">0.858</div>
-            <div class="kpi-subtext">Mål: 1.000 (Forbrukseffektivitet)</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-label"><span class="tufte-tip" data-tip="Sluttprognose (Estimate at Completion = AC + ETC): Forventet regnskapsresultat per 31.12 basert på nåværende forbrukstakt og planlagte tiltak.">Sluttprognose (EAC) <span class="tip-badge">EAC</span></span></div>
-            <div class="kpi-value">98 105 071 kr</div>
-            <div class="kpi-subtext kpi-alert">+14.17M kr est. sluttoverskridelse</div>
+
+        <!-- Sammenstillingstabell per virksomhetsområde (Tufte-standard: ingen vertikale streker, tall høyrejustert) -->
+        <div id="sector-comparison-container" style="display:none; margin-top:12px; background:var(--bg-surface); border:1px solid var(--border-light); border-radius:3px; padding:12px 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">🏛️ Sammenstilling av Nøkkeltall per Virksomhetsområde (EVM — 2026)</span>
+                <span style="font-size:11px; color:var(--text-secondary);">Klikk på en rad for å filtrere dashbordet</span>
+            </div>
+            <table class="tufte-table" id="sector-comparison-table">
+                <thead>
+                    <tr>
+                        <th>Virksomhetsområde</th>
+                        <th>Ansvarlig Rådgiver</th>
+                        <th class="num">Budsjett (BAC)</th>
+                        <th class="num">Planlagt (PV YTD)</th>
+                        <th class="num">Påløpt (AC YTD)</th>
+                        <th class="num">Avvik (CV)</th>
+                        <th class="num">CPI</th>
+                        <th class="num">Sluttprognose (EAC)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="sector-comparison-tbody">
+                    <tr onclick="selectSector('HELSE')" style="cursor:pointer;" id="row-sec-helse">
+                        <td><strong>🏥 1. Helse og mestring</strong></td>
+                        <td>Dedikert Økonomirådgiver Helse</td>
+                        <td class="num">1 850 000 000 kr</td>
+                        <td class="num">1 245 000 000 kr</td>
+                        <td class="num">1 254 850 000 kr</td>
+                        <td class="num" style="color:var(--alert-red); font-weight:600;">-9 850 000 kr</td>
+                        <td class="num" style="color:var(--alert-red); font-weight:600;">0.992</td>
+                        <td class="num">1 864 700 000 kr</td>
+                        <td><span class="status-badge" style="background:#fee2e2; color:#991b1b; font-size:10px;">Overtids-/døgnpress</span></td>
+                    </tr>
+                    <tr onclick="selectSector('OPPVEKST')" style="cursor:pointer;" id="row-sec-oppvekst">
+                        <td><strong>🏫 2. Oppvekst</strong></td>
+                        <td>Frank Ellingsen (Senior Controller)</td>
+                        <td class="num">2 120 000 000 kr</td>
+                        <td class="num">1 427 000 000 kr</td>
+                        <td class="num">1 438 872 460 kr</td>
+                        <td class="num" style="color:var(--alert-red); font-weight:600;">-11 872 460 kr</td>
+                        <td class="num" style="color:var(--alert-red); font-weight:600;">0.992</td>
+                        <td class="num">2 137 650 000 kr</td>
+                        <td><span class="status-badge" style="background:#fee2e2; color:#991b1b; font-size:10px;">Lærervikarer (§ 14-5)</span></td>
+                    </tr>
+                    <tr onclick="selectSector('BYUTVIKLING')" style="cursor:pointer;" id="row-sec-byutvikling">
+                        <td><strong>🏗️ 3. By- og stedsutvikling</strong></td>
+                        <td>Økonomirådgiver Byutvikling / Selvkost</td>
+                        <td class="num">940 000 000 kr</td>
+                        <td class="num">620 000 000 kr</td>
+                        <td class="num">619 690 000 kr</td>
+                        <td class="num" style="color:var(--navy-dark); font-weight:600;">+310 000 kr</td>
+                        <td class="num">1.001</td>
+                        <td class="num">939 500 000 kr</td>
+                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Balanse (VAR selvkost)</span></td>
+                    </tr>
+                    <tr onclick="selectSector('KULTUR')" style="cursor:pointer;" id="row-sec-kultur">
+                        <td><strong>🎭 4. Kultur og innbyggerdialog</strong></td>
+                        <td>Økonomirådgiver Kultur</td>
+                        <td class="num">380 000 000 kr</td>
+                        <td class="num">252 000 000 kr</td>
+                        <td class="num">252 045 000 kr</td>
+                        <td class="num" style="color:var(--navy-dark); font-weight:600;">-45 000 kr</td>
+                        <td class="num">1.000</td>
+                        <td class="num">380 065 000 kr</td>
+                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Balanse (Energibuffer)</span></td>
+                    </tr>
+                    <tr onclick="selectSector('ORG_TEK')" style="cursor:pointer;" id="row-sec-org_tek">
+                        <td><strong>💻 5. Organisasjon og teknologi</strong></td>
+                        <td>Økonomirådgiver IKT & Felles</td>
+                        <td class="num">460 000 000 kr</td>
+                        <td class="num">308 000 000 kr</td>
+                        <td class="num">308 120 000 kr</td>
+                        <td class="num" style="color:var(--navy-dark); font-weight:600;">-120 000 kr</td>
+                        <td class="num">1.000</td>
+                        <td class="num">460 180 000 kr</td>
+                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Balanse (FinOps)</span></td>
+                    </tr>
+                    <tr onclick="selectSector('OKONOMI')" style="cursor:pointer;" id="row-sec-okonomi">
+                        <td><strong>⚖️ 6. Økonomi og virksomhetsstyring</strong></td>
+                        <td>Økonomidirektør / Konserncontroller</td>
+                        <td class="num">1 490 000 000 kr</td>
+                        <td class="num">994 872 460 kr</td>
+                        <td class="num">992 295 000 kr</td>
+                        <td class="num" style="color:var(--navy-dark); font-weight:600;">+2 577 460 kr</td>
+                        <td class="num">1.003</td>
+                        <td class="num">1 486 125 000 kr</td>
+                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Finans & rentebuffer</span></td>
+                    </tr>
+                    <tr onclick="selectSector('ALL')" style="cursor:pointer; background:#f8fafc; font-weight:700; border-top:1.5px solid var(--navy-dark);" id="row-sec-all">
+                        <td><strong>🌐 SAMLET KONSERNTOTAL</strong></td>
+                        <td>Konsernledelsen / Bystyret</td>
+                        <td class="num">7 240 000 000 kr</td>
+                        <td class="num">4 846 872 460 kr</td>
+                        <td class="num">4 865 872 460 kr</td>
+                        <td class="num" style="color:var(--alert-red);">-19 000 000 kr</td>
+                        <td class="num" style="color:var(--alert-red);">0.996</td>
+                        <td class="num">7 268 450 000 kr</td>
+                        <td><span class="status-badge" style="background:#fef9c3; color:#a16207; font-size:10px;">Korrigerende tiltak</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -6600,12 +6729,28 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 ansvarsomrade: "Overordnet styring, tertialrapportering, samordning av 6 tjenesteområder, finansforvaltning og konsernavvik jf. Kommuneloven § 14-5.",
                 malgruppe: "Kommunedirektør, formannskap, bystyre, samt alle kommunens innbyggere og virksomheter.",
                 kostra: "Hele kontoplanen (Funksjon 100–899, Art 1000–1990)",
-                ramme: "7 250 000 000 NOK",
-                forbruk: "4 835 000 000 NOK",
-                avvik: "-11 872 460 NOK",
-                cpi: "0.858",
+                ramme: "7 240 000 000 NOK",
+                forbruk: "4 865 872 460 NOK",
+                avvik: "-19 000 000 NOK",
+                cpi: "0.996",
                 status_badge: "🟢 Konsernstyring",
                 fokus: "Helårsbalanse, pensjonskostnader, renteutvikling på lånegjeld, og disposisjonsfondsnivå (485M / 6.7 %).",
+                evm: {
+                    badge: "Totalramme: 7.25 Mrd",
+                    pv: "4 846 872 460 kr",
+                    pv_sub: "Akkumulert periodisert ramme (7.25 Mrd BAC)",
+                    ac: "4 865 872 460 kr",
+                    ac_sub: "Faktisk regnskapsført forbruk Visma ERP",
+                    cv: "-19 000 000 kr",
+                    cv_sub: "Samlet merforbruk før tiltak",
+                    cv_alert: true,
+                    cpi: "0.996",
+                    cpi_sub: "Mål: 1.000 (Styringstiltak iverksatt)",
+                    cpi_alert: true,
+                    eac: "7 268 450 000 kr",
+                    eac_sub: "+28.45M kr est. konsernavvik (dekkes av fond)",
+                    eac_alert: true
+                },
                 renterisiko: { gjeld: "7 250 000 000 NOK", snittrente: "4.12 %", fast: "58 %", flytende: "42 %", folsomhet: "-7.2 MNOK per +0.50 % NIBOR" },
                 pensjon_premieavvik: { innbetalt: "348 MNOK", kostnad: "312 MNOK", premieavvik: "+36 MNOK", amortisering: "7 år lineært" },
                 disposisjonsfond: { saldo: "485 000 000 NOK", andel: "6.7 %", krav: "6.0 %", buffer: "+50.8 MNOK over krav" }
@@ -6619,11 +6764,27 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 malgruppe: "Innbyggere med behov for helsehjelp, forebyggende helsetjenester, eldreomsorg og støtte til livsmestring.",
                 kostra: "Funksjon 234 (Aktivisering), 241 (Diagnose/behandling), 253 (Pleie/omsorg hjemme), 254 (Sykehjem), 261 (Kommunale boliger)",
                 ramme: "1 850 000 000 NOK",
-                forbruk: "1 245 850 000 NOK",
-                avvik: "+850 000 NOK",
-                cpi: "0.941",
+                forbruk: "1 254 850 000 NOK",
+                avvik: "-9 850 000 NOK",
+                cpi: "0.992",
                 status_badge: "🟠 Advarsel — Overtids- og bemanningspress",
                 fokus: "Økt pleietyngde (IPLOS), turnusoptimalisering, langvakter jf. HTA § 4 og sykefraværsreduserende tiltak i døgninstitusjoner.",
+                evm: {
+                    badge: "Totalramme: 1.85 Mrd",
+                    pv: "1 245 000 000 kr",
+                    pv_sub: "Akkumulert periodisert ramme (1.85 Mrd BAC)",
+                    ac: "1 254 850 000 kr",
+                    ac_sub: "Faktisk regnskapsført forbruk (Døgnpleie & omsorg)",
+                    cv: "-9 850 000 kr",
+                    cv_sub: "Merforbruk mot planlagt takt (Overtid & vikar)",
+                    cv_alert: true,
+                    cpi: "0.992",
+                    cpi_sub: "Mål: 1.000 (0.992 indikerer bemanningspress)",
+                    cpi_alert: true,
+                    eac: "1 864 700 000 kr",
+                    eac_sub: "+14.70M kr est. overskridelse (Toppfinansiering avstemmes)",
+                    eac_alert: true
+                },
                 toppfinansiering: {
                     innslagspunkt: "1 650 000 NOK",
                     brukere: 142,
@@ -6647,11 +6808,27 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 malgruppe: "Barn, unge og familier, samt voksne som tar grunnleggende opplæring.",
                 kostra: "Funksjon 201 (Førskole), 202 (Grunnskole), 211 (Skolelokaler), 215 (SFO), 221 (Spesialundervisning / PPT)",
                 ramme: "2 120 000 000 NOK",
-                forbruk: "1 428 240 000 NOK",
-                avvik: "+1 240 000 NOK",
-                cpi: "0.887",
+                forbruk: "1 438 872 460 NOK",
+                avvik: "-11 872 460 NOK",
+                cpi: "0.992",
                 status_badge: "🔴 Kritisk — Avvikstiltak kreves jf. § 14-5",
                 fokus: "Vikarinnleie (art 1050), NAV-refusjonsetterslep (art 1600), lærernorm og klassesammenslåing ved korttidsfravær.",
+                evm: {
+                    badge: "Totalramme: 2.12 Mrd",
+                    pv: "1 427 000 000 kr",
+                    pv_sub: "Akkumulert periodisert ramme (2.12 Mrd BAC)",
+                    ac: "1 438 872 460 kr",
+                    ac_sub: "Faktisk regnskapsført forbruk (Skoler & barnehager)",
+                    cv: "-11 872 460 kr",
+                    cv_sub: "Merforbruk mot planlagt takt (Lærervikarer & refusjoner)",
+                    cv_alert: true,
+                    cpi: "0.992",
+                    cpi_sub: "Mål: 1.000 (0.992 krever omdisponering/triage)",
+                    cpi_alert: true,
+                    eac: "2 137 650 000 kr",
+                    eac_sub: "+17.65M kr est. sluttoverskridelse jf. § 14-5",
+                    eac_alert: true
+                },
                 laerernorm: { trinn_1_4: "1:14.2 (Krav: 1:15)", trinn_5_10: "1:18.7 (Krav: 1:20)", status: "🟢 Oppfylt jf. § 8-2", buffer: "+12 lærertimer/uke" },
                 private_barnehager: { andel: "42 % private", tilskudd_ytd: "284.2 MNOK", forsinket_risiko: "+1.4 MNOK fremtidig overvelting i 2028" },
                 nav_radar: { under_3mnd: "250 000 NOK", mellom_3_6mnd: "110 000 NOK", over_6mnd: "50 000 NOK (Foreldelsesrisiko)", totalt: "410 000 NOK" }
@@ -6666,10 +6843,26 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 kostra: "Funksjon 301 (Planlegging), 312 (Byggesak), 332 (Kommunale veier), 340 (Vann), 345 (Avløp), 354 (Renovasjon)",
                 ramme: "940 000 000 NOK (inkl. selvkost)",
                 forbruk: "619 690 000 NOK",
-                avvik: "-310 000 NOK",
-                cpi: "1.005",
+                avvik: "+310 000 NOK",
+                cpi: "1.001",
                 status_badge: "🟢 Balanse — Selvkostfond overholdt",
                 fokus: "Selvkostavregning for VAR (selvkostforskriften § 8), fremdrift på store infrastrukturprosjekter (EVM) og byggesaksgebyrer.",
+                evm: {
+                    badge: "Totalramme: 940 MNOK (inkl. VAR)",
+                    pv: "620 000 000 kr",
+                    pv_sub: "Akkumulert periodisert ramme (940 MNOK BAC)",
+                    ac: "619 690 000 kr",
+                    ac_sub: "Faktisk regnskapsført forbruk (Samferdsel, VAR, kart)",
+                    cv: "+310 000 kr",
+                    cv_sub: "Mindreforbruk mot planlagt takt (Balanse)",
+                    cv_alert: false,
+                    cpi: "1.001",
+                    cpi_sub: "Mål: 1.000 (1.001 god balanse)",
+                    cpi_alert: false,
+                    eac: "939 500 000 kr",
+                    eac_sub: "-0.50M kr under ramme (VAR selvkostfond avsettes)",
+                    eac_alert: false
+                },
                 var_selvkost: { vann: "98.2 % (Fond: +14.2M)", avlop: "101.4 % (Fond: -4.8M)", renovasjon: "99.1 % (Fond: +2.1M)", regel: "§ 8 (5-års utjevning)" },
                 byggesak_gebyr: { dekningsgrad: "84.5 %", inntekter_ytd: "18.2 MNOK", budsjett_ytd: "21.5 MNOK", svikt: "-3.3 MNOK (Lav byggeaktivitet)" },
                 ks2_portefolje: { aktive: 14, p85_buffer: "45.0 MNOK", disponert: "12.4 MNOK (27.6 %)", status: "🟢 God kontroll (Port 9 HITL)" }
@@ -6684,10 +6877,26 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 kostra: "Funksjon 370 (Bibliotek), 375 (Museum/kunst), 380 (Idrett), 383 (Kulturskole), 385 (Fritid/ungdomsklubber)",
                 ramme: "380 000 000 NOK",
                 forbruk: "252 045 000 NOK",
-                avvik: "+45 000 NOK",
-                cpi: "0.999",
+                avvik: "-45 000 NOK",
+                cpi: "1.000",
                 status_badge: "🟢 Balanse — Kontrollert drift",
                 fokus: "Tilskuddsforvaltning for frivilligheten, leieinntekter for idrettshaller og energioptimalisering for kommunale kulturbygg.",
+                evm: {
+                    badge: "Totalramme: 380 MNOK",
+                    pv: "252 000 000 kr",
+                    pv_sub: "Akkumulert periodisert ramme (380 MNOK BAC)",
+                    ac: "252 045 000 kr",
+                    ac_sub: "Faktisk regnskapsført forbruk (Bibliotek, idrett, tilskudd)",
+                    cv: "-45 000 kr",
+                    cv_sub: "Marginalt avvik mot planlagt takt",
+                    cv_alert: false,
+                    cpi: "1.000",
+                    cpi_sub: "Mål: 1.000 (1.000 i perfekt balanse)",
+                    cpi_alert: false,
+                    eac: "380 065 000 kr",
+                    eac_sub: "+0.07M kr (Dekkes av energibuffer)",
+                    eac_alert: false
+                },
                 frivillighet_tilskudd: { ramme: "14 200 000 NOK", utbetalt: "9 850 000 NOK", behandles: "3 050 000 NOK", rest: "1 300 000 NOK" },
                 energi_idrett: { spot_snitt: "68 øre/kWh", budsjettert: "75 øre/kWh", gevinst: "+420 000 NOK (Positiv driftsbuffer)" },
                 kulturskole: { egenbetaling_dekn: "32.4 %", elevplasser: 1450, venteliste: 182, status: "Stabil elevmasse" }
@@ -6702,10 +6911,26 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 kostra: "Funksjon 120 (Administrasjon), 130 (Felles IKT-lisenser & infrastruktur), 180 (Fellestjenester/lønn/arkiv)",
                 ramme: "460 000 000 NOK",
                 forbruk: "308 120 000 NOK",
-                avvik: "+120 000 NOK",
-                cpi: "0.996",
+                avvik: "-120 000 NOK",
+                cpi: "1.000",
                 status_badge: "🟢 Balanse — Sky- og lisenskontroll",
                 fokus: "Konsulentreduksjon, FinOps for skylisenser, IKT-sikkerhetsinvesteringer og effektivisering av felles HR-prosesser.",
+                evm: {
+                    badge: "Totalramme: 460 MNOK",
+                    pv: "308 000 000 kr",
+                    pv_sub: "Akkumulert periodisert ramme (460 MNOK BAC)",
+                    ac: "308 120 000 kr",
+                    ac_sub: "Faktisk regnskapsført forbruk (HR, IKT, felles)",
+                    cv: "-120 000 kr",
+                    cv_sub: "Marginalt avvik mot planlagt takt",
+                    cv_alert: false,
+                    cpi: "1.000",
+                    cpi_sub: "Mål: 1.000 (1.000 i god balanse)",
+                    cpi_alert: false,
+                    eac: "460 180 000 kr",
+                    eac_sub: "+0.18M kr (Konsulentkutt og SaaS-sanering)",
+                    eac_alert: false
+                },
                 finops_saas: { budsjett: "48 000 000 NOK", fakturert: "32 100 000 NOK", inaktive: "420 000 NOK/år (38 M365 E5 lisenser)" },
                 konsulent_drift: { timepris_snitt: "1 450 NOK/t", innleid_ytd: "12.4 MNOK", gevinst_2_faste: "-1.8 MNOK spart per år" },
                 cyber_beredskap: { ramme: "18 000 000 NOK", fremdrift: "68 %", nist: "3.8 / 5.0 (🟢 Tilfredsstillende)" }
@@ -6718,12 +6943,28 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 ansvarsomrade: "Overordnet økonomiplanlegging, budsjettarbeid, regnskap, innkjøp, internkontroll og virksomhetsstyring på tvers av kommunens enheter. (Inkluderer staber for direkte politisk betjening, samfunnssikkerhet og beredskap, samt næringsutvikling).",
                 malgruppe: "Kommunedirektør, formannskap, bystyre, samt alle kommunens enheter og staber.",
                 kostra: "Funksjon 100 (Politisk styring), 110 (Kontrollutvalg/revisjon), 170 (Fellesutgifter), 800-serien (Renter, avdrag, fond)",
-                ramme: "7 250 000 000 NOK (Konsernramme)",
-                forbruk: "4 835 000 000 NOK",
-                avvik: "Renterisiko overvåkes",
-                cpi: "1.000",
+                ramme: "1 490 000 000 NOK (Felles & Finans)",
+                forbruk: "992 295 000 NOK",
+                avvik: "+2 577 460 NOK",
+                cpi: "1.003",
                 status_badge: "🟢 Finans & Konsernstyring",
                 fokus: "Rentesikring (renteavtaler), pensjonspremieavvik, disposisjonsfond (485M) og overordnet etterlevelse av Kommuneloven § 14-5.",
+                evm: {
+                    badge: "Totalramme: 1.49 Mrd (Felles & Finans)",
+                    pv: "994 872 460 kr",
+                    pv_sub: "Akkumulert periodisert ramme (1.49 Mrd BAC)",
+                    ac: "992 295 000 kr",
+                    ac_sub: "Faktisk regnskapsført forbruk (Renter, avdrag, felles)",
+                    cv: "+2 577 460 kr",
+                    cv_sub: "Mindreforbruk mot planlagt takt (Positiv rentebuffer)",
+                    cv_alert: false,
+                    cpi: "1.003",
+                    cpi_sub: "Mål: 1.003 (1.003 god kostnadskontroll)",
+                    cpi_alert: false,
+                    eac: "1 486 125 000 kr",
+                    eac_sub: "-3.88M kr under ramme (Sikrer disposisjonsfond)",
+                    eac_alert: false
+                },
                 renterisiko: { gjeld: "7 250 000 000 NOK", snittrente: "4.12 %", fast: "58 %", flytende: "42 %", folsomhet: "-7.2 MNOK per +0.50 % NIBOR" },
                 pensjon_premieavvik: { innbetalt: "348 MNOK", kostnad: "312 MNOK", premieavvik: "+36 MNOK", amortisering: "7 år lineært" },
                 disposisjonsfond: { saldo: "485 000 000 NOK", andel: "6.7 %", krav: "6.0 %", buffer: "+50.8 MNOK over krav" }
@@ -7029,7 +7270,112 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 switchSimulatorUnit('FINANS');
             }
 
+            // 5. Oppdater EVM nøkkeltall for valgt virksomhetsområde
+            updateKpiRow(sectorKey);
+
             showToast(`🏢 Valgt ansvarsområde: ${data.title}`);
+        }
+
+        function updateKpiRow(sectorKey) {
+            const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
+            if (!data || !data.evm) return;
+
+            // 1. Tittel og Badge over nøkkeltallene
+            const titleEl = document.getElementById("kpi-active-sector-title");
+            if (titleEl) titleEl.textContent = `${data.icon} ${data.title}`;
+            const badgeEl = document.getElementById("kpi-active-sector-badge");
+            if (badgeEl) badgeEl.textContent = data.evm.badge;
+
+            // 2. Synkroniser dropdown
+            const selectEl = document.getElementById("kpi-sector-select");
+            if (selectEl && selectEl.value !== sectorKey) {
+                selectEl.value = sectorKey;
+            }
+
+            // 3. Planlagt Verdi (PV YTD)
+            const pvVal = document.getElementById("kpi-val-pv");
+            if (pvVal) pvVal.textContent = data.evm.pv;
+            const pvSub = document.getElementById("kpi-sub-pv");
+            if (pvSub) pvSub.textContent = data.evm.pv_sub;
+
+            // 4. Påløpt Kostnad (AC YTD)
+            const acVal = document.getElementById("kpi-val-ac");
+            if (acVal) acVal.textContent = data.evm.ac;
+            const acSub = document.getElementById("kpi-sub-ac");
+            if (acSub) acSub.textContent = data.evm.ac_sub;
+
+            // 5. Kostnadsavvik (CV)
+            const cvVal = document.getElementById("kpi-val-cv");
+            if (cvVal) {
+                cvVal.textContent = data.evm.cv;
+                if (data.evm.cv_alert) {
+                    cvVal.classList.add("kpi-alert");
+                } else {
+                    cvVal.classList.remove("kpi-alert");
+                }
+            }
+            const cvSub = document.getElementById("kpi-sub-cv");
+            if (cvSub) {
+                cvSub.textContent = data.evm.cv_sub;
+                if (data.evm.cv_alert) {
+                    cvSub.classList.add("kpi-alert");
+                } else {
+                    cvSub.classList.remove("kpi-alert");
+                }
+            }
+
+            // 6. Kostnadsindeks (CPI)
+            const cpiVal = document.getElementById("kpi-val-cpi");
+            if (cpiVal) {
+                cpiVal.textContent = data.evm.cpi;
+                if (data.evm.cpi_alert) {
+                    cpiVal.classList.add("kpi-alert");
+                } else {
+                    cpiVal.classList.remove("kpi-alert");
+                }
+            }
+            const cpiSub = document.getElementById("kpi-sub-cpi");
+            if (cpiSub) cpiSub.textContent = data.evm.cpi_sub;
+
+            // 7. Sluttprognose (EAC)
+            const eacVal = document.getElementById("kpi-val-eac");
+            if (eacVal) eacVal.textContent = data.evm.eac;
+            const eacSub = document.getElementById("kpi-sub-eac");
+            if (eacSub) {
+                eacSub.textContent = data.evm.eac_sub;
+                if (data.evm.eac_alert) {
+                    eacSub.classList.add("kpi-alert");
+                } else {
+                    eacSub.classList.remove("kpi-alert");
+                }
+            }
+
+            // 8. Uthev aktiv rad i sammenstillingstabell
+            const rows = document.querySelectorAll("#sector-comparison-tbody tr");
+            rows.forEach(r => {
+                if (r.id === "row-sec-all") {
+                    r.style.background = "#f8fafc";
+                } else {
+                    r.style.background = "";
+                }
+            });
+            const activeRow = document.getElementById(`row-sec-${sectorKey.toLowerCase()}`);
+            if (activeRow) {
+                activeRow.style.background = "#e0f2fe";
+            }
+        }
+
+        function toggleSectorComparisonTable() {
+            const container = document.getElementById("sector-comparison-container");
+            const btn = document.getElementById("btn-toggle-sector-comp");
+            if (!container) return;
+            if (container.style.display === "none" || container.style.display === "") {
+                container.style.display = "block";
+                if (btn) btn.innerHTML = "▲ Skjul sammenstilling";
+            } else {
+                container.style.display = "none";
+                if (btn) btn.innerHTML = "📋 Vis alle 6 områder tabell";
+            }
         }
 
         // 3. Command Palette (Ctrl+K)
