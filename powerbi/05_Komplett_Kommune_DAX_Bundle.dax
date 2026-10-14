@@ -1,0 +1,165 @@
+// ==============================================================================
+// KRISTIANSAND KOMMUNE — MASTER DAX MEASURE BUNDLE
+// Spesifikasjon: POWER_BI_DAX_MEASURES_LIBRARY.md & POWER_BI_DASHBOARDS_AND_LAYOUTS.md
+// Forfatter: Frank Ellingsen, Senior Controller & BI-Spesialist
+// Standard: Star Schema, Tufte Data-Ink Ratio, ISINSCOPE Dynamisk Kontekst
+// ==============================================================================
+
+// ------------------------------------------------------------------------------
+// 1. BASISMÅLINGER (BASE MEASURES)
+// ------------------------------------------------------------------------------
+
+[Regnskap YTD] = 
+SUM(Fact_Regnskap[Belop_YTD])
+
+[Budsjett YTD] = 
+SUM(Fact_Budsjett[Budsjett_Revidert])
+
+[Budsjett Opprinnelig YTD] = 
+SUM(Fact_Budsjett[Budsjett_Opprinnelig])
+
+[Budsjettavvik Kr] = 
+[Regnskap YTD] - [Budsjett YTD]
+
+[Budsjettavvik %] = 
+DIVIDE([Budsjettavvik Kr], [Budsjett YTD], 0)
+
+[Avvik Status Fargekode] = 
+SWITCH(
+    TRUE(),
+    [Budsjettavvik %] > 0.05, "#DC2626", // Rød alarm: Merforbruk > 5 %
+    [Budsjettavvik %] > 0.02, "#F59E0B", // Gul advarsel: Merforbruk 2-5 %
+    "#16A34A"                           // Grønn: Innenfor ramme / mindreforbruk
+)
+
+
+// ------------------------------------------------------------------------------
+// 2. TIDSKORRIGERT OG HISTORIKK (TIME INTELLIGENCE)
+// ------------------------------------------------------------------------------
+
+[Regnskap Fjorar YTD] = 
+CALCULATE(
+    [Regnskap YTD],
+    SAMEPERIODLASTYEAR(Dim_Tid[Dato])
+)
+
+[Endring mot Fjorar Kr] = 
+[Regnskap YTD] - [Regnskap Fjorar YTD]
+
+[Endring mot Fjorar %] = 
+DIVIDE([Endring mot Fjorar Kr], [Regnskap Fjorar YTD], 0)
+
+[Regnskap Rullende 3 Mnd Snitt] = 
+CALCULATE(
+    AVERAGEX(
+        DATESINPERIOD(Dim_Tid[Dato], MAX(Dim_Tid[Dato]), -3, MONTH),
+        [Regnskap YTD]
+    )
+)
+
+
+// ------------------------------------------------------------------------------
+// 3. EOY FREMSKRIVING OG SCENARIOSIMULERING (FORECASTING)
+// ------------------------------------------------------------------------------
+
+[Gjenværende Maaneder] = 
+12 - MAX(Dim_Tid[Maaned])
+
+[Maanedlig Runrate Forbruk] = 
+DIVIDE([Regnskap YTD], MAX(Dim_Tid[Maaned]), 0)
+
+// EOY Uten Tiltak (P90 / Worst Case)
+[EOY_Prognose_Uten_Tiltak] = 
+[Regnskap YTD] + ([Maanedlig Runrate Forbruk] * [Gjenværende Maaneder])
+
+// Månedlig Tiltakseffekt (Vikarstopp og purring NAV)
+[Mnd_Tiltakseffekt_Kr] = 170000
+
+// EOY Med Tiltak (P10 / Målsetting)
+[EOY_Prognose_Med_Tiltak] = 
+VAR RullendePrognose = [EOY_Prognose_Uten_Tiltak]
+VAR TotalTiltaksGevinst = [Mnd_Tiltakseffekt_Kr] * [Gjenværende Maaneder]
+RETURN
+    RullendePrognose - TotalTiltaksGevinst
+
+// Forventet Sluttbalanse mot Helårsbudsjett
+[EOY_Forventet_Balanse] = 
+VAR HelarsBudsjett = CALCULATE(SUM(Fact_Budsjett[Budsjett_Revidert]), ALL(Dim_Tid[Maaned]))
+RETURN
+    HelarsBudsjett - [EOY_Prognose_Med_Tiltak]
+
+[EOY_Balanse_Status] = 
+IF(
+    [EOY_Forventet_Balanse] >= 0,
+    "Balanse Oppfylt (Overskudd: kr " & FORMAT([EOY_Forventet_Balanse], "#,##0") & ")",
+    "Inndekningsbehov jf. § 14-5 (Underskudd: kr " & FORMAT(ABS([EOY_Forventet_Balanse]), "#,##0") & ")"
+)
+
+
+// ------------------------------------------------------------------------------
+// 4. SEKTORSPESIFIKKE KOSTRA NØKKELTALL (KOSTRA KPIS)
+// ------------------------------------------------------------------------------
+
+// Grunnskole: Netto driftsutgift per elev (Funksjon 202)
+[Netto Driftsutgift Per Elev] = 
+VAR UtgifterGrunnskole = CALCULATE([Regnskap YTD], Dim_Tjeneste[Funksjon_Kode] = "202")
+VAR AntallElever = 1420 // Hentet fra Dim_KommuneFakta / GSI
+RETURN
+    DIVIDE(UtgifterGrunnskole, AntallElever, 0)
+
+// Helse: Vikarandel av samlede lønnsutgifter
+[Vikarandel Lonn %] = 
+VAR VikarUtgift = CALCULATE([Regnskap YTD], Dim_Konto[KontoArt_Gruppe] = "1020")
+VAR TotalLonn = CALCULATE([Regnskap YTD], Dim_Konto[KontoArt_Gruppe] IN {"1010", "1020", "1040", "1090"})
+RETURN
+    DIVIDE(VikarUtgift, TotalLonn, 0)
+
+// Overtidsandel %
+[Overtidsandel %] = 
+VAR OvertidUtgift = CALCULATE([Regnskap YTD], Dim_Konto[KontoArt_Gruppe] = "1090")
+VAR TotalLonn = CALCULATE([Regnskap YTD], Dim_Konto[KontoArt_Gruppe] IN {"1010", "1020", "1040", "1090"})
+RETURN
+    DIVIDE(OvertidUtgift, TotalLonn, 0)
+
+// Disposisjonsfond som andel av brutto driftsinntekter
+[Disposisjonsfond Andel %] = 
+VAR Fondsbeholdning = 412000000 // Kr 412 mill.
+VAR BruttoInntekter = 6250000000 // Kr 6,25 mrd.
+RETURN
+    DIVIDE(Fondsbeholdning, BruttoInntekter, 0)
+
+
+// ------------------------------------------------------------------------------
+// 5. DYNAMISKE TITLER & HIERARKI-SCOPE (ISINSCOPE)
+// ------------------------------------------------------------------------------
+
+[Dynamisk_Tittel_Nivaa] = 
+IF(
+    ISINSCOPE(Dim_Ansvar[Enhet_Navn]),
+    "Detaljnivå: Enhet " & SELECTEDVALUE(Dim_Ansvar[Enhet_Navn]),
+    IF(
+        ISINSCOPE(Dim_Ansvar[Kommunalsjef_Omraade]),
+        "Sektornivå: " & SELECTEDVALUE(Dim_Ansvar[Kommunalsjef_Omraade]),
+        "Samlet Kommunenivå — Kristiansand"
+    )
+)
+
+[FT_Aksjonstittel_Avvik] = 
+VAR AvvikKr = [Budsjettavvik Kr]
+VAR AvvikPct = [Budsjettavvik %]
+RETURN
+    IF(
+        AvvikKr > 500000,
+        "Kritisk merforbruk på kr " & FORMAT(AvvikKr, "#,##0") & " (" & FORMAT(AvvikPct, "+0.0%") & ") — Tiltak iverksatt",
+        "Økonomisk drift i balanse innenfor tildelt budsjettramme (" & FORMAT(AvvikPct, "+0.0%") & ")"
+    )
+
+
+// ------------------------------------------------------------------------------
+// 6. ROW-LEVEL SECURITY (RLS) FOR POWER BI SERVICE
+// ------------------------------------------------------------------------------
+// Regel legges på tabellen Dim_Ansvar:
+// [Kommunalsjef_Omraade] = LOOKUPVALUE(
+//     Dim_Ansvar[Kommunalsjef_Omraade],
+//     Dim_Ansvar[Epost], USERPRINCIPALNAME()
+// )

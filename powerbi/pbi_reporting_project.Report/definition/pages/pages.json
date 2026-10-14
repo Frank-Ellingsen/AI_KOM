@@ -1,7 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
   "pageOrder": [
-    "5facab6878ce87d42ae0"
+    "p01_cfo_executive",
+    "p02_oppvekst_skole",
+    "p03_helse_mestring",
+    "p04_lonn_vikar_monitor",
+    "p05_prognose_scenarier",
+    "p06_investering_evm",
+    "p07_revisjon_port9"
   ],
-  "activePageName": "5facab6878ce87d42ae0"
+  "activePageName": "p01_cfo_executive"
 }

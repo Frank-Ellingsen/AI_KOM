@@ -1,0 +1,72 @@
+table Audit_AI_Actions
+
+	column Tidsstempel
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: Tidsstempel
+
+	column Enhetskode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Enhetskode
+
+	column ansvar_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_kode
+
+	column AI_Tiltak
+		dataType: string
+		summarizeBy: none
+		sourceColumn: AI_Tiltak
+
+	column Konfidens
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Konfidens
+
+	column Leder_Beslutning
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Leder_Beslutning
+
+	column Saksbehandler
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Saksbehandler
+
+	column Begrunnelse
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Begrunnelse
+
+	column SHA256_Hash
+		dataType: string
+		summarizeBy: none
+		sourceColumn: SHA256_Hash
+
+	partition Audit_AI_Actions = m
+		mode: import
+		source =
+				let
+				    Source = #table(
+				        type table [
+				            Tidsstempel = datetime,
+				            Enhetskode = text,
+				            ansvar_kode = text,
+				            AI_Tiltak = text,
+				            Konfidens = number,
+				            Leder_Beslutning = text,
+				            Saksbehandler = text,
+				            Begrunnelse = text,
+				            SHA256_Hash = text
+				        ],
+				        {
+				            {#datetime(2026, 8, 20, 14, 30, 0), "2020", "2020", "Vikarstopp korttidsfravær < 3 dager", 0.94, "APPROVED", "Frank Ellingsen", "Kvantifisert innsparing 170k/mnd jf. § 14-5", "a8f9c2e411b98d24"},
+				            {#datetime(2026, 8, 22, 11, 15, 0), "2540", "2540", "Turnusendring og overtidstak døgnpost", 0.89, "MODIFIED", "Frank Ellingsen", "Drøftet med tillitsvalgte iht. HTA § 4", "f34b9982a74c1022"}
+				        }
+				    )
+				in
+				    Source
+
+	annotation PBI_ResultType = Table

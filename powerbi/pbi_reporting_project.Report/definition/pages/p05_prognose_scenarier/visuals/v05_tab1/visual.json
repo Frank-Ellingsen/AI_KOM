@@ -1,0 +1,121 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v05_tab1",
+  "position": {
+    "x": 1020,
+    "y": 180,
+    "z": 8,
+    "width": 540,
+    "height": 680,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "ansvar_navn"
+                }
+              },
+              "queryRef": "Dim_Ansvar.ansvar_navn",
+              "nativeQueryRef": "ansvar_navn",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vedtatt Årsbudsjett"
+                }
+              },
+              "queryRef": "_Measures.Vedtatt Årsbudsjett",
+              "nativeQueryRef": "Vedtatt Årsbudsjett",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "EOY Rullende Prognose"
+                }
+              },
+              "queryRef": "_Measures.EOY Rullende Prognose",
+              "nativeQueryRef": "EOY Rullende Prognose",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Planlagt Tiltakseffekt T3"
+                }
+              },
+              "queryRef": "_Measures.Planlagt Tiltakseffekt T3",
+              "nativeQueryRef": "Planlagt Tiltakseffekt T3",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Simulert EOY Forventet Avvik"
+                }
+              },
+              "queryRef": "_Measures.Simulert EOY Forventet Avvik",
+              "nativeQueryRef": "Simulert EOY Forventet Avvik",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Scenariooversikt EOY'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

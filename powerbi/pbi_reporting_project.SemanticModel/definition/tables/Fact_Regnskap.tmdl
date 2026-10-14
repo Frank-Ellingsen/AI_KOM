@@ -1,0 +1,150 @@
+table Fact_Regnskap
+
+	column dato
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: dato
+
+	column maned
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: maned
+
+	column manedsnavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: manedsnavn
+
+	column Tertial
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Tertial
+
+	column Status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Status
+
+	column ansvar_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_kode
+
+	column ansvar_navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_navn
+
+	column kommunalsjefomrade
+		dataType: string
+		summarizeBy: none
+		sourceColumn: kommunalsjefomrade
+
+	column funksjon_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: funksjon_kode
+
+	column art_key
+		dataType: string
+		summarizeBy: none
+		sourceColumn: art_key
+
+	column Hovedgruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Hovedgruppe
+
+	column Undergruppe
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Undergruppe
+
+	column KOSTRA_Art
+		dataType: string
+		summarizeBy: none
+		sourceColumn: KOSTRA_Art
+
+	column Kontokode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontokode
+
+	column Kontonavn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Kontonavn
+
+	column Budsjett
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Budsjett
+
+	column Regnskap
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Regnskap
+
+	column Avvik
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Avvik
+
+	column Merforbruk
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Merforbruk
+
+	column Aarsbudsjett
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Aarsbudsjett
+
+	partition Fact_Regnskap = m
+		mode: import
+		source =
+				let
+				    // 1. Skole Data
+				    SourceSkole = Csv.Document(File.Contents(DataRoot & "Komskole.csv"), [Delimiter=",", Encoding=1252, QuoteStyle=QuoteStyle.Csv]),
+				    SkipSkole = Table.Skip(SourceSkole, 2),
+				    HeadersSkole = Table.PromoteHeaders(SkipSkole, [PromoteAllScalars=true]),
+				    TypedSkole = Table.TransformColumnTypes(HeadersSkole, {{"Art", type text}, {"Regnskap hiå.", type number}, {"Budsjett hiå.", type number}, {"Avvik i kr", type number}, {"Årsbudsjett", type number}}, "en-US"),
+				    AddDateSkole = Table.AddColumn(TypedSkole, "dato", each #date(2026, 8, 1), type date),
+				    AddRespSkole = Table.AddColumn(AddDateSkole, "ansvar_kode", each "2020", type text),
+				    AddRespNameSkole = Table.AddColumn(AddRespSkole, "ansvar_navn", each "Enhet 202 Grunnskole", type text),
+				    AddFunkSkole = Table.AddColumn(AddRespNameSkole, "funksjon_kode", each "202", type text),
+				    AddMndSkole = Table.AddColumn(AddFunkSkole, "maned", each 8, Int64.Type),
+				    AddMndNavnSkole = Table.AddColumn(AddMndSkole, "manedsnavn", each "august", type text),
+				    AddTertialSkole = Table.AddColumn(AddMndNavnSkole, "Tertial", each "T2", type text),
+				    AddStatusSkole = Table.AddColumn(AddTertialSkole, "Status", each "Bokført", type text),
+				    AddHovedSkole = Table.AddColumn(AddStatusSkole, "Hovedgruppe", each [Kontotype], type text),
+				    AddUnderSkole = Table.AddColumn(AddHovedSkole, "Undergruppe", each [Kontotype], type text),
+				    AddArtKeySkole = Table.AddColumn(AddUnderSkole, "art_key", each Text.From([Art]) & "|" & Text.From([Kontotype]) & "|" & Text.From([Post]), type text),
+				    AddKostraArtSkole = Table.AddColumn(AddArtKeySkole, "KOSTRA_Art", each Text.From([Art]), type text),
+				    AddBudSkole = Table.AddColumn(AddKostraArtSkole, "Budsjett", each [#"Budsjett hiå."], type number),
+				    AddRegSkole = Table.AddColumn(AddBudSkole, "Regnskap", each [#"Regnskap hiå."], type number),
+				    AddAvvSkole = Table.AddColumn(AddRegSkole, "Avvik", each [#"Regnskap hiå."] - [#"Budsjett hiå."], type number),
+				    AddMerSkole = Table.AddColumn(AddAvvSkole, "Merforbruk", each [Avvik], type number),
+				    AddSektorSkole = Table.AddColumn(AddMerSkole, "kommunalsjefomrade", each "Oppvekst", type text),
+				    RenameSkole = Table.RenameColumns(AddSektorSkole, {{"Post", "Kontonavn"}, {"Kontotype", "Kontokode"}, {"Årsbudsjett", "Aarsbudsjett"}}),
+				    ColsSkole = Table.SelectColumns(RenameSkole, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"}),
+
+				    // 2. BoMiljø Data
+				    SourceBo = Csv.Document(File.Contents(DataRoot & "BoMiljø.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    HeadersBo = Table.PromoteHeaders(SourceBo, [PromoteAllScalars=true]),
+				    TypedBo = Table.TransformColumnTypes(HeadersBo, {{"Måned_Nr", Int64.Type}, {"KOSTRA_Funksjon", type text}, {"Tjenesteområde", type text}, {"KOSTRA_Art", type text}, {"Kontokode", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}, {"Merforbruk", type number}}, "en-US"),
+				    AddDateBo = Table.AddColumn(TypedBo, "dato", each Date.FromText([Periode] & "-01"), type date),
+				    AddRespBo = Table.AddColumn(AddDateBo, "ansvar_kode", each "2540", type text),
+				    AddRespNameBo = Table.AddColumn(AddRespBo, "ansvar_navn", each [Lokasjon], type text),
+				    AddFunkBo = Table.AddColumn(AddRespNameBo, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),
+				    AddSektorBo = Table.AddColumn(AddFunkBo, "kommunalsjefomrade", each [Tjenesteområde], type text),
+				    AddArtKeyBo = Table.AddColumn(AddSektorBo, "art_key", each Text.From([KOSTRA_Art]) & "|" & Text.From([Kontokode]) & "|" & Text.From([Kontonavn]), type text),
+				    AddAnnualBudgetBo = Table.AddColumn(AddArtKeyBo, "Aarsbudsjett", each [Budsjett] * 1.5, type number),
+				    RenameBo = Table.RenameColumns(AddAnnualBudgetBo, {{"Måned_Nr", "maned"}, {"Måned", "manedsnavn"}}),
+				    ColsBo = Table.SelectColumns(RenameBo, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"}),
+
+				    Combined = Table.Combine({ColsSkole, ColsBo})
+				in
+				    Combined
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v04_col1",
+  "position": {
+    "x": 20,
+    "y": 180,
+    "z": 5,
+    "width": 800,
+    "height": 380,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Dato"
+                    }
+                  },
+                  "Property": "manedsnavn"
+                }
+              },
+              "queryRef": "Dim_Dato.manedsnavn",
+              "nativeQueryRef": "manedsnavn",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vikarutgifter Art 1020"
+                }
+              },
+              "queryRef": "_Measures.Vikarutgifter Art 1020",
+              "nativeQueryRef": "Vikarutgifter Art 1020",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Vikarutvikling per Måned'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

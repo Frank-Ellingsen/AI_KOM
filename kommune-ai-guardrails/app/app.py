@@ -77,6 +77,12 @@ except ImportError:
 
 from sentence_transformers import SentenceTransformer
 from kommune_ai_guardrails.rag import ask_kommune_ai, get_db_connection, sanitize_pii
+from kommune_ai_guardrails.mcp_server import (
+    execute_gemini_mcp_query,
+    get_unit_financials,
+    search_municipal_law,
+    calculate_eoy_impact
+)
 
 # ==========================================
 # 2. STREAMLIT KONFIGURASJON & TUFTE-DESIGN
@@ -359,6 +365,32 @@ st.sidebar.markdown(
 WORKSPACE_ROOT = PROJECT_ROOT.parent
 
 DOCUMENTS_MENU = {
+    "🖥️ PowerPoint Presentasjonsmodeller (powerpoint/)": [
+        ("Presentasjon Bystyret Tertialrapport 2026 (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Bystyret_Tertialrapport_2026.pptx", "Fullverdig 16:9 widescreen 7-slide dekk for Bystyret & Formannskapet jf. FT Visual Vocabulary"),
+        ("Bystyret & Formannskapet Decks Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_BYSTYRET_OG_FORM ANNSKAPET_DECKS.md", "Slidelayout, fargekoder og 7 standard lysbilder"),
+        ("Visual Storytelling FT Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_VISUAL_STORYTELLING_FT.md", "Aksjonstitler, bullet charts og avviksbroer"),
+        ("PowerPoint Automatisering Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_PRESENTASJONSSKAPING_AUTOMATION.md", "python-pptx arkitektur og generator")
+    ],
+    "📊 Excel FP&A Finansielle Modeller (excel/)": [
+        ("Kommune FAST Finansiell Modell 2026 (Excel)", WORKSPACE_ROOT / "excel" / "Kommune_FAST_Finansiell_Modell_2026.xlsx", "5-tabs FAST-standard FP&A modell med tilpasset avviksformatering og EOY-beregning"),
+        ("FAST Finansiell Modellering Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_FPA_FINANCIAL_MODELLING_FAST.md", "FAST Standard, fargekoder og tab-struktur"),
+        ("Excel MCP Server Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_AUTOMATION_AND_MCP_SERVER.md", "Model Context Protocol for Excel og Power Query M-kode"),
+        ("Python in Excel Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_PYTHON_AND_COPILOT_INTEGRATION.md", "=PY() funksjonen og Copilot i Excel")
+    ],
+    "📝 Politiske Saksfremlegg & HØP (word/)": [
+        ("Saksfremlegg Bystyret Budsjettendring (Word)", WORKSPACE_ROOT / "word" / "Saksfremlegg_Bystyret_Budsjettendring_2026.docx", "Fullverdig saksfremlegg med Public360-metadata, 5 obligatoriske seksjoner og § 14-5 vedtak"),
+        ("Tertialrapport & HØP Notat 2026 (Word)", WORKSPACE_ROOT / "word" / "Tertialrapport_og_HOP_Notat_2026.docx", "HØP-notat iht. kommunens klarspråk- og WCAG 2.1 AA standard"),
+        ("Politiske Saksfremlegg Maler Spec (Markdown)", WORKSPACE_ROOT / "word" / "word_kommune_spec_bundle_v1" / "WORD_POLITISKE_SAKSFREMLEGG_MALER.md", "5-punkts mal og #1E3A8A overskriftsprofil"),
+        ("Public360 & Dokumentautomatisering (Markdown)", WORKSPACE_ROOT / "word" / "word_kommune_spec_bundle_v1" / "WORD_PUBLIC360_OG_DOKUMENT_AUTOMATION.md", "python-docx pipeline og arkivering"),
+        ("Tertialrapport & HØP Standarder (Markdown)", WORKSPACE_ROOT / "word" / "word_kommune_spec_bundle_v1" / "WORD_TERTIALRAPPORT_OG_HOP_STANDARDER.md", "WCAG 2.1 AA og kapittelstruktur for HØP")
+    ],
+    "⚡ Gemini Flash MCP & Power BI Specs": [
+        ("Power BI Reporting Project (.PBIP)", WORKSPACE_ROOT / "powerbi" / "pbi_reporting_project.pbip", "Offisielt Power BI prosjekt (.pbip) med 7 ferdige PBIR rapportsider og TMDL Semantisk Modell"),
+        ("Gemini Flash MCP Chat Spec (Markdown)", WORKSPACE_ROOT / "GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md", "Komplett spesifikasjon for Gemini Flash MCP Chat i Office Hub V2"),
+        ("Komplett Master DAX Bundle (DAX)", WORKSPACE_ROOT / "powerbi" / "05_Komplett_Kommune_DAX_Bundle.dax", "Fullstendig DAX-måltallspakke for alle 7 CFO/Controller layouts"),
+        ("Star Schema Power Query M-Code (Code)", WORKSPACE_ROOT / "powerbi" / "06_Star_Schema_DDL_and_PowerQuery.m", "Komplett M-kode med Fact_Regnskap, Fact_Budsjett og dimensjoner"),
+        ("7 CFO/Controller Dashboards Guide (Markdown)", WORKSPACE_ROOT / "powerbi" / "07_PowerBI_7_Layouts_Spec_Guide.md", "Visuell implementasjonsveileder for 7 Power BI layouts")
+    ],
     "🎯 AI-Implementeringspakke for Økonomi (ai-implementeringspakke-okonomi/)": [
         ("00 Masteroversikt & Struktur", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "00_INNHOLD_OG_OVERSIKT.md", "Helhetlig masterveileder for AI i kommunal økonomistyring"),
         ("Modul 1: Konsept & Beslutningsgrunnlag", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "01_MODUL_1_KONSEPT_OG_BESLUTNINGSGRUNNLAG.md", "Teknologilag, verdipotensial og forankring i KS/Digdir"),
@@ -585,13 +617,333 @@ for cat_title, items in DOCUMENTS_MENU.items():
 # ==========================================
 # 5. HOVEDFLATE: MULTI-TAB CONTROL OFFICE HUB
 # ==========================================
-tab_rag, tab_calendar, tab_controller, tab_saksfremlegg, tab_docs = st.tabs([
+tab_mcp, tab_pbi, tab_rag, tab_calendar, tab_controller, tab_saksfremlegg, tab_docs = st.tabs([
+    "⚡ Gemini Flash Chat (MCP)",
+    "📈 Power BI Rapportering (.PBIP)",
     "💬 RAG Regelverksassistent",
     "📅 Årshjul & Kritiske Frister",
     "📊 Økonomikontroll & Avvik (EVM)",
     "📝 Saksfremlegg & HITL Sign-Off",
     "📁 Dokumentarkiv & Ressurser"
 ])
+
+
+# -------------------------------------------------------------
+# FANE 0: GEMINI FLASH CHAT MED MCP PROTOKOLL
+# -------------------------------------------------------------
+with tab_mcp:
+    st.markdown("### ⚡ Gemini Flash Chat & MCP Beslutningsstøtte")
+    st.caption("Lynrask inferens (< 1,5s) forankret i Model Context Protocol (MCP), Visma ERP og sqlite-vec RAG.")
+
+    # Statusbanner
+    col_sb1, col_sb2, col_sb3 = st.columns([2, 1, 1])
+    with col_sb1:
+        st.success("🟢 **MCP Server Aktiv:** 3 verktøy tilkoblet (`get_unit_financials`, `search_municipal_law`, `calculate_eoy_impact`)", icon="🛠️")
+    with col_sb2:
+        st.info("⚡ **Responstid:** < 1,5 sekunder")
+    with col_sb3:
+        st.info("🛡️ **PII Filter:** Aktivt (GDPR)")
+
+    if "mcp_chat_history" not in st.session_state:
+        st.session_state.mcp_chat_history = []
+
+    if "mcp_active_tools" not in st.session_state:
+        st.session_state.mcp_active_tools = []
+
+    if "mcp_last_audit_hash" not in st.session_state:
+        st.session_state.mcp_last_audit_hash = ""
+
+    # Hurtigknapper for vanlige scenarioer
+    st.markdown("##### 💡 Hurtigvalg for vanlige problemstillinger:")
+    q_col1, q_col2, q_col3, q_col4 = st.columns(4)
+    quick_prompt = None
+
+    if q_col1.button("🏫 Enhet 202 Grunnskole: Q2 status & avvik", use_container_width=True):
+        quick_prompt = "Hva er status på Enhet 202 Grunnskole per Q2, hva er hovedårsaken til avviket, og hvilken effekt vil tiltakene ha på helårsprognosen (EOY)?"
+    if q_col2.button("⚖️ Inndekning av merforbruk (§ 14-5)", use_container_width=True):
+        quick_prompt = "Hvilke krav stiller Kommuneloven § 14-5 og bruttoprinsippet § 14-6 ved inndekning av merforbruk på skolesektoren?"
+    if q_col3.button("🎯 Kvantifiser vikarstopp (170k/mnd)", use_container_width=True):
+        quick_prompt = "Simulér helårseffekt dersom vi innfører vikarstopp og purring på NAV-refusjoner fra august med 170 000 kr månedlig besparelse."
+    if q_col4.button("🏥 Enhet 401 Boenhet: Overtid & turnus", use_container_width=True):
+        quick_prompt = "Hva er situasjonen for Enhet 401 Helse og Mestring per Q2 når det gjelder overtid, helgetillegg og turnusavvik?"
+
+    # Vis chat-historikk
+    for msg in st.session_state.mcp_chat_history:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
+    # Brukerinput
+    user_input = st.chat_input("Spør Gemini Flash om regnskap, lover eller helårsprognoser...")
+    active_prompt = quick_prompt or user_input
+
+    if active_prompt:
+        # Legg til brukerens melding
+        st.session_state.mcp_chat_history.append({"role": "user", "content": active_prompt})
+        with st.chat_message("user"):
+            st.markdown(active_prompt)
+
+        # Generer svar med MCP verktøy
+        with st.chat_message("assistant"):
+            with st.spinner("Kaller MCP Tools: get_unit_financials, search_municipal_law, calculate_eoy_impact..."):
+                res_dict = execute_gemini_mcp_query(active_prompt, model_name=selected_model)
+                reply_text = res_dict["text"]
+                audit_hash = res_dict["audit_hash"]
+                tools_used = res_dict["tools_called"]
+
+                st.markdown(reply_text)
+                st.caption(f"🔒 **Kryptografisk Revisjonsstempel (SHA-256):** `{audit_hash}` | Status: Logget i `Audit_AI_Actions`")
+
+                # Vis MCP verktøyinspektør i expander
+                with st.expander("🛠️ Se detaljerte MCP Verktøykall & Data-Payloads", expanded=False):
+                    st.markdown("**Verktøykall utført av Gemini Flash:**")
+                    for t in tools_used:
+                        st.code(t, language="python")
+                    st.json(res_dict.get("data", {}))
+
+                st.session_state.mcp_chat_history.append({"role": "assistant", "content": reply_text})
+                st.session_state.mcp_active_tools = tools_used
+                st.session_state.mcp_last_audit_hash = audit_hash
+
+    st.markdown("---")
+    st.subheader("📦 Genererte Styringsdokumenter for Bystyret & Formannskapet")
+    st.caption("Ferdigproduserte, formelle filer i samsvar med kommunens standardbunter for PowerPoint, Excel, Word og Power BI.")
+
+    col_dl1, col_dl2, col_dl3, col_dl4 = st.columns(4)
+
+    pptx_path = WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Bystyret_Tertialrapport_2026.pptx"
+    xlsx_path = WORKSPACE_ROOT / "excel" / "Kommune_FAST_Finansiell_Modell_2026.xlsx"
+    docx_path = WORKSPACE_ROOT / "word" / "Saksfremlegg_Bystyret_Budsjettendring_2026.docx"
+    dax_path = WORKSPACE_ROOT / "powerbi" / "05_Komplett_Kommune_DAX_Bundle.dax"
+
+    with col_dl1:
+        st.markdown("**🖥️ PowerPoint (16:9 Deck)**  \n*7 standard slides for Bystyret*")
+        if pptx_path.exists():
+            with open(pptx_path, "rb") as f:
+                st.download_button(
+                    "⬇️ Last ned PPTX",
+                    data=f.read(),
+                    file_name=pptx_path.name,
+                    mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                    key="dl_tabmcp_pptx",
+                    use_container_width=True
+                )
+        else:
+            st.warning("Ikke generert ennå")
+
+    with col_dl2:
+        st.markdown("**📊 Excel FAST Modell**  \n*5-tabs FP&A styringsmodell*")
+        if xlsx_path.exists():
+            with open(xlsx_path, "rb") as f:
+                st.download_button(
+                    "⬇️ Last ned XLSX",
+                    data=f.read(),
+                    file_name=xlsx_path.name,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    key="dl_tabmcp_xlsx",
+                    use_container_width=True
+                )
+        else:
+            st.warning("Ikke generert ennå")
+
+    with col_dl3:
+        st.markdown("**📝 Word Saksfremlegg**  \n*Public360-tagget politisk sak*")
+        if docx_path.exists():
+            with open(docx_path, "rb") as f:
+                st.download_button(
+                    "⬇️ Last ned DOCX",
+                    data=f.read(),
+                    file_name=docx_path.name,
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    key="dl_tabmcp_docx",
+                    use_container_width=True
+                )
+        else:
+            st.warning("Ikke generert ennå")
+
+    with col_dl4:
+        st.markdown("**📈 Power BI DAX Pakke**  \n*Komplett 7-layouts DAX bibliotek*")
+        if dax_path.exists():
+            st.download_button(
+                "⬇️ Last ned DAX",
+                data=dax_path.read_text(encoding="utf-8", errors="replace"),
+                file_name=dax_path.name,
+                mime="text/plain",
+                key="dl_tabmcp_dax",
+                use_container_width=True
+            )
+        else:
+            st.warning("Ikke generert ennå")
+
+
+
+# -------------------------------------------------------------
+# FANE 0.5: POWER BI RAPPORTERINGSPROSJEKT (.PBIP)
+# -------------------------------------------------------------
+with tab_pbi:
+    st.markdown("### 📈 Power BI Rapporteringsprosjekt (PBIP Developer Mode)")
+    st.caption("Offisielt Power BI Desktop / Fabric prosjekt: `powerbi/pbi_reporting_project.pbip` med 7 standardiserte PBIR rapportsider og TMDL Semantisk Modell.")
+
+    pbip_file = WORKSPACE_ROOT / "powerbi" / "pbi_reporting_project.pbip"
+    pbip_guide = WORKSPACE_ROOT / "powerbi" / "07_PowerBI_7_Layouts_Spec_Guide.md"
+    dax_bundle = WORKSPACE_ROOT / "powerbi" / "05_Komplett_Kommune_DAX_Bundle.dax"
+
+    # Status- og arkitekturoversikt
+    kpi_col1, kpi_col2, kpi_col3, kpi_col4 = st.columns(4)
+    with kpi_col1:
+        st.metric(label="Modellformat", value="PBIP + TMDL", delta="Git-vennlig")
+    with kpi_col2:
+        st.metric(label="Rapportsider", value="7 sider", delta="PBIR format")
+    with kpi_col3:
+        st.metric(label="Visual Containers", value="50 stk", delta="Tufte Data-Ink")
+    with kpi_col4:
+        st.metric(label="TMDL Tabeller", value="9 tabeller", delta="Star Schema")
+
+    # Handlingsknapper
+    act_col1, act_col2, act_col3 = st.columns([1.5, 1.5, 1])
+    with act_col1:
+        if pbip_file.exists():
+            st.download_button(
+                "⬇️ Last ned prosjektfil (.pbip)",
+                data=pbip_file.read_text(encoding="utf-8", errors="replace"),
+                file_name="pbi_reporting_project.pbip",
+                mime="application/json",
+                use_container_width=True
+            )
+    with act_col2:
+        if st.button("🔄 Bygg / Oppdater PBIP på nytt", use_container_width=True):
+            try:
+                from kommune_ai_guardrails.generators.powerbi_pbip_generator import build_pbip_project
+                res = build_pbip_project()
+                st.success(f"✓ Bygget {res['pages_count']} sider og {res['visuals_count']} visual containers!")
+            except Exception as e:
+                st.error(f"Feil ved bygging: {e}")
+    with act_col3:
+        if pbip_guide.exists():
+            st.link_button("📖 7 Layouts Guide", "https://github.com/Frank-Ellingsen/AI_KOM/blob/main/powerbi/07_PowerBI_7_Layouts_Spec_Guide.md", use_container_width=True)
+
+    st.markdown("---")
+    st.markdown("#### 📑 Interaktiv Forhåndsvisning av 7 PBIR Rapportsider")
+
+    selected_pbi_page = st.selectbox(
+        "Velg rapportside for detaljert visning og metrikker:",
+        options=[
+            "1. Toppledelse (CFO Panel)",
+            "2. Sektor Oppvekst & Grunnskole (Enhet 202)",
+            "3. Sektor Helse & Mestring (Enhet 2540)",
+            "4. Lønn, Overtid & Vikarmonitor",
+            "5. Prognose & What-If Scenarier",
+            "6. Investering & Capex (EVM)",
+            "7. Revisjon & Audit Trail (Stage-Gate Port 9)"
+        ],
+        index=0
+    )
+
+    if selected_pbi_page == "1. Toppledelse (CFO Panel)":
+        st.info("📰 **FT Aksjonstittel:** *Kristiansand Kommune — Finansiell Topplederoversikt & Prognose 2026*")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Regnskap YTD", "kr 36 080 000", "Bokført")
+        c2.metric("Budsjett YTD", "kr 33 591 000", "Periodisert")
+        c3.metric("Avvik YTD", "+kr 2 489 000", "+7,4% (Kritisk)", delta_color="inverse")
+        c4.metric("EOY Sluttavvik", "+kr 3 733 500", "Før tiltak", delta_color="inverse")
+
+        st.markdown("##### 📊 Avviksfordeling per Enhet (Diverging Bar / Tabell)")
+        df_p1 = pd.DataFrame([
+            {"Sektor / Enhet": "01 Oppvekst (Enhet 202 Grunnskole)", "Budsjett YTD": 12450000, "Regnskap YTD": 13870000, "Avvik YTD": 1420000, "Avvik %": "+11,4%", "Status": "KRITISK MERFORBRUK"},
+            {"Sektor / Enhet": "02 Helse & Mestring (Enhet 2540 Boenhet)", "Budsjett YTD": 21141000, "Regnskap YTD": 22210000, "Avvik YTD": 1069000, "Avvik %": "+5,1%", "Status": "AKTSOMHET"}
+        ])
+        st.dataframe(df_p1, use_container_width=True, hide_index=True)
+
+    elif selected_pbi_page == "2. Sektor Oppvekst & Grunnskole (Enhet 202)":
+        st.info("📰 **FT Aksjonstittel:** *Enhet 202 Grunnskole: Vikarforbruk og sykefravær krever omdisponering*")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Forbruk Grunnskole", "kr 13 870 000")
+        c2.metric("Vikarer Art 1020", "kr 1 420 000", "+158% vs budsjett", delta_color="inverse")
+        c3.metric("Vikarandel Lønn", "16,2%", "Mål: < 5,0%", delta_color="inverse")
+        c4.metric("Kostnad pr. Elev", "kr 9 768 /elev", "1 420 elever")
+
+        st.markdown("##### 📋 Kontospesifikasjon Grunnskole (KOSTRA Arter)")
+        df_p2 = pd.DataFrame([
+            {"Kontoart": "Art 1010", "Navn": "Fastlønn og faste tillegg", "Budsjett YTD": 9200000, "Regnskap YTD": 9180000, "Avvik": -20000, "Avvik %": "-0,2%"},
+            {"Kontoart": "Art 1020", "Navn": "Vikarer ved fravær", "Budsjett YTD": 550000, "Regnskap YTD": 1420000, "Avvik": 870000, "Avvik %": "+158,2%"},
+            {"Kontoart": "Art 1090", "Navn": "Overtid og ekstrahjelp", "Budsjett YTD": 300000, "Regnskap YTD": 720000, "Avvik": 420000, "Avvik %": "+140,0%"},
+            {"Kontoart": "Art 1600", "Navn": "NAV Sykepengerefusjoner", "Budsjett YTD": -800000, "Regnskap YTD": -650000, "Avvik": 150000, "Avvik %": "+18,8%"}
+        ])
+        st.dataframe(df_p2, use_container_width=True, hide_index=True)
+
+    elif selected_pbi_page == "3. Sektor Helse & Mestring (Enhet 2540)":
+        st.info("📰 **FT Aksjonstittel:** *Enhet 401 Boenhet: Turnus- og overtidspress i døgnkontinuerlig drift*")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Forbruk Helse", "kr 22 210 000")
+        c2.metric("Overtid Art 1090", "kr 2 150 000", "+320k vs budsjett", delta_color="inverse")
+        c3.metric("Overtidsandel Turnus", "14,8%", "Terskel: 10,0%", delta_color="inverse")
+        c4.metric("EOY etter Tiltak", "kr -324 921", "I balanse jf. § 14-5")
+
+        st.markdown("##### 🏥 Boenhets- og Turnusfordeling")
+        df_p3 = pd.DataFrame([
+            {"Lokasjon": "Boenhet A (Døgnpost 1)", "Område": "Miljøarbeidertjeneste", "Budsjett YTD": 8100000, "Regnskap YTD": 8650000, "Avvik": 550000, "Overtidsandel": "15,4%"},
+            {"Lokasjon": "Boenhet B (Døgnpost 2)", "Område": "Psykisk helse & rus", "Budsjett YTD": 7500000, "Regnskap YTD": 7820000, "Avvik": 320000, "Overtidsandel": "14,2%"},
+            {"Lokasjon": "Dagsenter & Avlastning", "Område": "Aktivitetstilbud", "Budsjett YTD": 5541000, "Regnskap YTD": 5740000, "Avvik": 199000, "Overtidsandel": "11,8%"}
+        ])
+        st.dataframe(df_p3, use_container_width=True, hide_index=True)
+
+    elif selected_pbi_page == "4. Lønn, Overtid & Vikarmonitor":
+        st.info("📰 **FT Aksjonstittel:** *HR & Lønnsmonitor: Artsanalyse for 1000 Fastlønn, 1020 Vikar og 1090 Overtid*")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Total Lønn YTD", "kr 28 850 000")
+        c2.metric("Vikarforbruk", "kr 2 480 000", "+1,2M vs budsjett", delta_color="inverse")
+        c3.metric("Overtid", "kr 2 870 000", "+740k vs budsjett", delta_color="inverse")
+        c4.metric("NAV-Refusjoner", "kr 1 120 000", "Bokført YTD")
+
+        st.markdown("##### 📅 Månedlig Lønns- og Vikarutvikling (2026)")
+        df_p4 = pd.DataFrame([
+            {"Måned": "Mai 2026", "Fastlønn": 2920000, "Vikarer": 290000, "Overtid": 340000, "NAV Refusjon": -140000, "Netto Lønn": 3410000},
+            {"Måned": "Juni 2026", "Fastlønn": 3050000, "Vikarer": 380000, "Overtid": 410000, "NAV Refusjon": -155000, "Netto Lønn": 3685000},
+            {"Måned": "Juli 2026", "Fastlønn": 3110000, "Vikarer": 460000, "Overtid": 450000, "NAV Refusjon": -160000, "Netto Lønn": 3860000},
+            {"Måned": "August 2026", "Fastlønn": 3180000, "Vikarer": 520000, "Overtid": 480000, "NAV Refusjon": -175000, "Netto Lønn": 4005000}
+        ])
+        st.dataframe(df_p4, use_container_width=True, hide_index=True)
+
+    elif selected_pbi_page == "5. Prognose & What-If Scenarier":
+        st.info("📰 **FT Aksjonstittel:** *What-If Simulering: Framsikt deflator, vikarreduksjon og helårsbalanse*")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Vedtatt Årsramme", "kr 52 400 000")
+        c2.metric("Prognose Uten Tiltak", "kr 56 133 500", "+3 733 500", delta_color="inverse")
+        c3.metric("Tiltakseffekt T3", "-kr 2 791 421", "Signert Port 9")
+        c4.metric("Simulert Sluttavvik", "+kr 942 079", "Håndterbart")
+
+        sim_def = st.slider("Framsikt Lønnsdeflator (%):", min_value=3.0, max_value=6.0, value=4.1, step=0.1)
+        sim_sav = st.slider("Fraværstiltak Effektreduksjon (%):", min_value=0.5, max_value=4.0, value=1.5, step=0.1)
+        st.caption(f"Simulert tilleggsramme deflator: kr {52400000 * (sim_def/100):,.0f} | Est. vikarbesparelse: kr {2480000 * (sim_sav/100):,.0f}")
+
+    elif selected_pbi_page == "6. Investering & Capex (EVM)":
+        st.info("📰 **FT Aksjonstittel:** *Project Controlling: Investeringsportefølje, Earned Value & Sluttkostnad (EAC)*")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Planlagt Verdi (PV)", "kr 328 000 000")
+        c2.metric("Påløpt Kostnad (AC)", "kr 292 900 000")
+        c3.metric("Kostnadsavvik (CV)", "-kr 35 100 000", "Underbudsjettert", delta_color="inverse")
+        c4.metric("Kostnadsindeks (CPI)", "0,893", "Terskel: 1,000", delta_color="inverse")
+
+        st.markdown("##### 🏗️ EVM Porteføljematrise for Project Controller")
+        df_p6 = pd.DataFrame([
+            {"Prosjekt": "Vågsbygd Skole Utvidelse", "Kode": "PROJ-101", "BAC": 185000000, "PV": 115000000, "AC": 104500000, "CPI": 0.909, "Sluttprognose (EAC)": 208251070},
+            {"Prosjekt": "Randesund Døgnbemannet Boenhet", "Kode": "PROJ-201", "BAC": 240000000, "PV": 165000000, "AC": 139100000, "CPI": 0.843, "Sluttprognose (EAC)": 299529558},
+            {"Prosjekt": "VA-Hovedledning Selvkost", "Kode": "PROJ-301", "BAC": 92000000, "PV": 48000000, "AC": 49300000, "CPI": 1.027, "Sluttprognose (EAC)": 89668168}
+        ])
+        st.dataframe(df_p6, use_container_width=True, hide_index=True)
+
+    elif selected_pbi_page == "7. Revisjon & Audit Trail (Stage-Gate Port 9)":
+        st.info("📰 **FT Aksjonstittel:** *Revisjonsspor & Kontrollutvalget: SHA-256 forsegling og Human-in-the-Loop*")
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Verifisert Regnskap YTD", "kr 36 080 000")
+        c2.metric("Totalavvik Gransket", "kr 2 489 000")
+        c3.metric("Signerte Tiltak i Port 9", "kr 2 791 421", "Godkjent")
+
+        st.markdown("##### 🛡️ Uforanderlig Revisjonslogg (Audit_AI_Actions)")
+        df_p7 = pd.DataFrame([
+            {"Tidsstempel": "2026-08-20 14:30", "Enhet": "2020 Grunnskole", "AI-Tiltak": "Vikarstopp korttidsfravær < 3 dager", "Beslutning": "APPROVED", "Saksbehandler": "Frank Ellingsen", "SHA-256 Hash": "a8f9c2e411b98d24..."},
+            {"Tidsstempel": "2026-08-22 11:15", "Enhet": "2540 Boenhet", "AI-Tiltak": "Turnusendring og overtidstak døgnpost", "Beslutning": "MODIFIED", "Saksbehandler": "Frank Ellingsen", "SHA-256 Hash": "f34b9982a74c1022..."}
+        ])
+        st.dataframe(df_p7, use_container_width=True, hide_index=True)
 
 
 # -------------------------------------------------------------
