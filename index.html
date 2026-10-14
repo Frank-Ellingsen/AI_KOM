@@ -2717,55 +2717,65 @@
         <!-- INTERAKTIV TILTAKSSIMULATOR (MINI-EAC KALKULATOR) -->
         <div class="triage-card" id="tiltak-simulator-card" style="grid-column: 1 / -1; border-left: 3px solid var(--accent-blue); background: #ffffff;">
             <div class="section-header" style="margin-bottom: 8px;">
-                <span>🎛️ Interaktiv Tiltakssimulator (Hva-hvis EAC for Enhet 202)</span>
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <span id="sim-main-title">🎛️ Interaktiv Tiltakssimulator (Hva-hvis EAC)</span>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn btn-sm btn-primary" id="sim-tab-skole" onclick="switchSimulatorUnit('SKOLE')" style="font-size:11px; padding:3px 8px;">
+                            🏫 Enhet 202 Skole
+                        </button>
+                        <button class="btn btn-sm" id="sim-tab-helse" onclick="switchSimulatorUnit('HELSE')" style="font-size:11px; padding:3px 8px; background:#f1f5f9; border-color:#cbd5e1; color:var(--text-primary);">
+                            🏥 Enhet 401 Helse & Døgnpleie
+                        </button>
+                    </div>
+                </div>
                 <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Beslutningsstøtte</span>
             </div>
-            <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 12px;">
+            <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 12px;" id="sim-desc-text">
                 Simuler strakstiltak (innleiekutt, NAV-refusjoner og faste ansettelser) for å se direkte effekt på årsavslutning (EAC) og budsjettbalanse jf. Kommuneloven § 14-5.
             </p>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 12px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 12px;" id="sim-sliders-container">
                 <div class="sim-control-group">
                     <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between;">
-                        <span>Vikarreduksjon (innleiekutt):</span>
-                        <span id="sim-vikar-val" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-blue);">20 %</span>
+                        <span id="sim-lbl-1">Vikarreduksjon (innleiekutt):</span>
+                        <span id="sim-val-1" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-blue);">20 %</span>
                     </div>
-                    <input type="range" id="sim-vikar-slider" min="0" max="60" value="20" step="5" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
-                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;">
+                    <input type="range" id="sim-slider-1" min="0" max="60" value="20" step="5" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
+                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;" id="sim-sub-1">
                         <span>0 %</span><span>30 %</span><span>60 %</span>
                     </div>
                 </div>
                 <div class="sim-control-group">
                     <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between;">
-                        <span>NAV-refusjoner innfridd (art 1600):</span>
-                        <span id="sim-nav-val" style="font-family:var(--font-mono); font-weight:700; color:var(--success-green);">410 000 NOK</span>
+                        <span id="sim-lbl-2">NAV-refusjoner innfridd (art 1600):</span>
+                        <span id="sim-val-2" style="font-family:var(--font-mono); font-weight:700; color:var(--success-green);">410 000 NOK</span>
                     </div>
-                    <input type="range" id="sim-nav-slider" min="0" max="410000" value="410000" step="50000" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
-                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;">
+                    <input type="range" id="sim-slider-2" min="0" max="410000" value="410000" step="50000" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
+                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;" id="sim-sub-2">
                         <span>0 kr</span><span>200k</span><span>410k</span>
                     </div>
                 </div>
                 <div class="sim-control-group">
                     <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between;">
-                        <span>Faste stillinger (erstatter vikar):</span>
-                        <span id="sim-fast-val" style="font-family:var(--font-mono); font-weight:700; color:var(--navy-dark);">2 stillinger</span>
+                        <span id="sim-lbl-3">Faste stillinger (erstatter vikar):</span>
+                        <span id="sim-val-3" style="font-family:var(--font-mono); font-weight:700; color:var(--navy-dark);">2 stillinger</span>
                     </div>
-                    <input type="range" id="sim-fast-slider" min="0" max="4" value="2" step="1" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
-                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;">
+                    <input type="range" id="sim-slider-3" min="0" max="4" value="2" step="1" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
+                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;" id="sim-sub-3">
                         <span>0</span><span>2</span><span>4</span>
                     </div>
                 </div>
             </div>
             <div style="background:#f8fafc; border:1px solid var(--border-light); padding:10px 14px; border-radius:3px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                 <div>
-                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Simulert Årseffekt (EAC)</div>
+                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;" id="sim-res-lbl-eac">Simulert Årseffekt (EAC)</div>
                     <div style="font-size:15px; font-family:var(--font-mono); font-weight:700; color:var(--navy-dark);" id="sim-eac-result">50 939 572 NOK</div>
                 </div>
                 <div>
-                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Avvik mot Ramme (BAC: 50.34M)</div>
+                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;" id="sim-res-lbl-bac">Avvik mot Ramme (BAC: 50.34M)</div>
                     <div style="font-size:15px; font-family:var(--font-mono); font-weight:700;" id="sim-var-result">+600 000 NOK (+1.19 %)</div>
                 </div>
                 <div>
-                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">§ 14-5 Status</div>
+                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Status</div>
                     <span class="status-badge" id="sim-status-badge" style="background:#dcfce7; color:#15803d; font-size:11px; font-weight:700;">
                         🟢 LOVLIG (&lt; 2.0 % terskel)
                     </span>
@@ -4467,6 +4477,46 @@ SWITCH(
                         </div>
                     </div>
                     <span class="cmd-item-badge">Triage</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('HTA_4')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📋</span>
+                        <div>
+                            <div class="cmd-item-label">HTA § 4 Turnus & Arbeidstid</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Turnusomlegging, langvakter og overtidskutt i pleie og omsorg</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Bemanningssimulator</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('TOPP_FINANS')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏥</span>
+                        <div>
+                            <div class="cmd-item-label">Toppfinansiering Ressurskrevende Tjenester</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Innslagspunkt 1,65M NOK / 142 brukere / 185,4M statstilskudd</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Helse & Mestring</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('SSHF_SAM')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🚑</span>
+                        <div>
+                            <div class="cmd-item-label">SSHF Samhandlingsbarometer</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">0 overliggerdøgn / 96 % korttidsbelegg på Valhall & Strai</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Samhandling</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('HELSEPERSONELL_4')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">⚖️</span>
+                        <div>
+                            <div class="cmd-item-label">Helsepersonelloven § 4</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Krav til faglig forsvarlighet ved vikarbyråstopp</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Lovoppslag</span>
                 </div>
                 <div class="cmd-palette-item" onclick="executeCommand('RAG_14_5')">
                     <div class="cmd-item-left">
@@ -6413,7 +6463,20 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 avvik: "+850 000 NOK",
                 cpi: "0.941",
                 status_badge: "🟠 Advarsel — Overtids- og bemanningspress",
-                fokus: "Økt pleietyngde (IPLOS), turnusoptimalisering, langvakter jf. HTA § 4 og sykefraværsreduserende tiltak i døgninstitusjoner."
+                fokus: "Økt pleietyngde (IPLOS), turnusoptimalisering, langvakter jf. HTA § 4 og sykefraværsreduserende tiltak i døgninstitusjoner.",
+                toppfinansiering: {
+                    innslagspunkt: "1 650 000 NOK",
+                    brukere: 142,
+                    refusjon: "185 420 000 NOK",
+                    egenandel: "80 % refusjonsgrad",
+                    status: "Innmeldt Helsedirektoratet"
+                },
+                sshf: {
+                    overliggerdogn: 0,
+                    gebyr_unngatt: "0 NOK",
+                    korttidsbelegg: "96 % (Valhall & Strai)",
+                    status: "🟢 Ingen sanksjoner"
+                }
             },
             "OPPVEKST": {
                 title: "2. Oppvekst",
@@ -6560,6 +6623,31 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                             <div class="kpi-num">${data.cpi}</div>
                         </div>
                     </div>
+                    ${sectorKey === 'HELSE' ? `
+                    <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🏛️ Toppfinansiering Ressurskrevende Tjenester</span>
+                                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">Statsrefusjon</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Innslagspunkt 2026: <strong>1 650 000 NOK</strong> | Antall brukere: <strong>142</strong><br>
+                                Forventet statstilskudd: <strong>185 420 000 NOK</strong> (80 % over innslagspunkt).<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Internkontroll: Månedlig avstemming mot tildelingsvedtak og IPLOS-kriterier.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--success-green); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🏥 SSHF Samhandlingsbarometer (Sørlandet Sykehus HF)</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">0 overliggerdøgn</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Utskrivningsklare pasienter: <strong>0 overliggerdøgn</strong> (Unngått gebyr: 5 860 kr/døgn).<br>
+                                Korttidsavlastning (Valhall & Strai): <strong>96 % belegg</strong> (Optimal pasientflyt).<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Lovhjemmel: Helse- og omsorgstjenesteloven § 11-2 & Samhandlingsavtalen.</span>
+                            </div>
+                        </div>
+                    </div>` : ''}
                 `;
             }
 
@@ -6661,6 +6749,22 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 previewDocument('RAPPORT_MONSTER');
             } else if (cmd === 'MAL_HTA') {
                 previewDocument('HTA_PROTOKOLL');
+            } else if (cmd === 'HTA_4') {
+                switchSimulatorUnit('HELSE');
+                const el = document.getElementById("tiltak-simulator-card");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("🏥 Åpnet Døgnpleie Turnus- og Bemanningssimulator jf. HTA § 4");
+            } else if (cmd === 'TOPP_FINANS' || cmd === 'SSHF_SAM') {
+                selectSector('HELSE');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("🏥 Viser Toppfinansiering og SSHF Samhandlingsbarometer");
+            } else if (cmd === 'HELSEPERSONELL_4') {
+                const inp = document.getElementById("rag-input");
+                if (inp) inp.value = "Helsepersonelloven § 4 forsvarlig bemanning";
+                executeMockRAG();
+                const el = document.getElementById("rag-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
             } else if (cmd === 'COPY_FRAMSIKT') {
                 copyToFramsiktFormat();
             } else if (cmd === 'COPY_TSV') {
@@ -6724,72 +6828,210 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             }
         }
 
-        // 4. Interaktiv Tiltakssimulator (Mini-EAC for Enhet 202)
+        // 4. Interaktiv Tiltakssimulator (Dual: Enhet 202 Skole & Enhet 401 Helse)
+        let currentSimulatorUnit = 'SKOLE';
+
+        function switchSimulatorUnit(unitMode) {
+            currentSimulatorUnit = unitMode;
+            const tabSkole = document.getElementById("sim-tab-skole");
+            const tabHelse = document.getElementById("sim-tab-helse");
+            const titleEl = document.getElementById("sim-main-title");
+            const descEl = document.getElementById("sim-desc-text");
+            const lbl1 = document.getElementById("sim-lbl-1");
+            const s1 = document.getElementById("sim-slider-1");
+            const sub1 = document.getElementById("sim-sub-1");
+            const lbl2 = document.getElementById("sim-lbl-2");
+            const s2 = document.getElementById("sim-slider-2");
+            const sub2 = document.getElementById("sim-sub-2");
+            const lbl3 = document.getElementById("sim-lbl-3");
+            const s3 = document.getElementById("sim-slider-3");
+            const sub3 = document.getElementById("sim-sub-3");
+            const lblBac = document.getElementById("sim-res-lbl-bac");
+
+            if (unitMode === 'HELSE') {
+                if (tabSkole) {
+                    tabSkole.className = "btn btn-sm";
+                    tabSkole.style.background = "#f1f5f9";
+                    tabSkole.style.borderColor = "#cbd5e1";
+                    tabSkole.style.color = "var(--text-primary)";
+                }
+                if (tabHelse) {
+                    tabHelse.className = "btn btn-sm btn-primary";
+                    tabHelse.style.background = "var(--navy-dark)";
+                    tabHelse.style.borderColor = "var(--navy-dark)";
+                    tabHelse.style.color = "#ffffff";
+                }
+                if (titleEl) titleEl.innerText = "🏥 Døgnpleie Turnus- og Bemanningssimulator (Enhet 401 Helse)";
+                if (descEl) descEl.innerText = "Simuler turnusomlegging med langvakter (HTA § 4), fraværsreduksjon og stans i innleie av vikarbyråsykepleiere for å eliminere overforbruk på art 10900/10500.";
+
+                if (lbl1) lbl1.innerText = "Sykefraværsreduksjon (fraværskutt):";
+                if (s1) { s1.min = 0; s1.max = 6; s1.step = 1; s1.value = 3; }
+                if (sub1) sub1.innerHTML = "<span>0 %-p</span><span>3 %-p</span><span>6 %-p</span>";
+
+                if (lbl2) lbl2.innerText = "Langvakter / Turnus HTA § 4 (overtidskutt):";
+                if (s2) { s2.min = 0; s2.max = 35; s2.step = 5; s2.value = 20; }
+                if (sub2) sub2.innerHTML = "<span>0 %</span><span>20 %</span><span>35 %</span>";
+
+                if (lbl3) lbl3.innerText = "Stans vikarbyråsykepleiere (art 10500):";
+                if (s3) { s3.min = 0; s3.max = 500000; s3.step = 50000; s3.value = 350000; }
+                if (sub3) sub3.innerHTML = "<span>0 kr</span><span>250k</span><span>500k</span>";
+
+                if (lblBac) lblBac.innerText = "Avvik mot Ramme (BAC: 14.20M)";
+                loadTriageUnit('ENHET_401');
+                showToast("🏥 Bemanningssimulator aktivert for Enhet 401 Helse & Mestring");
+            } else {
+                if (tabHelse) {
+                    tabHelse.className = "btn btn-sm";
+                    tabHelse.style.background = "#f1f5f9";
+                    tabHelse.style.borderColor = "#cbd5e1";
+                    tabHelse.style.color = "var(--text-primary)";
+                }
+                if (tabSkole) {
+                    tabSkole.className = "btn btn-sm btn-primary";
+                    tabSkole.style.background = "var(--navy-dark)";
+                    tabSkole.style.borderColor = "var(--navy-dark)";
+                    tabSkole.style.color = "#ffffff";
+                }
+                if (titleEl) titleEl.innerText = "🏫 Interaktiv Tiltakssimulator (Hva-hvis EAC for Enhet 202 Skole)";
+                if (descEl) descEl.innerText = "Simuler strakstiltak (innleiekutt, NAV-refusjoner og faste ansettelser) for å se direkte effekt på årsavslutning (EAC) og budsjettbalanse jf. Kommuneloven § 14-5.";
+
+                if (lbl1) lbl1.innerText = "Vikarreduksjon (innleiekutt):";
+                if (s1) { s1.min = 0; s1.max = 60; s1.step = 5; s1.value = 20; }
+                if (sub1) sub1.innerHTML = "<span>0 %</span><span>30 %</span><span>60 %</span>";
+
+                if (lbl2) lbl2.innerText = "NAV-refusjoner innfridd (art 1600):";
+                if (s2) { s2.min = 0; s2.max = 410000; s2.step = 50000; s2.value = 410000; }
+                if (sub2) sub2.innerHTML = "<span>0 kr</span><span>200k</span><span>410k</span>";
+
+                if (lbl3) lbl3.innerText = "Faste stillinger (erstatter vikar):";
+                if (s3) { s3.min = 0; s3.max = 4; s3.step = 1; s3.value = 2; }
+                if (sub3) sub3.innerHTML = "<span>0</span><span>2</span><span>4</span>";
+
+                if (lblBac) lblBac.innerText = "Avvik mot Ramme (BAC: 50.34M)";
+                loadTriageUnit('ENHET_202');
+                showToast("🏫 Tiltakssimulator aktivert for Enhet 202 Skole");
+            }
+            runTiltakSimulation();
+        }
+
         function runTiltakSimulation() {
-            const vikarSlider = document.getElementById("sim-vikar-slider");
-            const navSlider = document.getElementById("sim-nav-slider");
-            const fastSlider = document.getElementById("sim-fast-slider");
-            if (!vikarSlider || !navSlider || !fastSlider) return;
+            const s1 = document.getElementById("sim-slider-1");
+            const s2 = document.getElementById("sim-slider-2");
+            const s3 = document.getElementById("sim-slider-3");
+            if (!s1 || !s2 || !s3) return;
 
-            const vikarPct = parseInt(vikarSlider.value, 10);
-            const navRefund = parseInt(navSlider.value, 10);
-            const fasteStillinger = parseInt(fastSlider.value, 10);
+            const val1 = parseInt(s1.value, 10);
+            const val2 = parseInt(s2.value, 10);
+            const val3 = parseInt(s3.value, 10);
 
-            document.getElementById("sim-vikar-val").innerText = `${vikarPct} %`;
-            document.getElementById("sim-nav-val").innerText = `${navRefund.toLocaleString("no-NO")} NOK`;
-            document.getElementById("sim-fast-val").innerText = `${fasteStillinger} ${fasteStillinger === 1 ? 'stilling' : 'stillinger'}`;
-
-            const bac = 50339572;
-            const eacBase = 52189572;
-            const vikarGjenstaende = 2200000;
-
-            const vikarBesparelse = vikarGjenstaende * (vikarPct / 100);
-            const fastNettoEffekt = fasteStillinger * 90000; // Netto besparelse fast ansatt vs dyr vikar
-
-            const totalTiltaksEffekt = vikarBesparelse + navRefund + fastNettoEffekt;
-            const nyEac = Math.round(eacBase - totalTiltaksEffekt);
-            const nyttAvvikNok = nyEac - bac;
-            const nyttAvvikPct = ((nyttAvvikNok / bac) * 100).toFixed(2);
-
+            const v1El = document.getElementById("sim-val-1");
+            const v2El = document.getElementById("sim-val-2");
+            const v3El = document.getElementById("sim-val-3");
             const eacEl = document.getElementById("sim-eac-result");
             const varEl = document.getElementById("sim-var-result");
             const badgeEl = document.getElementById("sim-status-badge");
 
-            if (eacEl) eacEl.innerText = `${nyEac.toLocaleString("no-NO")} NOK`;
-            if (varEl) {
-                const sign = nyttAvvikNok >= 0 ? "+" : "";
-                varEl.innerText = `${sign}${nyttAvvikNok.toLocaleString("no-NO")} NOK (${sign}${nyttAvvikPct} %)`;
-                varEl.style.color = nyttAvvikPct > 2.0 ? "var(--alert-red)" : "var(--navy-dark)";
-            }
-            if (badgeEl) {
-                if (nyttAvvikPct <= 2.0) {
-                    badgeEl.style.background = "#dcfce7";
-                    badgeEl.style.color = "#15803d";
-                    badgeEl.innerText = `🟢 LOVLIG (< 2.0 % terskel jf. § 14-5)`;
-                } else {
-                    badgeEl.style.background = "var(--alert-red-bg)";
-                    badgeEl.style.color = "var(--alert-red)";
-                    badgeEl.innerText = `🔴 KRITISK MERFORBRUK (${nyttAvvikPct} % > 2.0 %)`;
+            if (currentSimulatorUnit === 'HELSE') {
+                if (v1El) v1El.innerText = `${val1} %-poeng`;
+                if (v2El) v2El.innerText = `${val2} %`;
+                if (v3El) v3El.innerText = `${val3.toLocaleString("no-NO")} NOK`;
+
+                const bac = 14200000;
+                const eacBase = 15300000;
+
+                const fravaerBesparelse = val1 * 75000;
+                const overtidBesparelse = 1800000 * (val2 / 100);
+                const byraBesparelse = val3;
+
+                const totalTiltak = fravaerBesparelse + overtidBesparelse + byraBesparelse;
+                const nyEac = Math.round(eacBase - totalTiltak);
+                const nyttAvvikNok = nyEac - bac;
+                const nyttAvvikPct = ((nyttAvvikNok / bac) * 100).toFixed(2);
+
+                if (eacEl) eacEl.innerText = `${nyEac.toLocaleString("no-NO")} NOK`;
+                if (varEl) {
+                    const sign = nyttAvvikNok >= 0 ? "+" : "";
+                    varEl.innerText = `${sign}${nyttAvvikNok.toLocaleString("no-NO")} NOK (${sign}${nyttAvvikPct} %)`;
+                    varEl.style.color = nyttAvvikPct > 2.0 ? "var(--alert-red)" : "var(--navy-dark)";
+                }
+                if (badgeEl) {
+                    if (nyttAvvikPct <= 1.5) {
+                        badgeEl.style.background = "#dcfce7";
+                        badgeEl.style.color = "#15803d";
+                        badgeEl.innerText = "🟢 DEKKES INNEN SEKTORRAMME (HTA § 4 godkjent)";
+                    } else if (nyttAvvikPct <= 2.0) {
+                        badgeEl.style.background = "#fef9c3";
+                        badgeEl.style.color = "#a16207";
+                        badgeEl.innerText = "🟡 AKSEPTABELT (Innenfor 2.0 % terskel)";
+                    } else {
+                        badgeEl.style.background = "var(--alert-red-bg)";
+                        badgeEl.style.color = "var(--alert-red)";
+                        badgeEl.innerText = `🔴 OVER SKJØNNSTERSKEL (${nyttAvvikPct} % > 2.0 %)`;
+                    }
+                }
+            } else {
+                if (v1El) v1El.innerText = `${val1} %`;
+                if (v2El) v2El.innerText = `${val2.toLocaleString("no-NO")} NOK`;
+                if (v3El) v3El.innerText = `${val3} ${val3 === 1 ? 'stilling' : 'stillinger'}`;
+
+                const bac = 50339572;
+                const eacBase = 52189572;
+                const vikarGjenstaende = 2200000;
+
+                const vikarBesparelse = vikarGjenstaende * (val1 / 100);
+                const fastNettoEffekt = val3 * 90000;
+
+                const totalTiltaksEffekt = vikarBesparelse + val2 + fastNettoEffekt;
+                const nyEac = Math.round(eacBase - totalTiltaksEffekt);
+                const nyttAvvikNok = nyEac - bac;
+                const nyttAvvikPct = ((nyttAvvikNok / bac) * 100).toFixed(2);
+
+                if (eacEl) eacEl.innerText = `${nyEac.toLocaleString("no-NO")} NOK`;
+                if (varEl) {
+                    const sign = nyttAvvikNok >= 0 ? "+" : "";
+                    varEl.innerText = `${sign}${nyttAvvikNok.toLocaleString("no-NO")} NOK (${sign}${nyttAvvikPct} %)`;
+                    varEl.style.color = nyttAvvikPct > 2.0 ? "var(--alert-red)" : "var(--navy-dark)";
+                }
+                if (badgeEl) {
+                    if (nyttAvvikPct <= 2.0) {
+                        badgeEl.style.background = "#dcfce7";
+                        badgeEl.style.color = "#15803d";
+                        badgeEl.innerText = "🟢 LOVLIG (< 2.0 % terskel jf. § 14-5)";
+                    } else {
+                        badgeEl.style.background = "var(--alert-red-bg)";
+                        badgeEl.style.color = "var(--alert-red)";
+                        badgeEl.innerText = `🔴 KRITISK MERFORBRUK (${nyttAvvikPct} % > 2.0 %)`;
+                    }
                 }
             }
         }
 
         function applySimulationToReport4() {
-            const vikarPct = document.getElementById("sim-vikar-val") ? document.getElementById("sim-vikar-val").innerText : "20 %";
-            const navVal = document.getElementById("sim-nav-val") ? document.getElementById("sim-nav-val").innerText : "410 000 NOK";
-            const fastVal = document.getElementById("sim-fast-val") ? document.getElementById("sim-fast-val").innerText : "2 stillinger";
-            const varResult = document.getElementById("sim-var-result") ? document.getElementById("sim-var-result").innerText : "+600 000 NOK (+1.19 %)";
+            const v1 = document.getElementById("sim-val-1") ? document.getElementById("sim-val-1").innerText : "";
+            const v2 = document.getElementById("sim-val-2") ? document.getElementById("sim-val-2").innerText : "";
+            const v3 = document.getElementById("sim-val-3") ? document.getElementById("sim-val-3").innerText : "";
+            const varResult = document.getElementById("sim-var-result") ? document.getElementById("sim-var-result").innerText : "";
 
             const p3 = document.getElementById("rep4-p3");
             const p4 = document.getElementById("rep4-p4");
 
-            if (p3) {
-                p3.innerText = `A) Vikarkutt ${vikarPct} (innleiestopp). B) Innfrielse av NAV-refusjoner (${navVal}). C) ${fastVal} faste fagarbeidere.`;
+            if (currentSimulatorUnit === 'HELSE') {
+                if (p3) {
+                    p3.innerText = `A) Turnusomlegging med langvakter jf. HTA § 4 (${v2} kutt i art 10900 overtid). B) Sykefraværsreduksjon (${v1}). C) Stans i innleie av vikarbyrå (${v3}).`;
+                }
+                if (p4) {
+                    p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (Inndekkes fullt ut innen Helse og mestrings ramme).`;
+                }
+                showToast("✓ Helse- og turnustiltak overført til Enhet 401 saksnotat!");
+            } else {
+                if (p3) {
+                    p3.innerText = `A) Vikarkutt ${v1} (innleiestopp). B) Innfrielse av NAV-refusjoner (${v2}). C) ${v3} faste fagarbeidere.`;
+                }
+                if (p4) {
+                    p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (Balanse jf. § 14-5).`;
+                }
+                showToast("✓ Skole- og vikartiltak overført til Enhet 202 saksnotat!");
             }
-            if (p4) {
-                p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (Balanse jf. § 14-5).`;
-            }
-            showToast("✓ Simulerte tiltak overført til 4-punkts saksnotat!");
         }
 
         // 5. Presentasjons- og Møtemodus
