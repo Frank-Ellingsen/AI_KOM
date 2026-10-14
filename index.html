@@ -1825,9 +1825,145 @@
             animation: toastSlideUp 0.2s ease-out;
         }
 
-        @keyframes toastSlideUp {
-            from { transform: translateY(12px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        /* ==========================================================================
+           ANSVARSOMRÅDER & SEKTORSTYRING (6 SEKTORER)
+           ========================================================================== */
+        .sector-nav-bar {
+            display: flex;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 4px;
+            gap: 4px;
+            margin: 16px 0;
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .sector-tab-btn {
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: all 0.15s;
+        }
+
+        .sector-tab-btn:hover {
+            color: var(--navy-dark);
+            background: #f1f5f9;
+        }
+
+        .sector-tab-btn.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+
+        .sector-tab-btn.active .sector-tab-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .sector-tab-badge {
+            font-size: 10px;
+            font-family: var(--font-mono);
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #e2e8f0;
+            color: var(--text-secondary);
+        }
+
+        .sector-detail-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .sector-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .sector-detail-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy-dark);
+        }
+
+        .sector-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .sector-detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sector-field-box {
+            background: #fbfbfb;
+            border: 1px solid var(--border-subtle);
+            border-radius: 3px;
+            padding: 10px 14px;
+        }
+
+        .sector-field-box strong {
+            color: var(--navy-dark);
+            display: block;
+            margin-bottom: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sector-kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .sector-kpi-chip {
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            padding: 8px 12px;
+            border-radius: 3px;
+        }
+
+        .sector-kpi-chip .kpi-sub {
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .sector-kpi-chip .kpi-num {
+            font-size: 14px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-top: 2px;
         }
 
     </style>
@@ -1882,6 +2018,41 @@
                 <a class="sidebar-nav-item" id="side-step-5" onclick="selectWorkflowPhase(5)">
                     <span>5️⃣ Politisk Sak & Vedtak</span>
                     <span class="badge-phase">Dag 25–30</span>
+                </a>
+            </div>
+
+            <!-- ANSVARSOMRÅDER & ØKONOMIRÅDGIVERE -->
+            <div class="sidebar-nav-group">
+                <div class="sidebar-nav-header">
+                    <span>Ansvarsområder (Sektorer)</span>
+                </div>
+                <a class="sidebar-nav-item active" id="side-sec-all" onclick="selectSector('ALL')">
+                    <span>🌐 Konsern (Alle)</span>
+                    <span class="badge-phase">Total</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-helse" onclick="selectSector('HELSE')">
+                    <span>🏥 1. Helse og mestring</span>
+                    <span class="badge-phase" style="background:var(--alert-amber); color:#fff;">+850k</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-oppvekst" onclick="selectSector('OPPVEKST')">
+                    <span>🏫 2. Oppvekst</span>
+                    <span class="badge-phase" style="background:var(--alert-red); color:#fff;">+1.24M</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-by" onclick="selectSector('BYUTVIKLING')">
+                    <span>🏗️ 3. By- og stedsutvikling</span>
+                    <span class="badge-phase">VAR</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-kultur" onclick="selectSector('KULTUR')">
+                    <span>🎭 4. Kultur og dialog</span>
+                    <span class="badge-phase">OK</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-org" onclick="selectSector('ORG_TEK')">
+                    <span>💻 5. Org & teknologi</span>
+                    <span class="badge-phase">IKT</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-oko" onclick="selectSector('OKONOMI')">
+                    <span>⚖️ 6. Økonomi & styring</span>
+                    <span class="badge-phase">Finans</span>
                 </a>
             </div>
 
@@ -2224,6 +2395,57 @@
                     <li>• 18. des: Bystyrets endelige vedtak</li>
                 </ul>
             </div>
+        </div>
+    </section>
+
+    <!-- =======================================================================
+         ANSVARSOMRÅDER & SEKTORSTYRING (KRISTIANSAND KOMMUNE)
+         Organisert etter økonomirådgivernes 6 operative tjenesteområder
+         ======================================================================= -->
+    <section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
+        <div class="section-header">
+            <span>🏛️ Ansvarsområder & Økonomirådgivere (6 Tjenesteområder)</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Virksomhetsstyring 2026</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+            Hvert tjenesteområde betjenes av dedikerte økonomirådgivere for saksfremlegg, KOSTRA-avstemming og avviksoppfølging jf. Kommuneloven § 14-5.
+        </p>
+
+        <!-- Sektorvelger Tabs -->
+        <div class="sector-nav-bar" id="sector-nav-bar">
+            <button class="sector-tab-btn active" id="sec-btn-all" onclick="selectSector('ALL')">
+                <span>🌐 Konsern (Alle områder)</span>
+                <span class="sector-tab-badge">7.25 mrd</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-helse" onclick="selectSector('HELSE')">
+                <span>🏥 1. Helse og mestring</span>
+                <span class="sector-tab-badge" style="background:var(--alert-amber); color:#fff;">+850k</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-oppvekst" onclick="selectSector('OPPVEKST')">
+                <span>🏫 2. Oppvekst</span>
+                <span class="sector-tab-badge" style="background:var(--alert-red); color:#fff;">+1.24M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-by" onclick="selectSector('BYUTVIKLING')">
+                <span>🏗️ 3. By- og stedsutvikling</span>
+                <span class="sector-tab-badge">VAR</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-kultur" onclick="selectSector('KULTUR')">
+                <span>🎭 4. Kultur og innbyggerdialog</span>
+                <span class="sector-tab-badge">380M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-org" onclick="selectSector('ORG_TEK')">
+                <span>💻 5. Organisasjon og teknologi</span>
+                <span class="sector-tab-badge">IKT</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-oko" onclick="selectSector('OKONOMI')">
+                <span>⚖️ 6. Økonomi og virksomhetsstyring</span>
+                <span class="sector-tab-badge">Finans</span>
+            </button>
+        </div>
+
+        <!-- Dynamisk Sektorkort / Detaljvisning -->
+        <div class="sector-detail-card" id="sector-detail-card">
+            <!-- Fylles dynamisk fra SEKTOR_DATA via JavaScript -->
         </div>
     </section>
 
@@ -4166,6 +4388,66 @@ SWITCH(
                 <span class="cmd-shortcut-hint">ESC for å lukke</span>
             </div>
             <div class="cmd-palette-list" id="cmd-palette-list">
+                <div class="cmd-palette-item" onclick="executeCommand('SEC_HELSE')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏥</span>
+                        <div>
+                            <div class="cmd-item-label">1. Helse og mestring</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Helse, pleie, omsorg, rus, legevakt, rehabilitering, boliger</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Ansvarsområde</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('SEC_OPPVEKST')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏫</span>
+                        <div>
+                            <div class="cmd-item-label">2. Oppvekst</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Barnehager, grunnskoler, SFO, PPT, familietjenester</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Ansvarsområde</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('SEC_BY')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏗️</span>
+                        <div>
+                            <div class="cmd-item-label">3. By- og stedsutvikling</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Plan, byggesak, samferdsel, VAR, eiendom, friluft</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Ansvarsområde</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('SEC_KULTUR')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🎭</span>
+                        <div>
+                            <div class="cmd-item-label">4. Kultur og innbyggerdialog</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Kultur, bibliotek, kulturskole, idrett, tilskudd, innbyggertorg</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Ansvarsområde</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('SEC_ORG')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">💻</span>
+                        <div>
+                            <div class="cmd-item-label">5. Organisasjon og teknologi</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">HR, rekruttering, arbeidsmiljø, IKT, digitalisering, fellestjenester</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Ansvarsområde</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('SEC_OKO')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">⚖️</span>
+                        <div>
+                            <div class="cmd-item-label">6. Økonomi og virksomhetsstyring</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Overordnet økonomiplan, budsjett, regnskap, innkjøp, staber</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Ansvarsområde</span>
+                </div>
                 <div class="cmd-palette-item" onclick="executeCommand('ENHET_202')">
                     <div class="cmd-item-left">
                         <span class="cmd-item-icon">🔴</span>
@@ -6101,7 +6383,197 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             }, 3000);
         }
 
-        // 2. Command Palette (Ctrl+K)
+        // 2. Ansvarsområder & Sektorstyring (Data & Logikk)
+        const SEKTOR_DATA = {
+            "ALL": {
+                title: "Kristiansand Kommune — Konsernoversikt (Alle 6 Ansvarsområder)",
+                icon: "🌐",
+                subtitle: "Samlet virksomhetsstyring og totalramme 2026",
+                radgiver: "Frank Ellingsen (Senior Controller) / Økonomidirektør",
+                ansvarsomrade: "Overordnet styring, tertialrapportering, samordning av 6 tjenesteområder, finansforvaltning og konsernavvik jf. Kommuneloven § 14-5.",
+                malgruppe: "Kommunedirektør, formannskap, bystyre, samt alle kommunens innbyggere og virksomheter.",
+                kostra: "Hele kontoplanen (Funksjon 100–899, Art 1000–1990)",
+                ramme: "7 250 000 000 NOK",
+                forbruk: "4 835 000 000 NOK",
+                avvik: "-11 872 460 NOK",
+                cpi: "0.858",
+                status_badge: "🟢 Konsernstyring",
+                fokus: "Helårsbalanse, pensjonskostnader, renteutvikling på lånegjeld, og disposisjonsfondsnivå (485M / 6.7 %)."
+            },
+            "HELSE": {
+                title: "1. Helse og mestring",
+                icon: "🏥",
+                subtitle: "Pleie, omsorg, legevakt, rehabilitering og livsmestring",
+                radgiver: "Dedikert Økonomirådgiver Helse & Mestring (Betjener Kommunalsjef Helse)",
+                ansvarsomrade: "Tjenester innen helse, pleie og omsorg, rus og psykisk helse, legevakt, rehabilitering, helsestasjoner, samt tildeling av omsorgstjenester og kommunale boliger.",
+                malgruppe: "Innbyggere med behov for helsehjelp, forebyggende helsetjenester, eldreomsorg og støtte til livsmestring.",
+                kostra: "Funksjon 234 (Aktivisering), 241 (Diagnose/behandling), 253 (Pleie/omsorg hjemme), 254 (Sykehjem), 261 (Kommunale boliger)",
+                ramme: "1 850 000 000 NOK",
+                forbruk: "1 245 850 000 NOK",
+                avvik: "+850 000 NOK",
+                cpi: "0.941",
+                status_badge: "🟠 Advarsel — Overtids- og bemanningspress",
+                fokus: "Økt pleietyngde (IPLOS), turnusoptimalisering, langvakter jf. HTA § 4 og sykefraværsreduserende tiltak i døgninstitusjoner."
+            },
+            "OPPVEKST": {
+                title: "2. Oppvekst",
+                icon: "🏫",
+                subtitle: "Barnehager, grunnskoler, SFO, PPT og familietjenester",
+                radgiver: "Frank Ellingsen (Senior Controller / Økonomirådgiver Oppvekst)",
+                ansvarsomrade: "Kommunale og private barnehager, grunnskoler, SFO, voksenopplæring, Pedagogisk-psykologisk tjeneste (PPT) og familietjenester (blant annet gjennom Familiens hus).",
+                malgruppe: "Barn, unge og familier, samt voksne som tar grunnleggende opplæring.",
+                kostra: "Funksjon 201 (Førskole), 202 (Grunnskole), 211 (Skolelokaler), 215 (SFO), 221 (Spesialundervisning / PPT)",
+                ramme: "2 120 000 000 NOK",
+                forbruk: "1 428 240 000 NOK",
+                avvik: "+1 240 000 NOK",
+                cpi: "0.887",
+                status_badge: "🔴 Kritisk — Avvikstiltak kreves jf. § 14-5",
+                fokus: "Vikarinnleie (art 1050), NAV-refusjonsetterslep (art 1600), lærernorm og klassesammenslåing ved korttidsfravær."
+            },
+            "BYUTVIKLING": {
+                title: "3. By- og stedsutvikling",
+                icon: "🏗️",
+                subtitle: "Plan, byggesak, samferdsel, VAR-selvkost, eiendom og klima",
+                radgiver: "Dedikert Økonomirådgiver By- og Stedsutvikling (Selvkost & Investeringer)",
+                ansvarsomrade: "Byggesak, kart og oppmåling, reguleringsplaner, samferdsel, vei, parkering, parkvesen, vann og avløp, miljø og klima, landbruk, samt forvaltning av kommunal eiendom og friluftsområder.",
+                malgruppe: "Innbyggere, utbyggere, næringsliv og andre som bruker byens fysiske rom, infrastruktur og natur.",
+                kostra: "Funksjon 301 (Planlegging), 312 (Byggesak), 332 (Kommunale veier), 340 (Vann), 345 (Avløp), 354 (Renovasjon)",
+                ramme: "940 000 000 NOK (inkl. selvkost)",
+                forbruk: "619 690 000 NOK",
+                avvik: "-310 000 NOK",
+                cpi: "1.005",
+                status_badge: "🟢 Balanse — Selvkostfond overholdt",
+                fokus: "Selvkostavregning for VAR (selvkostforskriften § 8), fremdrift på store infrastrukturprosjekter (EVM) og byggesaksgebyrer."
+            },
+            "KULTUR": {
+                title: "4. Kultur og innbyggerdialog",
+                icon: "🎭",
+                subtitle: "Kultur, bibliotek, kulturskole, idrett, tilskudd og innbyggertorg",
+                radgiver: "Dedikert Økonomirådgiver Kultur & Innbyggerdialog",
+                ansvarsomrade: "Kultur- og fritidstilbud, biblioteker, kulturskolen, idrettsanlegg og tilskuddsforvaltning, samt innbyggertorg, frivillighet og medvirkning.",
+                malgruppe: "Aktive innbyggere, frivillige organisasjoner, idrettslag og kulturliv.",
+                kostra: "Funksjon 370 (Bibliotek), 375 (Museum/kunst), 380 (Idrett), 383 (Kulturskole), 385 (Fritid/ungdomsklubber)",
+                ramme: "380 000 000 NOK",
+                forbruk: "252 045 000 NOK",
+                avvik: "+45 000 NOK",
+                cpi: "0.999",
+                status_badge: "🟢 Balanse — Kontrollert drift",
+                fokus: "Tilskuddsforvaltning for frivilligheten, leieinntekter for idrettshaller og energioptimalisering for kommunale kulturbygg."
+            },
+            "ORG_TEK": {
+                title: "5. Organisasjon og teknologi",
+                icon: "💻",
+                subtitle: "HR, rekruttering, arbeidsmiljø, IKT, digitalisering og fellestjenester",
+                radgiver: "Dedikert Økonomirådgiver Organisasjon & Teknologi (IKT & Fellestjenester)",
+                ansvarsomrade: "Interne støttetjenester knyttet til HR, rekruttering, arbeidsmiljø, IKT, digitalisering og fellestjenester som sikrer at kommunens indre maskineri fungerer optimalt.",
+                malgruppe: "Kommunens ledere, ansatte og interne organisasjonsledd.",
+                kostra: "Funksjon 120 (Administrasjon), 130 (Felles IKT-lisenser & infrastruktur), 180 (Fellestjenester/lønn/arkiv)",
+                ramme: "460 000 000 NOK",
+                forbruk: "308 120 000 NOK",
+                avvik: "+120 000 NOK",
+                cpi: "0.996",
+                status_badge: "🟢 Balanse — Sky- og lisenskontroll",
+                fokus: "Konsulentreduksjon, FinOps for skylisenser, IKT-sikkerhetsinvesteringer og effektivisering av felles HR-prosesser."
+            },
+            "OKONOMI": {
+                title: "6. Økonomi og virksomhetsstyring",
+                icon: "⚖️",
+                subtitle: "Overordnet plan, budsjett, regnskap, innkjøp, internkontroll og staber",
+                radgiver: "Økonomidirektør / Konserncontroller (Overordnet budsjett- og finanskontroll)",
+                ansvarsomrade: "Overordnet økonomiplanlegging, budsjettarbeid, regnskap, innkjøp, internkontroll og virksomhetsstyring på tvers av kommunens enheter. (Inkluderer staber for direkte politisk betjening, samfunnssikkerhet og beredskap, samt næringsutvikling).",
+                malgruppe: "Kommunedirektør, formannskap, bystyre, samt alle kommunens enheter og staber.",
+                kostra: "Funksjon 100 (Politisk styring), 110 (Kontrollutvalg/revisjon), 170 (Fellesutgifter), 800-serien (Renter, avdrag, fond)",
+                ramme: "7 250 000 000 NOK (Konsernramme)",
+                forbruk: "4 835 000 000 NOK",
+                avvik: "Renterisiko overvåkes",
+                cpi: "1.000",
+                status_badge: "🟢 Finans & Konsernstyring",
+                fokus: "Rentesikring (renteavtaler), pensjonspremieavvik, disposisjonsfond (485M) og overordnet etterlevelse av Kommuneloven § 14-5."
+            }
+        };
+
+        function selectSector(sectorKey) {
+            const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
+
+            // 1. Oppdater aktive knapper i top sector-nav-bar
+            const navButtons = document.querySelectorAll("#sector-nav-bar .sector-tab-btn");
+            navButtons.forEach(btn => btn.classList.remove("active"));
+            const activeNavBtn = document.getElementById(`sec-btn-${sectorKey.toLowerCase()}`) || document.getElementById("sec-btn-all");
+            if (activeNavBtn) activeNavBtn.classList.add("active");
+
+            // 2. Oppdater aktive lenker i sidebar
+            const sideLinks = document.querySelectorAll("#hub-sidebar .sidebar-nav-item");
+            sideLinks.forEach(link => {
+                if (link.id && link.id.startsWith("side-sec-")) {
+                    link.classList.remove("active");
+                }
+            });
+            const activeSideLink = document.getElementById(`side-sec-${sectorKey.toLowerCase()}`);
+            if (activeSideLink) activeSideLink.classList.add("active");
+
+            // 3. Rendre Sektor Detaljkort
+            const detailCard = document.getElementById("sector-detail-card");
+            if (detailCard) {
+                detailCard.innerHTML = `
+                    <div class="sector-detail-header">
+                        <div>
+                            <div class="sector-detail-title">${data.icon} ${data.title}</div>
+                            <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">
+                                ${data.subtitle} | Ansvarlig rådgiver: <strong>${data.radgiver}</strong>
+                            </div>
+                        </div>
+                        <span class="status-badge" style="font-size:11px; font-weight:700;">${data.status_badge}</span>
+                    </div>
+
+                    <div class="sector-detail-grid">
+                        <div class="sector-field-box">
+                            <strong>📌 Ansvarsområde</strong>
+                            <p>${data.ansvarsomrade}</p>
+                            <div style="margin-top:8px; font-size:11.5px; color:var(--text-secondary);">
+                                <strong>🏛️ KOSTRA-funksjoner:</strong> ${data.kostra}
+                            </div>
+                        </div>
+                        <div class="sector-field-box">
+                            <strong>🎯 Målgruppe & Tjenestebrukere</strong>
+                            <p>${data.malgruppe}</p>
+                            <div style="margin-top:8px; font-size:11.5px; color:var(--text-secondary);">
+                                <strong>⚡ Økonomisk Fokus & Tiltak:</strong> ${data.fokus}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sector-kpi-row">
+                        <div class="sector-kpi-chip">
+                            <div class="kpi-sub">Budsjettramme (BAC)</div>
+                            <div class="kpi-num">${data.ramme}</div>
+                        </div>
+                        <div class="sector-kpi-chip">
+                            <div class="kpi-sub">Hittil Påløpt (AC)</div>
+                            <div class="kpi-num">${data.forbruk}</div>
+                        </div>
+                        <div class="sector-kpi-chip">
+                            <div class="kpi-sub">Avvik YTD (CV)</div>
+                            <div class="kpi-num" style="color:${data.avvik.includes('+') ? 'var(--alert-red)' : 'var(--navy-dark)'};">${data.avvik}</div>
+                        </div>
+                        <div class="sector-kpi-chip">
+                            <div class="kpi-sub">Kostnadsindeks (CPI)</div>
+                            <div class="kpi-num">${data.cpi}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 4. Knytt til triage hvis aktuelt
+            if (sectorKey === 'OPPVEKST') {
+                loadTriageUnit('ENHET_202');
+            } else if (sectorKey === 'HELSE') {
+                loadTriageUnit('ENHET_401');
+            }
+
+            showToast(`🏢 Valgt ansvarsområde: ${data.title}`);
+        }
+
+        // 3. Command Palette (Ctrl+K)
         function openCommandPalette() {
             const modal = document.getElementById("cmd-palette-modal");
             if (modal) {
@@ -6137,7 +6609,31 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
 
         function executeCommand(cmd) {
             closeCommandPalette();
-            if (cmd === 'ENHET_202') {
+            if (cmd === 'SEC_HELSE') {
+                selectSector('HELSE');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'SEC_OPPVEKST') {
+                selectSector('OPPVEKST');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'SEC_BY') {
+                selectSector('BYUTVIKLING');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'SEC_KULTUR') {
+                selectSector('KULTUR');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'SEC_ORG') {
+                selectSector('ORG_TEK');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'SEC_OKO') {
+                selectSector('OKONOMI');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'ENHET_202') {
                 loadTriageUnit('ENHET_202');
                 const el = document.getElementById("triage-seksjon");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -6338,11 +6834,15 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             }
         });
 
-        // Initier sjekkliste ved oppstart
+        // Initier sjekkliste og sektorstyring ved oppstart
         document.addEventListener("DOMContentLoaded", () => {
             selectWorkflowPhase(2);
+            selectSector("ALL");
         });
-        setTimeout(() => selectWorkflowPhase(2), 200);
+        setTimeout(() => {
+            selectWorkflowPhase(2);
+            selectSector("ALL");
+        }, 200);
 
     </script>
 </body>
