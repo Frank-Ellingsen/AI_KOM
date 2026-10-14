@@ -380,9 +380,13 @@ DOCUMENTS_MENU = {
         ("Excel MCP Server Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_AUTOMATION_AND_MCP_SERVER.md", "Model Context Protocol for Excel og Power Query M-kode"),
         ("Python in Excel Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_PYTHON_AND_COPILOT_INTEGRATION.md", "=PY() funksjonen og Copilot i Excel")
     ],
-    "📝 Politiske Saksfremlegg & HØP (word/)": [
-        ("Saksfremlegg Bystyret Budsjettendring (Word)", WORKSPACE_ROOT / "word" / "Saksfremlegg_Bystyret_Budsjettendring_2026.docx", "Fullverdig saksfremlegg med Public360-metadata, 5 obligatoriske seksjoner og § 14-5 vedtak"),
-        ("Tertialrapport & HØP Notat 2026 (Word)", WORKSPACE_ROOT / "word" / "Tertialrapport_og_HOP_Notat_2026.docx", "HØP-notat iht. kommunens klarspråk- og WCAG 2.1 AA standard"),
+    "📝 Word Styringsrapporter & Politiske Saker (word/)": [
+        ("Saksfremlegg Bystyret: Budsjettendring (Word)", WORKSPACE_ROOT / "word" / "Saksfremlegg_Bystyret_Budsjettendring_2026.docx", "Nivå 1: Fullverdig saksfremlegg med Public360-metadata, 5 obligatoriske seksjoner og § 14-5 vedtak"),
+        ("Tertialrapport & HØP Notat 2026 (Word)", WORKSPACE_ROOT / "word" / "Tertialrapport_og_HOP_Notat_2026.docx", "Nivå 2: Handlings- og økonomiplan HØP 2027–2030 iht. kommunens klarspråk- og WCAG 2.1 AA standard"),
+        ("Månedsrapport Kommunedirektøren (Word)", WORKSPACE_ROOT / "word" / "Manedsrapport_Kommunedirektor_Strakstiltak_2026.docx", "Nivå 2: Konsernrapport med strakstiltak ACT-01 til ACT-04 (vikarstopp, konsulentkutt, lisenser)"),
+        ("Sektorstyringsnotat Oppvekst & Utdanning (Word)", WORKSPACE_ROOT / "word" / "Sektorstyringsnotat_Kommunalsjef_Oppvekst_2026.docx", "Nivå 3: Kommunalsjefens avviksmatrise for 4 skoler, lærernorm og felles vikarring"),
+        ("Prosjektkontroll & Capex Statusnotat (Word)", WORKSPACE_ROOT / "word" / "Prosjektkontroll_Capex_Statusnotat_2026.docx", "Nivå 4: ISO 21508 EVM porteføljeanalyse, CPI/SPI, EAC og P85-usikkerhetsreserve"),
+        ("Avviksnotat & Handlingsplan Enhet 202 (Word)", WORKSPACE_ROOT / "word" / "Avviksnotat_og_Handlingsplan_Enhetsleder_2026.docx", "Nivå 5: 4-punkts avviksrapport (MAL-AVVIK-EFFEKT-001) for Enhet 202 Grunnskole"),
         ("Politiske Saksfremlegg Maler Spec (Markdown)", WORKSPACE_ROOT / "word" / "word_kommune_spec_bundle_v1" / "WORD_POLITISKE_SAKSFREMLEGG_MALER.md", "5-punkts mal og #1E3A8A overskriftsprofil"),
         ("Public360 & Dokumentautomatisering (Markdown)", WORKSPACE_ROOT / "word" / "word_kommune_spec_bundle_v1" / "WORD_PUBLIC360_OG_DOKUMENT_AUTOMATION.md", "python-docx pipeline og arkivering"),
         ("Tertialrapport & HØP Standarder (Markdown)", WORKSPACE_ROOT / "word" / "word_kommune_spec_bundle_v1" / "WORD_TERTIALRAPPORT_OG_HOP_STANDARDER.md", "WCAG 2.1 AA og kapittelstruktur for HØP")

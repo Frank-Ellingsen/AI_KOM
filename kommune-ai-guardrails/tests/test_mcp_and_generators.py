@@ -11,7 +11,13 @@ from kommune_ai_guardrails.mcp_server import (
     calculate_eoy_impact,
     execute_gemini_mcp_query
 )
-from kommune_ai_guardrails.generators.powerpoint_generator import generate_bystyret_deck
+from kommune_ai_guardrails.generators.powerpoint_generator import (
+    generate_bystyret_deck,
+    generate_konsern_deck,
+    generate_oppvekst_deck,
+    generate_capex_evm_deck,
+    generate_enhet202_deck,
+)
 from kommune_ai_guardrails.generators.excel_fast_generator import generate_fast_excel_model
 from kommune_ai_guardrails.generators.excel_evm_generator import generate_project_controller_evm_model
 from kommune_ai_guardrails.generators.excel_cfo_generator import generate_cfo_executive_konsern_model
@@ -63,10 +69,35 @@ def test_mcp_execute_gemini_query():
 
 
 def test_powerpoint_generator(tmp_path):
-    target = tmp_path / "test_presentation.pptx"
-    out = generate_bystyret_deck(output_path=str(target))
-    assert Path(out).exists()
-    assert Path(out).stat().st_size > 10000
+    # 1. Bystyret Deck (Nivå 1)
+    target1 = tmp_path / "test_bystyret.pptx"
+    out1 = generate_bystyret_deck(output_path=str(target1))
+    assert Path(out1).exists()
+    assert Path(out1).stat().st_size > 10000
+
+    # 2. Konsernstyring Deck (Nivå 2)
+    target2 = tmp_path / "test_konsern.pptx"
+    out2 = generate_konsern_deck(output_path=str(target2))
+    assert Path(out2).exists()
+    assert Path(out2).stat().st_size > 10000
+
+    # 3. Oppvekst Deck (Nivå 3)
+    target3 = tmp_path / "test_oppvekst.pptx"
+    out3 = generate_oppvekst_deck(output_path=str(target3))
+    assert Path(out3).exists()
+    assert Path(out3).stat().st_size > 10000
+
+    # 4. Capex EVM Deck (Nivå 4)
+    target4 = tmp_path / "test_capex_evm.pptx"
+    out4 = generate_capex_evm_deck(output_path=str(target4))
+    assert Path(out4).exists()
+    assert Path(out4).stat().st_size > 10000
+
+    # 5. Enhet 202 Deck (Nivå 5)
+    target5 = tmp_path / "test_enhet202.pptx"
+    out5 = generate_enhet202_deck(output_path=str(target5))
+    assert Path(out5).exists()
+    assert Path(out5).stat().st_size > 10000
 
 
 def test_excel_generators(tmp_path):
