@@ -977,6 +977,398 @@ def create_saksbehandling_excel_model():
 
 
 # ==============================================================================
+# 8. MAL: KOMMUNESTYRET / BYSTYRET (NIVÅ 1)
+# ==============================================================================
+def create_rapportmal_kommunestyret():
+    filename_docx = TEMPLATES_DIR / "RAPPORTMAL_KOMMUNESTYRET.docx"
+    doc = docx.Document()
+    add_document_header(
+        doc,
+        title="MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — KOMMUNESTYRET / BYSTYRET",
+        subtitle="Månedlig strategisk økonomirapport for Bystyret jf. Kommuneloven § 14-5",
+        ref_code="RAP-2026-M09-BYSTYRE"
+    )
+
+    doc.add_heading(level=2).add_run("EXECUTIVE SUMMARY (BYSTYRET):").font.color.rgb = COLOR_NAVY
+    p_meta = doc.add_paragraph(
+        "• Rapporteringsperiode: Måned 9 (September) / 2026\n"
+        "• Samlet netto driftsavvik: +94,9 mill. kr (+1.9 % av årsbudsjett)\n"
+        "• Prognose EOY (31.12): +116,5 mill. kr i forventet merforbruk\n"
+        "• Kritiske saksforhold som krever politisk vedtak: 2 saker (Helse og Mestring / Disposisjonsfond)"
+    )
+
+    doc.add_heading(level=3).add_run("1. Sektorvis Avviksoversikt (Bystyrenivå):")
+    t = doc.add_table(rows=7, cols=6)
+    t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    hdrs = ["Kommunalsjefområde", "Vedtatt Ramme", "Påløpt Hittil", "Avvik Hittil", "EOY Prognose", "Status"]
+    for i, h in enumerate(hdrs):
+        c = t.rows[0].cells[i]
+        set_cell_background(c, "1B365D")
+        set_cell_margins(c, 80, 80, 80, 80)
+        p = c.paragraphs[0]
+        r = p.add_run(h)
+        r.font.name = "Segoe UI"
+        r.font.size = Pt(8.5)
+        r.font.bold = True
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    data = [
+        ("Oppvekst & Grunnskole", "2 450 MNOK", "1 685 MNOK", "+38,5 MNOK (+2.3%)", "+45,0 MNOK", "🔴 Kritiske avvik"),
+        ("Helse & Mestring", "3 100 MNOK", "2 140 MNOK", "+62,0 MNOK (+2.9%)", "+78,0 MNOK", "🔴 Kritiske avvik"),
+        ("By- og Stedsutvikling", "850 MNOK", "560 MNOK", "-4,2 MNOK (-0.8%)", "-5,0 MNOK", "🟢 Innenfor ramme"),
+        ("Kultur & Innbyggerdialog", "420 MNOK", "280 MNOK", "+1,1 MNOK (+0.4%)", "+1,5 MNOK", "🟡 Mildt avvik"),
+        ("Sentralstyring & Staber", "680 MNOK", "450 MNOK", "-2,5 MNOK (-0.6%)", "-3,0 MNOK", "🟢 Innenfor ramme"),
+        ("TOTALT DRIFT", "7 500 MNOK", "5 115 MNOK", "+94,9 MNOK (+1.9%)", "+116,5 MNOK", "🔴 Kritiske avvik")
+    ]
+    for r_idx, row_data in enumerate(data, start=1):
+        for c_idx, val in enumerate(row_data):
+            cell = t.rows[r_idx].cells[c_idx]
+            bg = "F8FAFC" if r_idx % 2 == 1 else "FFFFFF"
+            if r_idx == 6:
+                bg = "F1F5F9"
+            set_cell_background(cell, bg)
+            set_cell_margins(cell, 60, 60, 80, 80)
+            p = cell.paragraphs[0]
+            r = p.add_run(val)
+            r.font.name = "Segoe UI"
+            r.font.size = Pt(8.5)
+            if r_idx == 6 or "🔴" in val:
+                r.font.bold = True
+            if "🔴" in val:
+                r.font.color.rgb = RGBColor(192, 57, 43)
+
+    doc.add_heading(level=2).add_run("2. Forslag til Vedtak (Politiske tiltak):").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "1. Bystyret tar månedlig avviksrapport per september til orientering.\n"
+        "2. Bystyret vedtar omdisponering av 15,0 mill. kr fra prosjekt 4021 til drift i Helse og Mestring.\n"
+        "3. Bystyret godkjenner bruk av udisponert disposisjonsfond med inntil 25,0 mill. kr dersom EOY-prognosen opprettholdes.\n"
+        "4. Kommunedirektøren bes legge frem helhetlig omstillingsplan innen neste bystyremøte."
+    )
+
+    doc.add_heading(level=2).add_run("3. Revisorstempel & Sign-off (Stage-Gate Port 9):").font.color.rgb = COLOR_NAVY
+    p_sign = doc.add_paragraph(
+        "Saksbehandler: Frank Ellingsen (Senior Controller) | Dato: 2026-09-28\n"
+        "Kryptografisk Hash: SHA256:a8f9c1e3b2d4f5e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0"
+    )
+    p_sign.runs[0].font.name = "Consolas"
+    p_sign.runs[0].font.size = Pt(8.5)
+    doc.save(filename_docx)
+    print(f"✓ Mal generert: {filename_docx.name}")
+
+
+# ==============================================================================
+# 9. MAL: KOMMUNEDIREKTØREN (NIVÅ 2)
+# ==============================================================================
+def create_rapportmal_kommunedirektor():
+    filename_docx = TEMPLATES_DIR / "RAPPORTMAL_KOMMUNEDIREKTOR.docx"
+    doc = docx.Document()
+    add_document_header(
+        doc,
+        title="MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — KOMMUNEDIREKTØREN",
+        subtitle="Toppledelsens månedsrapport med administrative direktiver og strakstiltak",
+        ref_code="RAP-2026-M09-KOMDIR"
+    )
+
+    doc.add_heading(level=2).add_run("OVERSIKT TOPPLEDELSE:").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "• Samlet driftsbudsjett 2026: 7 500 mill. kr (Forbruk hittil: 5 115 mill. kr / 68.2 %)\n"
+        "• Påløpt driftsavvik hittil: +94,9 mill. kr | EOY Helårsprognose: +116,5 mill. kr\n"
+        "• Sykepengerefusjoner fra NAV (Etterslep > 60 dager): -12,4 mill. kr utestående\n"
+        "• Vikarbyråkostnader påløpt: 34,2 mill. kr (85 % av årsrammen er allerede brukt)\n"
+        "• Finans- og rentekostnader: -4,5 mill. kr (Mindreforbruk pga. gunstig likviditetsplassering)"
+    )
+
+    doc.add_heading(level=2).add_run("ADMINISTRATIVE STRAKSTILTAK (KOMMUNEDIREKTØRENS DIREKTIVER):").font.color.rgb = COLOR_NAVY
+    t_act = doc.add_table(rows=5, cols=5)
+    t_act.alignment = WD_TABLE_ALIGNMENT.CENTER
+    hdrs = ["ID", "Administrativt Strakstiltak", "Ansvarlig", "Frist", "Forventet Effekt"]
+    for i, h in enumerate(hdrs):
+        c = t_act.rows[0].cells[i]
+        set_cell_background(c, "1B365D")
+        set_cell_margins(c, 80, 80, 80, 80)
+        p = c.paragraphs[0]
+        r = p.add_run(h)
+        r.font.name = "Segoe UI"
+        r.font.size = Pt(8.5)
+        r.font.bold = True
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    acts = [
+        ("ACT-01", "Ansettelsesstopp for ikke-kritiske stabsstillinger", "HR-direktør", "Umiddelbart", "-8 000 000 kr"),
+        ("ACT-02", "Innkjøpsstopp for konsulenttjenester", "Anskaffelsessjef", "Umiddelbart", "-5 000 000 kr"),
+        ("ACT-03", "Skjerpet godkjenning av vikarbyråbruk (signaturkrav)", "Kommunalsjefer", "3 dager", "-12 000 000 kr"),
+        ("ACT-04", "Purrerutine og dedikert team for NAV-refusjoner", "Regnskapssjef", "5 dager", "+10 000 000 kr likviditet")
+    ]
+    for r_idx, (aid, desc, ans, fr, eff) in enumerate(acts, start=1):
+        for c_idx, val in enumerate([aid, desc, ans, fr, eff]):
+            cell = t_act.rows[r_idx].cells[c_idx]
+            set_cell_background(cell, "F8FAFC" if r_idx % 2 == 1 else "FFFFFF")
+            set_cell_margins(cell, 60, 60, 80, 80)
+            p = cell.paragraphs[0]
+            r = p.add_run(val)
+            r.font.name = "Segoe UI"
+            r.font.size = Pt(8.5)
+            if c_idx == 4:
+                r.font.bold = True
+
+    doc.add_heading(level=2).add_run("SIGN-OFF & BESLUTNING:").font.color.rgb = COLOR_NAVY
+    p_dec = doc.add_paragraph(
+        "Rapport generert av: Controller AI / Seniorrådgiver Frank Ellingsen\n"
+        "Kommunedirektørens beslutning: [ APPROVED ] | Dato: 2026-09-28\n"
+        "SHA-256: c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8"
+    )
+    p_dec.runs[0].font.name = "Consolas"
+    p_dec.runs[0].font.size = Pt(8.5)
+    doc.save(filename_docx)
+    print(f"✓ Mal generert: {filename_docx.name}")
+
+
+# ==============================================================================
+# 10. MAL: KOMMUNALSJEF (NIVÅ 3)
+# ==============================================================================
+def create_rapportmal_kommunalsjef():
+    filename_docx = TEMPLATES_DIR / "RAPPORTMAL_KOMMUNALSJEF.docx"
+    doc = docx.Document()
+    add_document_header(
+        doc,
+        title="MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — KOMMUNALSJEF",
+        subtitle="Sektorvis månedsrapport — Oppvekst og Grunnskole",
+        ref_code="RAP-2026-M09-KOMSJEF-OPPV"
+    )
+
+    doc.add_heading(level=2).add_run("SEKTOROVERSIKT OPPVEKST:").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "• Sektorens årsramme: 2 450 000 tNOK | Påløpt avvik hittil: +38 500 tNOK (+2.3 %)\n"
+        "• EOY Helårsprognose: +45 000 tNOK (Merforbruk dersom tiltak ikke iverksettes)\n"
+        "• Hoveddrivere: Lønnsart 1020 Vikarer (+18.2M / 47.3 %), Art 1090 Overtid (+6.4M), Spesialundervisning (+9.1M)"
+    )
+
+    doc.add_heading(level=3).add_run("Enhetsvis Avviksmatrise (Skoler):")
+    t_skoler = doc.add_table(rows=6, cols=6)
+    t_skoler.alignment = WD_TABLE_ALIGNMENT.CENTER
+    hdrs = ["Enhetsnr", "Skole / Virksomhet", "Ramme", "Påløpt", "Avvik", "Status"]
+    for i, h in enumerate(hdrs):
+        c = t_skoler.rows[0].cells[i]
+        set_cell_background(c, "1B365D")
+        set_cell_margins(c, 80, 80, 80, 80)
+        p = c.paragraphs[0]
+        r = p.add_run(h)
+        r.font.name = "Segoe UI"
+        r.font.size = Pt(8.5)
+        r.font.bold = True
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    skoler = [
+        ("201", "Grim Skole", "45 000 tNOK", "32 100 tNOK", "+1 800 tNOK (+5.9%)", "🔴 Kritiske avvik"),
+        ("202", "Lovisenlev Skole", "52 000 tNOK", "37 400 tNOK", "+3 200 tNOK (+9.3%)", "🔴 Kritiske avvik"),
+        ("203", "Tangvall Skole", "68 000 tNOK", "46 100 tNOK", "-800 tNOK (-1.7%)", "🟢 Innenfor ramme"),
+        ("204", "Vågsbygd Skole", "74 000 tNOK", "51 200 tNOK", "+2 100 tNOK (+4.3%)", "🟡 Mildt avvik"),
+        ("210", "PPT & Fellesenheter", "35 000 tNOK", "23 800 tNOK", "+400 tNOK (+1.7%)", "🟢 Innenfor ramme")
+    ]
+    for r_idx, row in enumerate(skoler, start=1):
+        for c_idx, val in enumerate(row):
+            cell = t_skoler.rows[r_idx].cells[c_idx]
+            set_cell_background(cell, "F8FAFC" if r_idx % 2 == 1 else "FFFFFF")
+            set_cell_margins(cell, 60, 60, 80, 80)
+            p = cell.paragraphs[0]
+            r = p.add_run(val)
+            r.font.name = "Segoe UI"
+            r.font.size = Pt(8.5)
+            if "🔴" in val:
+                r.font.bold = True
+                r.font.color.rgb = RGBColor(192, 57, 43)
+
+    doc.add_heading(level=2).add_run("SEKTORVISE TILTAK (ACTION ITEMS):").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "• OPP-01: Etablere intern vikarring på tvers av Grim, Lovisenlev og Vågsbygd skoler (-450k/md).\n"
+        "• OPP-02: Re-evaluere enkeltvedtak om spesialundervisning (gruppetiltak vs 1-til-1) (-800k/md).\n"
+        "• OPP-03: Midlertidig frys i utstyrsinnkjøp og læremidler utover kritiske digitale lisenser (-300k/md)."
+    )
+
+    p_sign = doc.add_paragraph(
+        "Kommunalsjef Oppvekst: Signert elektronisk | Dato: 2026-09-28\n"
+        "SHA-256: d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2"
+    )
+    p_sign.runs[0].font.name = "Consolas"
+    p_sign.runs[0].font.size = Pt(8.5)
+    doc.save(filename_docx)
+    print(f"✓ Mal generert: {filename_docx.name}")
+
+
+# ==============================================================================
+# 11. MAL: SEKSJONSLEDER / STABSSJEF (NIVÅ 4)
+# ==============================================================================
+def create_rapportmal_seksjonsleder():
+    filename_docx = TEMPLATES_DIR / "RAPPORTMAL_SEKSJONSLEDER.docx"
+    doc = docx.Document()
+    add_document_header(
+        doc,
+        title="MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — SEKSJONSLEDER / STABSSJEF",
+        subtitle="Seksjon: Anskaffelser og Innkjøp — Kristiansand kommune",
+        ref_code="RAP-2026-M09-SEKSJON-INNKJ"
+    )
+
+    doc.add_heading(level=2).add_run("SEKSJONSOVERSIKT:").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "• Årsramme: 28 500 tNOK | Påløpt avvik: +1 450 tNOK (Merforbruk)\n"
+        "• Hovedårsak: Konsulentbistand i forbindelse med gjennomføring av rammeavtaleanbud for IT og VVS."
+    )
+
+    t = doc.add_table(rows=5, cols=5)
+    t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    hdrs = ["Art", "Beskrivelse", "Årsbudsjett", "Påløpt", "Avvik"]
+    for i, h in enumerate(hdrs):
+        c = t.rows[0].cells[i]
+        set_cell_background(c, "1B365D")
+        set_cell_margins(c, 80, 80, 80, 80)
+        p = c.paragraphs[0]
+        r = p.add_run(h)
+        r.font.name = "Segoe UI"
+        r.font.size = Pt(8.5)
+        r.font.bold = True
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    data = [
+        ("1010", "Fast lønn stabsansatte", "21 000 tNOK", "14 200 tNOK", "+200 tNOK"),
+        ("1090", "Overtid ved anbudsfrister", "500 tNOK", "850 tNOK", "+350 tNOK 🔴"),
+        ("1270", "Juridisk/teknisk konsulentbistand", "4 000 tNOK", "4 900 tNOK", "+900 tNOK 🔴"),
+        ("1370", "Lisenser KGV/KAV fagsystem", "3 000 tNOK", "3 000 tNOK", "0 tNOK 🟢")
+    ]
+    for r_idx, row in enumerate(data, start=1):
+        for c_idx, val in enumerate(row):
+            cell = t.rows[r_idx].cells[c_idx]
+            set_cell_background(cell, "F8FAFC" if r_idx % 2 == 1 else "FFFFFF")
+            set_cell_margins(cell, 60, 60, 80, 80)
+            p = cell.paragraphs[0]
+            r = p.add_run(val)
+            r.font.name = "Segoe UI"
+            r.font.size = Pt(8.5)
+
+    doc.add_heading(level=2).add_run("TILTAKSPLAN FOR SEKSJONEN:").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "1. [ACT-SEK-01]: Avslutte ekstern juridisk konsulentbistand innen 14 dager; overføre restoppgaver internt (-600 000 kr).\n"
+        "2. [ACT-SEK-02]: Innføre overtidsforbud for konsulentoppfølging uten forhåndsgodkjenning (-200 000 kr)."
+    )
+
+    p_sign = doc.add_paragraph("Seksjonsleder: Signert | SHA256:e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0")
+    p_sign.runs[0].font.name = "Consolas"
+    p_sign.runs[0].font.size = Pt(8.5)
+    doc.save(filename_docx)
+    print(f"✓ Mal generert: {filename_docx.name}")
+
+
+# ==============================================================================
+# 12. MAL: AVDELINGSLEDER / ENHETSLEDER (NIVÅ 5)
+# ==============================================================================
+def create_rapportmal_avdelingsleder():
+    filename_docx = TEMPLATES_DIR / "RAPPORTMAL_AVDELINGSLEDER.docx"
+    doc = docx.Document()
+    add_document_header(
+        doc,
+        title="MÅNEDLIG OPERATIV AVVIKSRAPPORT — AVDELINGSLEDER / ENHETSLEDER",
+        subtitle="Enhet 202: Lovisenlev Skole — Operativ avviks- og tiltaksrapport",
+        ref_code="RAP-2026-M09-ENHET-202"
+    )
+
+    doc.add_heading(level=2).add_run("OPERATIV STATUS ENHET 202:").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "• Tildelt Årsramme: 52 000 tNOK | Påløpt hittil: 37 400 tNOK\n"
+        "• Avvik hittil i år: +3 200 tNOK (+9.3 % Merforbruk) — 🔴 RØD ALARM\n"
+        "• Hovedårsak: Vikarutgifter timelærere (Art 10200) +2 300 tNOK pga. sykefravær på 12.4 %"
+    )
+
+    doc.add_heading(level=3).add_run("Linjeavvik på Kontonivå (Visma ERP):")
+    t = doc.add_table(rows=6, cols=5)
+    t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    hdrs = ["Konto", "Kontonavn", "Årsramme", "Påløpt", "Avvik"]
+    for i, h in enumerate(hdrs):
+        c = t.rows[0].cells[i]
+        set_cell_background(c, "1B365D")
+        set_cell_margins(c, 80, 80, 80, 80)
+        p = c.paragraphs[0]
+        r = p.add_run(h)
+        r.font.name = "Segoe UI"
+        r.font.size = Pt(8.5)
+        r.font.bold = True
+        r.font.color.rgb = RGBColor(255, 255, 255)
+
+    rows = [
+        ("10100", "Fast lønn lærere", "38 000 tNOK", "25 800 tNOK", "+400 tNOK"),
+        ("10200", "Vikarutgifter timelærere", "2 500 tNOK", "4 800 tNOK", "+2 300 tNOK 🔴"),
+        ("10900", "Overtid / Ekstratimer", "300 tNOK", "650 tNOK", "+350 tNOK 🔴"),
+        ("11200", "Undervisningsmateriell", "1 200 tNOK", "1 350 tNOK", "+150 tNOK"),
+        ("12000", "Inventar og utstyr", "800 tNOK", "800 tNOK", "0 tNOK 🟢")
+    ]
+    for r_idx, rdata in enumerate(rows, start=1):
+        for c_idx, val in enumerate(rdata):
+            cell = t.rows[r_idx].cells[c_idx]
+            set_cell_background(cell, "F8FAFC" if r_idx % 2 == 1 else "FFFFFF")
+            set_cell_margins(cell, 60, 60, 80, 80)
+            p = cell.paragraphs[0]
+            r = p.add_run(val)
+            r.font.name = "Segoe UI"
+            r.font.size = Pt(8.5)
+            if "🔴" in val:
+                r.font.bold = True
+                r.font.color.rgb = RGBColor(192, 57, 43)
+
+    doc.add_heading(level=2).add_run("30-DAGERS OPERATIV HANDLINGSPLAN:").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "• ACT-202-A: Klassesammenslåing ved korttidsfravær < 3 dager (-80 000 kr/md).\n"
+        "• ACT-202-B: NAV-oppfølging med lønnskontor for refusjoner (+650 000 kr likviditet).\n"
+        "• ACT-202-C: IA-oppfølging og Tett-på-samtaler for å bringe fravær under 8 %.\n"
+        "• ACT-202-D: Innkjøpsstopp for rekvisita og inventar ut året (-50 000 kr/md)."
+    )
+
+    p_sign = doc.add_paragraph("Enhetsleder: Signert | SHA256:f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1")
+    p_sign.runs[0].font.name = "Consolas"
+    p_sign.runs[0].font.size = Pt(8.5)
+    doc.save(filename_docx)
+    print(f"✓ Mal generert: {filename_docx.name}")
+
+
+# ==============================================================================
+# 13. MAL: STANDARDIZERT 4-PUNKTS AVVIK OG EFFEKTPROGNOSE
+# ==============================================================================
+def create_rapportmonster_avvik_effekt():
+    filename_docx = TEMPLATES_DIR / "RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx"
+    doc = docx.Document()
+    add_document_header(
+        doc,
+        title="STANDARDIZERT RAPPORTERINGSMØNSTER: AVVIK & EFFEKTPROGNOSE",
+        subtitle="Obligatorisk 4-stegs struktur: YTD Avvik → Årsak → Action → Kvantifisert EOY Effekt",
+        ref_code="MAL-AVVIK-EFFEKT-001"
+    )
+
+    doc.add_heading(level=2).add_run("DET OBLIGATORISKE 4-PUNKTS MØNSTERET:").font.color.rgb = COLOR_NAVY
+    p_box = doc.add_paragraph(
+        "1. AVVIK HITTIL I ÅR (YTD Variance): Presist avvik i kroner og prosent mot periodisert budsjett i Visma ERP.\n"
+        "2. ÅRSAK TIL AVVIK (Root Cause Analysis): Dypdykk i drivere (sykefravær, NAV-etterslep, prisstigning) via Glass-Box RAG.\n"
+        "3. FORSLAG TIL ACTION (Corrective Action Plan): Strakstiltak (0–30 dager), operative tiltak (30–90 dager), politiske tiltak.\n"
+        "4. KVANTIFISERT EFFEKT PÅ PROGNOSEBANE & EOY BALANSE: Monte Carlo-beregning av effekt på sluttresultat per 31.12."
+    )
+    p_box.runs[0].font.name = "Segoe UI"
+    p_box.runs[0].font.size = Pt(9.5)
+
+    doc.add_heading(level=2).add_run("EKSEMPEL: ENHET 202 GRUNNSKOLE (SEPTEMBER M9):").font.color.rgb = COLOR_NAVY
+    doc.add_paragraph(
+        "• 1. YTD Avvik: Periodisert budsjett 10,0M | Regnskap 11,24M | YTD Avvik: +1 240 000 NOK (+12.4 %) [🔴 RØD ALARM]\n"
+        "• 2. Årsak: Høyt sykefravær (14.2 %) + NAV-etterslep på sykepengerefusjoner på 410 000 NOK.\n"
+        "• 3. Action: Strakstiltak ukentlig NAV-purring, intern klassesammenslåing, samt omdisponering i T2.\n"
+        "• 4. Kvantifisert Effekt: Status quo EOY: +1,85M -> Tiltakseffekt: -1,25M -> Revidert EOY Balanse: +600k (innenfor ramme)."
+    )
+
+    p_audit = doc.add_paragraph(
+        "Forseglet i SQLite Audit_AI_Actions jf. Stage-Gate Port 9\n"
+        "SHA-256: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3"
+    )
+    p_audit.runs[0].font.name = "Consolas"
+    p_audit.runs[0].font.size = Pt(8.5)
+    doc.save(filename_docx)
+    print(f"✓ Mal generert: {filename_docx.name}")
+
+
+# ==============================================================================
 # HOVEDKJØRING
 # ==============================================================================
 if __name__ == "__main__":
@@ -992,4 +1384,13 @@ if __name__ == "__main__":
     create_periodelukking_template()
     create_saksbehandling_excel_model()
 
-    print("\n✅ Samtlige maler og arbeidsbøker er vellykket generert!")
+    # De 5 hierarkiske rapportene og 4-punkts mønsteret
+    create_rapportmal_kommunestyret()
+    create_rapportmal_kommunedirektor()
+    create_rapportmal_kommunalsjef()
+    create_rapportmal_seksjonsleder()
+    create_rapportmal_avdelingsleder()
+    create_rapportmonster_avvik_effekt()
+
+    print("\n✅ Samtlige 13 maler og arbeidsbøker er vellykket generert!")
+

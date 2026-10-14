@@ -120,7 +120,21 @@ AI_KOM/
 │   ├── README_NO.md, dokumentasjon/ (saksfremlegg, AI-rapport, KOSTRA DAX-pakke, RAG-spec)
 │   ├── kildekode/ (datalinje/epm_agent_pipeline.py, sikkerhet/pii_scrubber.py, brukergrensesnitt/)
 │   └── data/ (kontor_oversikt_og_arshjul.xlsx, kristiansand_golden_record.db)
+├── templates/                     # Offisielle maler, saksfremlegg og rapporter (.docx og .md)
+│   ├── RAPPORTMAL_KOMMUNESTYRET.docx/.md (Nivå 1: Bystyret)
+│   ├── RAPPORTMAL_KOMMUNEDIREKTOR.docx/.md (Nivå 2: Kommunedirektøren)
+│   ├── RAPPORTMAL_KOMMUNALSJEF.docx/.md (Nivå 3: Sektor Oppvekst)
+│   ├── RAPPORTMAL_SEKSJONSLEDER.docx/.md (Nivå 4: Stab Anskaffelser)
+│   ├── RAPPORTMAL_AVDELINGSLEDER.docx/.md (Nivå 5: Enhet 202 Skole)
+│   ├── RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx/.md (Standardisert 4-punkts mønster)
+│   ├── MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.docx/.md (Kommuneloven § 14-5 & § 14-6)
+│   ├── MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx/.md (Tiltaksplan T1–T6)
+│   ├── MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.docx/.md (Partssamarbeid)
+│   ├── MAL_STAGE_GATE_PORT_9_HITL_SIGNOFF.docx/.md (Menneskelig overprøving)
+│   ├── MAL_FRIA_OG_DPIA_RISIKOVURDERING.docx/.md (EU AI Act & GDPR)
+│   └── MAL_PERIODELUKKING_OG_AVSTEMMING.docx/.md (Kontrollinstruks)
 ├── docs/                          # Arkitektur, forvaltningsdokumentasjon og kildedokumenter
+│   ├── VISUAL_STORYTELLING_FT_GUIDE.md (Financial Times Visual Vocabulary & Cleveland-McGill)
 │   ├── epm_full_workflow_documentation.md, antigravity_usecase_epm.md, dax_kostra_kpi_package.md
 │   ├── framsikt_epm_integrasjon_spesifikasjon.md, visual_storytelling_og_stakeholder_design.md
 │   └── references/ (1.-tertialrapport-2026, økonomiplan 2027-2030, økonomireglement, nøkkeltall)
@@ -133,10 +147,13 @@ AI_KOM/
 │   ├── CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md, TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md
 │   └── README.md                  # Revisjonsindeks
 ├── bruker-guides/                 # Brukerveiledninger, oppstartsguider og årshjul
+│   ├── MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md (Rammeverk for 5 ledelsesnivåer, terskler og rutiner)
 │   ├── BRUKERGUIDE.md, OPPSTARTSVEILEDER_STARTKNAPP.md, STYRINGSKALENDER_OG_ARSHJUL_2026.md
 │   ├── rag_forklaring.md, stage_gate_rammeverk.md
 │   └── README.md                  # Guide-indeks
 ├── spesifikasjoner/               # Arkitektur, prediktive modeller og MLOps-rigg
+│   ├── OFFICE_DASHBOARD_HUB_V2_WORKFLOW_UI.md (V2 UI, Zero-Click Triage & 4-punkts flyt)
+│   ├── OFFICE_HUB_GEMINI_MCP_CHAT_SPEC.md (Gemini Flash API & MCP Client integrasjon)
 │   ├── PREDICTIVE_AI_FORECASTING_SPEC.md, SKILL_PREDICTIVE_FORECASTING_AI.md
 │   ├── OFFICE_DASHBOARD_HUB_SPEC.md, DOCKER_AND_MLOPS_DEPLOYMENT.md
 │   └── README.md                  # Spesifikasjonsindeks
@@ -144,7 +161,7 @@ AI_KOM/
 │   ├── app_ui.py, etl.py, eac_forecasting.py, hitl_governance.py, run_pilot.py
 │   └── README.md
 ├── kommune-ai-guardrails/         # Kjerne RAG-motor, PII-vasker, Control Office Hub & sqlite-vec
-├── tools/                         # Hjelpeverktøy og API-servere
+├── tools/                         # Hjelpeverktøy, mal-generatorer og valideringsskripter
 ├── start_kommune_ai.bat           # Hovedoppstartskript for Control Office Hub
 ├── oppdater_vektor_db.bat         # Reindeksering av RAG-vektordatabase
 └── README.md                      # Hovedprosjektoversikt

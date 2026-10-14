@@ -875,6 +875,249 @@
             gap: 10px;
             background: #fafafa;
         }
+
+        /* ==========================================================================
+           OFFICE HUB V2: 12-Måneders Tidslinje, Zero-Click Triage & AI Chat Drawer
+           ========================================================================== */
+        .month-timeline-bar {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 4px 0 10px 0;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 10px;
+        }
+
+        .month-pill {
+            flex: 1;
+            min-width: 66px;
+            padding: 6px 4px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            background: #ffffff;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+            color: var(--text-secondary);
+        }
+
+        .month-pill:hover {
+            border-color: var(--navy-dark);
+            color: var(--navy-dark);
+            background: #f8fafc;
+        }
+
+        .month-pill.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+
+        .month-pill.highlight {
+            border-left: 3px solid var(--alert-red);
+        }
+
+        .timeline-status-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fdf2f2;
+            border: 1px solid #f8d7da;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 14px;
+            color: #721c24;
+        }
+
+        /* Smart Arbeidskø & Triage */
+        .triage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .triage-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 14px 18px;
+            border-radius: 4px;
+        }
+
+        .triage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 12.5px;
+        }
+
+        .triage-item:last-child {
+            border-bottom: none;
+        }
+
+        .triage-item-tag {
+            font-weight: 700;
+            font-size: 10.5px;
+            padding: 2px 7px;
+            border-radius: 3px;
+            margin-right: 8px;
+            display: inline-block;
+        }
+
+        .tag-critical { background: #fee2e2; color: #991b1b; }
+        .tag-warning { background: #fef3c7; color: #92400e; }
+        .tag-normal { background: #dcfce7; color: #166534; }
+
+        .report4-point {
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .report4-point strong {
+            display: block;
+            color: var(--navy-dark);
+            margin-bottom: 2px;
+            font-size: 11.5px;
+        }
+
+        /* Slide-out Gemini Flash + MCP AI Chat Drawer */
+        .chat-floating-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 28px;
+            background: var(--navy-dark);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 11px 18px;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .chat-floating-btn:hover {
+            background: #0f233d;
+            transform: translateY(-2px);
+        }
+
+        .chat-badge-pulse {
+            background: #10b981;
+            color: #ffffff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .chat-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 460px;
+            max-width: 92vw;
+            background: #ffffff;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chat-drawer.open {
+            transform: translateX(0);
+        }
+
+        .chat-drawer-header {
+            padding: 16px 20px;
+            background: var(--navy-dark);
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-drawer-footer {
+            padding: 14px 16px;
+            background: #ffffff;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .chat-chip {
+            background: #e2e8f0;
+            border: 1px solid #cbd5e1;
+            font-size: 11px;
+            padding: 5px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 2px;
+            transition: all 0.15s;
+        }
+
+        .chat-chip:hover {
+            background: #cbd5e1;
+            border-color: #94a3b8;
+        }
+
+        .chat-bubble {
+            max-width: 90%;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            line-height: 1.5;
+        }
+
+        .chat-bubble-user {
+            align-self: flex-end;
+            background: var(--navy-dark);
+            color: #ffffff;
+        }
+
+        .chat-bubble-ai {
+            align-self: flex-start;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+        }
+
+        .chat-sql-box {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 8px 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            border-radius: 4px;
+            margin: 6px 0;
+            overflow-x: auto;
+        }
     
     </style>
 </head>
@@ -974,6 +1217,33 @@
             <span>📅 Kommunalt Styringsårshjul & Kritiske Frister (2026)</span>
             <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Synkronisert med Plandisc & Teams</span>
         </div>
+
+        <!-- 12-MÅNEDERS TIDSVEKSLER (ÅRS- OG MÅNEDSLØYFE) -->
+        <div class="month-timeline-bar" id="month-timeline-bar">
+            <button class="month-pill" onclick="selectMonth(1)">Jan</button>
+            <button class="month-pill" onclick="selectMonth(2)">Feb</button>
+            <button class="month-pill" onclick="selectMonth(3)">Mar (T1)</button>
+            <button class="month-pill" onclick="selectMonth(4)">Apr</button>
+            <button class="month-pill" onclick="selectMonth(5)">Mai</button>
+            <button class="month-pill" onclick="selectMonth(6)">Jun</button>
+            <button class="month-pill" onclick="selectMonth(7)">Jul</button>
+            <button class="month-pill" onclick="selectMonth(8)">Aug</button>
+            <button class="month-pill active highlight" onclick="selectMonth(9)">Sep (T2)</button>
+            <button class="month-pill" onclick="selectMonth(10)">Okt</button>
+            <button class="month-pill" onclick="selectMonth(11)">Nov</button>
+            <button class="month-pill" onclick="selectMonth(12)">Des (HØP)</button>
+        </div>
+
+        <div class="timeline-status-banner" id="timeline-status-banner">
+            <div>
+                <span id="timeline-active-mode" style="font-weight: 700;">🔴 MÅNEDSRAPPORTERING M9 (September)</span> | 
+                <span id="timeline-deadline">Frist Formannskapet: 28. september (4 dager igjen)</span>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px;">
+                Saksbehandler: Frank Ellingsen (Senior Controller)
+            </div>
+        </div>
+
         <div class="quarters-grid">
             <div class="quarter-box">
                 <h3>Q1: KOSTRA & Regnskap <span>Jan–Mar</span></h3>
@@ -1184,6 +1454,89 @@
 
     </div>
 
+    <!-- =======================================================================
+         5B. SMART ARBEIDSKØ, ZERO-CLICK TRIAGE & 4-PUNKTS AVVIKSRAPPORT (V2)
+         ======================================================================= -->
+    <div class="triage-grid">
+        <!-- Smart Arbeidskø -->
+        <div class="triage-card">
+            <div class="section-header" style="margin-bottom: 8px;">
+                <span>📋 Smart Arbeidskø & Triage (Risikosortert)</span>
+                <span class="status-badge" id="triage-counter-badge">16 Enheter vurdert</span>
+            </div>
+            <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 10px;">
+                Automatisk triage fra Visma ERP og Framsikt. Håndter rødflagg først; batch-godkjenn normale enheter.
+            </p>
+
+            <div class="triage-item">
+                <div>
+                    <span class="triage-item-tag tag-critical">🔴 KRITISK</span>
+                    <strong>Enhet 202 Lovisenlev Skole</strong>: Vikarutgifter +1.24M (+12.4 %)
+                </div>
+                <button class="btn btn-sm" onclick="loadTriageUnit('ENHET_202')">Behandle</button>
+            </div>
+            <div class="triage-item">
+                <div>
+                    <span class="triage-item-tag tag-warning">🟠 ADVARSEL</span>
+                    <strong>Enhet 401 Helse & Mestring</strong>: Overtid +850k (+6.1 %)
+                </div>
+                <button class="btn btn-sm" onclick="loadTriageUnit('ENHET_401')">Behandle</button>
+            </div>
+            <div class="triage-item" id="green-units-row">
+                <div>
+                    <span class="triage-item-tag tag-normal">🟢 NORMAL</span>
+                    <span id="green-units-text"><strong>14 enheter</strong> innenfor avviksterskel (&plusmn;2.0 %)</span>
+                </div>
+                <button class="btn btn-sm btn-primary" id="btn-batch-approve" onclick="batchApproveGreenUnits()">
+                    ⚡ Batch-godkjenn grønne
+                </button>
+            </div>
+            <div id="batch-approve-msg" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-family: var(--font-mono);">
+                ✓ 14 enheter batch-godkjent jf. delegeringsreglement! SHA256: 7a8b9c0d1e2f3a4b...
+            </div>
+        </div>
+
+        <!-- 4-Punkts Avviks- og Effektprognose -->
+        <div class="triage-card" style="border-left: 3px solid var(--navy-dark);">
+            <div class="section-header" style="margin-bottom: 8px;">
+                <span>📝 4-Punkts Avviks- og Effektprognose</span>
+                <span class="status-badge">MAL-AVVIK-EFFEKT-001</span>
+            </div>
+            <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 8px;">
+                Aktiv enhet: <strong id="rep4-active-title">Enhet 202 Lovisenlev Skole (Grunnskole M9)</strong>
+            </p>
+            <div class="report4-point" style="margin-bottom: 6px;">
+                <strong>1. Avvik hittil i år (YTD):</strong>
+                <span id="rep4-p1">+1 240 000 NOK (+12.4 % merforbruk mot periodisert budsjett i Visma ERP)</span>
+            </div>
+            <div class="report4-point" style="margin-bottom: 6px;">
+                <strong>2. Årsak til avvik (Glass-Box RAG):</strong>
+                <span id="rep4-p2">Høyt sykefravær (14.2 %) + NAV-refusjonsetterslep på art 1600 (410 000 NOK utestående).</span>
+            </div>
+            <div class="report4-point" style="margin-bottom: 6px;">
+                <strong>3. Forslag til Action (Tiltaksplan):</strong>
+                <span id="rep4-p3">A) Strakstiltak NAV-purring. B) Klassesammenslåing ved korttidsfravær. C) Omdisponering i T2.</span>
+            </div>
+            <div class="report4-point" style="margin-bottom: 8px;">
+                <strong>4. Kvantifisert Effekt & EOY Balanse:</strong>
+                <span id="rep4-p4">Prognose uten tiltak: +1.85M -> Tiltakseffekt: -1.25M -> <strong>Revidert EOY: +600k</strong> (Balanse jf. § 14-5).</span>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn btn-sm btn-primary" onclick="approveReport4()">
+                    🔒 Godkjenn & Generer Saksnotat (SHA-256)
+                </button>
+                <button class="btn btn-sm" onclick="previewDocument('RAPPORT_MONSTER')">
+                    📄 Forhåndsvis Mal
+                </button>
+                <button class="btn btn-sm" onclick="openChatWithPrompt('Hvorfor har Enhet 202 så høyt vikarforbruk?')">
+                    💬 Spør Gemini AI
+                </button>
+            </div>
+            <div id="rep4-sign-msg" style="display: none; margin-top: 6px; font-size: 11px; color: var(--success-green); font-family: var(--font-mono);">
+                ✓ Saksnotat godkjent og forseglet! SHA256: e3b0c44298fc1c14...
+            </div>
+        </div>
+    </div>
 
     <!-- =======================================================================
          6. OPERATIV SAKSBEHANDLINGSFLYT & STAGE-GATE SLØYFE
@@ -1285,11 +1638,11 @@
 
         <!-- Filter-faner -->
         <div class="filter-tabs">
-            <button class="tab-btn active-tab" onclick="filterDocs('ALL')">📁 Alle Ressurser (16)</button>
-            <button class="tab-btn" onclick="filterDocs('MALER')">📝 Maler & Skjemaer (6)</button>
+            <button class="tab-btn active-tab" onclick="filterDocs('ALL')">📁 Alle Ressurser (20)</button>
+            <button class="tab-btn" onclick="filterDocs('MALER')">📝 Rapporter & Maler (12)</button>
             <button class="tab-btn" onclick="filterDocs('EXCEL')">📊 Excel-modeller (3)</button>
-            <button class="tab-btn" onclick="filterDocs('POWERBI')">📈 Power BI & DAX (3)</button>
-            <button class="tab-btn" onclick="filterDocs('JUS')">🛡️ Revisjon & Jus (4)</button>
+            <button class="tab-btn" onclick="filterDocs('POWERBI')">📈 Power BI & Datadesign (4)</button>
+            <button class="tab-btn" onclick="filterDocs('JUS')">🛡️ Revisjon, Styring & Jus (5)</button>
         </div>
 
         <!-- Dokumentkort Grid -->
@@ -1502,6 +1855,148 @@
                     <a href="templates/MAL_PERIODELUKKING_OG_AVSTEMMING.docx" download class="btn btn-sm btn-primary">📥 Word (.docx)</a>
                     <button class="btn btn-sm" onclick="previewDocument('LUKKING_INSTRUK')">👁️ Forhåndsvis</button>
                     <a href="templates/MAL_PERIODELUKKING_OG_AVSTEMMING.md" target="_blank" class="btn btn-sm">📄 Markdown</a>
+                </div>
+            </div>
+
+            <!-- KORT 13: RAPPORTMAL_KOMMUNESTYRET -->
+            <div class="doc-card" data-category="MALER">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-docx">.DOCX & .MD</span>
+                        <span style="font-size: 11px; color: var(--alert-red); font-weight: 700;">Nivå 1: Bystyret</span>
+                    </div>
+                    <div class="doc-title">Månedsrapport: Kommunestyret / Bystyret</div>
+                    <div class="doc-law">Hjemmel: Kommuneloven § 14-5 & § 14-6</div>
+                    <div class="doc-desc">Strategisk økonomirapport for Bystyret med helhetlig sektoravvik, disposisjonsfondsvurdering og formelle politiske vedtaksforslag.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/RAPPORTMAL_KOMMUNESTYRET.docx" download class="btn btn-sm btn-primary">📥 Word (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('RAPPORT_KOMMUNESTYRET')">👁️ Forhåndsvis</button>
+                    <a href="templates/RAPPORTMAL_KOMMUNESTYRET.md" target="_blank" class="btn btn-sm">📄 Markdown</a>
+                </div>
+            </div>
+
+            <!-- KORT 14: RAPPORTMAL_KOMMUNEDIREKTOR -->
+            <div class="doc-card" data-category="MALER">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-docx">.DOCX & .MD</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 700;">Nivå 2: Rådmann</span>
+                    </div>
+                    <div class="doc-title">Månedsrapport: Kommunedirektøren</div>
+                    <div class="doc-law">Direktiv: Administrativ Strakstiltaksplan</div>
+                    <div class="doc-desc">Toppledelsens månedsrapport med samlet driftsavvik, vikarbyråforbruk, NAV-etterslep og 4 administrative strakstiltak (ACT-01–04).</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx" download class="btn btn-sm btn-primary">📥 Word (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('RAPPORT_KOMMUNEDIREKTOR')">👁️ Forhåndsvis</button>
+                    <a href="templates/RAPPORTMAL_KOMMUNEDIREKTOR.md" target="_blank" class="btn btn-sm">📄 Markdown</a>
+                </div>
+            </div>
+
+            <!-- KORT 15: RAPPORTMAL_KOMMUNALSJEF -->
+            <div class="doc-card" data-category="MALER">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-docx">.DOCX & .MD</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 700;">Nivå 3: Sektor</span>
+                    </div>
+                    <div class="doc-title">Månedsrapport: Kommunalsjef Oppvekst</div>
+                    <div class="doc-law">Sektorstyring: Skoler & Virksomheter</div>
+                    <div class="doc-desc">Enhetsvis avviksmatrise for grunnskoler (Grim, Lovisenlev, Tangvall, Vågsbygd), vikar- og overtidstrender, samt intern vikarring.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/RAPPORTMAL_KOMMUNALSJEF.docx" download class="btn btn-sm btn-primary">📥 Word (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('RAPPORT_KOMMUNALSJEF')">👁️ Forhåndsvis</button>
+                    <a href="templates/RAPPORTMAL_KOMMUNALSJEF.md" target="_blank" class="btn btn-sm">📄 Markdown</a>
+                </div>
+            </div>
+
+            <!-- KORT 16: RAPPORTMAL_SEKSJONSLEDER -->
+            <div class="doc-card" data-category="MALER">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-docx">.DOCX & .MD</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 700;">Nivå 4: Stab</span>
+                    </div>
+                    <div class="doc-title">Månedsrapport: Seksjonsleder Innkjøp</div>
+                    <div class="doc-law">Stabsstyring: Rammeavtaler & Drift</div>
+                    <div class="doc-desc">Avviks- og transaksjonsanalyse for stabsseksjoner med kontroll over juridisk konsulentbistand, overtid og fagsystemlisenser.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/RAPPORTMAL_SEKSJONSLEDER.docx" download class="btn btn-sm btn-primary">📥 Word (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('RAPPORT_SEKSJONSLEDER')">👁️ Forhåndsvis</button>
+                    <a href="templates/RAPPORTMAL_SEKSJONSLEDER.md" target="_blank" class="btn btn-sm">📄 Markdown</a>
+                </div>
+            </div>
+
+            <!-- KORT 17: RAPPORTMAL_AVDELINGSLEDER -->
+            <div class="doc-card" data-category="MALER">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-docx">.DOCX & .MD</span>
+                        <span style="font-size: 11px; color: var(--alert-red); font-weight: 700;">Nivå 5: Enhet</span>
+                    </div>
+                    <div class="doc-title">Operativ Rapport: Enhetsleder Skole</div>
+                    <div class="doc-law">Virksomhetsstyring: Enhet 202</div>
+                    <div class="doc-desc">Detaljerte linjeavvik på kontonivå (art 10100, 10200, 10900) med Glass-Box RAG årsaksdiagnose og 30-dagers handlingsplan.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/RAPPORTMAL_AVDELINGSLEDER.docx" download class="btn btn-sm btn-primary">📥 Word (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('RAPPORT_AVDELINGSLEDER')">👁️ Forhåndsvis</button>
+                    <a href="templates/RAPPORTMAL_AVDELINGSLEDER.md" target="_blank" class="btn btn-sm">📄 Markdown</a>
+                </div>
+            </div>
+
+            <!-- KORT 18: RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE -->
+            <div class="doc-card" data-category="MALER">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-docx">.DOCX & .MD</span>
+                        <span style="font-size: 11px; color: var(--success-green); font-weight: 700;">Felles Mønster</span>
+                    </div>
+                    <div class="doc-title">Standardisert 4-Punkts Avviksmønster</div>
+                    <div class="doc-law">Standard: MAL-AVVIK-EFFEKT-001</div>
+                    <div class="doc-desc">Obligatorisk 4-stegs struktur: 1. YTD Avvik → 2. Årsak (RAG) → 3. Forslag til Action → 4. Kvantifisert Effekt & EOY Balanse.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx" download class="btn btn-sm btn-primary">📥 Word (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('RAPPORT_MONSTER')">👁️ Forhåndsvis</button>
+                    <a href="templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.md" target="_blank" class="btn btn-sm">📄 Markdown</a>
+                </div>
+            </div>
+
+            <!-- KORT 19: MANEDLIG_AVVIKSRAPPORT_RAMMEVERK -->
+            <div class="doc-card" data-category="JUS">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-md">.MD GUIDE</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 700;">Rammeverk</span>
+                    </div>
+                    <div class="doc-title">Månedlig Avviks- & Tiltaksrammeverk</div>
+                    <div class="doc-law">Styring: 5 Ledelsesnivåer & Månedshjul</div>
+                    <div class="doc-desc">Fullstendig instruks for månedlig avviksoppfølging med definerte beløpsterskler (50k til 5M), eskalering og controller-signoff.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md" target="_blank" class="btn btn-sm btn-primary">📄 Åpne Veileder</a>
+                    <button class="btn btn-sm" onclick="previewDocument('RAMMEVERK_MANED')">👁️ Forhåndsvis</button>
+                </div>
+            </div>
+
+            <!-- KORT 20: VISUAL_STORYTELLING_FT_GUIDE -->
+            <div class="doc-card" data-category="POWERBI">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-md">.MD DESIGN</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 700;">Datadesign</span>
+                    </div>
+                    <div class="doc-title">Visual Storytelling: FT Visual Vocabulary</div>
+                    <div class="doc-law">Metode: Financial Times & Cleveland-McGill</div>
+                    <div class="doc-desc">Veileder for kognitiv datakommunikasjon i kommunen: Bullet charts, Fan charts, Sparklines, fargekontraster og forbudte kakediagrammer.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="docs/VISUAL_STORYTELLING_FT_GUIDE.md" target="_blank" class="btn btn-sm btn-primary">📄 Åpne Veileder</a>
+                    <button class="btn btn-sm" onclick="previewDocument('FT_GUIDE')">👁️ Forhåndsvis</button>
                 </div>
             </div>
 
@@ -1723,6 +2218,51 @@ SWITCH(
                 <button class="btn" onclick="copyModalContent()">📋 Kopier Tekst</button>
                 <a id="modal-download-link" href="#" download class="btn btn-primary">📥 Last ned fil</a>
                 <button class="btn" onclick="closeModal()">Lukk</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING CHAT BUTTON -->
+    <button id="chat-floating-toggle" class="chat-floating-btn" onclick="toggleChatDrawer()">
+        💬 Gemini Flash AI-Chat <span class="chat-badge-pulse">MCP</span>
+    </button>
+
+    <!-- SLIDE-OUT GEMINI FLASH + MCP AI CHAT DRAWER -->
+    <div id="chat-drawer" class="chat-drawer">
+        <div class="chat-drawer-header">
+            <div>
+                <div style="font-weight: 700; font-size: 13.5px;">⚡ Gemini Flash EPM Assistent</div>
+                <div style="font-size: 10.5px; opacity: 0.85; font-family: var(--font-mono);">
+                    🛡️ PII-skjermet | 🔌 MCP: SQLite, Framsikt & Jus
+                </div>
+            </div>
+            <button onclick="toggleChatDrawer()" style="background: none; border: none; color: #fff; font-size: 18px; cursor: pointer;">✕</button>
+        </div>
+
+        <div class="chat-drawer-body" id="chat-messages-container">
+            <div style="font-size: 11px; text-align: center; color: var(--text-muted); margin-bottom: 4px;">
+                🔒 Sikker sone: Fødselsnumre og personopplysninger maskeres automatisk lokalt.
+            </div>
+
+            <!-- Hurtigspørsmål / Chips -->
+            <div style="margin-bottom: 8px;">
+                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">Hurtigspørsmål (MCP Tools):</div>
+                <span class="chat-chip" onclick="askPromptChip('Hvorfor har Enhet 202 så høyt vikarforbruk?')">🔍 Hvorfor avvik i Enhet 202?</span>
+                <span class="chat-chip" onclick="askPromptChip('Hva krever Kommuneloven § 14-5 ved budsjettavvik?')">⚖️ Krav i Kommuneloven § 14-5</span>
+                <span class="chat-chip" onclick="askPromptChip('Kjør EOY Monte Carlo prognose for Oppvekst')">📈 Kjør EOY prognose</span>
+                <span class="chat-chip" onclick="askPromptChip('Hva er status på NAV-refusjoner art 1600?')">🏥 NAV-refusjoner art 1600</span>
+            </div>
+
+            <!-- Initial melding fra AI -->
+            <div class="chat-bubble chat-bubble-ai">
+                <strong>🤖 Gemini Flash EPM:</strong> Hei Frank! Jeg har live-tilgang til Visma ERP, Framsikt-rammer og juridisk RAG via Model Context Protocol (MCP). Hva ønsker du å undersøke i dagens månedsoppgjør?
+            </div>
+        </div>
+
+        <div class="chat-drawer-footer">
+            <div style="display: flex; gap: 6px;">
+                <input type="text" id="chat-input-text" class="form-input" style="flex: 1; font-size: 12px;" placeholder="Still et spørsmål til økonomidataene..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+                <button class="btn btn-primary" onclick="sendChatMessage()">Send</button>
             </div>
         </div>
     </div>
@@ -2253,6 +2793,180 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
     <li><strong>Glass-Box RAG (Port 8):</strong> 100 % paragrafsitering mot Kommuneloven og forskrifter.</li>
     <li><strong>Offentlig Algoritmeregister (Port 10):</strong> Innsyn jf. Eurocities standard.</li>
 </ol>`
+            },
+            "RAPPORT_KOMMUNESTYRET": {
+                title: "Månedlig Rapport: Kommunestyret / Bystyret (Nivå 1)",
+                file: "templates/RAPPORTMAL_KOMMUNESTYRET.docx",
+                body: `<h3>MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — KOMMUNESTYRET</h3>
+<p><strong>Rapporteringsperiode:</strong> M9 September 2026 | <strong>Hjemmel:</strong> Kommuneloven § 14-5 & § 14-6</p>
+<hr>
+<h4>EXECUTIVE SUMMARY (BYSTYRET):</h4>
+<ul>
+    <li><strong>Samlet netto driftsavvik:</strong> +94,9 mill. kr (+1.9 % av årsbudsjett 7 500 MNOK)</li>
+    <li><strong>Prognose EOY per 31.12:</strong> +116,5 mill. kr i forventet merforbruk</li>
+    <li><strong>Kritiske politiske saker:</strong> Rammeflytting fra investering til Helse & Mestring (15,0 MNOK), samt bruk av disposisjonsfond.</li>
+</ul>
+<h4>SEKTORVIS AVVIKSOVERSIKT:</h4>
+<table class="tufte-table">
+    <thead>
+        <tr><th>Sektor</th><th class="num">Ramme</th><th class="num">Regnskap</th><th class="num">Avvik</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Oppvekst & Grunnskole</td><td class="num">2 450M</td><td class="num">1 685M</td><td class="num" style="color:var(--alert-red);">+38,5M (+2.3%)</td><td>🔴 Kritisk</td></tr>
+        <tr><td>Helse & Mestring</td><td class="num">3 100M</td><td class="num">2 140M</td><td class="num" style="color:var(--alert-red);">+62,0M (+2.9%)</td><td>🔴 Kritisk</td></tr>
+        <tr><td>By- og Stedsutvikling</td><td class="num">850M</td><td class="num">560M</td><td class="num" style="color:var(--success-green);">-4,2M (-0.8%)</td><td>🟢 Normal</td></tr>
+        <tr><td>Kultur & Dialog</td><td class="num">420M</td><td class="num">280M</td><td class="num">+1,1M (+0.4%)</td><td>🟡 Mild</td></tr>
+        <tr><td>Sentralstyring & Staber</td><td class="num">680M</td><td class="num">450M</td><td class="num" style="color:var(--success-green);">-2,5M (-0.6%)</td><td>🟢 Normal</td></tr>
+    </tbody>
+</table>
+<h4>FORSLAG TIL VEDTAK:</h4>
+<ol>
+    <li>Bystyret tar månedlig avviksrapport per september til orientering.</li>
+    <li>Bystyret vedtar omdisponering av 15,0 MNOK fra prosjekt 4021 til drift i Helse og Mestring.</li>
+    <li>Bystyret godkjenner bruk av udisponert disposisjonsfond med inntil 25,0 MNOK dersom EOY-prognosen opprettholdes.</li>
+</ol>
+<p><code>SHA-256: a8f9c1e3b2d4f5e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0</code></p>`
+            },
+            "RAPPORT_KOMMUNEDIREKTOR": {
+                title: "Månedlig Rapport: Kommunedirektøren (Nivå 2)",
+                file: "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+                body: `<h3>MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — KOMMUNEDIREKTØREN</h3>
+<p><strong>Gjelder:</strong> Toppledelsens månedsrapport med administrative direktiver | <strong>Dato:</strong> September 2026</p>
+<hr>
+<h4>HOVEDTALL TOPPLEDELSE:</h4>
+<ul>
+    <li><strong>Samlet drift:</strong> 7 500 mill. kr (Påløpt: 5 115 mill. kr / 68.2 % av årsramme)</li>
+    <li><strong>Sykepengerefusjoner NAV:</strong> -12,4 mill. kr utestående over 60 dager (likviditetsbelastning)</li>
+    <li><strong>Vikarbyråkostnader:</strong> 34,2 mill. kr påløpt (85 % av årsrammen er brukt)</li>
+</ul>
+<h4>ADMINISTRATIVE DIREKTIVER (STRAKSTILTAK):</h4>
+<ul>
+    <li><strong>ACT-01:</strong> Ansettelsesstopp for ikke-kritiske stabs- og støttestillinger (-8 000 000 kr EOY).</li>
+    <li><strong>ACT-02:</strong> Innkjøpsstopp for konsulenttjenester uten godkjenning fra Kommunedirektør (-5 000 000 kr EOY).</li>
+    <li><strong>ACT-03:</strong> Skjerpet godkjenningsregime for vikarbyråbruk (krav om kommunalsjef-signatur) (-12 000 000 kr EOY).</li>
+    <li><strong>ACT-04:</strong> Purrerutine og dedikert team for NAV-refusjoner (+10 000 000 kr likviditet).</li>
+</ul>
+<p><code>SHA-256: c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8</code></p>`
+            },
+            "RAPPORT_KOMMUNALSJEF": {
+                title: "Månedlig Rapport: Kommunalsjef Oppvekst (Nivå 3)",
+                file: "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+                body: `<h3>MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — KOMMUNALSJEF OPPVEKST</h3>
+<p><strong>Sektor:</strong> Oppvekst og Grunnskole | <strong>Årsramme:</strong> 2 450 000 tNOK | <strong>Avvik:</strong> +38 500 tNOK</p>
+<hr>
+<h4>DIAGNOSTISK ÅRSAKSANALYSE:</h4>
+<ul>
+    <li><strong>Lønnsart 1020 (Vikarer):</strong> +18,2 mill. kr (47.3 % av avviket) pga. 14.2 % sykefravær.</li>
+    <li><strong>Lønnsart 1090 (Overtid):</strong> +6,4 mill. kr (16.6 % av avviket).</li>
+    <li><strong>Kjøp av spesialundervisning:</strong> +9,1 mill. kr (23.6 % av avviket).</li>
+</ul>
+<h4>IVERKSATTE SEKTORTILTAK:</h4>
+<ul>
+    <li><strong>OPP-01:</strong> Etablering av intern vikarring på tvers av Grim, Lovisenlev og Vågsbygd skoler (-450 000 kr/md).</li>
+    <li><strong>OPP-02:</strong> Re-evaluering av enkeltvedtak for spesialundervisning (gruppetiltak vs 1-til-1) (-800 000 kr/md).</li>
+    <li><strong>OPP-03:</strong> Midlertidig frys i utstyrsinnkjøp og læremidler (-300 000 kr/md).</li>
+</ul>
+<p><code>SHA-256: d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2</code></p>`
+            },
+            "RAPPORT_SEKSJONSLEDER": {
+                title: "Månedlig Rapport: Seksjonsleder Innkjøp (Nivå 4)",
+                file: "templates/RAPPORTMAL_SEKSJONSLEDER.docx",
+                body: `<h3>MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT — SEKSJONSLEDER</h3>
+<p><strong>Seksjon:</strong> Anskaffelser og Innkjøp | <strong>Årsramme:</strong> 28 500 tNOK | <strong>Avvik:</strong> +1 450 tNOK</p>
+<hr>
+<h4>TRANSAKSJONSOVERSIKT:</h4>
+<table class="tufte-table">
+    <thead>
+        <tr><th>Konto</th><th>Beskrivelse</th><th class="num">Budsjett</th><th class="num">Regnskap</th><th class="num">Avvik</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1010</td><td>Fast lønn stabsansatte</td><td class="num">21 000</td><td class="num">14 200</td><td class="num">+200</td></tr>
+        <tr><td>1090</td><td>Overtid anbudsfrister</td><td class="num">500</td><td class="num">850</td><td class="num" style="color:var(--alert-red);">+350 🔴</td></tr>
+        <tr><td>1270</td><td>Juridisk konsulentbistand</td><td class="num">4 000</td><td class="num">4 900</td><td class="num" style="color:var(--alert-red);">+900 🔴</td></tr>
+        <tr><td>1370</td><td>Lisenser KGV/KAV</td><td class="num">3 000</td><td class="num">3 000</td><td class="num">0 🟢</td></tr>
+    </tbody>
+</table>
+<h4>TILTAK:</h4>
+<ul>
+    <li><strong>ACT-SEK-01:</strong> Avslutte ekstern juridisk konsulentbistand innen 14 dager; overføre restoppgaver til interne jurister (-600 000 kr).</li>
+    <li><strong>ACT-SEK-02:</strong> Overtidsforbud ved konsulentoppfølging uten forhåndsgodkjenning (-200 000 kr).</li>
+</ul>
+<p><code>SHA-256: e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0</code></p>`
+            },
+            "RAPPORT_AVDELINGSLEDER": {
+                title: "Månedlig Operativ Avviksrapport — Avdelingsleder Skole (Nivå 5)",
+                file: "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+                body: `<h3>MÅNEDLIG OPERATIV AVVIKSRAPPORT — ENHET 202</h3>
+<p><strong>Enhet:</strong> Lovisenlev Skole | <strong>Tildelt Ramme:</strong> 52 000 tNOK | <strong>Avvik YTD:</strong> +3 200 tNOK (🔴 RØD ALARM)</p>
+<hr>
+<h4>LINJEAVVIK PÅ KONTONIVÅ:</h4>
+<ul>
+    <li><strong>Art 10200 Vikarutgifter timelærere:</strong> 4 800 tNOK (Budsjett 2 500 tNOK) -> <strong>+2 300 tNOK</strong> avvik pga. 12.4 % sykefravær.</li>
+    <li><strong>Art 10900 Overtid / Ekstratimer:</strong> 650 tNOK (Budsjett 300 tNOK) -> <strong>+350 tNOK</strong> avvik.</li>
+</ul>
+<h4>30-DAGERS HANDLINGSPLAN (ENHETSLEDER):</h4>
+<ol>
+    <li><strong>ACT-202-A:</strong> Klassesammenslåing ved korttidsfravær < 3 dager i stedet for ekstern timelærer (-80 000 kr/md).</li>
+    <li><strong>ACT-202-B:</strong> NAV-oppfølging med lønnskontor for uavklarte refusjoner (+650 000 kr likviditet).</li>
+    <li><strong>ACT-202-C:</strong> Tett-på-samtaler og IA-oppfølging for å bringe fravær under 8 %.</li>
+    <li><strong>ACT-202-D:</strong> Innkjøpsstopp for rekvisita og inventar ut året (-50 000 kr/md).</li>
+</ol>
+<p><code>SHA-256: f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1</code></p>`
+            },
+            "RAPPORT_MONSTER": {
+                title: "Standardisert Rapporteringsmønster: 4-Punkts Avvik og Effektprognose",
+                file: "templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx",
+                body: `<h3>STANDARDIZERT 4-PUNKTS AVVIK OG EFFEKTPROGNOSE</h3>
+<p><strong>Dokument-ID:</strong> MAL-AVVIK-EFFEKT-001 | <strong>Gjelder:</strong> Alle ledelsesnivåer 1–5</p>
+<hr>
+<h4>DE 4 OBLIGATORISKE PUNKTER:</h4>
+<ol>
+    <li><strong>1. Avvik hittil i år (YTD Variance):</strong> Presist avvik i kroner og prosent mot periodisert budsjett i Visma ERP.</li>
+    <li><strong>2. Årsak til avvik (Root Cause Analysis):</strong> Dypdykk i underliggende drivere (sykefravær, NAV-etterslep, prisstigning) via Glass-Box RAG.</li>
+    <li><strong>3. Forslag til Action (Corrective Action Plan):</strong> Strakstiltak (0–30 dager), operative tiltak (30–90 dager), politiske tiltak.</li>
+    <li><strong>4. Kvantifisert Effekt & EOY Balanse:</strong> Monte Carlo-beregning av helårsavvik før og etter tiltak per 31.12.</li>
+</ol>
+<h4>KRAV FRA KOMMUNEREVISJONEN (PORT 9):</h4>
+<p>Hver genererte rapport forsegles med SHA-256 hash i <code>Audit_AI_Actions</code> slik at Kontrollutvalget kan verifisere at forutsatte tiltak faktisk ble gjennomført.</p>`
+            },
+            "RAMMEVERK_MANED": {
+                title: "Rammeverk for Månedlig Avviks- og Tiltaksrapportering",
+                file: "bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md",
+                body: `<h3>RAMMEVERK FOR MÅNEDLIG AVVIKS- OG TILTAKSRAPPORT</h3>
+<p><strong>Kristiansand Kommune</strong> — Økonomi og Virksomhetsstyring</p>
+<hr>
+<h4>AVVIKSTERSKLER PER LEDELSESNIVÅ:</h4>
+<ul>
+    <li><strong>Nivå 1 (Bystyret):</strong> Avvik > 5 000 000 kr (> 3.0 % av sektorramme). Prinsipielle avvik og fondstapping jf. § 14-5.</li>
+    <li><strong>Nivå 2 (Kommunedirektør):</strong> Avvik > 2 000 000 kr (> 2.0 % av samlet drift). Tverrsektorielle administrative strakstiltak.</li>
+    <li><strong>Nivå 3 (Kommunalsjef):</strong> Avvik > 500 000 kr (> 5.0 % av enhetens ramme). Sektorvise vikar- og overtidstiltak.</li>
+    <li><strong>Nivå 4 (Seksjonsleder):</strong> Avvik > 200 000 kr (> 5.0 % av seksjonens ramme). Prosjekt- og konsulentavvik.</li>
+    <li><strong>Nivå 5 (Enhetsleder):</strong> Avvik > 50 000 kr (> 5.0 % på enkeltart). Linjeavvik på vikarer og sykefravær.</li>
+</ul>
+<h4>DEN MÅNEDLIGE RAPPORTERINGSSLØYFEN:</h4>
+<p>Dag 1–3: Månedsoppgjør Visma ERP -> Dag 4: PII-vask og ETL til SQLite -> Dag 5: Avviksdeteksjon & AI-tiltak -> Dag 6–7: HITL Controller Sign-off -> Dag 8: Distribusjon til ledere 1–5.</p>`
+            },
+            "FT_GUIDE": {
+                title: "Visuell Datakommunikasjon og Storytelling med Data (Financial Times Guide)",
+                file: "docs/VISUAL_STORYTELLING_FT_GUIDE.md",
+                body: `<h3>VISUELL DATAKOMMUNIKASJON OG STORYTELLING MED DATA</h3>
+<p><strong>Basert på Financial Times Visual Vocabulary</strong> & Cleveland & McGills persepsjonsskala</p>
+<hr>
+<h4>KOGNITIV NØYAKTIGHETSSKALA (CLEVELAND & McGILL):</h4>
+<ol>
+    <li><strong>Posisjon langs felles akse:</strong> Høyest nøyaktighet (Stolpediagram, Bullet charts, Linjediagram).</li>
+    <li><strong>Posisjon langs usentrerte akser:</strong> Sparklines i tabeller.</li>
+    <li><strong>Lengde og vinkel:</strong> Trappediagram, Waterfall / Budsjettbro.</li>
+    <li><strong>Areal og fargemetning:</strong> Treemaps, Heatmaps.</li>
+    <li><strong>Forbudt i økonomirapportering:</strong> Kakediagrammer / 3D-diagrammer (villedende grafisk persepsjon).</li>
+</ol>
+<h4>DIAGRAMTYPER TILPASSES 4-PUNKTS RAPPORTEN:</h4>
+<ul>
+    <li><strong>1. Avvik YTD:</strong> Bullet Chart & Diverging Bar (Mål- og avviksstolpe).</li>
+    <li><strong>2. Årsak til avvik:</strong> Waterfall Chart (Budsjettbro: Opprinnelig -> Vikarer -> Overtid -> Tiltak).</li>
+    <li><strong>3. Action & EOY Balanse:</strong> Fan Chart (Viftediagram for P10 / P50 / P90 konfidensbaner).</li>
+    <li><strong>4. Hurtigovervåking:</strong> Sparklines integrert direkte i tabellceller.</li>
+</ul>`
             }
         };
 
@@ -2279,6 +2993,161 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             navigator.clipboard.writeText(bodyText).then(() => {
                 alert("✓ Dokumenttekst kopiert til utklippstavlen!");
             });
+        }
+
+        /* ==========================================================================
+           OFFICE HUB V2: INTERAKTIVE FUNKSJONER (TIDSLINJE, TRIAGE & CHAT)
+           ========================================================================== */
+        
+        // 1. Års- og månedsløyfe
+        const MONTH_DATA = {
+            1: { mode: "MÅNEDSRAPPORTERING M1 (Januar)", deadline: "Frist KOSTRA: 15. januar (Fullført)", highlight: false },
+            2: { mode: "MÅNEDSRAPPORTERING M2 (Februar)", deadline: "Frist KOSTRA 2. runde: 23. februar (Fullført)", highlight: false },
+            3: { mode: "1. TERTIAL / ÅRSREGNSKAP (Mars)", deadline: "Frist Årsregnskap: 31. mars (Fullført)", highlight: true },
+            4: { mode: "MÅNEDSRAPPORTERING M4 (April)", deadline: "Revisjonsberetning: 15. april (Fullført)", highlight: false },
+            5: { mode: "1. TERTIALRAPPORTERING (Mai)", deadline: "Bystyrebehandling T1: 25. mai (Fullført)", highlight: false },
+            6: { mode: "MÅNEDSRAPPORTERING M6 (Juni)", deadline: "Revidert nasjonalbudsjett oppdatering: 2. juni", highlight: false },
+            7: { mode: "MÅNEDSRAPPORTERING M7 (Juli)", deadline: "Sommerlukking og ferieavstemming", highlight: false },
+            8: { mode: "MÅNEDSRAPPORTERING M8 (August)", deadline: "Innspill til ny HØP 2027–2030: 15. august", highlight: false },
+            9: { mode: "🔴 MÅNEDSRAPPORTERING M9 (September)", deadline: "Frist Formannskapet: 28. september (4 dager igjen)", highlight: true },
+            10: { mode: "MÅNEDSRAPPORTERING M10 (Oktober)", deadline: "Statsbudsjettet og rammejustering: 7. oktober", highlight: false },
+            11: { mode: "HØP & BUDSJETTINNSPILL (November)", deadline: "Formannskapets innstilling: 25. november", highlight: false },
+            12: { mode: "BUDSJETTVEDTAK M12 (Desember)", deadline: "Bystyrets endelige HØP-vedtak: 18. desember", highlight: true }
+        };
+
+        function selectMonth(m) {
+            document.querySelectorAll(".month-pill").forEach((btn, idx) => {
+                if (idx + 1 === m) {
+                    btn.classList.add("active");
+                } else {
+                    btn.classList.remove("active");
+                }
+            });
+            const d = MONTH_DATA[m];
+            if (d) {
+                document.getElementById("timeline-active-mode").innerText = d.mode;
+                document.getElementById("timeline-deadline").innerText = d.deadline;
+            }
+        }
+
+        // 2. Smart Arbeidskø & Zero-Click Triage
+        function batchApproveGreenUnits() {
+            const btn = document.getElementById("btn-batch-approve");
+            const msg = document.getElementById("batch-approve-msg");
+            const txt = document.getElementById("green-units-text");
+            btn.disabled = true;
+            btn.innerText = "✓ Godkjent";
+            btn.classList.remove("btn-primary");
+            btn.style.background = "var(--success-green)";
+            btn.style.borderColor = "var(--success-green)";
+            txt.innerHTML = "<strong>14 enheter</strong> <span style='color:var(--success-green); font-weight:700;'>BATCH-GODKJENT</span> (Ingen avvik > 2 %)";
+            msg.style.display = "block";
+            document.getElementById("triage-counter-badge").innerText = "14 godkjent | 2 gjenstår";
+            document.getElementById("triage-counter-badge").style.borderColor = "var(--success-green)";
+            document.getElementById("triage-counter-badge").style.color = "var(--success-green)";
+        }
+
+        function loadTriageUnit(unit) {
+            if (unit === 'ENHET_202') {
+                document.getElementById("rep4-active-title").innerText = "Enhet 202 Lovisenlev Skole (Grunnskole M9)";
+                document.getElementById("rep4-p1").innerText = "+1 240 000 NOK (+12.4 % merforbruk mot periodisert budsjett i Visma ERP)";
+                document.getElementById("rep4-p2").innerText = "Høyt sykefravær (14.2 %) + NAV-refusjonsetterslep på art 1600 (410 000 NOK utestående).";
+                document.getElementById("rep4-p3").innerText = "A) Strakstiltak NAV-purring. B) Klassesammenslåing ved korttidsfravær. C) Omdisponering i T2.";
+                document.getElementById("rep4-p4").innerHTML = "Prognose uten tiltak: +1.85M -> Tiltakseffekt: -1.25M -> <strong>Revidert EOY: +600k</strong> (Balanse jf. § 14-5).";
+            } else if (unit === 'ENHET_401') {
+                document.getElementById("rep4-active-title").innerText = "Enhet 401 Helse & Mestring (Sykehjem M9)";
+                document.getElementById("rep4-p1").innerText = "+850 000 NOK (+6.1 % merforbruk på overtid og helgebemanning)";
+                document.getElementById("rep4-p2").innerText = "Økt pleietyngde hos 3 nye brukere + høyt helgefravær dekket med overtid (art 10900).";
+                document.getElementById("rep4-p3").innerText = "A) HTA § 4 drøftingsmøte om langvakter. B) Midlertidig stillingsjustering. C) Rammeflytting fra fond.";
+                document.getElementById("rep4-p4").innerHTML = "Prognose uten tiltak: +1.40M -> Tiltakseffekt: -900k -> <strong>Revidert EOY: +500k</strong> (Dekkes innen helseramme).";
+            }
+        }
+
+        function approveReport4() {
+            const msg = document.getElementById("rep4-sign-msg");
+            msg.style.display = "block";
+            msg.innerText = "✓ Saksnotat godkjent av Frank Ellingsen! SHA256: 4e8b9c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b";
+        }
+
+        // 3. Slide-out Gemini Flash + MCP AI Chat Drawer
+        function toggleChatDrawer() {
+            const drawer = document.getElementById("chat-drawer");
+            drawer.classList.toggle("open");
+        }
+
+        function openChatWithPrompt(prompt) {
+            const drawer = document.getElementById("chat-drawer");
+            drawer.classList.add("open");
+            askPromptChip(prompt);
+        }
+
+        function askPromptChip(promptText) {
+            document.getElementById("chat-input-text").value = promptText;
+            sendChatMessage();
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById("chat-input-text");
+            const text = input.value.trim();
+            if (!text) return;
+
+            const container = document.getElementById("chat-messages-container");
+
+            // Brukermelding
+            const userMsg = document.createElement("div");
+            userMsg.className = "chat-bubble chat-bubble-user";
+            userMsg.innerText = text;
+            container.appendChild(userMsg);
+            input.value = "";
+
+            // Skroll ned
+            container.scrollTop = container.scrollHeight;
+
+            // Simuler rask Gemini Flash (< 300ms) MCP respons
+            setTimeout(() => {
+                const aiMsg = document.createElement("div");
+                aiMsg.className = "chat-bubble chat-bubble-ai";
+
+                if (text.includes("202") || text.includes("vikar")) {
+                    aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
+Analysen av <strong>Enhet 202 (Lovisenlev Skole)</strong> viser et akkumulert YTD-avvik på <strong>+1,24 MNOK (+12.4 %)</strong>.
+<div class="chat-sql-box">MCP Tool: mcp-sqlite-finance / query_ytd_variance
+SELECT art, sum(belop_regnskap) - sum(belop_budsjett) AS avvik 
+FROM Fact_Transaksjoner WHERE enhet = 202 GROUP BY art;</div>
+<strong>Hoveddrivere:</strong>
+• Art 10200 (Vikarer timelærere): +2,30 MNOK pga. 14.2 % sykefravær.
+• Art 16000 (NAV-sykepengerefusjon): Utestående etterslep på 410 000 NOK.
+<br><strong>Juridisk vurdering:</strong>
+Kommuneloven § 14-5 krever realistisk budsjett. Foreslått tiltak: Klassesammenslåing + purring NAV.
+<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: 9b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e...</div>`;
+                } else if (text.includes("14-5") || text.includes("lov")) {
+                    aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
+<strong>Kommuneloven § 14-5 (Økonomisk handleplikt & budsjettbalanse):</strong>
+<div class="chat-sql-box">MCP Tool: mcp-rag-legal / search_municipal_law(query="§ 14-5 budsjettavvik")</div>
+Kommunedirektøren har en <em>lovfestet handleplikt</em> til å varsle og fremme sak om endring av årsbudsjettet dersom det oppstår vesentlige avvik som truer årsbalansen eller overstiger vedtatte rammer.
+I Kristiansand kommune utløses formell sak til Formannskapet ved avvik > 5 mill. kr på sektornivå.
+<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: 3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e...</div>`;
+                } else if (text.includes("prognose") || text.includes("Monte Carlo") || text.includes("EOY")) {
+                    aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
+Kjører prediktiv Monte Carlo tidsserieprognose for <strong>Oppvekst og Grunnskole</strong>:
+<div class="chat-sql-box">MCP Tool: mcp-sqlite-finance / get_eoy_prognosis(sector="Oppvekst", n_sim=5000)</div>
+• <strong>P10 (Best Case med tiltak):</strong> Balanse per 31.12 (+0,6 MNOK merforbruk).
+• <strong>P50 (Forventet / Base Case):</strong> +1,85 MNOK merforbruk.
+• <strong>P90 (Worst Case uten tiltak):</strong> +3,40 MNOK merforbruk.
+Anbefaling: Iverksett klassesammenslåing og vikarstopp for å sikre P10-banen.
+<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: 5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b...</div>`;
+                } else {
+                    aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
+Mottok spørsmål: "<em>${text}</em>".
+<div class="chat-sql-box">MCP Query: SELECT * FROM Dim_Enhet WHERE enhetsnavn LIKE '%${text.substring(0, 10)}%';</div>
+PII-skjerming bekreftet: 0 personopplysninger eksponert.
+Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 14 av 16 enheter. Hovedavvikene er konsentrert til Enhet 202 (Skole) og Enhet 401 (Helse).
+<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5...</div>`;
+                }
+
+                container.appendChild(aiMsg);
+                container.scrollTop = container.scrollHeight;
+            }, 250);
         }
 
         // Kjør oppdatering ved innlasting
