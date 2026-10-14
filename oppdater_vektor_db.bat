@@ -9,7 +9,10 @@ echo =====================================================================
 echo.
 echo [1/2] Sjekker rådokumenter i data\raw...
 set "APP_DIR=%~dp0kommune-ai-guardrails"
-set "PYTHON_EXE=python"
+set "PYTHON_EXE=C:\Users\frank\AppData\Local\Python\bin\python.exe"
+if not exist "%PYTHON_EXE%" (
+    set "PYTHON_EXE=python"
+)
 
 echo [2/2] Kjører indeksering med SentenceTransformer og sqlite-vec...
 echo.

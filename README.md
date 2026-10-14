@@ -85,11 +85,20 @@ Systemet fungerer som en intelligent beslutningsstøtte for økonomirådgivere, 
      ollama serve
      ```
 
-4. **Start Web UI (Streamlit):**
+4. **Start Web UI (Streamlit eller Control Office Hub V2):**
+   - **Alternativ A — Control Office Hub V2 (Anbefalt, Tufte-standard, lynrask):**
+     Dobbeltklikk `start_kommune_ai.bat` eller åpne `index.html` direkte i nettleseren (`file:///.../index.html`). Hub API-serveren starter automatisk på `http://127.0.0.1:8766`.
+   - **Alternativ B — Streamlit Guardrails App:**
+     ```powershell
+     streamlit run app/app.py
+     ```
+     *Nettleseren åpnes automatisk på `http://localhost:8501`.*
+
+5. **Kjør Master Test Suite:**
    ```powershell
-   streamlit run app/app.py
+   pytest tests/test_project_master.py -v
    ```
-   *Nettleseren åpnes automatisk på `http://localhost:8501`.*
+   *Kjører 6/6 kjernevalideringer (Office Hub V2, revisjonssjekk, EVM, MVP-pilot, MCP-server og Hub API).*
 
 ---
 
@@ -109,6 +118,9 @@ docker compose ps
 
 ```text
 AI_KOM/
+├── index.html                     # Control Office Hub V2 (Zero-Click Triage, WCAG 2.1 AA, Tufte-standard)
+├── tests/                         # Master Test Suite (Validerer alle 6 kjernedimensjoner)
+│   └── test_project_master.py     # 100 % dekning for Hub V2, revisjon, EVM, MVP, MCP og API
 ├── agenter/                       # 12 operative personas for økonomi- og prosjektstyring
 │   ├── 01_dataintegrasjon_etl_agent.md ... 12_revisjon_internkontroll_sporbarhet_agent.md
 │   └── README.md                  # Samlende agentmatrise og arbeidsflyt

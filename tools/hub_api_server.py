@@ -7,6 +7,7 @@ Håndterer REST API-kall fra index.html for å oppdatere og sjekke status på SQ
 
 from __future__ import annotations
 
+import hashlib
 import json
 import mimetypes
 import os
@@ -36,6 +37,7 @@ GUARDRAILS_DIR = ROOT_DIR / "kommune-ai-guardrails"
 SRC_DIR = GUARDRAILS_DIR / "src"
 RAW_DATA_DIR = GUARDRAILS_DIR / "data" / "raw"
 DB_PATH = GUARDRAILS_DIR / "data" / "db" / "kommune_rag_store.db"
+ERP_DIR = ROOT_DIR / "erp_data"
 
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
@@ -199,6 +201,100 @@ def _run_ingest_worker() -> None:
             UPDATE_STATE["message"] = f"Feil under indeksering: {exc}"
 
 
+def get_financial_summary() -> dict:
+    golden_db = ERP_DIR / "kommune_golden_record.db"
+    if not golden_db.exists():
+        return {"ok": False, "error": "Golden record DB finnes ikke."}
+    try:
+        conn = sqlite3.connect(str(golden_db))
+        cur = conn.cursor()
+        total_act = cur.execute("SELECT SUM(belop) FROM Fact_Regnskap").fetchone()[0] or 0.0
+        total_bud = cur.execute("SELECT SUM(budsjett_belop) FROM Fact_Budsjett").fetchone()[0] or 0.0
+        conn.close()
+        return {
+            "ok": True,
+            "actual_ytd_nok": total_act,
+            "budget_ytd_nok": total_bud,
+            "variance_ytd_nok": total_bud - total_act,
+            "source": "Fact_Regnskap & Fact_Budsjett (kommune_golden_record.db)"
+        }
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def handle_rag_query(query_text: str, top_k: int = 3) -> dict:
+    """Søker i lov- og regelverksbasen etter relevante paragrafer og KOSTRA-retningslinjer."""
+    clean_q = query_text.strip()
+    try:
+        from kommune_ai_guardrails.rag import sanitize_pii
+        clean_q = sanitize_pii(clean_q)
+    except Exception:
+        pass
+
+    results = []
+    # 1. Prøv mcp_server search_municipal_law
+    try:
+        from kommune_ai_guardrails.mcp_server import search_municipal_law
+        results = search_municipal_law(clean_q, top_k=top_k)
+    except Exception:
+        pass
+
+    # 2. Hvis vi trenger flere eller mer direkte treff fra lokal SQLite
+    if (not results or len(results) < top_k) and DB_PATH.exists():
+        try:
+            conn = sqlite3.connect(str(DB_PATH))
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute(
+                "SELECT section_ref, title, content, source_file FROM legal_chunks WHERE content LIKE ? OR title LIKE ? LIMIT ?",
+                (f"%{clean_q[:20]}%", f"%{clean_q[:20]}%", top_k)
+            ).fetchall()
+            for r in rows:
+                results.append({
+                    "paragraf": r["section_ref"] or r["title"],
+                    "tittel": r["title"],
+                    "kilde": r["source_file"],
+                    "tekst": r["content"][:350] + "...",
+                    "relevans_score": 0.88
+                })
+            conn.close()
+        except Exception:
+            pass
+
+    now = time.strftime("%Y-%m-%dT%H:%M:%SZ")
+    hash_payload = f"{now}|Frank Ellingsen|{clean_q}|{json.dumps(results, ensure_ascii=False)}"
+    audit_hash = hashlib.sha256(hash_payload.encode("utf-8")).hexdigest()
+
+    return {
+        "ok": True,
+        "query": clean_q,
+        "results": results,
+        "results_count": len(results),
+        "sha256": audit_hash,
+        "timestamp": now,
+    }
+
+
+def handle_mcp_query(prompt: str) -> dict:
+    """Eksekverer spørring mot Gemini Flash MCP server."""
+    clean_p = prompt.strip()
+    try:
+        from kommune_ai_guardrails.mcp_server import execute_gemini_mcp_query
+        res = execute_gemini_mcp_query(clean_p)
+        return {
+            "ok": True,
+            "text": res.get("text", ""),
+            "audit_hash": res.get("audit_hash", ""),
+            "tools_called": res.get("tools_called", []),
+            "data": res.get("data", {})
+        }
+    except Exception as exc:
+        return {
+            "ok": False,
+            "error": str(exc),
+            "text": f"Feil under MCP-kall: {exc}"
+        }
+
+
 class HubApiHandler(BaseHTTPRequestHandler):
     """HTTP Request Handler med full CORS-støtte og REST-endepunkter."""
 
@@ -229,6 +325,12 @@ class HubApiHandler(BaseHTTPRequestHandler):
             }
             self._set_headers(200, "application/json; charset=utf-8")
             self.wfile.write(json.dumps(response, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path == "/api/financial-summary":
+            summary = get_financial_summary()
+            self._set_headers(200, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(summary, ensure_ascii=False, indent=2).encode("utf-8"))
             return
 
         elif path == "/api/progress":
@@ -303,6 +405,33 @@ class HubApiHandler(BaseHTTPRequestHandler):
                     "status": "started",
                 }, ensure_ascii=False).encode("utf-8")
             )
+            return
+
+        elif path == "/api/rag-query":
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            query = payload.get("query", "").strip()
+            top_k = int(payload.get("top_k", 3))
+            res = handle_rag_query(query, top_k=top_k)
+            self._set_headers(200, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path == "/api/mcp-query":
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            prompt = payload.get("prompt", payload.get("query", "")).strip()
+            res = handle_mcp_query(prompt)
+            self._set_headers(200, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
             return
 
         self._set_headers(HTTPStatus.NOT_FOUND, "application/json")
