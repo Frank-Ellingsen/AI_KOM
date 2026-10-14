@@ -1826,6 +1826,198 @@
         }
 
         /* ==========================================================================
+           MÅNEDLIG MØTERAPPORTERING & NIVÅSTYRING (NIVÅ 1, 2, 3)
+           ========================================================================== */
+        .level-pills-bar {
+            display: flex;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 5px;
+            gap: 8px;
+            margin: 14px 0 16px 0;
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .level-pill-btn {
+            padding: 9px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: all 0.15s;
+        }
+
+        .level-pill-btn:hover {
+            color: var(--navy-dark);
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .level-pill-btn.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .level-pill-btn.active .level-badge {
+            background: rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+        }
+
+        .level-badge {
+            font-size: 10px;
+            font-family: var(--font-mono);
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #e2e8f0;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .meeting-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+        }
+
+        .meeting-hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .meeting-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy-dark);
+        }
+
+        .meeting-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            border-radius: 3px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .meeting-meta-item strong {
+            display: block;
+            color: var(--navy-dark);
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .meeting-kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .meeting-kpi-chip {
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            padding: 8px 12px;
+        }
+
+        .meeting-kpi-chip .kpi-sub {
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .meeting-kpi-chip .kpi-num {
+            font-size: 14px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--navy-dark);
+            margin-top: 2px;
+        }
+
+        .meeting-section-box {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+        }
+
+        .meeting-section-box h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .compliance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .compliance-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            border-left: 3px solid var(--success-green);
+            padding: 10px 12px;
+            border-radius: 3px;
+            line-height: 1.45;
+        }
+
+        .compliance-card.warning {
+            border-left-color: var(--alert-amber);
+            background: #fffbeb;
+        }
+
+        .compliance-card strong {
+            display: block;
+            color: var(--navy-dark);
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .meeting-actions-toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* ==========================================================================
            ANSVARSOMRÅDER & SEKTORSTYRING (6 SEKTORER)
            ========================================================================== */
         .sector-nav-bar {
@@ -2067,6 +2259,10 @@
                 </a>
                 <a href="#triage-seksjon" class="sidebar-nav-item">
                     <span>📋 Smart Triage (16 Enheter)</span>
+                </a>
+                <a href="#mote-rapportering-seksjon" class="sidebar-nav-item" id="side-mote-rapportering">
+                    <span>👥 Månedsmøter (Nivå 1–3)</span>
+                    <span class="badge-phase" style="background:var(--navy-dark); color:#fff;">M10</span>
                 </a>
                 <a href="#saksflyt" class="sidebar-nav-item">
                     <span>🔄 Saksgenerator & Notat</span>
@@ -2924,6 +3120,42 @@
             </div>
         </div>
     </div>
+
+    <!-- =======================================================================
+         5C. MÅNEDLIG MØTERAPPORTERING & NIVÅSTYRING (NIVÅ 1, 2, 3)
+         ======================================================================= -->
+    <section class="workflow-section" id="mote-rapportering-seksjon">
+        <div class="section-header">
+            <span>👥 Månedsmøter & Nivårapportering — Økonomirådgiverens Oppfølging</span>
+            <span class="status-badge" id="meeting-header-badge">Månedssyklus M10 (Oktober) | Port 9 HITL</span>
+        </div>
+        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+            Hver måned følger økonomirådgiveren opp hver budsjettansvarlig med skreddersydd status, kritiske avvik og handlingsplan for å sikre budsjettbalanse ved årets slutt (EOY per 31.12) jf. <strong>Kommuneloven § 14-5</strong>. Rapporteringen er organisert i 3 styringsnivåer tilpasset beslutningsmyndighet og lovpålagte rammer.
+        </p>
+
+        <!-- Nivåvelger Faner (Nivå 1, Nivå 2, Nivå 3) -->
+        <div class="level-pills-bar" id="level-pills-bar">
+            <button class="level-pill-btn active" id="btn-lvl-niva1" onclick="switchMeetingLevel('NIVA1')">
+                <span>👤 Nivå 1: Avdelings- / Seksjonsleder</span>
+                <span class="level-badge">Operativ Enhet</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva2" onclick="switchMeetingLevel('NIVA2')">
+                <span>👥 Nivå 2: Kommunalsjef</span>
+                <span class="level-badge">Taktisk Sektor</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva3" onclick="switchMeetingLevel('NIVA3')">
+                <span>🏛️ Nivå 3: Kommunaldirektør</span>
+                <span class="level-badge">Toppledelse</span>
+            </button>
+        </div>
+
+        <!-- Møtedetaljer Hovedkort (Innhold injiseres dynamisk) -->
+        <div class="meeting-card" id="meeting-main-card">
+            <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                Laster møtepakke for valgt nivå og sektor...
+            </div>
+        </div>
+    </section>
 
     <!-- =======================================================================
          6. OPERATIV SAKSBEHANDLINGSFLYT & STAGE-GATE SLØYFE
@@ -4615,6 +4847,36 @@ SWITCH(
                         </div>
                     </div>
                     <span class="cmd-item-badge">Triage</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('MOTE_NIVA1')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">👤</span>
+                        <div>
+                            <div class="cmd-item-label">Månedsmøte Nivå 1: Avdelings- / Seksjonsleder</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Operativ enhetsledelse, artsavvik (1010/1020/1090/1600) & 30-dagers handlingsplan</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Månedsmøte</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('MOTE_NIVA2')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">👥</span>
+                        <div>
+                            <div class="cmd-item-label">Månedsmøte Nivå 2: Kommunalsjef</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Taktisk sektorportefølje, enhetsmatrise, vikarring & sektoromstilling</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Månedsmøte</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('MOTE_NIVA3')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏛️</span>
+                        <div>
+                            <div class="cmd-item-label">Månedsmøte Nivå 3: Kommunaldirektør</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Toppledelsens styringsrapport, tertialjustering, politiske saker & administrative direktiver</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Månedsmøte</span>
                 </div>
                 <div class="cmd-palette-item" onclick="executeCommand('HTA_4')">
                     <div class="cmd-item-left">
@@ -7363,6 +7625,12 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             if (activeRow) {
                 activeRow.style.background = "#e0f2fe";
             }
+
+            // Synkroniser månedsmøte-rapporteringen til valgt virksomhetsområde
+            currentMeetingSector = sectorKey;
+            if (typeof renderMeetingPack === 'function') {
+                renderMeetingPack(sectorKey, currentMeetingLevel);
+            }
         }
 
         function toggleSectorComparisonTable() {
@@ -7376,6 +7644,1145 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 container.style.display = "none";
                 if (btn) btn.innerHTML = "📋 Vis alle 6 områder tabell";
             }
+        }
+
+        // ==========================================================================
+        // 2B. MÅNEDLIG MØTERAPPORTERING & NIVÅSTYRING (NIVÅ 1, NIVÅ 2, NIVÅ 3)
+        // ==========================================================================
+        let currentMeetingLevel = 'NIVA1';
+        let currentMeetingSector = 'ALL';
+
+        const MEETING_PACKS = {
+            "OPPVEKST": {
+                "NIVA1": {
+                    levelTitle: "Nivå 1: Seksjons- / Avdelingsleder (Rektor)",
+                    unitName: "Enhet 202: Lovisenlev Skole",
+                    leader: "Trond Jensen (Rektor / Enhetsleder)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Månedlig Oppfølgingsmøte (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Opplæringsloven § 8-2, HTA § 4",
+                    statusBadge: "🔴 RØD ALARM (+9.3 % Merforbruk)",
+                    statusColor: "var(--alert-red)",
+                    docKey: "RAPPORT_AVDELINGSLEDER",
+                    docxFile: "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+                    kpis: {
+                        bac: "52 000 000 NOK",
+                        ac: "37 400 000 NOK",
+                        cv: "+3 200 000 NOK (+9.3 %)",
+                        cvAlert: true,
+                        cpi: "0.915",
+                        cpiAlert: true,
+                        eac: "54 800 000 NOK",
+                        vac: "-2 800 000 NOK",
+                        eacSim: "50 520 000 NOK (🟢 BALANSERT JFR. § 14-5)"
+                    },
+                    variances: [
+                        { art: "10100", desc: "Fast lønn undervisningspersonale", budget: "38 000 000", actual: "25 800 000", varNok: "+400 000", varPct: "+1.1 %", driver: "Normal drift og lønnsoppgjørsvirkning" },
+                        { art: "10200", desc: "Vikarutgifter timelærere", budget: "2 500 000", actual: "4 800 000", varNok: "+2 300 000", varPct: "+92.0 %", driver: "Høyt sykefravær (12.4 %) på 1.–4. trinn; umiddelbar innleie av timelærere" },
+                        { art: "10900", desc: "Overtid / Ekstratimer", budget: "300 000", actual: "650 000", varNok: "+350 000", varPct: "+116.7 %", driver: "Manglende vikardekning i randsonetimer og ved akuttfravær" },
+                        { art: "11200", desc: "Undervisningsmateriell & lisenser", budget: "1 200 000", actual: "1 350 000", varNok: "+150 000", varPct: "+12.5 %", driver: "Prisstigning på digitale læremiddellisenser" },
+                        { art: "16000", desc: "Refusjon sykepenger NAV", budget: "-1 800 000", actual: "-1 390 000", varNok: "+410 000", varPct: "+22.8 %", driver: "Utestående refusjonskrav hos NAV Forvaltning (likviditetsavvik)" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-202-01", title: "Klassesammenslåing ved korttidsfravær (< 3 dager) på 5.–7. trinn", owner: "Rektor / Inspektør", deadline: "5 dager", impact: "-80 000 kr/md", legal: "Opplæringsloven § 8-2 (maks 1:20)", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-202-02", title: "Pre-autorisasjon av overtid: Rektor må godkjenne timer i forkant", owner: "Rektor", deadline: "Umiddelbart", impact: "-35 000 kr/md", legal: "Arbeidsmiljøloven § 10-6", status: "🟢 Vedtatt" },
+                        { id: "ACT-KORT-202-03", title: "Rask inndriving av NAV-sykepengerefusjoner med lønnskontoret", owner: "Enhetsleder / Kontor", deadline: "10 dager", impact: "+410 000 kr likv.", legal: "Folketrygdloven § 22-13", status: "🟡 Pågår" },
+                        { id: "ACT-KORT-202-04", title: "Innkjøpsstopp for skolemateriell og inventar ut året", owner: "Alle lærere", deadline: "Umiddelbart", impact: "-25 000 kr/md", legal: "Kommuneloven § 14-5", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-202-01", title: "Stillingskonvertering: Erstatte timelærere med faste fagarbeidere fra høst 2027", owner: "Enhetsleder / HR", deadline: "1. mai 2027", impact: "-650 000 kr/år", legal: "HTA § 2.3 & Hovedavtalen", status: "📋 Planlagt" },
+                        { id: "ACT-LANG-202-02", title: "IA-program og tett-på oppfølging for å senke sykefraværet til < 7.5 %", owner: "Verneombud / Rektor", deadline: "Q1 2027", impact: "-520 000 kr/år", legal: "Arbeidsmiljøloven § 4-1", status: "🟡 Påbegynt" },
+                        { id: "ACT-LANG-202-03", title: "Felles vikarring med naboskolene Grim og Vågsbygd", owner: "Rektor / Kommunalsjef", deadline: "1. des 2026", impact: "-300 000 kr/år", legal: "HTA § 4 Drøftingsplikt", status: "💬 Drøftes" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5 (Balansekrav)", status: "OK", desc: "Tiltakene lukker avviket med 1.48M innen 31.12 og gjenoppretter realistisk balanse." },
+                        { rule: "Kommuneloven § 14-6 (Bruttoprinsippet)", status: "OK", desc: "Lønnsutgifter (1020) og NAV-refusjoner (1600) føres strengt brutto uten nettobudsjettering." },
+                        { rule: "Opplæringsloven § 8-2 (Lærernorm)", status: "OK", desc: "Lærertetthet på 1:14.2 (1.-4. trinn) og 1:18.7 (5.-7. trinn) ivaretas fullt ut ved sammenslåing." },
+                        { rule: "HTA § 4 (Partssamarbeid)", status: "OK", desc: "Drøftingsprotokoll med Utdanningsforbundet og Fagforbundet er gjennomført og signert." }
+                    ]
+                },
+                "NIVA2": {
+                    levelTitle: "Nivå 2: Kommunalsjef",
+                    unitName: "Sektor: Oppvekst og Utdanning (28 Skoler & 54 Barnehager)",
+                    leader: "Svein Tore Kvernes (Kommunalsjef Skole og Utdanning)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Sektormøte — Porteføljestyring & Sektoromstilling (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Barnehageloven § 19, Opplæringsloven kap. 5",
+                    statusBadge: "🔴 SEKTORAVVIK (+38.5M Merforbruk)",
+                    statusColor: "var(--alert-red)",
+                    docKey: "RAPPORT_KOMMUNALSJEF",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+                    kpis: {
+                        bac: "2 450 000 000 NOK",
+                        ac: "1 685 000 000 NOK",
+                        cv: "+38 500 000 NOK (+2.3 %)",
+                        cvAlert: true,
+                        cpi: "0.978",
+                        cpiAlert: true,
+                        eac: "2 506 200 000 NOK",
+                        vac: "-56 200 000 NOK",
+                        eacSim: "2 450 000 000 NOK (🟢 BALANSERT VED SEKTORTILTAK)"
+                    },
+                    variances: [
+                        { art: "1020", desc: "Vikarutgifter grunnskole (28 skoler)", budget: "145 000 000", actual: "163 200 000", varNok: "+18 200 000", varPct: "+12.6 %", driver: "Høyt sykefravær (14.2 %) og utstrakt bruk av eksterne vikarbyråer" },
+                        { art: "1090", desc: "Overtid lærere og assistenter", budget: "22 000 000", actual: "28 400 000", varNok: "+6 400 000", varPct: "+29.1 %", driver: "Tilsyn og dekning ved akuttfravær utover ordinær arbeidstid" },
+                        { art: "1370", desc: "Kjøp av spesialundervisning & eksterne plasser", budget: "85 000 000", actual: "94 100 000", varNok: "+9 100 000", varPct: "+10.7 %", driver: "Økning i enkeltvedtak med krav om 1-til-1 oppfølging i klasserommet" },
+                        { art: "1120/1200", desc: "Øvrige driftsutgifter og læremidler", budget: "98 000 000", actual: "102 800 000", varNok: "+4 800 000", varPct: "+4.9 %", driver: "Prisstigning på lisenser og felles pedagogisk programvare" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-OPP-01", title: "Etablere felles intern vikarring mellom 4 sentrumsnære skoler", owner: "Rektorer (Grim, Lovisenlev mfl.)", deadline: "1. nov 2026", impact: "-450 000 kr/md", legal: "HTA § 4 & Hovedavtalen", status: "🟢 Godkjent" },
+                        { id: "ACT-KORT-OPP-02", title: "Midlertidig frys i utstyrsinnkjøp og fagbøker på tvers av sektoren", owner: "Alle rektorer", deadline: "Umiddelbart", impact: "-300 000 kr/md", legal: "Kommuneloven § 14-5", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-OPP-03", title: "Felles koordineringsgruppe mot NAV Forvaltning for raskere refusjoner", owner: "Sektorcontroller", deadline: "15 dager", impact: "+2 800 000 kr refusj.", legal: "Folketrygdloven", status: "🟡 Pågår" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-OPP-01", title: "Re-evaluering av enkeltvedtak for spesialundervisning (gruppe vs 1-til-1)", owner: "PPT-leder / Rektorer", deadline: "1. feb 2027", impact: "-4 200 000 kr/år", legal: "Opplæringsloven kap. 5", status: "📋 Utredes" },
+                        { id: "ACT-LANG-OPP-02", title: "Skolestrukturtilpasning og klasseoptimalisering for skoleåret 2027/28", owner: "Kommunalsjef / Rektorer", deadline: "1. mars 2027", impact: "-8 500 000 kr/år", legal: "Opplæringsloven § 8-2", status: "🟢 Forankret" },
+                        { id: "ACT-LANG-OPP-03", title: "Tilskuddsmodell private barnehager: Årlig etteroppgjør og kontroll", owner: "Barnehagesjef", deadline: "31. des 2026", impact: "-1 400 000 kr/år", legal: "Barnehageloven § 19", status: "🟢 Vedtatt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5 (Sektorbalanse)", status: "OK", desc: "Sektortiltakene demper prognostisert merforbruk fra 56.2M til balanse innen EOY." },
+                        { rule: "Opplæringsloven kap. 5", status: "OK", desc: "Individuelle rettigheter i spesialundervisning ivaretas faglig forsvarlig i samråd med PPT." },
+                        { rule: "Barnehageloven § 19", status: "OK", desc: "Likebehandlingsprinsippet overholdes; private barnehager mottar rettmessig tilskudd." },
+                        { rule: "HTA § 4 (Partssamarbeid)", status: "OK", desc: "Sektorvise drøftinger gjennomført med Utdanningsforbundet og Fagforbundet." }
+                    ]
+                },
+                "NIVA3": {
+                    levelTitle: "Nivå 3: Kommunaldirektør",
+                    unitName: "Virksomhetsområde: Oppvekst & Utdanning (Toppledelse)",
+                    leader: "Kristin Eidet Robstad (Kommunaldirektør Oppvekst) / Camilla Dunsæd",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Toppledermøte — Strategisk Styring & Rammevedtak (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, § 14-6, Forvaltningsloven § 28",
+                    statusBadge: "🔴 STRATEGISK RISIKO (+38.5M Merforbruk)",
+                    statusColor: "var(--alert-red)",
+                    docKey: "RAPPORT_KOMMUNEDIREKTOR",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+                    kpis: {
+                        bac: "2 450 000 000 NOK",
+                        ac: "1 685 000 000 NOK",
+                        cv: "+38 500 000 NOK (+2.3 %)",
+                        cvAlert: true,
+                        cpi: "0.978",
+                        cpiAlert: true,
+                        eac: "2 506 200 000 NOK",
+                        vac: "-56 200 000 NOK",
+                        eacSim: "2 450 000 000 NOK (🟢 BALANSERT VED BYSTYREVEDTAK)"
+                    },
+                    variances: [
+                        { art: "Skolesektor (28 skoler)", desc: "Grunnskoledrift og vikarutgifter", budget: "1 520 000 000", actual: "1 544 600 000", varNok: "+24 600 000", varPct: "+1.6 %", driver: "Strukturelt sykefravær og spesialpedagogisk bemanningspress" },
+                        { art: "Barnehagesektor (54 enheter)", desc: "Kommunale og private barnehagetilskudd", budget: "780 000 000", actual: "791 200 000", varNok: "+11 200 000", varPct: "+1.4 %", driver: "Økt barnetall og private barnehagetilskuddsjusteringer" },
+                        { art: "Familiens hus & PPT", desc: "Tverrfaglige familietjenester og tidlig innsats", budget: "150 000 000", actual: "152 700 000", varNok: "+2 700 000", varPct: "+1.8 %", driver: "Økt behov for tidliginnsatstiltak og barnevernsoppfølging" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-DIR-01", title: "Administrativt ansettelsesstopp for ikke-lovpålagte stabsstillinger", owner: "Kommunaldirektør", deadline: "Umiddelbart", impact: "-1 800 000 kr EOY", legal: "Kommuneloven § 13-1", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-DIR-02", title: "Skjerpet fullmaktsstruktur: Kommunalsjef må signere vikaravtaler > 50 000 kr", owner: "Kommunaldirektør", deadline: "Umiddelbart", impact: "-3 500 000 kr EOY", legal: "Delegasjonsreglement", status: "🟢 Godkjent" },
+                        { id: "ACT-KORT-DIR-03", title: "Forsere samlet NAV-innsats: Etablere dedikert kommunalt refusjonsteam", owner: "Regnskapssjef", deadline: "7 dager", impact: "+8 500 000 kr likv.", legal: "Folketrygdloven § 22-13", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-DIR-01", title: "Politisk sak til Formannskapet om tertialrevisjon og rammeflytting jf. § 14-5", owner: "Kommunedirektør / Økonomisjef", deadline: "28. okt 2026", impact: "Rammejust. 24.5M", legal: "Kommuneloven § 14-5", status: "🏛️ Til politisk beh." },
+                        { id: "ACT-LANG-DIR-02", title: "Helhetlig skolestruktursak for Kristiansand mot 2028 (justering av kretsgrenser)", owner: "Kommunaldirektør", deadline: "Q1 2027", impact: "-15 000 000 kr/år", legal: "Opplæringsloven § 8-2", status: "📋 Utredes" },
+                        { id: "ACT-LANG-DIR-03", title: "Flerårig omstillingsprogram for tidlig innsats (BTI) for å dempe spesialundervisning", owner: "Kommunaldirektør", deadline: "2027–2029", impact: "-10 000 000 kr/år", legal: "Folkehelseloven", status: "🟢 Forankret" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5 (Handleplikt)", status: "OK", desc: "Kommunedirektøren fremmer sak om budsjettendring til Formannskapet i tråd med lovens krav." },
+                        { rule: "Kommuneloven § 14-6 (Bruttoprinsippet)", status: "OK", desc: "Ingen ulovlig nettobudsjettering eller kryss-saldering mellom skole og barnehage." },
+                        { rule: "Opplæringsloven § 8-2", status: "OK", desc: "Skolestrukturforslaget ivaretar lovfestet lærernorm og elevers rett til nærskole." },
+                        { rule: "Partssamarbeid", status: "OK", desc: "Hovedtillitsvalgte orientert i KSU (Kommuneområdets Samarbeidsutvalg)." }
+                    ]
+                }
+            },
+            "HELSE": {
+                "NIVA1": {
+                    levelTitle: "Nivå 1: Seksjons- / Avdelingsleder (Sykehjem)",
+                    unitName: "Enhet 401: Strai Sykehjem & Avlastning",
+                    leader: "Kari Hansen (Avdelingsleder Strai)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Månedlig Oppfølgingsmøte (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Helse- og omsorgstjenesteloven § 4-1, HTA § 4",
+                    statusBadge: "🔴 RØD ALARM (+8.5 % Merforbruk)",
+                    statusColor: "var(--alert-red)",
+                    docKey: "RAPPORT_AVDELINGSLEDER",
+                    docxFile: "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+                    kpis: {
+                        bac: "84 500 000 NOK",
+                        ac: "61 200 000 NOK",
+                        cv: "+4 800 000 NOK (+8.5 %)",
+                        cvAlert: true,
+                        cpi: "0.922",
+                        cpiAlert: true,
+                        eac: "89 300 000 NOK",
+                        vac: "-4 800 000 NOK",
+                        eacSim: "84 500 000 NOK (🟢 BALANSERT JFR. § 14-5)"
+                    },
+                    variances: [
+                        { art: "10100", desc: "Fast lønn sykepleiere og helsefagarbeidere", budget: "54 000 000", actual: "37 800 000", varNok: "+350 000", varPct: "+0.9 %", driver: "Høy stillingsbesettelse, lav naturlig avgang" },
+                        { art: "10200", desc: "Vikarbyrå sykepleiere & vikarer", budget: "6 200 000", actual: "9 850 000", varNok: "+3 650 000", varPct: "+58.9 %", driver: "Bemanningskrav i helg og høyt helgefravær (14.5 %)" },
+                        { art: "10400/10900", desc: "Overtid og forskjøvet arbeidstid", budget: "1 800 000", actual: "2 620 000", varNok: "+820 000", varPct: "+45.6 %", driver: "Dobbeltvakter ved akutt sykdom for å dekke forsvarlighetskrav" },
+                        { art: "16000", desc: "Refusjon sykepenger NAV", budget: "-3 200 000", actual: "-2 580 000", varNok: "+620 000", varPct: "+19.4 %", driver: "Utestående refusjoner for langtidssykmeldte" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-401-01", title: "Stopp i innleie av vikarbyrå-sykepleiere; erstatte med interne ekstravakter", owner: "Avdelingsleder", deadline: "Umiddelbart", impact: "-180 000 kr/md", legal: "HTA § 2.3", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-401-02", title: "Streng oppgaveprioritering i pleien; fase ut administrative støtteoppgaver", owner: "Fagsykepleier", deadline: "7 dager", impact: "-50 000 kr/md", legal: "Helsepersonelloven § 4", status: "🟢 Vedtatt" },
+                        { id: "ACT-KORT-401-03", title: "Purrerutine og forsering av NAV-refusjoner mot NAV Agder", owner: "Avdelingsleder / Kontor", deadline: "10 dager", impact: "+620 000 kr likv.", legal: "Folketrygdloven § 22-13", status: "🟡 Pågår" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-401-01", title: "Heltidskultur: Innføre helgeavtaler og faste helgestillinger iht HTA § 4", owner: "Avdelingsleder / HR", deadline: "1. des 2026", impact: "-650 000 kr/år", legal: "HTA § 4 Partssamarbeid", status: "📋 Planlagt" },
+                        { id: "ACT-LANG-401-02", title: "Tett-på oppfølging av langtidssykmeldte for å senke fraværet til < 8 %", owner: "Avdelingsleder / Bedriftshelsetj.", deadline: "Q1 2027", impact: "-480 000 kr/år", legal: "Arbeidsmiljøloven § 4-1", status: "🟡 Påbegynt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Tiltakene reduserer driftsforbruket og sikrer EOY-balanse for enheten." },
+                        { rule: "Helse- og omsorgstjenesteloven § 4-1", status: "OK", desc: "Forsvarlighetskravet er ivaretatt; minimumsbemanning opprettholdes med faste ansatte." },
+                        { rule: "HTA § 4", status: "OK", desc: "Drøftet med Norsk Sykepleierforbund og Fagforbundet." }
+                    ]
+                },
+                "NIVA2": {
+                    levelTitle: "Nivå 2: Kommunalsjef",
+                    unitName: "Sektor: Pleie og Omsorg (11 Sykehjem & Hjemmetjenester)",
+                    leader: "Ole Bernt Skjævestad (Kommunalsjef Pleie og Omsorg)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Sektormøte — Portefølje & Bemanningsstyring (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Helsepersonelloven § 4, HTA § 4",
+                    statusBadge: "🔴 SEKTORAVVIK (+62.0M Merforbruk)",
+                    statusColor: "var(--alert-red)",
+                    docKey: "RAPPORT_KOMMUNALSJEF",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+                    kpis: {
+                        bac: "3 100 000 000 NOK",
+                        ac: "2 140 000 000 NOK",
+                        cv: "+62 000 000 NOK (+2.9 %)",
+                        cvAlert: true,
+                        cpi: "0.971",
+                        cpiAlert: true,
+                        eac: "3 190 000 000 NOK",
+                        vac: "-90 000 000 NOK",
+                        eacSim: "3 100 000 000 NOK (🟢 BALANSERT VED SEKTORTILTAK)"
+                    },
+                    variances: [
+                        { art: "1020", desc: "Vikarbyråer og ekstern innleie", budget: "95 000 000", actual: "128 500 000", varNok: "+33 500 000", varPct: "+35.3 %", driver: "Kritisk mangel på spesialsykepleiere i turnus" },
+                        { art: "1040/1090", desc: "Overtid og helgetillegg", budget: "48 000 000", actual: "66 400 000", varNok: "+18 400 000", varPct: "+38.3 %", driver: "Høyt sykefravær i helgene utløser dyre overtidstimer" },
+                        { art: "1150/1200", desc: "Medisinsk forbruksmateriell & legemidler", budget: "82 000 000", actual: "92 100 000", varNok: "+10 100 000", varPct: "+12.3 %", driver: "Økt antall krevende pasienter med sammensatte diagnoser" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-HEL-01", title: "Koordinert bemanningssentral for sykehjem og hjemmetjeneste", owner: "Bemanningssjef", deadline: "1. nov 2026", impact: "-750 000 kr/md", legal: "HTA § 4 & Hovedavtalen", status: "🟢 Godkjent" },
+                        { id: "ACT-KORT-HEL-02", title: "Tett-på dialogmøte 2 innen 26 uker for alle langtidssykmeldte", owner: "Enhetsledere / HR", deadline: "15 dager", impact: "-400 000 kr/md", legal: "Folketrygdloven § 8-7", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-HEL-03", title: "Full gjennomgang av felles innkjøp medisinsk forbruksmateriell", owner: "Innkjøpssjef", deadline: "30 dager", impact: "-250 000 kr/md", legal: "Anskaffelsesloven", status: "🟡 Pågår" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-HEL-01", title: "Turnusomlegging til langvakter (12.5 timer) i helg iht AML § 10-12 (4)", owner: "Kommunalsjef / NSF / Fagforbundet", deadline: "1. jan 2027", impact: "-6 800 000 kr/år", legal: "AML § 10-12 (4) Særavtale", status: "💬 Drøftes" },
+                        { id: "ACT-LANG-HEL-02", title: "Konvertering av vikarbudsjett til 15 faste sykepleierstillinger", owner: "Kommunalsjef / HR", deadline: "1. mars 2027", impact: "-4 500 000 kr/år", legal: "HTA § 2.3", status: "📋 Planlagt" },
+                        { id: "ACT-LANG-HEL-03", title: "Velferdsteknologi: Digitalt tilsyn og medisindispensere i hjemmetjenesten", owner: "Utviklingssjef", deadline: "2027–2028", impact: "-5 200 000 kr/år", legal: "Pasientrettighetsloven", status: "🟢 Vedtatt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Sektortiltakene demper helseavviket og bringer sektoren i balanse ved 31.12." },
+                        { rule: "Helsepersonelloven § 4", status: "OK", desc: "Kravet til faglig forsvarlighet opprettholdes i alle turnusplaner." },
+                        { rule: "HTA § 4 (Partssamarbeid)", status: "OK", desc: "Møteprotokoll med NSF og Fagforbundet gjennomført." }
+                    ]
+                },
+                "NIVA3": {
+                    levelTitle: "Nivå 3: Kommunaldirektør",
+                    unitName: "Virksomhetsområde: Helse og Mestring (Toppledelse)",
+                    leader: "Brede Holt (Kommunaldirektør Helse og Mestring) / Camilla Dunsæd",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Toppledermøte — Strategisk Styring & Rammevedtak (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Samhandlingsavtalen § 11-2, Pasient- og brukerrettighetsloven",
+                    statusBadge: "🔴 STRATEGISK RISIKO (+62.0M Merforbruk)",
+                    statusColor: "var(--alert-red)",
+                    docKey: "RAPPORT_KOMMUNEDIREKTOR",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+                    kpis: {
+                        bac: "3 100 000 000 NOK",
+                        ac: "2 140 000 000 NOK",
+                        cv: "+62 000 000 NOK (+2.9 %)",
+                        cvAlert: true,
+                        cpi: "0.971",
+                        cpiAlert: true,
+                        eac: "3 190 000 000 NOK",
+                        vac: "-90 000 000 NOK",
+                        eacSim: "3 100 000 000 NOK (🟢 BALANSERT VED BYSTYREVEDTAK)"
+                    },
+                    variances: [
+                        { art: "Sykehjemsdrift (11 enheter)", desc: "Døgnkontinuerlig pleie, legevakt og institusjon", budget: "1 850 000 000", actual: "1 892 000 000", varNok: "+42 000 000", varPct: "+2.3 %", driver: "Bemanningskrav og vikarbyråkostnader ved sykdom" },
+                        { art: "Hjemmebaserte tjenester", desc: "Hjemmesykepleie, praktisk bistand og BPA", budget: "950 000 000", actual: "965 200 000", varNok: "+15 200 000", varPct: "+1.6 %", driver: "Økt antall brukere med omfattende vedtak" },
+                        { art: "Rus, psykisk helse & bolig", desc: "Bo- og omsorgstilbud for rus og psykisk helse", budget: "300 000 000", actual: "304 800 000", varNok: "+4 800 000", varPct: "+1.6 %", driver: "Økt behov for miljøarbeidertilsyn i kommunale boliger" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-DIR-H01", title: "Sikre 0 SSHF overliggerdøgn ved hurtigavklaring på korttidsavlastning", owner: "Kommunaldirektør / SSHF", deadline: "Umiddelbart", impact: "-2 800 000 kr unngått", legal: "Samhandlingsavtalen § 11-2", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-DIR-H02", title: "Kvalitetssikre samtlige 142 IPLOS-vedtak for toppfinansiering innen 1. nov", owner: "Tildelingskontor / Controller", deadline: "1. nov 2026", impact: "+185 420 000 kr tilskudd", legal: "Statsbudsjettet kap. 575", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-DIR-H03", title: "Administrativt vikargodkjenningsregime: Kommunalsjef må signere alle byråkrav", owner: "Kommunaldirektør", deadline: "3 dager", impact: "-12 000 000 kr EOY", legal: "Kommuneloven § 13-1", status: "🟢 Godkjent" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-DIR-H01", title: "Kapasitetsforskyving: Omdisponere 25 sykehjemsplasser til hverdagsrehabilitering", owner: "Kommunaldirektør", deadline: "2027–2028", impact: "-18 000 000 kr/år", legal: "Helse- og omsorgstjenesteloven", status: "📋 Utredes" },
+                        { id: "ACT-LANG-DIR-H02", title: "Politisk sak om rammeflytting fra investering til drift (15.0 MNOK)", owner: "Kommunedirektør / Formannskap", deadline: "28. okt 2026", impact: "Rammejust. 15.0M", legal: "Kommuneloven § 14-5", status: "🏛️ Til politisk beh." },
+                        { id: "ACT-LANG-DIR-H03", title: "Strategisk heltidskulturprogram for Kristiansand kommune 2026–2030", owner: "Kommunaldirektør / HR", deadline: "Q2 2027", impact: "-14 000 000 kr/år", legal: "HTA § 4 & AML § 14-4a", status: "🟢 Forankret" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Sak til Formannskapet sikrer at merforbruket håndteres før årsslutt." },
+                        { rule: "Samhandlingsavtalen § 11-2", status: "OK", desc: "Overliggerbøter til SSHF avverges ved optimal pasientflyt." },
+                        { rule: "Helse- og omsorgstjenesteloven", status: "OK", desc: "Forsvarlighets- og omsorgskrav oppfylles fullt ut i hele tjenestekjeden." },
+                        { rule: "Port 9 HITL", status: "OK", desc: "Endelig sign-off gjennomført med revisjonsspor." }
+                    ]
+                }
+            },
+            "BYUTVIKLING": {
+                "NIVA1": {
+                    levelTitle: "Nivå 1: Seksjons- / Avdelingsleder (VAR Drift)",
+                    unitName: "Enhet 301: Vann, Avløp & Renovasjon (Drift)",
+                    leader: "Magne Simonsen (Avdelingsleder VAR Drift)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Månedlig Oppfølgingsmøte (Oktober 2026)",
+                    hjemmel: "Selvkostforskriften § 8, Forurensningsloven, Kommuneloven § 14-5",
+                    statusBadge: "🟢 I BALANSE (-2.1M Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_AVDELINGSLEDER",
+                    docxFile: "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+                    kpis: {
+                        bac: "215 000 000 NOK",
+                        ac: "144 000 000 NOK",
+                        cv: "-2 100 000 NOK (-1.4 %)",
+                        cvAlert: false,
+                        cpi: "1.015",
+                        cpiAlert: false,
+                        eac: "212 500 000 NOK",
+                        vac: "+2 500 000 NOK",
+                        eacSim: "212 500 000 NOK (🟢 SELVKOSTBALANSE)"
+                    },
+                    variances: [
+                        { art: "10100", desc: "Fast lønn driftspersonale VAR", budget: "68 000 000", actual: "45 200 000", varNok: "-300 000", varPct: "-0.7 %", driver: "God bemanningsstabilitet, lavt sykefravær" },
+                        { art: "11500", desc: "Kjemikalier og rensemidler", budget: "24 000 000", actual: "15 800 000", varNok: "-400 000", varPct: "-2.5 %", driver: "Gunstige innkjøpsavtaler og stabil vannkvalitet" },
+                        { art: "12300", desc: "Vedlikehold rørnett og pumpestasjoner", budget: "38 000 000", actual: "24 100 000", varNok: "-1 400 000", varPct: "-5.5 %", driver: "Planlagt vedlikehold forskyves til Q2 2027" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-301-01", title: "Utsette ikke-akutt grøftespyling til våren 2027", owner: "Avdelingsleder VAR", deadline: "Umiddelbart", impact: "-320 000 kr spart", legal: "Forurensningsloven", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-301-02", title: "Optimalisere fjernovervåking for å redusere unødvendig vaktutrykning", owner: "Driftsingeniør", deadline: "15 dager", impact: "-85 000 kr/md", legal: "HTA § 4", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-301-01", title: "Sensorbasert lekkasjesøking: Redusere vanntap fra 32 % til 18 %", owner: "Prosjektleder VAR", deadline: "2027–2028", impact: "-850 000 kr/år", legal: "Selvkostforskriften § 8", status: "🟢 Vedtatt" },
+                        { id: "ACT-LANG-301-02", title: "Energieffektivisering pumpestasjoner via frekvensomformere", owner: "Driftsingeniør", deadline: "1. mai 2027", impact: "-400 000 kr/år", legal: "Klima- og miljøplan", status: "📋 Planlagt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Selvkostforskriften § 8", status: "OK", desc: "Mindreforbruket overføres til selvkostfondet for avløp for 5-årig utjevning." },
+                        { rule: "Kommuneloven § 14-6", status: "OK", desc: "Selvkostmidler holdes strengt adskilt; ingen ulovlig overføring til frie formål." },
+                        { rule: "Forurensningsloven", status: "OK", desc: "Miljøkrav og rensekrav overholdes i alle ledd." }
+                    ]
+                },
+                "NIVA2": {
+                    levelTitle: "Nivå 2: Kommunalsjef",
+                    unitName: "Sektor: Bymiljø, Samferdsel & VAR",
+                    leader: "Harald Furre (Kommunalsjef Bymiljø)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Sektormøte — Portefølje & Gebyrkontroll (Oktober 2026)",
+                    hjemmel: "Plan- og bygningsloven § 33-1, Selvkostforskriften § 8, Vegloven",
+                    statusBadge: "🟢 I BALANSE (-4.2M Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_KOMMUNALSJEF",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+                    kpis: {
+                        bac: "850 000 000 NOK",
+                        ac: "560 000 000 NOK",
+                        cv: "-4 200 000 NOK (-0.8 %)",
+                        cvAlert: false,
+                        cpi: "1.008",
+                        cpiAlert: false,
+                        eac: "843 250 000 NOK",
+                        vac: "+6 750 000 NOK",
+                        eacSim: "843 250 000 NOK (🟢 ROBUST BUFFER)"
+                    },
+                    variances: [
+                        { art: "Vei, trafikk og parkering", desc: "Drift og vedlikehold av kommunale veier", budget: "320 000 000", actual: "212 500 000", varNok: "-1 800 000", varPct: "-0.8 %", driver: "Gunstige vinterdriftskostnader og færre akutte teleskader" },
+                        { art: "Byggesak og kart (Art 1620)", desc: "Gebyrinntekter byggesaksbehandling", budget: "45 000 000", actual: "26 800 000", varNok: "+3 300 000", varPct: "+11.0 %", driver: "Svikt i gebyrinntekter pga. lav igangsetting i eiendomsmarkedet" },
+                        { art: "Vann og avløp (Selvkost)", desc: "Gebyrfinansierte selvkosttjenester", budget: "485 000 000", actual: "320 700 000", varNok: "-5 700 000", varPct: "-1.7 %", driver: "Lavere energikostnader og mindreforbruk på kjemikalier" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-BY-01", title: "Forskyve asfaltering og oppmerking uten trafikksikkerhetsrisiko til 2027", owner: "Veisjef", deadline: "Umiddelbart", impact: "-1 400 000 kr spart", legal: "Vegloven", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-BY-02", title: "Skjerpe gebyrrutiner og purring av utestående byggesaksgebyrer", owner: "Byggesakssjef", deadline: "15 dager", impact: "+3 300 000 kr inntekt", legal: "Plan- og bygningsloven § 33-1", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-BY-01", title: "Reforhandle driftskontrakter for vei, grønt og belysning", owner: "Bymiljøsjef / Innkjøp", deadline: "1. mars 2027", impact: "-3 100 000 kr/år", legal: "Anskaffelsesloven", status: "📋 Planlagt" },
+                        { id: "ACT-LANG-BY-02", title: "Oppgradere gatelys til LED i resterende 4 soner", owner: "Energiansvarlig", deadline: "2027", impact: "-1 200 000 kr/år", legal: "Klima- og energiplan", status: "🟢 Vedtatt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Selvkostforskriften § 8", status: "OK", desc: "Vann og avløp holdes separat; fondssaldo håndterer differansen." },
+                        { rule: "Plan- og bygningsloven § 33-1", status: "OK", desc: "Byggesaksgebyrer overstiger ikke selvkost over 3-årsperioden." },
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Sektoren leverer solid balanse til kommunens totalregnskap." }
+                    ]
+                },
+                "NIVA3": {
+                    levelTitle: "Nivå 3: Kommunaldirektør",
+                    unitName: "Virksomhetsområde: By- og Stedsutvikling (Toppledelse)",
+                    leader: "Ragnar Evensen (Kommunaldirektør By- og Stedsutvikling) / Camilla Dunsæd",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Toppledermøte — Strategisk Styring & KS2 (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Selvkostforskriften § 8, NS 8407",
+                    statusBadge: "🟢 I BALANSE (-4.2M Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_KOMMUNEDIREKTOR",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+                    kpis: {
+                        bac: "850 000 000 NOK",
+                        ac: "560 000 000 NOK",
+                        cv: "-4 200 000 NOK (-0.8 %)",
+                        cvAlert: false,
+                        cpi: "1.008",
+                        cpiAlert: false,
+                        eac: "843 250 000 NOK",
+                        vac: "+6 750 000 NOK",
+                        eacSim: "843 250 000 NOK (🟢 DRIFTSOVERSKUDD)"
+                    },
+                    variances: [
+                        { art: "Byutvikling & Samferdsel", desc: "Plan, byggesak, samferdsel og eiendomsforvaltning", budget: "365 000 000", actual: "239 300 000", varNok: "+1 500 000", varPct: "+0.6 %", driver: "Gebyrsvikt på byggesak motvirkes av vedlikeholdsutsettelse" },
+                        { art: "VAR Selvkostområde", desc: "Vann, avløp og renovasjon gebyrfinansiert", budget: "485 000 000", actual: "320 700 000", varNok: "-5 700 000", varPct: "-1.7 %", driver: "Mindreforbruk avsettes til selvkostfond" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-DIR-B01", title: "Aktivere 5-års selvkostbuffer for avløp jf. selvkostforskriften § 8", owner: "Kommunaldirektør / Finans", deadline: "Umiddelbart", impact: "4.8M fondsavsetning", legal: "Selvkostforskriften § 8", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-DIR-B02", title: "KS2 Usikkerhetsoppfølging: Overvåke P85-reserve (45.0M) på renseanlegg", owner: "Prosjektcontroller", deadline: "Månedlig", impact: "12.4M disponert (27.6 %)", legal: "NS 8407 & Port 9", status: "🟢 Godkjent" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-DIR-B01", title: "Sak til Bystyret om justering av gebyrregulativ 2027 (+3.5 % på avløp)", owner: "Kommunedirektør / Bystyret", deadline: "Desember 2026", impact: "Gebyrbalanse 2027–2031", legal: "Selvkostforskriften § 8", status: "🏛️ Til politisk beh." },
+                        { id: "ACT-LANG-DIR-B02", title: "Kommuneplanens arealdel 2027–2035: Nærings- og boligutvikling", owner: "Plansjef", deadline: "2027", impact: "Økt skatte- og gebyrbase", legal: "Plan- og bygningsloven", status: "🟢 Forankret" }
+                    ],
+                    legalCheck: [
+                        { rule: "Selvkostforskriften § 8", status: "OK", desc: "Akkumulert fond utlignes innen 5 år uten kryss-subsidiering." },
+                        { rule: "Kommuneloven § 14-6", status: "OK", desc: "Bruttoprinsippet overholdes strengt på alle investerings- og driftskonti." },
+                        { rule: "Port 9 HITL", status: "OK", desc: "Revisjonssikret og attestert." }
+                    ]
+                }
+            },
+            "KULTUR": {
+                "NIVA1": {
+                    levelTitle: "Nivå 1: Seksjons- / Avdelingsleder (Bibliotek)",
+                    unitName: "Enhet 101: Kristiansand Folkebibliotek & Innbyggertorg",
+                    leader: "Inger Lise Ribe (Avdelingsleder Bibliotek)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Månedlig Oppfølgingsmøte (Oktober 2026)",
+                    hjemmel: "Folkebibliotekloven § 1, Kommuneloven § 14-5",
+                    statusBadge: "🟡 MILDT AVVIK (+450k Merforbruk)",
+                    statusColor: "var(--alert-amber)",
+                    docKey: "RAPPORT_AVDELINGSLEDER",
+                    docxFile: "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+                    kpis: {
+                        bac: "28 000 000 NOK",
+                        ac: "19 000 000 NOK",
+                        cv: "+450 000 NOK (+2.4 %)",
+                        cvAlert: true,
+                        cpi: "0.976",
+                        cpiAlert: false,
+                        eac: "28 650 000 NOK",
+                        vac: "-650 000 NOK",
+                        eacSim: "28 000 000 NOK (🟢 I BALANSE)"
+                    },
+                    variances: [
+                        { art: "10100", desc: "Fast lønn bibliotekarer og veiledere", budget: "19 500 000", actual: "13 100 000", varNok: "+100 000", varPct: "+0.8 %", driver: "Normal drift" },
+                        { art: "10900", desc: "Kveldstillegg og arrangementsbistand", budget: "1 200 000", actual: "1 450 000", varNok: "+250 000", varPct: "+20.8 %", driver: "Høy arrangementsaktivitet på kveldstid" },
+                        { art: "11200", desc: "Innkjøp av bøker og digitale medier", budget: "3 800 000", actual: "2 650 000", varNok: "+100 000", varPct: "+3.9 %", driver: "Økte lisenspriser for e-bøker" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-101-01", title: "Begrense kveldsarrangementer med overtidsbehov i Q4", owner: "Avdelingsleder", deadline: "Umiddelbart", impact: "-30 000 kr/md", legal: "Arbeidsmiljøloven § 10-6", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-101-02", title: "Frys i kjøp av trykte bøker ut året; prioritere e-bøker", owner: "Fagleder media", deadline: "15 dager", impact: "-45 000 kr/md", legal: "Folkebibliotekloven", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-101-01", title: "Meråpent bibliotek med automatisert adgangskontroll i filialer", owner: "Avdelingsleder / IKT", deadline: "1. mars 2027", impact: "-350 000 kr/år", legal: "Folkebibliotekloven", status: "📋 Planlagt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Folkebibliotekloven § 1", status: "OK", desc: "Lovfestet gratis tilgang til informasjon og bøker opprettholdes fullt ut." },
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Tiltakene lukker merforbruket innen 31.12." }
+                    ]
+                },
+                "NIVA2": {
+                    levelTitle: "Nivå 2: Kommunalsjef",
+                    unitName: "Sektor: Kultur, Idrett og Frivillighet",
+                    leader: "Torill Haugen (Kommunalsjef Kultur)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Sektormøte — Portefølje & Tilskuddsoppfølging (Oktober 2026)",
+                    hjemmel: "Kulturlova § 4, Kommuneloven § 14-5",
+                    statusBadge: "🟡 MILDT AVVIK (+1.1M Merforbruk)",
+                    statusColor: "var(--alert-amber)",
+                    docKey: "RAPPORT_KOMMUNALSJEF",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+                    kpis: {
+                        bac: "420 000 000 NOK",
+                        ac: "280 000 000 NOK",
+                        cv: "+1 100 000 NOK (+0.4 %)",
+                        cvAlert: false,
+                        cpi: "0.996",
+                        cpiAlert: false,
+                        eac: "421 650 000 NOK",
+                        vac: "-1 650 000 NOK",
+                        eacSim: "420 000 000 NOK (🟢 BALANSERT)"
+                    },
+                    variances: [
+                        { art: "Idrettsanlegg og svømmehaller (Aquarama)", desc: "Energi- og driftskostnader idrettsbygg", budget: "145 000 000", actual: "97 800 000", varNok: "+1 200 000", varPct: "+1.2 %", driver: "Økte strøm- og fjernvarmepriser" },
+                        { art: "Kulturhus, musikk og kulturskole", desc: "Kilden, Knuden og bydelskulturhus", budget: "185 000 000", actual: "123 100 000", varNok: "+350 000", varPct: "+0.3 %", driver: "Mindre merforbruk på arrangementsverter" },
+                        { art: "Frivillighetstilskudd (Art 1470)", desc: "Kommunale tilskudd til frivillige lag", budget: "90 000 000", actual: "59 100 000", varNok: "-450 000", varPct: "-0.8 %", driver: "Restmidler på udisponerte søknadspotter" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-KUL-01", title: "Energioptimalisering i svømmehaller og idrettsbygg i lavlasttimer", owner: "Driftsleder Aquarama", deadline: "Umiddelbart", impact: "-120 000 kr/md", legal: "Klima- og energiplan", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-KUL-02", title: "Utsettelse av ikke-kritiske vedlikeholdsbestillinger på idrettsbaner", owner: "Idrettssjef", deadline: "15 dager", impact: "-250 000 kr spart", legal: "Kommuneloven § 14-5", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-KUL-01", title: "Felles driftsmodell for bydelslokaler og kulturbygg", owner: "Kommunalsjef / Eiendom", deadline: "1. mars 2027", impact: "-900 000 kr/år", legal: "Kulturlova § 4", status: "📋 Planlagt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kulturlova § 4", status: "OK", desc: "Kommunens lovpålagte ansvar for et bredt kulturtilbud overholdes." },
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Tiltakene bringer sektoren i balanse før 31.12." }
+                    ]
+                },
+                "NIVA3": {
+                    levelTitle: "Nivå 3: Kommunaldirektør",
+                    unitName: "Virksomhetsområde: Kultur og Innbyggerdialog (Toppledelse)",
+                    leader: "Camilla Jarlsby (Kommunaldirektør Kultur) / Camilla Dunsæd",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Toppledermøte — Strategisk Styring (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Kulturlova",
+                    statusBadge: "🟡 MILDT AVVIK (+1.1M Merforbruk)",
+                    statusColor: "var(--alert-amber)",
+                    docKey: "RAPPORT_KOMMUNEDIREKTOR",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+                    kpis: {
+                        bac: "420 000 000 NOK",
+                        ac: "280 000 000 NOK",
+                        cv: "+1 100 000 NOK (+0.4 %)",
+                        cvAlert: false,
+                        cpi: "0.996",
+                        cpiAlert: false,
+                        eac: "421 650 000 NOK",
+                        vac: "-1 650 000 NOK",
+                        eacSim: "420 000 000 NOK (🟢 BALANSERT)"
+                    },
+                    variances: [
+                        { art: "Idrett og friluftsliv", desc: "Kommunale idrettsbygg og anlegg", budget: "190 000 000", actual: "127 200 000", varNok: "+1 100 000", varPct: "+0.9 %", driver: "Høye energipriser og varme i svømmeanlegg" },
+                        { art: "Kultur og innbyggerdialog", desc: "Bibliotek, kulturskole, innbyggertorg og tilskudd", budget: "230 000 000", actual: "152 800 000", varNok: "0", varPct: "0.0 %", driver: "I balanse" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-DIR-K01", title: "Hold igjen tildeling av udisponerte arrangementsstøttemidler (1.3M buffer)", owner: "Kommunaldirektør", deadline: "Umiddelbart", impact: "-450 000 kr spart", legal: "Tilskuddsreglement", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-DIR-K01", title: "Revidert tilskuddsforskrift for frivillighet med krav om egenfinansiering", owner: "Kommunaldirektør / Formannskap", deadline: "Q1 2027", impact: "-1 500 000 kr/år", legal: "Kommuneloven § 14-5", status: "📋 Planlagt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Kultursektoren håndterer avvik innenfor egen tildelt ramme." },
+                        { rule: "Port 9 HITL", status: "OK", desc: "Revisjonssikret." }
+                    ]
+                }
+            },
+            "ORG_TEK": {
+                "NIVA1": {
+                    levelTitle: "Nivå 1: Seksjons- / Avdelingsleder (Digital Drift)",
+                    unitName: "Enhet 501: Digital Drift & Infrastruktur",
+                    leader: "Geir Johansen (Avdelingsleder Digital Drift)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Månedlig Oppfølgingsmøte (Oktober 2026)",
+                    hjemmel: "Sikkerhetsloven, GDPR, Kommuneloven § 14-5",
+                    statusBadge: "🟢 I BALANSE (-600k Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_SEKSJONSLEDER",
+                    docxFile: "templates/RAPPORTMAL_SEKSJONSLEDER.docx",
+                    kpis: {
+                        bac: "48 000 000 NOK",
+                        ac: "31 000 000 NOK",
+                        cv: "-600 000 NOK (-1.9 %)",
+                        cvAlert: false,
+                        cpi: "1.019",
+                        cpiAlert: false,
+                        eac: "47 100 000 NOK",
+                        vac: "+900 000 NOK",
+                        eacSim: "47 100 000 NOK (🟢 GOD KONTROLL)"
+                    },
+                    variances: [
+                        { art: "10100", desc: "Fast lønn IT-drift og sikkerhetspersonell", budget: "32 000 000", actual: "21 100 000", varNok: "-200 000", varPct: "-0.9 %", driver: "Stabil bemanning, lav turnover" },
+                        { art: "12700", desc: "Konsulentbistand eksterne IT-spesialister", budget: "7 000 000", actual: "4 200 000", varNok: "-400 000", varPct: "-8.7 %", driver: "Redusert konsulentbruk og økt internkompetanse" },
+                        { art: "13700", desc: "Programvarelisenser og skylagring (FinOps)", budget: "9 000 000", actual: "5 700 000", varNok: "0", varPct: "0.0 %", driver: "I tråd med budsjett" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-501-01", title: "FinOps lisenshygiene: Sanere og terminere 42 ubrukte SaaS-lisenser", owner: "FinOps Lead", deadline: "10 dager", impact: "-180 000 kr/md", legal: "Anskaffelsesloven", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-501-02", title: "Overtidsstans ved rutineoppgraderinger av infrastruktur", owner: "Driftsleder", deadline: "Umiddelbart", impact: "-40 000 kr/md", legal: "Arbeidsmiljøloven § 10-6", status: "🟢 Vedtatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-501-01", title: "Konsulentkonvertering: Erstatte 2 innleide arkitekter med faste stillinger", owner: "Avdelingsleder / HR", deadline: "1. feb 2027", impact: "-1 200 000 kr/år", legal: "HTA § 2.3", status: "📋 Planlagt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Sikkerhetsloven & NSM", status: "OK", desc: "Grunnprinsipper for IKT-sikkerhet overholdes 100 %." },
+                        { rule: "GDPR Art. 32", status: "OK", desc: "Tekniske og organisatoriske sikkerhetstiltak er ivaretatt." },
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Enheten leverer overskudd til felleskassen." }
+                    ]
+                },
+                "NIVA2": {
+                    levelTitle: "Nivå 2: Kommunalsjef",
+                    unitName: "Sektor: Digitalisering, HR og Fellesfunksjoner",
+                    leader: "Kjetil Ånonsen (Kommunalsjef Digitalisering)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Sektormøte — Portefølje & Effektivisering (Oktober 2026)",
+                    hjemmel: "Kommuneloven § 14-5, Anskaffelsesloven, EU AI Act",
+                    statusBadge: "🟢 I BALANSE (-1.8M Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_KOMMUNALSJEF",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+                    kpis: {
+                        bac: "560 000 000 NOK",
+                        ac: "375 000 000 NOK",
+                        cv: "-1 800 000 NOK (-0.5 %)",
+                        cvAlert: false,
+                        cpi: "1.005",
+                        cpiAlert: false,
+                        eac: "557 200 000 NOK",
+                        vac: "+2 800 000 NOK",
+                        eacSim: "557 200 000 NOK (🟢 DRIFTSOVERSKUDD)"
+                    },
+                    variances: [
+                        { art: "Felles IKT og digitalisering", desc: "Sky-infrastruktur, nettverk og lisenser", budget: "240 000 000", actual: "161 200 000", varNok: "-1 100 000", varPct: "-0.7 %", driver: "FinOps-tiltak gir lavere skyleie" },
+                        { art: "HR og arbeidsgiverpolitikk", desc: "Bedriftshelsetjeneste, rekruttering og opplæring", budget: "160 000 000", actual: "107 800 000", varNok: "+200 000", varPct: "+0.2 %", driver: "Normal drift" },
+                        { art: "Felles administrasjon og arkiv", desc: "Dokumentsenter, politisk sekretariat og sentralbord", budget: "160 000 000", actual: "106 000 000", varNok: "-900 000", varPct: "-0.8 %", driver: "Vakanser i stabsfunksjoner" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-ORG-01", title: "Konsulentstopp for all ekstern administrativ rådgivning (art 1270)", owner: "Kommunalsjef", deadline: "Umiddelbart", impact: "-450 000 kr/md", legal: "Anskaffelsesloven", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-ORG-02", title: "Reforhandle telekom- og bredbåndsavtaler for kommunens lokasjoner", owner: "Innkjøpssjef", deadline: "30 dager", impact: "-180 000 kr/md", legal: "Rammeavtale", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-ORG-01", title: "Felles automatisert saksflyt og prosessautomatisering (RPA/AI)", owner: "Digitaliseringssjef", deadline: "2027", impact: "-4 500 000 kr/år", legal: "EU AI Act Art. 14", status: "🟢 Vedtatt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Sektoren overholder budsjettrammen med positiv margin." },
+                        { rule: "Anskaffelsesloven", status: "OK", desc: "Konkurransegrunnlag og rammeavtaler er fullt compliant." }
+                    ]
+                },
+                "NIVA3": {
+                    levelTitle: "Nivå 3: Kommunaldirektør",
+                    unitName: "Virksomhetsområde: Organisasjon og Teknologi (Toppledelse)",
+                    leader: "Lars Dahlen (Kommunaldirektør Org & Tek) / Camilla Dunsæd",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Toppledermøte — Strategisk Portefølje & Gevinstrealisering",
+                    hjemmel: "Kommuneloven § 14-5, Digitaliseringsrundskrivet, EU AI Act",
+                    statusBadge: "🟢 I BALANSE (-1.8M Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_KOMMUNEDIREKTOR",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+                    kpis: {
+                        bac: "560 000 000 NOK",
+                        ac: "375 000 000 NOK",
+                        cv: "-1 800 000 NOK (-0.5 %)",
+                        cvAlert: false,
+                        cpi: "1.005",
+                        cpiAlert: false,
+                        eac: "557 200 000 NOK",
+                        vac: "+2 800 000 NOK",
+                        eacSim: "557 200 000 NOK (🟢 POSITIV BIDRAGSYTER)"
+                    },
+                    variances: [
+                        { art: "IKT, digitalisering og fellestjenester", desc: "Infrastruktur, lisenser og felles stab", budget: "560 000 000", actual: "375 000 000", varNok: "-1 800 000", varPct: "-0.5 %", driver: "Kostnadsdisiplin og vellykket FinOps-optimalisering" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-DIR-O01", title: "Evaluering av IKT-prosjekter i Port 4/9 for å hindre kostnadsglidning", owner: "Kommunaldirektør", deadline: "Månedlig", impact: "0 MNOK avvik", legal: "Port 9 HITL", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-DIR-O01", title: "Flerårig gevinstrealiseringsprogram 2026–2030 (digital omstilling)", owner: "Kommunaldirektør / Ledergruppe", deadline: "2027–2030", impact: "-12 000 000 kr/år", legal: "Kommuneloven § 14-5", status: "🟢 Forankret" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Balansekrav fullt ivaretatt." },
+                        { rule: "EU AI Act Art. 14", status: "OK", desc: "Menneskelig overprøving og loggføring verifisert i alle AI-prosesser." }
+                    ]
+                }
+            },
+            "OKONOMI": {
+                "NIVA1": {
+                    levelTitle: "Nivå 1: Seksjons- / Avdelingsleder (Regnskap & Finans)",
+                    unitName: "Enhet 601: Regnskap, Lønn og Innfordring",
+                    leader: "Anne Marit Neset (Regnskapssjef)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Månedlig Oppfølgingsmøte (Oktober 2026)",
+                    hjemmel: "Kommuneloven kap. 14, Forskrift om økonomiplan og årsbudsjett",
+                    statusBadge: "🟢 I BALANSE (-3.88M Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_SEKSJONSLEDER",
+                    docxFile: "templates/RAPPORTMAL_SEKSJONSLEDER.docx",
+                    kpis: {
+                        bac: "1 490 000 000 NOK",
+                        ac: "985 000 000 NOK",
+                        cv: "-3 880 000 NOK (-0.4 %)",
+                        cvAlert: false,
+                        cpi: "1.003",
+                        cpiAlert: false,
+                        eac: "1 486 125 000 NOK",
+                        vac: "+3 875 000 NOK",
+                        eacSim: "1 486 125 000 NOK (🟢 ROBUST BUFFER)"
+                    },
+                    variances: [
+                        { art: "Finansinntekter & renter", desc: "Avkastning på likviditetsplasseringer", budget: "-65 000 000", actual: "-48 200 000", varNok: "-4 500 000", varPct: "-10.3 %", driver: "Gunstig renteplassering og god likviditetsstyring" },
+                        { art: "Lånerenter & gebyrer", desc: "Rentebelastning på 7.25 Mrd gjeldsportefølje", budget: "295 000 000", actual: "201 500 000", varNok: "+1 200 000", varPct: "+0.6 %", driver: "NIBOR-svingninger dempes av 58 % fastrenteavtaler" },
+                        { art: "Drift regnskap og innkjøp", desc: "Regnskapssentral, lønn og fakturering", budget: "38 000 000", actual: "25 100 000", varNok: "-580 000", varPct: "-2.3 %", driver: "Automatisert fakturabehandling (EHF 98.4 %)" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-601-01", title: "Månedlig avstemming av MVA-kompensasjon (art 1729) for raskere oppgjør", owner: "Regnskapssjef", deadline: "Dag 5", impact: "+14 500 000 kr likv.", legal: "Merverdiavgiftskompensasjonsloven", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-601-02", title: "Aktiv likviditetsplassering mot Kommunalbanken for optimal rente", owner: "Finansrådgiver", deadline: "Ukentlig", impact: "+150 000 kr/md", legal: "Finansreglementet", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-601-01", title: "Øke fastrenteandel til 60 % via rentebytteavtaler (swaps) for 800 MNOK", owner: "Finanssjef", deadline: "Desember 2026", impact: "Skjermer 7.2M mot NIBOR-hopp", legal: "Finansreglementet", status: "🟢 Vedtatt" },
+                        { id: "ACT-LANG-601-02", title: "Automatisering av bank- og reskontroavstemming med RPA", owner: "Systemansvarlig", deadline: "Q1 2027", impact: "-450 000 kr/år", legal: "GKRS", status: "📋 Planlagt" }
+                    ],
+                    legalCheck: [
+                        { rule: "Finansreglementet", status: "OK", desc: "Renterisiko og motpartsrisiko er innenfor bystyrets rammer." },
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Finansforvaltningen leverer solid overskudd til kommunen." }
+                    ]
+                },
+                "NIVA2": {
+                    levelTitle: "Nivå 2: Kommunalsjef / Økonomisjef",
+                    unitName: "Sektor: Økonomi, Finans & Virksomhetsstyring",
+                    leader: "Frank Ellingsen (Senior Controller / Økonomisjefens høyre hånd)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Sektormøte — Konsernavstemming & Risikostyring",
+                    hjemmel: "Kommuneloven § 14-5, § 14-6, Regnskapsforskriften § 5-4",
+                    statusBadge: "🟢 I BALANSE (-3.88M Mindreforbruk)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_KOMMUNALSJEF",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+                    kpis: {
+                        bac: "1 490 000 000 NOK",
+                        ac: "985 000 000 NOK",
+                        cv: "-3 880 000 NOK (-0.4 %)",
+                        cvAlert: false,
+                        cpi: "1.003",
+                        cpiAlert: false,
+                        eac: "1 486 125 000 NOK",
+                        vac: "+3 875 000 NOK",
+                        eacSim: "1 486 125 000 NOK (🟢 POSITIV BIDRAGSYTER)"
+                    },
+                    variances: [
+                        { art: "Renterisiko og finansposter", desc: "Netto rentebærende gjeld og finansplasseringer", budget: "230 000 000", actual: "153 300 000", varNok: "-3 300 000", varPct: "-2.1 %", driver: "Gunstig avkastning på overskuddslikviditet" },
+                        { art: "Pensjonspremieavvik (KLP/SPK)", desc: "Innbetalt 348M vs beregnet kostnad 312M", budget: "36 000 000", actual: "36 000 000", varNok: "0", varPct: "0.0 %", driver: "+36M premieavvik amortiseres over 7 år lineært" },
+                        { art: "Skatteinngang og rammetilskudd", desc: "Kommunens frie skatteinntekter YTD", budget: "1 224 000 000", actual: "795 700 000", varNok: "-580 000", varPct: "0.0 %", driver: "Skatteinngang 100.2 % av anslag" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-OKO-01", title: "Månedlig avstemming mellom Visma ERP og Framsikt rammer", owner: "Controllerteam", deadline: "Månedlig", impact: "0 avstemmingsavvik", legal: "Kommuneloven § 14-6", status: "🟢 Iverksatt" },
+                        { id: "ACT-KORT-OKO-02", title: "Overvåke disposisjonsfond mot handlingsregelen (485M / 6.7 % saldo)", owner: "Senior Controller", deadline: "Kontinuerlig", impact: "+50.8M over 6.0% krav", legal: "Kommuneloven § 14-5", status: "🟢 Overholdt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-OKO-01", title: "Utarbeidelse av Handlings- og økonomiplan (HØP) 2027–2030", owner: "Økonomisjef / Controller", deadline: "1. des 2026", impact: "Balansekrav over 4 år", legal: "Kommuneloven § 14-4", status: "🟢 Pågår" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Disposisjonsfondet er intakt og skjermer kommunen mot ROBEK." },
+                        { rule: "Regnskapsforskriften § 5-4", status: "OK", desc: "Pensjonspremieavvik amortiseres nøyaktig i tråd med regelverket." }
+                    ]
+                },
+                "NIVA3": {
+                    levelTitle: "Nivå 3: Kommunaldirektør / Kommunedirektør",
+                    unitName: "Kristiansand Kommune: Konsernledelse & Formannskap",
+                    leader: "Camilla Dunsæd (Kommunedirektør) / Terje Fjellvang (Finansdirektør)",
+                    advisor: "Frank Ellingsen (Senior Controller & Rådgiver)",
+                    cadence: "M10 Formannskapsmøte — Tertialrapport & Rammeendring",
+                    hjemmel: "Kommuneloven § 14-5, § 14-6, § 14-4",
+                    statusBadge: "🟢 LOVLIG STATUS (Disposisjonsfond 6.7 %)",
+                    statusColor: "var(--success-green)",
+                    docKey: "RAPPORT_KOMMUNEDIREKTOR",
+                    docxFile: "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+                    kpis: {
+                        bac: "7 500 000 000 NOK",
+                        ac: "5 115 000 000 NOK",
+                        cv: "+94 900 000 NOK (+1.9 %)",
+                        cvAlert: true,
+                        cpi: "0.981",
+                        cpiAlert: true,
+                        eac: "7 616 500 000 NOK",
+                        vac: "-116 500 000 NOK",
+                        eacSim: "7 500 000 000 NOK (🟢 BALANSE ETTER TILTAK)"
+                    },
+                    variances: [
+                        { art: "Driftsavvik Helse & Mestring", desc: "Vikarbyrå, overtid og institusjonsdrift", budget: "3 100 000 000", actual: "2 140 000 000", varNok: "+62 000 000", varPct: "+2.9 %", driver: "Høyt sykefravær og rekrutteringsutfordringer" },
+                        { art: "Driftsavvik Oppvekst", desc: "Vikarutgifter grunnskole og spesialundervisning", budget: "2 450 000 000", actual: "1 685 000 000", varNok: "+38 500 000", varPct: "+2.3 %", driver: "Bemanningspress og korttidsfravær i grunnskole" },
+                        { art: "Mindreforbruk Byutvikling & Finans", desc: "VAR, samferdsel, IKT og finansavkastning", budget: "1 950 000 000", actual: "1 290 000 000", varNok: "-5 600 000", varPct: "-0.4 %", driver: "Lavere energikostnader og god renteavkastning" }
+                    ],
+                    shortTermActions: [
+                        { id: "ACT-KORT-DIR-K01", title: "Fremme sak til Formannskapet om 2. tertialrapport med tiltakspakke", owner: "Kommunedirektør", deadline: "28. okt 2026", impact: "Rebalanserer 94.9M", legal: "Kommuneloven § 14-5", status: "🏛️ Fremmet" },
+                        { id: "ACT-KORT-DIR-K02", title: "Konsernovergripende ansettelses- og konsulentstopp i staber", owner: "Kommunedirektør", deadline: "Umiddelbart", impact: "-13 000 000 kr EOY", legal: "Kommuneloven § 13-1", status: "🟢 Iverksatt" }
+                    ],
+                    longTermActions: [
+                        { id: "ACT-LANG-DIR-K01", title: "Handlings- og økonomiplan (HØP) 2027–2030 med strukturelle kutt", owner: "Kommunedirektør / Bystyret", deadline: "Desember 2026", impact: "-45 000 000 kr/år", legal: "Kommuneloven § 14-4", status: "🟢 Pågår" },
+                        { id: "ACT-LANG-DIR-K02", title: "Vern av disposisjonsfond over 6.0 % handlingsregel (unngå ROBEK)", owner: "Finansdirektør", deadline: "Flerårig", impact: "Buffer +50.8 MNOK", legal: "Kommuneloven § 14-5", status: "🟢 Sikret" }
+                    ],
+                    legalCheck: [
+                        { rule: "Kommuneloven § 14-5", status: "OK", desc: "Lovfestet handleplikt er oppfylt; tiltakspakke lukker avviket før årsslutt." },
+                        { rule: "Kommuneloven § 14-6", status: "OK", desc: "Bruttoprinsippet overholdes; alle sektorer rapporteres brutto." },
+                        { rule: "ROBEK-sikring", status: "OK", desc: "Disposisjonsfondet på 485 MNOK (6.7 %) sikrer kommunen mot statlig kontroll." },
+                        { rule: "Port 9 HITL", status: "OK", desc: "Attestert og forseglet med SHA-256." }
+                    ]
+                }
+            }
+        };
+
+        // Fallback for "ALL" maps to "OKONOMI"
+        MEETING_PACKS["ALL"] = MEETING_PACKS["OKONOMI"];
+
+        function switchMeetingLevel(levelKey) {
+            currentMeetingLevel = levelKey;
+            
+            // Oppdater aktive knapper i level-pills-bar
+            const btns = document.querySelectorAll("#level-pills-bar .level-pill-btn");
+            btns.forEach(b => b.classList.remove("active"));
+            
+            const activeBtn = document.getElementById(`btn-lvl-${levelKey.toLowerCase()}`);
+            if (activeBtn) activeBtn.classList.add("active");
+            
+            renderMeetingPack(currentMeetingSector, currentMeetingLevel);
+            
+            const levelLabel = levelKey === 'NIVA1' ? 'Nivå 1: Avdelings- / Seksjonsleder' : (levelKey === 'NIVA2' ? 'Nivå 2: Kommunalsjef' : 'Nivå 3: Kommunaldirektør');
+            showToast(`👥 Viser møterapport for ${levelLabel}`);
+        }
+
+        function renderMeetingPack(sectorKey, levelKey) {
+            const secKey = sectorKey || currentMeetingSector || "ALL";
+            const lvlKey = levelKey || currentMeetingLevel || "NIVA1";
+            currentMeetingSector = secKey;
+            currentMeetingLevel = lvlKey;
+
+            const secPacks = MEETING_PACKS[secKey] || MEETING_PACKS["ALL"];
+            const pack = secPacks[lvlKey] || secPacks["NIVA1"];
+            const sectorData = SEKTOR_DATA[secKey] || SEKTOR_DATA["ALL"];
+
+            const container = document.getElementById("meeting-main-card");
+            if (!container) return;
+
+            // Oppdater seksjons-badge
+            const badgeEl = document.getElementById("meeting-header-badge");
+            if (badgeEl) {
+                const shortTitle = sectorData.title.includes('—') ? sectorData.title.split('—')[0].trim() : sectorData.title;
+                badgeEl.textContent = `${sectorData.icon} ${shortTitle} | ${pack.levelTitle.split(':')[0]} | M10`;
+            }
+
+            container.innerHTML = `
+                <!-- 1. Møteoverskrift Hero -->
+                <div class="meeting-hero-header">
+                    <div>
+                        <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-secondary); font-weight:700;">
+                            ${sectorData.icon} ${sectorData.title} &bull; ${pack.levelTitle}
+                        </div>
+                        <div class="meeting-title" style="margin-top:2px;">
+                            ${pack.unitName}
+                        </div>
+                        <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">
+                            ${pack.cadence}
+                        </div>
+                    </div>
+                    <div>
+                        <span class="status-badge" style="background:${pack.statusColor === 'var(--alert-red)' ? '#fee2e2' : (pack.statusColor === 'var(--alert-amber)' ? '#fef3c7' : '#dcfce7')}; color:${pack.statusColor === 'var(--alert-red)' ? '#991b1b' : (pack.statusColor === 'var(--alert-amber)' ? '#92400e' : '#166534')}; font-size:11px; font-weight:700;">
+                            ${pack.statusBadge}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 2. Møtemetadata Grid -->
+                <div class="meeting-meta-grid">
+                    <div class="meeting-meta-item">
+                        <strong>👔 Økonomirådgiver / Møteleder</strong>
+                        ${pack.advisor}
+                    </div>
+                    <div class="meeting-meta-item">
+                        <strong>👤 Budsjettansvarlig Leder</strong>
+                        ${pack.leader}
+                    </div>
+                    <div class="meeting-meta-item">
+                        <strong>📅 Kadens & Rapporteringstermin</strong>
+                        ${pack.cadence}
+                    </div>
+                    <div class="meeting-meta-item">
+                        <strong>⚖️ Lovhjemmel & Styringskrav</strong>
+                        ${pack.hjemmel}
+                    </div>
+                </div>
+
+                <!-- 3. EVM Nøkkeltall for Møtet -->
+                <div class="meeting-kpi-row">
+                    <div class="meeting-kpi-chip">
+                        <div class="kpi-sub">Budsjettramme (BAC)</div>
+                        <div class="kpi-num">${pack.kpis.bac}</div>
+                    </div>
+                    <div class="meeting-kpi-chip">
+                        <div class="kpi-sub">Hittil Påløpt (AC)</div>
+                        <div class="kpi-num">${pack.kpis.ac}</div>
+                    </div>
+                    <div class="meeting-kpi-chip">
+                        <div class="kpi-sub">Avvik YTD (CV)</div>
+                        <div class="kpi-num" style="color:${pack.kpis.cvAlert ? 'var(--alert-red)' : 'var(--navy-dark)'};">${pack.kpis.cv}</div>
+                    </div>
+                    <div class="meeting-kpi-chip">
+                        <div class="kpi-sub">Kostnadsindeks (CPI)</div>
+                        <div class="kpi-num" style="color:${pack.kpis.cpiAlert ? 'var(--alert-red)' : 'var(--navy-dark)'};">${pack.kpis.cpi}</div>
+                    </div>
+                    <div class="meeting-kpi-chip">
+                        <div class="kpi-sub">Sluttprognose (EAC)</div>
+                        <div class="kpi-num">${pack.kpis.eac}</div>
+                    </div>
+                    <div class="meeting-kpi-chip" style="background:#f0fdf4; border-color:#bbf7d0;">
+                        <div class="kpi-sub" style="color:#166534;">Simulert EOY m/ Tiltak</div>
+                        <div class="kpi-num" style="color:#15803d; font-size:12.5px;">${pack.kpis.eacSim}</div>
+                    </div>
+                </div>
+
+                <!-- 4. KOSTRA Artsavvik & Kostnadsdrivere -->
+                <div class="meeting-section-box">
+                    <h4>
+                        <span>🚨 Kritiske Linjeavvik på Kontonivå (Visma ERP Transaksjonsdata)</span>
+                        <span style="font-size:11px; font-weight:normal; color:var(--text-secondary);">KOSTRA funksjon & art</span>
+                    </h4>
+                    <table class="tufte-table" style="font-size:11.5px;">
+                        <thead>
+                            <tr>
+                                <th>Konto / Art</th>
+                                <th>Betegnelse</th>
+                                <th class="num">Budsjett YTD</th>
+                                <th class="num">Regnskap YTD</th>
+                                <th class="num">Avvik (kr & %)</th>
+                                <th>Årsak / Diagnostisk Rotårsak (RAG Glass-Box)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${pack.variances.map(v => `
+                                <tr>
+                                    <td><strong>${v.art}</strong></td>
+                                    <td>${v.desc}</td>
+                                    <td class="num">${v.budget}</td>
+                                    <td class="num">${v.actual}</td>
+                                    <td class="num" style="color:${v.varNok.startsWith('+') ? 'var(--alert-red)' : 'var(--success-green)'}; font-weight:700;">
+                                        ${v.varNok} (${v.varPct})
+                                    </td>
+                                    <td style="color:var(--text-secondary);">${v.driver}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 5. Konkrete Tiltak for å nå Balanse EOY (To tabeller: Kort- og Langsiktige) -->
+                <div style="display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:16px;">
+                    <!-- A. Kortsiktige Tiltak (0–3 måneder) -->
+                    <div class="meeting-section-box" style="border-left:3px solid var(--accent-blue);">
+                        <h4>
+                            <span>⚡ Kortsiktige Tiltak (0–3 måneder / Operative Strakstiltak)</span>
+                            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">Umiddelbar effekt</span>
+                        </h4>
+                        <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:10px;">
+                            Administrativt gjennomførbare tiltak for rask kostnadsreduksjon og likviditetsforbedring uten krav om lovendringer eller politisk behandling.
+                        </p>
+                        <table class="tufte-table" style="font-size:11.5px;">
+                            <thead>
+                                <tr>
+                                    <th>Tiltak ID</th>
+                                    <th>Konkret Handlingspunkt & Beskrivelse</th>
+                                    <th>Ansvarlig</th>
+                                    <th>Frist</th>
+                                    <th class="num">Estimert Effekt</th>
+                                    <th>Hjemmel / Forankring</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${pack.shortTermActions.map(a => `
+                                    <tr>
+                                        <td><code>${a.id}</code></td>
+                                        <td><strong>${a.title}</strong></td>
+                                        <td>${a.owner}</td>
+                                        <td>${a.deadline}</td>
+                                        <td class="num" style="color:var(--success-green); font-weight:700;">${a.impact}</td>
+                                        <td style="font-size:11px; color:var(--text-secondary);">${a.legal}</td>
+                                        <td><span class="status-badge" style="font-size:10px;">${a.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- B. Langsiktige Tiltak (4–12 måneder / Strukturelle) -->
+                    <div class="meeting-section-box" style="border-left:3px solid var(--navy-dark);">
+                        <h4>
+                            <span>🌱 Langsiktige Tiltak (4–12 måneder / Strukturelle Omstillinger)</span>
+                            <span class="status-badge" style="background:#f1f5f9; color:var(--navy-dark); font-size:10px;">Varig effekt</span>
+                        </h4>
+                        <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:10px;">
+                            Strukturelle og organisatoriske reformer som krever partssamarbeid (HTA § 4), bemanningsplanendringer eller sak til Formannskapet/Bystyret.
+                        </p>
+                        <table class="tufte-table" style="font-size:11.5px;">
+                            <thead>
+                                <tr>
+                                    <th>Tiltak ID</th>
+                                    <th>Strukturelt Omstillingstiltak</th>
+                                    <th>Ansvarlig</th>
+                                    <th>Frist</th>
+                                    <th class="num">Helårseffekt</th>
+                                    <th>Hjemmel / Forankring</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${pack.longTermActions.map(a => `
+                                    <tr>
+                                        <td><code>${a.id}</code></td>
+                                        <td><strong>${a.title}</strong></td>
+                                        <td>${a.owner}</td>
+                                        <td>${a.deadline}</td>
+                                        <td class="num" style="color:var(--success-green); font-weight:700;">${a.impact}</td>
+                                        <td style="font-size:11px; color:var(--text-secondary);">${a.legal}</td>
+                                        <td><span class="status-badge" style="font-size:10px;">${a.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 6. Juridisk Rammevurdering & Lovlighetssjekk -->
+                <div class="meeting-section-box">
+                    <h4>
+                        <span>⚖️ Juridiske Rammer & Lovlighetssjekk (Statutory Compliance Matrix)</span>
+                        <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">🟢 100 % LOVLIG</span>
+                    </h4>
+                    <div class="compliance-grid">
+                        ${pack.legalCheck.map(c => `
+                            <div class="compliance-card">
+                                <strong>✓ ${c.rule}</strong>
+                                <span style="font-size:11px; color:var(--text-secondary);">${c.desc}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- 7. Møteverktøylinje -->
+                <div class="meeting-actions-toolbar">
+                    <button class="btn btn-sm btn-primary" onclick="copyMeetingMemoToClipboard()" title="Kopier strukturert møtenotat til utklippstavlen for liming inn i Framsikt eller Visma">
+                        📋 Kopier Møtenotat til Framsikt
+                    </button>
+                    <button class="btn btn-sm" onclick="previewDocument('${pack.docKey}')" title="Åpne fullstendig månedsrapport i lesevisning">
+                        📄 Forhåndsvis Full Månedsrapport
+                    </button>
+                    <button class="btn btn-sm" onclick="signMeetingPackHITL('${secKey}', '${lvlKey}')" title="Signer med Stage-Gate Port 9 SHA-256 kryptografisk revisjonsstempel">
+                        🔒 Stage-Gate Port 9 Sign-Off
+                    </button>
+                    <a href="${pack.docxFile}" download class="btn btn-sm" title="Last ned offisiell Word (.docx) mal for dette nivået">
+                        ⬇️ Last ned Word Mal (.docx)
+                    </a>
+                    <button class="btn btn-sm" onclick="togglePresentationMode()" title="Aktiver fullskjerm møtemodus for visning i storskjerm">
+                        🖥️ Møtemodus
+                    </button>
+                    <span id="meeting-sign-badge" style="font-size:11px; font-family:var(--font-mono); margin-left:auto; color:var(--text-secondary);">
+                        Status: Venter på møtesignering
+                    </span>
+                </div>
+            `;
+        }
+
+        function copyMeetingMemoToClipboard() {
+            const secKey = currentMeetingSector || "ALL";
+            const lvlKey = currentMeetingLevel || "NIVA1";
+            const secPacks = MEETING_PACKS[secKey] || MEETING_PACKS["ALL"];
+            const pack = secPacks[lvlKey] || secPacks["NIVA1"];
+            const sectorData = SEKTOR_DATA[secKey] || SEKTOR_DATA["ALL"];
+
+            const now = new Date().toISOString().slice(0, 10);
+            const memoText = 
+`================================================================================
+KRISTIANSAND KOMMUNE — MÅNEDLIG MØTENOTAT FOR BUDSJETTANSVARLIG
+================================================================================
+Møtetype: ${pack.cadence}
+Nivå: ${pack.levelTitle}
+Virksomhetsområde: ${sectorData.title}
+Enhet / Sektor: ${pack.unitName}
+Møteleder / Controller: ${pack.advisor}
+Budsjettansvarlig: ${pack.leader}
+Dato: ${now}
+Hjemmel: ${pack.hjemmel}
+Status: ${pack.statusBadge}
+
+--------------------------------------------------------------------------------
+1. STATUS & EVM NØKKELTALL (PER 31.12):
+--------------------------------------------------------------------------------
+* Budsjettramme (BAC):         ${pack.kpis.bac}
+* Hittil påløpt regnskap (AC):  ${pack.kpis.ac}
+* Avvik hittil i år (CV):       ${pack.kpis.cv}
+* Kostnadsindeks (CPI):         ${pack.kpis.cpi}
+* Sluttprognose (EAC):          ${pack.kpis.eac}
+* Estimert sluttavvik (VAC):    ${pack.kpis.vac}
+* Simulert EOY m/ tiltak:       ${pack.kpis.eacSim}
+
+--------------------------------------------------------------------------------
+2. IDENTIFISERTE KRITISKE ARTSAVVIK & ROTÅRSAKER:
+--------------------------------------------------------------------------------
+${pack.variances.map(v => `* Art ${v.art} (${v.desc}): Avvik ${v.varNok} (${v.varPct})
+  Årsak: ${v.driver}`).join('\n')}
+
+--------------------------------------------------------------------------------
+3. VEDTATTE KORTSIKTIGE TILTAK (0–3 MND / OPERATIVE STRAKSTILTAK):
+--------------------------------------------------------------------------------
+${pack.shortTermActions.map(a => `* [${a.id}] ${a.title}
+  Ansvarlig: ${a.owner} | Frist: ${a.deadline} | Effekt: ${a.impact}
+  Hjemmel: ${a.legal} | Status: ${a.status}`).join('\n')}
+
+--------------------------------------------------------------------------------
+4. PLANLAGTE LANGSIKTIGE TILTAK (4–12 MND / STRUKTURELLE OMSTILLINGER):
+--------------------------------------------------------------------------------
+${pack.longTermActions.map(a => `* [${a.id}] ${a.title}
+  Ansvarlig: ${a.owner} | Frist: ${a.deadline} | Helårseffekt: ${a.impact}
+  Hjemmel: ${a.legal} | Status: ${a.status}`).join('\n')}
+
+--------------------------------------------------------------------------------
+5. JURIDISK RAMMEVURDERING & LOVLIGHETSSJEKK:
+--------------------------------------------------------------------------------
+${pack.legalCheck.map(c => `* ${c.rule}: ${c.desc}`).join('\n')}
+
+--------------------------------------------------------------------------------
+6. STAGE-GATE PORT 9 ATTESTASJON:
+--------------------------------------------------------------------------------
+Saksbehandler: Frank Ellingsen (Senior Controller)
+Attestert: JA jf. EU AI Act Art. 14 (Human Oversight) & Kommuneloven § 14-5
+SHA-256 Revisjonskvittering genereres ved elektronisk sign-off i Office Hub.
+================================================================================`;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(memoText).then(() => {
+                    showToast("📋 Møtenotat kopiert til utklippstavlen! Klar for Framsikt/Visma.");
+                }).catch(() => {
+                    fallbackCopyMeetingMemo(memoText);
+                });
+            } else {
+                fallbackCopyMeetingMemo(memoText);
+            }
+        }
+
+        function fallbackCopyMeetingMemo(text) {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand("copy");
+                showToast("📋 Møtenotat kopiert til utklippstavlen!");
+            } catch(e) {
+                showToast("Feil ved kopiering til utklippstavle");
+            }
+            document.body.removeChild(ta);
+        }
+
+        async function signMeetingPackHITL(sectorKey, levelKey) {
+            const secKey = sectorKey || currentMeetingSector || "ALL";
+            const lvlKey = levelKey || currentMeetingLevel || "NIVA1";
+            const secPacks = MEETING_PACKS[secKey] || MEETING_PACKS["ALL"];
+            const pack = secPacks[lvlKey] || secPacks["NIVA1"];
+            const now = new Date().toISOString();
+
+            const payload = `MOTE_PORT9|${secKey}|${lvlKey}|${pack.unitName}|${pack.kpis.cv}|Frank Ellingsen|${now}`;
+            const hash = await computeSHA256(payload);
+
+            auditLogEntries.push({
+                timestamp: now,
+                query: `Møterapport ${pack.levelTitle} - ${pack.unitName}`,
+                action: "APPROVED_MOTE_PORT9",
+                user: "Frank Ellingsen",
+                notes: `Månedsmøte godkjent. Kortsiktige og langsiktige tiltak forankret jf. Kommuneloven § 14-5. EOY balanse verifisert.`,
+                hash: hash
+            });
+
+            const badge = document.getElementById("meeting-sign-badge");
+            if (badge) {
+                badge.innerHTML = `<span style="color:var(--success-green); font-weight:700;">✓ Forseglet i Stage-Gate Port 9</span> | <code>SHA256:${hash.slice(0, 16)}...</code>`;
+            }
+
+            showToast(`🔒 Møtepakke forseglet i Port 9! SHA-256: ${hash.slice(0, 16)}...`);
         }
 
         // 3. Command Palette (Ctrl+K)
@@ -7448,6 +8855,18 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 const el = document.getElementById("triage-seksjon");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
                 showToast("📍 Viser Enhet 401 Helse & Mestring i avvikstriagen");
+            } else if (cmd === 'MOTE_NIVA1') {
+                switchMeetingLevel('NIVA1');
+                const el = document.getElementById("mote-rapportering-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'MOTE_NIVA2') {
+                switchMeetingLevel('NIVA2');
+                const el = document.getElementById("mote-rapportering-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'MOTE_NIVA3') {
+                switchMeetingLevel('NIVA3');
+                const el = document.getElementById("mote-rapportering-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
             } else if (cmd === 'RAG_14_5') {
                 const inp = document.getElementById("rag-input");
                 if (inp) inp.value = "Kommuneloven § 14-5";
@@ -8014,10 +9433,12 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
         document.addEventListener("DOMContentLoaded", () => {
             selectWorkflowPhase(2);
             selectSector("ALL");
+            if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
         });
         setTimeout(() => {
             selectWorkflowPhase(2);
             selectSector("ALL");
+            if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
         }, 200);
 
     </script>
