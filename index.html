@@ -2719,12 +2719,21 @@
             <div class="section-header" style="margin-bottom: 8px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <span id="sim-main-title">🎛️ Interaktiv Tiltakssimulator (Hva-hvis EAC)</span>
-                    <div style="display:flex; gap:6px;">
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
                         <button class="btn btn-sm btn-primary" id="sim-tab-skole" onclick="switchSimulatorUnit('SKOLE')" style="font-size:11px; padding:3px 8px;">
-                            🏫 Enhet 202 Skole
+                            🏫 Skole (Enhet 202)
                         </button>
                         <button class="btn btn-sm" id="sim-tab-helse" onclick="switchSimulatorUnit('HELSE')" style="font-size:11px; padding:3px 8px; background:#f1f5f9; border-color:#cbd5e1; color:var(--text-primary);">
-                            🏥 Enhet 401 Helse & Døgnpleie
+                            🏥 Helse (Enhet 401)
+                        </button>
+                        <button class="btn btn-sm" id="sim-tab-var" onclick="switchSimulatorUnit('VAR')" style="font-size:11px; padding:3px 8px; background:#f1f5f9; border-color:#cbd5e1; color:var(--text-primary);">
+                            🏗️ Byutvikling (VAR & KS2)
+                        </button>
+                        <button class="btn btn-sm" id="sim-tab-finops" onclick="switchSimulatorUnit('FINOPS')" style="font-size:11px; padding:3px 8px; background:#f1f5f9; border-color:#cbd5e1; color:var(--text-primary);">
+                            💻 Org/Tek (FinOps)
+                        </button>
+                        <button class="btn btn-sm" id="sim-tab-finans" onclick="switchSimulatorUnit('FINANS')" style="font-size:11px; padding:3px 8px; background:#f1f5f9; border-color:#cbd5e1; color:var(--text-primary);">
+                            ⚖️ Konsern (Rente & Fond)
                         </button>
                     </div>
                 </div>
@@ -4518,6 +4527,136 @@ SWITCH(
                     </div>
                     <span class="cmd-item-badge">Lovoppslag</span>
                 </div>
+                <div class="cmd-palette-item" onclick="executeCommand('LAERERNORM')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏫</span>
+                        <div>
+                            <div class="cmd-item-label">Lærernorm & Elevtallsbarometer</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">1:14.2 (1.–4. trinn) og 1:18.7 (5.–10. trinn) jf. Opplæringsloven § 8-2</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Oppvekst</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('BARNEHAGE_TILSKUDD')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">👶</span>
+                        <div>
+                            <div class="cmd-item-label">Private Barnehager Tilskuddsavstemming</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">42 % private barnehager / 2-års overveltingsrisiko på art 1470</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Oppvekst</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('NAV_RADAR')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📑</span>
+                        <div>
+                            <div class="cmd-item-label">NAV-refusjonsradar (Art 1600)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Aldersfordeling på 410 000 kr utestående sykepenger / foreldrepenger</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Oppvekst</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('VAR_SELVKPOST')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">💧</span>
+                        <div>
+                            <div class="cmd-item-label">VAR Selvkostbarometer (Selvkostforskriften § 8)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Fondssaldoer og 5-års utjevning for Vann (98.2%), Avløp (101.4%), Renovasjon (99.1%)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Byutvikling</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('BYGGESAK_GEBYR')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏗️</span>
+                        <div>
+                            <div class="cmd-item-label">Byggesaksgebyr-termometer (Art 1620)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Dekningsgrad 84.5 % (-3.3M inntektssvikt pga. lav byggeaktivitet)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Byutvikling</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('KS2_INNVESTERING')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📐</span>
+                        <div>
+                            <div class="cmd-item-label">KS2 Investerings-Gatekeeper (Port 9 HITL)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">P85 usikkerhetsavsetning (45M) og bufferbruk (27.6%) på 14 anleggsprosjekter</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Investering</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('FRIVILLIGHET_TILSKUDD')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🎭</span>
+                        <div>
+                            <div class="cmd-item-label">Frivillighetstilskudds-tracker (Funksjon 380/385)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">14.2M ramme / 9.85M utbetalt / 1.30M restramme til idrett & kultur</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Kultur</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('ENERGI_IDRETT')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">⚡</span>
+                        <div>
+                            <div class="cmd-item-label">Energipris- og Driftsbuffer Idrettsbygg</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Snitt spotpris 68 øre/kWh (budsjett 75 øre) / +420k akkumulert buffer</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Kultur</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('FINOPS_SAAS')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">💻</span>
+                        <div>
+                            <div class="cmd-item-label">FinOps & SaaS Lisens-Monitor (Funksjon 130)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">420 000 kr/år i inaktive M365 E5 / Visma skylisenser identifisert</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Org & Teknologi</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('KONSULENT_KUTT')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">💼</span>
+                        <div>
+                            <div class="cmd-item-label">Konsulent-konverteringskalkulator</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Konverter 2 eksterne konsulenter (1 450 kr/t) til faste stillinger (-1.8M spart)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Org & Teknologi</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('RENTERISIKO')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📈</span>
+                        <div>
+                            <div class="cmd-item-label">Renterisiko- og Finansbarometer (7.25 Mrd)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Snittrente 4.12 % / 58 % fast / Følsomhet: +0.50 % NIBOR = -7.2M i driftsresultat</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Konsern Finans</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('PENSJON_AVVIK')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">👥</span>
+                        <div>
+                            <div class="cmd-item-label">Pensjonspremieavvik & Amortisering (KLP)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Premieinnbetaling 348M vs. kostnad 312M (+36M premieavvik amortiseres over 7 år)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Konsern Finans</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('DISPOSISJONSFOND')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏦</span>
+                        <div>
+                            <div class="cmd-item-label">Disposisjonsfonds-termometer mot Handlingsregelen</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Saldo 485 MNOK (6.7 % av driftsinntekter > 6.0 % måltall)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Konsern Finans</span>
+                </div>
                 <div class="cmd-palette-item" onclick="executeCommand('RAG_14_5')">
                     <div class="cmd-item-left">
                         <span class="cmd-item-icon">⚖️</span>
@@ -5893,6 +6032,24 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                 document.getElementById("rep4-p2").innerText = "Økt pleietyngde hos 3 nye brukere + høyt helgefravær dekket med overtid (art 10900).";
                 document.getElementById("rep4-p3").innerText = "A) HTA § 4 drøftingsmøte om langvakter. B) Midlertidig stillingsjustering. C) Rammeflytting fra fond.";
                 document.getElementById("rep4-p4").innerHTML = "Prognose uten tiltak: +1.40M -> Tiltakseffekt: -900k -> <strong>Revidert EOY: +500k</strong> (Dekkes innen helseramme).";
+            } else if (unit === 'ENHET_301') {
+                document.getElementById("rep4-active-title").innerText = "Enhet 301 Ingeniørvesenet VAR (By- og Stedsutvikling)";
+                document.getElementById("rep4-p1").innerText = "+8 500 000 NOK YTD (Overinvesteringer vann/avløp + midlertidig gebyrsvikt byggesak)";
+                document.getElementById("rep4-p2").innerText = "Rehabiliteringsprosjekt Lund renseanlegg (uforutsette grunnforhold NS 8407) + lav igangsetting byggesak.";
+                document.getElementById("rep4-p3").innerText = "A) Fremføring mot VAR-selvkostfond (§ 8). B) P85 usikkerhetsavsetning innløses. C) Regulativjustering for 2027.";
+                document.getElementById("rep4-p4").innerHTML = "Prognose uten tiltak: +12.0M -> Selvkostavregning: -10.5M -> <strong>Revidert EOY: +1.5M</strong> (Fullt utlignet innen 5-årsregelen).";
+            } else if (unit === 'ENHET_501') {
+                document.getElementById("rep4-active-title").innerText = "Enhet 501 IKT & Fellestjenester (Organisasjon & Teknologi)";
+                document.getElementById("rep4-p1").innerText = "+3 200 000 NOK YTD (Merforbruk eksterne IT-konsulenter på art 11950)";
+                document.getElementById("rep4-p2").innerText = "Forsinket rekruttering av faste systemutviklere har tvunget frem dyr konsulentinnleie (1 450 kr/t).";
+                document.getElementById("rep4-p3").innerText = "A) FinOps sanering av 38 inaktive M365 E5 lisenser. B) Konvertering av 2 konsulenter til faste stillinger. C) RPA-automatisering.";
+                document.getElementById("rep4-p4").innerHTML = "Prognose uten tiltak: +4.8M -> FinOps & ansettelseseffekt: -3.4M -> <strong>Revidert EOY: +1.4M</strong> (Overholdes innenfor IKT-ramme).";
+            } else if (unit === 'KONSERN') {
+                document.getElementById("rep4-active-title").innerText = "Kristiansand Kommune — Konsern Finansforvaltning & Pensjon";
+                document.getElementById("rep4-p1").innerText = "+24 000 000 NOK (Potensiell renteøkning på 42 % flytende gjeldsandel)";
+                document.getElementById("rep4-p2").innerText = "Styringsrenteøkning i NIBOR + KLP pensjonspremieavvik på 36 MNOK som må amortiseres.";
+                document.getElementById("rep4-p3").innerText = "A) Økning i rentesikringsgrad fra 58 % til 65 % (rentebytteavtaler). B) Amortisering av premieavvik over 7 år. C) Vern av disposisjonsfond.";
+                document.getElementById("rep4-p4").innerHTML = "Prognose uten tiltak: +38M -> Rentesikring & amortisering: -32M -> <strong>Revidert EOY: +6.0M</strong> (Handlingsregel overholdt: Disposisjonsfond 6.7 % > 6.0 %).";
             }
         }
 
@@ -6448,7 +6605,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 avvik: "-11 872 460 NOK",
                 cpi: "0.858",
                 status_badge: "🟢 Konsernstyring",
-                fokus: "Helårsbalanse, pensjonskostnader, renteutvikling på lånegjeld, og disposisjonsfondsnivå (485M / 6.7 %)."
+                fokus: "Helårsbalanse, pensjonskostnader, renteutvikling på lånegjeld, og disposisjonsfondsnivå (485M / 6.7 %).",
+                renterisiko: { gjeld: "7 250 000 000 NOK", snittrente: "4.12 %", fast: "58 %", flytende: "42 %", folsomhet: "-7.2 MNOK per +0.50 % NIBOR" },
+                pensjon_premieavvik: { innbetalt: "348 MNOK", kostnad: "312 MNOK", premieavvik: "+36 MNOK", amortisering: "7 år lineært" },
+                disposisjonsfond: { saldo: "485 000 000 NOK", andel: "6.7 %", krav: "6.0 %", buffer: "+50.8 MNOK over krav" }
             },
             "HELSE": {
                 title: "1. Helse og mestring",
@@ -6491,7 +6651,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 avvik: "+1 240 000 NOK",
                 cpi: "0.887",
                 status_badge: "🔴 Kritisk — Avvikstiltak kreves jf. § 14-5",
-                fokus: "Vikarinnleie (art 1050), NAV-refusjonsetterslep (art 1600), lærernorm og klassesammenslåing ved korttidsfravær."
+                fokus: "Vikarinnleie (art 1050), NAV-refusjonsetterslep (art 1600), lærernorm og klassesammenslåing ved korttidsfravær.",
+                laerernorm: { trinn_1_4: "1:14.2 (Krav: 1:15)", trinn_5_10: "1:18.7 (Krav: 1:20)", status: "🟢 Oppfylt jf. § 8-2", buffer: "+12 lærertimer/uke" },
+                private_barnehager: { andel: "42 % private", tilskudd_ytd: "284.2 MNOK", forsinket_risiko: "+1.4 MNOK fremtidig overvelting i 2028" },
+                nav_radar: { under_3mnd: "250 000 NOK", mellom_3_6mnd: "110 000 NOK", over_6mnd: "50 000 NOK (Foreldelsesrisiko)", totalt: "410 000 NOK" }
             },
             "BYUTVIKLING": {
                 title: "3. By- og stedsutvikling",
@@ -6506,7 +6669,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 avvik: "-310 000 NOK",
                 cpi: "1.005",
                 status_badge: "🟢 Balanse — Selvkostfond overholdt",
-                fokus: "Selvkostavregning for VAR (selvkostforskriften § 8), fremdrift på store infrastrukturprosjekter (EVM) og byggesaksgebyrer."
+                fokus: "Selvkostavregning for VAR (selvkostforskriften § 8), fremdrift på store infrastrukturprosjekter (EVM) og byggesaksgebyrer.",
+                var_selvkost: { vann: "98.2 % (Fond: +14.2M)", avlop: "101.4 % (Fond: -4.8M)", renovasjon: "99.1 % (Fond: +2.1M)", regel: "§ 8 (5-års utjevning)" },
+                byggesak_gebyr: { dekningsgrad: "84.5 %", inntekter_ytd: "18.2 MNOK", budsjett_ytd: "21.5 MNOK", svikt: "-3.3 MNOK (Lav byggeaktivitet)" },
+                ks2_portefolje: { aktive: 14, p85_buffer: "45.0 MNOK", disponert: "12.4 MNOK (27.6 %)", status: "🟢 God kontroll (Port 9 HITL)" }
             },
             "KULTUR": {
                 title: "4. Kultur og innbyggerdialog",
@@ -6521,7 +6687,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 avvik: "+45 000 NOK",
                 cpi: "0.999",
                 status_badge: "🟢 Balanse — Kontrollert drift",
-                fokus: "Tilskuddsforvaltning for frivilligheten, leieinntekter for idrettshaller og energioptimalisering for kommunale kulturbygg."
+                fokus: "Tilskuddsforvaltning for frivilligheten, leieinntekter for idrettshaller og energioptimalisering for kommunale kulturbygg.",
+                frivillighet_tilskudd: { ramme: "14 200 000 NOK", utbetalt: "9 850 000 NOK", behandles: "3 050 000 NOK", rest: "1 300 000 NOK" },
+                energi_idrett: { spot_snitt: "68 øre/kWh", budsjettert: "75 øre/kWh", gevinst: "+420 000 NOK (Positiv driftsbuffer)" },
+                kulturskole: { egenbetaling_dekn: "32.4 %", elevplasser: 1450, venteliste: 182, status: "Stabil elevmasse" }
             },
             "ORG_TEK": {
                 title: "5. Organisasjon og teknologi",
@@ -6536,7 +6705,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 avvik: "+120 000 NOK",
                 cpi: "0.996",
                 status_badge: "🟢 Balanse — Sky- og lisenskontroll",
-                fokus: "Konsulentreduksjon, FinOps for skylisenser, IKT-sikkerhetsinvesteringer og effektivisering av felles HR-prosesser."
+                fokus: "Konsulentreduksjon, FinOps for skylisenser, IKT-sikkerhetsinvesteringer og effektivisering av felles HR-prosesser.",
+                finops_saas: { budsjett: "48 000 000 NOK", fakturert: "32 100 000 NOK", inaktive: "420 000 NOK/år (38 M365 E5 lisenser)" },
+                konsulent_drift: { timepris_snitt: "1 450 NOK/t", innleid_ytd: "12.4 MNOK", gevinst_2_faste: "-1.8 MNOK spart per år" },
+                cyber_beredskap: { ramme: "18 000 000 NOK", fremdrift: "68 %", nist: "3.8 / 5.0 (🟢 Tilfredsstillende)" }
             },
             "OKONOMI": {
                 title: "6. Økonomi og virksomhetsstyring",
@@ -6551,7 +6723,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 avvik: "Renterisiko overvåkes",
                 cpi: "1.000",
                 status_badge: "🟢 Finans & Konsernstyring",
-                fokus: "Rentesikring (renteavtaler), pensjonspremieavvik, disposisjonsfond (485M) og overordnet etterlevelse av Kommuneloven § 14-5."
+                fokus: "Rentesikring (renteavtaler), pensjonspremieavvik, disposisjonsfond (485M) og overordnet etterlevelse av Kommuneloven § 14-5.",
+                renterisiko: { gjeld: "7 250 000 000 NOK", snittrente: "4.12 %", fast: "58 %", flytende: "42 %", folsomhet: "-7.2 MNOK per +0.50 % NIBOR" },
+                pensjon_premieavvik: { innbetalt: "348 MNOK", kostnad: "312 MNOK", premieavvik: "+36 MNOK", amortisering: "7 år lineært" },
+                disposisjonsfond: { saldo: "485 000 000 NOK", andel: "6.7 %", krav: "6.0 %", buffer: "+50.8 MNOK over krav" }
             }
         };
 
@@ -6648,14 +6823,210 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                             </div>
                         </div>
                     </div>` : ''}
+
+                    ${sectorKey === 'OPPVEKST' ? `
+                    <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🏫 Lærernorm & Elevtallsbarometer</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">🟢 Lovkrav oppfylt</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                1.–4. trinn: <strong>1:14.2</strong> (Krav: maks 1:15) | 5.–10. trinn: <strong>1:18.7</strong> (Krav: maks 1:20).<br>
+                                Elevgrunnlag: <strong>11 480 elever</strong> | Timebuffer: <strong>+12 lærertimer/uke</strong>.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Opplæringsloven § 8-2: Minimumstimetall overholdt ved klassesammenslåing.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--alert-amber); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>👶 Private Barnehager Tilskuddsavstemming</span>
+                                <span class="status-badge" style="background:#fef9c3; color:#a16207; font-size:10px;">42 % private</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Utbetalt tilskudd YTD (art 1470): <strong>284 200 000 NOK</strong>.<br>
+                                <strong>Forsinket risiko:</strong> Merforbruk i år genererer <strong>+1,4 MNOK</strong> i økt tilskudd i 2028.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Barnehageloven § 19: Likebehandlingsprinsippet krever nøyaktig kostnadsstyring.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--success-green); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>📑 NAV-refusjonsradar (Art 1600)</span>
+                                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">410 000 NOK utestående</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Aldersfordeling: &lt; 3 mnd: <strong>250k</strong> | 3–6 mnd: <strong>110k</strong> | &gt; 6 mnd: <strong>50k (Risiko)</strong>.<br>
+                                Status: <strong>Purrerutine aktivert</strong> mot NAV Forvaltning Agder.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Folketrygdloven § 22-13: Frist 3 måneder for foreldelse overvåkes.</span>
+                            </div>
+                        </div>
+                    </div>` : ''}
+
+                    ${sectorKey === 'BYUTVIKLING' ? `
+                    <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>💧 VAR Selvkostbarometer (Selvkostforskriften § 8)</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">5-års utjevning</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Selvkostgrad: Vann <strong>98.2 % (+14.2M fond)</strong> | Avløp <strong>101.4 % (-4.8M fond)</strong> | Renovasjon <strong>99.1 % (+2.1M fond)</strong>.<br>
+                                Varsel gebyrregulativ 2027: <strong>+3.5 % på avløpsgebyret</strong>.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">KOSTRA funksjon 340/345/354: Unntatt krav om årlig driftsbalanse.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--alert-amber); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🏗️ Byggesaksgebyr-termometer (Art 1620)</span>
+                                <span class="status-badge" style="background:#fef9c3; color:#a16207; font-size:10px;">84.5 % dekningsgrad</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Gebyrinntekter YTD: <strong>18 200 000 NOK</strong> (Periodisert budsjett: 21.5M).<br>
+                                Inntektsavvik: <strong>-3 300 000 NOK</strong> pga. lav igangsetting i eiendomsmarkedet.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Plan- og bygningsloven § 33-1: Selvkostprinsipp for gebyrer.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--success-green); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>📐 KS2 Investerings-Gatekeeper (Port 9 HITL)</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">14 aktive prosjekter</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                P85 Usikkerhetsavsetning: <strong>45 000 000 NOK</strong> | Bufferdisponert: <strong>12.4M (27.6 %)</strong>.<br>
+                                Status: <strong>🟢 Robust risikobuffer</strong> på renseanlegg og samferdsel.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">NS 8407 totalentreprise: Endringsordrer håndteres innenfor P85-rammen.</span>
+                            </div>
+                        </div>
+                    </div>` : ''}
+
+                    ${sectorKey === 'KULTUR' ? `
+                    <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🎭 Frivillighetstilskudds-tracker</span>
+                                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">1.3M disponibelt</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Politisk ramme 2026: <strong>14 200 000 NOK</strong> | Utbetalt: <strong>9 850 000 NOK (69.4 %)</strong>.<br>
+                                Under behandling: <strong>3 050 000 NOK</strong> | Restramme: <strong>1 300 000 NOK</strong>.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">KOSTRA funksjon 380/385: Tilskudd til idrettslag og kulturorganisasjoner.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--success-green); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>⚡ Energipris- og Driftsbuffer Idrettsbygg</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">+420k buffer</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Snitt spotpris YTD: <strong>68 øre/kWh</strong> (Budsjettert forventning: 75 øre/kWh).<br>
+                                Positiv driftsbuffer: <strong>+420 000 NOK</strong> på Aquarama og idrettshaller.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Energiledelse: ENØK-tiltak gir lavere toppbelastning ved kuldeperioder.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🎨 Kulturskole Egenbetalingsgrad</span>
+                                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">32.4 % dekningsgrad</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Elevplasser: <strong>1 450 elever</strong> | Venteliste: <strong>182 søkere</strong>.<br>
+                                Egenbetalingssatser følger deflatorjustering for 2027.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">KOSTRA funksjon 383: Høy lærertetthet og stabil elevmasse.</span>
+                            </div>
+                        </div>
+                    </div>` : ''}
+
+                    ${sectorKey === 'ORG_TEK' ? `
+                    <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>💻 FinOps & SaaS Lisens-Monitor</span>
+                                <span class="status-badge" style="background:#fef9c3; color:#a16207; font-size:10px;">420k sparepotensial</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                SaaS-budsjett: <strong>48 000 000 NOK</strong> | Fakturert: <strong>32 100 000 NOK</strong>.<br>
+                                Inaktive kontoer identifisert: <strong>38 M365 E5 & Visma-lisenser (420 000 kr/år)</strong>.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Funksjon 130: Lisenssanering initiert med automatisk deaktivering.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--success-green); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>💼 Konsulent-konverteringskalkulator</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">-1.8M innsparingspotensial</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Timepris eksterne konsulenter (art 11950): <strong>1 450 NOK/time</strong>.<br>
+                                Gevinst: Konvertering av <strong>2 konsulenter til faste stillinger sparer 1 800 000 kr/år</strong>.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Strategisk HR: Økt intern kompetanse og redusert sårbarhet.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🛡️ Cyber- og Beredskapsavsetning</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">NIST 3.8 / 5.0</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Investeringsramme IT-sikkerhet: <strong>18 000 000 NOK</strong> (Fremdrift: 68 %).<br>
+                                Revisjonsstatus: <strong>🟢 Grønn sikkerhetsaudit</strong> jf. NSM grunnprinsipper.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Sikkerhetssertifisering overvåkes av personvernombud og IKT-sjef.</span>
+                            </div>
+                        </div>
+                    </div>` : ''}
+
+                    ${(sectorKey === 'OKONOMI' || sectorKey === 'ALL') ? `
+                    <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>📈 Renterisiko- og Finansbarometer (7.25 Mrd)</span>
+                                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">58 % fast / 42 % flytende</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Gjennomsnittsrente låneportefølje: <strong>4.12 %</strong> på 7,25 milliarder NOK.<br>
+                                <strong>Følsomhet:</strong> +0.50 % NIBOR gir <strong>-7 200 000 kr/år</strong> i økt rentebelastning.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Finansreglementet: Minimum 50 % rentesikringsgrad overholdes.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--accent-blue); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>👥 Pensjonspremieavvik & Amortisering (KLP)</span>
+                                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">+36M premieavvik</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Innbetalt premie: <strong>348 MNOK</strong> | Beregnet kostnad: <strong>312 MNOK</strong>.<br>
+                                Premieavvik på 36 MNOK amortiseres over 7 år lineært jf. regnskapsforskriften § 5-4.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">KLP & SPK: Årlig aktuarmessig avstemming utført.</span>
+                            </div>
+                        </div>
+                        <div style="background:#ffffff; border:1px solid var(--border-light); border-left:3px solid var(--success-green); padding:10px 14px; border-radius:3px;">
+                            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;">
+                                <span>🏦 Disposisjonsfond mot Handlingsregelen</span>
+                                <span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">6.7 % saldo</span>
+                            </div>
+                            <div style="margin-top:6px; font-size:11.5px; color:var(--text-secondary); line-height:1.5;">
+                                Saldo disposisjonsfond: <strong>485 000 000 NOK</strong> (Krav: min. 6.0 % av driftsinntekter).<br>
+                                Handlingsrom / buffer over kravet: <strong>+50 800 000 NOK (🟢 Trygg buffer)</strong>.<br>
+                                <span style="font-size:10.5px; color:var(--text-muted);">Kommuneloven § 14-5: Sikrer mot uforutsette inntektssvingninger.</span>
+                            </div>
+                        </div>
+                    </div>` : ''}
                 `;
             }
 
-            // 4. Knytt til triage hvis aktuelt
+            // 4. Knytt til triage & simulator hvis aktuelt
             if (sectorKey === 'OPPVEKST') {
                 loadTriageUnit('ENHET_202');
+                switchSimulatorUnit('SKOLE');
             } else if (sectorKey === 'HELSE') {
                 loadTriageUnit('ENHET_401');
+                switchSimulatorUnit('HELSE');
+            } else if (sectorKey === 'BYUTVIKLING') {
+                loadTriageUnit('ENHET_301');
+                switchSimulatorUnit('VAR');
+            } else if (sectorKey === 'ORG_TEK') {
+                loadTriageUnit('ENHET_501');
+                switchSimulatorUnit('FINOPS');
+            } else if (sectorKey === 'OKONOMI' || sectorKey === 'ALL') {
+                loadTriageUnit('KONSERN');
+                switchSimulatorUnit('FINANS');
             }
 
             showToast(`🏢 Valgt ansvarsområde: ${data.title}`);
@@ -6765,6 +7136,31 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 executeMockRAG();
                 const el = document.getElementById("rag-seksjon");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'LAERERNORM' || cmd === 'BARNEHAGE_TILSKUDD' || cmd === 'NAV_RADAR') {
+                selectSector('OPPVEKST');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("🏫 Viser Lærernorm, Barnehagetilskudd og NAV-refusjonsradar");
+            } else if (cmd === 'VAR_SELVKPOST' || cmd === 'BYGGESAK_GEBYR' || cmd === 'KS2_INNVESTERING') {
+                selectSector('BYUTVIKLING');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("💧 Viser VAR-Selvkost, Byggesaksgebyr og KS2 Gatekeeper");
+            } else if (cmd === 'FRIVILLIGHET_TILSKUDD' || cmd === 'ENERGI_IDRETT') {
+                selectSector('KULTUR');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("🎭 Viser Frivillighetstilskudd og Energibuffer for Idrettsbygg");
+            } else if (cmd === 'FINOPS_SAAS' || cmd === 'KONSULENT_KUTT') {
+                selectSector('ORG_TEK');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("💻 Viser FinOps Lisensmonitor og Konsulentkonvertering");
+            } else if (cmd === 'RENTERISIKO' || cmd === 'PENSJON_AVVIK' || cmd === 'DISPOSISJONSFOND') {
+                selectSector('OKONOMI');
+                const el = document.getElementById("sektor-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("📈 Viser Renterisiko, Pensjonspremieavvik og Disposisjonsfond");
             } else if (cmd === 'COPY_FRAMSIKT') {
                 copyToFramsiktFormat();
             } else if (cmd === 'COPY_TSV') {
@@ -6828,13 +7224,36 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             }
         }
 
-        // 4. Interaktiv Tiltakssimulator (Dual: Enhet 202 Skole & Enhet 401 Helse)
+        // 4. Interaktiv Tiltakssimulator (Dual & Multi: Skole, Helse, VAR, FinOps, Konsern)
         let currentSimulatorUnit = 'SKOLE';
 
         function switchSimulatorUnit(unitMode) {
             currentSimulatorUnit = unitMode;
-            const tabSkole = document.getElementById("sim-tab-skole");
-            const tabHelse = document.getElementById("sim-tab-helse");
+            
+            const tabButtons = {
+                'SKOLE': document.getElementById("sim-tab-skole"),
+                'HELSE': document.getElementById("sim-tab-helse"),
+                'VAR': document.getElementById("sim-tab-var"),
+                'FINOPS': document.getElementById("sim-tab-finops"),
+                'FINANS': document.getElementById("sim-tab-finans")
+            };
+
+            Object.keys(tabButtons).forEach(k => {
+                const btn = tabButtons[k];
+                if (!btn) return;
+                if (k === unitMode) {
+                    btn.className = "btn btn-sm btn-primary";
+                    btn.style.background = "var(--navy-dark)";
+                    btn.style.borderColor = "var(--navy-dark)";
+                    btn.style.color = "#ffffff";
+                } else {
+                    btn.className = "btn btn-sm";
+                    btn.style.background = "#f1f5f9";
+                    btn.style.borderColor = "#cbd5e1";
+                    btn.style.color = "var(--text-primary)";
+                }
+            });
+
             const titleEl = document.getElementById("sim-main-title");
             const descEl = document.getElementById("sim-desc-text");
             const lbl1 = document.getElementById("sim-lbl-1");
@@ -6849,18 +7268,6 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             const lblBac = document.getElementById("sim-res-lbl-bac");
 
             if (unitMode === 'HELSE') {
-                if (tabSkole) {
-                    tabSkole.className = "btn btn-sm";
-                    tabSkole.style.background = "#f1f5f9";
-                    tabSkole.style.borderColor = "#cbd5e1";
-                    tabSkole.style.color = "var(--text-primary)";
-                }
-                if (tabHelse) {
-                    tabHelse.className = "btn btn-sm btn-primary";
-                    tabHelse.style.background = "var(--navy-dark)";
-                    tabHelse.style.borderColor = "var(--navy-dark)";
-                    tabHelse.style.color = "#ffffff";
-                }
                 if (titleEl) titleEl.innerText = "🏥 Døgnpleie Turnus- og Bemanningssimulator (Enhet 401 Helse)";
                 if (descEl) descEl.innerText = "Simuler turnusomlegging med langvakter (HTA § 4), fraværsreduksjon og stans i innleie av vikarbyråsykepleiere for å eliminere overforbruk på art 10900/10500.";
 
@@ -6879,19 +7286,65 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
                 if (lblBac) lblBac.innerText = "Avvik mot Ramme (BAC: 14.20M)";
                 loadTriageUnit('ENHET_401');
                 showToast("🏥 Bemanningssimulator aktivert for Enhet 401 Helse & Mestring");
+            } else if (unitMode === 'VAR') {
+                if (titleEl) titleEl.innerText = "🏗️ VAR-Selvkost & KS2 Investeringssimulator (Byutvikling)";
+                if (descEl) descEl.innerText = "Simuler gebyrregulering i VAR jf. Selvkostforskriften § 8, innløsning av P85 usikkerhetsbuffer på anleggskontrakter og gebyreffektivisering i byggesak.";
+
+                if (lbl1) lbl1.innerText = "VAR gebyrjustering 2027 (utjevningsgrad):";
+                if (s1) { s1.min = 0; s1.max = 10; s1.step = 1; s1.value = 4; }
+                if (sub1) sub1.innerHTML = "<span>0 %</span><span>5 %</span><span>10 %</span>";
+
+                if (lbl2) lbl2.innerText = "KS2 Investering: P85 bufferdisponering:";
+                if (s2) { s2.min = 0; s2.max = 20000000; s2.step = 2000000; s2.value = 8000000; }
+                if (sub2) sub2.innerHTML = "<span>0M</span><span>10M</span><span>20M</span>";
+
+                if (lbl3) lbl3.innerText = "Byggesak: Effektivisering & gebyrinnhenting:";
+                if (s3) { s3.min = 0; s3.max = 1500000; s3.step = 250000; s3.value = 750000; }
+                if (sub3) sub3.innerHTML = "<span>0 kr</span><span>750k</span><span>1.5M</span>";
+
+                if (lblBac) lblBac.innerText = "Avvik mot Ramme (BAC: 940.0M)";
+                loadTriageUnit('ENHET_301');
+                showToast("🏗️ VAR- og Investeringssimulator aktivert");
+            } else if (unitMode === 'FINOPS') {
+                if (titleEl) titleEl.innerText = "💻 FinOps Skylisens- og Konsulentsimulator (Org & Teknologi)";
+                if (descEl) descEl.innerText = "Simuler sanering av inaktive SaaS-lisenser (M365/Visma), konvertering av eksterne IT-konsulenter (art 11950) til faste stillinger og RPA-automatisering.";
+
+                if (lbl1) lbl1.innerText = "SaaS lisenssanering (inaktive M365 kontoer):";
+                if (s1) { s1.min = 0; s1.max = 100; s1.step = 10; s1.value = 40; }
+                if (sub1) sub1.innerHTML = "<span>0</span><span>50</span><span>100 lisenser</span>";
+
+                if (lbl2) lbl2.innerText = "Konsulentkutt -> Faste IT-stillinger:";
+                if (s2) { s2.min = 0; s2.max = 4; s2.step = 1; s2.value = 2; }
+                if (sub2) sub2.innerHTML = "<span>0</span><span>2</span><span>4 stillinger</span>";
+
+                if (lbl3) lbl3.innerText = "Automatisering & RPA-driftsgevinster:";
+                if (s3) { s3.min = 0; s3.max = 800000; s3.step = 100000; s3.value = 400000; }
+                if (sub3) sub3.innerHTML = "<span>0 kr</span><span>400k</span><span>800k</span>";
+
+                if (lblBac) lblBac.innerText = "Avvik mot Ramme (BAC: 460.0M)";
+                loadTriageUnit('ENHET_501');
+                showToast("💻 FinOps & Konsulentsimulator aktivert");
+            } else if (unitMode === 'FINANS') {
+                if (titleEl) titleEl.innerText = "⚖️ Finansforvaltning & Renterisikosimulator (Konsern 7.25 Mrd)";
+                if (descEl) descEl.innerText = "Simuler renteendringer i NIBOR, økning i fastrentesikringsgrad på 7,25 mrd lånegjeld og vern av kommunens disposisjonsfond mot handlingsregelen (6.0 %).";
+
+                if (lbl1) lbl1.innerText = "Rentesikringsgrad (andel fastrente):";
+                if (s1) { s1.min = 40; s1.max = 90; s1.step = 5; s1.value = 65; }
+                if (sub1) sub1.innerHTML = "<span>40 %</span><span>65 %</span><span>90 %</span>";
+
+                if (lbl2) lbl2.innerText = "NIBOR renteendring (stress-scenario):";
+                if (s2) { s2.min = -100; s2.max = 200; s2.step = 25; s2.value = 50; }
+                if (sub2) sub2.innerHTML = "<span>-1.00 %</span><span>0.00 %</span><span>+2.00 %</span>";
+
+                if (lbl3) lbl3.innerText = "Disposisjonsfond overføring / buffervern:";
+                if (s3) { s3.min = 0; s3.max = 50000000; s3.step = 5000000; s3.value = 20000000; }
+                if (sub3) sub3.innerHTML = "<span>0M</span><span>25M</span><span>50M</span>";
+
+                if (lblBac) lblBac.innerText = "Avvik mot Konsernramme (BAC: 7.25 Mrd)";
+                loadTriageUnit('KONSERN');
+                showToast("⚖️ Renterisiko- og Finanssimulator aktivert");
             } else {
-                if (tabHelse) {
-                    tabHelse.className = "btn btn-sm";
-                    tabHelse.style.background = "#f1f5f9";
-                    tabHelse.style.borderColor = "#cbd5e1";
-                    tabHelse.style.color = "var(--text-primary)";
-                }
-                if (tabSkole) {
-                    tabSkole.className = "btn btn-sm btn-primary";
-                    tabSkole.style.background = "var(--navy-dark)";
-                    tabSkole.style.borderColor = "var(--navy-dark)";
-                    tabSkole.style.color = "#ffffff";
-                }
+                // SKOLE (Standard Enhet 202)
                 if (titleEl) titleEl.innerText = "🏫 Interaktiv Tiltakssimulator (Hva-hvis EAC for Enhet 202 Skole)";
                 if (descEl) descEl.innerText = "Simuler strakstiltak (innleiekutt, NAV-refusjoner og faste ansettelser) for å se direkte effekt på årsavslutning (EAC) og budsjettbalanse jf. Kommuneloven § 14-5.";
 
@@ -6969,7 +7422,118 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
                         badgeEl.innerText = `🔴 OVER SKJØNNSTERSKEL (${nyttAvvikPct} % > 2.0 %)`;
                     }
                 }
+            } else if (currentSimulatorUnit === 'VAR') {
+                if (v1El) v1El.innerText = `${val1} %`;
+                if (v2El) v2El.innerText = `${(val2 / 1000000).toFixed(1)} MNOK`;
+                if (v3El) v3El.innerText = `${val3.toLocaleString("no-NO")} NOK`;
+
+                const bac = 940000000;
+                const eacBase = 948500000; // +8.5M YTD
+
+                const gebyrEffekt = val1 * 3800000;
+                const bufferEffekt = val2;
+                const byggesakEffekt = val3;
+
+                const totalTiltak = gebyrEffekt + bufferEffekt + byggesakEffekt;
+                const nyEac = Math.round(eacBase - totalTiltak);
+                const nyttAvvikNok = nyEac - bac;
+                const nyttAvvikPct = ((nyttAvvikNok / bac) * 100).toFixed(2);
+
+                if (eacEl) eacEl.innerText = `${nyEac.toLocaleString("no-NO")} NOK`;
+                if (varEl) {
+                    const sign = nyttAvvikNok >= 0 ? "+" : "";
+                    varEl.innerText = `${sign}${nyttAvvikNok.toLocaleString("no-NO")} NOK (${sign}${nyttAvvikPct} %)`;
+                    varEl.style.color = nyttAvvikNok <= 0 ? "var(--success-green)" : "var(--navy-dark)";
+                }
+                if (badgeEl) {
+                    if (nyttAvvikNok <= 0) {
+                        badgeEl.style.background = "#dcfce7";
+                        badgeEl.style.color = "#15803d";
+                        badgeEl.innerText = "🟢 SELVKOSTFOND I OVERVEKT (§ 8 balanse)";
+                    } else if (nyttAvvikNok <= 4000000) {
+                        badgeEl.style.background = "#dcfce7";
+                        badgeEl.style.color = "#15803d";
+                        badgeEl.innerText = "🟢 DEKKES AV SELVKOSTFOND (5-års utjevning)";
+                    } else {
+                        badgeEl.style.background = "#fef9c3";
+                        badgeEl.style.color = "#a16207";
+                        badgeEl.innerText = "🟡 GEBYRREGULATIV-JUSTERING PÅKREVD";
+                    }
+                }
+            } else if (currentSimulatorUnit === 'FINOPS') {
+                if (v1El) v1El.innerText = `${val1} lisenser`;
+                if (v2El) v2El.innerText = `${val2} ${val2 === 1 ? 'stilling' : 'stillinger'}`;
+                if (v3El) v3El.innerText = `${val3.toLocaleString("no-NO")} NOK`;
+
+                const bac = 460000000;
+                const eacBase = 463200000; // +3.2M konsulentmerforbruk
+
+                const lisensBesparelse = val1 * 10500;
+                const konsulentBesparelse = val2 * 900000;
+                const rpaBesparelse = val3;
+
+                const totalTiltak = lisensBesparelse + konsulentBesparelse + rpaBesparelse;
+                const nyEac = Math.round(eacBase - totalTiltak);
+                const nyttAvvikNok = nyEac - bac;
+                const nyttAvvikPct = ((nyttAvvikNok / bac) * 100).toFixed(2);
+
+                if (eacEl) eacEl.innerText = `${nyEac.toLocaleString("no-NO")} NOK`;
+                if (varEl) {
+                    const sign = nyttAvvikNok >= 0 ? "+" : "";
+                    varEl.innerText = `${sign}${nyttAvvikNok.toLocaleString("no-NO")} NOK (${sign}${nyttAvvikPct} %)`;
+                    varEl.style.color = nyttAvvikPct <= 0.5 ? "var(--success-green)" : "var(--navy-dark)";
+                }
+                if (badgeEl) {
+                    if (nyttAvvikPct <= 0.3) {
+                        badgeEl.style.background = "#dcfce7";
+                        badgeEl.style.color = "#15803d";
+                        badgeEl.innerText = "🟢 FINOPS-GEVINST REALISERT (Skykontroll)";
+                    } else {
+                        badgeEl.style.background = "#fef9c3";
+                        badgeEl.style.color = "#a16207";
+                        badgeEl.innerText = "🟡 KONSULENTPRESS REDUSERT";
+                    }
+                }
+            } else if (currentSimulatorUnit === 'FINANS') {
+                const niborDecimal = (val2 / 100);
+                const niborSign = val2 >= 0 ? "+" : "";
+                if (v1El) v1El.innerText = `${val1} %`;
+                if (v2El) v2El.innerText = `${niborSign}${niborDecimal.toFixed(2)} %-p`;
+                if (v3El) v3El.innerText = `${(val3 / 1000000).toFixed(0)} MNOK`;
+
+                const bac = 7250000000;
+                // Renteøkning på den usikrede flytende andelen av 7.25 mrd
+                const usikretGjeld = bac * (1 - (val1 / 100));
+                const renteOkningNok = usikretGjeld * (niborDecimal / 100);
+                const fondTrekk = val3;
+
+                const nyEac = Math.round(bac + renteOkningNok - fondTrekk);
+                const nyttAvvikNok = nyEac - bac;
+                const nyttAvvikPct = ((nyttAvvikNok / bac) * 100).toFixed(2);
+
+                // Disposisjonsfond andel beregning (Startsaldo 485M)
+                const restFond = 485000000 - Math.max(0, nyttAvvikNok);
+                const fondPct = ((restFond / bac) * 100).toFixed(2);
+
+                if (eacEl) eacEl.innerText = `${nyEac.toLocaleString("no-NO")} NOK`;
+                if (varEl) {
+                    const sign = nyttAvvikNok >= 0 ? "+" : "";
+                    varEl.innerText = `${sign}${nyttAvvikNok.toLocaleString("no-NO")} NOK (${sign}${nyttAvvikPct} %)`;
+                    varEl.style.color = fondPct >= 6.0 ? "var(--success-green)" : "var(--alert-red)";
+                }
+                if (badgeEl) {
+                    if (fondPct >= 6.0) {
+                        badgeEl.style.background = "#dcfce7";
+                        badgeEl.style.color = "#15803d";
+                        badgeEl.innerText = `🟢 BUFFER INTAKT: Disposisjonsfond ${fondPct} % (Krav: 6.0 %)`;
+                    } else {
+                        badgeEl.style.background = "var(--alert-red-bg)";
+                        badgeEl.style.color = "var(--alert-red)";
+                        badgeEl.innerText = `🔴 HANDLINGSREGEL BRUTT: Disposisjonsfond ${fondPct} % < 6.0 %`;
+                    }
+                }
             } else {
+                // SKOLE
                 if (v1El) v1El.innerText = `${val1} %`;
                 if (v2El) v2El.innerText = `${val2.toLocaleString("no-NO")} NOK`;
                 if (v3El) v3El.innerText = `${val3} ${val3 === 1 ? 'stilling' : 'stillinger'}`;
@@ -7023,6 +7587,30 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
                     p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (Inndekkes fullt ut innen Helse og mestrings ramme).`;
                 }
                 showToast("✓ Helse- og turnustiltak overført til Enhet 401 saksnotat!");
+            } else if (currentSimulatorUnit === 'VAR') {
+                if (p3) {
+                    p3.innerText = `A) VAR gebyrregulering ${v1} for 2027. B) Innløsning av P85 usikkerhetsbuffer (${v2}) på anleggskontrakter. C) Byggesaksgebyr-effektivisering (${v3}).`;
+                }
+                if (p4) {
+                    p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (Balanseres mot VAR-selvkostfond jf. § 8).`;
+                }
+                showToast("✓ VAR- og investeringstiltak overført til Enhet 301 saksnotat!");
+            } else if (currentSimulatorUnit === 'FINOPS') {
+                if (p3) {
+                    p3.innerText = `A) Sanering av ${v1} inaktive SaaS-lisenser. B) Konvertering av ${v2} konsulenter til faste stillinger. C) RPA-automatisering (${v3}).`;
+                }
+                if (p4) {
+                    p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (FinOps-gevinst realisert).`;
+                }
+                showToast("✓ FinOps- og konsulenttiltak overført til Enhet 501 saksnotat!");
+            } else if (currentSimulatorUnit === 'FINANS') {
+                if (p3) {
+                    p3.innerText = `A) Økning i rentesikringsgrad til ${v1} (rentebytteavtaler). B) Håndtering av NIBOR-stress (${v2}). C) Vern av disposisjonsfond (${v3}).`;
+                }
+                if (p4) {
+                    p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (Disposisjonsfond overholder 6.0 % handlingsregel).`;
+                }
+                showToast("✓ Konsernets finanstiltak overført til saksnotat!");
             } else {
                 if (p3) {
                     p3.innerText = `A) Vikarkutt ${v1} (innleiestopp). B) Innfrielse av NAV-refusjoner (${v2}). C) ${v3} faste fagarbeidere.`;
