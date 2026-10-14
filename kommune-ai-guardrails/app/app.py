@@ -373,6 +373,9 @@ DOCUMENTS_MENU = {
     ],
     "📊 Excel FP&A Finansielle Modeller (excel/)": [
         ("Kommune FAST Finansiell Modell 2026 (Excel)", WORKSPACE_ROOT / "excel" / "Kommune_FAST_Finansiell_Modell_2026.xlsx", "5-tabs FAST-standard FP&A modell med tilpasset avviksformatering og EOY-beregning"),
+        ("Project Controller EVM Modell 2026 (Excel)", WORKSPACE_ROOT / "excel" / "Kommune_Project_Controller_EVM_2026.xlsx", "5-tabs ISO 21508 Capex modell med S-kurve, PV/AC/CV/CPI/EAC og P85-usikkerhetsreserve"),
+        ("CFO Executive Konsernmodell 2026 (Excel)", WORKSPACE_ROOT / "excel" / "Kommune_CFO_Executive_Konsern_2026.xlsx", "5-tabs toppledermodell: Bevilgningsregnskap, bruttoprinsippet § 14-6 og rentefølsomhet"),
+        ("HR Lønn & Vikarmonitor 2026 (Excel)", WORKSPACE_ROOT / "excel" / "Kommune_HR_Lonn_Vikar_Monitor_2026.xlsx", "5-tabs bemanningsmonitor: Art 1010/1020/1090/1600, vikarstopp-kalkyle og NAV-etterslep"),
         ("FAST Finansiell Modellering Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_FPA_FINANCIAL_MODELLING_FAST.md", "FAST Standard, fargekoder og tab-struktur"),
         ("Excel MCP Server Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_AUTOMATION_AND_MCP_SERVER.md", "Model Context Protocol for Excel og Power Query M-kode"),
         ("Python in Excel Spec (Markdown)", WORKSPACE_ROOT / "excel" / "excel_kommune_spec_bundle_v1" / "EXCEL_PYTHON_AND_COPILOT_INTEGRATION.md", "=PY() funksjonen og Copilot i Excel")

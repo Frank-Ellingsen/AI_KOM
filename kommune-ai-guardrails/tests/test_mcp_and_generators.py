@@ -13,6 +13,9 @@ from kommune_ai_guardrails.mcp_server import (
 )
 from kommune_ai_guardrails.generators.powerpoint_generator import generate_bystyret_deck
 from kommune_ai_guardrails.generators.excel_fast_generator import generate_fast_excel_model
+from kommune_ai_guardrails.generators.excel_evm_generator import generate_project_controller_evm_model
+from kommune_ai_guardrails.generators.excel_cfo_generator import generate_cfo_executive_konsern_model
+from kommune_ai_guardrails.generators.excel_hr_generator import generate_hr_lonn_vikar_monitor_model
 from kommune_ai_guardrails.generators.word_saksfremlegg_generator import (
     generate_saksfremlegg_docx,
     generate_hop_notat_docx
@@ -62,11 +65,30 @@ def test_powerpoint_generator(tmp_path):
     assert Path(out).stat().st_size > 10000
 
 
-def test_excel_fast_generator(tmp_path):
-    target = tmp_path / "test_model.xlsx"
-    out = generate_fast_excel_model(output_path=str(target))
-    assert Path(out).exists()
-    assert Path(out).stat().st_size > 5000
+def test_excel_generators(tmp_path):
+    # 1. FAST Modell
+    m1 = tmp_path / "test_fast.xlsx"
+    out1 = generate_fast_excel_model(output_path=str(m1))
+    assert Path(out1).exists()
+    assert Path(out1).stat().st_size > 5000
+
+    # 2. EVM Modell
+    m2 = tmp_path / "test_evm.xlsx"
+    out2 = generate_project_controller_evm_model(output_path=str(m2))
+    assert Path(out2).exists()
+    assert Path(out2).stat().st_size > 5000
+
+    # 3. CFO Modell
+    m3 = tmp_path / "test_cfo.xlsx"
+    out3 = generate_cfo_executive_konsern_model(output_path=str(m3))
+    assert Path(out3).exists()
+    assert Path(out3).stat().st_size > 5000
+
+    # 4. HR Modell
+    m4 = tmp_path / "test_hr.xlsx"
+    out4 = generate_hr_lonn_vikar_monitor_model(output_path=str(m4))
+    assert Path(out4).exists()
+    assert Path(out4).stat().st_size > 5000
 
 
 def test_word_generators(tmp_path):
