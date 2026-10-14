@@ -365,8 +365,12 @@ st.sidebar.markdown(
 WORKSPACE_ROOT = PROJECT_ROOT.parent
 
 DOCUMENTS_MENU = {
-    "🖥️ PowerPoint Presentasjonsmodeller (powerpoint/)": [
-        ("Presentasjon Bystyret Tertialrapport 2026 (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Bystyret_Tertialrapport_2026.pptx", "Fullverdig 16:9 widescreen 7-slide dekk for Bystyret & Formannskapet jf. FT Visual Vocabulary"),
+    "🖥️ PowerPoint Styringsdekk & Presentasjoner (powerpoint/)": [
+        ("Presentasjon Bystyret: Tertialrapport 2026 (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Bystyret_Tertialrapport_2026.pptx", "Nivå 1: 16:9 widescreen 7-slide dekk for Bystyret & Formannskapet jf. FT Visual Vocabulary"),
+        ("Presentasjon Kommunedirektøren: Konsernstyring (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Kommunedirektoren_Konsernstyring_2026.pptx", "Nivå 2: 7-slides konsernoppfølging, strakstiltak ACT-01–04, likviditet og 6,8 mrd. gjeld"),
+        ("Presentasjon Oppvekst: Bemanningskontroll (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Oppvekst_Bemanningskontroll_2026.pptx", "Nivå 3: 7-slides sektorstyring med skolematrise, lærernorm og felles vikarring"),
+        ("Presentasjon Prosjektkontroll: Capex EVM (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Prosjektkontroll_Capex_EVM_2026.pptx", "Nivå 4: 7-slides ISO 21508 EVM investeringstilsyn, S-kurver og P85-usikkerhetsreserve"),
+        ("Presentasjon Enhet 202: Operativ Avviksrapport (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Enhet202_Operativ_Avviksrapport_2026.pptx", "Nivå 5: 7-slides 4-punkts operativ avviksrapport (MAL-AVVIK-EFFEKT-001) for rektor"),
         ("Bystyret & Formannskapet Decks Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_BYSTYRET_OG_FORM ANNSKAPET_DECKS.md", "Slidelayout, fargekoder og 7 standard lysbilder"),
         ("Visual Storytelling FT Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_VISUAL_STORYTELLING_FT.md", "Aksjonstitler, bullet charts og avviksbroer"),
         ("PowerPoint Automatisering Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_PRESENTASJONSSKAPING_AUTOMATION.md", "python-pptx arkitektur og generator")
