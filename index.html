@@ -1631,10 +1631,203 @@
             font-size: 12px;
         }
 
-        .guide-mini-card strong {
-            color: var(--navy-dark);
+        /* ==========================================================================
+           UX ENHANCEMENTS: COMMAND PALETTE, PRESENTASJON, TILTAKSSIMULATOR & TOAST
+           ========================================================================== */
+        /* Command Palette (Ctrl+K) */
+        .cmd-palette-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(2px);
+            z-index: 100000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 10vh;
+        }
+
+        .cmd-palette-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            width: 90%;
+            max-width: 640px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: cmdFadeIn 0.15s ease-out;
+        }
+
+        @keyframes cmdFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cmd-palette-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            gap: 10px;
+            background: #fafafa;
+        }
+
+        .cmd-palette-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            font-family: var(--font-sans);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .cmd-shortcut-hint {
+            font-size: 10px;
+            background: #e2e8f0;
+            color: var(--text-secondary);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        .cmd-palette-list {
+            max-height: 380px;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+
+        .cmd-palette-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background 0.1s;
+            border-left: 3px solid transparent;
+        }
+
+        .cmd-palette-item:hover, .cmd-palette-item.active {
+            background: #f1f5f9;
+            border-left-color: var(--navy-dark);
+        }
+
+        .cmd-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cmd-item-icon {
+            font-size: 14px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .cmd-item-label {
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .cmd-item-badge {
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            background: #f1f5f9;
+            padding: 2px 7px;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Presentation / Møtemodus */
+        body.presentation-mode {
+            padding: 16px 32px;
+            background-color: #ffffff;
+        }
+
+        body.presentation-mode .hub-sidebar,
+        body.presentation-mode .monthly-cycle-banner,
+        body.presentation-mode .sidebar-toggle-btn,
+        body.presentation-mode #userguide-modal,
+        body.presentation-mode #rag-seksjon,
+        body.presentation-mode .chat-drawer-toggle-btn {
+            display: none !important;
+        }
+
+        body.presentation-mode .hub-container {
             display: block;
-            margin-bottom: 2px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        body.presentation-mode .hub-header {
+            border-bottom: 3px solid var(--navy-dark);
+            padding-bottom: 14px;
+        }
+
+        body.presentation-mode .exit-pres-banner {
+            display: flex !important;
+        }
+
+        .exit-pres-banner {
+            display: none;
+            position: fixed;
+            top: 14px;
+            right: 20px;
+            z-index: 99999;
+            background: var(--navy-dark);
+            color: #ffffff;
+            padding: 7px 16px;
+            border-radius: 4px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            font-size: 12px;
+            font-weight: 600;
+            gap: 8px;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .exit-pres-banner:hover {
+            background: #112240;
+        }
+
+        /* Interaktiv Tiltakssimulator */
+        .sim-control-group {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 10px 12px;
+            border-radius: 4px;
+        }
+
+        /* Toast-varsel */
+        #hub-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--navy-dark);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 4px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: toastSlideUp 0.2s ease-out;
+        }
+
+        @keyframes toastSlideUp {
+            from { transform: translateY(12px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
     </style>
@@ -1791,6 +1984,12 @@
                 </span>
             </div>
             <div style="display:flex; gap:8px; align-items:center;">
+                <button class="btn btn-sm" onclick="openCommandPalette()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Hurtigmeny for søk, enheter og maler (Ctrl+K)">
+                    ⚡ Søk (Ctrl+K)
+                </button>
+                <button class="btn btn-sm" onclick="togglePresentationMode()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Veksle møte-/presentasjonsmodus for storskjerm (Tast P)">
+                    🖥️ Møtemodus (P)
+                </button>
                 <button class="btn btn-sm" onclick="openUserGuide('MANED')" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;">
                     📖 Månedsveileder
                 </button>
@@ -2275,6 +2474,12 @@
                 <button class="btn btn-sm btn-primary" onclick="approveReport4()">
                     🔒 Godkjenn & Generer Saksnotat (SHA-256)
                 </button>
+                <button class="btn btn-sm" onclick="copyToFramsiktFormat()" style="background:#f0f9ff; border-color:#0284c7; color:#0369a1; font-weight:600;" title="Kopier 4-punkts avvikskommentar ferdig formatert for Framsikt EPM">
+                    📋 Kopier til Framsikt
+                </button>
+                <button class="btn btn-sm" onclick="copyTriageTableAsTSV()" title="Kopier tallgrunnlaget som tabulatorseparert tekst for Excel">
+                    📊 Kopier Excel TSV
+                </button>
                 <button class="btn btn-sm" onclick="previewDocument('RAPPORT_MONSTER')">
                     📄 Forhåndsvis Mal
                 </button>
@@ -2284,6 +2489,68 @@
             </div>
             <div id="rep4-sign-msg" style="display: none; margin-top: 6px; font-size: 11px; color: var(--success-green); font-family: var(--font-mono);">
                 ✓ Saksnotat godkjent og forseglet! SHA256: e3b0c44298fc1c14...
+            </div>
+        </div>
+
+        <!-- INTERAKTIV TILTAKSSIMULATOR (MINI-EAC KALKULATOR) -->
+        <div class="triage-card" id="tiltak-simulator-card" style="grid-column: 1 / -1; border-left: 3px solid var(--accent-blue); background: #ffffff;">
+            <div class="section-header" style="margin-bottom: 8px;">
+                <span>🎛️ Interaktiv Tiltakssimulator (Hva-hvis EAC for Enhet 202)</span>
+                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Beslutningsstøtte</span>
+            </div>
+            <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 12px;">
+                Simuler strakstiltak (innleiekutt, NAV-refusjoner og faste ansettelser) for å se direkte effekt på årsavslutning (EAC) og budsjettbalanse jf. Kommuneloven § 14-5.
+            </p>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 12px;">
+                <div class="sim-control-group">
+                    <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between;">
+                        <span>Vikarreduksjon (innleiekutt):</span>
+                        <span id="sim-vikar-val" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-blue);">20 %</span>
+                    </div>
+                    <input type="range" id="sim-vikar-slider" min="0" max="60" value="20" step="5" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
+                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;">
+                        <span>0 %</span><span>30 %</span><span>60 %</span>
+                    </div>
+                </div>
+                <div class="sim-control-group">
+                    <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between;">
+                        <span>NAV-refusjoner innfridd (art 1600):</span>
+                        <span id="sim-nav-val" style="font-family:var(--font-mono); font-weight:700; color:var(--success-green);">410 000 NOK</span>
+                    </div>
+                    <input type="range" id="sim-nav-slider" min="0" max="410000" value="410000" step="50000" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
+                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;">
+                        <span>0 kr</span><span>200k</span><span>410k</span>
+                    </div>
+                </div>
+                <div class="sim-control-group">
+                    <div style="font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between;">
+                        <span>Faste stillinger (erstatter vikar):</span>
+                        <span id="sim-fast-val" style="font-family:var(--font-mono); font-weight:700; color:var(--navy-dark);">2 stillinger</span>
+                    </div>
+                    <input type="range" id="sim-fast-slider" min="0" max="4" value="2" step="1" oninput="runTiltakSimulation()" style="width:100%; margin-top:6px;">
+                    <div style="font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between; margin-top:2px;">
+                        <span>0</span><span>2</span><span>4</span>
+                    </div>
+                </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid var(--border-light); padding:10px 14px; border-radius:3px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Simulert Årseffekt (EAC)</div>
+                    <div style="font-size:15px; font-family:var(--font-mono); font-weight:700; color:var(--navy-dark);" id="sim-eac-result">50 939 572 NOK</div>
+                </div>
+                <div>
+                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Avvik mot Ramme (BAC: 50.34M)</div>
+                    <div style="font-size:15px; font-family:var(--font-mono); font-weight:700;" id="sim-var-result">+600 000 NOK (+1.19 %)</div>
+                </div>
+                <div>
+                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">§ 14-5 Status</div>
+                    <span class="status-badge" id="sim-status-badge" style="background:#dcfce7; color:#15803d; font-size:11px; font-weight:700;">
+                        🟢 LOVLIG (&lt; 2.0 % terskel)
+                    </span>
+                </div>
+                <button class="btn btn-sm btn-primary" onclick="applySimulationToReport4()" title="Overfør de simulerte tallene til 4-punkts notatet">
+                    Overfør til Saksnotat ↵
+                </button>
             </div>
         </div>
     </div>
@@ -3884,6 +4151,137 @@ SWITCH(
 
     </main>
 </div>
+
+    <!-- EXIT PRESENTATION MODE FLOATING BANNER -->
+    <div class="exit-pres-banner" onclick="togglePresentationMode()" title="Trykk for å avslutte møtemodus">
+        <span>✕ Avslutt Møtemodus (Tast P eller Esc)</span>
+    </div>
+
+    <!-- COMMAND PALETTE (CTRL + K) -->
+    <div class="cmd-palette-overlay" id="cmd-palette-modal" onclick="closeCommandPaletteOnBackdrop(event)" role="dialog" aria-modal="true" aria-label="Hurtigmeny og kommandopalett">
+        <div class="cmd-palette-box">
+            <div class="cmd-palette-header">
+                <span style="font-size:16px;">⚡</span>
+                <input type="text" id="cmd-palette-input" class="cmd-palette-input" placeholder="Søk handling, enhet (f.eks. 202), lovparagraf (§ 14-5), mal..." oninput="filterCommandPalette(this.value)" autocomplete="off">
+                <span class="cmd-shortcut-hint">ESC for å lukke</span>
+            </div>
+            <div class="cmd-palette-list" id="cmd-palette-list">
+                <div class="cmd-palette-item" onclick="executeCommand('ENHET_202')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🔴</span>
+                        <div>
+                            <div class="cmd-item-label">Enhet 202 Lovisenlev Skole</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Kritisk merforbruk vikarer (+1.24M / +12.4 %)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Triage</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('ENHET_401')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🟠</span>
+                        <div>
+                            <div class="cmd-item-label">Enhet 401 Helse & Mestring</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Advarsel overtid & bemanning (+850k / +6.1 %)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Triage</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('RAG_14_5')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">⚖️</span>
+                        <div>
+                            <div class="cmd-item-label">Kommuneloven § 14-5</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Budsjettbalanse, inndekning og merforbruksterskel</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Glass-Box RAG</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('RAG_14_6')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">⚖️</span>
+                        <div>
+                            <div class="cmd-item-label">Kommuneloven § 14-6</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Bruttoprinsippet for inntekter og utgifter</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Glass-Box RAG</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('MAL_SAKSFREMLEGG')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📄</span>
+                        <div>
+                            <div class="cmd-item-label">Mal: Politisk Saksfremlegg Budsjettendring</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">For Formannskapet og Bystyret (Nivå 1 & 2)</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Malbank</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('MAL_4PUNKT')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📄</span>
+                        <div>
+                            <div class="cmd-item-label">Mal: 4-Punkts Avviks- og Effektprognose</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Standardisert mønster for tertialrapportering</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Malbank</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('MAL_HTA')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🤝</span>
+                        <div>
+                            <div class="cmd-item-label">Mal: HTA § 4 Drøftingsprotokoll</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Partssamarbeid ved vikar- og turnustiltak</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Malbank</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('COPY_FRAMSIKT')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📋</span>
+                        <div>
+                            <div class="cmd-item-label">Kopier til Framsikt EPM</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Legg ferdig formatert 4-punkts avviksnotat i utklippstavlen</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Eksport</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('COPY_TSV')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📊</span>
+                        <div>
+                            <div class="cmd-item-label">Kopier som Excel TSV</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Tabulatorseparert tallgrunnlag for regneark</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Eksport</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('TOGGLE_PRES')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🖥️</span>
+                        <div>
+                            <div class="cmd-item-label">Veksle Møtemodus (Storskjerm)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Fokusmodus for Formannskapet og Ledergruppen</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Visning (P)</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('CHAT_AI')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">💬</span>
+                        <div>
+                            <div class="cmd-item-label">Åpne Gemini Flash MCP Assistent</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Spør AI-motoren om KOSTRA, avvik eller juss</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">AI Chat</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="hub-toast"></div>
 
     <!-- BRUKERGUIDE & CONTROLLER-HÅNDBOK MODAL -->
     <div class="modal-overlay" id="userguide-modal" role="dialog" aria-modal="true" aria-labelledby="userguide-modal-title" onclick="closeUserGuideOnBackdrop(event)">
@@ -5687,11 +6085,252 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             contentArea.innerHTML = GUIDE_PAGES[tabKey] || GUIDE_PAGES["START"];
         }
 
-        // Global tastaturnavigasjon (Escape lukker åpne modaler og skuffer)
+        /* ==========================================================================
+           UX ENHANCEMENTS: COMMAND PALETTE, FRAMSIKT/TSV EXPORT, SIMULATOR & PRES.
+           ========================================================================== */
+
+        // 1. Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById("hub-toast");
+            if (!toast) return;
+            toast.innerText = msg;
+            toast.style.display = "flex";
+            clearTimeout(window._toastTimeout);
+            window._toastTimeout = setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+        }
+
+        // 2. Command Palette (Ctrl+K)
+        function openCommandPalette() {
+            const modal = document.getElementById("cmd-palette-modal");
+            if (modal) {
+                modal.style.display = "flex";
+                const inp = document.getElementById("cmd-palette-input");
+                if (inp) {
+                    inp.value = "";
+                    filterCommandPalette("");
+                    setTimeout(() => inp.focus(), 50);
+                }
+            }
+        }
+
+        function closeCommandPalette() {
+            const modal = document.getElementById("cmd-palette-modal");
+            if (modal) modal.style.display = "none";
+        }
+
+        function closeCommandPaletteOnBackdrop(e) {
+            if (e.target.id === "cmd-palette-modal") {
+                closeCommandPalette();
+            }
+        }
+
+        function filterCommandPalette(query) {
+            const q = query.toLowerCase().trim();
+            const items = document.querySelectorAll("#cmd-palette-list .cmd-palette-item");
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = (!q || text.includes(q)) ? "flex" : "none";
+            });
+        }
+
+        function executeCommand(cmd) {
+            closeCommandPalette();
+            if (cmd === 'ENHET_202') {
+                loadTriageUnit('ENHET_202');
+                const el = document.getElementById("triage-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("📍 Viser Enhet 202 Lovisenlev Skole i avvikstriagen");
+            } else if (cmd === 'ENHET_401') {
+                loadTriageUnit('ENHET_401');
+                const el = document.getElementById("triage-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                showToast("📍 Viser Enhet 401 Helse & Mestring i avvikstriagen");
+            } else if (cmd === 'RAG_14_5') {
+                const inp = document.getElementById("rag-input");
+                if (inp) inp.value = "Kommuneloven § 14-5";
+                executeMockRAG();
+                const el = document.getElementById("rag-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'RAG_14_6') {
+                const inp = document.getElementById("rag-input");
+                if (inp) inp.value = "Kommuneloven § 14-6 bruttoprinsippet";
+                executeMockRAG();
+                const el = document.getElementById("rag-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'MAL_SAKSFREMLEGG') {
+                previewDocument('SAKSFREMLEGG');
+            } else if (cmd === 'MAL_4PUNKT') {
+                previewDocument('RAPPORT_MONSTER');
+            } else if (cmd === 'MAL_HTA') {
+                previewDocument('HTA_PROTOKOLL');
+            } else if (cmd === 'COPY_FRAMSIKT') {
+                copyToFramsiktFormat();
+            } else if (cmd === 'COPY_TSV') {
+                copyTriageTableAsTSV();
+            } else if (cmd === 'TOGGLE_PRES') {
+                togglePresentationMode();
+            } else if (cmd === 'CHAT_AI') {
+                toggleChatDrawer();
+            }
+        }
+
+        // 3. Framsikt & Excel TSV Eksport
+        function copyToFramsiktFormat() {
+            const title = document.getElementById("rep4-active-title") ? document.getElementById("rep4-active-title").innerText : "Enhet 202";
+            const p1 = document.getElementById("rep4-p1") ? document.getElementById("rep4-p1").innerText : "";
+            const p2 = document.getElementById("rep4-p2") ? document.getElementById("rep4-p2").innerText : "";
+            const p3 = document.getElementById("rep4-p3") ? document.getElementById("rep4-p3").innerText : "";
+            const p4 = document.getElementById("rep4-p4") ? document.getElementById("rep4-p4").innerText : "";
+
+            const framsiktText = 
+`=== FRAMSIKT EPM AVVIKSKOMMENTAR ===
+Enhet: ${title}
+Saksbehandler: Frank Ellingsen (Senior Controller)
+Dato: ${new Date().toISOString().slice(0, 10)}
+Rapporteringstermin: 2. Tertial 2026
+
+1. AVVIK HITTIL I ÅR (YTD):
+${p1}
+
+2. ÅRSAK TIL AVVIK:
+${p2}
+
+3. FORESLÅTTE TILTAK & HANDLINGSPLAN:
+${p3}
+
+4. KVANTIFISERT EFFEKT & EOY BALANSE:
+${p4}
+
+Internkontroll: Vurdert mot Kommuneloven § 14-5 & § 14-6 (SHA-256 forseglet).`;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(framsiktText).then(() => {
+                    showToast("📋 4-punkts avviksnotat kopiert i Framsikt EPM-format!");
+                });
+            } else {
+                showToast("✓ Framsikt-tekst generert.");
+            }
+        }
+
+        function copyTriageTableAsTSV() {
+            const tsvData = 
+`Enhet\tHittil Faktisk (NOK)\tPeriodisert Budsjett (NOK)\tAvvik (NOK)\tAvvik (%)\tStatus
+Enhet 202 Lovisenlev Skole\t11240000,00\t10000000,00\t1240000,00\t12,4 %\tKRITISK
+Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
+14 Øvrige Enheter (Snitt)\t165400000,00\t166200000,00\t-800000,00\t-0,5 %\tNORMAL`;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(tsvData).then(() => {
+                    showToast("📊 Regnskapstall kopiert som Excel TSV (tabulatorseparert med norsk komma)!");
+                });
+            }
+        }
+
+        // 4. Interaktiv Tiltakssimulator (Mini-EAC for Enhet 202)
+        function runTiltakSimulation() {
+            const vikarSlider = document.getElementById("sim-vikar-slider");
+            const navSlider = document.getElementById("sim-nav-slider");
+            const fastSlider = document.getElementById("sim-fast-slider");
+            if (!vikarSlider || !navSlider || !fastSlider) return;
+
+            const vikarPct = parseInt(vikarSlider.value, 10);
+            const navRefund = parseInt(navSlider.value, 10);
+            const fasteStillinger = parseInt(fastSlider.value, 10);
+
+            document.getElementById("sim-vikar-val").innerText = `${vikarPct} %`;
+            document.getElementById("sim-nav-val").innerText = `${navRefund.toLocaleString("no-NO")} NOK`;
+            document.getElementById("sim-fast-val").innerText = `${fasteStillinger} ${fasteStillinger === 1 ? 'stilling' : 'stillinger'}`;
+
+            const bac = 50339572;
+            const eacBase = 52189572;
+            const vikarGjenstaende = 2200000;
+
+            const vikarBesparelse = vikarGjenstaende * (vikarPct / 100);
+            const fastNettoEffekt = fasteStillinger * 90000; // Netto besparelse fast ansatt vs dyr vikar
+
+            const totalTiltaksEffekt = vikarBesparelse + navRefund + fastNettoEffekt;
+            const nyEac = Math.round(eacBase - totalTiltaksEffekt);
+            const nyttAvvikNok = nyEac - bac;
+            const nyttAvvikPct = ((nyttAvvikNok / bac) * 100).toFixed(2);
+
+            const eacEl = document.getElementById("sim-eac-result");
+            const varEl = document.getElementById("sim-var-result");
+            const badgeEl = document.getElementById("sim-status-badge");
+
+            if (eacEl) eacEl.innerText = `${nyEac.toLocaleString("no-NO")} NOK`;
+            if (varEl) {
+                const sign = nyttAvvikNok >= 0 ? "+" : "";
+                varEl.innerText = `${sign}${nyttAvvikNok.toLocaleString("no-NO")} NOK (${sign}${nyttAvvikPct} %)`;
+                varEl.style.color = nyttAvvikPct > 2.0 ? "var(--alert-red)" : "var(--navy-dark)";
+            }
+            if (badgeEl) {
+                if (nyttAvvikPct <= 2.0) {
+                    badgeEl.style.background = "#dcfce7";
+                    badgeEl.style.color = "#15803d";
+                    badgeEl.innerText = `🟢 LOVLIG (< 2.0 % terskel jf. § 14-5)`;
+                } else {
+                    badgeEl.style.background = "var(--alert-red-bg)";
+                    badgeEl.style.color = "var(--alert-red)";
+                    badgeEl.innerText = `🔴 KRITISK MERFORBRUK (${nyttAvvikPct} % > 2.0 %)`;
+                }
+            }
+        }
+
+        function applySimulationToReport4() {
+            const vikarPct = document.getElementById("sim-vikar-val") ? document.getElementById("sim-vikar-val").innerText : "20 %";
+            const navVal = document.getElementById("sim-nav-val") ? document.getElementById("sim-nav-val").innerText : "410 000 NOK";
+            const fastVal = document.getElementById("sim-fast-val") ? document.getElementById("sim-fast-val").innerText : "2 stillinger";
+            const varResult = document.getElementById("sim-var-result") ? document.getElementById("sim-var-result").innerText : "+600 000 NOK (+1.19 %)";
+
+            const p3 = document.getElementById("rep4-p3");
+            const p4 = document.getElementById("rep4-p4");
+
+            if (p3) {
+                p3.innerText = `A) Vikarkutt ${vikarPct} (innleiestopp). B) Innfrielse av NAV-refusjoner (${navVal}). C) ${fastVal} faste fagarbeidere.`;
+            }
+            if (p4) {
+                p4.innerHTML = `Simulert årsprognose: Revidert avvik <strong>${varResult}</strong> mot ramme (Balanse jf. § 14-5).`;
+            }
+            showToast("✓ Simulerte tiltak overført til 4-punkts saksnotat!");
+        }
+
+        // 5. Presentasjons- og Møtemodus
+        function togglePresentationMode() {
+            document.body.classList.toggle("presentation-mode");
+            const isPres = document.body.classList.contains("presentation-mode");
+            showToast(isPres ? "🖥️ Møtemodus aktivert (Trykk P eller Esc for å avslutte)" : "Møtemodus avsluttet");
+        }
+
+        // 6. Global tastaturnavigasjon (Escape, Ctrl+K, P)
         document.addEventListener("keydown", (e) => {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+            const isInputFocused = (activeTag === "input" || activeTag === "textarea" || activeTag === "select");
+
+            // Ctrl + K eller Cmd + K: Åpne Command Palette
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+                e.preventDefault();
+                openCommandPalette();
+                return;
+            }
+
+            // P (når ikke i inputfelt): Veksle Møtemodus
+            if (e.key.toLowerCase() === "p" && !isInputFocused && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                e.preventDefault();
+                togglePresentationMode();
+                return;
+            }
+
+            // Escape: Lukk alle åpne overlegg
             if (e.key === "Escape") {
                 closeModal();
                 closeUserGuide();
+                closeCommandPalette();
+                if (document.body.classList.contains("presentation-mode")) {
+                    document.body.classList.remove("presentation-mode");
+                    showToast("Møtemodus avsluttet");
+                }
                 const drawer = document.getElementById("chat-drawer");
                 if (drawer && drawer.classList.contains("open")) {
                     drawer.classList.remove("open");
