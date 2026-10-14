@@ -315,6 +315,25 @@ st.sidebar.markdown(
 WORKSPACE_ROOT = PROJECT_ROOT.parent
 
 DOCUMENTS_MENU = {
+    "🎯 AI-Implementeringspakke for Økonomi (ai-implementeringspakke-okonomi/)": [
+        ("00 Masteroversikt & Struktur", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "00_INNHOLD_OG_OVERSIKT.md", "Helhetlig masterveileder for AI i kommunal økonomistyring"),
+        ("Modul 1: Konsept & Beslutningsgrunnlag", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "01_MODUL_1_KONSEPT_OG_BESLUTNINGSGRUNNLAG.md", "Teknologilag, verdipotensial og forankring i KS/Digdir"),
+        ("Modul 2: AI Readiness & Modenhet (L1-L5)", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "02_MODUL_2_AI_READINESS_OG_MATURITY_FRAMEWORK.md", "9-dimensjonal matrise for organisatorisk AI-modenhet"),
+        ("Modul 3: Governance, Etikk, GDPR & EU AI Act", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "03_MODUL_3_GOVERNANCE_ETIKK_OG_GDPR.md", "Deployer-krav, FRIA, DPIA og menneskelig kontroll"),
+        ("Modul 4: Enterprise Målarkitektur & RAG", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "04_MODUL_4_ENTERPRISE_MAALARKITEKTUR_OG_RAG.md", "AI Gateway, PII-vask, modelluavhengighet og dataflyt"),
+        ("Modul 5: Use-Case-Prioritering & Pilotmetodikk", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "05_MODUL_5_USE_CASE_PRIORITERING_OG_PILOTMETODIKK.md", "Netto prioriteringsformel, Bølge 1-3 og Gate G3"),
+        ("Modul 6: Skalering, Gevinst & Roadmap Kristiansand", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "06_MODUL_6_SKALERING_GEVINST_OG_ROADMAP_KRISTIANSAND.md", "Sekvensert 2025-2030 roadmap og FinOps"),
+        ("07 Juridisk Sjekkliste (FRIA & DPIA)", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "07_JURIDISK_SJEKKLISTE_FRIA_DPIA.md", "5-trinns operasjonell juridisk screening og sjekkliste"),
+        ("08 Gevinstmodell & Finansiell Håndbok", WORKSPACE_ROOT / "ai-implementeringspakke-okonomi" / "08_GEVINSTMODELL_OG_FINANSIELL_HANDBOK.md", "ROI-kalkulator, parametere og gevinstutaksplan")
+    ],
+    "⚙️ MLOps & LLMOps Rammeverk (mlops-implementeringspakke/)": [
+        ("01 MLOps Oversikt & Prinsipper", WORKSPACE_ROOT / "mlops-implementeringspakke" / "01_MLOps_Oversikt_og_Prinsipper.md", "Kjørneprinsipper, DevOps vs MLOps vs LLMOps og livsløp for kommunale AI-modeller"),
+        ("02 Teknisk MLOps-Arkitektur", WORKSPACE_ROOT / "mlops-implementeringspakke" / "02_MLOps_Arkitektur_og_Komponenter.md", "Enterprise MLOps Control Plane, AI Gateway, Model Registry og CI/CD"),
+        ("03 Observability, Drift & FinOps", WORKSPACE_ROOT / "mlops-implementeringspakke" / "03_MLOps_Observability_og_Drift.md", "Overvåking av datadrift, concept drift, prompt drift, token caching og FinOps"),
+        ("04 Governance, AI Act & Sikkerhet", WORKSPACE_ROOT / "mlops-implementeringspakke" / "04_MLOps_Governance_og_Sikkerhet.md", "EU AI Act deployer-krav, operativ rollestruktur, audit logging og kill-switch"),
+        ("05 Testing, Ground Truth & Kvalitet", WORKSPACE_ROOT / "mlops-implementeringspakke" / "05_MLOps_Test_og_Kvalitetssikring.md", "Test-pyramide, Ground Truth fasitsett og Gate G3 akseptkriterier"),
+        ("06 Kravspesifikasjon & Anbudsmal", WORKSPACE_ROOT / "mlops-implementeringspakke" / "06_MLOps_Anbud_og_Innkjøpsmal.md", "A- og B-kravmatrise (K-01 til K-10), datasuverenitet og anbudskontrakt")
+    ],
     "📊 Ledelsesrapporter & Diagrammer (reports/)": [
         ("Net Zero Waterfall Avviksanalyse (PNG)", WORKSPACE_ROOT / "reports" / "chart_netzero_waterfall.png", "Visuell avviksanalyse fra budsjett til net zero sluttavvik"),
         ("Bo og Miljø Månedlig Avviksprofil (PNG)", WORKSPACE_ROOT / "reports" / "chart_bomiljo_monthly.png", "Månedlig budsjett vs regnskapsavvik for enhet 5200"),

@@ -104,6 +104,17 @@ def parse_markdown_file(file_path: Path) -> list[dict[str, str]]:
 
     sec_regex = re.compile(r"§\s*[\d]+(?:-[\d]+)?(?:[a-z])?", re.IGNORECASE)
 
+    # Identifiser meningsfull kategori
+    lower_name = file_path.name.lower()
+    if "mlops" in lower_name:
+        category = "MLOps-Rammeverk"
+    elif "modul" in lower_name or "aipakke" in lower_name or "innhold" in lower_name or "fria" in lower_name or "gevinstmodell" in lower_name:
+        category = "AI-Implementeringspakke"
+    elif "aarshjul" in lower_name:
+        category = "Årshjul og Veiledere"
+    else:
+        category = "Kommunale Veiledere"
+
     for line in lines:
         stripped = line.strip()
         if stripped.startswith("#"):
@@ -112,7 +123,7 @@ def parse_markdown_file(file_path: Path) -> list[dict[str, str]]:
                 if content and len(content) > 30:
                     chunks.append({
                         "source_file": file_path.name,
-                        "category": "Årshjul og Veiledere",
+                        "category": category,
                         "section_ref": current_ref,
                         "title": current_title,
                         "content": content,
@@ -135,7 +146,7 @@ def parse_markdown_file(file_path: Path) -> list[dict[str, str]]:
         if content and len(content) > 30:
             chunks.append({
                 "source_file": file_path.name,
-                "category": "Årshjul og Veiledere",
+                "category": category,
                 "section_ref": current_ref,
                 "title": current_title,
                 "content": content,
@@ -253,8 +264,9 @@ def ingest_all(
     db_path: Path | None = None,
     embedding_model: Any | None = None,
     progress_callback: Any | None = None,
+    force_reindex: bool = False,
 ) -> int:
-    """Leser inn alle råfiler fra data_dir og lagrer i db_path."""
+    """Leser inn råfiler fra data_dir og oppdaterer SQLite-databasen inkrementelt eller fullt."""
     settings = get_settings()
     base_dir = Path(__file__).resolve().parents[2]
     
@@ -280,17 +292,74 @@ def ingest_all(
         conn.enable_load_extension(False)
 
     init_rag_schema(conn)
-
-    # Finn alle filer
-    all_chunks: list[dict[str, str]] = []
-    print(f"📂 Søker etter dokumenter i {data_dir}...")
-    if progress_callback:
-        progress_callback({"step": "scanning", "message": f"Søker etter dokumenter i {data_dir.name}..."})
+    cursor = conn.cursor()
 
     raw_files = [f for f in data_dir.glob("*") if f.is_file()]
     total_files = len(raw_files)
 
-    for idx, file_path in enumerate(raw_files, start=1):
+    # Undersøk eksisterende kilder
+    existing_sources = set(r[0] for r in cursor.execute("SELECT DISTINCT source_file FROM legal_chunks").fetchall())
+    
+    # Håndter slettede filer dersom noen ble fjernet fra data_dir
+    current_names = {f.name for f in raw_files}
+    deleted_sources = existing_sources - current_names
+    if deleted_sources:
+        for ds in deleted_sources:
+            ids = [r[0] for r in cursor.execute("SELECT id FROM legal_chunks WHERE source_file = ?", (ds,)).fetchall()]
+            if ids:
+                if sqlite_vec is not None:
+                    cursor.executemany("DELETE FROM vec_legal_chunks WHERE chunk_id = ?", [(i,) for i in ids])
+                cursor.executemany("DELETE FROM legal_fts WHERE rowid = ?", [(i,) for i in ids])
+                cursor.execute("DELETE FROM legal_chunks WHERE source_file = ?", (ds,))
+        conn.commit()
+        print(f"🧹 Fjernet {len(deleted_sources)} utgåtte kilder fra databasen.")
+
+    # Velg hvilke filer som skal indekseres
+    if force_reindex or not existing_sources:
+        files_to_process = raw_files
+        print("🔄 Kjører full re-indeksering av alle dokumenter...")
+        cursor.execute("DELETE FROM legal_chunks")
+        cursor.execute("DELETE FROM legal_fts")
+        if sqlite_vec is not None:
+            cursor.execute("DELETE FROM vec_legal_chunks")
+        conn.commit()
+    else:
+        files_to_process = [f for f in raw_files if f.name not in existing_sources]
+        print(f"⚡ Inkrementell oppdatering: {len(files_to_process)} nye filer å indeksere (av {total_files} totalt).")
+
+    # Hvis ingen nye filer, kjør eventuelle kategori-oppdateringer og returner
+    if not files_to_process:
+        cursor.execute("""
+            UPDATE legal_chunks SET category = 'AI-Implementeringspakke'
+            WHERE category = 'Årshjul og Veiledere'
+            AND (source_file LIKE '%MODUL%' OR source_file LIKE '%INNHOLD%' OR source_file LIKE '%FRIA%' OR source_file LIKE '%GEVINSTMODELL%')
+        """)
+        cursor.execute("""
+            UPDATE legal_chunks SET category = 'MLOps-Rammeverk'
+            WHERE category != 'MLOps-Rammeverk'
+            AND (source_file LIKE '%MLOps%')
+        """)
+        conn.commit()
+        total_chunks = cursor.execute("SELECT COUNT(*) FROM legal_chunks").fetchone()[0]
+        print(f"✅ Vektordatabasen er allerede oppdatert ({total_chunks} biter fra {len(existing_sources)} kilder).")
+        if progress_callback:
+            progress_callback({
+                "step": "done",
+                "total_chunks": total_chunks,
+                "total_files": total_files,
+                "db_path": str(db_path),
+                "message": f"Vektordatabasen er fullstendig synkronisert ({total_chunks} biter fra {total_files} dokumenter)."
+            })
+        conn.close()
+        return total_chunks
+
+    # Finn biter fra nye filer
+    new_chunks: list[dict[str, str]] = []
+    print(f"📂 Parser {len(files_to_process)} nye dokumenter...")
+    if progress_callback:
+        progress_callback({"step": "scanning", "message": f"Søker etter nye dokumenter i {data_dir.name}..."})
+
+    for idx, file_path in enumerate(files_to_process, start=1):
         ext = file_path.suffix.lower()
         parsed: list[dict[str, str]] = []
         if ext == ".md":
@@ -301,7 +370,7 @@ def ingest_all(
             parsed = parse_pdf_file(file_path)
 
         if parsed:
-            all_chunks.extend(parsed)
+            new_chunks.extend(parsed)
             print(f"  ✓ {file_path.name}: {len(parsed)} biter")
 
         if progress_callback:
@@ -309,42 +378,32 @@ def ingest_all(
                 "step": "parsing",
                 "file": file_path.name,
                 "current_file_idx": idx,
-                "total_files": total_files,
-                "chunks_found": len(all_chunks),
-                "message": f"Parser [{idx}/{total_files}] {file_path.name} ({len(parsed)} biter)"
+                "total_files": len(files_to_process),
+                "chunks_found": len(new_chunks),
+                "message": f"Parser [{idx}/{len(files_to_process)}] {file_path.name} ({len(parsed)} biter)"
             })
 
-    if not all_chunks:
-        print("⚠️ Ingen dokumentbiter funnet for indeksering.")
-        if progress_callback:
-            progress_callback({"step": "error", "message": "Ingen dokumentbiter funnet for indeksering."})
+    if not new_chunks:
+        print("⚠️ Ingen nye dokumentbiter funnet.")
+        total_chunks = cursor.execute("SELECT COUNT(*) FROM legal_chunks").fetchone()[0]
         conn.close()
-        return 0
+        return total_chunks
 
-    print(f"\n🔢 Totalt {len(all_chunks)} biter klare for embedding og indeksering.")
+    print(f"\n🔢 {len(new_chunks)} nye biter klare for lagring og semantisk embedding.")
 
-    # Last inn embedding-modell dersom den ikke er oppgitt
+    # Last inn embedding-modell
     if embedding_model is None and SentenceTransformer is not None:
         print("⏳ Laster embedding-modell intfloat/multilingual-e5-small...")
         if progress_callback:
             progress_callback({"step": "loading_model", "message": "Laster semantisk modell intfloat/multilingual-e5-small..."})
         embedding_model = SentenceTransformer("intfloat/multilingual-e5-small")
 
-    cursor = conn.cursor()
-
-    # Tøm eksisterende data dersom vi reindekserer
-    cursor.execute("DELETE FROM legal_chunks")
-    cursor.execute("DELETE FROM legal_fts")
-    if sqlite_vec is not None:
-        cursor.execute("DELETE FROM vec_legal_chunks")
-
-    print("💾 Lagrer og indekserer i SQLite...")
+    # 1. Sett inn i legal_chunks og legal_fts
     if progress_callback:
-        progress_callback({"step": "inserting_text", "message": f"Lagrer {len(all_chunks)} tekstbiter og FTS5-indeks..."})
-    
-    # 1. Sett inn i legal_chunks og legal_fts først for å få chunk_ids
+        progress_callback({"step": "inserting_text", "message": f"Lagrer {len(new_chunks)} nye biter i SQLite..."})
+
     chunk_records = []
-    for chunk in all_chunks:
+    for chunk in new_chunks:
         cursor.execute(
             """
             INSERT INTO legal_chunks (source_file, category, section_ref, title, content)
@@ -371,9 +430,9 @@ def ingest_all(
 
     conn.commit()
 
-    # 2. Beregn vektorer i batches for maksimal ytelse (130+ biter/sek)
+    # 2. Beregn vektorer for de nye bitene
     if embedding_model is not None and sqlite_vec is not None:
-        print(f"⏳ Beregner semantiske vektorer for {len(chunk_records)} biter (batch-størrelse 64)...")
+        print(f"⏳ Beregner semantiske vektorer for {len(chunk_records)} nye biter...")
         if progress_callback:
             progress_callback({"step": "embedding", "total_chunks": len(chunk_records), "message": f"Beregner 384D semantiske vektorer for {len(chunk_records)} biter..."})
 
@@ -382,7 +441,6 @@ def ingest_all(
             for _, c in chunk_records
         ]
         
-        # Batch-koding med SentenceTransformer
         embeddings = embedding_model.encode(
             texts_to_embed,
             batch_size=64,
@@ -390,7 +448,7 @@ def ingest_all(
             normalize_embeddings=True,
         )
 
-        print("⚡ Skriver vektorer til vec_legal_chunks...")
+        print("⚡ Skriver nye vektorer til vec_legal_chunks...")
         if progress_callback:
             progress_callback({"step": "writing_vectors", "message": "Skriver vektorer til sqlite-vec..."})
 
@@ -408,19 +466,33 @@ def ingest_all(
         )
         conn.commit()
 
+    # Kategori-oppdatering for eventuelle historiske biter
+    cursor.execute("""
+        UPDATE legal_chunks SET category = 'AI-Implementeringspakke'
+        WHERE category = 'Årshjul og Veiledere'
+        AND (source_file LIKE '%MODUL%' OR source_file LIKE '%INNHOLD%' OR source_file LIKE '%FRIA%' OR source_file LIKE '%GEVINSTMODELL%')
+    """)
     conn.commit()
+
+    total_chunks = cursor.execute("SELECT COUNT(*) FROM legal_chunks").fetchone()[0]
+    total_sources = len(set(r[0] for r in cursor.execute("SELECT DISTINCT source_file FROM legal_chunks").fetchall()))
     conn.close()
-    print(f"🎉 Fullført! {len(all_chunks)} biter indeksert i {db_path}")
+
+    print(f"🎉 Fullført! Totalt {total_chunks} biter indeksert fra {total_sources} dokumenter.")
     if progress_callback:
         progress_callback({
             "step": "done",
-            "total_chunks": len(all_chunks),
-            "total_files": total_files,
+            "total_chunks": total_chunks,
+            "total_files": total_sources,
             "db_path": str(db_path),
-            "message": f"Fullført! {len(all_chunks)} biter indeksert fra {total_files} dokumenter."
+            "message": f"Fullført! {len(new_chunks)} nye biter indeksert. Totalt {total_chunks} biter fra {total_sources} dokumenter."
         })
-    return len(all_chunks)
+    return total_chunks
 
 
 if __name__ == "__main__":
-    ingest_all()
+    import argparse
+    parser = argparse.ArgumentParser(description="Indeksering for Kommune AI Guardrails")
+    parser.add_argument("--force", action="store_true", help="Tving full re-indeksering av alle filer")
+    args = parser.parse_args()
+    ingest_all(force_reindex=args.force)

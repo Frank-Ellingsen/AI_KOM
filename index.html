@@ -1132,7 +1132,7 @@
         <div class="hub-meta">
             <div>Bruker: <strong>Frank Ellingsen (Senior Controller)</strong></div>
             <div style="margin-top: 4px;">
-                <span class="status-badge" id="vdb-badge-header">Vektor-DB: 2 842 biter</span> | 
+                <span class="status-badge" id="vdb-badge-header">Vektor-DB: 3 509 biter (43 dok)</span> | 
                 <span class="status-badge">Port 4 & 9 Aktiv</span> | 
                 Motor: <strong id="active-engine-label">Gemini 3.8 Flash (0 % CPU)</strong>
             </div>
@@ -1149,6 +1149,12 @@
         </a>
         <a href="reports/Mal_Saksbehandling_Tiltak_Avstemming_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;">
             📑 Saksbehandlingsmodell (.xlsx)
+        </a>
+        <a href="#dokumentbank" onclick="filterDocs('AIPAKKE')" class="btn btn-accent" style="background: var(--navy-dark); color: #fff; border-color: var(--navy-dark);">
+            🎯 AI-Implementering (9)
+        </a>
+        <a href="#dokumentbank" onclick="filterDocs('MLOPS')" class="btn btn-accent" style="background: #1B365D; color: #fff; border-color: #1B365D;">
+            ⚙️ MLOps-Pakke (6)
         </a>
         <a href="#dokumentbank" class="btn btn-accent">
             📂 Dokument- & Malbank
@@ -1206,7 +1212,7 @@
         <div class="vdb-status-details">
             <div id="vdb-status-msg" style="color: var(--text-primary); font-weight: 500;">Klar til å starte indeksering av data/raw...</div>
             <div id="vdb-stats-meta" style="color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px;">
-                data/raw: 24 filer | DB: 2 842 biter
+                data/raw: 37 filer | DB: 3 484 biter (37 indeksert)
             </div>
         </div>
     </div>
@@ -1638,7 +1644,9 @@
 
         <!-- Filter-faner -->
         <div class="filter-tabs">
-            <button class="tab-btn active-tab" onclick="filterDocs('ALL')">📁 Alle Ressurser (20)</button>
+            <button class="tab-btn active-tab" onclick="filterDocs('ALL')">📁 Alle Ressurser (35)</button>
+            <button class="tab-btn" onclick="filterDocs('AIPAKKE')" style="font-weight: 700; color: var(--navy-dark); border-bottom: 2px solid var(--navy-dark);">🎯 AI-Implementering (9)</button>
+            <button class="tab-btn" onclick="filterDocs('MLOPS')" style="font-weight: 700; color: #1B365D; border-bottom: 2px solid #1B365D;">⚙️ MLOps & LLMOps (6)</button>
             <button class="tab-btn" onclick="filterDocs('MALER')">📝 Rapporter & Maler (12)</button>
             <button class="tab-btn" onclick="filterDocs('EXCEL')">📊 Excel-modeller (3)</button>
             <button class="tab-btn" onclick="filterDocs('POWERBI')">📈 Power BI & Datadesign (4)</button>
@@ -1648,6 +1656,261 @@
         <!-- Dokumentkort Grid -->
         <div class="doc-cards-grid" id="doc-cards-container">
             
+            <!-- AI-IMPLEMENTERINGSKORT 0 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: var(--navy-dark); color: #fff;">AI PAKKE 00</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 700;">Masteroversikt</span>
+                    </div>
+                    <div class="doc-title">Håndbok & Rammeverk: Masteroversikt</div>
+                    <div class="doc-law">Målgruppe: Kommunedirektør, Toppledelse & Økonomi</div>
+                    <div class="doc-desc">Samlet masteroversikt og dokumentstruktur for implementering av AI i kommunal økonomi og virksomhetsstyring basert på KS og Digdir.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_00')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/00_INNHOLD_OG_OVERSIKT.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 1 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: var(--navy-dark); color: #fff;">MODUL 1</span>
+                        <span style="font-size: 11px; color: var(--text-secondary);">Strategi & Beslutning</span>
+                    </div>
+                    <div class="doc-title">Modul 1: Konsept & Beslutningsgrunnlag</div>
+                    <div class="doc-law">Hjemmel: Forankring i KS & Digdir 2024–2030</div>
+                    <div class="doc-desc">Verdipotensial, teknologilag (RPA, Prediktiv AI, LLM, RAG, Agentic AI) og forankring i Kristiansand kommunes økonomiplan.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_01')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/01_MODUL_1_KONSEPT_OG_BESLUTNINGSGRUNNLAG.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 2 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: var(--navy-dark); color: #fff;">MODUL 2</span>
+                        <span style="font-size: 11px; color: var(--accent-blue); font-weight: 600;">L1–L5 Matrise</span>
+                    </div>
+                    <div class="doc-title">Modul 2: AI Readiness & Modenhetsrammeverk</div>
+                    <div class="doc-law">Standard: 9-Dimensjonal Readiness-Matrix</div>
+                    <div class="doc-desc">Evaluerer organisasjon, prosesser, data, teknologi, sikkerhet og juss over fem modenhetsnivåer fra Umoden (L1) til Transformert (L5).</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_02')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/02_MODUL_2_AI_READINESS_OG_MATURITY_FRAMEWORK.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 3 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: var(--navy-dark); color: #fff;">MODUL 3</span>
+                        <span style="font-size: 11px; color: var(--alert-red); font-weight: 600;">Jus & Etterlevelse</span>
+                    </div>
+                    <div class="doc-title">Modul 3: Governance, Etikk, GDPR & EU AI Act</div>
+                    <div class="doc-law">Hjemmel: EU AI Act Vedlegg III & GDPR Art. 22 / 35</div>
+                    <div class="doc-desc">Kommunens ansvar som idriftsetter (deployer), FRIA og DPIA, forbud mot leverandørtrening og Human-in-the-Loop kontroll.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_03')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/03_MODUL_3_GOVERNANCE_ETIKK_OG_GDPR.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 4 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: var(--navy-dark); color: #fff;">MODUL 4</span>
+                        <span style="font-size: 11px; color: var(--text-secondary);">Arkitektur</span>
+                    </div>
+                    <div class="doc-title">Modul 4: Enterprise Målarkitektur & RAG</div>
+                    <div class="doc-law">Standard: Zero Trust / AI Gateway / RBAC</div>
+                    <div class="doc-desc">Dataflyt fra ERP/fagsystemer via AI Gateway med PII-maskering, RAG-vektorindeks, modelluavhengighet og FinOps-styring.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_04')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/04_MODUL_4_ENTERPRISE_MAALARKITEKTUR_OG_RAG.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 5 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: var(--navy-dark); color: #fff;">MODUL 5</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 600;">Metodikk</span>
+                    </div>
+                    <div class="doc-title">Modul 5: Use-Case-Prioritering & Pilotmetodikk</div>
+                    <div class="doc-law">Formel: Netto Prioritet & Gate G1–G4</div>
+                    <div class="doc-desc">Prioriteringsformel for verdi vs. risiko, bølgeinndeling (Bølge 1–3) og 4-trinns pilotmetodikk for produksjonssetting.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_05')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/05_MODUL_5_USE_CASE_PRIORITERING_OG_PILOTMETODIKK.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 6 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: var(--navy-dark); color: #fff;">MODUL 6</span>
+                        <span style="font-size: 11px; color: var(--success-green); font-weight: 600;">Kristiansand Case</span>
+                    </div>
+                    <div class="doc-title">Modul 6: Skalering, Gevinst & Roadmap 2025–2030</div>
+                    <div class="doc-law">Avstemt: Økonomiplan 2027–2030 (Teknologiløft)</div>
+                    <div class="doc-desc">Sekvensert roadmap for Kristiansand kommune, stakeholder-matrise, endringsledelse og gevinstutak (kapasitet, konsulenter, rammekutt).</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_06')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/06_MODUL_6_SKALERING_GEVINST_OG_ROADMAP_KRISTIANSAND.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 7 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #c0392b; color: #fff;">SJEKKLISTE</span>
+                        <span style="font-size: 11px; color: var(--alert-red); font-weight: 600;">Skriveklar</span>
+                    </div>
+                    <div class="doc-title">07: Operasjonell Juridisk Sjekkliste (FRIA & DPIA)</div>
+                    <div class="doc-law">Hjemmel: EU AI Act Art. 26/27 & GDPR Art. 35</div>
+                    <div class="doc-desc">5-trinns operasjonell sjekkliste for jurister, personvernombud og controllere for screening, hjemmelskontroll og godkjenning.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_07')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/07_JURIDISK_SJEKKLISTE_FRIA_DPIA.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- AI-IMPLEMENTERINGSKORT 8 -->
+            <div class="doc-card" data-category="AIPAKKE">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-xlsx">.XLSX & .MD</span>
+                        <span style="font-size: 11px; color: var(--success-green); font-weight: 600;">Gevinstmodell</span>
+                    </div>
+                    <div class="doc-title">08: Finansiell Håndbok & Gevinstmodell (ROI)</div>
+                    <div class="doc-law">Metode: 3-års ROI, Payback-periode & 70% Realisering</div>
+                    <div class="doc-desc">Manual og formelsett for gevinstberegning, timekostnad, FinOps, payback-periode og kobling mot gevinstmodell-ai-okonomi.xlsx.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('AIPAKKE_08')">👁️ Forhåndsvis</button>
+                    <a href="ai-implementeringspakke-okonomi/08_GEVINSTMODELL_OG_FINANSIELL_HANDBOK.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- MLOPS KORT 1 -->
+            <div class="doc-card" data-category="MLOPS">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #1B365D; color: #fff;">MLOPS 01</span>
+                        <span style="font-size: 11px; color: #1B365D; font-weight: 700;">Prinsipper & Oversikt</span>
+                    </div>
+                    <div class="doc-title">01: MLOps & LLMOps i Offentlig Sektor</div>
+                    <div class="doc-law">Målgruppe: Kommunedirektør, IT-sjef & Økonomidirektør</div>
+                    <div class="doc-desc">Operasjonell ryggrad for KI i kommunal sektor. Treveis avhengighet (kode, data, modell), reproduserbarhet og human-in-the-loop.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MLOPS_01')">👁️ Forhåndsvis</button>
+                    <a href="mlops-implementeringspakke/01_MLOps_Oversikt_og_Prinsipper.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- MLOPS KORT 2 -->
+            <div class="doc-card" data-category="MLOPS">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #1B365D; color: #fff;">MLOPS 02</span>
+                        <span style="font-size: 11px; color: #1B365D; font-weight: 700;">Målarkitektur</span>
+                    </div>
+                    <div class="doc-title">02: Teknisk MLOps-Arkitektur & Komponenter</div>
+                    <div class="doc-law">Struktur: Enterprise Control Plane, AI Gateway & Registry</div>
+                    <div class="doc-desc">Isolering av fagsystemer, PII-vasking, RAG-vektorlager, DVC, Model Registry (MLflow) og CI/CD med automatiserte tester.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MLOPS_02')">👁️ Forhåndsvis</button>
+                    <a href="mlops-implementeringspakke/02_MLOps_Arkitektur_og_Komponenter.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- MLOPS KORT 3 -->
+            <div class="doc-card" data-category="MLOPS">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #1B365D; color: #fff;">MLOPS 03</span>
+                        <span style="font-size: 11px; color: #1B365D; font-weight: 700;">Drift & FinOps</span>
+                    </div>
+                    <div class="doc-title">03: MLOps Observability, Drift & FinOps</div>
+                    <div class="doc-law">Metode: Data-, Concept- & Prompt-drift samt Token Caching</div>
+                    <div class="doc-desc">Metrikker for sanntidsdrift, hallusinasjonsmåling, token caching, budsjettgrenser per avdeling og FinOps-kostnadskontroll.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MLOPS_03')">👁️ Forhåndsvis</button>
+                    <a href="mlops-implementeringspakke/03_MLOps_Observability_og_Drift.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- MLOPS KORT 4 -->
+            <div class="doc-card" data-category="MLOPS">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #1B365D; color: #fff;">MLOPS 04</span>
+                        <span style="font-size: 11px; color: #1B365D; font-weight: 700;">Governance & Sikkerhet</span>
+                    </div>
+                    <div class="doc-title">04: MLOps Governance, EU AI Act & Sikkerhet</div>
+                    <div class="doc-law">Krav: Deployer-rolle, Audit Logg Art. 26 & Kill-Switch</div>
+                    <div class="doc-desc">Operativ rollestruktur, lovpålagt audit logging etter EU AI Act art. 26 og teknisk prosedyre for nødknapp (Kill-Switch).</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MLOPS_04')">👁️ Forhåndsvis</button>
+                    <a href="mlops-implementeringspakke/04_MLOps_Governance_og_Sikkerhet.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- MLOPS KORT 5 -->
+            <div class="doc-card" data-category="MLOPS">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #1B365D; color: #fff;">MLOPS 05</span>
+                        <span style="font-size: 11px; color: #1B365D; font-weight: 700;">Ground Truth & QA</span>
+                    </div>
+                    <div class="doc-title">05: MLOps Testing, Ground Truth & Kvalitet</div>
+                    <div class="doc-law">Kvalitet: 0% feiltoleranse, Faithfulness & Gate G3</div>
+                    <div class="doc-desc">Test-pyramide for AI, Ground Truth benchmarking (Faithfulness, Retrieval Precision), PII-lekkasjetest og produksjonskrav.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MLOPS_05')">👁️ Forhåndsvis</button>
+                    <a href="mlops-implementeringspakke/05_MLOps_Test_og_Kvalitetssikring.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- MLOPS KORT 6 -->
+            <div class="doc-card" data-category="MLOPS">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #1B365D; color: #fff;">MLOPS 06</span>
+                        <span style="font-size: 11px; color: #1B365D; font-weight: 700;">Anskaffelse & Anbud</span>
+                    </div>
+                    <div class="doc-title">06: Kravspesifikasjon & Anbudsmal for MLOps</div>
+                    <div class="doc-law">Matrise: K-01 til K-10 (A/B-krav) & Datasuverenitet</div>
+                    <div class="doc-desc">Skriveklart konkurransegrunnlag for anskaffelse av MLOps/LLMOps. K-01–K-10 kravmatrise, datasuverenitet og forbud mot modelltrening.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MLOPS_06')">👁️ Forhåndsvis</button>
+                    <a href="mlops-implementeringspakke/06_MLOps_Anbud_og_Innkjøpsmal.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
             <!-- KORT 1 -->
             <div class="doc-card" data-category="MALER">
                 <div>
@@ -2438,7 +2701,7 @@ SWITCH(
             badge.innerText = "Pågår";
             badge.style.color = "var(--accent-blue)";
             badge.style.borderColor = "var(--accent-blue)";
-            msg.innerText = "Kobler til lokal oppdateringstjeneste (port 8765)...";
+            msg.innerText = "Kobler til lokal oppdateringstjeneste (port 8766)...";
             pbar.style.width = "5%";
             timeLabel.innerText = "Tid: 0.0s";
 
@@ -2462,7 +2725,7 @@ SWITCH(
                 badge.innerText = "Tilkoblingsfeil";
                 badge.style.color = "var(--alert-red)";
                 badge.style.borderColor = "var(--alert-red)";
-                msg.innerHTML = `⚠️ Lokal bakgrunnstjeneste svarer ikke på port 8765.<br>
+                msg.innerHTML = `⚠️ Lokal bakgrunnstjeneste svarer ikke på port 8766.<br>
                 <strong>Løsning:</strong> Dobbelklikk på <code>oppdater_vektor_db.bat</code> i prosjektmappen, eller start <code>start_kommune_ai.bat</code>.<br>
                 <div style="margin-top: 8px;">
                     <button class="btn" onclick="triggerVectorDbUpdate()">🔄 Prøv på nytt</button>
@@ -2609,7 +2872,21 @@ Status: Godkjent administrativt innenfor rammen. Forseglet i Audit_AI_Actions.`
         function filterDocs(cat) {
             const tabs = document.querySelectorAll(".filter-tabs .tab-btn");
             tabs.forEach(t => t.classList.remove("active-tab"));
-            event.target.classList.add("active-tab");
+            
+            let matched = false;
+            if (window.event && window.event.target && window.event.target.classList && window.event.target.classList.contains("tab-btn")) {
+                window.event.target.classList.add("active-tab");
+                matched = true;
+            }
+            if (!matched) {
+                tabs.forEach(t => {
+                    const oc = t.getAttribute("onclick") || "";
+                    if (oc.includes(`'${cat}'`)) {
+                        t.classList.add("active-tab");
+                        matched = true;
+                    }
+                });
+            }
 
             const cards = document.querySelectorAll(".doc-card");
             cards.forEach(c => {
@@ -2659,6 +2936,285 @@ Status: Godkjent administrativt innenfor rammen. Forseglet i Audit_AI_Actions.`
 
         /* Modal Forhåndsvisning */
         const DOC_CONTENT = {
+            "AIPAKKE_00": {
+                title: "Håndbok & Rammeverk: Masteroversikt og Dokumentstruktur",
+                file: "ai-implementeringspakke-okonomi/00_INNHOLD_OG_OVERSIKT.md",
+                body: `<h3>AI-IMPLEMENTERING FOR ØKONOMI OG VIRKSOMHETSSTYRING I KOMMUNAL SEKTOR</h3>
+<p><strong>Masteroversikt og Pedagogisk Veileder</strong> | Forankret i KS, Digdir og EU AI Act</p>
+<hr>
+<h4>HOVEDSTRUKTUR (MODUL 1–6 + SJEKKLISTER & GEVINSTMODELL):</h4>
+<ul>
+    <li><strong>Modul 1: Konsept & Beslutningsgrunnlag:</strong> Verdipotensial, RPA vs. RAG vs. Agentic AI, forankring i Kristiansand økonomiplan.</li>
+    <li><strong>Modul 2: Readiness & Modenhet (L1–L5):</strong> 9-dimensjonal evalueringsmatrise fra Umoden til Transformert.</li>
+    <li><strong>Modul 3: Governance, Etikk & EU AI Act:</strong> Krav til idriftsetter (deployer), FRIA, DPIA, Art. 22 og loggplikt.</li>
+    <li><strong>Modul 4: Enterprise Målarkitektur:</strong> AI Gateway, PII-maskering, RAG-vektorindeks, Zero Trust og FinOps.</li>
+    <li><strong>Modul 5: Use-Case-Prioritering & Pilotmetodikk:</strong> Netto prioriteringsformel, Bølge 1–3 og Gate G1–G4.</li>
+    <li><strong>Modul 6: Skalering & Roadmap 2025–2030:</strong> Sekvensert løp for Kristiansand, stakeholder-matrise og gevinstutak.</li>
+    <li><strong>07 Juridisk Sjekkliste:</strong> 5-trinns operasjonell sjekkliste for FRIA og DPIA.</li>
+    <li><strong>08 Finansiell Håndbok:</strong> Manual for <code>gevinstmodell-ai-okonomi.xlsx</code>, timekostnad og ROI-beregning.</li>
+</ul>`
+            },
+            "AIPAKKE_01": {
+                title: "Modul 1: Konseptuelt og Beslutningsgrunnlag for AI i Økonomistyring",
+                file: "ai-implementeringspakke-okonomi/01_MODUL_1_KONSEPT_OG_BESLUTNINGSGRUNNLAG.md",
+                body: `<h3>MODUL 1: KONSEPTUELT OG BESLUTNINGSGRUNNLAG FOR AI I ØKONOMISTYRING</h3>
+<p><strong>Målgruppe:</strong> Ledergrupper, kommunedirektør og politikere</p>
+<hr>
+<h4>1. HVORFOR AI I KOMMUNAL ØKONOMI?</h4>
+<p>Kommunal sektor møter en demografisk klemme: flere eldre og økende velferdsbehov, knapphet på fagkompetanse og stramme budsjetter. AI muliggjør automatisering av tunge rutiner, 100 % transaksjonskontroll og styrket beslutningsgrunnlag.</p>
+<h4>2. TEKNOLOGILAG:</h4>
+<ul>
+    <li><strong>RPA:</strong> Regelbasert filflytting og dataoverføring.</li>
+    <li><strong>Prediktiv AI:</strong> Mønstergjenkjenning for sykefravær og skatteinngang.</li>
+    <li><strong>Generativ AI:</strong> Språkmodeller for utkast til tertialrapporter og avviksforklaringer.</li>
+    <li><strong>RAG:</strong> Kildeforankret oppslag i lukkede kommunale dokumenter med §-sitering.</li>
+    <li><strong>Agentic AI:</strong> Autonome agenter for multi-trinns analyse under menneskelig tilsyn.</li>
+</ul>
+<h4>3. FORANKRING:</h4>
+<p>Digdir Nasjonal digitaliseringsstrategi 2024–2030, KS AI-rammeverk og Kristiansand kommunes Økonomiplan 2027–2030.</p>`
+            },
+            "AIPAKKE_02": {
+                title: "Modul 2: AI Readiness- og Modenhetsrammeverk for Kommunal Sektor",
+                file: "ai-implementeringspakke-okonomi/02_MODUL_2_AI_READINESS_OG_MATURITY_FRAMEWORK.md",
+                body: `<h3>MODUL 2: AI READINESS- OG MODENHETSRAMMEVERK</h3>
+<p><strong>Standard:</strong> 5 Modenhetsnivåer & 9-Dimensjonal Evalueringsmatrise</p>
+<hr>
+<h4>MODENHETSNIVÅER (L1 TIL L5):</h4>
+<ol>
+    <li><strong>L1 (Umoden / Passiv):</strong> Ingen AI-strategi, skygge-IT, høyt risikobilde.</li>
+    <li><strong>L2 (Eksperimenterende):</strong> Isolerte punktpiloter, manglende MLOps og uavklarte rammer.</li>
+    <li><strong>L3 (Strukturert / Rigget):</strong> AI Governance etablert, RAG/AI Gateway, DPIA/FRIA-prosedyrer.</li>
+    <li><strong>L4 (Skalert / Integrert):</strong> Integrert i ERP, kontinuerlig MLOps og aktiv gevinstrealisering.</li>
+    <li><strong>L5 (Transformert):</strong> Datadrevet virksomhetsstyring, prediktiv budsjettering og samhandlende agenter.</li>
+</ol>
+<h4>DE 9 EVALUERINGSDIMENSJONENE:</h4>
+<p>Strategi, Organisasjon, Prosesser, Data, Teknologi, Sikkerhet, Juss & Etterlevelse, Økonomi (FinOps), Endringskapasitet.</p>`
+            },
+            "AIPAKKE_03": {
+                title: "Modul 3: Governance, Etikk, GDPR og EU AI Act",
+                file: "ai-implementeringspakke-okonomi/03_MODUL_3_GOVERNANCE_ETIKK_OG_GDPR.md",
+                body: `<h3>MODUL 3: GOVERNANCE, ETIKK, GDPR OG EU AI ACT</h3>
+<p><strong>Fokus:</strong> Kommunens rolle som "Deployer" (Idriftsetter) og Juridisk Etterlevelse</p>
+<hr>
+<h4>EU AI ACT KRAV TIL IDRIFTSETTER (DEPLOYER):</h4>
+<ul>
+    <li><strong>Høyrisikoklassifisering (Vedlegg III):</strong> HR/rekruttering, velferdstjenester og kritisk infrastruktur.</li>
+    <li><strong>Plikter:</strong> Gjennomføre FRIA, sikre Human-in-the-Loop, hendelseslogging i min. 6 måneder, AI-literacy og registrering i EUs database.</li>
+    <li><strong>Forbudt praksis:</strong> Sosial scoring, biometrisk fjernidentifikasjon i sanntid.</li>
+</ul>
+<h4>GDPR & PERSONVERN I ØKONOMIFUNKSJONEN:</h4>
+<ul>
+    <li>Behandlingsgrunnlag (Art. 6 e - utøvelse av offentlig myndighet).</li>
+    <li>Dataminimering og klientside PII-vask før sending til språkmodeller.</li>
+    <li>Forbud mot leverandørtrening på kommunens produksjonsdata.</li>
+</ul>`
+            },
+            "AIPAKKE_04": {
+                title: "Modul 4: Enterprise AI Målarkitektur, RAG og Integrasjoner",
+                file: "ai-implementeringspakke-okonomi/04_MODUL_4_ENTERPRISE_MAALARKITEKTUR_OG_RAG.md",
+                body: `<h3>MODUL 4: ENTERPRISE AI MÅLARKITEKTUR, RAG OG INTEGRASJONER</h3>
+<p><strong>Arkitekturprinsipper:</strong> Zero Trust, Modelluavhengighet, RAG og RBAC</p>
+<hr>
+<h4>SYSTEMKOMPONENTER:</h4>
+<ul>
+    <li><strong>Enterprise AI Gateway:</strong> PII-anonymisering, Entra ID tilgangsstyring, FinOps token-kontroll og SHA-256 audit-logging.</li>
+    <li><strong>RAG-Motor & Dataindeks:</strong> sqlite-vec / Qdrant vektordatabase, FTS5 fulltekst, Framsikt/Visma regnskapsdata og kommunale forskrifter.</li>
+    <li><strong>Språkmodell-lag:</strong> Lukkede skymodeller (Gemini / Azure OpenAI) og lokale frakoblede modeller (Ollama llama3.1 / qwen2.5).</li>
+</ul>
+<h4>HYBRID SØK (RRF):</h4>
+<p>Kombinerer eksakt paragrafsøk (BM25/FTS5) med semantisk vektorsøk (384D float) via Reciprocal Rank Fusion for null hallusinasjoner.</p>`
+            },
+            "AIPAKKE_05": {
+                title: "Modul 5: Use-Case-Prioritering og Pilotmetodikk",
+                file: "ai-implementeringspakke-okonomi/05_MODUL_5_USE_CASE_PRIORITERING_OG_PILOTMETODIKK.md",
+                body: `<h3>MODUL 5: USE-CASE-PRIORITERING OG PILOTMETODIKK</h3>
+<p><strong>Metode:</strong> Netto Prioriteringsformel & Stage-Gate Pilotfaser</p>
+<hr>
+<h4>BØLGEINNDELING AV USE-CASES:</h4>
+<ul>
+    <li><strong>Bølge 1 (Lav risiko / Høy verdi - År 1):</strong> RAG-assistent for regelverk og avtaler, utkast til avvikskort i tertialrapporter.</li>
+    <li><strong>Bølge 2 (Moderat risiko / Integrert - År 2):</strong> Automatisk bilags- og transaksjonsavvik, prediktive scenarier ved økonomiplan.</li>
+    <li><strong>Bølge 3 (Avansert / Autonom - År 3+):</strong> Agentbaserte arbeidsflyter og prediktiv bemanningsplanlegging.</li>
+</ul>
+<h4>DEN 4-TRINNS PILOTMETODIKKEN:</h4>
+<ol>
+    <li>Fase 1: Konsept og Sikkerhetsavklaring (Gate G1).</li>
+    <li>Fase 2: Teknisk PoC & Fasittest (Gate G2).</li>
+    <li>Fase 3: Kontrollert Brukerpilot med HITL (Gate G3).</li>
+    <li>Fase 4: Produksjonssetting og Gevinstoppfølging (Gate G4).</li>
+</ol>`
+            },
+            "AIPAKKE_06": {
+                title: "Modul 6: Skalering, Gevinstrealisering og Roadmap (Kristiansand Kommune)",
+                file: "ai-implementeringspakke-okonomi/06_MODUL_6_SKALERING_GEVINST_OG_ROADMAP_KRISTIANSAND.md",
+                body: `<h3>MODUL 6: SKALERING, GEVINSTREALISERING OG ROADMAP</h3>
+<p><strong>Case:</strong> Kristiansand Kommune Økonomiplan 2027–2030 (Teknologiløft)</p>
+<hr>
+<h4>DE TRE GEVINSTMEKANISMENE:</h4>
+<ol>
+    <li><strong>Kapasitetsreallokering:</strong> Frigjort tid flyttes fra manuell punching til strategisk analyse og rådgivning.</li>
+    <li><strong>Direkte Kostnadsreduksjon:</strong> Redusert overtid og lavere konsulentinnleie.</li>
+    <li><strong>Strukturelt Rammekutt:</strong> Innsparinger realiseres i budsjettet ved naturlig avgang eller omstilling.</li>
+</ol>
+<h4>KRISTIANSAND ROADMAP 2025–2030:</h4>
+<ul>
+    <li><strong>2025–2026:</strong> Fundament, AI Governance og ERP-datarydding.</li>
+    <li><strong>2027:</strong> AI Gateway, PII-skjerming og Bølge 1 RAG-pilot (Gate G3).</li>
+    <li><strong>2028:</strong> Skalering til Bølge 2 (avvikskontroll og prognoser), FinOps.</li>
+    <li><strong>2029–2030:</strong> Full gevinstrealisering (2 mill. kr/år innsparingskrav nås).</li>
+</ul>`
+            },
+            "AIPAKKE_07": {
+                title: "07: Operasjonell Juridisk Sjekkliste for AI (FRIA & DPIA)",
+                file: "ai-implementeringspakke-okonomi/07_JURIDISK_SJEKKLISTE_FRIA_DPIA.md",
+                body: `<h3>OPERASJONELL JURIDISK SJEKKLISTE FOR AI (FRIA & DPIA)</h3>
+<p><strong>Praktisk sjekkliste:</strong> Skriveklar for personvernombud, jurister og prosjektledere</p>
+<hr>
+<h4>DE 5 TRINNENE:</h4>
+<ol>
+    <li><strong>Trinn 1: Screening & Risiko:</strong> Rolleavklaring (idriftsetter/deployer), Vedlegg III klassifisering, GDPR Art. 35 utløser.</li>
+    <li><strong>Trinn 2: Hjemmel & Grunnlag:</strong> GDPR Art. 6(1)(e), forvaltningsloven, forbud mot leverandørtrening i DBA.</li>
+    <li><strong>Trinn 3: DPIA (Personvern):</strong> PII-filter, innsynsrett (Art. 15), forbud mot automatisert vedtak (Art. 22), kryptering innen EU/EØS.</li>
+    <li><strong>Trinn 4: FRIA (Menneskerettigheter):</strong> Navngitt HITL saksbehandler, kildeforankring (XAI), bias-testing, fasit-sett.</li>
+    <li><strong>Trinn 5: Governance & Registrering:</strong> 6 mnd hendelseslogg (Art. 26), oppføring i kommunalt AI-register.</li>
+</ol>`
+            },
+            "AIPAKKE_08": {
+                title: "08: Finansiell Håndbok og Brukermanual for AI Gevinstmodell",
+                file: "ai-implementeringspakke-okonomi/08_GEVINSTMODELL_OG_FINANSIELL_HANDBOK.md",
+                body: `<h3>FINANSIELL HÅNDBOK OG BRUKERMANUAL FOR AI GEVINSTMODELL</h3>
+<p><strong>Verktøy:</strong> Manual for <code>gevinstmodell-ai-okonomi.xlsx</code></p>
+<hr>
+<h4>FANEBLADER I REGNEARKET:</h4>
+<ul>
+    <li><strong>ROI & Sammendrag:</strong> Netto gevinster, 3-års ROI (%) og payback-periode i måneder.</li>
+    <li><strong>Use-Case Kalkulator:</strong> Tidsbruk for 5 prosesser (RAG, tertialrapporter, bilag, budsjett, innkjøp).</li>
+    <li><strong>Kostnader & FinOps:</strong> Engangsinvesteringer (etablering, DPIA) og løpende drift (tokens, lisenser).</li>
+    <li><strong>Gevinstutaksplan:</strong> Plan for omsetting av frigjort tid til reallokering eller kutt.</li>
+</ul>
+<h4>STANDARDFORMEL:</h4>
+<p><code>Realisert gevinst = Innsparte timer × Timekostnad (650 kr/t) × Realiseringsgrad (70 %)</code></p>`
+            },
+            "MLOPS_01": {
+                title: "01: MLOps og LLMOps i Offentlig Sektor: Oversikt og Prinsipper",
+                file: "mlops-implementeringspakke/01_MLOps_Oversikt_og_Prinsipper.md",
+                body: `<h3>01. MLOPS OG LLMOPS I OFFENTLIG SEKTOR: OVERSIKT OG PRINSIPPER</h3>
+<p><strong>Målgruppe:</strong> Kommunedirektør, IT-sjef, Økonomidirektør og Prosjekteiere | Forankret i KS & Digdir</p>
+<hr>
+<h4>1. DEVOPS VS. MLOPS VS. LLMOPS:</h4>
+<ul>
+    <li><strong>Tradisjonell DevOps:</strong> Versjonerer kode og infrastruktur; tester enhetstester og integrasjoner.</li>
+    <li><strong>Classic MLOps:</strong> Håndterer treveis avhengighet mellom <em>kode, data og modeller</em>; overvåker data- og modell-drift.</li>
+    <li><strong>LLMOps (RAG & GenAI):</strong> Versjonerer system-prompts, RAG-vektorindekser, embeddings og LLM-hyperparametre; måler hallusinasjoner og Ground Truth.</li>
+</ul>
+<h4>2. 5 KJØRNEPRINSIPPER FOR KOMMUNAL MLOPS:</h4>
+<ol>
+    <li><strong>Automatiserte Pipelines:</strong> Erstatte ad-hoc manuelle skript med kodebaserte, reproduserbare rørgater.</li>
+    <li><strong>Kildesporbarhet & Reproduserbarhet:</strong> Enhver rapport og prognose kan spores tilbake til eksakt datagrunnlag og modellversjon.</li>
+    <li><strong>Menneskelig Kontroll (HITL):</strong> AI forblir leseorientert (read-only) og forslagsproduserende; ingen direkte skriving til ERP uten faglig godkjenning.</li>
+    <li><strong>Sikkerhet & Datakontroll (Control Plane):</strong> Sluse alle forespørsler gjennom en AI Gateway med PII-skjerming, SSO og audit logging.</li>
+    <li><strong>Kontinuerlig Overvåking & Nødknapp:</strong> Sanntidsovervåking av latency, kostnader (FinOps) og øyeblikkelig utkobling (Kill-Switch).</li>
+</ol>`
+            },
+            "MLOPS_02": {
+                title: "02: Teknisk MLOps-Arkitektur og Komponenter",
+                file: "mlops-implementeringspakke/02_MLOps_Arkitektur_og_Komponenter.md",
+                body: `<h3>02. TEKNISK MLOPS-ARKITEKTUR OG KOMPONENTER</h3>
+<p><strong>Arkitekturtype:</strong> Enterprise Control Plane | Ingen leverandørlås (No Vendor Lock-in)</p>
+<hr>
+<h4>1. 5 ARKITEKTURLAG:</h4>
+<ol>
+    <li><strong>Applikasjonslag:</strong> ERP (Visma/Unit4), Sak/Arkiv (Elements/ACOS), AI-Assistent.</li>
+    <li><strong>AI Gateway (Control Plane):</strong> PII-skjerming, Rate Limiting, FinOps budsjettak, SSO (Entra ID) og Audit Logg.</li>
+    <li><strong>Data & RAG Pipeline:</strong> Vektordatabase (sqlite-vec / Pgvector), DVC dataversjonering, metadata- og RBAC-arv.</li>
+    <li><strong>Model Engine & Inference:</strong> Lukkede EU-skymodeller (Azure OpenAI EU / Mistral) og spesialiserte lokale ML-modeller.</li>
+    <li><strong>MLOps Plattform:</strong> MLflow Modellregister, CI/CD, Observability og Kill-Switch.</li>
+</ol>
+<h4>2. KJERNEKOMPONENTER:</h4>
+<ul>
+    <li><strong>Model Registry:</strong> Sentral katalog med fasene <code>Development ➔ Staging ➔ Production ➔ Archived</code>.</li>
+    <li><strong>Docker / Containerisering:</strong> Standardiserte containere for forutsigbarhet på tvers av test og drift.</li>
+    <li><strong>CI/CD med GitHub Actions:</strong> Automatisert testing mot Ground Truth før produksjonssetting.</li>
+</ul>`
+            },
+            "MLOPS_03": {
+                title: "03: MLOps Observability, Drift-Håndtering og FinOps",
+                file: "mlops-implementeringspakke/03_MLOps_Observability_og_Drift.md",
+                body: `<h3>03. MLOPS OBSERVABILITY, DRIFT-HÅNDTERING OG FINOPS</h3>
+<p><strong>Formål:</strong> Sanntidsovervåking av systemhelse, svarkvalitet og IT-økonomi</p>
+<hr>
+<h4>1. DASHBORDMETRIKKER:</h4>
+<ul>
+    <li><strong>System & Ytelse:</strong> Latency (TTFT), HTTP Error Rate, Oppetid (SLA 99,5 %).</li>
+    <li><strong>Modellkvalitet & Semantikk:</strong> Retrieval Accuracy (RAG), Hallusinasjonsindeks (%), Menneskelige overrides (%).</li>
+    <li><strong>Økonomi & FinOps:</strong> Token-forbruk per dag, kostnad per forespørsel, avdelingsvise budsjettak.</li>
+</ul>
+<h4>2. HÅNDTERING AV 3 FORMER FOR DRIFT:</h4>
+<ol>
+    <li><strong>Data Drift:</strong> Endring i inndatadistribusjon (f.eks. ny kontoplan). Varsler automatisk ved distribusjonsavvik.</li>
+    <li><strong>Concept / Model Drift:</strong> Endring i sammenheng inndata/utdata (f.eks. ny forvaltningspraksis). Utløser re-indeksering og test mot Ground Truth.</li>
+    <li><strong>Prompt & Model Version Drift:</strong> Leverandøroppdatering av underliggende LLM. Låser versjoner og kjører regresjonstester.</li>
+</ol>`
+            },
+            "MLOPS_04": {
+                title: "04: MLOps Governance, EU AI Act og Sikkerhetskontroller",
+                file: "mlops-implementeringspakke/04_MLOps_Governance_og_Sikkerhet.md",
+                body: `<h3>04. MLOPS GOVERNANCE, EU AI ACT OG SIKKERHETSKONTROLLER</h3>
+<p><strong>Juridisk Hjemmel:</strong> EU AI Act, GDPR, Forvaltningsloven § 25 og ISO 42001 (AIMS)</p>
+<hr>
+<h4>1. OPERATIV ROLLESTRUKTUR:</h4>
+<ul>
+    <li><strong>Prosesseier (Fagavdeling):</strong> Formelt eierskap til gevinstrealisering og endelig produksjonsgodkjenning.</li>
+    <li><strong>AI Lead & MLOps Engineer:</strong> Ansvar for pipeline, AI Gateway, modellregister og SLA.</li>
+    <li><strong>CISO, Personvernombud & Jurist:</strong> Godkjenning av DPIA/FRIA, PII-filter og tilsynslogger.</li>
+    <li><strong>Saksbehandler / Controller:</strong> Reell faglig overprøving (Human-in-the-Loop) før lagring i fagsystem.</li>
+</ul>
+<h4>2. PLIKTIG AUDIT LOGGING (AI ACT ART. 26):</h4>
+<p>Automatisk logging av: 1. Tidsstempel & Bruker-ID, 2. Inndata & Prompt, 3. Uthentet RAG-kontekst, 4. Modellidentifikator og 5. Generert utdata samt brukers endelige handling.</p>
+<h4>3. TEKNISK NØDKNAPP (KILL-SWITCH):</h4>
+<p>Umiddelbar deaktivering i AI Gateway ved avvik med automatisk fallback til etablert manuell saksflyt.</p>`
+            },
+            "MLOPS_05": {
+                title: "05: MLOps Testing, Ground Truth og Kvalitetssikring",
+                file: "mlops-implementeringspakke/05_MLOps_Test_og_Kvalitetssikring.md",
+                body: `<h3>05. MLOPS TESTING, GROUND TRUTH OG KVALITETSSIKRING</h3>
+<p><strong>Krav:</strong> 0 % feiltoleranse på kritiske regnskapstall og budsjettrapportering</p>
+<hr>
+<h4>1. TEST-PYRAMIDEN FOR AI:</h4>
+<ul>
+    <li><strong>Nivå 1 (Data & Kode):</strong> Unit tests, PII-filtervalidering, JSON-skjemakontroll.</li>
+    <li><strong>Nivå 2 (Ground Truth & RAG):</strong> Automatiserte LLM-benchmarks, Retrieval Precision & Recall, Faithfulness.</li>
+    <li><strong>Nivå 3 (Human-in-the-Loop):</strong> Brukertesting (UAT) og fagøkonomenes overprøving.</li>
+</ul>
+<h4>2. GATE G3 AKSEPTKRITERIER FOR PRODUKSJON:</h4>
+<ul>
+    <li>☑ <strong>100 % pass-rate</strong> på kritiske tallberegninger i Ground Truth-testsettet.</li>
+    <li>☑ <strong>Minst 90 % score</strong> på Faithfulness og Retrieval Precision.</li>
+    <li>☑ <strong>0 % utslag</strong> på PII-lekkasjetester (anonymiseringsfilter verifisert).</li>
+    <li>☑ <strong>Gjennomført og godkjent DPIA/FRIA</strong> med forvaltningsrutine.</li>
+    <li>☑ <strong>Aktiv audit logging</strong> verifisert i AI Gateway.</li>
+</ul>`
+            },
+            "MLOPS_06": {
+                title: "06: Kravspesifikasjon og Anbudsmal for MLOps-Anskaffelse",
+                file: "mlops-implementeringspakke/06_MLOps_Anbud_og_Innkjøpsmal.md",
+                body: `<h3>06. KRAVSPESIFIKASJON OG ANBUDSMAL FOR MLOPS-ANSKAFFELSE</h3>
+<p><strong>Formål:</strong> Skriveklare krav for offentlige anskaffelser | Etterlevelse av Anskaffelsesloven, EU AI Act og ISO 42001</p>
+<hr>
+<h4>KRAVMATRISE FOR ANBUD (K-01 TIL K-10):</h4>
+<ul>
+    <li><strong>K-01 (A-krav):</strong> Sentral AI Gateway som isolerer fagsystemer (No Vendor Lock-in).</li>
+    <li><strong>K-02 (A-krav):</strong> Automatisk PII-skjerming før sending til eksterne språkmodeller.</li>
+    <li><strong>K-03 (A-krav):</strong> Drift innenfor EU/EØS med eksplisitt forbud mot leverandørtrening på kommunens data.</li>
+    <li><strong>K-04 (A-krav):</strong> Sømløs Entra ID-integrasjon med arvet tilgangsstyring (RBAC/ABAC).</li>
+    <li><strong>K-05 (A-krav):</strong> Integrert Modellregister (Model Registry) med Staging/Production og CI/CD.</li>
+    <li><strong>K-06 (A-krav):</strong> Lovpålagt audit logging jf. EU AI Act art. 26.</li>
+    <li><strong>K-07 (A-krav):</strong> Observability-dashbord for datadrift, presisjon, latency og FinOps.</li>
+    <li><strong>K-08 (B-krav):</strong> Automatisert benchmarking mot Ground Truth-testsett.</li>
+    <li><strong>K-09 (A-krav):</strong> Teknisk nødknapp (Kill-Switch) med manuell fallback.</li>
+    <li><strong>K-10 (B-krav):</strong> SLA på minimum 99,5 % oppetid for produksjonsendepunkter.</li>
+</ul>`
+            },
             "SAKSFREMLEGG": {
                 title: "MAL: Politisk Saksfremlegg (Kommuneloven § 14-5 & § 14-6)",
                 file: "templates/MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.docx",
