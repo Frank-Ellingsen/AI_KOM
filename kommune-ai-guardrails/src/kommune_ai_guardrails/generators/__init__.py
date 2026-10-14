@@ -11,7 +11,14 @@ from .excel_evm_generator import generate_project_controller_evm_model
 from .excel_cfo_generator import generate_cfo_executive_konsern_model
 from .excel_hr_generator import generate_hr_lonn_vikar_monitor_model
 from .powerpoint_generator import generate_bystyret_deck
-from .word_saksfremlegg_generator import generate_saksfremlegg_docx, generate_hop_notat_docx
+from .word_saksfremlegg_generator import (
+    generate_saksfremlegg_docx,
+    generate_hop_notat_docx,
+    generate_raadmann_notat_docx,
+    generate_sektornotat_oppvekst_docx,
+    generate_prosjektkontroll_capex_docx,
+    generate_avviksnotat_enhetsleder_docx,
+)
 from .powerbi_pbip_generator import build_pbip_project
 
 # Aliases for convenience
@@ -32,5 +39,10 @@ __all__ = [
     "generate_politisk_saksfremlegg",
     "generate_hop_notat_docx",
     "generate_hop_notat",
+    "generate_raadmann_notat_docx",
+    "generate_sektornotat_oppvekst_docx",
+    "generate_prosjektkontroll_capex_docx",
+    "generate_avviksnotat_enhetsleder_docx",
     "build_pbip_project",
 ]
+

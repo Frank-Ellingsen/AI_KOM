@@ -18,7 +18,11 @@ from kommune_ai_guardrails.generators.excel_cfo_generator import generate_cfo_ex
 from kommune_ai_guardrails.generators.excel_hr_generator import generate_hr_lonn_vikar_monitor_model
 from kommune_ai_guardrails.generators.word_saksfremlegg_generator import (
     generate_saksfremlegg_docx,
-    generate_hop_notat_docx
+    generate_hop_notat_docx,
+    generate_raadmann_notat_docx,
+    generate_sektornotat_oppvekst_docx,
+    generate_prosjektkontroll_capex_docx,
+    generate_avviksnotat_enhetsleder_docx,
 )
 from kommune_ai_guardrails.generators.powerbi_pbip_generator import build_pbip_project
 
@@ -92,15 +96,41 @@ def test_excel_generators(tmp_path):
 
 
 def test_word_generators(tmp_path):
+    # 1. Bystyret Saksfremlegg (Nivå 1)
     doc1 = tmp_path / "test_saksfremlegg.docx"
     out1 = generate_saksfremlegg_docx(output_path=str(doc1))
     assert Path(out1).exists()
     assert Path(out1).stat().st_size > 10000
 
+    # 2. HØP Notat (Nivå 2)
     doc2 = tmp_path / "test_hop.docx"
     out2 = generate_hop_notat_docx(output_path=str(doc2))
     assert Path(out2).exists()
     assert Path(out2).stat().st_size > 10000
+
+    # 3. Rådmann Strakstiltak (Nivå 2)
+    doc3 = tmp_path / "test_raadmann.docx"
+    out3 = generate_raadmann_notat_docx(output_path=str(doc3))
+    assert Path(out3).exists()
+    assert Path(out3).stat().st_size > 10000
+
+    # 4. Sektorstyring Oppvekst (Nivå 3)
+    doc4 = tmp_path / "test_oppvekst.docx"
+    out4 = generate_sektornotat_oppvekst_docx(output_path=str(doc4))
+    assert Path(out4).exists()
+    assert Path(out4).stat().st_size > 10000
+
+    # 5. Capex Statusnotat EVM (Nivå 4)
+    doc5 = tmp_path / "test_capex.docx"
+    out5 = generate_prosjektkontroll_capex_docx(output_path=str(doc5))
+    assert Path(out5).exists()
+    assert Path(out5).stat().st_size > 10000
+
+    # 6. Avviksnotat Enhetsleder (Nivå 5)
+    doc6 = tmp_path / "test_enhetsleder.docx"
+    out6 = generate_avviksnotat_enhetsleder_docx(output_path=str(doc6))
+    assert Path(out6).exists()
+    assert Path(out6).stat().st_size > 10000
 
 
 def test_powerbi_pbip_generator():

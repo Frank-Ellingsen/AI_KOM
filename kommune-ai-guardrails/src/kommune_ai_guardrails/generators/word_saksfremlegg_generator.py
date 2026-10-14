@@ -504,7 +504,403 @@ def generate_hop_notat_docx(output_path: Optional[str] = None) -> str:
     return str(target)
 
 
+def generate_raadmann_notat_docx(output_path: Optional[str] = None) -> str:
+    """
+    Nivå 2: Månedsrapport for Kommunedirektøren med administrativ strakstiltaksplan.
+    """
+    if output_path is None:
+        target = Path(__file__).resolve().parents[4] / "word" / "Manedsrapport_Kommunedirektor_Strakstiltak_2026.docx"
+    else:
+        target = Path(output_path)
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    doc = Document()
+
+    for section in doc.sections:
+        section.top_margin = Inches(0.984)
+        section.bottom_margin = Inches(0.984)
+        section.left_margin = Inches(0.984)
+        section.right_margin = Inches(0.984)
+
+        header = section.header
+        hp = header.paragraphs[0]
+        hp.text = "KRISTIANSAND KOMMUNE  •  KOMMUNEDIREKTØRENS LEDERGRUPPE"
+        hp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        hp.runs[0].font.name = "Arial"
+        hp.runs[0].font.size = Pt(8.5)
+        hp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+        footer = section.footer
+        fp = footer.paragraphs[0]
+        fp.text = "Månedsrapport Økonomi & Drift  |  Internkontroll jf. Kommuneloven § 14-5  |  Offl. § 14"
+        fp.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        fp.runs[0].font.name = "Arial"
+        fp.runs[0].font.size = Pt(8.5)
+        fp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+    # Tittel
+    h1 = doc.add_paragraph()
+    h1.paragraph_format.space_before = Pt(12)
+    h1.paragraph_format.space_after = Pt(4)
+    r1 = h1.add_run("Månedsrapport Kommunedirektøren: Administrativ Strakstiltaksplan 2026")
+    r1.font.name = "Arial"
+    r1.font.size = Pt(18)
+    r1.font.bold = True
+    r1.font.color.rgb = COLOR_NAVY_RGB
+
+    p_sub = doc.add_paragraph()
+    format_paragraph(p_sub, space_after=12)
+    r_sub = p_sub.add_run("Månedlig konsernoppfølging, vikarstopp og likviditetsanalyse per 2. Tertial.")
+    r_sub.font.name = "Arial"
+    r_sub.font.size = Pt(11)
+    r_sub.font.italic = True
+    r_sub.font.color.rgb = COLOR_GRAY_RGB
+
+    # 1. Hovedstatus
+    p_h = doc.add_paragraph()
+    p_h.add_run("1. Finansiell Hovedstatus & Konsernavvik").bold = True
+    p_h.runs[0].font.size = Pt(13)
+    p_h.runs[0].font.color.rgb = COLOR_NAVY_RGB
+
+    p_txt1 = doc.add_paragraph()
+    format_paragraph(p_txt1)
+    p_txt1.add_run(
+        "Akkumulert driftsregnskap per august 2026 viser et samlet netto merforbruk på kr 2 489 000 mot periodisert budsjett. "
+        "Hovedårsaken til avviket er konsentrert til Sektor Oppvekst (kr 1 420 000 i vikarutgifter) og Sektor Helse og Mestring "
+        "(kr 1 069 000 i overtid og døgnvakttillegg). Kommunedirektøren iverksetter umiddelbart fire administrative strakstiltak (ACT-01 til ACT-04) "
+        "for å bringe helårsdriften i balanse innenfor vedtatt årsbudsjett jf. Kommuneloven § 14-5."
+    )
+
+    # Tabell over administrative strakstiltak
+    table = doc.add_table(rows=5, cols=4)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    add_table_header_repeat(table)
+
+    headers = ["Tiltak ID", "Område / Sektor", "Beskrivelse av Strakstiltak", "Månedlig Effekt (kr)"]
+    for c_i, th in enumerate(headers):
+        cell = table.cell(0, c_i)
+        cell.text = th
+        cell.paragraphs[0].runs[0].font.bold = True
+        cell.paragraphs[0].runs[0].font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        set_cell_background(cell, "1E3A8A")
+        set_cell_margins(cell, top=100, bottom=100, left=140, right=140)
+
+    actions = [
+        ("ACT-01", "Oppvekst & Utdanning", "Vikarstopp for korttidsfravær < 3 dager; intern omdisponering", "170 000 kr"),
+        ("ACT-02", "Helse og Mestring", "Omlegging av langvakter og restriksjoner på innleie fra byrå", "145 000 kr"),
+        ("ACT-03", "Kultur & Innbyggerdialog", "Innstillinger i eksterne konsulentkjøp og kursvirksomhet", "65 000 kr"),
+        ("ACT-04", "Fellestjenester / IKT", "Konsolidering av programvarelisenser og utstyrsanskaffelser", "80 000 kr")
+    ]
+
+    for r_idx, row in enumerate(actions, start=1):
+        for c_idx, val in enumerate(row):
+            cell = table.cell(r_idx, c_idx)
+            cell.text = val
+            p = cell.paragraphs[0]
+            p.runs[0].font.name = "Arial"
+            p.runs[0].font.size = Pt(9)
+            if c_idx == 3:
+                p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+                p.runs[0].font.bold = True
+                p.runs[0].font.color.rgb = COLOR_GREEN_RGB
+            elif c_idx == 0:
+                p.runs[0].font.bold = True
+            set_cell_background(cell, "F9FAFB" if r_idx % 2 == 1 else "FFFFFF")
+            set_cell_margins(cell, top=100, bottom=100, left=140, right=140)
+
+    # Signatur
+    p_sig = doc.add_paragraph()
+    p_sig.paragraph_format.space_before = Pt(20)
+    p_sig.add_run("Kristiansand, " + datetime.datetime.now().strftime("%d.%m.%Y") + "\n\n").italic = True
+    p_sig.add_run("Camilla Dunsæd\nKommunedirektør").bold = True
+
+    doc.save(str(target))
+    return str(target)
+
+
+def generate_sektornotat_oppvekst_docx(output_path: Optional[str] = None) -> str:
+    """
+    Nivå 3: Sektorstyringsnotat fra Kommunalsjef Oppvekst til Kommunedirektøren.
+    """
+    if output_path is None:
+        target = Path(__file__).resolve().parents[4] / "word" / "Sektorstyringsnotat_Kommunalsjef_Oppvekst_2026.docx"
+    else:
+        target = Path(output_path)
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    doc = Document()
+
+    for section in doc.sections:
+        section.top_margin = Inches(0.984)
+        section.bottom_margin = Inches(0.984)
+        section.left_margin = Inches(0.984)
+        section.right_margin = Inches(0.984)
+
+        header = section.header
+        hp = header.paragraphs[0]
+        hp.text = "KRISTIANSAND KOMMUNE  •  SEKTOR OPPVEKST OG UTDANNING"
+        hp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        hp.runs[0].font.size = Pt(8.5)
+        hp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+        footer = section.footer
+        fp = footer.paragraphs[0]
+        fp.text = "Sektorstyringsnotat Grunnskole  |  Enhetsoppfølging T2 2026"
+        fp.runs[0].font.size = Pt(8.5)
+        fp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+    h1 = doc.add_paragraph()
+    h1.paragraph_format.space_before = Pt(12)
+    h1.paragraph_format.space_after = Pt(4)
+    r1 = h1.add_run("Sektorstyringsnotat: Oppvekst & Grunnskole 2026")
+    r1.font.name = "Arial"
+    r1.font.size = Pt(18)
+    r1.font.bold = True
+    r1.font.color.rgb = COLOR_NAVY_RGB
+
+    p_sub = doc.add_paragraph()
+    format_paragraph(p_sub, space_after=12)
+    p_sub.add_run("Enhetsvis avviksmatrise, vikarforbruk og tiltak for lærertetthet per 2. Tertial.").italic = True
+
+    p_txt = doc.add_paragraph()
+    format_paragraph(p_txt)
+    p_txt.add_run(
+        "Sektor Oppvekst har et akkumulert merforbruk på kr 1 420 000 ved utgangen av august. Merforbruket drives av høyt "
+        "korttidsfravær og innleie av vikarer i grunnskolene (Art 1020). Kommunalsjefen har gjennomgått samtlige enheter og etablert "
+        "en intern vikarring mellom skolene i Vågsbygd og Grim for å redusere kjøp fra kommersielle vikarbyråer."
+    )
+
+    # Skoleoversikt tabell
+    table = doc.add_table(rows=5, cols=5)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    add_table_header_repeat(table)
+
+    headers = ["Skoleenhet", "Elevtall", "Budsjett YTD", "Regnskap YTD", "Avvik YTD (Merforbruk)"]
+    for c_i, th in enumerate(headers):
+        cell = table.cell(0, c_i)
+        cell.text = th
+        cell.paragraphs[0].runs[0].font.bold = True
+        cell.paragraphs[0].runs[0].font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        set_cell_background(cell, "1E3A8A")
+        set_cell_margins(cell, top=100, bottom=100, left=120, right=120)
+
+    schools = [
+        ("Grim Skole (Enhet 2020)", "480", "4 150 000", "4 720 000", "+570 000 kr"),
+        ("Lovisenlev Skole", "390", "3 400 000", "3 710 000", "+310 000 kr"),
+        ("Tangvall Skole", "310", "2 650 000", "2 890 000", "+240 000 kr"),
+        ("Vågsbygd Skole", "340", "2 250 000", "2 550 000", "+300 000 kr")
+    ]
+
+    for r_idx, row in enumerate(schools, start=1):
+        for c_idx, val in enumerate(row):
+            cell = table.cell(r_idx, c_idx)
+            cell.text = val
+            p = cell.paragraphs[0]
+            if c_idx >= 2:
+                p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            if c_idx == 4:
+                p.runs[0].font.bold = True
+                p.runs[0].font.color.rgb = COLOR_RED_RGB
+            set_cell_background(cell, "F9FAFB" if r_idx % 2 == 1 else "FFFFFF")
+            set_cell_margins(cell, top=80, bottom=80, left=120, right=120)
+
+    p_sig = doc.add_paragraph()
+    p_sig.paragraph_format.space_before = Pt(20)
+    p_sig.add_run("Kristin E. Bakke\nKommunalsjef Oppvekst").bold = True
+
+    doc.save(str(target))
+    return str(target)
+
+
+def generate_prosjektkontroll_capex_docx(output_path: Optional[str] = None) -> str:
+    """
+    Nivå 4: Prosjektkontroll og Investeringstilsyn (Capex) for Kontrollutvalget jf. ISO 21508.
+    """
+    if output_path is None:
+        target = Path(__file__).resolve().parents[4] / "word" / "Prosjektkontroll_Capex_Statusnotat_2026.docx"
+    else:
+        target = Path(output_path)
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    doc = Document()
+
+    for section in doc.sections:
+        section.top_margin = Inches(0.984)
+        section.bottom_margin = Inches(0.984)
+        section.left_margin = Inches(0.984)
+        section.right_margin = Inches(0.984)
+
+        header = section.header
+        hp = header.paragraphs[0]
+        hp.text = "KRISTIANSAND KOMMUNE  •  KONTROLLUTVALGET & BYUTVIKLING"
+        hp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        hp.runs[0].font.size = Pt(8.5)
+        hp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+        footer = section.footer
+        fp = footer.paragraphs[0]
+        fp.text = "Capex Statusrapport ISO 21508 EVM  |  Prosjektkontroll Frank Ellingsen"
+        fp.runs[0].font.size = Pt(8.5)
+        fp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+    h1 = doc.add_paragraph()
+    h1.paragraph_format.space_before = Pt(12)
+    h1.paragraph_format.space_after = Pt(4)
+    r1 = h1.add_run("Prosjektkontroll & Investeringstilsyn (Capex): Statusnotat 2026")
+    r1.font.name = "Arial"
+    r1.font.size = Pt(18)
+    r1.font.bold = True
+    r1.font.color.rgb = COLOR_NAVY_RGB
+
+    p_sub = doc.add_paragraph()
+    format_paragraph(p_sub, space_after=12)
+    p_sub.add_run("Earned Value Management (EVM) analyse av Vågsbygd Skole, Randesund Boenhet og VA-anlegg.").italic = True
+
+    p_txt = doc.add_paragraph()
+    format_paragraph(p_txt)
+    p_txt.add_run(
+        "Project Controller Frank Ellingsen har gjennomført en fullstendig EVM-avstemming av kommunens tre største investeringsprosjekter. "
+        "Samlet portefølje har en vedtatt kostnadsramme (BAC) på kr 517 000 000. Per 31.08.2026 er påløpt kostnad (AC) kr 292 900 000, "
+        "mens opptjent verdi (EV) utgjør kr 262 900 000. Dette gir et samlet kostnadsavvik (CV) på kr -30 000 000 og en portefølje-CPI på 0,893. "
+        "Sluttoverskridelsen (VAC) estimeres til kr 80 448 796, som anbefales delvis inndekket gjennom trekk på P85-usikkerhetsavsetningene."
+    )
+
+    # EVM Tabell
+    table = doc.add_table(rows=4, cols=6)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    add_table_header_repeat(table)
+
+    headers = ["Prosjekt", "Vedtatt Ramme (BAC)", "Påløpt (AC)", "Opptjent (EV)", "Kostn.indeks (CPI)", "Sluttprognose (EAC)"]
+    for c_i, th in enumerate(headers):
+        cell = table.cell(0, c_i)
+        cell.text = th
+        cell.paragraphs[0].runs[0].font.bold = True
+        cell.paragraphs[0].runs[0].font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        set_cell_background(cell, "1E3A8A")
+        set_cell_margins(cell, top=100, bottom=100, left=100, right=100)
+
+    projects = [
+        ("Vågsbygd Skole (PROJ-101)", "185 000 000", "104 500 000", "95 000 000", "0,909", "208 251 070 kr"),
+        ("Randesund Boenhet (PROJ-201)", "240 000 000", "139 100 000", "117 300 000", "0,843", "299 529 558 kr"),
+        ("VA Hovedledning (PROJ-301)", "92 000 000", "49 300 000", "50 600 000", "1,027", "89 668 168 kr")
+    ]
+
+    for r_idx, row in enumerate(projects, start=1):
+        for c_idx, val in enumerate(row):
+            cell = table.cell(r_idx, c_idx)
+            cell.text = val
+            p = cell.paragraphs[0]
+            if c_idx >= 1:
+                p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            if c_idx == 4 and "0," in val:
+                p.runs[0].font.bold = True
+                p.runs[0].font.color.rgb = COLOR_RED_RGB
+            set_cell_background(cell, "F9FAFB" if r_idx % 2 == 1 else "FFFFFF")
+            set_cell_margins(cell, top=80, bottom=80, left=100, right=100)
+
+    p_sig = doc.add_paragraph()
+    p_sig.paragraph_format.space_before = Pt(20)
+    p_sig.add_run("Frank Ellingsen\nProject Controller & BI-Spesialist").bold = True
+
+    doc.save(str(target))
+    return str(target)
+
+
+def generate_avviksnotat_enhetsleder_docx(output_path: Optional[str] = None) -> str:
+    """
+    Nivå 5: Operativ Avviksrapport & Handlingsplan for Enhetsleder (MAL-AVVIK-EFFEKT-001).
+    """
+    if output_path is None:
+        target = Path(__file__).resolve().parents[4] / "word" / "Avviksnotat_og_Handlingsplan_Enhetsleder_2026.docx"
+    else:
+        target = Path(output_path)
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    doc = Document()
+
+    for section in doc.sections:
+        section.top_margin = Inches(0.984)
+        section.bottom_margin = Inches(0.984)
+        section.left_margin = Inches(0.984)
+        section.right_margin = Inches(0.984)
+
+        header = section.header
+        hp = header.paragraphs[0]
+        hp.text = "KRISTIANSAND KOMMUNE  •  ENHET 202 GRUNNSKOLE"
+        hp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        hp.runs[0].font.size = Pt(8.5)
+        hp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+        footer = section.footer
+        fp = footer.paragraphs[0]
+        fp.text = "Standard Avviksmønster MAL-AVVIK-EFFEKT-001  |  Stage-Gate Port 9 Sign-off"
+        fp.runs[0].font.size = Pt(8.5)
+        fp.runs[0].font.color.rgb = COLOR_GRAY_RGB
+
+    h1 = doc.add_paragraph()
+    h1.paragraph_format.space_before = Pt(12)
+    h1.paragraph_format.space_after = Pt(4)
+    r1 = h1.add_run("Operativ Avviksrapport & Handlingsplan: Enhet 202 Grunnskole")
+    r1.font.name = "Arial"
+    r1.font.size = Pt(18)
+    r1.font.bold = True
+    r1.font.color.rgb = COLOR_NAVY_RGB
+
+    p_sub = doc.add_paragraph()
+    format_paragraph(p_sub, space_after=12)
+    p_sub.add_run("Månedlig avviksoppfølging, årsaksdiagnose og 30-dagers tiltaksplan for rektor.").italic = True
+
+    steps = [
+        ("1. Avvik Hittil i År (YTD Variance)",
+         "Enhet 202 Grunnskole har per august 2026 et samlet merforbruk på kr 1 420 000 (+11,4 % mot periodisert budsjett). "
+         "Vedtatt årsramme er kr 18 500 000. Dersom ingen tiltak iverksettes, vil helårsavviket eskalere til kr 2 130 000."),
+        
+        ("2. Årsak til Avvik (Root Cause via kontonivå)",
+         "Kontoart 1020 (Vikarer) viser kr 870 000 i merforbruk som følge av en fraværsbølge blant pedagogisk personale (12,8 % sykefravær). "
+         "Kontoart 1090 (Overtid) har et merforbruk på kr 420 000 på grunn av pålegg om sensur og eksamensavvikling. "
+         "Kontoart 1600 (NAV Refusjoner) viser etterslep på kr 150 000 på grunn av saksbehandlingstid hos NAV."),
+        
+        ("3. Forslag til Action Plan (0–30 dager og 30–90 dager)",
+         "Tiltak 1 (0–30 dgr): Innføring av administrativt vikarstopp for korttidsfravær under 3 dager. Etablering av intern vikarring.\n"
+         "Tiltak 2 (30–90 dgr): Raskere elektronisk innsending av inntektsskjema til NAV for å fremskynde refusjoner.\n"
+         "Tiltak 3 (30–90 dgr): Overtidsstopp og godkjenning av all mertid direkte hos rektor."),
+        
+        ("4. Kvantifisert Effekt & EOY Balanse",
+         "Implementering av vikarstopp gir en verifisert månedlig besparelse på kr 170 000 fra 1. september (totalt kr 680 000 i 2026). "
+         "Akselerert NAV-refusjon frigjør kr 150 000. Samlet innsparing på kr 830 000 reduserer forventet sluttavvik til kr 590 000, "
+         "som foreslås dekket gjennom omdisponering fra disposisjonsfondet jf. Kommuneloven § 14-5.")
+    ]
+
+    for s_title, s_body in steps:
+        h2 = doc.add_paragraph()
+        h2.paragraph_format.space_before = Pt(14)
+        h2.paragraph_format.space_after = Pt(4)
+        r = h2.add_run(s_title)
+        r.font.name = "Arial"
+        r.font.size = Pt(13)
+        r.font.bold = True
+        r.font.color.rgb = COLOR_NAVY_RGB
+
+        p_b = doc.add_paragraph()
+        format_paragraph(p_b)
+        r_b = p_b.add_run(s_body)
+        r_b.font.name = "Arial"
+        r_b.font.size = Pt(10.5)
+        r_b.font.color.rgb = COLOR_DARK_RGB
+
+    p_sig = doc.add_paragraph()
+    p_sig.paragraph_format.space_before = Pt(20)
+    p_sig.add_run("Frank Ellingsen\nSenior Controller (Attestert Stage-Gate Port 9)").bold = True
+
+    doc.save(str(target))
+    return str(target)
+
+
 if __name__ == "__main__":
     out1 = generate_saksfremlegg_docx()
     out2 = generate_hop_notat_docx()
-    print(f"Word-dokumenter opprettet:\n- {out1}\n- {out2}")
+    out3 = generate_raadmann_notat_docx()
+    out4 = generate_sektornotat_oppvekst_docx()
+    out5 = generate_prosjektkontroll_capex_docx()
+    out6 = generate_avviksnotat_enhetsleder_docx()
+    print("Alle 6 Word-dokumenter generert med suksess!")
