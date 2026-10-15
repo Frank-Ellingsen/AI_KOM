@@ -2682,14 +2682,14 @@
                     <span>👥 Månedsmøter (Nivå 1–3)</span>
                     <span class="badge-phase" style="background:var(--navy-dark); color:#fff;">M10</span>
                 </a>
+                <a href="#rag-seksjon" class="sidebar-nav-item">
+                    <span>🤖 Glass-Box RAG & Juss</span>
+                </a>
                 <a href="#triage-seksjon" class="sidebar-nav-item">
                     <span>📋 Smart Triage (16 Enheter)</span>
                 </a>
                 <a href="#saksflyt" class="sidebar-nav-item">
                     <span>🔄 Saksgenerator & Notat</span>
-                </a>
-                <a href="#rag-seksjon" class="sidebar-nav-item">
-                    <span>🤖 Glass-Box RAG & Juss</span>
                 </a>
                 <a href="#powerbi-showcase" class="sidebar-nav-item">
                     <span>📊 Power BI & DAX Hub</span>
@@ -2721,6 +2721,50 @@
                 <a class="sidebar-nav-item" onclick="openUserGuide('TUFTE')">
                     <span>📊 Tufte Data-Ink Standard</span>
                 </a>
+                <a href="bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md" target="_blank" class="sidebar-nav-item">
+                    <span>📅 Styringskalender 2026/27</span>
+                </a>
+                <a href="revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md" target="_blank" class="sidebar-nav-item">
+                    <span>🛡️ Sjekkliste & Lukking</span>
+                </a>
+                <a href="revisjon-og-kontroll/TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md" target="_blank" class="sidebar-nav-item">
+                    <span>📝 Politisk Notat (T2)</span>
+                </a>
+            </div>
+
+            <!-- 4. Maler & Hurtignedlasting -->
+            <div class="sidebar-nav-group">
+                <div class="sidebar-nav-header">Maler & Hurtignedlasting</div>
+                <a href="excel/Kommune_FAST_Finansiell_Modell_2026.xlsx" download class="sidebar-nav-item" title="Last ned 5-tabs FAST finansiell modell i Excel">
+                    <span>📊 Excel FAST Modell</span>
+                    <span class="badge-phase" style="background:#107c41; color:#fff;">.xlsx</span>
+                </a>
+                <a href="powerpoint/Presentasjon_Bystyret_Tertialrapport_2026.pptx" download class="sidebar-nav-item" title="Last ned offisiell PowerPoint-presentasjon for Bystyret">
+                    <span>🖥️ PowerPoint Bystyret</span>
+                    <span class="badge-phase" style="background:#1e3a8a; color:#fff;">.pptx</span>
+                </a>
+                <a href="word/Saksfremlegg_Bystyret_Budsjettendring_2026.docx" download class="sidebar-nav-item" title="Last ned politisk saksfremlegg til Bystyret">
+                    <span>📝 Word Saksfremlegg</span>
+                    <span class="badge-phase" style="background:#0056b3; color:#fff;">.docx</span>
+                </a>
+                <a href="powerbi/05_Komplett_Kommune_DAX_Bundle.dax" download class="sidebar-nav-item" title="Last ned komplett DAX-måltallspakke for 7 layouts">
+                    <span>📈 Power BI DAX Pakke</span>
+                    <span class="badge-phase" style="background:#b45309; color:#fff;">.dax</span>
+                </a>
+                <a href="reports/Kommune_Project_Controller_Reporting_2026.xlsx" download class="sidebar-nav-item" title="Master prosjektcontroller rapport">
+                    <span>📊 Excel Master (EVM)</span>
+                    <span class="badge-phase" style="background:#107c41; color:#fff;">.xlsx</span>
+                </a>
+                <a href="reports/Mal_Saksbehandling_Tiltak_Avstemming_2026.xlsx" download class="sidebar-nav-item" title="Saksbehandlingsmodell for tiltak">
+                    <span>📑 Saksbehandlingsmodell</span>
+                    <span class="badge-phase" style="background:#107c41; color:#fff;">.xlsx</span>
+                </a>
+                <a href="#dokumentbank" onclick="filterDocs('AIPAKKE')" class="sidebar-nav-item" title="Filter for 9 AI-implementeringsmaler">
+                    <span>🎯 AI-Implementering (9)</span>
+                </a>
+                <a href="#dokumentbank" onclick="filterDocs('MLOPS')" class="sidebar-nav-item" title="Filter for 6 MLOps-maler">
+                    <span>⚙️ MLOps-Pakke (6)</span>
+                </a>
             </div>
         </div>
 
@@ -2732,9 +2776,20 @@
             </div>
             <div style="font-size:10.5px; color:var(--text-secondary); line-height:1.4;">
                 • Vektor-DB: <strong>sqlite-vec</strong> (3 509 biter)<br>
-                • AI-Motor: <strong>Gemini 3.8 Flash</strong> (0 % CPU)
+                • AI-Motor: <strong id="sb-engine-label">Gemini 3.8 Flash</strong> (0 % CPU)
             </div>
-            <a href="http://localhost:8501" target="_blank" class="btn btn-primary btn-sm" style="width:100%; justify-content:center; margin-top:4px;" title="Åpne full Streamlit Web-applikasjon">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:4px;">
+                <button class="btn btn-sm" id="btn-update-vectordb" onclick="triggerVectorDbUpdate()" style="font-size:10.5px; padding:3px 6px; justify-content:center;" title="Oppdater lokal sqlite-vec database">
+                    ⚡ Oppdater DB
+                </button>
+                <button class="btn btn-sm" onclick="exportAuditTrail()" style="font-size:10.5px; padding:3px 6px; justify-content:center;" title="Eksporter SHA-256 revisjonslogg">
+                    📥 Audit Log
+                </button>
+            </div>
+            <button class="btn btn-sm" id="engine-btn" onclick="toggleEngine()" style="width:100%; justify-content:center; margin-top:2px; font-size:10.5px; padding:3px;" title="Veksle mellom Gemini og lokal Ollama">
+                🔄 Bytt Motor
+            </button>
+            <a href="http://localhost:8501" target="_blank" class="btn btn-primary btn-sm" style="width:100%; justify-content:center; margin-top:2px;" title="Åpne full Streamlit Web-applikasjon">
                 🚀 Åpne Streamlit (Port 8501)
             </a>
         </div>
@@ -3062,6 +3117,73 @@
         </div>
     </section>
 
+    <!-- =======================================================================
+         5B. RAG REGELVERKSASSISTENT & JUSS (GLASS-BOX AI)
+         ======================================================================= -->
+    <div class="panel" id="rag-seksjon" style="margin-bottom: 24px;">
+            <div class="section-header">
+                <span>🤖 RAG Regelverksassistent & Juss</span>
+                <span class="status-badge">Glass-Box (§)</span>
+            </div>
+
+            <div class="quick-queries">
+                <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?')">
+                    § 14-5 Budsjettendring
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvordan skal vikarutgifter og sykepenger periodiseres i KOSTRA?')">
+                    KOSTRA Vikarer
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvilke fullmakter har kommunedirektøren for omdisponering?')">
+                    Delegasjon fullmakt
+                </span>
+            </div>
+
+            <div class="rag-search-box">
+                <input type="text" id="rag-input" class="rag-input" placeholder="Still et spørsmål om lovverk eller økonomireglement..." 
+                       value="Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?"
+                       aria-label="Søk i lovverk og økonomireglement"
+                       onkeydown="if(event.key==='Enter') executeMockRAG()">
+                <button class="btn btn-primary" onclick="executeMockRAG()">🔍 Søk</button>
+            </div>
+
+            <div class="rag-response-card" id="rag-output">
+                <strong>Vurdering jf. Kommuneloven § 14-5:</strong><br/>
+                Dersom det i løpet av budsjettåret oppstår vesentlige avvik som truer budsjettmessig balanse eller realismekravet, plikter kommunedirektøren å fremme sak om endring av årsbudsjettet for Bystyret.<br/><br/>
+                For Oppvekst og utdanning må det avklares om merforbruket på vikarer (-645 000 kr) og overtid (-379 000 kr) kan dekkes ved omdisponering innenfor rammen, eller om det kreves inndekning via kommunens disposisjonsfond.
+                <div class="audit-meta-row">
+                    <span>Kilde: Kommuneloven § 14-5, Økonomireglementet § 3-1</span>
+                    <span id="audit-hash-display">SHA-256: 7f8a9b2c...3d4e</span>
+                </div>
+
+            <!-- HUMAN-IN-THE-LOOP SAKSBEHANDLING (PORT 9) -->
+            <div class="hitl-zone">
+                <div style="font-weight: 700; font-size: 12px; color: var(--navy-dark); margin-bottom: 6px;">
+                    🛡️ Stage-Gate Port 9: Menneskelig Overprøving (HITL Sign-Off)
+                </div>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="APPROVED" checked> 🟢 APPROVED (Godkjenn)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="MODIFIED"> 🟡 MODIFIED (Endre)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="REJECTED"> 🔴 REJECTED (Avvis)
+                    </label>
+                </div>
+                <textarea class="textarea-box" id="hitl-notes" placeholder="Saksbehandlers begrunnelse...">Reelt merforbruk bekreftet i Visma ERP. Foreslås dekket ved omdisponering i sak til Bystyret 28. september.</textarea>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="signAndSaveAudit()">
+                    🔒 Signer & Registrer med SHA-256 Stempel
+                </button>
+                <div id="sign-confirmation" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-weight: 600;">
+                    ✓ Signert og arkivert i Audit_AI_Actions!
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
     <!-- 6. ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
     <div class="monthly-cycle-banner" id="workflow-cycle-banner">
         <div class="monthly-cycle-header">
@@ -3156,77 +3278,7 @@
         </div>
     </div>
 
-    <!-- 6. HURTIG-HANDLINGER / TOOLBAR -->
-    <div class="hub-toolbar">
-        <a href="http://localhost:8501" target="_blank" class="btn btn-primary" title="Åpner lokal Streamlit-app på http://localhost:8501 (krever at start_kommune_ai.bat kjører lokalt)">
-            🚀 Åpne Streamlit (Port 8501)
-        </a>
-        <a href="powerpoint/Presentasjon_Bystyret_Tertialrapport_2026.pptx" download class="btn" style="background: #1e3a8a; color: white; border-color: #1e3a8a;" title="Last ned offisiell PowerPoint-presentasjon for Bystyret">
-            🖥️ PowerPoint Bystyret (.pptx)
-        </a>
-        <a href="excel/Kommune_FAST_Finansiell_Modell_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;" title="Last ned 5-tabs FAST finansiell modell i Excel">
-            📊 Excel FAST Modell (.xlsx)
-        </a>
-        <a href="word/Saksfremlegg_Bystyret_Budsjettendring_2026.docx" download class="btn" style="background: #0056b3; color: white; border-color: #0056b3;" title="Last ned politisk saksfremlegg til Bystyret">
-            📝 Word Saksfremlegg (.docx)
-        </a>
-        <a href="powerbi/05_Komplett_Kommune_DAX_Bundle.dax" download class="btn" style="background: #b45309; color: white; border-color: #b45309;" title="Last ned komplett DAX-måltallspakke for 7 layouts">
-            📈 Power BI DAX (.dax)
-        </a>
-        <a href="reports/Kommune_Project_Controller_Reporting_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;">
-            📊 Excel Master (.xlsx)
-        </a>
-        <a href="reports/Mal_Saksbehandling_Tiltak_Avstemming_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;">
-            📑 Saksbehandlingsmodell (.xlsx)
-        </a>
-        <a href="#dokumentbank" onclick="filterDocs('AIPAKKE')" class="btn btn-accent" style="background: var(--navy-dark); color: #fff; border-color: var(--navy-dark);">
-            🎯 AI-Implementering (9)
-        </a>
-        <a href="#dokumentbank" onclick="filterDocs('MLOPS')" class="btn btn-accent" style="background: #1B365D; color: #fff; border-color: #1B365D;">
-            ⚙️ MLOps-Pakke (6)
-        </a>
-        <button class="btn btn-accent" onclick="openUserGuide('START')" style="background:var(--navy-dark); color:#fff; border-color:var(--navy-dark);">
-            📖 Brukerguide & Håndbok
-        </button>
-        <a href="#dokumentbank" class="btn btn-accent">
-            📂 Dokument- & Malbank
-        </a>
-        <a href="#saksflyt" class="btn">
-            🔄 Saksbehandlingsflyt
-        </a>
-        <a href="#powerbi-showcase" class="btn">
-            📊 Power BI & DAX Hub
-        </a>
-        <a href="bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md" target="_blank" class="btn">
-            📅 Årshjul 2026/2027
-        </a>
-        <a href="revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md" target="_blank" class="btn">
-            🛡️ Sjekkliste & Lukking
-        </a>
-        <a href="revisjon-og-kontroll/TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md" target="_blank" class="btn">
-            📝 Politisk Notat (T2)
-        </a>
-        <button class="btn" id="btn-update-vectordb" onclick="triggerVectorDbUpdate()">
-            ⚡ Oppdater Vektor-DB
-        </button>
-        <button class="btn" onclick="exportAuditTrail()">
-            📥 Audit Log (JSON)
-        </button>
-        <button class="btn" onclick="filterEntity('ALL')">
-            🏛️ Alle
-        </button>
-        <button class="btn" onclick="filterEntity('SKOLE')">
-            🏫 Skole
-        </button>
-        <button class="btn" onclick="filterEntity('BO')">
-            🏥 Boenhet
-        </button>
-        <button class="btn" onclick="toggleEngine()" id="engine-btn">
-            🔄 Bytt Motor
-        </button>
-    </div>
-
-    <!-- VEKTORDATABASE STATUS & PROGRESS PANEL (TUFTE DATA-INK) -->
+<!-- VEKTORDATABASE STATUS & PROGRESS PANEL (TUFTE DATA-INK) -->
     <div id="vectordb-panel" class="vectordb-panel" style="display: none;">
         <div class="vectordb-panel-header">
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -3317,73 +3369,6 @@
             </div>
         </div>
     </section>
-
-
-
-    <!-- 8. RAG REGELVERK & HITL SIGN-OFF -->
-    <div class="panel" id="rag-seksjon" style="margin-bottom: 24px;">
-            <div class="section-header">
-                <span>🤖 RAG Regelverksassistent & Juss</span>
-                <span class="status-badge">Glass-Box (§)</span>
-            </div>
-
-            <div class="quick-queries">
-                <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?')">
-                    § 14-5 Budsjettendring
-                </span>
-                <span class="query-chip" onclick="setQuery('Hvordan skal vikarutgifter og sykepenger periodiseres i KOSTRA?')">
-                    KOSTRA Vikarer
-                </span>
-                <span class="query-chip" onclick="setQuery('Hvilke fullmakter har kommunedirektøren for omdisponering?')">
-                    Delegasjon fullmakt
-                </span>
-            </div>
-
-            <div class="rag-search-box">
-                <input type="text" id="rag-input" class="rag-input" placeholder="Still et spørsmål om lovverk eller økonomireglement..." 
-                       value="Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?"
-                       aria-label="Søk i lovverk og økonomireglement"
-                       onkeydown="if(event.key==='Enter') executeMockRAG()">
-                <button class="btn btn-primary" onclick="executeMockRAG()">🔍 Søk</button>
-            </div>
-
-            <div class="rag-response-card" id="rag-output">
-                <strong>Vurdering jf. Kommuneloven § 14-5:</strong><br/>
-                Dersom det i løpet av budsjettåret oppstår vesentlige avvik som truer budsjettmessig balanse eller realismekravet, plikter kommunedirektøren å fremme sak om endring av årsbudsjettet for Bystyret.<br/><br/>
-                For Oppvekst og utdanning må det avklares om merforbruket på vikarer (-645 000 kr) og overtid (-379 000 kr) kan dekkes ved omdisponering innenfor rammen, eller om det kreves inndekning via kommunens disposisjonsfond.
-                <div class="audit-meta-row">
-                    <span>Kilde: Kommuneloven § 14-5, Økonomireglementet § 3-1</span>
-                    <span id="audit-hash-display">SHA-256: 7f8a9b2c...3d4e</span>
-                </div>
-
-            <!-- HUMAN-IN-THE-LOOP SAKSBEHANDLING (PORT 9) -->
-            <div class="hitl-zone">
-                <div style="font-weight: 700; font-size: 12px; color: var(--navy-dark); margin-bottom: 6px;">
-                    🛡️ Stage-Gate Port 9: Menneskelig Overprøving (HITL Sign-Off)
-                </div>
-                <div class="radio-group">
-                    <label class="radio-label">
-                        <input type="radio" name="hitl_status" value="APPROVED" checked> 🟢 APPROVED (Godkjenn)
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="hitl_status" value="MODIFIED"> 🟡 MODIFIED (Endre)
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="hitl_status" value="REJECTED"> 🔴 REJECTED (Avvis)
-                    </label>
-                </div>
-                <textarea class="textarea-box" id="hitl-notes" placeholder="Saksbehandlers begrunnelse...">Reelt merforbruk bekreftet i Visma ERP. Foreslås dekket ved omdisponering i sak til Bystyret 28. september.</textarea>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="signAndSaveAudit()">
-                    🔒 Signer & Registrer med SHA-256 Stempel
-                </button>
-                <div id="sign-confirmation" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-weight: 600;">
-                    ✓ Signert og arkivert i Audit_AI_Actions!
-                </div>
-            </div>
-
-        </div>
-
-    </div>
 
     <!-- =======================================================================
          5B. SMART ARBEIDSKØ, ZERO-CLICK TRIAGE & 4-PUNKTS AVVIKSRAPPORT (V2)
@@ -5800,7 +5785,9 @@ SWITCH(
                 currentEngine = "Gemini 3.8 Flash (0 % CPU)";
             }
             document.getElementById("active-engine-label").innerText = currentEngine;
-            document.getElementById("engine-btn").innerText = `🔄 Bytt Motor (Aktiv: ${currentEngine.split(' ')[0]})`;
+            const sbEng = document.getElementById("sb-engine-label");
+            if (sbEng) sbEng.innerText = currentEngine;
+            document.getElementById("engine-btn").innerText = `🔄 Bytt Motor (${currentEngine.split(' ')[0]})`;
         }
 
         function filterEntity(entity) {
