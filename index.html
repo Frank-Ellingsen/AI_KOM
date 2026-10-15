@@ -3126,7 +3126,7 @@
                 <span class="status-badge">Glass-Box (§)</span>
             </div>
 
-            <div class="quick-queries">
+            <div class="quick-queries" id="rag-quick-queries">
                 <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?')">
                     § 14-5 Budsjettendring
                 </span>
@@ -3384,28 +3384,31 @@
                 Automatisk triage fra Visma ERP og Framsikt. Håndter rødflagg først; batch-godkjenn normale enheter.
             </p>
 
-            <div class="triage-item">
-                <div>
-                    <span class="triage-item-tag tag-critical">🔴 KRITISK</span>
-                    <strong>Enhet 202 Lovisenlev Skole</strong>: Vikarutgifter +1.24M (+12.4 %)
+            <div id="triage-items-container">
+                <!-- Dynamisk fylt for valgt virksomhetsområde via renderSectorTriage() -->
+                <div class="triage-item">
+                    <div>
+                        <span class="triage-item-tag tag-critical">🔴 KRITISK</span>
+                        <strong>Enhet 202 Lovisenlev Skole</strong>: Vikarutgifter +1.24M (+12.4 %)
+                    </div>
+                    <button class="btn btn-sm" onclick="loadTriageUnit('ENHET_202')">Behandle</button>
                 </div>
-                <button class="btn btn-sm" onclick="loadTriageUnit('ENHET_202')">Behandle</button>
-            </div>
-            <div class="triage-item">
-                <div>
-                    <span class="triage-item-tag tag-warning">🟠 ADVARSEL</span>
-                    <strong>Enhet 401 Helse & Mestring</strong>: Overtid +850k (+6.1 %)
+                <div class="triage-item">
+                    <div>
+                        <span class="triage-item-tag tag-warning">🟠 ADVARSEL</span>
+                        <strong>Enhet 401 Helse & Mestring</strong>: Overtid +850k (+6.1 %)
+                    </div>
+                    <button class="btn btn-sm" onclick="loadTriageUnit('ENHET_401')">Behandle</button>
                 </div>
-                <button class="btn btn-sm" onclick="loadTriageUnit('ENHET_401')">Behandle</button>
-            </div>
-            <div class="triage-item" id="green-units-row">
-                <div>
-                    <span class="triage-item-tag tag-normal">🟢 NORMAL</span>
-                    <span id="green-units-text"><strong>14 enheter</strong> innenfor avviksterskel (&plusmn;2.0 %)</span>
+                <div class="triage-item" id="green-units-row">
+                    <div>
+                        <span class="triage-item-tag tag-normal">🟢 NORMAL</span>
+                        <span id="green-units-text"><strong>14 enheter</strong> innenfor avviksterskel (&plusmn;2.0 %)</span>
+                    </div>
+                    <button class="btn btn-sm btn-primary" id="btn-batch-approve" onclick="batchApproveGreenUnits()">
+                        ⚡ Batch-godkjenn grønne
+                    </button>
                 </div>
-                <button class="btn btn-sm btn-primary" id="btn-batch-approve" onclick="batchApproveGreenUnits()">
-                    ⚡ Batch-godkjenn grønne
-                </button>
             </div>
             <div id="batch-approve-msg" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-family: var(--font-mono);">
                 ✓ 14 enheter batch-godkjent jf. delegeringsreglement! SHA256: 7a8b9c0d1e2f3a4b...
@@ -3597,9 +3600,13 @@
                 <div class="form-group">
                     <label>Velg Enhet / Sektor</label>
                     <select id="gen-enhet" class="form-select" onchange="updateGeneratedNote()">
-                        <option value="SKOLE">Kommunal Skole (KOSTRA 202 Oppvekst)</option>
-                        <option value="BO">Kommunal Boenhet (KOSTRA 254 Helse & Mestring)</option>
-                        <option value="BEGGE">Samlet Virksomhetsområde (Skole + Bo)</option>
+                        <option value="BO">🏥 1. Helse og mestring (KOSTRA 254 Sykehjem & Omsorg)</option>
+                        <option value="SKOLE">🏫 2. Oppvekst og utdanning (KOSTRA 202 Grunnskole)</option>
+                        <option value="BY">🏗️ 3. By- og stedsutvikling (KOSTRA 340/345 VAR & Plan)</option>
+                        <option value="KULTUR">🎭 4. Kultur og dialog (KOSTRA 380/385 Idrett & Bibliotek)</option>
+                        <option value="ORG">💻 5. Organisasjon & teknologi (KOSTRA 130 IKT & FinOps)</option>
+                        <option value="OKO">⚖️ 6. Økonomi & styring (KOSTRA 180/190 Finans & Gjeld)</option>
+                        <option value="KONSERN">🌐 Konsernoversikt (Alle 6 virksomhetsområder)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -3664,7 +3671,7 @@
                         <th>Varslingsstatus</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="pbi-kostra-tbody">
                     <tr style="background: #f8fafc; font-weight: 700;">
                         <td>▼ 01 OPPVEKST OG UTDANNING</td>
                         <td>Sektor Oppvekst</td>
@@ -3730,7 +3737,7 @@
                         <th>Risikostatus</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="pbi-capex-tbody">
                     <tr>
                         <td>Vågsbygd Barneskole (Nybygg)</td>
                         <td>PROJ-101</td>
@@ -4183,6 +4190,18 @@ SWITCH(
             Kvalitetssikrede maler utarbeidet for controllere, rådgivere og enhetsledere i Kristiansand kommune. Alle dokumenter overholder Edward Tuftes standarder og kommunelovens krav.
         </p>
 
+                <!-- Sektorfilter-indikator for Dokumentbank -->
+        <div id="docbank-sector-filter-banner" style="background:#e0f2fe; border:1px solid #bae6fd; border-left:4px solid var(--accent-blue); padding:10px 14px; border-radius:3px; margin-bottom:14px; font-size:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+                <span>🎯 Dokumentbank tilpasset valgt område: <strong id="docbank-active-sector-label" style="color:var(--navy-dark);">🌐 Konsern (Alle)</strong></span>
+                <span id="docbank-sector-count-badge" class="status-badge" style="margin-left:8px; font-size:10px;">Viser alle maler</span>
+            </div>
+            <div style="display:flex; gap:6px;">
+                <button type="button" class="btn btn-sm" onclick="clearDocbankSectorFilter()" style="font-size:11px; padding:3px 8px; background:#ffffff; border-color:#93c5fd;">
+                    Vis alle maler ufiltrert
+                </button>
+            </div>
+        </div>
         <!-- Filter-faner -->
         <div class="filter-tabs">
             <button class="tab-btn active-tab" onclick="filterDocs('ALL')">📁 Alle Ressurser</button>
@@ -8869,6 +8888,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             // 5. Oppdater EVM nøkkeltall for valgt virksomhetsområde
             updateKpiRow(sectorKey);
 
+            // 6. Synkroniser samtlige elementer i index.html for valgt virksomhetsområde
+            if (typeof syncAllSectionsForSector === 'function') {
+                syncAllSectionsForSector(sectorKey);
+            }
+
             showToast(`🏢 Valgt ansvarsområde: ${data.title}`);
         }
 
@@ -10807,6 +10831,794 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
         if (typeof updateSidebarSectorBadges === 'function') updateSidebarSectorBadges();
         if (typeof updateSidebarOverview === 'function') updateSidebarOverview('ALL');
 
-    </script>
+    
+
+// ==========================================================================
+// SEKTORSYNKRONISERING FOR HELE DASHBOARDET (TUFTE STANDARD)
+// Sikrer at alle elementer i index.html kun viser innhold for valgt virksomhetsområde
+// ==========================================================================
+
+const SECTOR_RAG_DATA = {
+    "HELSE": {
+        chips: [
+            { text: "§ 4-1 Forsvarlighet", query: "Hva er kravene til faglig forsvarlighet jf. Helse- og omsorgstjenesteloven § 4-1 ved turnusavvik?" },
+            { text: "HTA § 4 Langvakter", query: "Hvordan forhandles langvakter og helgetillegg jf. HTA § 4 og Arbeidsmiljøloven § 10-12?" },
+            { text: "Toppfinansiering Refusjon", query: "Hvilke innslagspunkter og krav gjelder for toppfinansiering av ressurskrevende helsetjenester?" },
+            { text: "SSHF § 11-2 Overligger", query: "Hva er sanksjonsgebyret for overliggerdøgn jf. Samhandlingsavtalen og helseloven § 11-2?" },
+            { text: "§ 14-5 Budsjettbalanse", query: "Hvordan skal merforbruk i døgninstitusjoner håndteres jf. Kommuneloven § 14-5?" }
+        ],
+        defaultQuery: "Hva er formelle krav jf. Helse- og omsorgstjenesteloven § 4-1 og Kommuneloven § 14-5 ved overtid og innleie i sykehjem?",
+        outputTitle: "Vurdering jf. Helse- og omsorgstjenesteloven § 4-1 & Kommuneloven § 14-5:",
+        outputBody: "Kommunen har en lovfestet plikt til å yte forsvarlige helse- og omsorgstjenester. Når økt pleietyngde (IPLOS) og sykefravær utløser merforbruk på overtid (art 10900: +820 000 kr) og vikarbyrå (art 10200: +3 650 000 kr), kan ikke forsvarlighetskravet settes til side. Likevel krever kommuneloven § 14-5 at driftsbalansen gjenopprettes innen årets utløp.<br/><br/>For Helse og mestring anbefales turnusomlegging til langvakter (12,5t) jf. HTA § 4, full avstemming av statstilskudd for ressurskrevende tjenester (innslagspunkt 1 650 000 kr, 142 brukere) og fremleggelse av sak for Bystyret om rammeregulering.",
+        kilde: "Kilde: Helse- og omsorgstjenesteloven § 4-1, Kommuneloven § 14-5, HTA § 4, Helsedirektoratet rundskriv",
+        hitlNote: "Turnusavvik og overtid i Bo og Miljø / Strai vurdert. Strakstiltak om langvakter drøftet med NSF og Fagforbundet, og sak om rammeregulering forberedes for Bystyret."
+    },
+    "OPPVEKST": {
+        chips: [
+            { text: "§ 14-5 Budsjettendring", query: "Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?" },
+            { text: "Lærernorm § 8-2", query: "Hva krever Opplæringsloven § 8-2 for lærertetthet på 1.-4. og 5.-10. trinn?" },
+            { text: "HTA § 4 Vikarstopp", query: "Hvordan kan vikarinnleie reguleres jf. HTA § 4 partssamarbeid?" },
+            { text: "Barnehageloven § 19", query: "Hvilke krav stilles til tilskuddsberegning for private barnehager jf. § 19?" }
+        ],
+        defaultQuery: "Hva er formelle krav jf. Kommuneloven § 14-5 ved overskridelse på vikarer i grunnskolen?",
+        outputTitle: "Vurdering jf. Kommuneloven § 14-5 (Budsjettbalanse og handleplikt):",
+        outputBody: "Dersom det i løpet av budsjettåret oppstår vesentlige avvik som truer budsjettmessig balanse eller realismekravet, plikter kommunedirektøren å fremme sak om endring av årsbudsjettet for Bystyret.<br/><br/>For Oppvekst og utdanning må det avklares om merforbruket på vikarer (-1.24M) og overtid (-480k) kan dekkes ved omdisponering innenfor rammen, eller om det kreves inndekning via kommunens disposisjonsfond jf. § 14-5.",
+        kilde: "Kilde: Kommuneloven § 14-5, Opplæringsloven § 8-2, HTA § 4",
+        hitlNote: "Reelt merforbruk bekreftet i Visma ERP for Lovisenlev Skole. Foreslås dekket ved omdisponering i sak til Bystyret 28. september."
+    },
+    "BYUTVIKLING": {
+        chips: [
+            { text: "Selvkostforskriften § 8", query: "Hvilke krav stiller Selvkostforskriften § 8 til fremføring av underskudd på vann og avløp?" },
+            { text: "Plan- og bygn.lov § 33-1", query: "Hva er rammen for selvkostberegning av byggesaksgebyrer jf. § 33-1?" },
+            { text: "NS 8407 Totalentreprise", query: "Hvordan håndteres endringsordrer og P85-usikkerhetsavsetning under NS 8407?" }
+        ],
+        defaultQuery: "Hvilke krav stiller Selvkostforskriften § 8 til fremføring av fond og gebyrer på vann og avløp?",
+        outputTitle: "Vurdering jf. Selvkostforskriften § 8 & Kommuneloven § 14-5:",
+        outputBody: "Vann, avløp og renovasjon er gebyrfinansierte selvkostområder som følger 5-års fremføringsregel jf. Selvkostforskriften § 8. Avvik på disse funksjonene truer ikke kommunens generelle driftsbalanse jf. § 14-5, men skal avregnes mot respektive selvkostfond.<br/><br/>For byggesaksgebyrer (art 1620) gjelder 3-års akkumulert selvkostkontroll. Svikt i gebyrinntekter må motvirkes med kapasitetstilpasning.",
+        kilde: "Kilde: Selvkostforskriften § 8, Plan- og bygningsloven § 33-1, KOSTRA funksjon 340/345",
+        hitlNote: "Mindreforbruk og fondsavsetninger avstemt mot 5-årsplanen. Gebyrregulativ 2027 varsles med +3.5 % økning på avløp."
+    },
+    "KULTUR": {
+        chips: [
+            { text: "Folkebibliotekloven § 1", query: "Hvilke lovkrav gjelder for bibliotektilbud og åpningstider?" },
+            { text: "Kulturlova § 4", query: "Hva krever Kulturlova § 4 for kommunal planlegging og tilskudd?" }
+        ],
+        defaultQuery: "Hva er handlingsrommet for å tilpasse arrangementsaktivitet etter Folkebibliotekloven § 1?",
+        outputTitle: "Vurdering jf. Folkebibliotekloven § 1 & Kommuneloven § 14-5:",
+        outputBody: "Folkebibliotekene skal ha til formål å fremme opplysning, utdanning og annen kulturell virksomhet. Gratisprinsippet for utlån er absolutt. Kveldsarrangementer som utløser overtid må rammes inn innenfor vedtatt lønnsbudsjett.",
+        kilde: "Kilde: Folkebibliotekloven § 1, Kulturlova § 4",
+        hitlNote: "Kveldsarrangementer i Q4 tilpasses vedtatt ramme, ingen overskridelse av årsbudsjett."
+    },
+    "ORG_TEK": {
+        chips: [
+            { text: "FinOps Lisenssanering", query: "Hva er prosedyren for deaktivering av inaktive M365 og ERP-lisenser?" },
+            { text: "Konsulentkonvertering", query: "Hvilke arbeidsrettslige regler gjelder for konvertering av konsulenter til faste stillinger?" },
+            { text: "EU AI Act Art. 14", query: "Hva kreves for Human-in-the-Loop etterlevelse i kommunale AI-systemer?" }
+        ],
+        defaultQuery: "Hvilke krav gjelder for konsulentkonvertering og lisensoptimalisering (FinOps) i kommunal IKT?",
+        outputTitle: "Vurdering jf. Kommuneloven § 14-5 & Anskaffelsesforskriften:",
+        outputBody: "Bruk av eksterne IT-konsulenter (art 11950) medfører høye timepriser (1 450 kr/t). Konvertering til faste stillinger reduserer sårbarhet og gir dokumentert innsparing på 1.8 MNOK/år jf. HTA § 2.3. Sanering av 38 ubrukte SaaS-lisenser sparer ytterligere 420 000 kr/år.",
+        kilde: "Kilde: Digitaliseringsrundskrivet, HTA § 2.3, Anskaffelsesloven",
+        hitlNote: "FinOps-tiltak godkjent. Rekruttering av to faste utviklere igangsatt for å erstatte innleie."
+    },
+    "OKONOMI": {
+        chips: [
+            { text: "Kommuneloven § 14-5", query: "Hvilke krav stilles til årsbudsjett i balanse og handleplikt ved avvik?" },
+            { text: "Regnskapsforskr. § 5-4", query: "Hvordan amortiseres pensjonspremieavvik lineært over 7 år?" },
+            { text: "Finansreglementet § 3", query: "Hvilke krav gjelder for rentesikring og gjeldsportefølje?" }
+        ],
+        defaultQuery: "Hvilke krav gjelder for tertialrapportering, pensjonsamortisering og disposisjonsfond?",
+        outputTitle: "Vurdering jf. Kommuneloven §§ 14-4, 14-5 og Regnskapsforskriften § 5-4:",
+        outputBody: "Kommunedirektøren skal påse at årsregnskapet og årsbudsjettet er i balanse. Med 7.25 milliarder NOK i gjeld sikrer 58 % fastrente stabilitet mot NIBOR-hopp. Premieavvik på 36 MNOK amortiseres over 7 år. Disposisjonsfondet på 485 MNOK (6.7 % av driftsinntektene) overstiger handlingsregelens minstekrav på 6.0 %.",
+        kilde: "Kilde: Kommuneloven kap. 14, Regnskapsforskriften § 5-4, Finansreglementet",
+        hitlNote: "Konsernrapport forberedt for Formannskapet og Bystyret. Disposisjonsfond intakt og handlingsregel overholdt."
+    },
+    "ALL": {
+        chips: [
+            { text: "§ 14-5 Tertialrapport", query: "Hvilke regler gjelder for 2. tertialrapportering og budsjettregulering jf. Kommuneloven § 14-5?" },
+            { text: "Konsern Handlingsregel", query: "Hva er status på handlingsregelen for disposisjonsfond (min. 6.0 %)?" },
+            { text: "Bruttoprinsippet § 14-6", query: "Hvordan håndheves bruttoprinsippet på tvers av alle 6 sektorer?" }
+        ],
+        defaultQuery: "Hva er den samlede konsernvurderingen jf. Kommuneloven § 14-5 ved 2. tertial 2026?",
+        outputTitle: "Samlet Konsernvurdering jf. Kommuneloven § 14-5 (2. Tertial 2026):",
+        outputBody: "Konsoliderte tall per M9 viser et samlet netto avvik på -19.00 MNOK fordelt på 6 virksomhetsområder. Merforbruket er konsentrert i Helse og mestring (-9.85M) og Oppvekst (-11.87M), motvirket av positive bidrag fra Byutvikling (+310k) og Finans (+2.58M). Handlingsregelen er overholdt med 6.7 % saldo på disposisjonsfondet.",
+        kilde: "Kilde: Kommuneloven §§ 14-5, 14-6, Framsikt EPM, Visma Enterprise ERP",
+        hitlNote: "Samlet tertialsak fremmes for Formannskapet 28. september med helhetlig salderingstiltak."
+    }
+};
+
+const SECTOR_TRIAGE_DATA = {
+    "HELSE": {
+        badge: "12 Enheter vurdert",
+        items: [
+            { tag: "tag-critical", tagText: "🔴 KRITISK", unit: "Enhet 401 Strai Sykehjem & Avlastning", desc: "Vikarbyrå & helgetillegg +3.65M (+58.9 %)", unitKey: "ENHET_401" },
+            { tag: "tag-warning", tagText: "🟠 ADVARSEL", unit: "Enhet 402 Hjemmetjeneste Vågsbygd", desc: "Overtid art 1090 +820k (+45.6 %)", unitKey: "ENHET_402" },
+            { tag: "tag-normal", tagText: "🟡 OBSERVASJON", unit: "Enhet 403 Sørlandsparken Boenhet", desc: "Sykefravær pleie +310k (+3.2 %)", unitKey: "ENHET_403" }
+        ],
+        greenCount: 9,
+        greenText: "9 helse- og omsorgsenheter",
+        primaryUnit: "ENHET_401",
+        simUnit: "HELSE"
+    },
+    "OPPVEKST": {
+        badge: "28 Enheter vurdert",
+        items: [
+            { tag: "tag-critical", tagText: "🔴 KRITISK", unit: "Enhet 202 Lovisenlev Skole", desc: "Vikarutgifter +1.24M (+12.4 %)", unitKey: "ENHET_202" },
+            { tag: "tag-warning", tagText: "🟠 ADVARSEL", unit: "Enhet 203 Vågsbygd Skole", desc: "Overtid lærere +480k (+8.2 %)", unitKey: "ENHET_203" }
+        ],
+        greenCount: 26,
+        greenText: "26 skoler og barnehager",
+        primaryUnit: "ENHET_202",
+        simUnit: "SKOLE"
+    },
+    "BYUTVIKLING": {
+        badge: "10 Enheter vurdert",
+        items: [
+            { tag: "tag-warning", tagText: "🟠 ADVARSEL", unit: "Enhet 301 Byggesak & Regulering", desc: "Gebyrsvikt byggesak -3.30M", unitKey: "ENHET_301" },
+            { tag: "tag-normal", tagText: "🟢 NORMAL", unit: "Enhet 302 VAR Selvkost (Vann & Avløp)", desc: "Selvkostgrad 98.2 % (+14.2M fond)", unitKey: "ENHET_302" }
+        ],
+        greenCount: 8,
+        greenText: "8 byutviklings- og samferdselsenheter",
+        primaryUnit: "ENHET_301",
+        simUnit: "VAR"
+    },
+    "KULTUR": {
+        badge: "8 Enheter vurdert",
+        items: [
+            { tag: "tag-normal", tagText: "🟡 OBSERVASJON", unit: "Enhet 101 Folkebibliotek & Innbyggertorg", desc: "Kveldstillegg arrangementer +250k", unitKey: "ENHET_101" }
+        ],
+        greenCount: 7,
+        greenText: "7 kultur- og idrettsenheter",
+        primaryUnit: "ENHET_101",
+        simUnit: "FINANS"
+    },
+    "ORG_TEK": {
+        badge: "6 Enheter vurdert",
+        items: [
+            { tag: "tag-warning", tagText: "🟠 ADVARSEL", unit: "Enhet 501 IKT & Fellestjenester", desc: "Konsulentinnleie art 11950 +3.20M", unitKey: "ENHET_501" }
+        ],
+        greenCount: 5,
+        greenText: "5 felles- og stabsavdelinger",
+        primaryUnit: "ENHET_501",
+        simUnit: "FINOPS"
+    },
+    "OKONOMI": {
+        badge: "5 Enheter vurdert",
+        items: [
+            { tag: "tag-normal", tagText: "🟢 NORMAL", unit: "Enhet 601 Finans & Regnskapssentral", desc: "Renter og likviditetsgevinst +4.50M", unitKey: "KONSERN" }
+        ],
+        greenCount: 4,
+        greenText: "4 stabs- og økonomienheter",
+        primaryUnit: "KONSERN",
+        simUnit: "FINANS"
+    },
+    "ALL": {
+        badge: "81 Enheter vurdert",
+        items: [
+            { tag: "tag-critical", tagText: "🔴 KRITISK", unit: "Enhet 202 Lovisenlev Skole (Oppvekst)", desc: "Vikarutgifter +1.24M (+12.4 %)", unitKey: "ENHET_202" },
+            { tag: "tag-warning", tagText: "🟠 ADVARSEL", unit: "Enhet 401 Strai Sykehjem (Helse)", desc: "Vikarbyrå & overtid +3.65M (+58.9 %)", unitKey: "ENHET_401" },
+            { tag: "tag-warning", tagText: "🟠 ADVARSEL", unit: "Enhet 501 IKT (Org & Tek)", desc: "Konsulenter art 11950 +3.20M", unitKey: "ENHET_501" }
+        ],
+        greenCount: 78,
+        greenText: "78 enheter på tvers av konsernet",
+        primaryUnit: "KONSERN",
+        simUnit: "FINANS"
+    }
+};
+
+const SECTOR_PBI_KOSTRA_DATA = {
+    "HELSE": [
+        { type: "header", name: "▼ 02 HELSE OG MESTRING", enhet: "Sektor Helse & Mestring", bac: 1850000000, ac: 1254850000, eoy: 1864700000, var: -9850000, status: "🔴 KRITISK MERFORBRUK", badgeClass: "rag-badge-red" },
+        { type: "line", name: "• Funksjon 254 Kommunal Boenhet & Sykehjem", enhet: "5200 Bo og Miljø", bac: 850000000, ac: 612000000, eoy: 864000000, var: -14000000, status: "🔴 Overtid art 1090", badgeClass: "rag-badge-red" },
+        { type: "line", name: "• Funksjon 253 Pleie og omsorg i hjemmet", enhet: "5210 Hjemmetjenester", bac: 580000000, ac: 395000000, eoy: 583000000, var: -3000000, status: "🟡 Bemanningspress", badgeClass: "rag-badge-yellow" },
+        { type: "line", name: "• Funksjon 241 Diagnose, behandling, legevakt", enhet: "5220 Legevakt", bac: 240000000, ac: 165000000, eoy: 240000000, var: 0, status: "🟢 I balanse", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 261 Kommunalt disponerte boliger", enhet: "5230 Boligforvaltning", bac: 180000000, ac: 82850000, eoy: 177700000, var: 2300000, status: "🟢 Mindreforbruk", badgeClass: "rag-badge-green" },
+        { type: "summary", name: "TOTALT 1. HELSE OG MESTRING", enhet: "4 KOSTRA-funksjoner", bac: 1850000000, ac: 1254850000, eoy: 1864700000, var: -9850000, status: "🔴 Bystyrets bord 28. sep", badgeClass: "rag-badge-red" }
+    ],
+    "OPPVEKST": [
+        { type: "header", name: "▼ 01 OPPVEKST OG UTDANNING", enhet: "Sektor Oppvekst", bac: 2120000000, ac: 1438872460, eoy: 2137650000, var: -11872460, status: "🔴 KRITISK MERFORBRUK", badgeClass: "rag-badge-red" },
+        { type: "line", name: "• Funksjon 202 Grunnskoleopplæring", enhet: "4100 Kommunal Skole", bac: 1520000000, ac: 1042500000, eoy: 1544600000, var: -24600000, status: "🔴 § 14-5 Sak påkrevd", badgeClass: "rag-badge-red" },
+        { type: "line", name: "• Funksjon 211 Styrket barnehagetilbud", enhet: "4200 Barnehage", bac: 450000000, ac: 301200000, eoy: 450000000, var: 0, status: "🟢 I balanse", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 222 Spesialpedagogiske tiltak", enhet: "4300 PPT & Familiens Hus", bac: 150000000, ac: 95172460, eoy: 143050000, var: 12727540, status: "🟢 Mindreforbruk", badgeClass: "rag-badge-green" },
+        { type: "summary", name: "TOTALT 2. OPPVEKST OG UTDANNING", enhet: "3 KOSTRA-funksjoner", bac: 2120000000, ac: 1438872460, eoy: 2137650000, var: -11872460, status: "🔴 Bystyrets bord 28. sep", badgeClass: "rag-badge-red" }
+    ],
+    "BYUTVIKLING": [
+        { type: "header", name: "▼ 03 BY- OG STEDSUTVIKLING", enhet: "Sektor Byutvikling", bac: 940000000, ac: 619690000, eoy: 939500000, var: 310000, status: "🟢 BALANSE (SELVKCOST)", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 340 Vannforsyning (Selvkost)", enhet: "3100 Vannverk", bac: 220000000, ac: 142000000, eoy: 215000000, var: 5000000, status: "🟢 Fondsoverskudd", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 345 Avløpshåndtering (Selvkost)", enhet: "3200 Avløp Lund", bac: 265000000, ac: 178700000, eoy: 269800000, var: -4800000, status: "🟡 Utlignes mot fond", badgeClass: "rag-badge-yellow" },
+        { type: "line", name: "• Funksjon 301/302 Plan, byggesak og geodata", enhet: "3300 Byggesak", bac: 95000000, ac: 64500000, eoy: 98300000, var: -3300000, status: "🟠 Gebyrsvikt", badgeClass: "rag-badge-yellow" },
+        { type: "line", name: "• Funksjon 332 Kommunale veier og grønt", enhet: "3400 Samferdsel", bac: 360000000, ac: 234490000, eoy: 356400000, var: 3410000, status: "🟢 Mindreforbruk", badgeClass: "rag-badge-green" },
+        { type: "summary", name: "TOTALT 3. BY- OG STEDSUTVIKLING", enhet: "4 KOSTRA-funksjoner", bac: 940000000, ac: 619690000, eoy: 939500000, var: 310000, status: "🟢 I balanse", badgeClass: "rag-badge-green" }
+    ],
+    "KULTUR": [
+        { type: "header", name: "▼ 04 KULTUR OG INNBYGGERDIALOG", enhet: "Sektor Kultur", bac: 380000000, ac: 252045000, eoy: 380065000, var: -45000, status: "🟢 I BALANSE", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 380 Idrett og tilskudd", enhet: "2100 Idrettsenheten", bac: 195000000, ac: 128500000, eoy: 194580000, var: 420000, status: "🟢 Energibuffer", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 385 Folkebibliotek og kulturhus", enhet: "2200 Biblioteket", bac: 110000000, ac: 73800000, eoy: 110465000, var: -465000, status: "🟡 Kveldstillegg", badgeClass: "rag-badge-yellow" },
+        { type: "line", name: "• Funksjon 383 Kulturskole", enhet: "2300 Kulturskolen", bac: 75000000, ac: 49745000, eoy: 75000000, var: 0, status: "🟢 Full dekning", badgeClass: "rag-badge-green" },
+        { type: "summary", name: "TOTALT 4. KULTUR OG DIALOG", enhet: "3 KOSTRA-funksjoner", bac: 380000000, ac: 252045000, eoy: 380065000, var: -45000, status: "🟢 I balanse", badgeClass: "rag-badge-green" }
+    ],
+    "ORG_TEK": [
+        { type: "header", name: "▼ 05 ORGANISASJON OG TEKNOLOGI", enhet: "Sektor Org & Tek", bac: 460000000, ac: 308120000, eoy: 460180000, var: -120000, status: "🟢 I BALANSE (FINOPS)", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 130 IKT, digitalisering og lisenser", enhet: "1100 IKT-tjenesten", bac: 280000000, ac: 189200000, eoy: 281800000, var: -1800000, status: "🟠 Konsulentinnleie", badgeClass: "rag-badge-yellow" },
+        { type: "line", name: "• Funksjon 120 Fellesadministrasjon og HR", enhet: "1200 Organisasjon", bac: 180000000, ac: 118920000, eoy: 178380000, var: 1680000, status: "🟢 Mindreforbruk stab", badgeClass: "rag-badge-green" },
+        { type: "summary", name: "TOTALT 5. ORGANISASJON OG TEKNOLOGI", enhet: "2 KOSTRA-funksjoner", bac: 460000000, ac: 308120000, eoy: 460180000, var: -120000, status: "🟢 I balanse", badgeClass: "rag-badge-green" }
+    ],
+    "OKONOMI": [
+        { type: "header", name: "▼ 06 ØKONOMI OG VIRKSOMHETSSTYRING", enhet: "Sektor Økonomi", bac: 1490000000, ac: 992295000, eoy: 1486125000, var: 2577460, status: "🟢 FINANS & RENTEBUFFER", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 180/190 Renter og gjeldsforvaltning", enhet: "Finansforvaltning", bac: 295000000, ac: 201500000, eoy: 296200000, var: -1200000, status: "🟡 Renterisiko", badgeClass: "rag-badge-yellow" },
+        { type: "line", name: "• Funksjon 170 Likviditetsplasseringer", enhet: "Finansforvaltning", bac: -65000000, ac: -48200000, eoy: -69500000, var: 4500000, status: "🟢 Renteinntekter", badgeClass: "rag-badge-green" },
+        { type: "line", name: "• Funksjon 100 Politisk styring og regnskap", enhet: "Konsernstab", bac: 1260000000, ac: 838995000, eoy: 1259425000, var: -722540, status: "🟢 I balanse", badgeClass: "rag-badge-green" },
+        { type: "summary", name: "TOTALT 6. ØKONOMI OG STYRING", enhet: "3 KOSTRA-funksjoner", bac: 1490000000, ac: 992295000, eoy: 1486125000, var: 2577460, status: "🟢 Positivt bidrag", badgeClass: "rag-badge-green" }
+    ],
+    "ALL": [
+        { type: "header", name: "▼ 01 OPPVEKST OG UTDANNING", enhet: "Sektor Oppvekst", bac: 2120000000, ac: 1438872460, eoy: 2137650000, var: -11872460, status: "🔴 KRITISK MERFORBRUK", badgeClass: "rag-badge-red" },
+        { type: "line", name: "• Funksjon 202 Grunnskoleopplæring", enhet: "4100 Kommunal Skole", bac: 1520000000, ac: 1042500000, eoy: 1544600000, var: -24600000, status: "🔴 § 14-5 Sak påkrevd", badgeClass: "rag-badge-red" },
+        { type: "header", name: "▼ 02 HELSE OG MESTRING", enhet: "Sektor Helse", bac: 1850000000, ac: 1254850000, eoy: 1864700000, var: -9850000, status: "🔴 KRITISK MERFORBRUK", badgeClass: "rag-badge-red" },
+        { type: "line", name: "• Funksjon 254 Kommunal Boenhet & Sykehjem", enhet: "5200 Bo og Miljø", bac: 850000000, ac: 612000000, eoy: 864000000, var: -14000000, status: "🔴 Overtid art 1090", badgeClass: "rag-badge-red" },
+        { type: "header", name: "▼ 03 BY- OG STEDSUTVIKLING", enhet: "Sektor Byutvikling", bac: 940000000, ac: 619690000, eoy: 939500000, var: 310000, status: "🟢 Balanse (Selvkost)", badgeClass: "rag-badge-green" },
+        { type: "header", name: "▼ 04 KULTUR OG DIALOG", enhet: "Sektor Kultur", bac: 380000000, ac: 252045000, eoy: 380065000, var: -45000, status: "🟢 Balanse (Buffer)", badgeClass: "rag-badge-green" },
+        { type: "header", name: "▼ 05 ORGANISASJON OG TEKNOLOGI", enhet: "Sektor Org & Tek", bac: 460000000, ac: 308120000, eoy: 460180000, var: -120000, status: "🟢 Balanse (FinOps)", badgeClass: "rag-badge-green" },
+        { type: "header", name: "▼ 06 ØKONOMI OG VIRKSOMHETSSTYRING", enhet: "Sektor Økonomi", bac: 1490000000, ac: 992295000, eoy: 1486125000, var: 2577460, status: "🟢 Finansbuffer", badgeClass: "rag-badge-green" },
+        { type: "summary", name: "TOTALT KONSOLIDERT KONSERN", enhet: "6 Virksomhetsområder", bac: 7240000000, ac: 4865872460, eoy: 7268450000, var: -19000000, status: "🔴 Bystyrets bord 28. sep", badgeClass: "rag-badge-red" }
+    ]
+};
+
+const SECTOR_PBI_CAPEX_DATA = {
+    "HELSE": [
+        { name: "Randesund Døgnbemannet Boenhet", id: "PROJ-201", bac: 240000000, ac: 165000000, ev: 139100000, cpi: 0.843, spi: 0.887, eac: 299529558, status: "🔴 HØY RISIKO", badgeClass: "rag-badge-red" },
+        { name: "TOTALT CAPEX INVESTERING HELSE", id: "PORT-HELSE", bac: 240000000, ac: 165000000, ev: 139100000, cpi: 0.843, spi: 0.887, eac: 299529558, status: "🔴 Porteføljeoppfølging", badgeClass: "rag-badge-red", isSummary: true }
+    ],
+    "OPPVEKST": [
+        { name: "Vågsbygd Barneskole (Nybygg)", id: "PROJ-101", bac: 185000000, ac: 115000000, ev: 104500000, cpi: 0.909, spi: 0.950, eac: 208251070, status: "🟡 MIDDELS RISIKO", badgeClass: "rag-badge-yellow" },
+        { name: "TOTALT CAPEX INVESTERING OPPVEKST", id: "PORT-OPP", bac: 185000000, ac: 115000000, ev: 104500000, cpi: 0.909, spi: 0.950, eac: 208251070, status: "🟡 Moderat avvik", badgeClass: "rag-badge-yellow", isSummary: true }
+    ],
+    "BYUTVIKLING": [
+        { name: "VA-Hovedledning Selvkost (Renseanlegg Lund)", id: "PROJ-301", bac: 92000000, ac: 48000000, ev: 48700000, cpi: 1.015, spi: 1.000, eac: 91000000, status: "🟢 PÅ PLAN", badgeClass: "rag-badge-green" },
+        { name: "TOTALT CAPEX INVESTERING BYUTVIKLING", id: "PORT-BY", bac: 92000000, ac: 48000000, ev: 48700000, cpi: 1.015, spi: 1.000, eac: 91000000, status: "🟢 På plan", badgeClass: "rag-badge-green", isSummary: true }
+    ],
+    "ALL": [
+        { name: "Vågsbygd Barneskole (Nybygg)", id: "PROJ-101", bac: 185000000, ac: 115000000, ev: 104500000, cpi: 0.909, spi: 0.950, eac: 208251070, status: "🟡 MIDDELS RISIKO", badgeClass: "rag-badge-yellow" },
+        { name: "Randesund Døgnbemannet Boenhet", id: "PROJ-201", bac: 240000000, ac: 165000000, ev: 139100000, cpi: 0.843, spi: 0.887, eac: 299529558, status: "🔴 HØY RISIKO", badgeClass: "rag-badge-red" },
+        { name: "VA-Hovedledning Selvkost", id: "PROJ-301", bac: 92000000, ac: 48000000, ev: 48700000, cpi: 1.015, spi: 1.000, eac: 91000000, status: "🟢 PÅ PLAN", badgeClass: "rag-badge-green" },
+        { name: "TOTALT KONSOLIDERT INVESTERINGSRAMME", id: "3 Prosjekter", bac: 517000000, ac: 328000000, ev: 292300000, cpi: 0.891, spi: 0.923, eac: 598780628, status: "🔴 KS2 Eskalering", badgeClass: "rag-badge-red", isSummary: true }
+    ]
+};
+
+// Ekstra saksnotat-tekster for samtlige sektorer
+Object.assign(SAKS_TEKSTER, {
+    "BY_NIVA3": `SAKSFREMLEGG: BUDSJETTREGULERING 2. TERTIAL 2026 — BY- OG STEDSUTVIKLING (KOSTRA 340/345)
+Arkivsak: 26/08940-3 | Utvalg: Formannskapet / Bystyret | Møtedato: 28. september 2026
+Saksbehandler: Frank Ellingsen (Senior Controller) | Hjemmel: Kommuneloven § 14-5 & Selvkostforskriften § 8
+
+KOMMUNEDIREKTØRENS FORSLAG TIL VEDTAK:
+1. Bystyret tar til etterretning framdriften i VAR-investeringene og godkjenner overføring av akkumulert underskudd på avløp (-4.8M) mot selvkostfondet for avløp jf. Selvkostforskriften § 8.
+2. Gebyrsatsene for avløp varsles økt med 3.5 % i gebyrregulativet for 2027 for å opprettholde full 5-års balanse.
+3. Svikt i byggesaksgebyrer (-3.3M) salderes mot utsettelse av ikke-kritiske vedlikeholdstiltak på samferdsel.
+
+SAKSUTREDNING:
+By- og stedsutvikling leverer et samlet driftsresultat i balanse (+310 000 kr). Selvkostområdene vann og avløp skjermes fra kommunens ordinære rammer og utlignes mot fond.
+
+KRYPTOGRAFISK REVISJONSSTEMPEL:
+SHA-256: 3a9f8e7d6c5b4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b`,
+
+    "KULTUR_NIVA3": `SAKSFREMLEGG: BUDSJETTREGULERING 2. TERTIAL 2026 — KULTUR OG INNBYGGERDIALOG (KOSTRA 380/385)
+Arkivsak: 26/08940-4 | Utvalg: Formannskapet / Bystyret | Møtedato: 28. september 2026
+Saksbehandler: Frank Ellingsen (Senior Controller) | Hjemmel: Folkebibliotekloven § 1 & Kommuneloven § 14-5
+
+KOMMUNEDIREKTØRENS FORSLAG TIL VEDTAK:
+1. Bystyret godkjenner justert driftsramme for Kultur og dialog innenfor tildelt budsjettramme.
+2. Merforbruk på kveldstillegg ved Kristiansand Folkebibliotek (-465 000 kr) salderes mot positiv energibuffer på idrettsbygg (+420 000 kr).
+
+SAKSUTREDNING:
+Sektoren opererer tilnærmet i balanse (-45 000 kr). Gratisprinsippet for folkebibliotekene opprettholdes.
+
+KRYPTOGRAFISK REVISJONSSTEMPEL:
+SHA-256: 8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d7c6b5a4f3e2d1c0b9a8f7e`,
+
+    "ORG_NIVA3": `SAKSFREMLEGG: BUDSJETTREGULERING 2. TERTIAL 2026 — ORGANISASJON OG TEKNOLOGI (KOSTRA 130)
+Arkivsak: 26/08940-5 | Utvalg: Formannskapet / Bystyret | Møtedato: 28. september 2026
+Saksbehandler: Frank Ellingsen (Senior Controller) | Hjemmel: Kommuneloven § 14-5 & Digitaliseringsrundskrivet
+
+KOMMUNEDIREKTØRENS FORSLAG TIL VEDTAK:
+1. Bystyret godkjenner iverksettelse av FinOps-lisenssanering med frigjøring av 420 000 kr/år.
+2. Innleide konsulenter i art 11950 konverteres til 2 faste utviklerstillinger med en årlig nettoinnsparing på 1 800 000 kr fra 2027.
+
+SAKSUTREDNING:
+Org og teknologi har et stabilt forbruk med et mindre avvik på -120 000 kr. Konvertering til faste stillinger styrker digital beredskap.
+
+KRYPTOGRAFISK REVISJONSSTEMPEL:
+SHA-256: 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b`,
+
+    "OKO_NIVA3": `SAKSFREMLEGG: FINANS- OG GJELDSFORVALTNING 2. TERTIAL 2026 (KOSTRA 180/190)
+Arkivsak: 26/08940-6 | Utvalg: Formannskapet / Bystyret | Møtedato: 28. september 2026
+Saksbehandler: Frank Ellingsen (Senior Controller) | Hjemmel: Kommuneloven kap. 14 & Finansreglementet
+
+KOMMUNEDIREKTØRENS FORSLAG TIL VEDTAK:
+1. Bystyret godkjenner finansrapporten per 2. tertial 2026. Merinntekter på overskuddslikviditet (+4.50M) avsettes til kommunens disposisjonsfond.
+2. Fastrenteandelen opprettholdes på 58 % for å skjerme mot rentevolatilitet.
+3. Pensjonspremieavvik på 36 MNOK amortiseres lineært over 7 år jf. regnskapsforskriften § 5-4.
+
+KRYPTOGRAFISK REVISJONSSTEMPEL:
+SHA-256: 9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d`,
+
+    "KONSERN_NIVA3": `SAKSFREMLEGG: 2. TERTIALRAPPORT 2026 OG SAMLET BUDSJETTREGULERING
+Arkivsak: 26/08940-0 | Utvalg: Formannskapet og Bystyret | Møtedato: 28. september 2026
+Saksbehandler: Frank Ellingsen (Senior Controller) / Camilla Dunsæd | Hjemmel: Kommuneloven § 14-5 & § 14-6
+
+KOMMUNEDIREKTØRENS FORSLAG TIL VEDTAK:
+1. Bystyret vedtar 2. tertialrapport 2026.
+2. Netto driftsavvik på -19.00 MNOK reguleres ved omdisponering innenfor virksomhetsområdene og delvis inndekning fra disposisjonsfondet med kr 12 500 000.
+3. Disposisjonsfondets saldo etter reguleringen utgjør 485 MNOK (6.7 % av brutto driftsinntekter), som tilfredsstiller handlingsregelen (min. 6.0 %).
+4. Kommunedirektøren pålegges å videreføre ansettelseskontroll og innkjøpsstopp i staber ut året.
+
+KRYPTOGRAFISK REVISJONSSTEMPEL:
+SHA-256: d504a35181b99181c07bad48ac6964d188319f077abef265f2420caea919a32c`
+});
+
+// Overstyr loadTriageUnit med full støtte for alle enheter
+const ORIGINAL_LOAD_TRIAGE = typeof loadTriageUnit === 'function' ? loadTriageUnit : null;
+
+function loadTriageUnit(unit) {
+    const titleEl = document.getElementById("rep4-active-title");
+    const p1El = document.getElementById("rep4-p1");
+    const p2El = document.getElementById("rep4-p2");
+    const p3El = document.getElementById("rep4-p3");
+    const p4El = document.getElementById("rep4-p4");
+    if (!titleEl || !p1El || !p2El || !p3El || !p4El) return;
+
+    if (unit === 'ENHET_401') {
+        titleEl.innerText = "Enhet 401 Strai Sykehjem & Omsorgsboliger (Helse & Mestring M9)";
+        p1El.innerText = "+850 000 NOK (+6.1 % merforbruk på overtid og helgebemanning i Visma ERP)";
+        p2El.innerText = "Økt pleietyngde hos 3 nye brukere (IPLOS) + høyt helgefravær dekket med overtid (art 10900) og vikarbyrå (art 10200).";
+        p3El.innerText = "A) HTA § 4 drøftingsmøte om langvakter (12.5t helg). B) Vikarstopp på eksterne byråer. C) Avstemming av toppfinansiering mot staten.";
+        p4El.innerHTML = "Prognose uten tiltak: +1.40M -> Tiltakseffekt: -900k -> <strong>Revidert EOY: +500k</strong> (Dekkes innenfor vedtatt helseramme).";
+    } else if (unit === 'ENHET_402') {
+        titleEl.innerText = "Enhet 402 Hjemmetjeneste Vågsbygd (Helse & Mestring M9)";
+        p1El.innerText = "+420 000 NOK (+4.8 % merforbruk på helgetillegg og reisetid)";
+        p2El.innerText = "Høyt antall hjemmebesøk og krevende enkeltvedtak i helgene utløser forskjøvet arbeidstid.";
+        p3El.innerText = "A) Ruteoptimalisering med digital kjøreplan. B) Innføring av velferdsteknologi (medisindispensere).";
+        p4El.innerHTML = "Prognose uten tiltak: +750k -> Tiltakseffekt: -500k -> <strong>Revidert EOY: +250k</strong> (Balanse innen 31.12).";
+    } else if (unit === 'ENHET_403') {
+        titleEl.innerText = "Enhet 403 Sørlandsparken Boenhet (Helse & Mestring M9)";
+        p1El.innerText = "+310 000 NOK (+3.2 % merforbruk på sykefraværsdekning)";
+        p2El.innerText = "Korttidsfravær i turnuslinjer med krav om to-pleier dekning.";
+        p3El.innerText = "A) Tett-på IA-oppfølging. B) Intern omdisponering av helsefagarbeidere fra dagsenter.";
+        p4El.innerHTML = "Prognose uten tiltak: +480k -> Tiltakseffekt: -380k -> <strong>Revidert EOY: +100k</strong> (Fullt saldert).";
+    } else if (unit === 'ENHET_202') {
+        titleEl.innerText = "Enhet 202 Lovisenlev Skole (Grunnskole Oppvekst M9)";
+        p1El.innerText = "+1 240 000 NOK (+12.4 % merforbruk mot periodisert budsjett i Visma ERP)";
+        p2El.innerText = "Høyt sykefravær (14.2 %) + NAV-refusjonsetterslep på art 1600 (410 000 NOK utestående).";
+        p3El.innerText = "A) Strakstiltak NAV-purring. B) Klassesammenslåing ved korttidsfravær jf. lærernorm. C) Omdisponering i T2.";
+        p4El.innerHTML = "Prognose uten tiltak: +1.85M -> Tiltakseffekt: -1.25M -> <strong>Revidert EOY: +600k</strong> (Balanse jf. § 14-5).";
+    } else if (unit === 'ENHET_203') {
+        titleEl.innerText = "Enhet 203 Vågsbygd Skole (Grunnskole Oppvekst M9)";
+        p1El.innerText = "+480 000 NOK (+8.2 % merforbruk på overtid og timelærere)";
+        p2El.innerText = "Akutt lærermangel i realfag og forsinket tilsetting av faste lærere.";
+        p3El.innerText = "A) Felles vikarring med naboskoler. B) Forhåndsgodkjenning av overtid.";
+        p4El.innerHTML = "Prognose uten tiltak: +820k -> Tiltakseffekt: -600k -> <strong>Revidert EOY: +220k</strong> (I balanse).";
+    } else if (unit === 'ENHET_301') {
+        titleEl.innerText = "Enhet 301 Byggesak & Regulering (By- og Stedsutvikling M9)";
+        p1El.innerText = "+3 300 000 NOK (Inntektsvikt på byggesaksgebyrer art 1620)";
+        p2El.innerText = "Lav igangsetting i eiendomsmarkedet har redusert gebyrinntektene med 15.5 % mot budsjettert volum.";
+        p3El.innerText = "A) Forskyving av eksterne utredninger til 2027. B) Midlertidig kapasitetsoverføring til plan.";
+        p4El.innerHTML = "Prognose uten tiltak: -3.8M inntektsavvik -> Kostnadskutt: +2.5M -> <strong>Revidert EOY: -1.3M</strong> (Dekkes innen sektoren).";
+    } else if (unit === 'ENHET_302') {
+        titleEl.innerText = "Enhet 302 VAR Ingeniørvesenet (Vann, Avløp & Renovasjon M9)";
+        p1El.innerText = "-4 800 000 NOK underskudd på avløp / +14 200 000 NOK overskudd på vann";
+        p2El.innerText = "Ekstraordinære rehabiliteringskostnader på Lund renseanlegg jf. NS 8407.";
+        p3El.innerText = "A) Avregning mot selvkostfond avløp jf. Selvkostforskriften § 8. B) Varsel om 3.5 % gebyrøkning i 2027.";
+        p4El.innerHTML = "5-års selvkostbalanse overholdt: Fondssaldo absorberer svingningen fullt ut.";
+    } else if (unit === 'ENHET_101') {
+        titleEl.innerText = "Enhet 101 Kristiansand Folkebibliotek (Kultur og Dialog M9)";
+        p1El.innerText = "+250 000 NOK (+20.8 % på kveldstillegg og arrangementsstøtte)";
+        p2El.innerText = "Høy arrangementsaktivitet og debattmøter på kveldstid utover ordinær åpningstid.";
+        p3El.innerText = "A) Tilpasning av arrangementskalender i Q4. B) Saldering mot energibuffer på idrettsbygg (+420k).";
+        p4El.innerHTML = "Prognose uten tiltak: +450k -> Tiltakseffekt: -350k -> <strong>Revidert EOY: +100k</strong> (Balanse innen kulturbudsjett).";
+    } else if (unit === 'ENHET_501') {
+        titleEl.innerText = "Enhet 501 IKT & Fellestjenester (Organisasjon & Teknologi M9)";
+        p1El.innerText = "+3 200 000 NOK YTD (Merforbruk eksterne IT-konsulenter på art 11950)";
+        p2El.innerText = "Forsinket rekruttering av faste systemutviklere har tvunget frem konsulentinnleie (1 450 kr/t).";
+        p3El.innerText = "A) FinOps sanering av 38 ubrukte SaaS-lisenser (-420k). B) Konvertering av 2 konsulenter til faste stillinger (-1.8M).";
+        p4El.innerHTML = "Prognose uten tiltak: +4.8M -> FinOps & rekrutteringseffekt: -3.4M -> <strong>Revidert EOY: +1.4M</strong> (I balanse).";
+    } else if (unit === 'KONSERN') {
+        titleEl.innerText = "Kristiansand Kommune — Konsern Finansforvaltning & Pensjon";
+        p1El.innerText = "+24 000 000 NOK (Potensiell renteøkning på 42 % flytende gjeldsandel)";
+        p2El.innerText = "NIBOR-svingninger på 7.25 Mrd gjeld + KLP pensjonspremieavvik på 36 MNOK.";
+        p3El.innerText = "A) 58 % fastrentesikring opprettholdes. B) Amortisering av premieavvik over 7 år. C) Sikring av disposisjonsfond (6.7 %).";
+        p4El.innerHTML = "Prognose uten tiltak: +38M -> Rentesikring & tiltak: -32M -> <strong>Revidert EOY: +6.0M</strong> (Handlingsregel overholdt).";
+    }
+}
+
+// 1. RAG-assistent synkronisering
+function renderSectorRag(sectorKey) {
+    const data = SECTOR_RAG_DATA[sectorKey] || SECTOR_RAG_DATA["ALL"];
+    
+    // Chips
+    const chipsContainer = document.getElementById("rag-quick-queries");
+    if (chipsContainer && data.chips) {
+        chipsContainer.innerHTML = data.chips.map(c => 
+            `<span class="query-chip" onclick="setQuery('${c.query.replace(/'/g, "\\'")}')">${c.text}</span>`
+        ).join("");
+    }
+
+    // Input felt
+    const inputEl = document.getElementById("rag-input");
+    if (inputEl) {
+        inputEl.value = data.defaultQuery;
+        inputEl.placeholder = data.defaultQuery;
+    }
+
+    // Output kort
+    const outputEl = document.getElementById("rag-output");
+    if (outputEl) {
+        outputEl.innerHTML = `
+            <strong>${data.outputTitle}</strong><br/>
+            ${data.outputBody}
+            <div class="audit-meta-row">
+                <span>${data.kilde}</span>
+                <span id="audit-hash-display">SHA-256: 7f8a9b2c...${sectorKey.toLowerCase().slice(0, 4)}</span>
+            </div>
+            <div class="hitl-zone" style="margin-top:14px;">
+                <div style="font-weight: 700; font-size: 12px; color: var(--navy-dark); margin-bottom: 6px;">
+                    🛡️ Stage-Gate Port 9: Menneskelig Overprøving (HITL Sign-Off) — ${sectorKey}
+                </div>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="APPROVED" checked> 🟢 APPROVED (Godkjenn)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="MODIFIED"> 🟡 MODIFIED (Endre)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="REJECTED"> 🔴 REJECTED (Avvis)
+                    </label>
+                </div>
+                <textarea class="textarea-box" id="hitl-notes" placeholder="Saksbehandlers begrunnelse...">${data.hitlNote}</textarea>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="signAndSaveAudit()">
+                    🔒 Signer & Registrer med SHA-256 Stempel
+                </button>
+                <div id="sign-confirmation" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-weight: 600;">
+                    ✓ Signert og arkivert i Audit_AI_Actions!
+                </div>
+            </div>
+        `;
+    }
+}
+
+// 2. Triage & Smart Arbeidskø synkronisering
+function renderSectorTriage(sectorKey) {
+    const data = SECTOR_TRIAGE_DATA[sectorKey] || SECTOR_TRIAGE_DATA["ALL"];
+
+    // Badge teller
+    const badgeEl = document.getElementById("triage-counter-badge");
+    if (badgeEl) badgeEl.textContent = data.badge;
+
+    // Items container
+    const container = document.getElementById("triage-items-container");
+    if (container) {
+        let itemsHtml = "";
+        data.items.forEach(it => {
+            itemsHtml += `
+                <div class="triage-item">
+                    <div>
+                        <span class="triage-item-tag ${it.tag}">${it.tagText}</span>
+                        <strong>${it.unit}</strong>: ${it.desc}
+                    </div>
+                    <button class="btn btn-sm" onclick="loadTriageUnit('${it.unitKey}')">Behandle</button>
+                </div>
+            `;
+        });
+
+        // Grønn rad
+        itemsHtml += `
+            <div class="triage-item" id="green-units-row">
+                <div>
+                    <span class="triage-item-tag tag-normal">🟢 NORMAL</span>
+                    <span id="green-units-text"><strong>${data.greenCount} enheter</strong> innenfor avviksterskel (&plusmn;2.0 %)</span>
+                </div>
+                <button class="btn btn-sm btn-primary" id="btn-batch-approve" onclick="batchApproveGreenUnits()">
+                    ⚡ Batch-godkjenn grønne
+                </button>
+            </div>
+            <div id="batch-approve-msg" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-family: var(--font-mono);">
+                ✓ ${data.greenCount} enheter batch-godkjent jf. delegeringsreglement! SHA256: 7a8b9c0d1e2f3a4b...
+            </div>
+        `;
+        container.innerHTML = itemsHtml;
+    }
+
+    // Last 4-punkts rapport og switch simulator
+    loadTriageUnit(data.primaryUnit);
+    if (typeof switchSimulatorUnit === 'function') {
+        switchSimulatorUnit(data.simUnit);
+    }
+}
+
+// 3. Saksgenerator synkronisering
+function syncSaksgeneratorForSector(sectorKey) {
+    const selectEl = document.getElementById("gen-enhet");
+    if (!selectEl) return;
+
+    const sectorToGenMap = {
+        "HELSE": "BO",
+        "OPPVEKST": "SKOLE",
+        "BYUTVIKLING": "BY",
+        "KULTUR": "KULTUR",
+        "ORG_TEK": "ORG",
+        "OKONOMI": "OKO",
+        "ALL": "KONSERN"
+    };
+
+    const targetVal = sectorToGenMap[sectorKey] || "BO";
+    selectEl.value = targetVal;
+    updateGeneratedNote();
+}
+
+function updateGeneratedNote() {
+    const enh = document.getElementById("gen-enhet") ? document.getElementById("gen-enhet").value : "BO";
+    const niv = document.getElementById("gen-niva") ? document.getElementById("gen-niva").value : "NIVA3";
+    const out = document.getElementById("generated-note-text");
+    if (!out) return;
+
+    const key = `${enh}_${niv}`;
+    if (SAKS_TEKSTER[key]) {
+        out.innerText = SAKS_TEKSTER[key];
+    } else if (enh === "BO") {
+        out.innerText = SAKS_TEKSTER["BO_NIVA3"];
+    } else if (enh === "SKOLE") {
+        out.innerText = SAKS_TEKSTER["SKOLE_NIVA3"];
+    } else if (enh === "BY") {
+        out.innerText = SAKS_TEKSTER["BY_NIVA3"];
+    } else if (enh === "KULTUR") {
+        out.innerText = SAKS_TEKSTER["KULTUR_NIVA3"];
+    } else if (enh === "ORG") {
+        out.innerText = SAKS_TEKSTER["ORG_NIVA3"];
+    } else if (enh === "OKO") {
+        out.innerText = SAKS_TEKSTER["OKO_NIVA3"];
+    } else if (enh === "KONSERN") {
+        out.innerText = SAKS_TEKSTER["KONSERN_NIVA3"];
+    } else {
+        out.innerText = SAKS_TEKSTER["DEFAULT"];
+    }
+}
+
+// 4. Power BI Tab 1: KOSTRA Matrise synkronisering
+function renderPbiKostraForSector(sectorKey) {
+    const tbody = document.getElementById("pbi-kostra-tbody");
+    if (!tbody) return;
+
+    const data = SECTOR_PBI_KOSTRA_DATA[sectorKey] || SECTOR_PBI_KOSTRA_DATA["ALL"];
+    let html = "";
+
+    data.forEach(r => {
+        const isHeader = r.type === "header";
+        const isSummary = r.type === "summary";
+        let rowStyle = "";
+        let tdPadding = "";
+        
+        if (isHeader) {
+            rowStyle = 'style="background: #f8fafc; font-weight: 700;"';
+        } else if (isSummary) {
+            rowStyle = 'class="summary-row" style="font-weight: 700; border-top: 1.5px solid var(--navy-dark);"';
+        } else {
+            tdPadding = 'style="padding-left: 24px;"';
+        }
+
+        const isNeg = r.var < 0;
+        const cfClass = isNeg ? 'cf-rag-red' : (r.var > 0 ? 'cf-rag-green' : '');
+        const formattedVar = isNeg ? `-${Math.abs(r.var).toLocaleString('nb-NO').replace(/\s/g, ' ')}` : (r.var > 0 ? `+${r.var.toLocaleString('nb-NO').replace(/\s/g, ' ')}` : "0");
+
+        html += `
+            <tr ${rowStyle}>
+                <td ${tdPadding}>${r.name}</td>
+                <td>${r.enhet}</td>
+                <td class="num">${r.bac.toLocaleString('nb-NO').replace(/\s/g, ' ')}</td>
+                <td class="num">${r.ac.toLocaleString('nb-NO').replace(/\s/g, ' ')}</td>
+                <td class="num">${r.eoy.toLocaleString('nb-NO').replace(/\s/g, ' ')}</td>
+                <td class="num ${cfClass}">${formattedVar}</td>
+                <td><span class="rag-badge ${r.badgeClass}">${r.status}</span></td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = html;
+}
+
+// 5. Power BI Tab 2: Capex EVM synkronisering
+function renderPbiCapexForSector(sectorKey) {
+    const tbody = document.getElementById("pbi-capex-tbody");
+    if (!tbody) return;
+
+    const data = SECTOR_PBI_CAPEX_DATA[sectorKey] || SECTOR_PBI_CAPEX_DATA["ALL"];
+    let html = "";
+
+    data.forEach(p => {
+        const rowStyle = p.isSummary ? 'class="summary-row" style="font-weight: 700; border-top: 1.5px solid var(--navy-dark);"' : '';
+        const cpiClass = p.cpi < 0.95 ? 'cf-rag-red' : (p.cpi < 1.0 ? 'cf-rag-yellow' : 'cf-rag-green');
+        const spiClass = p.spi < 0.95 ? 'cf-rag-red' : (p.spi < 1.0 ? 'cf-rag-yellow' : 'cf-rag-green');
+
+        html += `
+            <tr ${rowStyle}>
+                <td>${p.name}</td>
+                <td>${p.id}</td>
+                <td class="num">${p.bac.toLocaleString('nb-NO').replace(/\s/g, ' ')}</td>
+                <td class="num">${p.ac.toLocaleString('nb-NO').replace(/\s/g, ' ')}</td>
+                <td class="num">${p.ev.toLocaleString('nb-NO').replace(/\s/g, ' ')}</td>
+                <td class="num ${cpiClass}">${p.cpi.toFixed(3)}</td>
+                <td class="num ${spiClass}">${p.spi.toFixed(3)}</td>
+                <td class="num ${p.eac > p.bac ? 'cf-rag-red' : 'cf-rag-green'}">${Math.round(p.eac).toLocaleString('nb-NO').replace(/\s/g, ' ')}</td>
+                <td><span class="rag-badge ${p.badgeClass}">${p.status}</span></td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = html;
+}
+
+// 6. Power BI Tab 4: 7 Rapportsider synkronisering
+function syncPbiReportPageForSector(sectorKey) {
+    const pageMap = {
+        "HELSE": 3,       // Side 3: Sektor Helse og Mestring
+        "OPPVEKST": 2,     // Side 2: Grunnskole Bemanningskontroll
+        "BYUTVIKLING": 6,  // Side 6: Investeringskontroll Capex
+        "KULTUR": 5,       // Side 5: What-If Simulering & Tiltak
+        "ORG_TEK": 5,      // Side 5: What-If Simulering (FinOps)
+        "OKONOMI": 4,      // Side 4: Lønns- og Stillingskontroll
+        "ALL": 1           // Side 1: CFO Konsernstyring
+    };
+    const targetPage = pageMap[sectorKey] || 1;
+    if (typeof switchPbiReportPage === 'function') {
+        switchPbiReportPage(targetPage);
+    }
+}
+
+// 7. Dokumentbank synkronisering
+function updateDocbankForSector(sectorKey) {
+    const banner = document.getElementById("docbank-sector-filter-banner");
+    const label = document.getElementById("docbank-active-sector-label");
+    const badge = document.getElementById("docbank-sector-count-badge");
+    const sectorData = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
+
+    if (label) {
+        label.textContent = `${sectorData.icon} ${sectorData.title}`;
+    }
+
+    const cards = document.querySelectorAll("#doc-cards-container .doc-card");
+    if (!cards.length) return;
+
+    let visibleCount = 0;
+    cards.forEach(card => {
+        const cardTitle = (card.querySelector(".doc-title") ? card.querySelector(".doc-title").innerText : "").toLowerCase();
+        const cardDesc = (card.querySelector(".doc-desc") ? card.querySelector(".doc-desc").innerText : "").toLowerCase();
+        const cardCategory = card.getAttribute("data-category") || "";
+
+        let match = false;
+        if (sectorKey === "ALL") {
+            match = true;
+        } else if (sectorKey === "HELSE") {
+            // Helse-relevante maler
+            if (cardTitle.includes("helse") || cardTitle.includes("boenhet") || cardTitle.includes("sykehjem") || 
+                cardDesc.includes("helse") || cardDesc.includes("turnus") || cardDesc.includes("pleie") || 
+                cardTitle.includes("avdelingsleder") || cardTitle.includes("kommunalsjef") || cardTitle.includes("kommunedirektøren") ||
+                cardTitle.includes("bystyret") || cardTitle.includes("fast") || cardTitle.includes("mcp") || cardTitle.includes("ai")) {
+                match = true;
+            }
+        } else if (sectorKey === "OPPVEKST") {
+            // Oppvekst-relevante maler
+            if (cardTitle.includes("oppvekst") || cardTitle.includes("skole") || cardTitle.includes("barnehage") || 
+                cardDesc.includes("lærer") || cardDesc.includes("rektor") || cardDesc.includes("vikar") ||
+                cardTitle.includes("avdelingsleder") || cardTitle.includes("kommunalsjef") || cardTitle.includes("kommunedirektøren") ||
+                cardTitle.includes("bystyret") || cardTitle.includes("fast") || cardTitle.includes("mcp") || cardTitle.includes("ai")) {
+                match = true;
+            }
+        } else if (sectorKey === "BYUTVIKLING") {
+            // Byutvikling / Capex
+            if (cardTitle.includes("capex") || cardTitle.includes("prosjektkontroll") || cardTitle.includes("evm") || 
+                cardDesc.includes("selvkost") || cardDesc.includes("va") || cardTitle.includes("bystyret") || cardTitle.includes("kommunedirektøren")) {
+                match = true;
+            }
+        } else {
+            // Standard styringsdokumenter for andre sektorer
+            if (cardTitle.includes("bystyret") || cardTitle.includes("kommunedirektøren") || cardTitle.includes("fast") || cardTitle.includes("mcp")) {
+                match = true;
+            }
+        }
+
+        if (match) {
+            card.style.display = "";
+            visibleCount++;
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    if (badge) {
+        if (sectorKey === "ALL") {
+            badge.textContent = `Viser alle ${visibleCount} maler`;
+            badge.style.background = "var(--success-green-bg)";
+            badge.style.color = "var(--success-green)";
+        } else {
+            badge.textContent = `Filtrert: ${visibleCount} relevante maler for ${sectorData.title}`;
+            badge.style.background = "#e0f2fe";
+            badge.style.color = "#0369a1";
+        }
+    }
+}
+
+function clearDocbankSectorFilter() {
+    updateDocbankForSector("ALL");
+}
+
+// 8. Sammenstillingstabell filtrering
+function filterSectorComparisonTable(sectorKey) {
+    const rows = document.querySelectorAll("#sector-comparison-tbody tr");
+    if (!rows.length) return;
+
+    rows.forEach(r => {
+        if (sectorKey === "ALL") {
+            r.style.display = "";
+            if (r.id === "row-sec-all") {
+                r.style.background = "#f8fafc";
+            } else {
+                r.style.background = "";
+            }
+        } else {
+            const targetId = `row-sec-${sectorKey.toLowerCase()}`;
+            if (r.id === targetId || r.id === "row-sec-all") {
+                r.style.display = "";
+                if (r.id === targetId) {
+                    r.style.background = "#e0f2fe";
+                } else {
+                    r.style.background = "#f8fafc";
+                }
+            } else {
+                r.style.display = "none";
+            }
+        }
+    });
+}
+
+// 9. Timeline Banner oppdatering med aktiv sektor
+function updateTimelineBannerForSector(sectorKey) {
+    const modeEl = document.getElementById("timeline-active-mode");
+    const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
+    if (modeEl) {
+        if (sectorKey === "ALL") {
+            modeEl.innerText = "🔴 MÅNEDSRAPPORTERING M9 (September) — 🌐 Konsernoversikt";
+        } else {
+            modeEl.innerText = `🔴 MÅNEDSRAPPORTERING M9 (September) — ${data.icon} ${data.title}`;
+        }
+    }
+}
+
+// ==========================================================================
+// SENTRAL HOVEDFUNKSJON: SYNKRONISERER ALLE ELEMENTER FOR VALGT VIRKSOMHETSOMRÅDE
+// ==========================================================================
+function syncAllSectionsForSector(sectorKey) {
+    // 1. Sammenstillingstabell
+    filterSectorComparisonTable(sectorKey);
+
+    // 2. RAG Regelverksassistent & Juss
+    renderSectorRag(sectorKey);
+
+    // 3. Smart Arbeidskø & Triage
+    renderSectorTriage(sectorKey);
+
+    // 4. Saksgenerator & Politisk saksflyt
+    syncSaksgeneratorForSector(sectorKey);
+
+    // 5. Power BI Showcase (KOSTRA, Capex, Rapportsider)
+    renderPbiKostraForSector(sectorKey);
+    renderPbiCapexForSector(sectorKey);
+    syncPbiReportPageForSector(sectorKey);
+
+    // 6. Dokumentbank
+    updateDocbankForSector(sectorKey);
+
+    // 7. Timeline banner
+    updateTimelineBannerForSector(sectorKey);
+}
+
+</script>
 </body>
 </html>
