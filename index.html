@@ -2381,6 +2381,142 @@
             z-index: 1000;
             white-space: nowrap;
         }
+
+        /* ==========================================================================
+           RAG CONDITIONAL FORMATTING DESIGN SYSTEM (TUFTE / OFFICE BI STANDARD)
+           Light Red (#fef2f2 / #991b1b), Light Yellow (#fefce8 / #854d0e), Light Green (#f0fdf4 / #166534)
+           ========================================================================== */
+        :root {
+            --rag-red-bg: #fef2f2;
+            --rag-red-text: #991b1b;
+            --rag-red-border: #fecaca;
+            --rag-yellow-bg: #fefce8;
+            --rag-yellow-text: #854d0e;
+            --rag-yellow-border: #fef08a;
+            --rag-green-bg: #f0fdf4;
+            --rag-green-text: #166534;
+            --rag-green-border: #bbf7d0;
+        }
+
+        /* Conditional Formatting Cell & Element Utilities */
+        .cf-rag-red {
+            background-color: var(--rag-red-bg) !important;
+            color: var(--rag-red-text) !important;
+        }
+        .cf-rag-yellow {
+            background-color: var(--rag-yellow-bg) !important;
+            color: var(--rag-yellow-text) !important;
+        }
+        .cf-rag-green {
+            background-color: var(--rag-green-bg) !important;
+            color: var(--rag-green-text) !important;
+        }
+
+        /* RAG Status Pill Badges */
+        .rag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+        .rag-badge-red {
+            background: var(--rag-red-bg) !important;
+            color: var(--rag-red-text) !important;
+            border: 1px solid var(--rag-red-border) !important;
+        }
+        .rag-badge-yellow {
+            background: var(--rag-yellow-bg) !important;
+            color: var(--rag-yellow-text) !important;
+            border: 1px solid var(--rag-yellow-border) !important;
+        }
+        .rag-badge-green {
+            background: var(--rag-green-bg) !important;
+            color: var(--rag-green-text) !important;
+            border: 1px solid var(--rag-green-border) !important;
+        }
+
+        /* KPI Card Conditional Formatting */
+        .kpi-card.cf-rag-red {
+            background: var(--rag-red-bg);
+            border-color: var(--rag-red-border);
+            border-left: 3px solid #dc2626;
+        }
+        .kpi-card.cf-rag-yellow {
+            background: var(--rag-yellow-bg);
+            border-color: var(--rag-yellow-border);
+            border-left: 3px solid #d97706;
+        }
+        .kpi-card.cf-rag-green {
+            background: var(--rag-green-bg);
+            border-color: var(--rag-green-border);
+            border-left: 3px solid #16a34a;
+        }
+
+        /* Sector KPI Chip Conditional Formatting */
+        .sector-kpi-chip.cf-rag-red {
+            background: var(--rag-red-bg);
+            border-color: var(--rag-red-border);
+            border-left: 3px solid #dc2626;
+        }
+        .sector-kpi-chip.cf-rag-yellow {
+            background: var(--rag-yellow-bg);
+            border-color: var(--rag-yellow-border);
+            border-left: 3px solid #d97706;
+        }
+        .sector-kpi-chip.cf-rag-green {
+            background: var(--rag-green-bg);
+            border-color: var(--rag-green-border);
+            border-left: 3px solid #16a34a;
+        }
+
+        /* Table Conditional Formatting Cell Styles */
+        table.tufte-table td.cf-rag-red {
+            background-color: var(--rag-red-bg);
+            color: var(--rag-red-text);
+            font-weight: 600;
+        }
+        table.tufte-table td.cf-rag-yellow {
+            background-color: var(--rag-yellow-bg);
+            color: var(--rag-yellow-text);
+            font-weight: 600;
+        }
+        table.tufte-table td.cf-rag-green {
+            background-color: var(--rag-green-bg);
+            color: var(--rag-green-text);
+            font-weight: 600;
+        }
+
+        /* RAG Legend Bar */
+        .rag-legend-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            padding: 3px 10px;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+        }
+        .rag-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .rag-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .rag-dot.red { background: #dc2626; }
+        .rag-dot.yellow { background: #d97706; }
+        .rag-dot.green { background: #16a34a; }
 </style>
 </head>
 <body>
@@ -2622,7 +2758,59 @@
         </div>
     </header>
 
-    <!-- 2. TOTALTALL PER VIRKSOMHETSOMRÅDE (EVM / PROJECT CONTROLLING) -->
+    <!-- =======================================================================
+         2. ANSVARSOMRÅDER & SEKTORSTYRING (KRISTIANSAND KOMMUNE)
+         Organisert etter økonomirådgivernes 6 operative tjenesteområder
+         ======================================================================= -->
+    <section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
+        <div class="section-header">
+            <span>🏛️ Ansvarsområder & Økonomirådgivere (6 Tjenesteområder)</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Virksomhetsstyring 2026</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+            Hvert tjenesteområde betjenes av dedikerte økonomirådgivere for saksfremlegg, KOSTRA-avstemming og avviksoppfølging jf. Kommuneloven § 14-5.
+        </p>
+
+        <!-- Sektorvelger Tabs -->
+        <!-- Sektorvelger Tabs -->
+        <div class="sector-nav-bar" id="sector-nav-bar">
+            <button class="sector-tab-btn active" id="sec-btn-all" onclick="selectSector('ALL')">
+                <span>🌐 Konsern (Alle områder)</span>
+                <span class="sector-tab-badge">7.25 mrd</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-helse" onclick="selectSector('HELSE')">
+                <span>🏥 1. Helse og mestring</span>
+                <span class="sector-tab-badge" style="background:var(--alert-amber); color:#fff;">-9.85M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-oppvekst" onclick="selectSector('OPPVEKST')">
+                <span>🏫 2. Oppvekst</span>
+                <span class="sector-tab-badge" style="background:var(--alert-red); color:#fff;">-11.87M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-by" onclick="selectSector('BYUTVIKLING')">
+                <span>🏗️ 3. By- og stedsutvikling</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">940M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-kultur" onclick="selectSector('KULTUR')">
+                <span>🎭 4. Kultur og innbyggerdialog</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">380M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-org" onclick="selectSector('ORG_TEK')">
+                <span>💻 5. Organisasjon og teknologi</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">460M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-oko" onclick="selectSector('OKONOMI')">
+                <span>⚖️ 6. Økonomi og virksomhetsstyring</span>
+                <span class="sector-tab-badge" style="background:#dcfce7; color:#15803d;">+2.58M</span>
+            </button>
+        </div>
+
+        <!-- Dynamisk Sektorkort / Detaljvisning -->
+        <div class="sector-detail-card" id="sector-detail-card">
+            <!-- Fylles dynamisk fra SEKTOR_DATA via JavaScript -->
+        </div>
+    </section>
+
+    <!-- 3. TOTALTALL PER VIRKSOMHETSOMRÅDE (EVM / PROJECT CONTROLLING) -->
     <div style="margin-bottom: 24px;" id="kpi-seksjon-container">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
             <div style="display:flex; align-items:center; gap:8px;">
@@ -2645,34 +2833,49 @@
                 <button type="button" class="btn-tool" onclick="toggleSectorComparisonTable()" style="font-size:11px; padding:3px 10px;" id="btn-toggle-sector-comp">
                     📋 Vis alle 6 områder tabell
                 </button>
+                <div class="rag-legend-bar">
+                    <span style="font-weight:700;">RAG:</span>
+                    <span class="rag-legend-item"><span class="rag-dot red"></span> Rød (&lt;0 / CPI&lt;0.95)</span>
+                    <span class="rag-legend-item"><span class="rag-dot yellow"></span> Gul (0.95–0.999)</span>
+                    <span class="rag-legend-item"><span class="rag-dot green"></span> Grønn (≥1.000)</span>
+                </div>
             </div>
         </div>
 
         <div class="kpi-grid" id="kpi-seksjon">
-            <div class="kpi-card">
+            <div class="kpi-card" id="card-kpi-pv">
                 <div class="kpi-label"><span class="tufte-tip" data-tip="Planlagt Verdi (Planned Value): Akkumulert periodisert ramme fra Framsikt EPM frem til rapporteringsmåneden for valgt virksomhetsområde.">Planlagt Verdi (PV YTD) <span class="tip-badge">PV</span></span></div>
                 <div class="kpi-value" id="kpi-val-pv">4 846 872 460 kr</div>
                 <div class="kpi-subtext" id="kpi-sub-pv">Akkumulert periodisert ramme</div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" id="card-kpi-ac">
                 <div class="kpi-label"><span class="tufte-tip" data-tip="Påløpt Kostnad (Actual Cost): Faktisk regnskapsført forbruk fra Visma Enterprise ERP for valgt virksomhetsområde.">Påløpt Kostnad (AC YTD) <span class="tip-badge">AC</span></span></div>
                 <div class="kpi-value" id="kpi-val-ac">4 865 872 460 kr</div>
                 <div class="kpi-subtext" id="kpi-sub-ac">Faktisk regnskapsført forbruk</div>
             </div>
-            <div class="kpi-card">
-                <div class="kpi-label"><span class="tufte-tip" data-tip="Kostnadsavvik (Cost Variance = PV - AC): Avvik mot periodisert budsjett. Negativt tall indikerer merforbruk (rød alarm).">Kostnadsavvik (CV) <span class="tip-badge">CV</span></span></div>
-                <div class="kpi-value kpi-alert" id="kpi-val-cv">-19 000 000 kr</div>
-                <div class="kpi-subtext kpi-alert" id="kpi-sub-cv">Samlet merforbruk før tiltak</div>
+            <div class="kpi-card cf-rag-red" id="card-kpi-cv">
+                <div class="kpi-label" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="tufte-tip" data-tip="Kostnadsavvik (Cost Variance = PV - AC): Avvik mot periodisert budsjett. Negativt tall indikerer merforbruk (rød alarm).">Kostnadsavvik (CV) <span class="tip-badge">CV</span></span>
+                    <span id="kpi-badge-cv" class="rag-badge rag-badge-red">🔴 Merforbruk</span>
+                </div>
+                <div class="kpi-value" id="kpi-val-cv" style="color:var(--rag-red-text);">-19 000 000 kr</div>
+                <div class="kpi-subtext" id="kpi-sub-cv" style="color:var(--rag-red-text);">Samlet merforbruk før tiltak</div>
             </div>
-            <div class="kpi-card">
-                <div class="kpi-label"><span class="tufte-tip" data-tip="Kostnadsindeks (CPI = PV / AC): Forbrukseffektivitet for virksomhetsområdet. Under 1.000 betyr at kronene renner ut raskere enn budsjettert takt (mål: 1.000).">Kostnadsindeks (CPI) <span class="tip-badge">CPI</span></span></div>
-                <div class="kpi-value kpi-alert" id="kpi-val-cpi">0.996</div>
-                <div class="kpi-subtext" id="kpi-sub-cpi">Mål: 1.000 (Forbrukseffektivitet)</div>
+            <div class="kpi-card cf-rag-yellow" id="card-kpi-cpi">
+                <div class="kpi-label" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="tufte-tip" data-tip="Kostnadsindeks (CPI = PV / AC): Forbrukseffektivitet for virksomhetsområdet. Under 1.000 betyr at kronene renner ut raskere enn budsjettert takt (mål: 1.000).">Kostnadsindeks (CPI) <span class="tip-badge">CPI</span></span>
+                    <span id="kpi-badge-cpi" class="rag-badge rag-badge-yellow">🟡 0.996</span>
+                </div>
+                <div class="kpi-value" id="kpi-val-cpi" style="color:var(--rag-yellow-text);">0.996</div>
+                <div class="kpi-subtext" id="kpi-sub-cpi" style="color:var(--rag-yellow-text);">Mål: 1.000 (Tilsyn kreves)</div>
             </div>
-            <div class="kpi-card">
-                <div class="kpi-label"><span class="tufte-tip" data-tip="Sluttprognose (Estimate at Completion = AC + ETC): Forventet regnskapsresultat per 31.12 for virksomhetsområdet basert på nåværende forbrukstakt og planlagte tiltak.">Sluttprognose (EAC) <span class="tip-badge">EAC</span></span></div>
-                <div class="kpi-value" id="kpi-val-eac">7 268 450 000 kr</div>
-                <div class="kpi-subtext kpi-alert" id="kpi-sub-eac">+28.45M kr est. konsernavvik</div>
+            <div class="kpi-card cf-rag-red" id="card-kpi-eac">
+                <div class="kpi-label" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="tufte-tip" data-tip="Sluttprognose (Estimate at Completion = AC + ETC): Forventet regnskapsresultat per 31.12 for virksomhetsområdet basert på nåværende forbrukstakt og planlagte tiltak.">Sluttprognose (EAC) <span class="tip-badge">EAC</span></span>
+                    <span id="kpi-badge-eac" class="rag-badge rag-badge-red">🔴 +28.45M</span>
+                </div>
+                <div class="kpi-value" id="kpi-val-eac" style="color:var(--rag-red-text);">7 268 450 000 kr</div>
+                <div class="kpi-subtext" id="kpi-sub-eac" style="color:var(--rag-red-text);">+28.45M kr est. konsernavvik</div>
             </div>
         </div>
 
@@ -2703,21 +2906,21 @@
                         <td class="num">1 850 000 000 kr</td>
                         <td class="num">1 245 000 000 kr</td>
                         <td class="num">1 254 850 000 kr</td>
-                        <td class="num" style="color:var(--alert-red); font-weight:600;">-9 850 000 kr</td>
-                        <td class="num" style="color:var(--alert-red); font-weight:600;">0.992</td>
-                        <td class="num">1 864 700 000 kr</td>
-                        <td><span class="status-badge" style="background:#fee2e2; color:#991b1b; font-size:10px;">Overtids-/døgnpress</span></td>
+                        <td class="num cf-rag-red">-9 850 000 kr</td>
+                        <td class="num cf-rag-yellow">0.992</td>
+                        <td class="num">1 859 850 000 kr</td>
+                        <td><span class="rag-badge rag-badge-yellow">🟡 Overtidspress</span></td>
                     </tr>
                     <tr onclick="selectSector('OPPVEKST')" style="cursor:pointer;" id="row-sec-oppvekst">
                         <td><strong>🏫 2. Oppvekst</strong></td>
-                        <td>Frank Ellingsen (Senior Controller)</td>
+                        <td>Økonomirådgiver Oppvekst</td>
                         <td class="num">2 120 000 000 kr</td>
                         <td class="num">1 427 000 000 kr</td>
                         <td class="num">1 438 872 460 kr</td>
-                        <td class="num" style="color:var(--alert-red); font-weight:600;">-11 872 460 kr</td>
-                        <td class="num" style="color:var(--alert-red); font-weight:600;">0.992</td>
+                        <td class="num cf-rag-red">-11 872 460 kr</td>
+                        <td class="num cf-rag-yellow">0.992</td>
                         <td class="num">2 137 650 000 kr</td>
-                        <td><span class="status-badge" style="background:#fee2e2; color:#991b1b; font-size:10px;">Lærervikarer (§ 14-5)</span></td>
+                        <td><span class="rag-badge rag-badge-red">🔴 Kritisk merforbruk</span></td>
                     </tr>
                     <tr onclick="selectSector('BYUTVIKLING')" style="cursor:pointer;" id="row-sec-byutvikling">
                         <td><strong>🏗️ 3. By- og stedsutvikling</strong></td>
@@ -2725,10 +2928,10 @@
                         <td class="num">940 000 000 kr</td>
                         <td class="num">620 000 000 kr</td>
                         <td class="num">619 690 000 kr</td>
-                        <td class="num" style="color:var(--navy-dark); font-weight:600;">+310 000 kr</td>
-                        <td class="num">1.001</td>
+                        <td class="num cf-rag-green">+310 000 kr</td>
+                        <td class="num cf-rag-green">1.001</td>
                         <td class="num">939 500 000 kr</td>
-                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Balanse (VAR selvkost)</span></td>
+                        <td><span class="rag-badge rag-badge-green">🟢 Balanse (Selvkost)</span></td>
                     </tr>
                     <tr onclick="selectSector('KULTUR')" style="cursor:pointer;" id="row-sec-kultur">
                         <td><strong>🎭 4. Kultur og innbyggerdialog</strong></td>
@@ -2736,10 +2939,10 @@
                         <td class="num">380 000 000 kr</td>
                         <td class="num">252 000 000 kr</td>
                         <td class="num">252 045 000 kr</td>
-                        <td class="num" style="color:var(--navy-dark); font-weight:600;">-45 000 kr</td>
-                        <td class="num">1.000</td>
+                        <td class="num cf-rag-yellow">-45 000 kr</td>
+                        <td class="num cf-rag-green">1.000</td>
                         <td class="num">380 065 000 kr</td>
-                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Balanse (Energibuffer)</span></td>
+                        <td><span class="rag-badge rag-badge-green">🟢 Balanse (Buffer)</span></td>
                     </tr>
                     <tr onclick="selectSector('ORG_TEK')" style="cursor:pointer;" id="row-sec-org_tek">
                         <td><strong>💻 5. Organisasjon og teknologi</strong></td>
@@ -2747,10 +2950,10 @@
                         <td class="num">460 000 000 kr</td>
                         <td class="num">308 000 000 kr</td>
                         <td class="num">308 120 000 kr</td>
-                        <td class="num" style="color:var(--navy-dark); font-weight:600;">-120 000 kr</td>
-                        <td class="num">1.000</td>
+                        <td class="num cf-rag-yellow">-120 000 kr</td>
+                        <td class="num cf-rag-green">1.000</td>
                         <td class="num">460 180 000 kr</td>
-                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Balanse (FinOps)</span></td>
+                        <td><span class="rag-badge rag-badge-green">🟢 Balanse (FinOps)</span></td>
                     </tr>
                     <tr onclick="selectSector('OKONOMI')" style="cursor:pointer;" id="row-sec-okonomi">
                         <td><strong>⚖️ 6. Økonomi og virksomhetsstyring</strong></td>
@@ -2758,10 +2961,10 @@
                         <td class="num">1 490 000 000 kr</td>
                         <td class="num">994 872 460 kr</td>
                         <td class="num">992 295 000 kr</td>
-                        <td class="num" style="color:var(--navy-dark); font-weight:600;">+2 577 460 kr</td>
-                        <td class="num">1.003</td>
+                        <td class="num cf-rag-green">+2 577 460 kr</td>
+                        <td class="num cf-rag-green">1.003</td>
                         <td class="num">1 486 125 000 kr</td>
-                        <td><span class="status-badge" style="background:#dcfce7; color:#15803d; font-size:10px;">Finans & rentebuffer</span></td>
+                        <td><span class="rag-badge rag-badge-green">🟢 Finans & rentebuffer</span></td>
                     </tr>
                     <tr onclick="selectSector('ALL')" style="cursor:pointer; background:#f8fafc; font-weight:700; border-top:1.5px solid var(--navy-dark);" id="row-sec-all">
                         <td><strong>🌐 SAMLET KONSERNTOTAL</strong></td>
@@ -2769,10 +2972,10 @@
                         <td class="num">7 240 000 000 kr</td>
                         <td class="num">4 846 872 460 kr</td>
                         <td class="num">4 865 872 460 kr</td>
-                        <td class="num" style="color:var(--alert-red);">-19 000 000 kr</td>
-                        <td class="num" style="color:var(--alert-red);">0.996</td>
+                        <td class="num cf-rag-red">-19 000 000 kr</td>
+                        <td class="num cf-rag-yellow">0.996</td>
                         <td class="num">7 268 450 000 kr</td>
-                        <td><span class="status-badge" style="background:#fef9c3; color:#a16207; font-size:10px;">Korrigerende tiltak</span></td>
+                        <td><span class="rag-badge rag-badge-yellow">🟡 Korrigerende tiltak</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -2780,7 +2983,7 @@
     </div>
 
 
-    <!-- 3. KRITISKE KOSTNADSAVVIK PÅ KOSTRA ART (GOLDEN RECORD) -->
+    <!-- 4. KRITISKE KOSTNADSAVVIK PÅ KOSTRA ART (GOLDEN RECORD) -->
     <div class="panel" id="avvik-seksjon" style="margin-bottom: 24px;">
         <div class="section-header">
             <span>🚨 Kritiske Kostnadsavvik på KOSTRA Art (Golden Record)</span>
@@ -2790,6 +2993,17 @@
             Avvik beregnes som <em>Budsjett - Regnskap</em>. Negativt tall indikerer merforbruk (rødt jf. Tufte data-ink standard).
         </p>
 
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+            <div style="font-size:11.5px; color:var(--text-secondary);">
+                Viser KOSTRA-avvik for valgt ansvarsområde. Negativt avvik indikerer merforbruk.
+            </div>
+            <div class="rag-legend-bar">
+                <span style="font-weight:700;">RAG-format:</span>
+                <span class="rag-legend-item"><span class="rag-dot red"></span> Rød (Merforbruk &gt; 500k)</span>
+                <span class="rag-legend-item"><span class="rag-dot yellow"></span> Gul (Mindre avvik)</span>
+                <span class="rag-legend-item"><span class="rag-dot green"></span> Grønn (Mindreforbruk / balanse)</span>
+            </div>
+        </div>
         <table class="tufte-table" id="variances-table">
             <thead>
                 <tr>
@@ -2799,6 +3013,7 @@
                     <th class="num">Regnskap</th>
                     <th class="num">Avvik (NOK)</th>
                     <th class="num">Avvik %</th>
+                    <th>RAG Status</th>
                 </tr>
             </thead>
             <tbody id="variances-tbody">
@@ -2811,7 +3026,7 @@
         </div>
     </div>
 
-    <!-- 4. ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
+    <!-- 5. ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
     <div class="monthly-cycle-banner" id="workflow-cycle-banner">
         <div class="monthly-cycle-header">
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -2905,7 +3120,7 @@
         </div>
     </div>
 
-    <!-- 4. HURTIG-HANDLINGER / TOOLBAR -->
+    <!-- 6. HURTIG-HANDLINGER / TOOLBAR -->
     <div class="hub-toolbar">
         <a href="http://localhost:8501" target="_blank" class="btn btn-primary" title="Åpner lokal Streamlit-app på http://localhost:8501 (krever at start_kommune_ai.bat kjører lokalt)">
             🚀 Åpne Streamlit (Port 8501)
@@ -2998,7 +3213,7 @@
         </div>
     </div>
 
-    <!-- 5. ÅRSHJUL & KRITISKE FRISTER -->
+    <!-- 7. ÅRSHJUL & KRITISKE FRISTER -->
     <section class="timeline-section">
         <div class="section-header">
             <span>📅 Kommunalt Styringsårshjul & Kritiske Frister (2026)</span>
@@ -3067,57 +3282,7 @@
         </div>
     </section>
 
-    <!-- =======================================================================
-         6. ANSVARSOMRÅDER & SEKTORSTYRING (KRISTIANSAND KOMMUNE)
-         Organisert etter økonomirådgivernes 6 operative tjenesteområder
-         ======================================================================= -->
-    <section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
-        <div class="section-header">
-            <span>🏛️ Ansvarsområder & Økonomirådgivere (6 Tjenesteområder)</span>
-            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Virksomhetsstyring 2026</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-            Hvert tjenesteområde betjenes av dedikerte økonomirådgivere for saksfremlegg, KOSTRA-avstemming og avviksoppfølging jf. Kommuneloven § 14-5.
-        </p>
 
-        <!-- Sektorvelger Tabs -->
-        <!-- Sektorvelger Tabs -->
-        <div class="sector-nav-bar" id="sector-nav-bar">
-            <button class="sector-tab-btn active" id="sec-btn-all" onclick="selectSector('ALL')">
-                <span>🌐 Konsern (Alle områder)</span>
-                <span class="sector-tab-badge">7.25 mrd</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-helse" onclick="selectSector('HELSE')">
-                <span>🏥 1. Helse og mestring</span>
-                <span class="sector-tab-badge" style="background:var(--alert-amber); color:#fff;">-9.85M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-oppvekst" onclick="selectSector('OPPVEKST')">
-                <span>🏫 2. Oppvekst</span>
-                <span class="sector-tab-badge" style="background:var(--alert-red); color:#fff;">-11.87M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-by" onclick="selectSector('BYUTVIKLING')">
-                <span>🏗️ 3. By- og stedsutvikling</span>
-                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">940M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-kultur" onclick="selectSector('KULTUR')">
-                <span>🎭 4. Kultur og innbyggerdialog</span>
-                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">380M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-org" onclick="selectSector('ORG_TEK')">
-                <span>💻 5. Organisasjon og teknologi</span>
-                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">460M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-oko" onclick="selectSector('OKONOMI')">
-                <span>⚖️ 6. Økonomi og virksomhetsstyring</span>
-                <span class="sector-tab-badge" style="background:#dcfce7; color:#15803d;">+2.58M</span>
-            </button>
-        </div>
-
-        <!-- Dynamisk Sektorkort / Detaljvisning -->
-        <div class="sector-detail-card" id="sector-detail-card">
-            <!-- Fylles dynamisk fra SEKTOR_DATA via JavaScript -->
-        </div>
-    </section>
 
     <!-- 8. RAG REGELVERK & HITL SIGN-OFF -->
     <div class="panel" id="rag-seksjon" style="margin-bottom: 24px;">
@@ -4486,8 +4651,8 @@
                         <td class="num">33 591 000</td>
                         <td class="num">36 080 000</td>
                         <td class="num">49 164 212</td>
-                        <td class="num" style="color: var(--alert-red);">-15 573 212</td>
-                        <td><span class="status-badge" style="color: var(--alert-red); border-color: var(--alert-red); background: var(--alert-red-bg);">KRITISK MERFORBRUK</span></td>
+                        <td class="num cf-rag-red">-15 573 212</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 KRITISK MERFORBRUK</span></td>
                     </tr>
                     <tr>
                         <td style="padding-left: 24px;">• Funksjon 202 Grunnskoleopplæring</td>
@@ -4495,8 +4660,8 @@
                         <td class="num">33 591 000</td>
                         <td class="num">36 080 000</td>
                         <td class="num">49 164 212</td>
-                        <td class="num" style="color: var(--alert-red);">-15 573 212</td>
-                        <td>§ 14-5 Sak påkrevd</td>
+                        <td class="num cf-rag-red">-15 573 212</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 § 14-5 Sak påkrevd</span></td>
                     </tr>
                     <tr style="background: #f8fafc; font-weight: 700;">
                         <td>▼ 02 HELSE OG MESTRING</td>
@@ -4504,8 +4669,8 @@
                         <td class="num">50 339 572</td>
                         <td class="num">47 426 244</td>
                         <td class="num">67 072 639</td>
-                        <td class="num" style="color: var(--alert-red);">-16 733 067</td>
-                        <td><span class="status-badge" style="color: var(--alert-red); border-color: var(--alert-red); background: var(--alert-red-bg);">KRITISK MERFORBRUK</span></td>
+                        <td class="num cf-rag-red">-16 733 067</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 KRITISK MERFORBRUK</span></td>
                     </tr>
                     <tr>
                         <td style="padding-left: 24px;">• Funksjon 254 Kommunal Boenhet</td>
@@ -4513,8 +4678,8 @@
                         <td class="num">50 339 572</td>
                         <td class="num">47 426 244</td>
                         <td class="num">67 072 639</td>
-                        <td class="num" style="color: var(--alert-red);">-16 733 067</td>
-                        <td>§ 14-5 Sak påkrevd</td>
+                        <td class="num cf-rag-red">-16 733 067</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 Overtid art 1090</span></td>
                     </tr>
                     <tr class="summary-row">
                         <td>TOTALT KONSOLIDERT KONTROLLUTVALG</td>
@@ -4522,8 +4687,8 @@
                         <td class="num">83 930 572</td>
                         <td class="num">83 506 244</td>
                         <td class="num">116 236 851</td>
-                        <td class="num" style="color: var(--alert-red);">-32 306 279</td>
-                        <td>Bystyrets bord 28. sep</td>
+                        <td class="num cf-rag-red">-32 306 279</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 Bystyrets bord 28. sep</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -4552,10 +4717,10 @@
                         <td class="num">185 000 000</td>
                         <td class="num">115 000 000</td>
                         <td class="num">104 500 000</td>
-                        <td class="num">0.909</td>
-                        <td class="num">0.950</td>
-                        <td class="num">208 251 070</td>
-                        <td><span class="status-badge" style="color: var(--alert-amber); border-color: var(--alert-amber); background: #fef3c7;">MIDDELS RISIKO</span></td>
+                        <td class="num cf-rag-red">0.909</td>
+                        <td class="num cf-rag-yellow">0.950</td>
+                        <td class="num cf-rag-red">208 251 070</td>
+                        <td><span class="rag-badge rag-badge-yellow">🟡 MIDDELS RISIKO</span></td>
                     </tr>
                     <tr>
                         <td>Randesund Døgnbemannet Boenhet</td>
@@ -4563,10 +4728,10 @@
                         <td class="num">240 000 000</td>
                         <td class="num">165 000 000</td>
                         <td class="num">139 100 000</td>
-                        <td class="num">0.843</td>
-                        <td class="num">0.887</td>
-                        <td class="num">299 529 558</td>
-                        <td><span class="status-badge" style="color: var(--alert-red); border-color: var(--alert-red); background: var(--alert-red-bg);">HØY RISIKO</span></td>
+                        <td class="num cf-rag-red">0.843</td>
+                        <td class="num cf-rag-red">0.887</td>
+                        <td class="num cf-rag-red">299 529 558</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 HØY RISIKO</span></td>
                     </tr>
                     <tr>
                         <td>VA-Hovedledning Selvkost</td>
@@ -4574,10 +4739,10 @@
                         <td class="num">92 000 000</td>
                         <td class="num">48 000 000</td>
                         <td class="num">49 300 000</td>
-                        <td class="num">1.027</td>
-                        <td class="num">0.997</td>
-                        <td class="num">89 668 168</td>
-                        <td><span class="status-badge">I RUTE (LAV RISIKO)</span></td>
+                        <td class="num cf-rag-green">1.027</td>
+                        <td class="num cf-rag-yellow">0.997</td>
+                        <td class="num cf-rag-green">89 668 168</td>
+                        <td><span class="rag-badge rag-badge-green">🟢 I RUTE (LAV RISIKO)</span></td>
                     </tr>
                     <tr class="summary-row">
                         <td>TOTAL INVESTERINGSPORTFOLJE</td>
@@ -4585,10 +4750,10 @@
                         <td class="num">517 000 000</td>
                         <td class="num">328 000 000</td>
                         <td class="num">292 900 000</td>
-                        <td class="num">0.893</td>
-                        <td class="num">0.927</td>
-                        <td class="num">597 448 796</td>
-                        <td>Trekk på P85-reserve</td>
+                        <td class="num cf-rag-red">0.893</td>
+                        <td class="num cf-rag-yellow">0.927</td>
+                        <td class="num cf-rag-red">597 448 796</td>
+                        <td><span class="rag-badge rag-badge-yellow">🟡 Trekk på P85-reserve</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -4714,19 +4879,19 @@ SWITCH(
                             <td><strong>01 Sektor Oppvekst (Enhet 202)</strong></td>
                             <td class="num">12 450 000</td>
                             <td class="num">13 870 000</td>
-                            <td class="num" style="color: var(--alert-red);">+1 420 000</td>
-                            <td class="num" style="color: var(--alert-red);">+11,4%</td>
-                            <td class="num" style="color: var(--alert-red);">+2 130 000</td>
-                            <td><span class="status-badge" style="color: var(--alert-red); border-color: var(--alert-red); background: var(--alert-red-bg);">MERFORBRUK</span></td>
+                            <td class="num cf-rag-red">+1 420 000</td>
+                            <td class="num cf-rag-red">+11,4%</td>
+                            <td class="num cf-rag-red">+2 130 000</td>
+                            <td><span class="rag-badge rag-badge-red">🔴 MERFORBRUK</span></td>
                         </tr>
                         <tr>
                             <td><strong>02 Sektor Helse & Mestring (Enhet 2540)</strong></td>
                             <td class="num">21 141 000</td>
                             <td class="num">22 210 000</td>
-                            <td class="num" style="color: var(--alert-red);">+1 069 000</td>
-                            <td class="num" style="color: var(--alert-red);">+5,1%</td>
-                            <td class="num" style="color: var(--alert-red);">+1 603 500</td>
-                            <td><span class="status-badge" style="color: var(--alert-amber); border-color: var(--alert-amber); background: #fef3c7;">AKTSOMHET</span></td>
+                            <td class="num cf-rag-yellow">+1 069 000</td>
+                            <td class="num cf-rag-yellow">+5,1%</td>
+                            <td class="num cf-rag-yellow">+1 603 500</td>
+                            <td><span class="rag-badge rag-badge-yellow">🟡 AKTSOMHET</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -6393,11 +6558,11 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         <tr><th>Sektor</th><th class="num">Ramme</th><th class="num">Regnskap</th><th class="num">Avvik</th><th>Status</th></tr>
     </thead>
     <tbody>
-        <tr><td>Oppvekst & Grunnskole</td><td class="num">2 450M</td><td class="num">1 685M</td><td class="num" style="color:var(--alert-red);">+38,5M (+2.3%)</td><td>🔴 Kritisk</td></tr>
-        <tr><td>Helse & Mestring</td><td class="num">3 100M</td><td class="num">2 140M</td><td class="num" style="color:var(--alert-red);">+62,0M (+2.9%)</td><td>🔴 Kritisk</td></tr>
-        <tr><td>By- og Stedsutvikling</td><td class="num">850M</td><td class="num">560M</td><td class="num" style="color:var(--success-green);">-4,2M (-0.8%)</td><td>🟢 Normal</td></tr>
-        <tr><td>Kultur & Dialog</td><td class="num">420M</td><td class="num">280M</td><td class="num">+1,1M (+0.4%)</td><td>🟡 Mild</td></tr>
-        <tr><td>Sentralstyring & Staber</td><td class="num">680M</td><td class="num">450M</td><td class="num" style="color:var(--success-green);">-2,5M (-0.6%)</td><td>🟢 Normal</td></tr>
+        <tr><td>Oppvekst & Grunnskole</td><td class="num">2 450M</td><td class="num">1 685M</td><td class="num cf-rag-red">+38,5M (+2.3%)</td><td><span class="rag-badge rag-badge-red">🔴 Kritisk</span></td></tr>
+        <tr><td>Helse & Mestring</td><td class="num">3 100M</td><td class="num">2 140M</td><td class="num cf-rag-red">+62,0M (+2.9%)</td><td><span class="rag-badge rag-badge-red">🔴 Kritisk</span></td></tr>
+        <tr><td>By- og Stedsutvikling</td><td class="num">850M</td><td class="num">560M</td><td class="num cf-rag-green">-4,2M (-0.8%)</td><td><span class="rag-badge rag-badge-green">🟢 Normal</span></td></tr>
+        <tr><td>Kultur & Dialog</td><td class="num">420M</td><td class="num">280M</td><td class="num cf-rag-yellow">+1,1M (+0.4%)</td><td><span class="rag-badge rag-badge-yellow">🟡 Mild</span></td></tr>
+        <tr><td>Sentralstyring & Staber</td><td class="num">680M</td><td class="num">450M</td><td class="num cf-rag-green">-2,5M (-0.6%)</td><td><span class="rag-badge rag-badge-green">🟢 Normal</span></td></tr>
     </tbody>
 </table>
 <h4>FORSLAG TIL VEDTAK:</h4>
@@ -6461,10 +6626,10 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         <tr><th>Konto</th><th>Beskrivelse</th><th class="num">Budsjett</th><th class="num">Regnskap</th><th class="num">Avvik</th></tr>
     </thead>
     <tbody>
-        <tr><td>1010</td><td>Fast lønn stabsansatte</td><td class="num">21 000</td><td class="num">14 200</td><td class="num">+200</td></tr>
-        <tr><td>1090</td><td>Overtid anbudsfrister</td><td class="num">500</td><td class="num">850</td><td class="num" style="color:var(--alert-red);">+350 🔴</td></tr>
-        <tr><td>1270</td><td>Juridisk konsulentbistand</td><td class="num">4 000</td><td class="num">4 900</td><td class="num" style="color:var(--alert-red);">+900 🔴</td></tr>
-        <tr><td>1370</td><td>Lisenser KGV/KAV</td><td class="num">3 000</td><td class="num">3 000</td><td class="num">0 🟢</td></tr>
+        <tr><td>1010</td><td>Fast lønn stabsansatte</td><td class="num">21 000</td><td class="num">14 200</td><td class="num cf-rag-green">+200 kr</td></tr>
+        <tr><td>1090</td><td>Overtid anbudsfrister</td><td class="num">500</td><td class="num">850</td><td class="num cf-rag-red">+350 kr 🔴</td></tr>
+        <tr><td>1270</td><td>Juridisk konsulentbistand</td><td class="num">4 000</td><td class="num">4 900</td><td class="num cf-rag-red">+900 kr 🔴</td></tr>
+        <tr><td>1370</td><td>Lisenser KGV/KAV</td><td class="num">3 000</td><td class="num">3 000</td><td class="num cf-rag-green">0 kr 🟢</td></tr>
     </tbody>
 </table>
 <h4>TILTAK:</h4>
@@ -8340,31 +8505,44 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
 
             let html = "";
             data.rows.forEach(r => {
+                let cfClass = 'cf-rag-green';
+                let ragBadge = '<span class="rag-badge rag-badge-green">🟢 Mindreforbruk</span>';
+                
+                if (r.avvik < -500000 || r.isAlert) {
+                    cfClass = 'cf-rag-red';
+                    ragBadge = '<span class="rag-badge rag-badge-red">🔴 Merforbruk</span>';
+                } else if (r.avvik < 0) {
+                    cfClass = 'cf-rag-yellow';
+                    ragBadge = '<span class="rag-badge rag-badge-yellow">🟡 Observasjon</span>';
+                }
+
                 const rowClass = r.isAlert ? 'class="alert-row"' : '';
-                const avvikColor = r.avvik < 0 ? 'var(--alert-red)' : 'var(--navy-dark)';
                 html += `
                     <tr ${rowClass}>
                         <td><span class="tufte-tip" data-tip="${r.tip}">${r.art}</span></td>
                         <td>${r.enhet}</td>
                         <td class="num">${formatNok(r.budsjett)}</td>
                         <td class="num">${formatNok(r.regnskap)}</td>
-                        <td class="num" style="color:${avvikColor}; font-weight:600;">${formatNok(r.avvik)}</td>
-                        <td class="num" style="color:${avvikColor}; font-weight:600;">${r.avvikPct}</td>
+                        <td class="num ${cfClass}">${formatNok(r.avvik)}</td>
+                        <td class="num ${cfClass}">${r.avvikPct}</td>
+                        <td>${ragBadge}</td>
                     </tr>
                 `;
             });
 
             if (data.summary) {
                 const s = data.summary;
-                const sAvvikColor = s.avvik < 0 ? 'var(--alert-red)' : 'var(--navy-dark)';
+                const sCfClass = s.avvik < 0 ? 'cf-rag-red' : 'cf-rag-green';
+                const sBadge = s.avvik < 0 ? '<span class="rag-badge rag-badge-red">🔴 Samlet merforbruk</span>' : '<span class="rag-badge rag-badge-green">🟢 Samlet mindreforbruk</span>';
                 html += `
                     <tr class="summary-row">
                         <td>${s.title}</td>
                         <td>${s.enhet}</td>
                         <td class="num">${formatNok(s.budsjett)}</td>
                         <td class="num">${formatNok(s.regnskap)}</td>
-                        <td class="num" style="color:${sAvvikColor};">${formatNok(s.avvik)}</td>
-                        <td class="num" style="color:${sAvvikColor};">${s.avvikPct}</td>
+                        <td class="num ${sCfClass}">${formatNok(s.avvik)}</td>
+                        <td class="num ${sCfClass}">${s.avvikPct}</td>
+                        <td>${sBadge}</td>
                     </tr>
                 `;
             }
@@ -8450,12 +8628,18 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                             <div class="kpi-sub">Hittil Påløpt (AC)</div>
                             <div class="kpi-num">${data.forbruk}</div>
                         </div>
-                        <div class="sector-kpi-chip">
-                            <div class="kpi-sub">Avvik YTD (CV)</div>
-                            <div class="kpi-num" style="color:${data.avvik.includes('+') ? 'var(--alert-red)' : 'var(--navy-dark)'};">${data.avvik}</div>
+                        <div class="sector-kpi-chip ${data.avvik.startsWith('-') ? 'cf-rag-red' : 'cf-rag-green'}">
+                            <div class="kpi-sub" style="display:flex; justify-content:space-between; align-items:center;">
+                                <span>Avvik YTD (CV)</span>
+                                <span class="rag-badge ${data.avvik.startsWith('-') ? 'rag-badge-red' : 'rag-badge-green'}" style="font-size:9.5px; padding:1px 5px;">${data.avvik.startsWith('-') ? '🔴 Merforbruk' : '🟢 Balanse'}</span>
+                            </div>
+                            <div class="kpi-num">${data.avvik}</div>
                         </div>
-                        <div class="sector-kpi-chip">
-                            <div class="kpi-sub">Kostnadsindeks (CPI)</div>
+                        <div class="sector-kpi-chip ${parseFloat(data.cpi) < 0.95 ? 'cf-rag-red' : (parseFloat(data.cpi) < 1.00 ? 'cf-rag-yellow' : 'cf-rag-green')}">
+                            <div class="kpi-sub" style="display:flex; justify-content:space-between; align-items:center;">
+                                <span>Kostnadsindeks (CPI)</span>
+                                <span class="rag-badge ${parseFloat(data.cpi) < 0.95 ? 'rag-badge-red' : (parseFloat(data.cpi) < 1.00 ? 'rag-badge-yellow' : 'rag-badge-green')}" style="font-size:9.5px; padding:1px 5px;">${parseFloat(data.cpi) >= 1.00 ? '🟢 Mål nådd' : (parseFloat(data.cpi) >= 0.95 ? '🟡 Tilsyn' : '🔴 Tiltak')}</span>
+                            </div>
                             <div class="kpi-num">${data.cpi}</div>
                         </div>
                     </div>
@@ -8724,49 +8908,69 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             const acSub = document.getElementById("kpi-sub-ac");
             if (acSub) acSub.textContent = data.evm.ac_sub;
 
-            // 5. Kostnadsavvik (CV)
+            // 5. Kostnadsavvik (CV) med RAG conditional formatting
             const cvVal = document.getElementById("kpi-val-cv");
-            if (cvVal) {
-                cvVal.textContent = data.evm.cv;
-                if (data.evm.cv_alert) {
-                    cvVal.classList.add("kpi-alert");
-                } else {
-                    cvVal.classList.remove("kpi-alert");
-                }
-            }
+            if (cvVal) cvVal.textContent = data.evm.cv;
             const cvSub = document.getElementById("kpi-sub-cv");
-            if (cvSub) {
-                cvSub.textContent = data.evm.cv_sub;
-                if (data.evm.cv_alert) {
-                    cvSub.classList.add("kpi-alert");
-                } else {
-                    cvSub.classList.remove("kpi-alert");
+            if (cvSub) cvSub.textContent = data.evm.cv_sub;
+            
+            const cardCv = document.getElementById("card-kpi-cv");
+            const badgeCv = document.getElementById("kpi-badge-cv");
+            if (cardCv) {
+                cardCv.classList.remove("cf-rag-red", "cf-rag-yellow", "cf-rag-green");
+                const isNeg = data.evm.cv.startsWith("-");
+                cardCv.classList.add(isNeg ? "cf-rag-red" : "cf-rag-green");
+                if (badgeCv) {
+                    badgeCv.className = `rag-badge ${isNeg ? 'rag-badge-red' : 'rag-badge-green'}`;
+                    badgeCv.innerHTML = isNeg ? '🔴 Merforbruk' : '🟢 Balanse';
                 }
             }
 
-            // 6. Kostnadsindeks (CPI)
+            // 6. Kostnadsindeks (CPI) med RAG conditional formatting
             const cpiVal = document.getElementById("kpi-val-cpi");
-            if (cpiVal) {
-                cpiVal.textContent = data.evm.cpi;
-                if (data.evm.cpi_alert) {
-                    cpiVal.classList.add("kpi-alert");
-                } else {
-                    cpiVal.classList.remove("kpi-alert");
-                }
-            }
+            if (cpiVal) cpiVal.textContent = data.evm.cpi;
             const cpiSub = document.getElementById("kpi-sub-cpi");
             if (cpiSub) cpiSub.textContent = data.evm.cpi_sub;
 
-            // 7. Sluttprognose (EAC)
+            const cardCpi = document.getElementById("card-kpi-cpi");
+            const badgeCpi = document.getElementById("kpi-badge-cpi");
+            const cpiValNum = parseFloat(data.evm.cpi);
+            if (cardCpi) {
+                cardCpi.classList.remove("cf-rag-red", "cf-rag-yellow", "cf-rag-green");
+                let cpiClass = "cf-rag-green";
+                let cpiBadgeClass = "rag-badge-green";
+                let cpiText = `🟢 ${data.evm.cpi}`;
+                if (cpiValNum < 0.95) {
+                    cpiClass = "cf-rag-red";
+                    cpiBadgeClass = "rag-badge-red";
+                    cpiText = `🔴 ${data.evm.cpi}`;
+                } else if (cpiValNum < 1.00) {
+                    cpiClass = "cf-rag-yellow";
+                    cpiBadgeClass = "rag-badge-yellow";
+                    cpiText = `🟡 ${data.evm.cpi}`;
+                }
+                cardCpi.classList.add(cpiClass);
+                if (badgeCpi) {
+                    badgeCpi.className = `rag-badge ${cpiBadgeClass}`;
+                    badgeCpi.innerHTML = cpiText;
+                }
+            }
+
+            // 7. Sluttprognose (EAC) med RAG conditional formatting
             const eacVal = document.getElementById("kpi-val-eac");
             if (eacVal) eacVal.textContent = data.evm.eac;
             const eacSub = document.getElementById("kpi-sub-eac");
-            if (eacSub) {
-                eacSub.textContent = data.evm.eac_sub;
-                if (data.evm.eac_alert) {
-                    eacSub.classList.add("kpi-alert");
-                } else {
-                    eacSub.classList.remove("kpi-alert");
+            if (eacSub) eacSub.textContent = data.evm.eac_sub;
+
+            const cardEac = document.getElementById("card-kpi-eac");
+            const badgeEac = document.getElementById("kpi-badge-eac");
+            if (cardEac) {
+                cardEac.classList.remove("cf-rag-red", "cf-rag-yellow", "cf-rag-green");
+                const isAlert = data.evm.eac_alert;
+                cardEac.classList.add(isAlert ? "cf-rag-red" : "cf-rag-green");
+                if (badgeEac) {
+                    badgeEac.className = `rag-badge ${isAlert ? 'rag-badge-red' : 'rag-badge-green'}`;
+                    badgeEac.innerHTML = isAlert ? '🔴 Overskridelse' : '🟢 I balanse';
                 }
             }
 
