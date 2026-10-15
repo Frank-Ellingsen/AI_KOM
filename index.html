@@ -1141,20 +1141,22 @@
             width: 100%;
         }
 
-        /* --- VENSTRE SIDEBAR --- */
+        /* --- VENSTRE SIDEBAR (PINNED / FIXED) --- */
         .hub-sidebar {
             width: 290px;
             min-width: 290px;
             background: #ffffff;
             border-right: 1px solid var(--border-light);
             height: 100vh;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            bottom: 0;
             display: flex;
             flex-direction: column;
             z-index: 990;
             box-shadow: 2px 0 8px rgba(0,0,0,0.02);
-            transition: transform 0.25s ease, margin-left 0.25s ease;
+            transition: transform 0.25s ease, margin-left 0.25s ease, left 0.25s ease;
         }
 
         .hub-sidebar-scroll {
@@ -1307,6 +1309,8 @@
             min-width: 0;
             padding: 22px 30px;
             max-width: 1550px;
+            margin-left: 290px;
+            width: calc(100% - 290px);
         }
 
         /* Mobil/Nettbrett Sidebar-Toggle */
@@ -1339,6 +1343,8 @@
             }
             .hub-main-content {
                 padding: 16px;
+                margin-left: 0;
+                width: 100%;
             }
         }
 
@@ -1765,6 +1771,12 @@
             display: block;
             max-width: 1600px;
             margin: 0 auto;
+        }
+
+        body.presentation-mode .hub-main-content {
+            margin-left: 0 !important;
+            width: 100% !important;
+            padding: 0 !important;
         }
 
         body.presentation-mode .hub-header {
@@ -2378,10 +2390,11 @@
     <aside class="hub-sidebar" id="hub-sidebar">
         <div class="sidebar-brand">
             <div class="sidebar-brand-crest">🏛️</div>
-            <div>
+            <div style="flex:1; min-width:0;">
                 <div class="sidebar-brand-title">KRISTIANSAND KOMMUNE</div>
                 <div class="sidebar-brand-sub">Control Office Hub & AI Assistent</div>
             </div>
+            <span class="status-badge" style="font-size:9.5px; padding:2px 5px; flex-shrink:0; margin-left:auto;" title="Menyen er festet til venstre (Pinned)">📌 Festet</span>
         </div>
 
         <div class="sidebar-user-pill">
@@ -2444,7 +2457,7 @@
                 <!-- Linjediagram av avvik pr måned YTD (M1–M9) -->
                 <div class="sidebar-chart-box">
                     <div class="sidebar-chart-header">
-                        <span>Avvik pr måned YTD</span>
+                        <span id="sb-chart-title">Akk. merforbruk YTD</span>
                         <div class="sidebar-chart-tabs">
                             <button type="button" class="sb-chart-tab active" id="sb-tab-cum" onclick="setSidebarChartMode('CUM')">YTD Akk</button>
                             <button type="button" class="sb-chart-tab" id="sb-tab-month" onclick="setSidebarChartMode('MONTH')">Mnd</button>
@@ -2609,316 +2622,7 @@
         </div>
     </header>
 
-    
-    <!-- ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
-    <div class="monthly-cycle-banner" id="workflow-cycle-banner">
-        <div class="monthly-cycle-header">
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰ Meny</button>
-                <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy-dark);">
-                    📅 ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP
-                </span>
-                <span style="font-size:11px; color:var(--text-secondary);">
-                    Gjeldende fase: <strong id="current-phase-label" style="color:var(--navy-dark);">Fase 2: Avviksdeteksjon & Triage (Dag 6–10)</strong>
-                </span>
-            </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-                <button class="btn btn-sm" onclick="openCommandPalette()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Hurtigmeny for søk, enheter og maler (Ctrl+K)">
-                    ⚡ Søk (Ctrl+K)
-                </button>
-                <button class="btn btn-sm" onclick="togglePresentationMode()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Veksle møte-/presentasjonsmodus for storskjerm (Tast P)">
-                    🖥️ Møtemodus (P)
-                </button>
-                <button class="btn btn-sm" onclick="openUserGuide('MANED')" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;">
-                    📖 Månedsveileder
-                </button>
-                <span class="status-badge" id="cycle-month-tag">M9 September (T2)</span>
-            </div>
-        </div>
-
-        <div class="workflow-stepper">
-            <div class="cycle-step-card" id="cycle-card-1" onclick="selectWorkflowPhase(1)">
-                <div class="cycle-step-days">
-                    <span>Fase 1</span>
-                    <span>Dag 1–5</span>
-                </div>
-                <div class="cycle-step-title">1. Månedsstart & Import</div>
-                <div class="cycle-step-sub">Visma ERP data, bankavstemming, EHF-attestasjon og PII-vask til Golden Record.</div>
-            </div>
-
-            <div class="cycle-step-card active" id="cycle-card-2" onclick="selectWorkflowPhase(2)">
-                <div class="cycle-step-days">
-                    <span>Fase 2 ⭐</span>
-                    <span>Dag 6–10</span>
-                </div>
-                <div class="cycle-step-title">2. Avvik & Triage</div>
-                <div class="cycle-step-sub">Z-score screening, 16 enheter triage, artsavvik (vikarer/overtid) og NAV-etterslep.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-3" onclick="selectWorkflowPhase(3)">
-                <div class="cycle-step-days">
-                    <span>Fase 3</span>
-                    <span>Dag 11–18</span>
-                </div>
-                <div class="cycle-step-title">3. Lederdialog & Tiltak</div>
-                <div class="cycle-step-sub">Møter med enhetsledere (Skole/Bo), 4-punkts tiltaksplan og drøfting iht. HTA § 4.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-4" onclick="selectWorkflowPhase(4)">
-                <div class="cycle-step-days">
-                    <span>Fase 4</span>
-                    <span>Dag 19–24</span>
-                </div>
-                <div class="cycle-step-title">4. Prognose (EAC/ETC)</div>
-                <div class="cycle-step-sub">Oppdatere rullende EOY i Framsikt EPM, usikkerhet P10/P50/P90, pensjon & rente.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-5" onclick="selectWorkflowPhase(5)">
-                <div class="cycle-step-days">
-                    <span>Fase 5</span>
-                    <span>Dag 25–30</span>
-                </div>
-                <div class="cycle-step-title">5. Politisk Sak & Vedtak</div>
-                <div class="cycle-step-sub">Formannskapssak jf. § 14-5, Bystyrets bord, saksnotat, SHA-256 revisjonsstempel.</div>
-            </div>
-        </div>
-
-        <!-- Operativ Controller Sjekkliste for den valgte fasen -->
-        <div class="controller-checklist-panel" id="checklist-panel">
-            <div class="checklist-header">
-                <div>
-                    <strong id="checklist-title">🛡️ Fase 2 Controller Sjekkliste: Avviksdeteksjon & Triage</strong>
-                    <span style="font-size:11px; color:var(--text-secondary); margin-left:8px;" id="checklist-counter">4 av 5 oppgaver fullført</span>
-                </div>
-                <div style="display:flex; gap:6px;">
-                    <button class="btn btn-sm" onclick="resetCurrentChecklist()" style="font-size:10.5px; padding:2px 7px;">Tilbakestill</button>
-                    <button class="btn btn-sm btn-primary" onclick="markAllChecklistDone()" style="font-size:10.5px; padding:2px 7px;">✓ Merk alle fullført</button>
-                </div>
-            </div>
-            <div class="checklist-progress-bar">
-                <div class="checklist-progress-fill" id="checklist-progress" style="width: 80%;"></div>
-            </div>
-            <div id="checklist-items-container">
-                <!-- Dynamisk fylt via JavaScript -->
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. HURTIG-HANDLINGER / TOOLBAR -->
-    <div class="hub-toolbar">
-        <a href="http://localhost:8501" target="_blank" class="btn btn-primary" title="Åpner lokal Streamlit-app på http://localhost:8501 (krever at start_kommune_ai.bat kjører lokalt)">
-            🚀 Åpne Streamlit (Port 8501)
-        </a>
-        <a href="powerpoint/Presentasjon_Bystyret_Tertialrapport_2026.pptx" download class="btn" style="background: #1e3a8a; color: white; border-color: #1e3a8a;" title="Last ned offisiell PowerPoint-presentasjon for Bystyret">
-            🖥️ PowerPoint Bystyret (.pptx)
-        </a>
-        <a href="excel/Kommune_FAST_Finansiell_Modell_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;" title="Last ned 5-tabs FAST finansiell modell i Excel">
-            📊 Excel FAST Modell (.xlsx)
-        </a>
-        <a href="word/Saksfremlegg_Bystyret_Budsjettendring_2026.docx" download class="btn" style="background: #0056b3; color: white; border-color: #0056b3;" title="Last ned politisk saksfremlegg til Bystyret">
-            📝 Word Saksfremlegg (.docx)
-        </a>
-        <a href="powerbi/05_Komplett_Kommune_DAX_Bundle.dax" download class="btn" style="background: #b45309; color: white; border-color: #b45309;" title="Last ned komplett DAX-måltallspakke for 7 layouts">
-            📈 Power BI DAX (.dax)
-        </a>
-        <a href="reports/Kommune_Project_Controller_Reporting_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;">
-            📊 Excel Master (.xlsx)
-        </a>
-        <a href="reports/Mal_Saksbehandling_Tiltak_Avstemming_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;">
-            📑 Saksbehandlingsmodell (.xlsx)
-        </a>
-        <a href="#dokumentbank" onclick="filterDocs('AIPAKKE')" class="btn btn-accent" style="background: var(--navy-dark); color: #fff; border-color: var(--navy-dark);">
-            🎯 AI-Implementering (9)
-        </a>
-        <a href="#dokumentbank" onclick="filterDocs('MLOPS')" class="btn btn-accent" style="background: #1B365D; color: #fff; border-color: #1B365D;">
-            ⚙️ MLOps-Pakke (6)
-        </a>
-        <button class="btn btn-accent" onclick="openUserGuide('START')" style="background:var(--navy-dark); color:#fff; border-color:var(--navy-dark);">
-            📖 Brukerguide & Håndbok
-        </button>
-        <a href="#dokumentbank" class="btn btn-accent">
-            📂 Dokument- & Malbank
-        </a>
-        <a href="#saksflyt" class="btn">
-            🔄 Saksbehandlingsflyt
-        </a>
-        <a href="#powerbi-showcase" class="btn">
-            📊 Power BI & DAX Hub
-        </a>
-        <a href="bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md" target="_blank" class="btn">
-            📅 Årshjul 2026/2027
-        </a>
-        <a href="revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md" target="_blank" class="btn">
-            🛡️ Sjekkliste & Lukking
-        </a>
-        <a href="revisjon-og-kontroll/TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md" target="_blank" class="btn">
-            📝 Politisk Notat (T2)
-        </a>
-        <button class="btn" id="btn-update-vectordb" onclick="triggerVectorDbUpdate()">
-            ⚡ Oppdater Vektor-DB
-        </button>
-        <button class="btn" onclick="exportAuditTrail()">
-            📥 Audit Log (JSON)
-        </button>
-        <button class="btn" onclick="filterEntity('ALL')">
-            🏛️ Alle
-        </button>
-        <button class="btn" onclick="filterEntity('SKOLE')">
-            🏫 Skole
-        </button>
-        <button class="btn" onclick="filterEntity('BO')">
-            🏥 Boenhet
-        </button>
-        <button class="btn" onclick="toggleEngine()" id="engine-btn">
-            🔄 Bytt Motor
-        </button>
-    </div>
-
-    <!-- VEKTORDATABASE STATUS & PROGRESS PANEL (TUFTE DATA-INK) -->
-    <div id="vectordb-panel" class="vectordb-panel" style="display: none;">
-        <div class="vectordb-panel-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span id="vdb-status-icon">⚡</span>
-                <strong id="vdb-status-title">Oppdatering av Vektordatabase (sqlite-vec)</strong>
-                <span id="vdb-status-badge" class="status-badge">Klar</span>
-            </div>
-            <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary);" id="vdb-time-label">
-                Tid: 0.0s
-            </div>
-        </div>
-        <div class="vdb-progress-bar-container">
-            <div id="vdb-progress-bar" class="vdb-progress-bar" style="width: 0%;"></div>
-        </div>
-        <div class="vdb-status-details">
-            <div id="vdb-status-msg" style="color: var(--text-primary); font-weight: 500;">Klar til å starte indeksering av data/raw...</div>
-            <div id="vdb-stats-meta" style="color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px;">
-                data/raw: 37 filer | DB: 3 484 biter (37 indeksert)
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. ÅRSHJUL & KRITISKE FRISTER -->
-    <section class="timeline-section">
-        <div class="section-header">
-            <span>📅 Kommunalt Styringsårshjul & Kritiske Frister (2026)</span>
-            <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Synkronisert med Plandisc & Teams</span>
-        </div>
-
-        <!-- 12-MÅNEDERS TIDSVEKSLER (ÅRS- OG MÅNEDSLØYFE) -->
-        <div class="month-timeline-bar" id="month-timeline-bar">
-            <button class="month-pill" onclick="selectMonth(1)">Jan</button>
-            <button class="month-pill" onclick="selectMonth(2)">Feb</button>
-            <button class="month-pill" onclick="selectMonth(3)">Mar (T1)</button>
-            <button class="month-pill" onclick="selectMonth(4)">Apr</button>
-            <button class="month-pill" onclick="selectMonth(5)">Mai</button>
-            <button class="month-pill" onclick="selectMonth(6)">Jun</button>
-            <button class="month-pill" onclick="selectMonth(7)">Jul</button>
-            <button class="month-pill" onclick="selectMonth(8)">Aug</button>
-            <button class="month-pill active highlight" onclick="selectMonth(9)">Sep (T2)</button>
-            <button class="month-pill" onclick="selectMonth(10)">Okt</button>
-            <button class="month-pill" onclick="selectMonth(11)">Nov</button>
-            <button class="month-pill" onclick="selectMonth(12)">Des (HØP)</button>
-        </div>
-
-        <div class="timeline-status-banner" id="timeline-status-banner">
-            <div>
-                <span id="timeline-active-mode" style="font-weight: 700;">🔴 MÅNEDSRAPPORTERING M9 (September)</span> | 
-                <span id="timeline-deadline">Frist Formannskapet: 28. september (4 dager igjen)</span>
-            </div>
-            <div style="font-family: var(--font-mono); font-size: 11px;">
-                Saksbehandler: Frank Ellingsen (Senior Controller)
-            </div>
-        </div>
-
-        <div class="quarters-grid">
-            <div class="quarter-box">
-                <h3>Q1: KOSTRA & Regnskap <span>Jan–Mar</span></h3>
-                <ul>
-                    <li>• 15. jan / 23. feb: KOSTRA-rapportering</li>
-                    <li>• 09. mars: Regnskapsavslutning</li>
-                    <li>• 31. mars: Årsregnskap fremlegges</li>
-                </ul>
-            </div>
-            <div class="quarter-box">
-                <h3>Q2: 1. Tertial (T1) <span>Apr–Jun</span></h3>
-                <ul>
-                    <li>• 15. apr: Revisjonsberetning</li>
-                    <li>• 25. mai: 1. tertial til Bystyret</li>
-                    <li>• 02. juni: RNB & KOSTRA-tall</li>
-                </ul>
-            </div>
-            <div class="quarter-box active">
-                <h3>Q3: 2. Tertial (T2) ⭐ AKTIV <span>Jul–Sep</span></h3>
-                <ul>
-                    <li>• 15. aug: Innspill ny HØP</li>
-                    <li>• 23. sep: Kommunedirektørens HØP</li>
-                    <li>• <strong>28. sep: 2. tertial i Formannskapet</strong></li>
-                </ul>
-            </div>
-            <div class="quarter-box">
-                <h3>Q4: HØP & Budsjettvedtak <span>Okt–Des</span></h3>
-                <ul>
-                    <li>• 07. okt: Statsbudsjettet</li>
-                    <li>• 25. nov: Formannskapets innstilling</li>
-                    <li>• 18. des: Bystyrets endelige vedtak</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- =======================================================================
-         ANSVARSOMRÅDER & SEKTORSTYRING (KRISTIANSAND KOMMUNE)
-         Organisert etter økonomirådgivernes 6 operative tjenesteområder
-         ======================================================================= -->
-    <section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
-        <div class="section-header">
-            <span>🏛️ Ansvarsområder & Økonomirådgivere (6 Tjenesteområder)</span>
-            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Virksomhetsstyring 2026</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-            Hvert tjenesteområde betjenes av dedikerte økonomirådgivere for saksfremlegg, KOSTRA-avstemming og avviksoppfølging jf. Kommuneloven § 14-5.
-        </p>
-
-        <!-- Sektorvelger Tabs -->
-        <!-- Sektorvelger Tabs -->
-        <div class="sector-nav-bar" id="sector-nav-bar">
-            <button class="sector-tab-btn active" id="sec-btn-all" onclick="selectSector('ALL')">
-                <span>🌐 Konsern (Alle områder)</span>
-                <span class="sector-tab-badge">7.25 mrd</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-helse" onclick="selectSector('HELSE')">
-                <span>🏥 1. Helse og mestring</span>
-                <span class="sector-tab-badge" style="background:var(--alert-amber); color:#fff;">-9.85M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-oppvekst" onclick="selectSector('OPPVEKST')">
-                <span>🏫 2. Oppvekst</span>
-                <span class="sector-tab-badge" style="background:var(--alert-red); color:#fff;">-11.87M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-by" onclick="selectSector('BYUTVIKLING')">
-                <span>🏗️ 3. By- og stedsutvikling</span>
-                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">940M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-kultur" onclick="selectSector('KULTUR')">
-                <span>🎭 4. Kultur og innbyggerdialog</span>
-                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">380M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-org" onclick="selectSector('ORG_TEK')">
-                <span>💻 5. Organisasjon og teknologi</span>
-                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">460M</span>
-            </button>
-            <button class="sector-tab-btn" id="sec-btn-oko" onclick="selectSector('OKONOMI')">
-                <span>⚖️ 6. Økonomi og virksomhetsstyring</span>
-                <span class="sector-tab-badge" style="background:#dcfce7; color:#15803d;">+2.58M</span>
-            </button>
-        </div>
-
-        <!-- Dynamisk Sektorkort / Detaljvisning -->
-        <div class="sector-detail-card" id="sector-detail-card">
-            <!-- Fylles dynamisk fra SEKTOR_DATA via JavaScript -->
-        </div>
-    </section>
-
-    <!-- 4. NØKKELTALL (EVM / PROJECT CONTROLLING) -->
+    <!-- 2. TOTALTALL PER VIRKSOMHETSOMRÅDE (EVM / PROJECT CONTROLLING) -->
     <div style="margin-bottom: 24px;" id="kpi-seksjon-container">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
             <div style="display:flex; align-items:center; gap:8px;">
@@ -3075,89 +2779,348 @@
         </div>
     </div>
 
-    <!-- 5. TO-KOLONNERS ARBEIDSFLATE -->
-    <div class="workspace-grid">
-        
-        <!-- VENSTRE KOLONNE: AVVIKSANALYSE & TABELLER (TUFTE) -->
-        <div class="panel" id="avvik-seksjon">
-            <div class="section-header">
-                <span>🚨 Kritiske Kostnadsavvik på KOSTRA Art (Golden Record)</span>
-                <span id="active-entity-filter" style="font-size: 11px; font-weight: normal; color: var(--navy-dark);">Viser: Alle Enheter</span>
+
+    <!-- 3. KRITISKE KOSTNADSAVVIK PÅ KOSTRA ART (GOLDEN RECORD) -->
+    <div class="panel" id="avvik-seksjon" style="margin-bottom: 24px;">
+        <div class="section-header">
+            <span>🚨 Kritiske Kostnadsavvik på KOSTRA Art (Golden Record)</span>
+            <span id="active-entity-filter" style="font-size: 11px; font-weight: 700; color: var(--navy-dark); text-transform: uppercase;">Viser: Konsern (Alle Enheter)</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+            Avvik beregnes som <em>Budsjett - Regnskap</em>. Negativt tall indikerer merforbruk (rødt jf. Tufte data-ink standard).
+        </p>
+
+        <table class="tufte-table" id="variances-table">
+            <thead>
+                <tr>
+                    <th>KOSTRA Art / Post</th>
+                    <th>Enhet</th>
+                    <th class="num">Budsjett</th>
+                    <th class="num">Regnskap</th>
+                    <th class="num">Avvik (NOK)</th>
+                    <th class="num">Avvik %</th>
+                </tr>
+            </thead>
+            <tbody id="variances-tbody">
+                <!-- Dynamisk fylt fra SECTOR_VARIANCES via renderVariancesTable(sectorKey) -->
+            </tbody>
+        </table>
+
+        <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
+            Data-Ink merknad: Vertikale rutenett fjernet. Tall høyrejustert og formatert i hele kroner. Kilde: Visma ERP & Framsikt EPM Golden Record.
+        </div>
+    </div>
+
+    <!-- 4. ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
+    <div class="monthly-cycle-banner" id="workflow-cycle-banner">
+        <div class="monthly-cycle-header">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰ Meny</button>
+                <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy-dark);">
+                    📅 ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP
+                </span>
+                <span style="font-size:11px; color:var(--text-secondary);">
+                    Gjeldende fase: <strong id="current-phase-label" style="color:var(--navy-dark);">Fase 2: Avviksdeteksjon & Triage (Dag 6–10)</strong>
+                </span>
             </div>
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-                Avvik beregnes som <em>Budsjett - Regnskap</em>. Negativt tall indikerer merforbruk.
-            </p>
-
-            <table class="tufte-table" id="variances-table">
-                <thead>
-                    <tr>
-                        <th>KOSTRA Art / Post</th>
-                        <th>Enhet</th>
-                        <th class="num">Budsjett</th>
-                        <th class="num">Regnskap</th>
-                        <th class="num">Avvik (NOK)</th>
-                        <th class="num">Avvik %</th>
-                    </tr>
-                </thead>
-                <tbody id="variances-tbody">
-                    <tr class="alert-row">
-                        <td><span class="tufte-tip" data-tip="KOSTRA Art 1010: Fast lønn til undervisningspersonale og stabsstillinger.">SKOLE_FASTLØNNLÆRE Fast lønn lærere</span></td>
-                        <td>Kommunal Skole</td>
-                        <td class="num">15 729 000</td>
-                        <td class="num">18 197 000</td>
-                        <td class="num">-2 468 000</td>
-                        <td class="num">-15.7 %</td>
-                    </tr>
-                    <tr class="alert-row">
-                        <td><span class="tufte-tip" data-tip="KOSTRA Art 1020: Lønn til sykevikarer og timelærere ved fraværsdekning. Kritisk kostnadsdriver.">SKOLE_LØNNTILVIKAR Lønn til vikarer</span></td>
-                        <td>Kommunal Skole</td>
-                        <td class="num">202 000</td>
-                        <td class="num">847 000</td>
-                        <td class="num">-645 000</td>
-                        <td class="num">-319.3 %</td>
-                    </tr>
-                    <tr class="alert-row">
-                        <td><span class="tufte-tip" data-tip="KOSTRA Art 1090/090: Arbeidsgiveravgift beregnet på lønn og vikarer (14.1 % i sone 1).">SKOLE_ARBEIDSGIVER Arbeidsgiveravgift</span></td>
-                        <td>Kommunal Skole</td>
-                        <td class="num">3 785 000</td>
-                        <td class="num">4 216 000</td>
-                        <td class="num">-431 000</td>
-                        <td class="num">-11.4 %</td>
-                    </tr>
-                    <tr class="alert-row">
-                        <td><span class="tufte-tip" data-tip="KOSTRA Art 1270: Kjøp av vikarbyråtjenester, ekstern konsulentbistand og juridiske rådgivere.">1270 Kjøp fra private / konsulenter</span></td>
-                        <td>Kommunal Boenhet</td>
-                        <td class="num">0</td>
-                        <td class="num">382 656</td>
-                        <td class="num">-382 656</td>
-                        <td class="num">Ubudsjettert</td>
-                    </tr>
-                    <tr class="alert-row">
-                        <td><span class="tufte-tip" data-tip="KOSTRA Art 1090/090: Overtidsarbeid og ekstratimer utover ordinær arbeidstid jf. HTA § 4.">SKOLE_OVERTIDSLØNN Overtidslønn</span></td>
-                        <td>Kommunal Skole</td>
-                        <td class="num">57 000</td>
-                        <td class="num">436 000</td>
-                        <td class="num">-379 000</td>
-                        <td class="num">-664.9 %</td>
-                    </tr>
-                    <tr class="summary-row">
-                        <td>TOTALT TOPP 5 KRITISKE AVVIK</td>
-                        <td>Flere</td>
-                        <td class="num">19 773 000</td>
-                        <td class="num">24 078 656</td>
-                        <td class="num">-4 305 656</td>
-                        <td class="num">-21.8 %</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
-                Data-Ink merknad: Vertikale rutenett fjernet. Tall høyrejustert og formatert i hele kroner.
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button class="btn btn-sm" onclick="openCommandPalette()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Hurtigmeny for søk, enheter og maler (Ctrl+K)">
+                    ⚡ Søk (Ctrl+K)
+                </button>
+                <button class="btn btn-sm" onclick="togglePresentationMode()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Veksle møte-/presentasjonsmodus for storskjerm (Tast P)">
+                    🖥️ Møtemodus (P)
+                </button>
+                <button class="btn btn-sm" onclick="openUserGuide('MANED')" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;">
+                    📖 Månedsveileder
+                </button>
+                <span class="status-badge" id="cycle-month-tag">M9 September (T2)</span>
             </div>
         </div>
 
-        <!-- HØYRE KOLONNE: RAG REGELVERK & HITL SIGN-OFF -->
-        <div class="panel" id="rag-seksjon">
+        <div class="workflow-stepper">
+            <div class="cycle-step-card" id="cycle-card-1" onclick="selectWorkflowPhase(1)">
+                <div class="cycle-step-days">
+                    <span>Fase 1</span>
+                    <span>Dag 1–5</span>
+                </div>
+                <div class="cycle-step-title">1. Månedsstart & Import</div>
+                <div class="cycle-step-sub">Visma ERP data, bankavstemming, EHF-attestasjon og PII-vask til Golden Record.</div>
+            </div>
+
+            <div class="cycle-step-card active" id="cycle-card-2" onclick="selectWorkflowPhase(2)">
+                <div class="cycle-step-days">
+                    <span>Fase 2 ⭐</span>
+                    <span>Dag 6–10</span>
+                </div>
+                <div class="cycle-step-title">2. Avvik & Triage</div>
+                <div class="cycle-step-sub">Z-score screening, 16 enheter triage, artsavvik (vikarer/overtid) og NAV-etterslep.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-3" onclick="selectWorkflowPhase(3)">
+                <div class="cycle-step-days">
+                    <span>Fase 3</span>
+                    <span>Dag 11–18</span>
+                </div>
+                <div class="cycle-step-title">3. Lederdialog & Tiltak</div>
+                <div class="cycle-step-sub">Møter med enhetsledere (Skole/Bo), 4-punkts tiltaksplan og drøfting iht. HTA § 4.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-4" onclick="selectWorkflowPhase(4)">
+                <div class="cycle-step-days">
+                    <span>Fase 4</span>
+                    <span>Dag 19–24</span>
+                </div>
+                <div class="cycle-step-title">4. Prognose (EAC/ETC)</div>
+                <div class="cycle-step-sub">Oppdatere rullende EOY i Framsikt EPM, usikkerhet P10/P50/P90, pensjon & rente.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-5" onclick="selectWorkflowPhase(5)">
+                <div class="cycle-step-days">
+                    <span>Fase 5</span>
+                    <span>Dag 25–30</span>
+                </div>
+                <div class="cycle-step-title">5. Politisk Sak & Vedtak</div>
+                <div class="cycle-step-sub">Formannskapssak jf. § 14-5, Bystyrets bord, saksnotat, SHA-256 revisjonsstempel.</div>
+            </div>
+        </div>
+
+        <!-- Operativ Controller Sjekkliste for den valgte fasen -->
+        <div class="controller-checklist-panel" id="checklist-panel">
+            <div class="checklist-header">
+                <div>
+                    <strong id="checklist-title">🛡️ Fase 2 Controller Sjekkliste: Avviksdeteksjon & Triage</strong>
+                    <span style="font-size:11px; color:var(--text-secondary); margin-left:8px;" id="checklist-counter">4 av 5 oppgaver fullført</span>
+                </div>
+                <div style="display:flex; gap:6px;">
+                    <button class="btn btn-sm" onclick="resetCurrentChecklist()" style="font-size:10.5px; padding:2px 7px;">Tilbakestill</button>
+                    <button class="btn btn-sm btn-primary" onclick="markAllChecklistDone()" style="font-size:10.5px; padding:2px 7px;">✓ Merk alle fullført</button>
+                </div>
+            </div>
+            <div class="checklist-progress-bar">
+                <div class="checklist-progress-fill" id="checklist-progress" style="width: 80%;"></div>
+            </div>
+            <div id="checklist-items-container">
+                <!-- Dynamisk fylt via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. HURTIG-HANDLINGER / TOOLBAR -->
+    <div class="hub-toolbar">
+        <a href="http://localhost:8501" target="_blank" class="btn btn-primary" title="Åpner lokal Streamlit-app på http://localhost:8501 (krever at start_kommune_ai.bat kjører lokalt)">
+            🚀 Åpne Streamlit (Port 8501)
+        </a>
+        <a href="powerpoint/Presentasjon_Bystyret_Tertialrapport_2026.pptx" download class="btn" style="background: #1e3a8a; color: white; border-color: #1e3a8a;" title="Last ned offisiell PowerPoint-presentasjon for Bystyret">
+            🖥️ PowerPoint Bystyret (.pptx)
+        </a>
+        <a href="excel/Kommune_FAST_Finansiell_Modell_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;" title="Last ned 5-tabs FAST finansiell modell i Excel">
+            📊 Excel FAST Modell (.xlsx)
+        </a>
+        <a href="word/Saksfremlegg_Bystyret_Budsjettendring_2026.docx" download class="btn" style="background: #0056b3; color: white; border-color: #0056b3;" title="Last ned politisk saksfremlegg til Bystyret">
+            📝 Word Saksfremlegg (.docx)
+        </a>
+        <a href="powerbi/05_Komplett_Kommune_DAX_Bundle.dax" download class="btn" style="background: #b45309; color: white; border-color: #b45309;" title="Last ned komplett DAX-måltallspakke for 7 layouts">
+            📈 Power BI DAX (.dax)
+        </a>
+        <a href="reports/Kommune_Project_Controller_Reporting_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;">
+            📊 Excel Master (.xlsx)
+        </a>
+        <a href="reports/Mal_Saksbehandling_Tiltak_Avstemming_2026.xlsx" download class="btn" style="background: #107c41; color: white; border-color: #107c41;">
+            📑 Saksbehandlingsmodell (.xlsx)
+        </a>
+        <a href="#dokumentbank" onclick="filterDocs('AIPAKKE')" class="btn btn-accent" style="background: var(--navy-dark); color: #fff; border-color: var(--navy-dark);">
+            🎯 AI-Implementering (9)
+        </a>
+        <a href="#dokumentbank" onclick="filterDocs('MLOPS')" class="btn btn-accent" style="background: #1B365D; color: #fff; border-color: #1B365D;">
+            ⚙️ MLOps-Pakke (6)
+        </a>
+        <button class="btn btn-accent" onclick="openUserGuide('START')" style="background:var(--navy-dark); color:#fff; border-color:var(--navy-dark);">
+            📖 Brukerguide & Håndbok
+        </button>
+        <a href="#dokumentbank" class="btn btn-accent">
+            📂 Dokument- & Malbank
+        </a>
+        <a href="#saksflyt" class="btn">
+            🔄 Saksbehandlingsflyt
+        </a>
+        <a href="#powerbi-showcase" class="btn">
+            📊 Power BI & DAX Hub
+        </a>
+        <a href="bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md" target="_blank" class="btn">
+            📅 Årshjul 2026/2027
+        </a>
+        <a href="revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md" target="_blank" class="btn">
+            🛡️ Sjekkliste & Lukking
+        </a>
+        <a href="revisjon-og-kontroll/TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md" target="_blank" class="btn">
+            📝 Politisk Notat (T2)
+        </a>
+        <button class="btn" id="btn-update-vectordb" onclick="triggerVectorDbUpdate()">
+            ⚡ Oppdater Vektor-DB
+        </button>
+        <button class="btn" onclick="exportAuditTrail()">
+            📥 Audit Log (JSON)
+        </button>
+        <button class="btn" onclick="filterEntity('ALL')">
+            🏛️ Alle
+        </button>
+        <button class="btn" onclick="filterEntity('SKOLE')">
+            🏫 Skole
+        </button>
+        <button class="btn" onclick="filterEntity('BO')">
+            🏥 Boenhet
+        </button>
+        <button class="btn" onclick="toggleEngine()" id="engine-btn">
+            🔄 Bytt Motor
+        </button>
+    </div>
+
+    <!-- VEKTORDATABASE STATUS & PROGRESS PANEL (TUFTE DATA-INK) -->
+    <div id="vectordb-panel" class="vectordb-panel" style="display: none;">
+        <div class="vectordb-panel-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="vdb-status-icon">⚡</span>
+                <strong id="vdb-status-title">Oppdatering av Vektordatabase (sqlite-vec)</strong>
+                <span id="vdb-status-badge" class="status-badge">Klar</span>
+            </div>
+            <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary);" id="vdb-time-label">
+                Tid: 0.0s
+            </div>
+        </div>
+        <div class="vdb-progress-bar-container">
+            <div id="vdb-progress-bar" class="vdb-progress-bar" style="width: 0%;"></div>
+        </div>
+        <div class="vdb-status-details">
+            <div id="vdb-status-msg" style="color: var(--text-primary); font-weight: 500;">Klar til å starte indeksering av data/raw...</div>
+            <div id="vdb-stats-meta" style="color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px;">
+                data/raw: 37 filer | DB: 3 484 biter (37 indeksert)
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. ÅRSHJUL & KRITISKE FRISTER -->
+    <section class="timeline-section">
+        <div class="section-header">
+            <span>📅 Kommunalt Styringsårshjul & Kritiske Frister (2026)</span>
+            <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Synkronisert med Plandisc & Teams</span>
+        </div>
+
+        <!-- 12-MÅNEDERS TIDSVEKSLER (ÅRS- OG MÅNEDSLØYFE) -->
+        <div class="month-timeline-bar" id="month-timeline-bar">
+            <button class="month-pill" onclick="selectMonth(1)">Jan</button>
+            <button class="month-pill" onclick="selectMonth(2)">Feb</button>
+            <button class="month-pill" onclick="selectMonth(3)">Mar (T1)</button>
+            <button class="month-pill" onclick="selectMonth(4)">Apr</button>
+            <button class="month-pill" onclick="selectMonth(5)">Mai</button>
+            <button class="month-pill" onclick="selectMonth(6)">Jun</button>
+            <button class="month-pill" onclick="selectMonth(7)">Jul</button>
+            <button class="month-pill" onclick="selectMonth(8)">Aug</button>
+            <button class="month-pill active highlight" onclick="selectMonth(9)">Sep (T2)</button>
+            <button class="month-pill" onclick="selectMonth(10)">Okt</button>
+            <button class="month-pill" onclick="selectMonth(11)">Nov</button>
+            <button class="month-pill" onclick="selectMonth(12)">Des (HØP)</button>
+        </div>
+
+        <div class="timeline-status-banner" id="timeline-status-banner">
+            <div>
+                <span id="timeline-active-mode" style="font-weight: 700;">🔴 MÅNEDSRAPPORTERING M9 (September)</span> | 
+                <span id="timeline-deadline">Frist Formannskapet: 28. september (4 dager igjen)</span>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px;">
+                Saksbehandler: Frank Ellingsen (Senior Controller)
+            </div>
+        </div>
+
+        <div class="quarters-grid">
+            <div class="quarter-box">
+                <h3>Q1: KOSTRA & Regnskap <span>Jan–Mar</span></h3>
+                <ul>
+                    <li>• 15. jan / 23. feb: KOSTRA-rapportering</li>
+                    <li>• 09. mars: Regnskapsavslutning</li>
+                    <li>• 31. mars: Årsregnskap fremlegges</li>
+                </ul>
+            </div>
+            <div class="quarter-box">
+                <h3>Q2: 1. Tertial (T1) <span>Apr–Jun</span></h3>
+                <ul>
+                    <li>• 15. apr: Revisjonsberetning</li>
+                    <li>• 25. mai: 1. tertial til Bystyret</li>
+                    <li>• 02. juni: RNB & KOSTRA-tall</li>
+                </ul>
+            </div>
+            <div class="quarter-box active">
+                <h3>Q3: 2. Tertial (T2) ⭐ AKTIV <span>Jul–Sep</span></h3>
+                <ul>
+                    <li>• 15. aug: Innspill ny HØP</li>
+                    <li>• 23. sep: Kommunedirektørens HØP</li>
+                    <li>• <strong>28. sep: 2. tertial i Formannskapet</strong></li>
+                </ul>
+            </div>
+            <div class="quarter-box">
+                <h3>Q4: HØP & Budsjettvedtak <span>Okt–Des</span></h3>
+                <ul>
+                    <li>• 07. okt: Statsbudsjettet</li>
+                    <li>• 25. nov: Formannskapets innstilling</li>
+                    <li>• 18. des: Bystyrets endelige vedtak</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- =======================================================================
+         6. ANSVARSOMRÅDER & SEKTORSTYRING (KRISTIANSAND KOMMUNE)
+         Organisert etter økonomirådgivernes 6 operative tjenesteområder
+         ======================================================================= -->
+    <section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
+        <div class="section-header">
+            <span>🏛️ Ansvarsområder & Økonomirådgivere (6 Tjenesteområder)</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Virksomhetsstyring 2026</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+            Hvert tjenesteområde betjenes av dedikerte økonomirådgivere for saksfremlegg, KOSTRA-avstemming og avviksoppfølging jf. Kommuneloven § 14-5.
+        </p>
+
+        <!-- Sektorvelger Tabs -->
+        <!-- Sektorvelger Tabs -->
+        <div class="sector-nav-bar" id="sector-nav-bar">
+            <button class="sector-tab-btn active" id="sec-btn-all" onclick="selectSector('ALL')">
+                <span>🌐 Konsern (Alle områder)</span>
+                <span class="sector-tab-badge">7.25 mrd</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-helse" onclick="selectSector('HELSE')">
+                <span>🏥 1. Helse og mestring</span>
+                <span class="sector-tab-badge" style="background:var(--alert-amber); color:#fff;">-9.85M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-oppvekst" onclick="selectSector('OPPVEKST')">
+                <span>🏫 2. Oppvekst</span>
+                <span class="sector-tab-badge" style="background:var(--alert-red); color:#fff;">-11.87M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-by" onclick="selectSector('BYUTVIKLING')">
+                <span>🏗️ 3. By- og stedsutvikling</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">940M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-kultur" onclick="selectSector('KULTUR')">
+                <span>🎭 4. Kultur og innbyggerdialog</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">380M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-org" onclick="selectSector('ORG_TEK')">
+                <span>💻 5. Organisasjon og teknologi</span>
+                <span class="sector-tab-badge" style="background:#e0f2fe; color:#0369a1;">460M</span>
+            </button>
+            <button class="sector-tab-btn" id="sec-btn-oko" onclick="selectSector('OKONOMI')">
+                <span>⚖️ 6. Økonomi og virksomhetsstyring</span>
+                <span class="sector-tab-badge" style="background:#dcfce7; color:#15803d;">+2.58M</span>
+            </button>
+        </div>
+
+        <!-- Dynamisk Sektorkort / Detaljvisning -->
+        <div class="sector-detail-card" id="sector-detail-card">
+            <!-- Fylles dynamisk fra SEKTOR_DATA via JavaScript -->
+        </div>
+    </section>
+
+    <!-- 8. RAG REGELVERK & HITL SIGN-OFF -->
+    <div class="panel" id="rag-seksjon" style="margin-bottom: 24px;">
             <div class="section-header">
                 <span>🤖 RAG Regelverksassistent & Juss</span>
                 <span class="status-badge">Glass-Box (§)</span>
@@ -3191,7 +3154,6 @@
                     <span>Kilde: Kommuneloven § 14-5, Økonomireglementet § 3-1</span>
                     <span id="audit-hash-display">SHA-256: 7f8a9b2c...3d4e</span>
                 </div>
-            </div>
 
             <!-- HUMAN-IN-THE-LOOP SAKSBEHANDLING (PORT 9) -->
             <div class="hitl-zone">
@@ -5672,28 +5634,12 @@ SWITCH(
         }
 
         function filterEntity(entity) {
-            const label = document.getElementById("active-entity-filter");
-            const rows = document.querySelectorAll("#variances-tbody tr");
-
             if (entity === 'SKOLE') {
-                label.innerText = "Viser: Kommunal Skole (Oppvekst)";
-                rows[0].style.display = "";
-                rows[1].style.display = "";
-                rows[2].style.display = "";
-                rows[3].style.display = "none";
-                rows[4].style.display = "";
-                rows[5].style.display = "";
+                selectSector('OPPVEKST');
             } else if (entity === 'BO') {
-                label.innerText = "Viser: Kommunal Boenhet (Helse & Mestring)";
-                rows[0].style.display = "none";
-                rows[1].style.display = "none";
-                rows[2].style.display = "none";
-                rows[3].style.display = "";
-                rows[4].style.display = "none";
-                rows[5].style.display = "";
+                selectSector('HELSE');
             } else {
-                label.innerText = "Viser: Alle Enheter";
-                rows.forEach(r => r.style.display = "");
+                selectSector('ALL');
             }
         }
 
@@ -6902,7 +6848,7 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
 
         let currentActivePhase = 2;
 
-        function selectWorkflowPhase(phaseNum) {
+        function selectWorkflowPhase(phaseNum, shouldScroll = false) {
             currentActivePhase = phaseNum;
 
             // Oppdater stepper-kort
@@ -6925,15 +6871,17 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 renderPhaseChecklist(phaseNum);
             }
 
-            // Scroll relevant seksjon i syne basert på fasen
-            if (phaseNum === 2) {
-                document.getElementById("avvik-seksjon")?.scrollIntoView({ behavior: 'smooth' });
-            } else if (phaseNum === 3) {
-                document.getElementById("triage-seksjon")?.scrollIntoView({ behavior: 'smooth' });
-            } else if (phaseNum === 4) {
-                document.getElementById("kpi-seksjon")?.scrollIntoView({ behavior: 'smooth' });
-            } else if (phaseNum === 5) {
-                document.getElementById("saksflyt")?.scrollIntoView({ behavior: 'smooth' });
+            // Scroll relevant seksjon i syne basert på fasen kun ved eksplisitt klikk
+            if (shouldScroll) {
+                if (phaseNum === 2) {
+                    document.getElementById("avvik-seksjon")?.scrollIntoView({ behavior: 'smooth' });
+                } else if (phaseNum === 3) {
+                    document.getElementById("triage-seksjon")?.scrollIntoView({ behavior: 'smooth' });
+                } else if (phaseNum === 4) {
+                    document.getElementById("kpi-seksjon")?.scrollIntoView({ behavior: 'smooth' });
+                } else if (phaseNum === 5) {
+                    document.getElementById("saksflyt")?.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         }
 
@@ -7625,6 +7573,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             const tabMonth = document.getElementById("sb-tab-month");
             if (tabCum) tabCum.classList.toggle("active", mode === 'CUM');
             if (tabMonth) tabMonth.classList.toggle("active", mode === 'MONTH');
+            const titleEl = document.getElementById("sb-chart-title");
+            if (titleEl) {
+                titleEl.textContent = mode === 'CUM' ? "Akk. merforbruk YTD" : "Månedlig merforbruk";
+            }
             renderSidebarLineChart(activeSidebarSector);
         }
 
@@ -7632,6 +7584,12 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             activeSidebarSector = sectorKey;
             const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
             if (!data) return;
+
+            // Oppdater tittel på linjediagram
+            const chartTitleEl = document.getElementById("sb-chart-title");
+            if (chartTitleEl) {
+                chartTitleEl.textContent = currentSidebarChartMode === 'CUM' ? "Akk. merforbruk YTD" : "Månedlig merforbruk";
+            }
 
             // 1. Tittel, Ikon & Status
             const iconEl = document.getElementById("sb-ov-icon");
@@ -7753,7 +7711,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
 
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep"];
             const monthLetters = ["J", "F", "M", "A", "M", "J", "J", "A", "S"];
-            const dataSeries = currentSidebarChartMode === 'CUM' ? mData.cum_cv : mData.monthly_cv;
+            
+            // Negativt regnskapsavvik (merforbruk) vises som positiv / stigende kurve over null-linjen.
+            // Når merforbruket øker stiger kurven; når merforbruket minker/avtar synker kurven nedover mot null.
+            const rawSeries = currentSidebarChartMode === 'CUM' ? mData.cum_cv : mData.monthly_cv;
+            const dataSeries = rawSeries.map(v => -v);
 
             const svgWidth = 246;
             const svgHeight = 76;
@@ -7783,7 +7745,15 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             const yZero = getY(0);
 
             // Bygg linjesti (SVG path)
-            const points = dataSeries.map((v, i) => ({ x: getX(i), y: getY(v), val: v, month: monthNames[i], letter: monthLetters[i] }));
+            const points = dataSeries.map((v, i) => ({
+                x: getX(i),
+                y: getY(v),
+                val: v,
+                rawVal: rawSeries[i],
+                month: monthNames[i],
+                letter: monthLetters[i]
+            }));
+
             let pathD = `M ${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`;
             for (let i = 1; i < points.length; i++) {
                 pathD += ` L ${points[i].x.toFixed(1)},${points[i].y.toFixed(1)}`;
@@ -7792,10 +7762,10 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             // Arealfyll (under eller over 0)
             let areaD = `${pathD} L ${points[points.length - 1].x.toFixed(1)},${yZero.toFixed(1)} L ${points[0].x.toFixed(1)},${yZero.toFixed(1)} Z`;
 
-            // Farge: Hvis siste verdi er negativ (merforbruk) -> rød, positiv -> grønn, nøytral -> navy
+            // Farge: Hvis siste verdi er positiv (merforbruk) -> rød, negativ (mindreforbruk) -> grønn, nøytral -> navy
             const lastVal = dataSeries[dataSeries.length - 1];
-            const strokeColor = lastVal < 0 ? "#c0392b" : (lastVal > 0 ? "#27ae60" : "#1b365d");
-            const fillColor = lastVal < 0 ? "rgba(192, 57, 43, 0.08)" : (lastVal > 0 ? "rgba(39, 174, 96, 0.08)" : "rgba(27, 54, 93, 0.05)");
+            const strokeColor = lastVal > 0 ? "#c0392b" : (lastVal < 0 ? "#27ae60" : "#1b365d");
+            const fillColor = lastVal > 0 ? "rgba(192, 57, 43, 0.08)" : (lastVal < 0 ? "rgba(39, 174, 96, 0.08)" : "rgba(27, 54, 93, 0.05)");
 
             let svgHtml = `
             <svg class="sidebar-chart-svg" viewBox="0 0 ${svgWidth} ${svgHeight}">
@@ -7820,7 +7790,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                     const r = isLast ? 3.5 : 2;
                     const fill = isLast ? strokeColor : "#ffffff";
                     const stroke = strokeColor;
-                    const tooltipText = `M${idx + 1} (${p.month}): ${formatNOK(p.val, 2)} (${currentSidebarChartMode === 'CUM' ? 'Akkumulert YTD' : 'Månedsavvik'})`;
+                    const tooltipText = p.val > 0
+                        ? `M${idx + 1} (${p.month}): +${formatNOK(p.val, 2).replace('+', '')} merforbruk (Avvik: ${formatNOK(p.rawVal, 2)})`
+                        : (p.val < 0 
+                            ? `M${idx + 1} (${p.month}): -${formatNOK(Math.abs(p.val), 2).replace('+', '')} mindreforbruk (Avvik: +${formatNOK(Math.abs(p.rawVal), 2)})`
+                            : `M${idx + 1} (${p.month}): I balanse (0 kr)`);
                     return `
                         <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${isLast ? 1.8 : 1.2}" style="cursor:pointer;" onmouseenter="showSidebarChartTooltip(event, '${tooltipText}')" onmouseleave="hideSidebarChartTooltip()">
                             <title>${tooltipText}</title>
@@ -7830,7 +7804,7 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
 
                 <!-- Direkte merking på siste punkt (M9) jf. Edward Tufte Data-Ink prinsipp -->
                 <text x="${(points[points.length - 1].x + 4).toFixed(1)}" y="${(points[points.length - 1].y + 3).toFixed(1)}" font-size="8.5" font-weight="700" fill="${strokeColor}" font-family="monospace">
-                    ${formatNOK(lastVal, 1)}
+                    ${lastVal > 0 ? ('+' + formatNOK(lastVal, 1).replace('+', '')) : (lastVal < 0 ? ('-' + formatNOK(Math.abs(lastVal), 1).replace('+', '')) : '0 kr')}
                 </text>
             </svg>
             `;
@@ -7890,8 +7864,520 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             }
         }
 
+        
+        // =====================================================================
+        // DYNAMISK KOSTRA ARTSAVVIK DATASETT PER VIRKSOMHETSOMRÅDE
+        // Kilde: Visma ERP & Framsikt EPM Golden Record (kommune_golden_record.db)
+        // =====================================================================
+        const SECTOR_VARIANCES = {
+            "ALL": {
+                filterLabel: "Viser: Konsern (Alle Enheter)",
+                rows: [
+                    {
+                        art: "SKOLE_FASTLØNNLÆRE Fast lønn lærere",
+                        tip: "KOSTRA Art 1010: Fast lønn til undervisningspersonale og stabsstillinger.",
+                        enhet: "Kommunal Skole",
+                        budsjett: 15729000,
+                        regnskap: 18197000,
+                        avvik: -2468000,
+                        avvikPct: "-15.7 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "SKOLE_LØNNTILVIKAR Lønn til vikarer",
+                        tip: "KOSTRA Art 1020: Lønn til sykevikarer og timelærere ved fraværsdekning. Kritisk kostnadsdriver.",
+                        enhet: "Kommunal Skole",
+                        budsjett: 202000,
+                        regnskap: 847000,
+                        avvik: -645000,
+                        avvikPct: "-319.3 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "SKOLE_ARBEIDSGIVER Arbeidsgiveravgift",
+                        tip: "KOSTRA Art 1090/090: Arbeidsgiveravgift beregnet på lønn og vikarer (14.1 % i sone 1).",
+                        enhet: "Kommunal Skole",
+                        budsjett: 3785000,
+                        regnskap: 4216000,
+                        avvik: -431000,
+                        avvikPct: "-11.4 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1270 Kjøp fra private / konsulenter",
+                        tip: "KOSTRA Art 1270: Kjøp av vikarbyråtjenester, ekstern konsulentbistand og juridiske rådgivere.",
+                        enhet: "Kommunal Boenhet",
+                        budsjett: 0,
+                        regnskap: 382656,
+                        avvik: -382656,
+                        avvikPct: "Ubudsjettert",
+                        isAlert: true
+                    },
+                    {
+                        art: "SKOLE_OVERTIDSLØNN Overtidslønn",
+                        tip: "KOSTRA Art 1090/090: Overtidsarbeid og ekstratimer utover ordinær arbeidstid jf. HTA § 4.",
+                        enhet: "Kommunal Skole",
+                        budsjett: 57000,
+                        regnskap: 436000,
+                        avvik: -379000,
+                        avvikPct: "-664.9 %",
+                        isAlert: true
+                    }
+                ],
+                summary: {
+                    title: "TOTALT TOPP 5 KRITISKE AVVIK",
+                    enhet: "Flere",
+                    budsjett: 19773000,
+                    regnskap: 24078656,
+                    avvik: -4305656,
+                    avvikPct: "-21.8 %"
+                }
+            },
+            "OPPVEKST": {
+                filterLabel: "Viser: 2. Oppvekst (Skoler & Barnehager)",
+                rows: [
+                    {
+                        art: "SKOLE_FASTLØNNLÆRE Fast lønn lærere",
+                        tip: "KOSTRA Art 1010: Fast lønn til undervisningspersonale og stabsstillinger i grunnskolen.",
+                        enhet: "Kommunal Skole (Enhet 202)",
+                        budsjett: 15729000,
+                        regnskap: 18197000,
+                        avvik: -2468000,
+                        avvikPct: "-15.7 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "SKOLE_LØNNTILVIKAR Lønn til vikarer",
+                        tip: "KOSTRA Art 1020: Lønn til sykevikarer og timelærere ved fraværsdekning. Kritisk kostnadsdriver.",
+                        enhet: "Kommunal Skole (Enhet 202)",
+                        budsjett: 202000,
+                        regnskap: 847000,
+                        avvik: -645000,
+                        avvikPct: "-319.3 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "SKOLE_ARBEIDSGIVER Arbeidsgiveravgift",
+                        tip: "KOSTRA Art 1090/090: Arbeidsgiveravgift beregnet på lønn og vikarer (14.1 % i sone 1).",
+                        enhet: "Kommunal Skole (Enhet 202)",
+                        budsjett: 3785000,
+                        regnskap: 4216000,
+                        avvik: -431000,
+                        avvikPct: "-11.4 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "SKOLE_OVERTIDSLØNN Overtidslønn",
+                        tip: "KOSTRA Art 1090/090: Overtidsarbeid og ekstratimer utover ordinær arbeidstid jf. HTA § 4.",
+                        enhet: "Kommunal Skole (Enhet 202)",
+                        budsjett: 57000,
+                        regnskap: 436000,
+                        avvik: -379000,
+                        avvikPct: "-664.9 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1470 Tilskudd til private barnehager",
+                        tip: "KOSTRA Art 1470: Lovpålagt driftstilskudd til ikke-kommunale barnehager jf. Barnehageloven § 19.",
+                        enhet: "Oppvekst Administrasjon",
+                        budsjett: 284200000,
+                        regnskap: 285600000,
+                        avvik: -1400000,
+                        avvikPct: "-0.5 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1600 Refusjon sykepenger NAV (etterslep)",
+                        tip: "KOSTRA Art 1600: Krav mot NAV for sykepenger. Etterslep skaper midlertidig regnskapsmessig merforbruk.",
+                        enhet: "Kommunal Skole (Enhet 202)",
+                        budsjett: 1800000,
+                        regnskap: 1390000,
+                        avvik: -410000,
+                        avvikPct: "-22.8 %",
+                        isAlert: true
+                    }
+                ],
+                summary: {
+                    title: "TOTALT KRITISKE AVVIK OPPVEKST",
+                    enhet: "Kommunal Skole / Oppvekst",
+                    budsjett: 305773000,
+                    regnskap: 310686000,
+                    avvik: -4913000,
+                    avvikPct: "-1.6 %"
+                }
+            },
+            "HELSE": {
+                filterLabel: "Viser: 1. Helse og mestring (Boenheter & Pleie)",
+                rows: [
+                    {
+                        art: "1020 Vikarutgifter pleie & omsorg",
+                        tip: "KOSTRA Art 1020: Vikarer i døgnturnus ved akutt og langtidssykefravær i pleie og omsorg.",
+                        enhet: "Kommunal Boenhet (Enhet 401)",
+                        budsjett: 14200000,
+                        regnskap: 18650000,
+                        avvik: -4450000,
+                        avvikPct: "-31.3 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1090 Overtid & vaktbelastning (§ 4)",
+                        tip: "KOSTRA Art 1090: Overtidsarbeid ved ubesatte vakter og helgebemanning jf. HTA § 4.",
+                        enhet: "Kommunal Boenhet (Enhet 401)",
+                        budsjett: 2100000,
+                        regnskap: 3850000,
+                        avvik: -1750000,
+                        avvikPct: "-83.3 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1270 Kjøp fra private / vikarbyrå",
+                        tip: "KOSTRA Art 1270: Innleie av sykepleiere og vernepleiere fra eksterne bemanningsbyråer.",
+                        enhet: "Kommunal Boenhet (Valhall/Strai)",
+                        budsjett: 0,
+                        regnskap: 382656,
+                        avvik: -382656,
+                        avvikPct: "Ubudsjettert",
+                        isAlert: true
+                    },
+                    {
+                        art: "1010 Fast lønn helsefagarbeidere / pleiere",
+                        tip: "KOSTRA Art 1010: Grunnlønn og faste turnustillegg for fast ansatt helsepersonell.",
+                        enhet: "Helse & Mestring Døgnpleie",
+                        budsjett: 88500000,
+                        regnskap: 90850000,
+                        avvik: -2350000,
+                        avvikPct: "-2.7 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1600 Refusjon sykepenger NAV",
+                        tip: "KOSTRA Art 1600: Utestående refusjoner fra NAV Forvaltning for sykemeldte helsearbeidere.",
+                        enhet: "Helse & Mestring Felles",
+                        budsjett: 8200000,
+                        regnskap: 7282544,
+                        avvik: -917456,
+                        avvikPct: "-11.2 %",
+                        isAlert: true
+                    }
+                ],
+                summary: {
+                    title: "TOTALT KRITISKE AVVIK HELSE & MESTRING",
+                    enhet: "Kommunal Boenhet / Pleie",
+                    budsjett: 113000000,
+                    regnskap: 121015200,
+                    avvik: -8015200,
+                    avvikPct: "-7.1 %"
+                }
+            },
+            "BYUTVIKLING": {
+                filterLabel: "Viser: 3. By- og stedsutvikling (VAR Selvkost & Plan/Bygg)",
+                rows: [
+                    {
+                        art: "1620 Gebyrinntekter byggesaksbehandling",
+                        tip: "KOSTRA Art 1620: Svikt i gebyrinntekter pga. markant lavere igangsetting i eiendomsmarkedet.",
+                        enhet: "Byggesak og kart",
+                        budsjett: 21500000,
+                        regnskap: 18200000,
+                        avvik: -3300000,
+                        avvikPct: "-15.3 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1230 Vedlikehold rørnett og pumpestasjoner",
+                        tip: "KOSTRA Art 1230: Akutt vedlikehold og oppgradering på avløpsnettet.",
+                        enhet: "VAR Vann og avløp",
+                        budsjett: 24100000,
+                        regnskap: 25500000,
+                        avvik: -1400000,
+                        avvikPct: "-5.8 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1332 Kommunale veier og vinterdrift",
+                        tip: "KOSTRA Art 1332 / Funksjon 332: Brøyting, strøing og akutt asfaltvedlikehold.",
+                        enhet: "Samferdsel & Parkvesen",
+                        budsjett: 32000000,
+                        regnskap: 32800000,
+                        avvik: -800000,
+                        avvikPct: "-2.5 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1150 Kjemikalier renseanlegg",
+                        tip: "KOSTRA Art 1150: Fellingskjemikalier og rensemidler ved renseanlegg.",
+                        enhet: "VAR Vann og avløp",
+                        budsjett: 15800000,
+                        regnskap: 16200000,
+                        avvik: -400000,
+                        avvikPct: "-2.5 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1010 Fast lønn driftspersonale VAR",
+                        tip: "KOSTRA Art 1010: Driftsoperatører på pumpestasjoner og vannverk.",
+                        enhet: "VAR Vann og avløp",
+                        budsjett: 45200000,
+                        regnskap: 45500000,
+                        avvik: -300000,
+                        avvikPct: "-0.7 %",
+                        isAlert: true
+                    }
+                ],
+                summary: {
+                    title: "TOTALT KRITISKE AVVIK BYUTVIKLING",
+                    enhet: "By- og stedsutvikling / VAR",
+                    budsjett: 138600000,
+                    regnskap: 144200000,
+                    avvik: -5600000,
+                    avvikPct: "-4.0 %"
+                }
+            },
+            "KULTUR": {
+                filterLabel: "Viser: 4. Kultur og innbyggerdialog (Idrett, Bad & Kulturhus)",
+                rows: [
+                    {
+                        art: "1120 Energi- og strømkostnader (Aquarama)",
+                        tip: "KOSTRA Art 1120: Oppvarming og strømtariffer for svømmehaller og idrettsbygg.",
+                        enhet: "Idrettsanlegg & Aquarama",
+                        budsjett: 14500000,
+                        regnskap: 15700000,
+                        avvik: -1200000,
+                        avvikPct: "-8.3 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1090 Kveldstillegg og arrangementsverter",
+                        tip: "KOSTRA Art 1090: Helge- og kveldstillegg ved høysesong og forestillinger.",
+                        enhet: "Kilden, Knuden & Kulturhus",
+                        budsjett: 1200000,
+                        regnskap: 1450000,
+                        avvik: -250000,
+                        avvikPct: "-20.8 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1120 Innkjøp e-medier og biblioteklisenser",
+                        tip: "KOSTRA Art 1120: Lisensøkninger på digitale utlån og databaser.",
+                        enhet: "Kristiansand folkebibliotek",
+                        budsjett: 2550000,
+                        regnskap: 2650000,
+                        avvik: -100000,
+                        avvikPct: "-3.9 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1010 Fast lønn kulturskole og bibliotek",
+                        tip: "KOSTRA Art 1010: Undervisningspersonale og bibliotekarer.",
+                        enhet: "Kultur og innbyggerdialog",
+                        budsjett: 19500000,
+                        regnskap: 19600000,
+                        avvik: -100000,
+                        avvikPct: "-0.5 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1470 Frivillighetstilskudd og kulturmidler",
+                        tip: "KOSTRA Art 1470: Kommunale tilskudd til lokale lag og kulturorganisasjoner.",
+                        enhet: "Kultur og innbyggerdialog",
+                        budsjett: 8500000,
+                        regnskap: 8500000,
+                        avvik: 0,
+                        avvikPct: "0.0 %",
+                        isAlert: false
+                    }
+                ],
+                summary: {
+                    title: "TOTALT KRITISKE AVVIK KULTUR",
+                    enhet: "Kultur & Innbyggerdialog",
+                    budsjett: 46250000,
+                    regnskap: 47900000,
+                    avvik: -1650000,
+                    avvikPct: "-3.6 %"
+                }
+            },
+            "ORG_TEK": {
+                filterLabel: "Viser: 5. Organisasjon og teknologi (IKT, Sky & Fellestjenester)",
+                rows: [
+                    {
+                        art: "1270 Konsulentbistand eksterne IT-spesialister",
+                        tip: "KOSTRA Art 1270: Konsulentbistand for integrasjonsarkitektur og IT-sikkerhet.",
+                        enhet: "Felles IKT og digitalisering",
+                        budsjett: 4200000,
+                        regnskap: 4600000,
+                        avvik: -400000,
+                        avvikPct: "-9.5 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1090 Overtid beredskap og cyberhendelser",
+                        tip: "KOSTRA Art 1090: Overtidstillegg for teknisk vaktlag ved systemoppgraderinger.",
+                        enhet: "IKT Driftssentral",
+                        budsjett: 350000,
+                        regnskap: 550000,
+                        avvik: -200000,
+                        avvikPct: "-57.1 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1010 Fast lønn IT-drift og fellestjenester",
+                        tip: "KOSTRA Art 1010: Faste ingeniører og stabsstillinger innen organisasjon.",
+                        enhet: "Organisasjon og teknologi",
+                        budsjett: 32000000,
+                        regnskap: 32200000,
+                        avvik: -200000,
+                        avvikPct: "-0.6 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1120 Nettverksutstyr og infrastruktur",
+                        tip: "KOSTRA Art 1120: Switcher, brannmurer og kablet infrastruktur for skoler.",
+                        enhet: "IKT Drift & Nettverk",
+                        budsjett: 6800000,
+                        regnskap: 6920000,
+                        avvik: -120000,
+                        avvikPct: "-1.8 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1370 Programvarelisenser og skylagring (FinOps)",
+                        tip: "KOSTRA Art 1370: M365, Azure skylagring og fagsystemlisenser.",
+                        enhet: "Digitalisering & FinOps",
+                        budsjett: 28500000,
+                        regnskap: 28500000,
+                        avvik: 0,
+                        avvikPct: "0.0 %",
+                        isAlert: false
+                    }
+                ],
+                summary: {
+                    title: "TOTALT KRITISKE AVVIK ORG & TEKNOLOGI",
+                    enhet: "Organisasjon & Teknologi",
+                    budsjett: 71850000,
+                    regnskap: 72770000,
+                    avvik: -920000,
+                    avvikPct: "-1.3 %"
+                }
+            },
+            "OKONOMI": {
+                filterLabel: "Viser: 6. Økonomi og virksomhetsstyring (Finans & Konsern)",
+                rows: [
+                    {
+                        art: "1900 Lånerenter på gjeldsportefølje",
+                        tip: "KOSTRA Art 1900: Rentebelastning på 7.25 Mrd gjeld. 42 % flytende rente gir NIBOR-sensitivitet.",
+                        enhet: "Finansforvaltning",
+                        budsjett: 201500000,
+                        regnskap: 202700000,
+                        avvik: -1200000,
+                        avvikPct: "-0.6 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1010 Lønn regnskapssentral og innkjøp",
+                        tip: "KOSTRA Art 1010: Driftsstaber innen controllerfunksjon, regnskap og innkjøp.",
+                        enhet: "Økonomi & Virksomhetsstyring",
+                        budsjett: 25100000,
+                        regnskap: 25680000,
+                        avvik: -580000,
+                        avvikPct: "-2.3 %",
+                        isAlert: true
+                    },
+                    {
+                        art: "1090 Pensjonspremieavvik (KLP/SPK)",
+                        tip: "KOSTRA Art 1090: Innbetalt 348M vs premiekostnad 312M. +36M premieavvik amortiseres lineært over 7 år.",
+                        enhet: "Finans & Konsern",
+                        budsjett: 36000000,
+                        regnskap: 36000000,
+                        avvik: 0,
+                        avvikPct: "0.0 %",
+                        isAlert: false
+                    },
+                    {
+                        art: "1870 Frie skatteinntekter YTD",
+                        tip: "KOSTRA Art 1870: Skatt på inntekt og formue. Ligger 0.1 % over periodisert budsjett.",
+                        enhet: "Konserninntekter",
+                        budsjett: -795120000,
+                        regnskap: -795700000,
+                        avvik: 580000,
+                        avvikPct: "+0.1 %",
+                        isAlert: false
+                    },
+                    {
+                        art: "1800 Renteinntekter overskuddslikviditet",
+                        tip: "KOSTRA Art 1800: Avkastning på likviditetsplasseringer i norske banker og sertifikater.",
+                        enhet: "Finansforvaltning",
+                        budsjett: -43700000,
+                        regnskap: -48200000,
+                        avvik: 4500000,
+                        avvikPct: "+10.3 %",
+                        isAlert: false
+                    }
+                ],
+                summary: {
+                    title: "TOTALT KRITISKE AVVIK ØKONOMISTYRING",
+                    enhet: "Økonomi & Virksomhetsstyring",
+                    budsjett: -576220000,
+                    regnskap: -579520000,
+                    avvik: 3300000,
+                    avvikPct: "+0.6 % (Mindreforbruk)"
+                }
+            }
+        };
+
+        function formatNok(val) {
+            if (val === 0) return "0";
+            const isNeg = val < 0;
+            const absStr = Math.abs(val).toLocaleString('nb-NO').replace(/\s/g, ' ');
+            return isNeg ? `-${absStr}` : absStr;
+        }
+
+        function renderVariancesTable(sectorKey) {
+            const data = SECTOR_VARIANCES[sectorKey] || SECTOR_VARIANCES["ALL"];
+            const filterLabel = document.getElementById("active-entity-filter");
+            if (filterLabel) filterLabel.textContent = data.filterLabel;
+
+            const tbody = document.getElementById("variances-tbody");
+            if (!tbody) return;
+
+            let html = "";
+            data.rows.forEach(r => {
+                const rowClass = r.isAlert ? 'class="alert-row"' : '';
+                const avvikColor = r.avvik < 0 ? 'var(--alert-red)' : 'var(--navy-dark)';
+                html += `
+                    <tr ${rowClass}>
+                        <td><span class="tufte-tip" data-tip="${r.tip}">${r.art}</span></td>
+                        <td>${r.enhet}</td>
+                        <td class="num">${formatNok(r.budsjett)}</td>
+                        <td class="num">${formatNok(r.regnskap)}</td>
+                        <td class="num" style="color:${avvikColor}; font-weight:600;">${formatNok(r.avvik)}</td>
+                        <td class="num" style="color:${avvikColor}; font-weight:600;">${r.avvikPct}</td>
+                    </tr>
+                `;
+            });
+
+            if (data.summary) {
+                const s = data.summary;
+                const sAvvikColor = s.avvik < 0 ? 'var(--alert-red)' : 'var(--navy-dark)';
+                html += `
+                    <tr class="summary-row">
+                        <td>${s.title}</td>
+                        <td>${s.enhet}</td>
+                        <td class="num">${formatNok(s.budsjett)}</td>
+                        <td class="num">${formatNok(s.regnskap)}</td>
+                        <td class="num" style="color:${sAvvikColor};">${formatNok(s.avvik)}</td>
+                        <td class="num" style="color:${sAvvikColor};">${s.avvikPct}</td>
+                    </tr>
+                `;
+            }
+            tbody.innerHTML = html;
+        }
+
         function selectSector(sectorKey) {
             const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
+
+            // 0. Oppdater dynamisk KOSTRA artsavvik tabell for valgt virksomhetsområde
+            if (typeof renderVariancesTable === 'function') {
+                renderVariancesTable(sectorKey);
+            }
 
             // 1. Oppdater aktive knapper i top sector-nav-bar
             const navButtons = document.querySelectorAll("#sector-nav-bar .sector-tab-btn");
@@ -10101,17 +10587,19 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             }
         });
 
-        // Initier sjekkliste og sektorstyring ved oppstart
+        // Initier sjekkliste, nøkkeltall og KOSTRA-artsavvik ved oppstart
         document.addEventListener("DOMContentLoaded", () => {
-            selectWorkflowPhase(2);
+            selectWorkflowPhase(2, false);
             selectSector("ALL");
+            if (typeof renderVariancesTable === 'function') renderVariancesTable("ALL");
             if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
         });
         setTimeout(() => {
-            selectWorkflowPhase(2);
+            selectWorkflowPhase(2, false);
             selectSector("ALL");
+            if (typeof renderVariancesTable === 'function') renderVariancesTable("ALL");
             if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
-        }, 200);
+        }, 150);
 
     
         // Initialiser dynamisk sidebar ved oppstart
