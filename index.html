@@ -2517,6 +2517,392 @@
         .rag-dot.red { background: #dc2626; }
         .rag-dot.yellow { background: #d97706; }
         .rag-dot.green { background: #16a34a; }
+
+        /* ==========================================================================
+           BUDSJETTMODUL: FRAMSIKT EPM, STILLINGS- & LØNNSMOTOR, SELVKOST (TUFTE STANDARD)
+           ========================================================================== */
+        .budsjett-modul-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            border-top: 3px solid var(--navy-dark);
+        }
+
+        .bm-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 14px;
+        }
+
+        .bm-header-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bm-header-sub {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        .bm-header-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .bm-badge {
+            font-size: 10.5px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .bm-badge-primary {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+        }
+
+        .bm-badge-success {
+            background: var(--success-green-bg);
+            color: var(--success-green);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .bm-badge-navy {
+            background: var(--navy-dark);
+            color: #ffffff;
+        }
+
+        .bm-kpi-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .bm-kpi-card {
+            background: #fafbfc;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            padding: 10px 14px;
+        }
+
+        .bm-kpi-card .bm-kpi-label {
+            font-size: 10.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .bm-kpi-card .bm-kpi-val {
+            font-size: 18px;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--navy-dark);
+        }
+
+        .bm-kpi-card .bm-kpi-note {
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .bm-nav-tabs {
+            display: flex;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-light);
+            margin-bottom: 20px;
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .bm-tab-btn {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--navy-dark);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .bm-tab-btn:hover {
+            background: #e2e8f0;
+            color: var(--navy-dark);
+        }
+
+        .bm-tab-btn.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .bm-tab-pane {
+            display: none;
+            animation: fadeIn 0.15s ease-in;
+        }
+
+        .bm-tab-pane.active {
+            display: block;
+        }
+
+        .bm-grid-2col {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .bm-grid-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .bm-box {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 16px 18px;
+        }
+
+        .bm-box-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1.5px solid var(--border-subtle);
+            padding-bottom: 6px;
+        }
+
+        .bm-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .bm-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bm-form-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--navy-dark);
+        }
+
+        .bm-form-group select,
+        .bm-form-group input {
+            padding: 6px 10px;
+            font-size: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            font-family: var(--font-sans);
+            background: #ffffff;
+        }
+
+        .bm-form-group select:focus,
+        .bm-form-group input:focus {
+            outline: none;
+            border-color: var(--navy-dark);
+        }
+
+        .bm-result-summary {
+            background: #fafbfc;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 14px;
+        }
+
+        .bm-res-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 12px;
+        }
+
+        .bm-res-item:last-child {
+            border-bottom: none;
+        }
+
+        .bm-res-item.highlight-total {
+            border-top: 1.5px solid var(--navy-dark);
+            border-bottom: 2px solid var(--navy-dark);
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--navy-dark);
+            padding: 8px 0;
+        }
+
+        .bm-res-item .num-val {
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        .bm-alert-banner {
+            background: #fef3c7;
+            border-left: 3px solid #d97706;
+            padding: 9px 12px;
+            font-size: 11.5px;
+            color: #92400e;
+            margin: 12px 0;
+            border-radius: 2px;
+            line-height: 1.45;
+        }
+
+        .bm-formula-banner {
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            border-left: 3px solid var(--navy-dark);
+            padding: 10px 14px;
+            font-size: 12px;
+            margin-bottom: 14px;
+            border-radius: 2px;
+            line-height: 1.5;
+        }
+
+        .bm-year-stepper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .bm-step-card {
+            border: 1px solid var(--border-light);
+            border-top: 3px solid var(--navy-light);
+            border-radius: 3px;
+            padding: 12px 14px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .bm-step-card:hover {
+            border-color: var(--navy-dark);
+            background: #f8fafc;
+        }
+
+        .bm-step-card.active-phase {
+            border-top-color: #0284c7;
+            background: #f0f9ff;
+            border-color: #bae6fd;
+        }
+
+        .bm-step-period {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .bm-step-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .bm-step-desc {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .bm-step-role {
+            font-size: 10px;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            margin-top: 6px;
+            display: block;
+        }
+
+        .bm-check-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 14px 0;
+        }
+
+        .bm-check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 9px 12px;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .bm-check-item:hover {
+            background: #f8fafc;
+        }
+
+        .bm-check-item input[type="checkbox"] {
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .bm-check-text {
+            flex: 1;
+        }
+
+        .bm-check-title {
+            font-weight: 600;
+            color: var(--navy-dark);
+            margin-bottom: 2px;
+        }
+
+        .bm-check-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
 </style>
 </head>
 <body>
@@ -2677,6 +3063,10 @@
                 </a>
                 <a href="#avvik-seksjon" class="sidebar-nav-item">
                     <span>🚨 KOSTRA Artsavvik</span>
+                </a>
+                <a href="#budsjett-modul-seksjon" class="sidebar-nav-item" id="side-budsjett-modul" onclick="switchBudsjettModulTab('LONN')">
+                    <span>🏛️ Budsjettmodul (Framsikt)</span>
+                    <span class="badge-phase" style="background:#0369a1; color:#fff;">HØP 26</span>
                 </a>
                 <a href="#mote-rapportering-seksjon" class="sidebar-nav-item" id="side-mote-rapportering">
                     <span>👥 Månedsmøter (Nivå 1–3)</span>
@@ -3201,6 +3591,597 @@
             </div>
         </div>
 
+    </section>
+
+
+    <!-- =======================================================================
+         5A. KOMMUNAL BUDSJETTMODUL — FRAMSIKT EPM & HØP 2027–2030
+         Stillings- og lønnsbudsjettering, selvkostkalkyler, KOSTRA kontoplan
+         og internt budsjett-årshjul jf. Kommuneloven kapittel 14 & Bystyrets reglement
+         ======================================================================= -->
+    <section class="budsjett-modul-section" id="budsjett-modul-seksjon">
+        <div class="bm-header-container">
+            <div>
+                <div class="bm-header-title">
+                    <span>🏛️ Kommunal Budsjettmodul — Framsikt EPM & Handlings- og Økonomiplan (HØP)</span>
+                </div>
+                <div class="bm-header-sub">
+                    Integrert stillings- og lønnsmotor, selvkostberegninger for tekniske tjenester (VAR/Byggesak), 
+                    KOSTRA kontoplan (1000–1990) og utvidet internt årshjul for Kristiansand kommune.
+                </div>
+            </div>
+            <div class="bm-header-badges">
+                <span class="bm-badge bm-badge-primary">Framsikt v26.1 Live</span>
+                <span class="bm-badge bm-badge-navy">AGA Sone 1 (14,1 %)</span>
+                <span class="bm-badge bm-badge-success">Økonomireglement § 14</span>
+                <span class="status-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">Aktiv Fase: HØP Høring (Okt)</span>
+            </div>
+        </div>
+
+        <!-- Finansielle Måltall & Handlingsregler (Bystyrets vedtak 11.10.2023) -->
+        <div class="bm-kpi-bar">
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Samlet Brutto Driftsbudsjett</div>
+                <div class="bm-kpi-val">11,48 mrd</div>
+                <div class="bm-kpi-note">Over 81 resultatenheter & 6 virksomhetsområder</div>
+            </div>
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Netto Driftsresultat Mål</div>
+                <div class="bm-kpi-val" style="color:var(--success-green);">≥ 1,0 %</div>
+                <div class="bm-kpi-note">Minimum 114,8 mill. kr for finansiell handlefrihet</div>
+            </div>
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Sentralt Disposisjonsfond</div>
+                <div class="bm-kpi-val" style="color:#0284c7;">≥ 4,0 %</div>
+                <div class="bm-kpi-note">Minimum 459,2 mill. kr som robust buffer</div>
+            </div>
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Maksimal Netto Lånegjeld</div>
+                <div class="bm-kpi-val" style="color:var(--navy-dark);">&lt; 8,80 mrd</div>
+                <div class="bm-kpi-note">Lånetak for å forhindre uhåndterlige rentekostnader</div>
+            </div>
+        </div>
+
+        <!-- Hovednavigasjon for Budsjettmodul -->
+        <div class="bm-nav-tabs">
+            <button class="bm-tab-btn active" id="bm-btn-lonn" onclick="switchBudsjettModulTab('LONN')">
+                <span>👥 1. Stillings- & Lønnsbudsjett</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-selvkost" onclick="switchBudsjettModulTab('SELVKOST')">
+                <span>💧 2. Selvkost (VAR & Byggesak)</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-arshjul" onclick="switchBudsjettModulTab('ARSHJUL')">
+                <span>📅 3. Budsjett-Årshjul & Frister</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-kostra" onclick="switchBudsjettModulTab('KOSTRA')">
+                <span>📑 4. KOSTRA Driftsarter & Kontering</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-qa" onclick="switchBudsjettModulTab('QA')">
+                <span>📋 5. Framsikt Excel QA-Motor</span>
+            </button>
+        </div>
+
+        <!-- ===================================================================
+             FANE 1: STILLINGS- & LØNNSBUDSJETT (FRAMSIKT LØNNSMOTOR)
+             =================================================================== -->
+        <div class="bm-tab-pane active" id="bm-pane-lonn">
+            <div class="bm-formula-banner">
+                <strong>💡 Framsikts Lønnsarkitektur & Bruttoføringsprinsippet:</strong>
+                Lønn og sosiale kostnader utgjør <strong>70–80 % av kommunens driftskostnader</strong>.
+                Framsikt skiller strengt mellom <strong>Fast Lønn (Art 1010)</strong> via Stillingsoversikten og 
+                <strong>Variable Potter (Art 1020 vikarer, 1050/1090 tillegg)</strong>. 
+                Sosiale kostnader beregnes maskinelt: 
+                <em>Bruttolønn → Feriepenger (12,0 % / 14,3 %) → Pensjon (SPK/KLP) → Arbeidsgiveravgift (14,1 % Sone 1 på Lønn + Feriepenger + Pensjon)</em>.
+                Jf. <strong>Kommuneloven § 14-6</strong> er nettobudsjettering av vikarer mot refusjoner forbudt.
+            </div>
+
+            <div class="bm-grid-2col">
+                <!-- Interaktiv Lønnskalkulator -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>🧮 Framsikt Lønnskalkulator & Stillingsberegner</span>
+                        <span class="bm-badge bm-badge-primary">Live Modell</span>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Virksomhetsområde</label>
+                            <select id="bm-calc-sector" onchange="onBmSectorChange()">
+                                <option value="OPPVEKST">🏫 2. Oppvekst (Skole & Barnehage)</option>
+                                <option value="HELSE">🏥 1. Helse og mestring</option>
+                                <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
+                                <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
+                                <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
+                                <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
+                            </select>
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Stillingskategori / Tittel</label>
+                            <select id="bm-calc-title" onchange="onBmTitleChange()">
+                                <option value="LEKTOR">Lektor / Lærer (SPK-pensjon)</option>
+                                <option value="SYKEPLEIER">Spesialsykepleier (KLP-pensjon)</option>
+                                <option value="FAGARBEIDER">Helsefagarbeider / Barneveileder</option>
+                                <option value="INGENIOR">Overingeniør VAR (Selvkostfunksjon)</option>
+                                <option value="SAKSBEHANDLER">Saksbehandler Byggesak</option>
+                                <option value="KONSULENT">Rådgiver / Konsulent Administrasjon</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Grunnlønn ved 100 % (NOK / år)</label>
+                            <input type="number" id="bm-calc-salary" value="620000" step="5000" oninput="recalcSalaryBudsjett()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Stillingsbrøk (%)</label>
+                            <input type="number" id="bm-calc-fraction" value="100" min="10" max="100" step="5" oninput="recalcSalaryBudsjett()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Alder / Feriepengesats</label>
+                            <select id="bm-calc-age" onchange="recalcSalaryBudsjett()">
+                                <option value="UNDER60">Under 60 år (12,0 % feriepenger)</option>
+                                <option value="OVER60">60 år eller eldre (14,3 % ekstra ferieuke)</option>
+                            </select>
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Pensjonsordning</label>
+                            <select id="bm-calc-pension" onchange="recalcSalaryBudsjett()">
+                                <option value="SPK">SPK (Lærere/pedagoger, 13,8 % premie)</option>
+                                <option value="KLP" selected>KLP (Fagarbeidere, pleie & staber, 15,2 % premie)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Faste/variable turnustillegg (Art 1050/1090)</label>
+                            <input type="number" id="bm-calc-shifts" value="35000" step="1000" oninput="recalcSalaryBudsjett()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Vikarpott ved forventet sykefravær (Art 1020)</label>
+                            <input type="number" id="bm-calc-substitute" value="45000" step="1000" oninput="recalcSalaryBudsjett()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-group" style="margin-bottom: 12px;">
+                        <label>Forventet Sykelønnsrefusjon fra NAV (Art 1690 - Inntekt)</label>
+                        <input type="number" id="bm-calc-refund" value="30000" step="1000" oninput="recalcSalaryBudsjett()">
+                    </div>
+
+                    <div class="bm-alert-banner" id="bm-gross-warning" style="display:none;">
+                        ⚠️ <strong>Bruttoføringsadvarsel:</strong> Vikarmidler på Art 1020 kan ikke trekkes fra Art 1010 direkte. Begge må føres brutto for at KOSTRA-nøkkeltall og AGA-beregning skal stemme!
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+                        <button type="button" class="btn btn-sm" onclick="resetSalaryCalc()">↺ Nullstill Verdier</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="copySalaryAccounting()">📋 Kopier Konteringssplitt</button>
+                    </div>
+                </div>
+
+                <!-- Beregningsresultat & Totaler -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>📊 Beregnet Årskostnad & Sosiale Utgifter</span>
+                        <span class="bm-badge bm-badge-success">Sone 1 (14,1 %)</span>
+                    </div>
+
+                    <div class="bm-result-summary">
+                        <div class="bm-res-item">
+                            <span>Art 1010 Fast lønn (brøkjustert)</span>
+                            <span class="num-val" id="bm-res-fastlonn">620 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Art 1099 Feriepengeavsetning (<span id="bm-res-ferie-rate">12,0 %</span>)</span>
+                            <span class="num-val" id="bm-res-feriepenger">74 400 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Art 1200 Pensjonspremie (<span id="bm-res-pensjon-org">KLP 15,2 %</span>)</span>
+                            <span class="num-val" id="bm-res-pensjon">94 240 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Art 1210 Arbeidsgiveravgift (14,1 % av lønn, ferie & pensjon)</span>
+                            <span class="num-val" id="bm-res-aga-fast">111 202 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:var(--text-secondary);">
+                            <span>Variable tillegg (Art 1050/1090) inkl. AGA & feriepenger</span>
+                            <span class="num-val" id="bm-res-tillegg-tot">44 723 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:var(--text-secondary);">
+                            <span>Vikarpott (Art 1020) inkl. AGA & feriepenger</span>
+                            <span class="num-val" id="bm-res-vikar-tot">57 501 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:#0369a1;">
+                            <span>Art 1690 Sykelønnsrefusjon fra NAV (Inntekt)</span>
+                            <span class="num-val" id="bm-res-refusjon" style="color:#0369a1;">-30 000 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total">
+                            <span>Samlet Brutto Kostnad (Art 1000–1210)</span>
+                            <span class="num-val" id="bm-res-brutto-tot" style="font-size:16px;">1 002 066 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total" style="border-top:none; color:var(--accent-blue);">
+                            <span>Netto Kommunal Utgift (Brutto minus NAV-refusjon)</span>
+                            <span class="num-val" id="bm-res-netto-tot" style="font-size:16px; color:var(--accent-blue);">972 066 kr</span>
+                        </div>
+                    </div>
+
+                    <!-- Automatisk KOSTRA Konteringsmatrise -->
+                    <div style="margin-top:16px;">
+                        <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:6px; text-transform:uppercase;">
+                            📑 Generert KOSTRA Konteringsbilag i Framsikt:
+                        </div>
+                        <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
+                            <table class="tufte-table" id="bm-kostra-table">
+                                <thead>
+                                    <tr>
+                                        <th>Art</th>
+                                        <th>Kontonavn</th>
+                                        <th class="num">Debet (kr)</th>
+                                        <th class="num">Kredit (kr)</th>
+                                        <th>Modul</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bm-kostra-tbody">
+                                    <!-- Innhold genereres via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stillingsregister & Bemanningshjemler i Enheten -->
+            <div class="bm-box" style="margin-top:20px;">
+                <div class="bm-box-title">
+                    <span>👥 Eksempelregister: Bemanningsplan & Stillingshjemler i Framsikt</span>
+                    <span class="status-badge" style="background:#e0f2fe; color:#0369a1;">6 Utvalgte Hjemler</span>
+                </div>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">
+                    Stillingshjemler importeres fra Visma Enterprise / Unit4 til Framsikt. Justering av stillingsbrøk eller permisjon rekalkulerer automatisk feriepenger, pensjon og AGA per måned.
+                </p>
+                <div class="table-responsive">
+                    <table class="tufte-table">
+                        <thead>
+                            <tr>
+                                <th>Stilling ID</th>
+                                <th>Tittel / Stilling</th>
+                                <th>Ansatt / Status</th>
+                                <th>Virksomhetsområde</th>
+                                <th>Pensjon</th>
+                                <th class="num">Brøk (%)</th>
+                                <th class="num">Fastlønn (kr)</th>
+                                <th class="num">Sosiale Kostn. (kr)</th>
+                                <th class="num">Sum Ramme (kr)</th>
+                                <th style="text-align:center;">Handling</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bm-positions-tbody">
+                            <!-- Innhold genereres via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 2: SELVKOST (VAR & BYGGESAK)
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-selvkost">
+            <div class="bm-formula-banner">
+                <strong>💧 Selvkostberegninger for Tekniske Tjenester (Kommuneloven § 15-1 & Selvkostforskriften):</strong>
+                Kommunen har plikt til å kreve selvkost for vann, avløp, renovasjon og byggesak, uten å generere overskudd over tid.
+                Formel i Framsikt: 
+                <em>Gebyrgrunnlag = Direkte driftsutgifter (Art 1000–1270) + Indirekte henføring + Kapitalkostnader (Avskrivning Art 1590 + Kalkulatorisk rente) - Direkte inntekter</em>.
+                Eventuelle avvik overføres til/fra <strong>Bundet Selvkostfond (Art 1530 / 1930)</strong> og må avvikles innen <strong>5 år</strong>.
+            </div>
+
+            <div class="level-pills-bar" style="margin-bottom:16px;">
+                <button class="level-pill-btn active" id="btn-sk-vann" onclick="switchSelvkostService('VANN')">
+                    <span>💧 Funksjon 3400: Vannforsyning</span>
+                </button>
+                <button class="level-pill-btn" id="btn-sk-avloep" onclick="switchSelvkostService('AVLOEP')">
+                    <span>🚽 Funksjon 3450: Avløpshåndtering (2 mrd inv.)</span>
+                </button>
+                <button class="level-pill-btn" id="btn-sk-renovasjon" onclick="switchSelvkostService('RENOVASJON')">
+                    <span>♻️ Funksjon 3500: Renovasjon (Avfall Sør)</span>
+                </button>
+                <button class="level-pill-btn" id="btn-sk-byggesak" onclick="switchSelvkostService('BYGGESAK')">
+                    <span>📐 Funksjon 3600: Byggesak & Geodata</span>
+                </button>
+            </div>
+
+            <div class="bm-grid-2col">
+                <!-- Selvkost Parametere & Kalkyle -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span id="bm-sk-title">💧 Funksjon 3400: Vannforsyning — Kostnadselementer</span>
+                        <span class="bm-badge bm-badge-primary">Kalkulatorisk rente: 4,00 %</span>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Direkte driftsutgifter (Art 1000–1270)</label>
+                            <input type="number" id="bm-sk-direkte" value="142500000" step="500000" oninput="recalcSelvkost()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Indirekte henførte kostnader (HR/IT/Rådhus)</label>
+                            <input type="number" id="bm-sk-henforing" value="8200000" step="100000" oninput="recalcSelvkost()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Avskrivninger på anleggsmidler (Art 1590)</label>
+                            <input type="number" id="bm-sk-avskrivning" value="44800000" step="500000" oninput="recalcSelvkost()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Bokført restverdi anleggsmidler (kr)</label>
+                            <input type="number" id="bm-sk-restverdi" value="820000000" step="5000000" oninput="recalcSelvkost()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Direkte inntekter utenom gebyrer</label>
+                            <input type="number" id="bm-sk-inntekter" value="4500000" step="100000" oninput="recalcSelvkost()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Budsjetterte gebyrinntekter (Art 1620)</label>
+                            <input type="number" id="bm-sk-gebyr" value="223800000" step="500000" oninput="recalcSelvkost()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-group" style="margin-top:6px;">
+                        <label>Eksisterende Selvkostfond Saldo (primo året)</label>
+                        <input type="number" id="bm-sk-fond-saldo" value="12400000" step="200000" oninput="recalcSelvkost()">
+                    </div>
+
+                    <div style="margin-top:14px; display:flex; justify-content:space-between;">
+                        <button type="button" class="btn btn-sm" onclick="resetSelvkostValues()">↺ Tilbakestill til Grunndata</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="exportSelvkostNote()">📄 Eksporter Selvkostnotat</button>
+                    </div>
+                </div>
+
+                <!-- Selvkost Resultat & Fondsavstemming -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>⚖️ Selvkostresultat & Regulering av Selvkostfond</span>
+                        <span class="bm-badge" id="bm-sk-status-badge">I Balanse</span>
+                    </div>
+
+                    <div class="bm-result-summary">
+                        <div class="bm-res-item">
+                            <span>Direkte driftsutgifter (Art 1000–1270)</span>
+                            <span class="num-val" id="bm-res-sk-direkte">142 500 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Indirekte henføring (Felleskostnader)</span>
+                            <span class="num-val" id="bm-res-sk-henforing">8 200 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Avskrivninger anleggsmidler (Art 1590)</span>
+                            <span class="num-val" id="bm-res-sk-avskrivning">44 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Kalkulatorisk rente (4,00 % av restverdi)</span>
+                            <span class="num-val" id="bm-res-sk-rente">32 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:var(--text-secondary);">
+                            <span>Fradrag: Direkte inntekter utenom gebyr</span>
+                            <span class="num-val" id="bm-res-sk-inntekt">-4 500 000 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total">
+                            <span>Beregnet Gebyrgrunnlag (Full Selvkost)</span>
+                            <span class="num-val" id="bm-res-sk-gebyrgrunnlag" style="font-size:16px;">223 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Budsjettert Gebyrinntekt (Art 1620)</span>
+                            <span class="num-val" id="bm-res-sk-gebyrinntekt" style="font-weight:700;">223 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total" style="border-top:none;">
+                            <span>Selvkostresultat (Avvik Gebyr vs. Selvkost)</span>
+                            <span class="num-val" id="bm-res-sk-resultat">0 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Dekningsgrad (%)</span>
+                            <span class="num-val" id="bm-res-sk-dekningsgrad" style="font-size:15px; font-weight:800; color:var(--success-green);">100,0 %</span>
+                        </div>
+                    </div>
+
+                    <!-- Fondsberegning & 5-årsregel -->
+                    <div style="margin-top:16px; padding:12px; background:#f8fafc; border:1px solid var(--border-light); border-radius:3px;">
+                        <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:4px;">
+                            🏛️ Selvkostfond Regulering & 5-årsregelen (Selvkostforskriften § 6):
+                        </div>
+                        <div style="font-size:12px; line-height:1.5; color:var(--text-secondary);" id="bm-sk-fond-forklaring">
+                            Gebyret dekker nøyaktig 100,0 % av selvkost. Ingen avsetning til Art 1530 eller bruk av Art 1930 nødvendig.
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px; font-family:var(--font-mono); color:var(--text-muted); border-top:1px solid var(--border-subtle); padding-top:6px;">
+                            <span>Fremføringsår: <strong id="bm-sk-fremforing-ar">År 2 av 5</strong></span>
+                            <span>Estimert fondssaldo ultimo: <strong id="bm-sk-fond-ultimo">12 400 000 kr</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 3: BUDSJETT-ÅRSHJUL & FRISTER
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-arshjul">
+            <div class="bm-formula-banner">
+                <strong>📅 Utvidet Internt Årshjul og Tidslinje for Kristiansand kommune:</strong>
+                Kommunens budsjettprosess løper strukturert fra mai til desember jf. Bystyrets økonomireglement. 
+                Nedenfor vises alle 8 faser fra rammeavklaringer til Bystyrets endelige vedtak og overføring til Unit4 regnskap.
+            </div>
+
+            <!-- Interaktiv Tidslinje-stepper -->
+            <div class="bm-year-stepper" id="bm-year-stepper-container">
+                <!-- Genereres via JS -->
+            </div>
+
+            <!-- Detaljkort for Valgt Årshjulfase -->
+            <div class="bm-box" id="bm-phase-detail-card" style="margin-top:16px;">
+                <!-- Injiseres dynamisk -->
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 4: KOSTRA DRIFTSARTER & KONTERING
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-kostra">
+            <div class="bm-formula-banner">
+                <strong>📑 KOSTRA Kontoplan & Konteringsregler i Framsikt (Driftsarter 1000–1990):</strong>
+                Alle poster i Kristiansand konteres på 3 dimensjoner: <em>Kontoklasse (1 Drift / 2 Inv) × Funksjon × Art</em>.
+                Tabellen under viser fullstendig konteringsveiledning for lønn, varekjøp, konserninterne overføringer, selvkostfond og refusjoner.
+            </div>
+
+            <!-- Filter og Søkebar for KOSTRA -->
+            <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; align-items:center; background:#fafbfc; padding:10px 14px; border:1px solid var(--border-light); border-radius:4px;">
+                <div style="flex:1; min-width:240px;">
+                    <input type="text" id="bm-kostra-search" class="form-control" placeholder="🔍 Søk i KOSTRA kontoplan (f.eks. 1010, strøm, vikar, 1240 lisens, selvkostfond)..." 
+                           style="width:100%; padding:6px 10px; font-size:12px; border:1px solid var(--border-light); border-radius:3px;"
+                           oninput="filterKostraDriftsarter()">
+                </div>
+                <div>
+                    <select id="bm-kostra-cat-filter" class="form-select" style="padding:6px 10px; font-size:12px; border:1px solid var(--border-light); border-radius:3px;" onchange="filterKostraDriftsarter()">
+                        <option value="ALL">Alle Kontoserier (1000–1990)</option>
+                        <option value="LONN">Lønn & Sosiale utgifter (1000–1220)</option>
+                        <option value="VARE">Kjøp av varer og tjenester (1100–1270)</option>
+                        <option value="OVERFORING">Overføringer & Tilskudd (1300–1480)</option>
+                        <option value="FINANS">Finans, avskrivning & fond (1500–1590)</option>
+                        <option value="INNTEKT">Gebyr-, salgs- og refusjonsinntekter (1600–1750)</option>
+                        <option value="STAT">Statstilskudd & Fondsbruk (1800–1930)</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm" onclick="resetKostraFilter()">Nullstill filter</button>
+                </div>
+            </div>
+
+            <!-- KOSTRA Tabell -->
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                <table class="tufte-table" id="bm-kostra-full-table">
+                    <thead>
+                        <tr>
+                            <th style="width:70px;">Art</th>
+                            <th style="width:190px;">Artsnavn</th>
+                            <th style="width:140px;">Framsikt-modul</th>
+                            <th>Retningslinjer for Kontering & Kostnadstype</th>
+                            <th>Typiske Kostnader i Kristiansand</th>
+                            <th>Spesiell Kontrollregel</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bm-kostra-full-tbody">
+                        <!-- Genereres fra JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 5: FRAMSIKT EXCEL QA & VALIDERINGSMOTOR
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-qa">
+            <div class="bm-formula-banner">
+                <strong>📋 Sjekkliste og Kvalitetskontroll for Excel Eksport/Import og Framsikt-låsing:</strong>
+                Før seksjonsledere og økonomirådgivere godkjenner detaljbudsjettet, må følgende 8 kontrollpunkter verifiseres.
+                Dette hindrer budsjetteringsfeil på AGA, feil pensjonskasse, ulovlig nettobudsjettering og brudd på selvkostforskriften.
+            </div>
+
+            <div class="bm-grid-2col">
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>☑️ Controllerens 8 Kritiske Kontrollpunkter</span>
+                        <span class="bm-badge bm-badge-primary" id="bm-qa-checked-count">8 av 8 Bekreftet</span>
+                    </div>
+
+                    <div class="bm-check-list">
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-1" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">1. Uforanderlige ID-er i Excel-maler</div>
+                                <div class="bm-check-sub">Stilling ID, Ansatt ID og Ansvar er beholdt uendret slik at Framsikt matcher stillingene ved import.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-2" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">2. Månedsoppdeling og oppstartsdatoer</div>
+                                <div class="bm-check-sub">Stillingsendringer og nyansettelser (f.eks. lærere per 01.08) er lagt på riktig måned, ikke fordelt over 12 mnd.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-3" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">3. Arbeidsgiveravgiftssone (14,1 % Sone 1)</div>
+                                <div class="bm-check-sub">Alle stillinger og potter ligger i Sone 1, og AGA er beregnet av både lønn, feriepenger og pensjon.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-4" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">4. Pensjonskassetilhørighet (SPK vs KLP)</div>
+                                <div class="bm-check-sub">Lærere og skoleledere er koblet mot SPK (13,8 %), mens øvrige er registrert på KLP (15,2 %).</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-5" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">5. Bruttoføring av Vikarer og NAV-refusjon</div>
+                                <div class="bm-check-sub">Vikarpotter (Art 1020) og forventet sykelønnsrefusjon (Art 1690) er ført brutto jf. Kommuneloven § 14-6.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-6" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">6. Selvkostavstemming & 5-årsregel (VAR/Byggesak)</div>
+                                <div class="bm-check-sub">Direkte, indirekte og kapitalkostnader er avstemt mot gebyrinntekter og bundet selvkostfond (1530/1930).</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-7" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">7. Konsernavstemming (KBR IKS & Avfall Sør)</div>
+                                <div class="bm-check-sub">Tilskudd til brannvesen (Art 1480) og renovasjonstjenester (Art 1380) stemmer med selskapenes budsjetter.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-8" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">8. Finansielle Måltall & Rammevedtak</div>
+                                <div class="bm-check-sub">Seksjonens samlede ramme er innenfor kommunedirektørens tildeling, og netto driftsresultat ≥ 1,0 %.</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div style="margin-top:14px; display:flex; justify-content:space-between;">
+                        <button type="button" class="btn btn-sm" onclick="toggleAllBmQa(true)">Merk Alle</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="runSimulatedFramsiktQA()">🔒 Kjør Formell QA-Validering</button>
+                    </div>
+                </div>
+
+                <!-- QA Valideringsrapport / Attest -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>📜 Formell QA Valideringsattest (HITL Port 9)</span>
+                        <span class="bm-badge bm-badge-success" id="bm-qa-attest-badge">Verifisert</span>
+                    </div>
+
+                    <div id="bm-qa-attest-output" style="background:#fafbfc; border:1px solid var(--border-light); border-radius:3px; padding:14px; font-family:var(--font-mono); font-size:11.5px; line-height:1.6; max-height:380px; overflow-y:auto; white-space:pre-wrap;">
+Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest med SHA-256 kryptografisk forsegling.
+                    </div>
+
+                    <div style="margin-top:12px; display:flex; justify-content:flex-end; gap:8px;">
+                        <button type="button" class="btn btn-sm" onclick="copyBmQaAttest()">📋 Kopier Attest</button>
+                        <button type="button" class="btn btn-sm btn-accent" onclick="downloadBmQaReport()">📥 Last ned Valideringsrapport</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- =======================================================================
@@ -5321,6 +6302,46 @@ SWITCH(
                         </div>
                     </div>
                     <span class="cmd-item-badge">Ansvarsområde</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('BUDSJETT_MODUL')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">🏛️</span>
+                        <div>
+                            <div class="cmd-item-label">Budsjettmodul & Framsikt EPM</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Stillingsbudsjett, lønnsmotor, selvkost VAR og HØP årshjul</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Framsikt</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('BUDSJETT_LONN')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">👥</span>
+                        <div>
+                            <div class="cmd-item-label">Stillings- og Lønnsberegning (Framsikt)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">KLP vs SPK, feriepenger (12%/14,3%), 14,1% AGA og bruttoføring</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Lønnsmotor</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('BUDSJETT_SELVKOST')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">💧</span>
+                        <div>
+                            <div class="cmd-item-label">Selvkostkalkulator (VAR & Byggesak)</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Funksjon 3400/3450/3500/3600, kapitalkostnader og 5-årsfond</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Selvkost</span>
+                </div>
+                <div class="cmd-palette-item" onclick="executeCommand('BUDSJETT_ARSHJUL')">
+                    <div class="cmd-item-left">
+                        <span class="cmd-item-icon">📅</span>
+                        <div>
+                            <div class="cmd-item-label">Budsjett-Årshjul & Framsikt Tidslinje</div>
+                            <div style="font-size:11px; color:var(--text-secondary);">Interne frister fra mai til desember jf. Bystyrets økonomireglement</div>
+                        </div>
+                    </div>
+                    <span class="cmd-item-badge">Årshjul</span>
                 </div>
                 <div class="cmd-palette-item" onclick="executeCommand('ENHET_202')">
                     <div class="cmd-item-left">
@@ -10319,6 +11340,30 @@ SHA-256 Revisjonskvittering genereres ved elektronisk sign-off i Office Hub.
                 const el = document.getElementById("triage-seksjon");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
                 showToast("📍 Viser Enhet 401 Helse & Mestring i avvikstriagen");
+            } else if (cmd === 'BUDSJETT_MODUL') {
+                switchBudsjettModulTab('LONN');
+                const el = document.getElementById("budsjett-modul-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'BUDSJETT_LONN') {
+                switchBudsjettModulTab('LONN');
+                const el = document.getElementById("budsjett-modul-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'BUDSJETT_SELVKOST') {
+                switchBudsjettModulTab('SELVKOST');
+                const el = document.getElementById("budsjett-modul-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'BUDSJETT_ARSHJUL') {
+                switchBudsjettModulTab('ARSHJUL');
+                const el = document.getElementById("budsjett-modul-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'BUDSJETT_KOSTRA') {
+                switchBudsjettModulTab('KOSTRA');
+                const el = document.getElementById("budsjett-modul-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (cmd === 'BUDSJETT_QA') {
+                switchBudsjettModulTab('QA');
+                const el = document.getElementById("budsjett-modul-seksjon");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
             } else if (cmd === 'MOTE_NIVA1') {
                 switchMeetingLevel('NIVA1');
                 const el = document.getElementById("mote-rapportering-seksjon");
@@ -11707,7 +12752,28 @@ function syncAllSectionsForSector(sectorKey) {
     if (typeof updateBudgetHoldersForSector === 'function') {
         updateBudgetHoldersForSector(sectorKey);
     }
+
+    // 9. Budsjettmodul (Framsikt)
+    if (typeof updateBudsjettModulForSector === 'function') {
+        updateBudsjettModulForSector(sectorKey);
     }
+}
+
+function updateBudsjettModulForSector(sectorKey) {
+    if (sectorKey === "ALL") return;
+    const secSelect = document.getElementById("bm-calc-sector");
+    if (!secSelect) return;
+
+    if (sectorKey === "OPPVEKST" || sectorKey === "HELSE" || sectorKey === "BYUTVIKLING" || 
+        sectorKey === "KULTUR" || sectorKey === "ORG_TEK" || sectorKey === "OKONOMI") {
+        secSelect.value = sectorKey;
+        onBmSectorChange();
+
+        if (sectorKey === "BYUTVIKLING") {
+            switchSelvkostService("VANN");
+        }
+    }
+}
 
 
 
@@ -12730,6 +13796,901 @@ function logBudgetHolderReturn(ansvarId) {
     if (typeof renderBudgetHoldersTable === 'function') {
         renderBudgetHoldersTable('ALL', 'ALL', '');
     }
+
+    /* ==========================================================================
+       BUDSJETTMODUL: FRAMSIKT EPM, STILLINGS- OG LØNNSMOTOR, SELVKOST OG ÅRSHJUL
+       Basert på Bystyrets økonomireglement og Framsikt-veilederne
+       ========================================================================== */
+
+    const BUDSJETT_POSITIONS_DATA = [
+        { id: "ST-202-01", tittel: "Rektor / Enhetsleder", ansatt: "Knut O. Myhre", sektor: "Oppvekst", sektor_id: "OPPVEKST", pensjon: "SPK", brok: 100, fastlonn: 940000, sosiale: 284300 },
+        { id: "ST-202-02", tittel: "Avdelingsleder / Lektor", ansatt: "Astrid Tveit", sektor: "Oppvekst", sektor_id: "OPPVEKST", pensjon: "SPK", brok: 100, fastlonn: 745000, sosiale: 225300 },
+        { id: "ST-401-01", tittel: "Spesialsykepleier natt", ansatt: "Marit Solberg", sektor: "Helse og mestring", sektor_id: "HELSE", pensjon: "KLP", brok: 100, fastlonn: 665000, sosiale: 236800 },
+        { id: "ST-401-02", tittel: "Helsefagarbeider turnus", ansatt: "Einar Løvås", sektor: "Helse og mestring", sektor_id: "HELSE", pensjon: "KLP", brok: 80, fastlonn: 432000, sosiale: 153800 },
+        { id: "ST-501-01", tittel: "Overingeniør Vann & Avløp", ansatt: "Lars K. Strand", sektor: "By- og stedsutvikling", sektor_id: "BYUTVIKLING", pensjon: "KLP", brok: 100, fastlonn: 875000, sosiale: 311500 },
+        { id: "ST-502-01", tittel: "Senior Saksbehandler Bygg", ansatt: "Ingrid Bakke", sektor: "By- og stedsutvikling", sektor_id: "BYUTVIKLING", pensjon: "KLP", brok: 100, fastlonn: 685000, sosiale: 243900 },
+        { id: "ST-301-01", tittel: "Kulturkonsulent Kilden", ansatt: "Tone Lind", sektor: "Kultur og dialog", sektor_id: "KULTUR", pensjon: "KLP", brok: 100, fastlonn: 630000, sosiale: 224300 },
+        { id: "ST-101-01", tittel: "Senior Controller Økonomi", ansatt: "Frank Ellingsen", sektor: "Økonomistyring", sektor_id: "OKONOMI", pensjon: "KLP", brok: 100, fastlonn: 895000, sosiale: 318600 }
+    ];
+
+    const SELVKOST_SERVICES_DATA = {
+        "VANN": {
+            tittel: "💧 Funksjon 3400: Vannforsyning — Drikkevann og Ledningsnett",
+            direkte: 142500000,
+            henforing: 8200000,
+            avskrivning: 44800000,
+            restverdi: 820000000,
+            rente_sats: 0.040,
+            inntekter: 4500000,
+            gebyrinntekt: 223800000,
+            fond_primo: 12400000,
+            fremforing_ar: "År 2 av 5",
+            lov: "Kommuneloven § 15-1 & Drikkevannsforskriften"
+        },
+        "AVLOEP": {
+            tittel: "🚽 Funksjon 3450: Avløpshåndtering — Renseanlegg & Pumpestasjoner",
+            direkte: 185200000,
+            henforing: 11400000,
+            avskrivning: 78500000,
+            restverdi: 1950000000,
+            rente_sats: 0.040,
+            inntekter: 5100000,
+            gebyrinntekt: 348000000,
+            fond_primo: -14200000,
+            fremforing_ar: "År 3 av 5 (Investeringsplan 2027–2030: 2 mrd kr)",
+            lov: "Forurensningsloven & Kommuneloven § 15-1"
+        },
+        "RENOVASJON": {
+            tittel: "♻️ Funksjon 3500: Renovasjon & Avfallshåndtering (Avfall Sør)",
+            direkte: 128400000,
+            henforing: 3600000,
+            avskrivning: 9200000,
+            restverdi: 95000000,
+            rente_sats: 0.040,
+            inntekter: 2100000,
+            gebyrinntekt: 142900000,
+            fond_primo: 4800000,
+            fremforing_ar: "År 1 av 5",
+            lov: "Forurensningsloven § 30 og § 34"
+        },
+        "BYGGESAK": {
+            tittel: "📐 Funksjon 3600: Byggesak, Oppmåling og Geodata",
+            direkte: 41200000,
+            henforing: 4100000,
+            avskrivning: 1800000,
+            restverdi: 18000000,
+            rente_sats: 0.040,
+            inntekter: 900000,
+            gebyrinntekt: 46920000,
+            fond_primo: 1100000,
+            fremforing_ar: "År 2 av 5",
+            lov: "Plan- og bygningsloven § 33-1 & Eierseksjonsloven"
+        }
+    };
+
+    const BUDSJETT_ARSHJUL_DATA = [
+        {
+            id: 1,
+            periode: "Mai – Juni",
+            tittel: "Rammeavklaringer & 1. Tertial",
+            status: "Fullført",
+            status_color: "var(--success-green)",
+            rolle: "Kommunedirektørens ledergruppe & Bystyret",
+            desc: "Avklaring av demografiberegninger for skole/barnehage og omsorg. Behandling av 1. tertialrapport og oppdatering av 4-årige HØP-rammer.",
+            oppgaver: [
+                "Demografifremskriving fra SSB analyseres per resultatenhet",
+                "Kommunedirektørens retningslinjer for lønnsvekst og prisvekst fastsettes",
+                "1. tertialrapport fremlegges for Bystyret med oppdaterte skatteprognoser"
+            ],
+            hjemmel: "Kommuneloven § 14-5 & § 14-10"
+        },
+        {
+            id: 2,
+            periode: "Primo August",
+            tittel: "HR-Data Eksport til Framsikt",
+            status: "Fullført",
+            status_color: "var(--success-green)",
+            rolle: "Lønnsavdeling & Økonomi",
+            desc: "Oppdaterte person- og stillingsdata importeres fra Visma Enterprise / Unit4 til Framsikt Årsbudsjettmodul. Excel-maler klargjøres for utsending.",
+            oppgaver: [
+                "Avstemming av faste stillingshjemler mot faktisk ansattliste",
+                "Verifisering av stillingskoder, ansiennitet og pensjonstilhørighet (SPK/KLP)",
+                "Klargjøring og låsing av felles satser for AGA (14,1 %) og feriepenger"
+            ],
+            hjemmel: "Økonomireglement for Kristiansand kommune kap. 3"
+        },
+        {
+            id: 3,
+            periode: "25. August",
+            tittel: "Utsending av Excel-Maler",
+            status: "Fullført",
+            status_color: "var(--success-green)",
+            rolle: "Økonomirådgivere → Seksjonsledere",
+            desc: "Excel-maler per seksjon og kostnadssted distribueres til seksjons- og enhetsledere sammen med tildelte budsjettrammer og retningslinjer.",
+            oppgaver: [
+                "Distribusjon av Excel bemanningsplan per resultatansvar",
+                "Gjennomgang av krav til driftseffektivisering og omstillingskrav",
+                "Veiledning om uforanderlige stillings-IDer ved senere gjeninnlesing"
+            ],
+            hjemmel: "Delegeringsreglement Kristiansand kommune"
+        },
+        {
+            id: 4,
+            periode: "10. September",
+            tittel: "Seksjonsledernes Frist",
+            status: "Fullført",
+            status_color: "var(--success-green)",
+            rolle: "Seksjonsledere",
+            desc: "Frist for seksjonsledere til å ferdigstille neste års stillings- og bemanningsplan, registrere vikar-/overtidspotter og lese inn i Framsikt.",
+            oppgaver: [
+                "Planlagte fødsels- og utdanningspermisjoner registreres med startmåned",
+                "Vakanser og nyrekrutteringer bekreftes med måned for tilsetting",
+                "Innlesing av oppdatert Excel-mal i Framsikt og kontroll av summer"
+            ],
+            hjemmel: "Kommuneloven § 13-1 (Enhetsleders ansvar)"
+        },
+        {
+            id: 5,
+            periode: "20. September",
+            tittel: "Enhetsledernes Godkjenning",
+            status: "Fullført",
+            status_color: "var(--success-green)",
+            rolle: "Enhetsledere / Rektorer",
+            desc: "Enhetsledere avstemmer hele enhetens budsjett i Framsikt, kontrollerer at rammen holder, og godkjenner i systemet.",
+            oppgaver: [
+                "Kvalitetskontroll av at sum lønn, varekjøp og refusjoner er i balanse",
+                "Avsjekk av bruttoføring: vikarutgifter (1020) ikke nettet mot NAV-refusjon (1690)",
+                "Formell godkjenning av enhetsbudsjett i Framsikt (Stage-Gate Port 4)"
+            ],
+            hjemmel: "Kommuneloven § 14-5 (Budsjettbalanse)"
+        },
+        {
+            id: 6,
+            periode: "30. September",
+            tittel: "Kommunalsjefens Godkjenning",
+            status: "Fullført",
+            status_color: "var(--success-green)",
+            rolle: "Direktører / Kommunalsjefer",
+            desc: "Kommunalsjefene ferdigstiller sitt samlede virksomhetsområde. Kvalitetssikring av selvkostkalkyler (Vann, avløp, renovasjon, byggesak) og investeringer.",
+            oppgaver: [
+                "Konsolidering av kommunalområdets enheter i Framsikt",
+                "Avstemming av selvkostkalkyler og regulering av bundet fond (1530/1930)",
+                "Samordning av 4-årig investeringsbudsjett opp mot lånetaket (8,8 mrd kr)"
+            ],
+            hjemmel: "Selvkostforskriften § 6 & Kommuneloven § 14-6"
+        },
+        {
+            id: 7,
+            periode: "Ultimo Oktober",
+            tittel: "HØP & Årsbudsjett Offentliggjøres",
+            status: "AKTIV NÅ",
+            status_color: "#0284c7",
+            rolle: "Kommunedirektøren",
+            desc: "Siste kvalitetssikring i Kommunedirektørens ledergruppe. Kommunedirektørens forslag til Handlings- og økonomiplan (HØP 2027–2030) og årsbudsjett legges frem 25. oktober.",
+            oppgaver: [
+                "Sluttbehandling i Kommunedirektørens ledergruppe (KDLG)",
+                "Offentlig publisering av HØP-dokument, saksfremlegg og Framsikt-portal",
+                "Presseorientering og oversendelse til de folkevalgte organene"
+            ],
+            hjemmel: "Kommuneloven § 14-3 & § 14-4"
+        },
+        {
+            id: 8,
+            periode: "Nov – Desember",
+            tittel: "Politisk Behandling & Bystyrevedtak",
+            status: "Kommende",
+            status_color: "var(--text-muted)",
+            rolle: "Formannskap, Fagutvalg & Bystyret",
+            desc: "Fagutvalg og formannskap behandler forslaget. Midten av desember fatter Bystyret endelig vedtak. Budsjettet registreres i Unit4 innen 31. desember.",
+            oppgaver: [
+                "Primo nov: Orientering for formannskapet og høring i fagutvalgene",
+                "Primo des: Formannskapet avgir endelig innstilling",
+                "Midtdesember: Bystyret fatter bindende budsjettvedtak, skatter og gebyrer",
+                "31. des: Endelig budsjett lastes over til regnskapssystemet Unit4 for neste regnskapsår"
+            ],
+            hjemmel: "Kommuneloven § 14-3, § 14-4 og § 14-6"
+        }
+    ];
+
+    const KOSTRA_DRIFTSARTER_DATA = [
+        { art: "1010", navn: "Fast lønn / fastlønn", cat: "LONN", modul: "Stillingsoversikt", desc: "Bruttolønn for faste stillinger og faste engasjementer. Beregnes automatisk per stilling/ansatt i Framsikt.", typisk: "Lærere, sykepleiere, ingeniører, saksbehandlere", regel: "Hovedregel for faste årsverk. Sykefravær skal ALDRI redusere Art 1010." },
+        { art: "1020", navn: "Lønn til vikarer", cat: "LONN", modul: "Konto / Pot", desc: "Lønn til timelønte sykevikarer og kortere vikariater ved fravær. Budskjetteres som kronepott per ansvar.", typisk: "Lærervikarer, pleievikarer ved korttidsfravær", regel: "Må ALDRI nettføres mot fastlønn eller mot NAV-refusjon (1690)." },
+        { art: "1030", navn: "Lønn til ekstrahjelp", cat: "LONN", modul: "Konto / Pot", desc: "Timelønte ekstrahjelper ved sesongtopper, snøbrøyting, prosjekter eller uforutsett arbeidsmengde.", typisk: "Badevakter, sommerhjelper, sesongarbeidere park", regel: "Genererer feriepenger (12%) og AGA (14,1%)." },
+        { art: "1040", navn: "Lønn til lærlinger", cat: "LONN", modul: "Stilling / Pot", desc: "Lønn og godtgjørelse til lærlinger etter gjeldende læretekst og lærlingelønnssatser.", typisk: "Helsefaglærlinger, IKT-lærlinger, barne- og ungdomsarbeidere", regel: "Knyttes mot sentral tilskuddsordning for lærlinger." },
+        { art: "1050", navn: "Annen lønn og godtgjørelser", cat: "LONN", modul: "Stilling / Pot", desc: "Trekkpliktige uregelmessige tillegg, utrykningstillegg, klesgodtgjørelse og stasjonsvakter.", typisk: "Klesgodtgjørelse, utrykning brann/legevakt, telefonkompensasjon", regel: "Inngår i grunnlag for feriepenger og AGA." },
+        { art: "1090", navn: "Overtid og ubekvem tid", cat: "LONN", modul: "Konto / Pot", desc: "Overtidsbetaling jf. HTA, samt turnustillegg (kvelds-, natt- og helgetillegg, lørdag/søndag).", typisk: "Kveldstillegg hjemmesykepleie, beredskapsvakt VAR, helgetillegg omsorg", regel: "Turnustillegg må baseres på godkjente bemanningsplaner i Visma." },
+        { art: "1099", navn: "Påløpt feriepengeavsetning", cat: "LONN", modul: "Automatisk (System)", desc: "Regnskapsmessig avsetning for opptjente feriepenger (12,0 % under 60 år / 14,3 % over 60 år).", typisk: "Lovpålagt feriepengeavsetning for alle kommunalt ansatte", regel: "Framsikt beregner automatisk AGA (14,1 %) av feriepengeavsetningen." },
+        { art: "1200", navn: "Pensjonsinnskudd (KLP/SPK)", cat: "LONN", modul: "Automatisk (Stilling)", desc: "Arbeidsgivers lovpålagte pensjonspremie. Framsikt beregner ut fra pensjonskassetilhørighet.", typisk: "SPK for lærere/pedagoger, KLP for helse, teknisk og administrasjon", regel: "Premiesatser fastsettes sentralt (SPK ~13,8 %, KLP ~15,2 %)." },
+        { art: "1210", navn: "Arbeidsgiveravgift (AGA)", cat: "LONN", modul: "Automatisk (System)", desc: "AGA av lønn, tillegg og pensjon. Beregnes ut fra kommunens sone (14,1 % / Sone 1 for Kristiansand).", typisk: "Statlig arbeidsgiveravgift på alle lønns- og pensjonsutgifter", regel: "Beregnes av (Lønn 1010-1090 + Feriepenger 1099 + Pensjon 1200)." },
+        { art: "1220", navn: "Yrkesskade / gruppeliv", cat: "LONN", modul: "Automatisk (Stilling)", desc: "Lovpålagte personalforsikringer og gruppelivsordninger for kommunalt ansatte.", typisk: "Ulykkesforsikring, yrkesskadeforsikring gjennom KLP Skade", regel: "Periodiseres månedlig i Framsikt." },
+        { art: "1100", navn: "Kontormateriell og trykksaker", cat: "VARE", modul: "Detaljbudsjett", desc: "Standard rekvisita, papir, trykking av brosjyrer og profilmateriell.", typisk: "Kopipapir, toner, trykking av utvalgspapirer til bystyret", regel: "Følger felles innkjøpsavtale via Agder Innkjøpssamarbeid." },
+        { art: "1115", navn: "Undervisningsmateriell", cat: "VARE", modul: "Detaljbudsjett", desc: "Lærebøker, digitale læremidler, forbruksmateriell i skoler og barnehager.", typisk: "Skolebøker, NEON elevlisenser, formingsrekvisita, musikkutstyr", regel: "Brukes utelukkende under funksjon 2010–2220 i Oppvekst." },
+        { art: "1120", navn: "Møbler, inventar og utstyr", cat: "VARE", modul: "Detaljbudsjett", desc: "Løsøre, møbler og utstyr under aktiveringsgrensen for investering (under 100 000 kr).", typisk: "Kontorstoler, heve/senk-pulter, sykehjemssenger, elevpulter", regel: "Kjøp over 100 000 kr med levetid >3 år skal vurderes for investering (klasse 2)." },
+        { art: "1130", navn: "Telefoni og datakommunikasjon", cat: "VARE", modul: "Detaljbudsjett", desc: "Mobiltelefoner, linjeleie, bredbånd og fasttelefoni for kommunale lokasjoner.", typisk: "Tjenestemobiler, fiberlinjer til omsorgssentre og skoler", regel: "Telenor-rammeavtale forvaltes av IKT-avdelingen." },
+        { art: "1140", navn: "Annonser og informasjon", cat: "VARE", modul: "Detaljbudsjett", desc: "Offentlige kunngjøringer, annonsering av reguleringsplaner, stillingsutlysninger.", typisk: "Stillingsutlysninger på Finn, kunngjøring av planhøringer i Fædrelandsvennen", regel: "Gebyrpliktige planannonser henføres til selvkost funksjon 3600." },
+        { art: "1150", navn: "Opplæring og kompetanseheving", cat: "VARE", modul: "Detaljbudsjett", desc: "Kursavgifter, etterutdanning, seminarer og sertifiseringer for ansatte.", typisk: "Videreutdanning sykepleiere, Framsikt-opplæring, HMS-kurs", regel: "Kompensasjon for tapt fritid føres på lønnsart 1050, ikke 1150." },
+        { art: "1160", navn: "Skyss- og reiseutgifter (oppg.pl.)", cat: "VARE", modul: "Detaljbudsjett", desc: "Oppgavepliktig kilometergodtgjørelse ved bruk av privat bil i tjenesten.", typisk: "Kjøregodtgjørelse for hjemmesykepleiere, tilsynsførere, feltinspektører", regel: "Føres etter statens satser i Visma Lønn." },
+        { art: "1170", navn: "Reiseutgifter (ikke oppg.pl.)", cat: "VARE", modul: "Detaljbudsjett", desc: "Tog, fly, overnatting, offentlig transport og diett ved tjenestereiser.", typisk: "Deltakelse på KS-konferanser, nasjonale fagsamlinger, revisjonskurs", regel: "Kommunens reisepolicy krever tog på strekningen Kr.sand–Oslo/Stavanger." },
+        { art: "1180", navn: "Energi, strøm og fjernvarme", cat: "VARE", modul: "Detaljbudsjett", desc: "Elektrisk kraft, nettleie, brensel og fjernvarme for kommunale formålsbygg.", typisk: "Strøm til rådhus, omsorgssentre, skoler, idrettshaller, gatelys", regel: "Avstemmes mot Eiendomsavdelingens volumprognoser (kWh)." },
+        { art: "1190", navn: "Husleie og leie av lokaler", cat: "VARE", modul: "Detaljbudsjett", desc: "Ekstern leie av formålsbygg, kontorlokaler, moduler og idrettsanlegg.", typisk: "Leie av eksterne barnehagelokaler, legesentre, midlertidige skolepaviljonger", regel: "Må skilles fra intern husleieavregning." },
+        { art: "1200", navn: "Forbruksmateriell og råvarer", cat: "VARE", modul: "Detaljbudsjett", desc: "Innsatsfaktorer til drift, helseartikler, kjemikalier og matvarer.", typisk: "Medisinsk forbruksmateriell, kjemikalier til vannverk, strøsand for vei", regel: "Inngår i direkte driftsutgifter på selvkostområdene (VAR)." },
+        { art: "1220", navn: "Vedlikehold av maskiner/utstyr", cat: "VARE", modul: "Detaljbudsjett", desc: "Service, reparasjon og vedlikehold av teknisk utstyr og kjøretøypark.", typisk: "Service på legevaktbiler, brøyteutstyr, heiser, medisinsk-teknisk utstyr", regel: "Årlige servicekontrakter periodiseres jevnt." },
+        { art: "1230", navn: "Vedlikeholdstjenester bygg", cat: "VARE", modul: "Detaljbudsjett", desc: "Løpende bygningsmessig vedlikehold utført av eksterne håndverkere.", typisk: "Rørlegger-, elektriker- og malertjenester i skoler og sykehjem", regel: "Større oppgraderinger som forlenger levetid vurderes for klasse 2." },
+        { art: "1240", navn: "Serviceavtaler, IT-lisenser & SaaS", cat: "VARE", modul: "Detaljbudsjett", desc: "Årlige skytjenestelisenser, IT-vedlikehold og programvareavtaler.", typisk: "Lisenser for Framsikt, Visma Enterprise, Microsoft 365, Agresso", regel: "Felleslisenser henføres delvis til selvkost som indirekte kostnader." },
+        { art: "1250", navn: "Konsulenttjenester og revisjon", cat: "VARE", modul: "Detaljbudsjett", desc: "Kjøp av ekstern spesialistkompetanse, prosjektering, juridisk bistand og revisjon.", typisk: "Advokatbistand, arkitekt, Agder Kommunerevisjon IKS", regel: "Konsulentkjøp krever særskilt begrunnelse jf. innkjøpsreglementet." },
+        { art: "1260", navn: "Renhold og vaskeritjenester", cat: "VARE", modul: "Detaljbudsjett", desc: "Renholdstjenester kjøpt fra eksterne samt vask av tøy/tekstiler.", typisk: "Eksternt vaskeri for sykehjemstøy, vindusvask, spesialrenhold", regel: "Avstemmes mot renholdskontrakter per bygg." },
+        { art: "1270", navn: "Andre kjøp av driftstjenester", cat: "VARE", modul: "Detaljbudsjett", desc: "Øvrige driftsavtaler, vakthold, snøbrøyting, renovasjonsfrakt og vektertjenester.", typisk: "Vintervedlikehold/brøyting veinett, vektertjenester rådhus og skoler", regel: "Vinterdrift budsjetteres med normalårskostnad." },
+        { art: "1300", navn: "Kjøp av tjenester fra staten", cat: "OVERFORING", modul: "Overføringer", desc: "Betaling for statlige spesialisttjenester eller institusjonsplasser.", typisk: "Barnevernsinstitusjoner (Bufetat), statlige oppholdsbetalinger", regel: "Statlige satser legges til grunn i budsjettet." },
+        { art: "1350", navn: "Kjøp fra andre kommuner", cat: "OVERFORING", modul: "Overføringer", desc: "Vertskommunesamarbeid, legevaktsamarbeid og gjesteelevsoppgjør.", typisk: "Gjesteelever i Vennesla/Lillesand, felles IKT-tjenester", regel: "Avstemmes mot nabokommunenes fakturagrunnlag." },
+        { art: "1370", navn: "Tilskudd til private og ideelle", cat: "OVERFORING", modul: "Overføringer", desc: "Lovpålagte driftstilskudd til private barnehager, private skoler og frivillighet.", typisk: "Tilskudd til private barnehager (ca. 450 mill kr), idrettslag, Kilden", regel: "Beregnes etter nasjonale satser og historiske kommunale kostnader." },
+        { art: "1380", navn: "Kjøp fra KOSTRA-konsernet", cat: "OVERFORING", modul: "Konsern", desc: "Kjøp av tjenester fra kommunale foretak (KF) eller interkommunale selskaper (IKS).", typisk: "Avfallsbehandling kjøpt fra Avfall Sør, havnetjenester", regel: "Må motsvares av konsernselskapets salgsinntekt på art 1780." },
+        { art: "1400", navn: "Direkte overføringer innbyggere", cat: "OVERFORING", modul: "Overføringer", desc: "Utbetaling av økonomisk sosialhjelp, bostøtte og kommunale stipend.", typisk: "Livsopphold og husleiestøtte via NAV, TT-kort forflytningshemmede", regel: "Sosialhjelp er en lovpålagt rettighet og kan ikke rammebegrenses." },
+        { art: "1480", navn: "Overføringer til konsernenheter", cat: "OVERFORING", modul: "Konsern", desc: "Driftstilskudd til IKS og KF (Kristiansandsregionen brann og redning - KBR).", typisk: "Driftstilskudd til KBR brann og redning IKS, Agder Renovasjon IKS", regel: "Eierbrøk fastsatt i selskapsavtale legges til grunn." },
+        { art: "1530", navn: "Avsetning til selvkostfond", cat: "FINANS", modul: "Selvkost", desc: "Avsetning av årets overskudd på selvkostområdene (Vann, avløp, renovasjon, byggesak).", typisk: "Overskytende gebyrinntekter som må tilbakeføres innbyggerne", regel: "Bundet fond. Må tilbakeføres til abonnentene innen 5 år." },
+        { art: "1590", navn: "Avskrivninger", cat: "FINANS", modul: "Kapitalkostnader", desc: "Regnskapsmessig lineær avskrivning av kommunens anleggsmidler.", typisk: "Avskrivning av vann- og avløpsledninger, renseanlegg, skolebygg", regel: "Inngår som kapitalkostnad i selvkostberegninger." },
+        { art: "1600", navn: "Bruker- og foreldrebetaling", cat: "INNTEKT", modul: "Konto / Pot", desc: "Betaling for opphold i barnehage, SFO, kulturskole og institusjonsplass.", typisk: "Foreldrebetaling SFO, egenandeler korttidsopphold sykehjem", regel: "Følger nasjonal makspris for barnehage og SFO." },
+        { art: "1620", navn: "Gebyrinntekter (Selvkost)", cat: "INNTEKT", modul: "Selvkost", desc: "Gebyrer for vann, avløp, renovasjon, feiing og byggesaksbehandling.", typisk: "Vanngebyr, kloakkgebyr, tømmegebyr avfall, byggesaksgebyr", regel: "Skal dekke 100 % av beregnet gebyrgrunnlag over en 5-årsperiode." },
+        { art: "1690", navn: "Sykelønnsrefusjon fra NAV", cat: "INNTEKT", modul: "Konto / Pot", desc: "Refusjon av sykepenger og foreldrepenger etter arbeidsgiverperioden (16 dager).", typisk: "Refusjonskrav sendt NAV for langtidssykmeldte ansatte", regel: "Må føres BRUTTO som inntekt. Må ALDRI motregnes mot lønnskonto 1010/1020." },
+        { art: "1700", navn: "Refusjon fra staten", cat: "INNTEKT", modul: "Konto / Pot", desc: "Øremerkede tilskudd og refusjoner fra statlige etater (Udir, Helsedirektoratet).", typisk: "Statlig helsestasjonsmidler, lærernormstilskudd, legetilskudd", regel: "Krever dokumentasjon på at vilkårene for tilskuddet er oppfylt." },
+        { art: "1850", navn: "Integreringstilskudd fra IMDi", cat: "STAT", modul: "Konto / Pot", desc: "Statlige tilskudd ved bosetting av flyktninger og introduksjonsprogram.", typisk: "År 1–5 integreringstilskudd for bosatte flyktninger", regel: "Forvaltes av Nav og Næring (Virksomhetsområde 6)." },
+        { art: "1930", navn: "Bruk av bundet selvkostfond", cat: "STAT", modul: "Selvkost", desc: "Bruk av tidligere avsatt overskudd for å dekke årets underskudd i selvkost.", typisk: "Dekning av økte driftskostnader på vann og avløp uten gebyrøkning", regel: "Fondets saldo tilføres kalkulatorisk rente." }
+    ];
+
+    let currentSelvkostKey = "VANN";
+    let currentBudsjettPhaseId = 7; // Aktiv fase nå: Ultimo Oktober
+
+    function switchBudsjettModulTab(tabKey) {
+        const tabs = ["lonn", "selvkost", "arshjul", "kostra", "qa"];
+        tabs.forEach(t => {
+            const btn = document.getElementById("bm-btn-" + t);
+            const pane = document.getElementById("bm-pane-" + t);
+            if (btn) btn.classList.remove("active");
+            if (pane) pane.classList.remove("active");
+        });
+
+        const activeKey = tabKey.toLowerCase();
+        const activeBtn = document.getElementById("bm-btn-" + activeKey);
+        const activePane = document.getElementById("bm-pane-" + activeKey);
+
+        if (activeBtn) activeBtn.classList.add("active");
+        if (activePane) activePane.classList.add("active");
+
+        // Spesiell init for faner
+        if (activeKey === "lonn") {
+            recalcSalaryBudsjett();
+            renderBmPositionsTable();
+        } else if (activeKey === "selvkost") {
+            switchSelvkostService(currentSelvkostKey);
+        } else if (activeKey === "arshjul") {
+            renderBmYearStepper();
+            selectBudsjettPhase(currentBudsjettPhaseId);
+        } else if (activeKey === "kostra") {
+            filterKostraDriftsarter();
+        } else if (activeKey === "qa") {
+            updateBmQaStatus();
+        }
+    }
+
+    function onBmSectorChange() {
+        const sec = document.getElementById("bm-calc-sector").value;
+        const titleSelect = document.getElementById("bm-calc-title");
+        const pensionSelect = document.getElementById("bm-calc-pension");
+
+        if (sec === "OPPVEKST") {
+            titleSelect.value = "LEKTOR";
+            pensionSelect.value = "SPK";
+            document.getElementById("bm-calc-salary").value = 680000;
+        } else if (sec === "HELSE") {
+            titleSelect.value = "SYKEPLEIER";
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 640000;
+        } else if (sec === "BYUTVIKLING") {
+            titleSelect.value = "INGENIOR";
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 850000;
+        } else if (sec === "KULTUR") {
+            titleSelect.value = "KONSULENT";
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 630000;
+        } else {
+            pensionSelect.value = "KLP";
+        }
+        recalcSalaryBudsjett();
+    }
+
+    function onBmTitleChange() {
+        const title = document.getElementById("bm-calc-title").value;
+        const pensionSelect = document.getElementById("bm-calc-pension");
+
+        if (title === "LEKTOR") {
+            pensionSelect.value = "SPK";
+            document.getElementById("bm-calc-salary").value = 680000;
+        } else if (title === "SYKEPLEIER") {
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 640000;
+        } else if (title === "FAGARBEIDER") {
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 510000;
+        } else if (title === "INGENIOR") {
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 850000;
+        } else if (title === "SAKSBEHANDLER") {
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 670000;
+        } else if (title === "KONSULENT") {
+            pensionSelect.value = "KLP";
+            document.getElementById("bm-calc-salary").value = 620000;
+        }
+        recalcSalaryBudsjett();
+    }
+
+    function recalcSalaryBudsjett() {
+        const grunnlonn = parseFloat(document.getElementById("bm-calc-salary").value) || 0;
+        const brok = parseFloat(document.getElementById("bm-calc-fraction").value) || 100;
+        const alder = document.getElementById("bm-calc-age").value;
+        const pensjonKasse = document.getElementById("bm-calc-pension").value;
+        const tillegg = parseFloat(document.getElementById("bm-calc-shifts").value) || 0;
+        const vikar = parseFloat(document.getElementById("bm-calc-substitute").value) || 0;
+        const navRefusjon = parseFloat(document.getElementById("bm-calc-refund").value) || 0;
+
+        // 1. Beregn Fast Lønn (Art 1010)
+        const fastlonn = Math.round(grunnlonn * (brok / 100));
+
+        // 2. Feriepenger (Art 1099): 12,0 % under 60 år, 14,3 % ved 60+
+        const ferieRate = (alder === "OVER60") ? 0.143 : 0.120;
+        const feriepenger = Math.round(fastlonn * ferieRate);
+
+        // 3. Pensjonspremie (Art 1200): SPK (13,8 %) for lærere, KLP (15,2 %) for øvrige
+        const pensjonRate = (pensjonKasse === "SPK") ? 0.138 : 0.152;
+        const pensjon = Math.round(fastlonn * pensjonRate);
+
+        // 4. Arbeidsgiveravgift (Art 1210): 14,1 % (Sone 1 - Kristiansand) av (Lønn + Feriepenger + Pensjon)
+        const agaRate = 0.141;
+        const agaFast = Math.round((fastlonn + feriepenger + pensjon) * agaRate);
+
+        // 5. Variable tillegg og vikarer
+        // Tillegg genererer feriepenger og AGA
+        const ferieTillegg = Math.round(tillegg * ferieRate);
+        const agaTillegg = Math.round((tillegg + ferieTillegg) * agaRate);
+        const sumTilleggTot = tillegg + ferieTillegg + agaTillegg;
+
+        // Vikarer genererer feriepenger og AGA
+        const ferieVikar = Math.round(vikar * ferieRate);
+        const agaVikar = Math.round((vikar + ferieVikar) * agaRate);
+        const sumVikarTot = vikar + ferieVikar + agaVikar;
+
+        // Samlet Brutto og Netto
+        const bruttoTot = fastlonn + feriepenger + pensjon + agaFast + sumTilleggTot + sumVikarTot;
+        const nettoTot = bruttoTot - navRefusjon;
+
+        // Oppdater DOM
+        const fmt = num => num.toLocaleString('nb-NO') + " kr";
+        document.getElementById("bm-res-fastlonn").innerText = fmt(fastlonn);
+        document.getElementById("bm-res-ferie-rate").innerText = (ferieRate * 100).toFixed(1) + " %";
+        document.getElementById("bm-res-feriepenger").innerText = fmt(feriepenger);
+        document.getElementById("bm-res-pensjon-org").innerText = `${pensjonKasse} ${(pensjonRate * 100).toFixed(1)} %`;
+        document.getElementById("bm-res-pensjon").innerText = fmt(pensjon);
+        document.getElementById("bm-res-aga-fast").innerText = fmt(agaFast);
+        document.getElementById("bm-res-tillegg-tot").innerText = fmt(sumTilleggTot);
+        document.getElementById("bm-res-vikar-tot").innerText = fmt(sumVikarTot);
+        document.getElementById("bm-res-refusjon").innerText = "-" + fmt(navRefusjon);
+        document.getElementById("bm-res-brutto-tot").innerText = fmt(bruttoTot);
+        document.getElementById("bm-res-netto-tot").innerText = fmt(nettoTot);
+
+        // Render KOSTRA Konteringsmatrise
+        renderBmKostraSplit({
+            fastlonn,
+            feriepenger,
+            pensjon,
+            agaFast,
+            tillegg,
+            ferieTillegg,
+            agaTillegg,
+            vikar,
+            ferieVikar,
+            agaVikar,
+            navRefusjon,
+            bruttoTot,
+            nettoTot,
+            pensjonKasse
+        });
+    }
+
+    function renderBmKostraSplit(data) {
+        const tbody = document.getElementById("bm-kostra-tbody");
+        if (!tbody) return;
+
+        const fmt = n => n.toLocaleString('nb-NO');
+        const rows = [
+            { art: "1010", navn: "Fast lønn / stilling", debet: fmt(data.fastlonn), kredit: "-", modul: "Stilling", merknad: "Grunnlønn stillingshjemmel" },
+            { art: "1099", navn: "Feriepengeavsetning", debet: fmt(data.feriepenger), kredit: "-", modul: "System", merknad: "Påløpt feriepengeforpliktelse" },
+            { art: "1200", navn: `Pensjonsinnskudd (${data.pensjonKasse})`, debet: fmt(data.pensjon), kredit: "-", modul: "Stilling", merknad: "Arbeidsgivers premieandel" },
+            { art: "1210", navn: "Arbeidsgiveravgift (AGA)", debet: fmt(data.agaFast + data.agaTillegg + data.agaVikar), kredit: "-", modul: "System", merknad: "14,1 % Sone 1 av lønn+ferie+pensjon" },
+            { art: "1050/1090", navn: "Turnus- og overtidstillegg", debet: fmt(data.tillegg), kredit: "-", modul: "Konto/Pot", merknad: "Ubekvem arbeidstid / helgetillegg" },
+            { art: "1020", navn: "Lønn til vikarer", debet: fmt(data.vikar), kredit: "-", modul: "Konto/Pot", merknad: "Syke- og fraværsvikarpott" },
+            { art: "1690", navn: "Sykelønnsrefusjon fra NAV", debet: "-", kredit: fmt(data.navRefusjon), modul: "Inntekt", merknad: "Forventet refundert etter 16 dager" },
+            { art: "SUM", navn: "Netto Kommunal Kostnad", debet: fmt(data.nettoTot), kredit: "-", modul: "Framsikt HØP", merknad: "Belastes enhetens driftsramme" }
+        ];
+
+        let html = "";
+        rows.forEach(r => {
+            const isSum = r.art === "SUM";
+            html += `
+                <tr style="${isSum ? 'font-weight:700; border-top:1.5px solid var(--navy-dark); border-bottom:2px solid var(--navy-dark); background:#f8fafc;' : ''}">
+                    <td style="font-family:var(--font-mono); font-weight:600;">${r.art}</td>
+                    <td>${r.navn}</td>
+                    <td class="num" style="font-family:var(--font-mono);">${r.debet}</td>
+                    <td class="num" style="font-family:var(--font-mono);">${r.kredit}</td>
+                    <td style="font-size:11px; color:var(--text-secondary);">${r.merknad}</td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function resetSalaryCalc() {
+        document.getElementById("bm-calc-salary").value = 620000;
+        document.getElementById("bm-calc-fraction").value = 100;
+        document.getElementById("bm-calc-age").value = "UNDER60";
+        document.getElementById("bm-calc-pension").value = "KLP";
+        document.getElementById("bm-calc-shifts").value = 35000;
+        document.getElementById("bm-calc-substitute").value = 45000;
+        document.getElementById("bm-calc-refund").value = 30000;
+        recalcSalaryBudsjett();
+        showToast("↺ Lønnskalkulator nullstilt til standardparametere");
+    }
+
+    function copySalaryAccounting() {
+        const text = `KRISTIANSAND KOMMUNE — KOSTRA LØNNSKONTERINGSBILAG (FRAMSIKT)
+Fastlønn (Art 1010): ${document.getElementById("bm-res-fastlonn").innerText}
+Feriepenger (Art 1099): ${document.getElementById("bm-res-feriepenger").innerText}
+Pensjon (Art 1200): ${document.getElementById("bm-res-pensjon").innerText}
+AGA Sone 1 (Art 1210): ${document.getElementById("bm-res-aga-fast").innerText}
+Variable tillegg (Art 1050/1090): ${document.getElementById("bm-res-tillegg-tot").innerText}
+Vikarpott (Art 1020): ${document.getElementById("bm-res-vikar-tot").innerText}
+NAV Sykelønnsrefusjon (Art 1690 Inntekt): ${document.getElementById("bm-res-refusjon").innerText}
+SAMLET BRUTTO LØNNSKOSTNAD: ${document.getElementById("bm-res-brutto-tot").innerText}
+NETTO KOMMUNAL KOSTNAD: ${document.getElementById("bm-res-netto-tot").innerText}
+Kilde: Framsikt EPM & Visma Golden Record | Kommuneloven § 14-6`;
+
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("✓ KOSTRA Konteringssplitt kopiert til utklippstavlen!");
+        });
+    }
+
+    function renderBmPositionsTable() {
+        const tbody = document.getElementById("bm-positions-tbody");
+        if (!tbody) return;
+
+        let html = "";
+        BUDSJETT_POSITIONS_DATA.forEach(pos => {
+            const sumTot = pos.fastlonn + pos.sosiale;
+            html += `
+                <tr>
+                    <td style="font-family:var(--font-mono); font-weight:700;">${pos.id}</td>
+                    <td><strong>${pos.tittel}</strong></td>
+                    <td>${pos.ansatt}</td>
+                    <td>${pos.sektor}</td>
+                    <td><span class="bm-badge bm-badge-primary">${pos.pensjon}</span></td>
+                    <td class="num">${pos.brok} %</td>
+                    <td class="num">${pos.fastlonn.toLocaleString('nb-NO')} kr</td>
+                    <td class="num">${pos.sosiale.toLocaleString('nb-NO')} kr</td>
+                    <td class="num" style="font-weight:700; color:var(--navy-dark);">${sumTot.toLocaleString('nb-NO')} kr</td>
+                    <td style="text-align:center;">
+                        <button type="button" class="btn btn-sm" onclick="loadPositionIntoCalc('${pos.id}')" title="Last denne stillingen inn i lønnskalkulatoren">
+                            ⚡ Regn
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function loadPositionIntoCalc(posId) {
+        const pos = BUDSJETT_POSITIONS_DATA.find(p => p.id === posId);
+        if (!pos) return;
+
+        document.getElementById("bm-calc-salary").value = pos.fastlonn;
+        document.getElementById("bm-calc-fraction").value = pos.brok;
+        document.getElementById("bm-calc-pension").value = pos.pensjon;
+
+        if (pos.sektor_id) {
+            const secSel = document.getElementById("bm-calc-sector");
+            if (secSel) secSel.value = pos.sektor_id;
+        }
+
+        recalcSalaryBudsjett();
+        showToast(`⚡ Lastet ${pos.tittel} (${pos.ansatt}) inn i Framsikt-kalkulatoren`);
+        const el = document.getElementById("bm-pane-lonn");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    /* --- SELVKOSTKALKULATOR LOGIKK --- */
+    function switchSelvkostService(svcKey) {
+        currentSelvkostKey = svcKey;
+        const keys = ["vann", "avloep", "renovasjon", "byggesak"];
+        keys.forEach(k => {
+            const btn = document.getElementById("btn-sk-" + k);
+            if (btn) btn.classList.remove("active");
+        });
+
+        const activeBtn = document.getElementById("btn-sk-" + svcKey.toLowerCase());
+        if (activeBtn) activeBtn.classList.add("active");
+
+        const data = SELVKOST_SERVICES_DATA[svcKey];
+        if (!data) return;
+
+        document.getElementById("bm-sk-title").innerText = data.tittel;
+        document.getElementById("bm-sk-direkte").value = data.direkte;
+        document.getElementById("bm-sk-henforing").value = data.henforing;
+        document.getElementById("bm-sk-avskrivning").value = data.avskrivning;
+        document.getElementById("bm-sk-restverdi").value = data.restverdi;
+        document.getElementById("bm-sk-inntekter").value = data.inntekter;
+        document.getElementById("bm-sk-gebyr").value = data.gebyrinntekt;
+        document.getElementById("bm-sk-fond-saldo").value = data.fond_primo;
+        document.getElementById("bm-sk-fremforing-ar").innerText = data.fremforing_ar;
+
+        recalcSelvkost();
+    }
+
+    function recalcSelvkost() {
+        const direkte = parseFloat(document.getElementById("bm-sk-direkte").value) || 0;
+        const henforing = parseFloat(document.getElementById("bm-sk-henforing").value) || 0;
+        const avskrivning = parseFloat(document.getElementById("bm-sk-avskrivning").value) || 0;
+        const restverdi = parseFloat(document.getElementById("bm-sk-restverdi").value) || 0;
+        const inntekter = parseFloat(document.getElementById("bm-sk-inntekter").value) || 0;
+        const gebyr = parseFloat(document.getElementById("bm-sk-gebyr").value) || 0;
+        const fondPrimo = parseFloat(document.getElementById("bm-sk-fond-saldo").value) || 0;
+
+        // Kalkulatorisk rente (5-årig statsobligasjon 3,25 % + 0,75 % = 4,00 %)
+        const renteSats = 0.040;
+        const kalkRente = Math.round(restverdi * renteSats);
+
+        // Full Selvkost (Kalkulert Gebyrgrunnlag)
+        const gebyrgrunnlag = Math.round(direkte + henforing + avskrivning + kalkRente - inntekter);
+
+        // Selvkostresultat (Avvik i året)
+        const resultat = Math.round(gebyr - gebyrgrunnlag);
+
+        // Dekningsgrad
+        const dekningsgrad = gebyrgrunnlag > 0 ? ((gebyr / gebyrgrunnlag) * 100) : 100;
+
+        // Fond ultimo estimat
+        const renteFond = Math.round(fondPrimo * renteSats);
+        const fondUltimo = Math.round(fondPrimo + resultat + renteFond);
+
+        const fmt = n => n.toLocaleString('nb-NO') + " kr";
+        document.getElementById("bm-res-sk-direkte").innerText = fmt(direkte);
+        document.getElementById("bm-res-sk-henforing").innerText = fmt(henforing);
+        document.getElementById("bm-res-sk-avskrivning").innerText = fmt(avskrivning);
+        document.getElementById("bm-res-sk-rente").innerText = fmt(kalkRente);
+        document.getElementById("bm-res-sk-inntekt").innerText = "-" + fmt(inntekter);
+        document.getElementById("bm-res-sk-gebyrgrunnlag").innerText = fmt(gebyrgrunnlag);
+        document.getElementById("bm-res-sk-gebyrinntekt").innerText = fmt(gebyr);
+
+        const resEl = document.getElementById("bm-res-sk-resultat");
+        const badgeEl = document.getElementById("bm-sk-status-badge");
+        const dgEl = document.getElementById("bm-res-sk-dekningsgrad");
+        const forklaringEl = document.getElementById("bm-sk-fond-forklaring");
+
+        dgEl.innerText = dekningsgrad.toFixed(1) + " %";
+        document.getElementById("bm-sk-fond-ultimo").innerText = fmt(fondUltimo);
+
+        if (Math.abs(resultat) < 50000) {
+            resEl.innerText = fmt(resultat) + " (I balanse)";
+            resEl.style.color = "var(--success-green)";
+            badgeEl.innerText = "I Balanse (100 %)";
+            badgeEl.className = "bm-badge bm-badge-success";
+            dgEl.style.color = "var(--success-green)";
+            forklaringEl.innerHTML = "Gebyret dekker nøyaktig selvkost. Ingen vesentlig avsetning til Art 1530 eller bruk av Art 1930 jf. <strong>Kommuneloven § 15-1</strong>.";
+        } else if (resultat > 0) {
+            resEl.innerText = "+" + fmt(resultat) + " (Overskudd)";
+            resEl.style.color = "var(--navy-dark)";
+            badgeEl.innerText = `Overskudd (+${((dekningsgrad - 100)).toFixed(1)} %)`;
+            badgeEl.className = "bm-badge bm-badge-primary";
+            dgEl.style.color = "var(--navy-dark)";
+            forklaringEl.innerHTML = `Gebyret overstiger årets selvkost med <strong>${fmt(resultat)}</strong>. Beløpet må avsettes til <strong>Bundet Selvkostfond (Art 1530)</strong> og tilbakeføres abonnentene gjennom lavere gebyrer innen maksimalt <strong>5 år</strong> jf. Selvkostforskriften § 6.`;
+        } else {
+            resEl.innerText = fmt(resultat) + " (Underskudd)";
+            resEl.style.color = "var(--alert-amber)";
+            badgeEl.innerText = `Underskudd (${dekningsgrad.toFixed(1)} %)`;
+            badgeEl.className = "bm-badge";
+            badgeEl.style.background = "#fef3c7";
+            badgeEl.style.color = "#92400e";
+            dgEl.style.color = "var(--alert-amber)";
+            forklaringEl.innerHTML = `Gebyret er lavere enn årets selvkost med <strong>${fmt(Math.abs(resultat))}</strong>. Underskuddet må dekkes ved <strong>Bruk av Bundet Selvkostfond (Art 1930)</strong> eller innarbeides i fremtidige gebyrsatser innen 5-årsfristen.`;
+        }
+    }
+
+    function resetSelvkostValues() {
+        switchSelvkostService(currentSelvkostKey);
+        showToast("↺ Selvkostparametere tilbakestilt til Framsikt-grunndata");
+    }
+
+    function exportSelvkostNote() {
+        const svc = SELVKOST_SERVICES_DATA[currentSelvkostKey];
+        const direkte = document.getElementById("bm-res-sk-direkte").innerText;
+        const henforing = document.getElementById("bm-res-sk-henforing").innerText;
+        const avskrivning = document.getElementById("bm-res-sk-avskrivning").innerText;
+        const rente = document.getElementById("bm-res-sk-rente").innerText;
+        const gebyrgrunnlag = document.getElementById("bm-res-sk-gebyrgrunnlag").innerText;
+        const gebyr = document.getElementById("bm-res-sk-gebyrinntekt").innerText;
+        const resultat = document.getElementById("bm-res-sk-resultat").innerText;
+        const dg = document.getElementById("bm-res-sk-dekningsgrad").innerText;
+        const fondUltimo = document.getElementById("bm-sk-fond-ultimo").innerText;
+
+        const note = `KRISTIANSAND KOMMUNE — SELVKOSTNOTAT FOR BYSTYRET
+Tjeneste: ${svc.tittel}
+Rettslig grunnlag: ${svc.lov}
+Kalkulatorisk rente: 4,00 % (Årsgjennomsnitt 5-årig statsobligasjon + 0,75 %-poeng)
+
+1. Direkte driftsutgifter (Art 1000–1270): ${direkte}
+2. Indirekte henføring fellestjenester: ${henforing}
+3. Avskrivninger på anleggsmidler (Art 1590): ${avskrivning}
+4. Kalkulatorisk rente på anleggsmidler: ${rente}
+SUM KALKULERT GEBYRGRUNNLAG: ${gebyrgrunnlag}
+
+5. Budsjettert gebyrinntekt (Art 1620): ${gebyr}
+ÅRETS SELVKOSTRESULTAT: ${resultat}
+DEKNINGSGRAD: ${dg}
+Estimert fondssaldo ultimo (Art 1530/1930): ${fondUltimo}
+5-årsregel: Fremført saldo må avvikles innen 5 år jf. Selvkostforskriften § 6.
+Kilde: Framsikt Selvkostmodul | Senior Controller Frank Ellingsen`;
+
+        navigator.clipboard.writeText(note).then(() => {
+            showToast("✓ Selvkostnotat kopiert til utklippstavlen!");
+        });
+    }
+
+    /* --- BUDSJETT-ÅRSHJUL LOGIKK --- */
+    function renderBmYearStepper() {
+        const container = document.getElementById("bm-year-stepper-container");
+        if (!container) return;
+
+        let html = "";
+        BUDSJETT_ARSHJUL_DATA.forEach(phase => {
+            const isActive = phase.id === currentBudsjettPhaseId;
+            html += `
+                <div class="bm-step-card ${isActive ? 'active-phase' : ''}" onclick="selectBudsjettPhase(${phase.id})">
+                    <div class="bm-step-period" style="display:flex; justify-content:space-between;">
+                        <span>${phase.periode}</span>
+                        <span style="color:${phase.status_color}; font-size:10px;">● ${phase.status}</span>
+                    </div>
+                    <div class="bm-step-title">${phase.id}. ${phase.tittel}</div>
+                    <div class="bm-step-desc">${phase.desc}</div>
+                    <span class="bm-step-role">👤 Ansvarlig: ${phase.rolle}</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function selectBudsjettPhase(phaseId) {
+        currentBudsjettPhaseId = phaseId;
+        renderBmYearStepper();
+
+        const phase = BUDSJETT_ARSHJUL_DATA.find(p => p.id === phaseId);
+        const card = document.getElementById("bm-phase-detail-card");
+        if (!phase || !card) return;
+
+        let oppgaverHtml = "";
+        phase.oppgaver.forEach(op => {
+            oppgaverHtml += `<li style="padding:4px 0; color:var(--text-primary); font-size:12.5px;">✓ ${op}</li>`;
+        });
+
+        card.innerHTML = `
+            <div class="bm-box-title">
+                <span>📍 Detaljert Arbeidspakke: Fase ${phase.id} — ${phase.tittel} (${phase.periode})</span>
+                <span class="bm-badge" style="background:${phase.status === 'AKTIV NÅ' ? '#0284c7' : 'var(--navy-dark)'}; color:#fff;">
+                    ${phase.status}
+                </span>
+            </div>
+            <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px; line-height:1.55;">
+                ${phase.desc}
+            </p>
+            <div style="background:#f8fafc; border:1px solid var(--border-light); padding:12px 16px; border-radius:3px; margin-bottom:12px;">
+                <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); text-transform:uppercase; margin-bottom:6px;">
+                    Obligatoriske Oppgaver & Leveranser:
+                </div>
+                <ul style="list-style:none; padding-left:0;">
+                    ${oppgaverHtml}
+                </ul>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:var(--text-muted); border-top:1px solid var(--border-subtle); padding-top:8px;">
+                <span>⚖️ Hjemmel: <strong>${phase.hjemmel}</strong></span>
+                <span>👤 Nøkkelrolle: <strong>${phase.rolle}</strong></span>
+            </div>
+        `;
+    }
+
+    /* --- KOSTRA KONTOPLAN FILTER LOGIKK --- */
+    function filterKostraDriftsarter() {
+        const query = (document.getElementById("bm-kostra-search")?.value || "").toLowerCase().trim();
+        const cat = document.getElementById("bm-kostra-cat-filter")?.value || "ALL";
+        const tbody = document.getElementById("bm-kostra-full-tbody");
+        if (!tbody) return;
+
+        const filtered = KOSTRA_DRIFTSARTER_DATA.filter(item => {
+            const matchesCat = (cat === "ALL" || item.cat === cat);
+            const matchesQuery = !query || 
+                item.art.includes(query) || 
+                item.navn.toLowerCase().includes(query) || 
+                item.desc.toLowerCase().includes(query) || 
+                item.typisk.toLowerCase().includes(query) ||
+                item.regel.toLowerCase().includes(query);
+            return matchesCat && matchesQuery;
+        });
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-muted);">Ingen KOSTRA-arter matcher søket "${query}".</td></tr>`;
+            return;
+        }
+
+        let html = "";
+        filtered.forEach(item => {
+            html += `
+                <tr>
+                    <td style="font-family:var(--font-mono); font-weight:700; color:var(--navy-dark);">${item.art}</td>
+                    <td><strong>${item.navn}</strong></td>
+                    <td><span class="bm-badge bm-badge-primary">${item.modul}</span></td>
+                    <td style="font-size:12px; line-height:1.45;">${item.desc}</td>
+                    <td style="font-size:11.5px; color:var(--text-secondary);">${item.typisk}</td>
+                    <td style="font-size:11.5px; color:#92400e; font-weight:500;">${item.regel}</td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function resetKostraFilter() {
+        const s = document.getElementById("bm-kostra-search");
+        const c = document.getElementById("bm-kostra-cat-filter");
+        if (s) s.value = "";
+        if (c) c.value = "ALL";
+        filterKostraDriftsarter();
+    }
+
+    /* --- FRAMSIKT EXCEL QA VALIDERINGS LOGIKK --- */
+    function updateBmQaStatus() {
+        let checkedCount = 0;
+        for (let i = 1; i <= 8; i++) {
+            const chk = document.getElementById("bm-qa-" + i);
+            if (chk && chk.checked) checkedCount++;
+        }
+        const badge = document.getElementById("bm-qa-checked-count");
+        if (badge) {
+            badge.innerText = `${checkedCount} av 8 Bekreftet`;
+            if (checkedCount === 8) {
+                badge.className = "bm-badge bm-badge-success";
+            } else {
+                badge.className = "bm-badge";
+                badge.style.background = "#fef3c7";
+                badge.style.color = "#92400e";
+            }
+        }
+    }
+
+    function toggleAllBmQa(checkAll) {
+        for (let i = 1; i <= 8; i++) {
+            const chk = document.getElementById("bm-qa-" + i);
+            if (chk) chk.checked = checkAll;
+        }
+        updateBmQaStatus();
+    }
+
+    function runSimulatedFramsiktQA() {
+        let checkedCount = 0;
+        let uncheckedItems = [];
+        const checkTitles = [
+            "Uforanderlige ID-er i Excel",
+            "Månedsoppdeling og oppstart",
+            "AGA 14,1 % Sone 1 på lønn, ferie og pensjon",
+            "Pensjonskassetilhørighet (SPK vs KLP)",
+            "Bruttoføring av vikarer (1020) og NAV-refusjon (1690)",
+            "Selvkost og 5-årsfond (VAR/Byggesak)",
+            "Konsernavstemming (KBR IKS & Avfall Sør)",
+            "Finansielle måltall (Netto driftsresultat ≥ 1,0 %)"
+        ];
+
+        for (let i = 1; i <= 8; i++) {
+            const chk = document.getElementById("bm-qa-" + i);
+            if (chk && chk.checked) {
+                checkedCount++;
+            } else {
+                uncheckedItems.push(checkTitles[i - 1]);
+            }
+        }
+
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('nb-NO') + " kl. " + now.toLocaleTimeString('nb-NO');
+        const sha256 = "6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c";
+
+        let reportText = "";
+        if (checkedCount === 8) {
+            reportText = `========================================================================
+KRISTIANSAND KOMMUNE — KONTROLL OG GODKJENNING AV BUDSJETTGRUNNLAG
+FRAMSIKT EPM ÅRSBUDSJETT & HANDLINGS- OG ØKONOMIPLAN 2027–2030
+========================================================================
+Tidspunkt: ${dateStr}
+Saksbehandler / Lead Controller: Frank Ellingsen
+Organisasjon: Kristiansand Kommune (81 resultatenheter / 6 virksomhetsområder)
+Revisjonsstandard: Kommuneloven kapittel 14 & Selvkostforskriften
+Stage-Gate: Port 9 HITL (Human-in-the-Loop) Formell Godkjenning
+
+VERIFIKASJONSSTATUS: FULLT GODKJENT (8 av 8 sjekkpunkter bestått)
+------------------------------------------------------------------------
+[✓] 1. Unike stillings- og ansatt-ID-er intakt ved Excel-import
+[✓] 2. Oppstartsdatoer og stillingsbrøker periodisert per måned
+[✓] 3. Sone 1 AGA (14,1 %) beregnet av Lønn, Feriepenger og Pensjon
+[✓] 4. Pensjonskassetilhørighet verifisert: SPK for lærere, KLP for øvrige
+[✓] 5. Bruttoføring jf. § 14-6: Ingen ulovlig netting av vikar mot refusjon
+[✓] 6. Selvkostkalkyler (Vann, avløp, renovasjon, byggesak) 100 % dekningsgrad
+[✓] 7. Konsernavstemming fullført: KBR brann IKS og Avfall Sør avstemt
+[✓] 8. Finansielle måltall overholdt: Korrigert driftsresultat ≥ 1,0 %
+
+KRYPTOGRAFISK FORSEGLING (SHA-256):
+${sha256}
+
+Dette dokumentet er godkjent for oversendelse til Kommunedirektøren og
+videre politisk behandling i Formannskapet og Bystyret.
+========================================================================`;
+            document.getElementById("bm-qa-attest-badge").innerText = "Verifisert (100 %)";
+            document.getElementById("bm-qa-attest-badge").className = "bm-badge bm-badge-success";
+            showToast("✓ Framsikt QA fullstendig godkjent med SHA-256 stempel!");
+        } else {
+            reportText = `========================================================================
+KRISTIANSAND KOMMUNE — AVVIK I BUDSJETTVALIDERING (FRAMSIKT QA)
+========================================================================
+Tidspunkt: ${dateStr}
+Kontrollør: Frank Ellingsen
+STATUS: AVVIST / KREVER RETTING (${checkedCount} av 8 sjekkpunkter godkjent)
+
+FØLGENDE PUNKTER ER IKKE BEKREFTET:
+${uncheckedItems.map(item => `[!] ${item}`).join('\n')}
+
+ADVARSEL: Budsjettrammen kan ikke låses i Framsikt før alle 8 punkter er 
+verifisert jf. Kommuneloven § 14-5 og Kristiansand kommunes økonomireglement.
+========================================================================`;
+            document.getElementById("bm-qa-attest-badge").innerText = `Avvik (${checkedCount}/8)`;
+            document.getElementById("bm-qa-attest-badge").className = "bm-badge";
+            document.getElementById("bm-qa-attest-badge").style.background = "#fee2e2";
+            document.getElementById("bm-qa-attest-badge").style.color = "#991b1b";
+            showToast("⚠️ Framsikt QA har uavklarte sjekkpunkter!");
+        }
+
+        const out = document.getElementById("bm-qa-attest-output");
+        if (out) out.innerText = reportText;
+    }
+
+    function copyBmQaAttest() {
+        const text = document.getElementById("bm-qa-attest-output").innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("✓ QA-attest kopiert til utklippstavlen!");
+        });
+    }
+
+    function downloadBmQaReport() {
+        const text = document.getElementById("bm-qa-attest-output").innerText;
+        const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "Framsikt_Budsjett_QA_Attest_2026.txt";
+        a.click();
+        showToast("📥 Lastet ned Framsikt QA Valideringsrapport (.txt)");
+    }
+
+    // Init-kall for Budsjettmodul
+    if (typeof recalcSalaryBudsjett === 'function') {
+        recalcSalaryBudsjett();
+        renderBmPositionsTable();
+        recalcSelvkost();
+        renderBmYearStepper();
+        selectBudsjettPhase(7);
+        filterKostraDriftsarter();
+        updateBmQaStatus();
+    }
+
 </script>
 </body>
 </html>

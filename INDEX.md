@@ -15,8 +15,10 @@
 * [5. Revisjon, Kontrollutvalg & Lover (`revisjon-og-kontroll/`)](#5-revisjon-kontrollutvalg--lover-revisjon-og-kontroll)
 * [6. Spesifikasjonsbunter per Verktøy (PowerPoint, Word, Excel, Power BI)](#6-spesifikasjonsbunter-per-verktøy)
 * [7. Offisielle Dokumentmaler (`templates/`)](#7-offisielle-dokumentmaler-templates)
-* [8. Kjørbare Verktøy & Skript (`tools/`)](#8-kjørbare-verktøy--skript-tools)
-* [9. Data & Golden Record (`erp_data/`)](#9-data--golden-record-erp_data)
+* [8. Brukerguider & Styringsrutiner (`bruker-guides/`)](#8-brukerguider--styringsrutiner-bruker-guides)
+* [9. Kjørbare Verktøy & Skript (`tools/`)](#9-kjørbare-verktøy--skript-tools)
+* [10. Data & Golden Record (`erp_data/`)](#10-data--golden-record-erp_data)
+* [11. Framsikt EPM & Budsjettstyring (`budsjett-framsikt/`)](#11-framsikt-epm--budsjettstyring-budsjett-framsikt)
 
 ---
 
@@ -27,6 +29,7 @@
 | **Hovedveileder for AI-Agenter** | Persona, arkitektur, Tufte-regler og styringsprinsipper | [`AGENTS.md`](./AGENTS.md) |
 | **README & Prosjektoversikt** | Rask oppstart, Docker-oppsett og systemoversikt | [`README.md`](./README.md) |
 | **Control Office Hub Web-app** | Komplett interaktivt dashboard med dynamisk sektorsynkronisering | [`index.html`](./index.html) |
+| **Kommunal Budsjettmodul (Framsikt)** | Stillings- og lønnsmotor, selvkostkalkulator for VAR, KOSTRA-tabell og QA-motor | [`index.html#budsjett-modul-seksjon`](./index.html#budsjett-modul-seksjon) |
 | **Office Dashboard Hub Spec** | Teknisk funksjonsspesifikasjon for web-huben | [`spesifikasjoner/OFFICE_DASHBOARD_HUB_SPEC.md`](./spesifikasjoner/OFFICE_DASHBOARD_HUB_SPEC.md) |
 | **Office Hub V2 Workflow UI** | Brukergrensesnitt for månedshjulet og operativ arbeidsflyt | [`spesifikasjoner/OFFICE_DASHBOARD_HUB_V2_WORKFLOW_UI.md`](./spesifikasjoner/OFFICE_DASHBOARD_HUB_V2_WORKFLOW_UI.md) |
 | **Gemini Flash MCP Chat Spec** | Spesifikasjon for MCP AI-assistent og slide-out chat | [`spesifikasjoner/GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md`](./spesifikasjoner/GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md) |
@@ -167,3 +170,16 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 * **`kommune_golden_record.db`**: SQLite stjernemodell med `Fact_Regnskap`, `Fact_Budsjett`, `Dim_Funksjon`, `Dim_Art`, `Dim_Ansvar`, `Dim_Budsjettansvarlige`.
 * **`budsjettansvarlige_register.json` / `.csv`**: Komplett katalog over alle budsjettansvarlige på Nivå 1–4 med kontaktinfo, delegering og skjemaflyt.
 * **Råfiler**: Syntetiske regnskapstrekk fra Visma ERP og periodiserte budsjettrammer fra Framsikt EPM.
+
+---
+
+## 11. Framsikt EPM & Budsjettstyring (`budsjett-framsikt/`)
+
+| Dokument | Hovedinnhold & Standard | Filsti |
+| :--- | :--- | :--- |
+| **Budsjettering & Årshjul** | Måltall (11,48 mrd ramme, $\ge 1,0\%$ driftsres, $\ge 4,0\%$ fond, $<8,8$ mrd lån), 8-faset internt årshjul fra mai til 31. des. | [`budsjett-framsikt/budsjettering-kristiansand-kommune.md`](./budsjett-framsikt/budsjettering-kristiansand-kommune.md) |
+| **Stillings- & Lønnsbudsjett** | Fastlønn (1010) vs variable potter (1020/1050/1090), feriepenger (12%/14,3%), SPK vs KLP, AGA Sone 1 (14,1%), bruttoføring jf. § 14-6. | [`budsjett-framsikt/lonnsbudsjettering-kristiansand-framsikt.md`](./budsjett-framsikt/lonnsbudsjettering-kristiansand-framsikt.md) |
+| **Driftsarter & Selvkost** | Varekjøp (1100–1270), overføringer (1300–1480), finans/fond (1500–1930), selvkostkalkyler for VAR & Byggesak (3400/3450/3500/3600) med 5-årsregel. | [`budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md`](./budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md) |
+| **KOSTRA Konteringsregler** | Lønnsarter, sosiale kostnader og refusjoner (1690). Bruttoføringskrav og controller-sjekkliste før budsjettlåsing i Framsikt. | [`budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md`](./budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md) |
+| **Framsikt Master Index (README)** | Samlet inngangsport og hurtigreferanse for AI-agenter og controllere. | [`budsjett-framsikt/README.md`](./budsjett-framsikt/README.md) |
+

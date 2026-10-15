@@ -1,3 +1,18 @@
+---
+title: "Driftsarter, Selvkost og KOSTRA-Kontering for Alle Kommunalområder i Framsikt"
+canonical_path: "budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md"
+version: "2.1"
+domain: "Driftsøkonomi, KOSTRA & Selvkost"
+statutory_basis: "Kommuneloven § 15-1, Selvkostforskriften, KOSTRA-forskriften"
+key_functions:
+  vannforsyning: "Funksjon 3400"
+  avloepshandtering: "Funksjon 3450 (2 mrd capex plan)"
+  renovasjon: "Funksjon 3500 (Avfall Sør)"
+  byggesak_geodata: "Funksjon 3600"
+key_formula: "Gebyrgrunnlag = Direkte (1000-1270) + Henføring + Kapitalkostnader (1590 + Rente 4,00%) - Direkte inntekter"
+summary: "Fullstendig gjennomgang av driftsarter (1100–1270), overføringer (1300–1480), finans/fond (1500–1930) og selvkostberegninger for tekniske tjenester med 5-årsregel."
+---
+
 # Driftsarter, Selvkost og KOSTRA-Kontering for Alle Kommunalområder i Framsikt
 
 ## 1. Innledning og Systematikk

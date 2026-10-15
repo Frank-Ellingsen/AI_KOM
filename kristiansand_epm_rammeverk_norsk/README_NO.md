@@ -7,7 +7,7 @@ Dette rammeverket utgjør en komplett, ansvarlig og RAG-forankret Enterprise Per
 ```text
 kristiansand_epm_rammeverk_norsk/
 ├── README_NO.md                                      <- Hovedveileder for rammeverket
-├── agent_ferdigheter/                                <- Spesialiserte agent-instruksjoner (.md)
+├── agent_ferdigheter/                                <- Pekere (Kanonisk: agenter/01–12)
 │   ├── 01_dataintegrasjon_etl_agent.md               <- Integrasjon og KOSTRA-harmonisering
 │   ├── 02_bi_dax_modellering_agent.md                <- DAX-måltall og stjernemodell
 │   ├── 03_prediktiv_anomali_agent.md                 <- Sesongdekomponering og tidligvarsling

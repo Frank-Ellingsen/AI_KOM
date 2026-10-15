@@ -78,7 +78,8 @@ This repository is fully configured for Antigravity native progressive disclosur
 | **`.agents/`** | Antigravity AI Customizations | 19 native skills, 3 rule files, progressive disclosure |
 | **`agenter/`** | 12 Agent Role Specifications | Detailed roles for ETL, DAX, RAG, Controller, etc. |
 | **`app/`** | Web Applications & APIs | FastAPI server, Streamlit pilots, UI components |
-| **`archive/`** | Historical Backups & Scratch | `backups/` (`index.html.bak1-9`), `scratch/` (analysis tools) |
+| **`archive/`** | Historical Backups & Scratch | `backups/`, `scratch/`, legacy exports |
+| **`budsjett-framsikt/`** | Framsikt EPM & KOSTRA Master Package | `budsjettering-kristiansand-kommune.md`, `lonnsbudsjettering-kristiansand-framsikt.md`, `driftsarter-og-selvkost-alle-omrader-framsikt.md`, `kostra-artskontoer-konteringsregler-framsikt.md` |
 | **`docs/`** | Unified Documentation | Architecture, user guides, specifications, and PDF publications |
 | **`erp_data/`** | Municipal Data Lake | `kommune_golden_record.db`, Visma ERP CSVs, Framsikt extracts |
 | **`excel/`** | Financial Modeling | FAST models, `Kommune_Project_Controller_Reporting_2026.xlsx` |

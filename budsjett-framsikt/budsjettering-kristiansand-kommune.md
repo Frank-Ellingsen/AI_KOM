@@ -1,4 +1,17 @@
-# Budsjettering i Kristiansand kommune: Rammer, Reglement og Budsjettprosess
+---
+title: "Budsjettering i Kristiansand kommune: Rammer, Reglement og Utvidet Internt Årshjul"
+canonical_path: "budsjett-framsikt/budsjettering-kristiansand-kommune.md"
+version: "2.1"
+domain: "Kommunal Finans og EPM"
+statutory_basis: "Kommuneloven (2018) kapittel 14, Bystyrets Økonomireglement (11.10.2023)"
+key_targets:
+  netto_driftsresultat: "≥ 1,0 % av brutto driftsinntekter (~115 MNOK)"
+  disposisjonsfond: "≥ 4,0 % av brutto driftsinntekter (~460 MNOK)"
+  lanetak: "< 8,8 milliarder NOK netto lånegjeld"
+summary: "Overordnede økonomiske rammer, måltall, handlingsregler og 8-faset internt årshjul for Kristiansand kommune fra mai til 31. desember."
+---
+
+# Budsjettering i Kristiansand kommune: Rammer, Reglement og Utvidet Internt Årshjul
 
 ## 1. Innledning og Rettslig Grunnlag
 Kristiansand kommune forvalter sitt årlige drifts- og investeringsbudsjett i henhold til **Kommuneloven (2018) kapittel 14** og det lokalt vedtatte **Økonomireglement for Kristiansand kommune** (vedtatt i bystyret 11. oktober 2023).
@@ -38,19 +51,40 @@ Kommunens driftsbudsjett (på over 11 milliarder kroner brutto) er fordelt på f
 
 ---
 
-## 4. Den Administrative og Politiske Budsjettprosessen
-Budsjettarbeidet rulles ut gjennom et fast årshjul i kommunen:
+## 4. Utvidet Internt Årshjul og Tidslinje for Kristiansand kommune
+
+Nedenfor vises det detaljerte årshjulet med spesifikke interne frister for seksjonsledere, enhetsledere, kommunalområder og direktørledergruppen fra vår til desember:
 
 ```
-[Januar - Mai]         --> Evaluering av regnskap og oppstart av rammeavklaring
-[Juni - August]        --> Rammevedtak, lønnsdataimport fra lønnssystem til Framsikt
-[August - September]   --> Seksjonsledere detaljbudsjetterer i Framsikt (lønns- og driftsbudsjett)
-[Oktober]              --> Kommunedirektørens forslag til Økonomiplan og Årsbudsjett legges fram
-[November - Desember]  --> Politisk utvalgsbehandling, formannskapsinnstilling og bystyrevedtak
-```
+[ Mai - Juni ]
+ └── Kommunedirektørens ledergruppe avklarer rammeendringer og demografiberegninger
+ └── Bystyret behandler 1. tertialrapport og oppdaterte økonomiske rammer
 
-### Hovedsteg i Prosessen:
-1. **Rammefordeling (Sensommer):** Kommunedirektøren fordeler overordnede rammer til direktører og kommunalsjefer basert på gjeldende økonomiplan og demografiforutsetninger.
-2. **Detaljbudsjettering ute i enhetene:** Seksjons- og enhetsledere legger inn detaljert lønns- og driftsbudsjett innenfor tildelt ramme.
-3. **Kommunedirektørens Innstilling:** Administrasjonen samordner alle tall og publiserer kommunedirektørens forslag til Handlings- og økonomiplan samt årsbudsjett i slutten av oktober.
-4. **Politisk Behandling:** Bystyret behandler budsjettet i desember og vedtar endelige rammer og gebyrer/egenandeler.
+[ Primo August ]
+ └── Henting av oppdaterte HR-data (lønns-, stillings- og ansattdata) fra Visma/Unit4 til Framsikt
+ └── Økonomiavdelingen åpner Framsikt Årsbudsjettmodul og eksporterer Excel-maler for lønn
+
+[ August - Medio September: Internt Arbeid i Enhetene ]
+ └── 25. august: Seksjonsledere og enhetsledere får utsendt Excel-maler og budsjettrammer
+ └── 10. september: Frist for seksjonsledere til å ferdigstille lønnsbudsjett og innlesing i Framsikt
+ └── 20. september: Frist for enhetsledere til å avstemme og godkjenne samlet enhetsbudsjett i Framsikt
+
+[ Slutt September: Konsolidering ]
+ └── 30. september: Direktører/Kommunalsjefer ferdigstiller og godkjenner sitt kommunalområde i Framsikt
+ └── Kvalitetssikring av selvkostkalkyler (Vann, avløp, renovasjon, feiing) og investeringsbudsjett
+
+[ Oktober: Kommunedirektørens Innstilling ]
+ └── Medio oktober: Siste kvalitetssikring i Kommunedirektørens ledergruppe
+ └── Ultimo oktober (ca. 25. oktober): Kommunedirektørens forslag til Handlings- og økonomiplan (HØP) 
+     og årsbudsjett legges frem offentlig
+
+[ November - Desember: Politisk Behandling ]
+ └── Primo november: Orientering for formannskapet og utsending til fagutvalgene
+ └── Medio november: Fagutvalgene behandler sine respektive rammeområder
+ └── Primo desember: Formannskapet avgir sin innstilling til Handlings- og økonomiplan og årsbudsjett
+ └── Midtdesember (bystyremøte): Bystyret fatter endelig vedtak om Handlings- og økonomiplan, årsbudsjett,
+     skattesatser, gebyrer og lånerammer
+
+[ Ultimo Desember ]
+ └── 31. desember: Endelig budsjett registreres i kommunens regnskapssystem (Unit4) for neste regnskapsår
+```

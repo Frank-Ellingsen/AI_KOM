@@ -1,3 +1,17 @@
+---
+title: "KOSTRA Artskontoer og Konteringsregler for Lønnsområdet i Framsikt"
+canonical_path: "budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md"
+version: "2.1"
+domain: "KOSTRA Kontoplan og Konteringsregler"
+statutory_basis: "KOSTRA-forskriften, Budsjett- og regnskapsforskriften, Kommuneloven § 14-6"
+key_accounts:
+  fastlonn: "Art 1010 (Stillingsoversikt)"
+  vikarer: "Art 1020 (Kronepott per ansvar)"
+  tillegg_overtid: "Art 1050 / 1090 (Turnus og overtid)"
+  refusjon_nav: "Art 1690 (Sykelønnsrefusjon brutto inntekt)"
+summary: "Konteringsveiledning for lønnsarter, sosiale utgifter og NAV-refusjoner, med sjekkliste for seksjonsledere før budsjettlåsing."
+---
+
 # KOSTRA Artskontoer og Konteringsregler for Lønnsområdet i Framsikt
 
 ## 1. Innledning og Systematikk
