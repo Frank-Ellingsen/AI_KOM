@@ -142,9 +142,18 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 
 ---
 
-## 8. Kjørbare Verktøy & Skript (`tools/`)
+## 8. Brukerguider & Styringsrutiner (`bruker-guides/`)
+
+* **Register over Budsjettansvarlige & Delegeringskatalog**: [`bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md`](./bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md)
+* **Månedlig Avviksrapport Rammeverk**: [`bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md`](./bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md)
+* **Styringskalender & Årshjul 2026**: [`bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md`](./bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md)
+
+---
+
+## 9. Kjørbare Verktøy & Skript (`tools/`)
 
 * **[`tools/run_tool.py`](./tools/run_tool.py)**: Hovedinngangsport for kommandolinjen (`forecast`, `audit`, `excel`, `verify`, `server`, `parse`).
+* **[`tools/build_budsjettansvarlige_register.py`](./tools/build_budsjettansvarlige_register.py)**: Bygger JSON, CSV og SQLite register over budsjettansvarlige på Nivå 1–4.
 * **[`tools/predictive_forecasting_engine.py`](./tools/predictive_forecasting_engine.py)**: Monte Carlo og EVM tidsserieberegning.
 * **[`tools/audit_revisjon_validator.py`](./tools/audit_revisjon_validator.py)**: Revisjonsvalidering jf. § 14-5 og § 14-6 med SHA-256 stempel.
 * **[`tools/generate_controller_excel_report.py`](./tools/generate_controller_excel_report.py)**: Bygger FAST regneark for Kristiansand kommune.
@@ -153,7 +162,8 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 
 ---
 
-## 9. Data & Golden Record (`erp_data/`)
+## 10. Data & Golden Record (`erp_data/`)
 
-* **`kommune_golden_record.db`**: SQLite stjernemodell med `Fact_Regnskap`, `Fact_Budsjett`, `Dim_Funksjon`, `Dim_Art`, `Dim_Ansvar`.
+* **`kommune_golden_record.db`**: SQLite stjernemodell med `Fact_Regnskap`, `Fact_Budsjett`, `Dim_Funksjon`, `Dim_Art`, `Dim_Ansvar`, `Dim_Budsjettansvarlige`.
+* **`budsjettansvarlige_register.json` / `.csv`**: Komplett katalog over alle budsjettansvarlige på Nivå 1–4 med kontaktinfo, delegering og skjemaflyt.
 * **Råfiler**: Syntetiske regnskapstrekk fra Visma ERP og periodiserte budsjettrammer fra Framsikt EPM.

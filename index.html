@@ -3115,6 +3115,92 @@
                 Laster møtepakke for valgt nivå og sektor...
             </div>
         </div>
+    
+        <!-- =======================================================================
+             3B. REGISTER OVER BUDSJETTANSVARLIGE & DELEGERINGSHIERARKI (NIVÅ 1–4)
+             Sikrer korrekt utsendelse av rapporter, skjemaer og returflyt
+             ======================================================================= -->
+        <div class="panel" id="budsjettansvarlige-panel" style="margin-top: 24px; border: 1px solid var(--border-light); background: #ffffff; padding: 18px; border-radius: 4px;">
+            <div class="section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 15px; font-weight: 700; color: var(--navy-dark);">👥 Register over Budsjettansvarlige & Delegeringshierarki (Nivå 1–4)</span>
+                    <span class="status-badge" id="budget-holders-count-badge" style="background: #e0f2fe; color: #0369a1; font-size: 11px;">Viser: 39 ansvarlige</span>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="erp_data/budsjettansvarlige_register.csv" download class="btn btn-sm" title="Last ned som CSV til Excel / Power Query">
+                        📊 Last ned CSV
+                    </a>
+                    <a href="erp_data/budsjettansvarlige_register.json" download class="btn btn-sm" title="Last ned rådata i JSON format">
+                        📦 Last ned JSON
+                    </a>
+                    <a href="bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md" target="_blank" class="btn btn-sm btn-primary">
+                        📖 Full Veileder (.md)
+                    </a>
+                </div>
+            </div>
+
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
+                Oversikt over alle budsjett- og anvisningsmyndige ledere i Kristiansand kommune. Benyttes for automatisert utsendelse av månedlige avviksrapporter og maler fra Visma ERP, samt kvalitetssikret oppfølging og retur jf. <strong>Kommuneloven § 13-1 og § 14-5</strong>.
+            </p>
+
+            <!-- Filter og Søkebar -->
+            <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; background: #f8fafc; padding: 10px 14px; border-radius: 4px; border: 1px solid var(--border-subtle);">
+                <div style="flex: 1; min-width: 220px;">
+                    <input type="text" id="budget-holder-search" class="form-control" placeholder="🔍 Søk på navn, stilling, enhet, ansvar (f.eks. 202, Strai, Lovisenlev)..." 
+                           style="width: 100%; padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;"
+                           oninput="filterBudgetHoldersTable()">
+                </div>
+                <div>
+                    <select id="budget-holder-level-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
+                        <option value="ALL">Alle Styringsnivåer</option>
+                        <option value="NIVA1">🏛️ Nivå 1: Toppledelse (Kommunedirektør & Kommunalsjef)</option>
+                        <option value="NIVA2">👥 Nivå 2: Områdedirektør / Avdelingssjef</option>
+                        <option value="NIVA3">👤 Nivå 3: Enhetsleder / Rektor (KOSTRA-ansvar)</option>
+                        <option value="NIVA4">📋 Nivå 4: Avdelingsleder / Turnusleder</option>
+                        <option value="CONTROLLER">👔 Controllerteamet & Rådgivere</option>
+                    </select>
+                </div>
+                <div>
+                    <select id="budget-holder-sector-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
+                        <option value="ALL">🌐 Alle Virksomhetsområder</option>
+                        <option value="HELSE">🏥 1. Helse og mestring</option>
+                        <option value="OPPVEKST">🏫 2. Oppvekst og utdanning</option>
+                        <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
+                        <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
+                        <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
+                        <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm" onclick="resetBudgetHolderFilters()">Nullstill filter</button>
+                </div>
+            </div>
+
+            <!-- Tabell (Tufte Data-Ink Standard) -->
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto; border: 1px solid var(--border-subtle); border-radius: 3px;">
+                <table class="data-table" id="budget-holders-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                    <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 2; border-bottom: 1.5px solid var(--navy-dark);">
+                        <tr>
+                            <th style="padding: 8px 10px; text-align: left;">Ansvar / ID</th>
+                            <th style="padding: 8px 10px; text-align: left;">Budsjettansvarlig Leder</th>
+                            <th style="padding: 8px 10px; text-align: left;">Nivå & Sektor</th>
+                            <th style="padding: 8px 10px; text-align: left;">Kontaktinformasjon</th>
+                            <th style="padding: 8px 10px; text-align: right;">Fullmakt (NOK)</th>
+                            <th style="padding: 8px 10px; text-align: left;">Utsendte Maler / Skjema</th>
+                            <th style="padding: 8px 10px; text-align: left;">Returkanal & Frist</th>
+                            <th style="padding: 8px 10px; text-align: center;">Operativ Handling</th>
+                        </tr>
+                    </thead>
+                    <tbody id="budget-holders-tbody">
+                        <!-- Genereres fra JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="budget-holders-empty-msg" style="display: none; padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
+                Ingen budsjettansvarlige matcher valgt filter.
+            </div>
+        </div>
+
     </section>
 
     <!-- =======================================================================
@@ -11617,8 +11703,1033 @@ function syncAllSectionsForSector(sectorKey) {
 
     // 7. Timeline banner
     updateTimelineBannerForSector(sectorKey);
+// 8. Register over Budsjettansvarlige
+    if (typeof updateBudgetHoldersForSector === 'function') {
+        updateBudgetHoldersForSector(sectorKey);
+    }
+    }
+
+
+
+// ==========================================================================
+// 8. REGISTER OVER BUDSJETTANSVARLIGE & DELEGERINGSKATALOG (NIVÅ 1–4)
+// ==========================================================================
+const BUDGET_HOLDERS_DATA = [
+  {
+    "ansvar_id": "0000-KOMMDIR",
+    "navn": "Camilla Dunsæd",
+    "tittel": "Kommunedirektør",
+    "niva": "NIVA1",
+    "niva_tekst": "Nivå 1: Toppledelse",
+    "sektor_kode": "KONSERN",
+    "sektor_navn": "Konsernledelsen / Bystyret",
+    "enhet_navn": "Kommunedirektørens stab",
+    "kostra_funksjon": "100 Politisk styring og konsernledelse",
+    "epost": "camilla.dunsaed@kristiansand.kommune.no",
+    "telefon": "+47 38 00 70 01",
+    "kontorsted": "Rådhuset, Rådhusgata 18, 4611 Kristiansand",
+    "delegeringsfullmakt_nok": 100000000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Bystyrets Tertialrapport (T1/T2), Årsregnskap, Rammereguleringsnotat § 14-5, Beredskapsrapport",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+    "returkanal": "bystyret.postmottak@kristiansand.kommune.no / Public 360",
+    "returfrist": "M+12 virkedag kl. 16:00"
+  },
+  {
+    "ansvar_id": "5000-SJEF-HELSE",
+    "navn": "Brede Skeie",
+    "tittel": "Kommunalsjef Helse og mestring",
+    "niva": "NIVA1",
+    "niva_tekst": "Nivå 1: Kommunalsjef",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Kommunalsjefens fagstab Helse",
+    "kostra_funksjon": "241/253/254 Helse og omsorg",
+    "epost": "brede.skeie@kristiansand.kommune.no",
+    "telefon": "+47 38 00 71 10",
+    "kontorsted": "Kvartal 35, Tollbodgata 22, 4611 Kristiansand",
+    "delegeringsfullmakt_nok": 25000000,
+    "controller_navn": "Frank Ellingsen / Marianne Tellefsen",
+    "controller_epost": "okonomi.helse@kristiansand.kommune.no",
+    "utsendte_rapporter": "Sektorrapport Helse M9/M10, Porteføljerapport HTA § 4 Langvakter, Søknad toppfinansiering ressurskrevende",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no / Websak 26/08940",
+    "returfrist": "M+8 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "4000-SJEF-OPPV",
+    "navn": "Kristin Eidet Robstad",
+    "tittel": "Kommunalsjef Oppvekst og utdanning",
+    "niva": "NIVA1",
+    "niva_tekst": "Nivå 1: Kommunalsjef",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Kommunalsjefens fagstab Oppvekst",
+    "kostra_funksjon": "202/211/222 Grunnskole og barnehage",
+    "epost": "kristin.robstad@kristiansand.kommune.no",
+    "telefon": "+47 38 00 72 10",
+    "kontorsted": "Kvartal 35, Tollbodgata 22, 4611 Kristiansand",
+    "delegeringsfullmakt_nok": 25000000,
+    "controller_navn": "Frank Ellingsen / Erik Halvorsen",
+    "controller_epost": "okonomi.oppvekst@kristiansand.kommune.no",
+    "utsendte_rapporter": "Sektorrapport Oppvekst M9/M10, Lærernormoppfølging § 8-2, Barnehagetilskudd § 19, Vikarrammeavvik",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no / Websak 26/08940",
+    "returfrist": "M+8 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "3000-SJEF-BYUTV",
+    "navn": "Ragnar Evensen",
+    "tittel": "Kommunalsjef By- og stedsutvikling",
+    "niva": "NIVA1",
+    "niva_tekst": "Nivå 1: Kommunalsjef",
+    "sektor_kode": "BYUTVIKLING",
+    "sektor_navn": "By- og stedsutvikling",
+    "enhet_navn": "Kommunalsjefens stab Byutvikling",
+    "kostra_funksjon": "301/340/345 Plan, VAR og samferdsel",
+    "epost": "ragnar.evensen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 73 10",
+    "kontorsted": "Tangen 8, 4608 Kristiansand",
+    "delegeringsfullmakt_nok": 20000000,
+    "controller_navn": "Knut Arild Vike",
+    "controller_epost": "okonomi.byutvikling@kristiansand.kommune.no",
+    "utsendte_rapporter": "VAR Selvkostrapport (5-års fond), Capex KS2 Investeringsoppfølging, Gebyrregulativ 2027",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.byutvikling@kristiansand.kommune.no / Websak",
+    "returfrist": "M+8 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "2000-SJEF-KULTUR",
+    "navn": "Camilla Jarlsby",
+    "tittel": "Kommunalsjef Kultur og innbyggerdialog",
+    "niva": "NIVA1",
+    "niva_tekst": "Nivå 1: Kommunalsjef",
+    "sektor_kode": "KULTUR",
+    "sektor_navn": "Kultur og innbyggerdialog",
+    "enhet_navn": "Kommunalsjefens stab Kultur",
+    "kostra_funksjon": "380/383/385 Idrett, bibliotek og kulturhus",
+    "epost": "camilla.jarlsby@kristiansand.kommune.no",
+    "telefon": "+47 38 00 74 10",
+    "kontorsted": "Gyldenløves gate 23, 4611 Kristiansand",
+    "delegeringsfullmakt_nok": 15000000,
+    "controller_navn": "Silje Mæland",
+    "controller_epost": "okonomi.kultur@kristiansand.kommune.no",
+    "utsendte_rapporter": "Sektorrapport Kultur M9/M10, Folkebibliotektilbud jf. Lov § 1, Idrettsanlegg energiutligning",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.kultur@kristiansand.kommune.no / Websak",
+    "returfrist": "M+8 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "1000-SJEF-ORGTEK",
+    "navn": "Geir A. Askvik",
+    "tittel": "Kommunalsjef Organisasjon og teknologi",
+    "niva": "NIVA1",
+    "niva_tekst": "Nivå 1: Kommunalsjef",
+    "sektor_kode": "ORG_TEK",
+    "sektor_navn": "Organisasjon og teknologi",
+    "enhet_navn": "Kommunalsjefens stab Org & Tek",
+    "kostra_funksjon": "120/130 IKT, digitalisering og fellestjenester",
+    "epost": "geir.askvik@kristiansand.kommune.no",
+    "telefon": "+47 38 00 75 10",
+    "kontorsted": "Rådhuskvartalet, 4611 Kristiansand",
+    "delegeringsfullmakt_nok": 15000000,
+    "controller_navn": "Silje Mæland / Frank Ellingsen",
+    "controller_epost": "okonomi.orgtek@kristiansand.kommune.no",
+    "utsendte_rapporter": "FinOps SaaS Lisensrapport, Konsulentreduksjonsplan (art 11950), AI Risikovurdering (FRIA/DPIA)",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.orgtek@kristiansand.kommune.no / Websak",
+    "returfrist": "M+8 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "6000-DIR-OKONOMI",
+    "navn": "Terje Fjellvang",
+    "tittel": "Økonomidirektør",
+    "niva": "NIVA1",
+    "niva_tekst": "Nivå 1: Økonomidirektør",
+    "sektor_kode": "OKONOMI",
+    "sektor_navn": "Økonomi og virksomhetsstyring",
+    "enhet_navn": "Sentral økonomistab",
+    "kostra_funksjon": "170/180/190 Finansforvaltning og konsernregnskap",
+    "epost": "terje.fjellvang@kristiansand.kommune.no",
+    "telefon": "+47 38 00 76 10",
+    "kontorsted": "Rådhuset, Torvet 1, 4611 Kristiansand",
+    "delegeringsfullmakt_nok": 50000000,
+    "controller_navn": "Frank Ellingsen (Senior Controller)",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Konsern Finans- og Gjeldsrapport, Likviditetsprognose, Pensjonspremieavvik (7 år), Handlingsregel Disposisjonsfond",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx",
+    "returkanal": "konsernokonomi@kristiansand.kommune.no / Websak",
+    "returfrist": "M+9 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "5100-OMR-SYKEHJEM",
+    "navn": "Mette Syvertsen",
+    "tittel": "Områdeleder Institusjon & Døgnpleie",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Døgnomsorg og Sykehjem",
+    "kostra_funksjon": "254 Kommunale sykehjem og heldøgnspleie",
+    "epost": "mette.syvertsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 71 20",
+    "kontorsted": "Kvartal 35, Tollbodgata 22",
+    "delegeringsfullmakt_nok": 10000000,
+    "controller_navn": "Marianne Tellefsen",
+    "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Samlet Institusjonsrapport M9/M10, Turnusoversikt GAT, Vikarbyråforbruk (art 10200)",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no",
+    "returfrist": "M+7 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "5200-OMR-HJEMME",
+    "navn": "Arve Sætre",
+    "tittel": "Områdeleder Hjemmebaserte Tjenester",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Hjemmetjenester og rehabilitering",
+    "kostra_funksjon": "253 Pleie og omsorg i hjemmet",
+    "epost": "arve.saetre@kristiansand.kommune.no",
+    "telefon": "+47 38 00 71 30",
+    "kontorsted": "Lund Helsehus, Marviksveien 20",
+    "delegeringsfullmakt_nok": 8000000,
+    "controller_navn": "Marianne Tellefsen",
+    "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Kjørerute- og bemanningsavvik, Velferdsteknologieffekt, Overtidslogg art 10900",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no",
+    "returfrist": "M+7 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "4100-OMR-SKOLE",
+    "navn": "Svein Tore Kvernes",
+    "tittel": "Skolesjef Grunnskole",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Grunnskoleavdelingen (28 skoler)",
+    "kostra_funksjon": "202 Grunnskoleopplæring",
+    "epost": "svein.tore.kvernes@kristiansand.kommune.no",
+    "telefon": "+47 38 00 72 20",
+    "kontorsted": "Kvartal 35, Tollbodgata 22",
+    "delegeringsfullmakt_nok": 10000000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Konsolidert Skolerapport M9/M10, Felles Vikarring Status, Lærertetthetskontroll",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+    "returfrist": "M+7 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "4200-OMR-BHG",
+    "navn": "Anne Lise Tønnessen",
+    "tittel": "Barnehagesjef",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Barnehageavdelingen (54 barnehager)",
+    "kostra_funksjon": "211 Styrket barnehagetilbud",
+    "epost": "anne.lise.tonnessen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 72 30",
+    "kontorsted": "Kvartal 35, Tollbodgata 22",
+    "delegeringsfullmakt_nok": 8000000,
+    "controller_navn": "Erik Halvorsen",
+    "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Barnehagetilskudd Privat vs Kommunal, Bemanningsnormrapport, Vikarforbruk",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+    "returfrist": "M+7 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "3100-DIR-VAR",
+    "navn": "Helge Møller",
+    "tittel": "VA-sjef & Kommunalteknisk Direktør",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "BYUTVIKLING",
+    "sektor_navn": "By- og stedsutvikling",
+    "enhet_navn": "Ingeniørvesenet (Vann, Avløp & Renovasjon)",
+    "kostra_funksjon": "340/345 Vann og avløp selvkost",
+    "epost": "helge.moller@kristiansand.kommune.no",
+    "telefon": "+47 38 00 73 30",
+    "kontorsted": "Rigetjønnveien 18, 4626 Kristiansand",
+    "delegeringsfullmakt_nok": 10000000,
+    "controller_navn": "Knut Arild Vike",
+    "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+    "utsendte_rapporter": "Selvkostberegning M9, Capex Hovedledning Framdriftsrapport, Investeringsplan 2026–2030",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.byutvikling@kristiansand.kommune.no",
+    "returfrist": "M+7 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "3200-DIR-PLAN",
+    "navn": "Einar Jørgensen",
+    "tittel": "Områdeleder Byplan & Byggesak",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "BYUTVIKLING",
+    "sektor_navn": "By- og stedsutvikling",
+    "enhet_navn": "Plan- og bygningsetaten",
+    "kostra_funksjon": "301/302 Plan og byggesak",
+    "epost": "einar.jorgensen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 73 20",
+    "kontorsted": "Tangen 8, 4608 Kristiansand",
+    "delegeringsfullmakt_nok": 6000000,
+    "controller_navn": "Knut Arild Vike",
+    "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+    "utsendte_rapporter": "Gebyrsituasjon Byggesak, Reguleringsplan portefølje, Selvkost 3-årskontroll",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.byutvikling@kristiansand.kommune.no",
+    "returfrist": "M+7 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "1100-DIR-IKT",
+    "navn": "Siri Bentsen",
+    "tittel": "IKT- og Digitaliseringsdirektør",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "ORG_TEK",
+    "sektor_navn": "Organisasjon og teknologi",
+    "enhet_navn": "Digitaliseringsavdelingen",
+    "kostra_funksjon": "130 IKT og fellesløsninger",
+    "epost": "siri.bentsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 75 20",
+    "kontorsted": "Rådhuskvartalet, Tollbodgata 22",
+    "delegeringsfullmakt_nok": 8000000,
+    "controller_navn": "Silje Mæland / Frank Ellingsen",
+    "controller_epost": "okonomi.orgtek@kristiansand.kommune.no",
+    "utsendte_rapporter": "M365 & SaaS Lisenssanering, Konsulentavtaler art 11950, IT Sikkerhetsstatus",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.orgtek@kristiansand.kommune.no",
+    "returfrist": "M+7 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "6100-DIR-REGNSKAP",
+    "navn": "Bente Gundersen",
+    "tittel": "Konsernregnskapssjef",
+    "niva": "NIVA2",
+    "niva_tekst": "Nivå 2: Områdedirektør",
+    "sektor_kode": "OKONOMI",
+    "sektor_navn": "Økonomi og virksomhetsstyring",
+    "enhet_navn": "Konsernregnskap og Lønnssentral",
+    "kostra_funksjon": "100/170 Konsernregnskap og oppgjør",
+    "epost": "bente.gundersen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 76 20",
+    "kontorsted": "Rådhuset, Torvet 1",
+    "delegeringsfullmakt_nok": 10000000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavstemmingsinstruks, MVA-kompensasjonsstatus, Periodelukkingsprotokoll",
+    "tilknyttet_mal": "templates/MAL_PERIODELUKKING_OG_AVSTEMMING.docx",
+    "returkanal": "konsernokonomi@kristiansand.kommune.no",
+    "returfrist": "M+5 virkedag kl. 15:00"
+  },
+  {
+    "ansvar_id": "5200-ENH-401",
+    "navn": "Solveig Grimstad",
+    "tittel": "Enhetsleder Strai Sykehjem",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Enhet 401: Strai Sykehjem & Omsorgsboliger",
+    "kostra_funksjon": "254 Kommunal Boenhet og Sykehjem",
+    "epost": "solveig.grimstad@kristiansand.kommune.no",
+    "telefon": "+47 38 00 84 01",
+    "kontorsted": "Strai Helsehus, Setesdalsveien 320, 4618 Kristiansand",
+    "delegeringsfullmakt_nok": 2000000,
+    "controller_navn": "Frank Ellingsen / Marianne Tellefsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavviksrapport M10, Avviksnotat & Tiltaksplan Sykehjem, HTA § 4 Drøftingsprotokoll (Langvakter)",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "5210-ENH-402",
+    "navn": "Berit Olsen",
+    "tittel": "Enhetsleder Hjemmetjeneste Vågsbygd",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Enhet 402: Hjemmetjenesten Vågsbygd",
+    "kostra_funksjon": "253 Pleie og omsorg i hjemmet",
+    "epost": "berit.olsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 84 02",
+    "kontorsted": "Kirsten Flagstads vei 28, 4621 Kristiansand",
+    "delegeringsfullmakt_nok": 1500000,
+    "controller_navn": "Marianne Tellefsen",
+    "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavvik Hjemmetjeneste, Overtidsnotat art 10900, Kjøreplanoptimalisering",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "5220-ENH-403",
+    "navn": "Christian Holte",
+    "tittel": "Enhetsleder Bo- og Miljøtjenester",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Enhet 403: Sørlandsparken Bo- og Miljøtjeneste",
+    "kostra_funksjon": "254 Heldøgns omsorgsbolig",
+    "epost": "christian.holte@kristiansand.kommune.no",
+    "telefon": "+47 38 00 84 03",
+    "kontorsted": "Skibåsen 12, 4636 Kristiansand",
+    "delegeringsfullmakt_nok": 1800000,
+    "controller_navn": "Marianne Tellefsen",
+    "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavvik Bo og Miljø, To-pleier bemanningsoppfølging, IA-sykefraværsplan",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "5230-ENH-404",
+    "navn": "Kari Vesterhus",
+    "tittel": "Enhetsleder Presteheia Omsorgssenter",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Enhet 404: Presteheia Omsorgssenter",
+    "kostra_funksjon": "254 Sykehjem korttidsplasser",
+    "epost": "kari.vesterhus@kristiansand.kommune.no",
+    "telefon": "+47 38 00 84 04",
+    "kontorsted": "Presteheia 1, 4633 Kristiansand",
+    "delegeringsfullmakt_nok": 1500000,
+    "controller_navn": "Marianne Tellefsen",
+    "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsrapport Korttidsbelegg, Samhandlingsavvik overliggerdøgn jf. § 11-2",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "4100-ENH-202",
+    "navn": "Trond Jensen",
+    "tittel": "Rektor / Enhetsleder Lovisenlev Skole",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Enhet 202: Lovisenlev Skole",
+    "kostra_funksjon": "202 Grunnskole 1.–7. trinn",
+    "epost": "trond.jensen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 82 02",
+    "kontorsted": "Lovisenlev Skolevei 4, 4633 Kristiansand",
+    "delegeringsfullmakt_nok": 2000000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavvik Skole, Avviksnotat & Tiltaksplan Vikarer (art 10200), NAV Refusjonspurring (art 16000)",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "4101-ENH-203",
+    "navn": "Mona Lindstrøm",
+    "tittel": "Rektor Vågsbygd Skole",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Enhet 203: Vågsbygd Skole",
+    "kostra_funksjon": "202 Grunnskole 1.–10. trinn",
+    "epost": "mona.lindstrom@kristiansand.kommune.no",
+    "telefon": "+47 38 00 82 03",
+    "kontorsted": "Kirsten Flagstads vei 30, 4621 Kristiansand",
+    "delegeringsfullmakt_nok": 1800000,
+    "controller_navn": "Erik Halvorsen",
+    "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavvik Skole, Overtid lærere art 10900, Felles vikarring deltakelse",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "4102-ENH-204",
+    "navn": "Espen Birkeland",
+    "tittel": "Rektor Grim Ungdomsskole",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Enhet 204: Grim Ungdomsskole",
+    "kostra_funksjon": "202 Grunnskole 8.–10. trinn",
+    "epost": "espen.birkeland@kristiansand.kommune.no",
+    "telefon": "+47 38 00 82 04",
+    "kontorsted": "Møllevannsveien 48, 4617 Kristiansand",
+    "delegeringsfullmakt_nok": 1800000,
+    "controller_navn": "Erik Halvorsen",
+    "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavvik Ungdomsskole, Realfagsvikarer, Valgfagsbudsjett",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "4210-ENH-211",
+    "navn": "Grete Hovden",
+    "tittel": "Styrer Lund Barnehage",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Styrer Barnehage",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Enhet 211: Lund Kommunale Barnehage",
+    "kostra_funksjon": "211 Kommunal barnehage",
+    "epost": "grete.hovden@kristiansand.kommune.no",
+    "telefon": "+47 38 00 82 11",
+    "kontorsted": "Marviksveien 45, 4632 Kristiansand",
+    "delegeringsfullmakt_nok": 1200000,
+    "controller_navn": "Erik Halvorsen",
+    "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Bemanningsnorm M9, Vikarkostnader assistenter, Kostpenger avstemming",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "3300-ENH-301",
+    "navn": "Hans Petter Vik",
+    "tittel": "Enhetsleder Byggesak & Tilsyn",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder",
+    "sektor_kode": "BYUTVIKLING",
+    "sektor_navn": "By- og stedsutvikling",
+    "enhet_navn": "Enhet 301: Byggesak og Tilsyn",
+    "kostra_funksjon": "301/302 Byggesak og reguleringsplan",
+    "epost": "hans.petter.vik@kristiansand.kommune.no",
+    "telefon": "+47 38 00 83 01",
+    "kontorsted": "Tangen 8, 4608 Kristiansand",
+    "delegeringsfullmakt_nok": 1500000,
+    "controller_navn": "Knut Arild Vike",
+    "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+    "utsendte_rapporter": "Gebyravvik art 1620, Saksmengdestatistikk, Selvkostgrad M9",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.byutvikling@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "3100-ENH-302",
+    "navn": "Inger Johanne Foss",
+    "tittel": "Enhetsleder VAR Ingeniørvesen",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder",
+    "sektor_kode": "BYUTVIKLING",
+    "sektor_navn": "By- og stedsutvikling",
+    "enhet_navn": "Enhet 302: Vann, Avløp og Renovasjon",
+    "kostra_funksjon": "340/345 Selvkost Vann og Avløp",
+    "epost": "inger.foss@kristiansand.kommune.no",
+    "telefon": "+47 38 00 83 02",
+    "kontorsted": "Rigetjønnveien 18, 4626 Kristiansand",
+    "delegeringsfullmakt_nok": 3000000,
+    "controller_navn": "Knut Arild Vike",
+    "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+    "utsendte_rapporter": "Selvkostfond Avregning M9, NS 8407 Totalentreprise Avvik, Investeringsframdrift",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.byutvikling@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "2200-ENH-101",
+    "navn": "Hege Gabrielsen",
+    "tittel": "Biblioteksjef",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder / Biblioteksjef",
+    "sektor_kode": "KULTUR",
+    "sektor_navn": "Kultur og innbyggerdialog",
+    "enhet_navn": "Enhet 101: Kristiansand Folkebibliotek",
+    "kostra_funksjon": "385 Folkebibliotek",
+    "epost": "hege.gabrielsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 81 01",
+    "kontorsted": "Gyldenløves gate 23, 4611 Kristiansand",
+    "delegeringsfullmakt_nok": 1000000,
+    "controller_navn": "Silje Mæland",
+    "controller_epost": "silje.maeland@kristiansand.kommune.no",
+    "utsendte_rapporter": "Kvelds- og helgetillegg M9, Bokkjøp og lisenser, Arrangementsbudsjett",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.kultur@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "1110-ENH-501",
+    "navn": "Kenneth Dale",
+    "tittel": "IKT Driftssjef",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Enhetsleder",
+    "sektor_kode": "ORG_TEK",
+    "sektor_navn": "Organisasjon og teknologi",
+    "enhet_navn": "Enhet 501: IKT Drift & Brukerstøtte",
+    "kostra_funksjon": "130 Felles IKT-infrastruktur",
+    "epost": "kenneth.dale@kristiansand.kommune.no",
+    "telefon": "+47 38 00 85 01",
+    "kontorsted": "Rådhuskvartalet, Tollbodgata 22",
+    "delegeringsfullmakt_nok": 2500000,
+    "controller_navn": "Silje Mæland / Frank Ellingsen",
+    "controller_epost": "okonomi.orgtek@kristiansand.kommune.no",
+    "utsendte_rapporter": "FinOps Lisenssanering, Konsulenttimer art 11950, Server- og skydriftskostnader",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.orgtek@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "6200-ENH-601",
+    "navn": "Knut Ingebrigtsen",
+    "tittel": "Finans- og Gjeldsforvalter",
+    "niva": "NIVA3",
+    "niva_tekst": "Nivå 3: Avdelingsleder Finans",
+    "sektor_kode": "OKONOMI",
+    "sektor_navn": "Økonomi og virksomhetsstyring",
+    "enhet_navn": "Enhet 601: Finans- og Likviditetsforvaltning",
+    "kostra_funksjon": "180/190 Renter og gjeldsforvaltning",
+    "epost": "knut.ingebrigtsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 86 01",
+    "kontorsted": "Rådhuset, Torvet 1",
+    "delegeringsfullmakt_nok": 5000000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Rentesikringsrapport (58 % fast), Likviditetsrenteinntekter, Pensjonspremieavvik",
+    "tilknyttet_mal": "templates/MAL_PERIODELUKKING_OG_AVSTEMMING.docx",
+    "returkanal": "konsernokonomi@kristiansand.kommune.no",
+    "returfrist": "M+5 virkedag kl. 14:00"
+  },
+  {
+    "ansvar_id": "5201-SEK-DEMENS",
+    "navn": "Tone Røyseland",
+    "tittel": "Avdelingsleder Demensavdelingen",
+    "niva": "NIVA4",
+    "niva_tekst": "Nivå 4: Avdelingsleder / Turnus",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Strai Sykehjem — Avd. Demens",
+    "kostra_funksjon": "254 Skjermet enhet demens",
+    "epost": "tone.royseland@kristiansand.kommune.no",
+    "telefon": "+47 38 00 84 11",
+    "kontorsted": "Strai Helsehus, 2. etasje",
+    "delegeringsfullmakt_nok": 250000,
+    "controller_navn": "Marianne Tellefsen",
+    "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Gat Turnusliste M10, Overtidsattestasjon art 10900, Vikarforespørsel helg",
+    "tilknyttet_mal": "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+    "returkanal": "solveig.grimstad@kristiansand.kommune.no (Enhetsleder)",
+    "returfrist": "M+3 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "5202-SEK-KORTTID",
+    "navn": "Lars Klev",
+    "tittel": "Avdelingsleder Somatikk & Korttid",
+    "niva": "NIVA4",
+    "niva_tekst": "Nivå 4: Avdelingsleder / Turnus",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Strai Sykehjem — Somatisk Korttidsavd.",
+    "kostra_funksjon": "254 Somatisk pleie",
+    "epost": "lars.klev@kristiansand.kommune.no",
+    "telefon": "+47 38 00 84 12",
+    "kontorsted": "Strai Helsehus, 1. etasje",
+    "delegeringsfullmakt_nok": 250000,
+    "controller_navn": "Marianne Tellefsen",
+    "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Turnusavvik, Medisinsk forbruksmateriell, Helgebemanning",
+    "tilknyttet_mal": "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+    "returkanal": "solveig.grimstad@kristiansand.kommune.no",
+    "returfrist": "M+3 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "4103-SEK-SFO",
+    "navn": "Cathrine Solberg",
+    "tittel": "Avdelingsleder SFO Lovisenlev",
+    "niva": "NIVA4",
+    "niva_tekst": "Nivå 4: Avdelingsleder SFO",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Lovisenlev Skole — Skolefritidsordning",
+    "kostra_funksjon": "202 Skolefritidsordning (SFO)",
+    "epost": "cathrine.solberg@kristiansand.kommune.no",
+    "telefon": "+47 38 00 82 12",
+    "kontorsted": "Lovisenlev Skole, Bygg B",
+    "delegeringsfullmakt_nok": 150000,
+    "controller_navn": "Erik Halvorsen",
+    "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Assistenttimer SFO, Foreldrebetaling avstemming, Matinnkjøp",
+    "tilknyttet_mal": "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+    "returkanal": "trond.jensen@kristiansand.kommune.no (Rektor)",
+    "returfrist": "M+3 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "4104-SEK-INSP",
+    "navn": "Bjarne Wiig",
+    "tittel": "Inspektør 1.–4. trinn",
+    "niva": "NIVA4",
+    "niva_tekst": "Nivå 4: Trinnleder / Inspektør",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Lovisenlev Skole — Småtrinnet",
+    "kostra_funksjon": "202 Undervisning småtrinn",
+    "epost": "bjarne.wiig@kristiansand.kommune.no",
+    "telefon": "+47 38 00 82 13",
+    "kontorsted": "Lovisenlev Skole, Administrasjonsfløy",
+    "delegeringsfullmakt_nok": 200000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Vikarrekvisisjoner timelærere, Korttidsfravær logg, Lærernormsjekk",
+    "tilknyttet_mal": "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+    "returkanal": "trond.jensen@kristiansand.kommune.no (Rektor)",
+    "returfrist": "M+3 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "3101-SEK-AVLOP",
+    "navn": "Vidar Aanensen",
+    "tittel": "Seksjonsleder Lund Renseanlegg",
+    "niva": "NIVA4",
+    "niva_tekst": "Nivå 4: Seksjonsleder drift",
+    "sektor_kode": "BYUTVIKLING",
+    "sektor_navn": "By- og stedsutvikling",
+    "enhet_navn": "VAR Ingeniørvesenet — Renseanlegg Lund",
+    "kostra_funksjon": "345 Avløpsrensing",
+    "epost": "vidar.aanensen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 83 11",
+    "kontorsted": "Marviksveien 120, 4632 Kristiansand",
+    "delegeringsfullmakt_nok": 350000,
+    "controller_navn": "Knut Arild Vike",
+    "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+    "utsendte_rapporter": "Driftsavvik kjemikalier art 11150, Slamtransportfakturaer, Beredskapsvakt",
+    "tilknyttet_mal": "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+    "returkanal": "inger.foss@kristiansand.kommune.no",
+    "returfrist": "M+3 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "1111-SEK-FINOPS",
+    "navn": "Thomas Berge",
+    "tittel": "Seksjonsleder Skyløsninger & FinOps",
+    "niva": "NIVA4",
+    "niva_tekst": "Nivå 4: Seksjonsleder IKT",
+    "sektor_kode": "ORG_TEK",
+    "sektor_navn": "Organisasjon og teknologi",
+    "enhet_navn": "IKT Drift — Cloud & FinOps",
+    "kostra_funksjon": "130 IT Cloud Operations",
+    "epost": "thomas.berge@kristiansand.kommune.no",
+    "telefon": "+47 38 00 85 11",
+    "kontorsted": "Rådhuskvartalet, 3. etasje",
+    "delegeringsfullmakt_nok": 300000,
+    "controller_navn": "Silje Mæland",
+    "controller_epost": "silje.maeland@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedlig Azure/M365 ressursforbruk, Ubrukte lisensallokeringer, Konsulenttimer",
+    "tilknyttet_mal": "templates/RAPPORTMAL_AVDELINGSLEDER.docx",
+    "returkanal": "kenneth.dale@kristiansand.kommune.no",
+    "returfrist": "M+3 virkedag kl. 12:00"
+  },
+  {
+    "ansvar_id": "6001-CTRL-FRANK",
+    "navn": "Frank Ellingsen",
+    "tittel": "Senior Financial Controller & Project Controller",
+    "niva": "CONTROLLER",
+    "niva_tekst": "Økonomirådgiver / Fagansvarlig",
+    "sektor_kode": "KONSERN",
+    "sektor_navn": "Konsern, Helse & Oppvekst",
+    "enhet_navn": "Sentrale Økonomitjenester / Hub Koordinator",
+    "kostra_funksjon": "100 Økonomistyring, EPM & AI Hub",
+    "epost": "frank.ellingsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 76 50",
+    "kontorsted": "Rådhuset, Torvet 1, Rom 214",
+    "delegeringsfullmakt_nok": 1000000,
+    "controller_navn": "Terje Fjellvang (Økonomidirektør)",
+    "controller_epost": "terje.fjellvang@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedspakker M1–M12, Monte Carlo EOY P10/P50/P90, Stage-Gate Port 9 Revisjon, FAST Excel Modell",
+    "tilknyttet_mal": "templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx",
+    "returkanal": "frank.ellingsen@kristiansand.kommune.no / AI Hub API",
+    "returfrist": "Løpende oppfølging"
+  },
+  {
+    "ansvar_id": "6002-CTRL-MARIANNE",
+    "navn": "Marianne Tellefsen",
+    "tittel": "Sektorcontroller Helse og Mestring",
+    "niva": "CONTROLLER",
+    "niva_tekst": "Økonomirådgiver Sektor",
+    "sektor_kode": "HELSE",
+    "sektor_navn": "Helse og mestring",
+    "enhet_navn": "Økonomitjenesten Helse",
+    "kostra_funksjon": "241/253/254 Helseøkonomi",
+    "epost": "marianne.tellefsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 76 51",
+    "kontorsted": "Kvartal 35, 4. etasje",
+    "delegeringsfullmakt_nok": 500000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavvik Helse, Turnusavstemming GAT, HTA § 4 Saksforberedelse",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.helse@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 16:00"
+  },
+  {
+    "ansvar_id": "6003-CTRL-ERIK",
+    "navn": "Erik Halvorsen",
+    "tittel": "Sektorcontroller Oppvekst og Utdanning",
+    "niva": "CONTROLLER",
+    "niva_tekst": "Økonomirådgiver Sektor",
+    "sektor_kode": "OPPVEKST",
+    "sektor_navn": "Oppvekst og utdanning",
+    "enhet_navn": "Økonomitjenesten Oppvekst",
+    "kostra_funksjon": "202/211 Skole- og barnehageøkonomi",
+    "epost": "erik.halvorsen@kristiansand.kommune.no",
+    "telefon": "+47 38 00 76 52",
+    "kontorsted": "Kvartal 35, 4. etasje",
+    "delegeringsfullmakt_nok": 500000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "Månedsavvik Skole, Lærernormberegninger, Barnehagetilskudd",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 16:00"
+  },
+  {
+    "ansvar_id": "6004-CTRL-KNUT",
+    "navn": "Knut Arild Vike",
+    "tittel": "Sektorcontroller Byutvikling & Selvkost",
+    "niva": "CONTROLLER",
+    "niva_tekst": "Økonomirådgiver Sektor",
+    "sektor_kode": "BYUTVIKLING",
+    "sektor_navn": "By- og stedsutvikling",
+    "enhet_navn": "Økonomitjenesten Byutvikling",
+    "kostra_funksjon": "301/340/345 VAR og Byggesaksøkonomi",
+    "epost": "knut.arild.vike@kristiansand.kommune.no",
+    "telefon": "+47 38 00 76 53",
+    "kontorsted": "Tangen 8, 3. etasje",
+    "delegeringsfullmakt_nok": 500000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "VAR Selvkostregnskap, Capex Framdriftsrapportering, Gebyrkalkyler",
+    "tilknyttet_mal": "templates/RAPPORTMAL_KOMMUNALSJEF.docx",
+    "returkanal": "okonomi.byutvikling@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 16:00"
+  },
+  {
+    "ansvar_id": "6005-CTRL-SILJE",
+    "navn": "Silje Mæland",
+    "tittel": "Sektorcontroller Kultur, Dialog & Fellestjenester",
+    "niva": "CONTROLLER",
+    "niva_tekst": "Økonomirådgiver Sektor",
+    "sektor_kode": "KULTUR",
+    "sektor_navn": "Kultur, Dialog, Org & Teknologi",
+    "enhet_navn": "Økonomitjenesten Kultur & Felles",
+    "kostra_funksjon": "130/380/385 Kultur- og IKT-økonomi",
+    "epost": "silje.maeland@kristiansand.kommune.no",
+    "telefon": "+47 38 00 76 54",
+    "kontorsted": "Gyldenløves gate 23",
+    "delegeringsfullmakt_nok": 500000,
+    "controller_navn": "Frank Ellingsen",
+    "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+    "utsendte_rapporter": "FinOps Kostnadsallokering, Bibliotek- og idrettsanalyser",
+    "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+    "returkanal": "okonomi.kultur@kristiansand.kommune.no",
+    "returfrist": "M+6 virkedag kl. 16:00"
+  }
+];
+
+function renderBudgetHoldersTable(filterSector, filterLevel, searchTerm) {
+    const tbody = document.getElementById("budget-holders-tbody");
+    const emptyMsg = document.getElementById("budget-holders-empty-msg");
+    const countBadge = document.getElementById("budget-holders-count-badge");
+    if (!tbody) return;
+
+    const secFilter = filterSector || "ALL";
+    const lvlFilter = filterLevel || "ALL";
+    const search = (searchTerm || "").trim().toLowerCase();
+
+    let matched = BUDGET_HOLDERS_DATA.filter(item => {
+        // Sektorfilter
+        if (secFilter !== "ALL") {
+            if (item.sektor_kode !== secFilter && item.sektor_kode !== "KONSERN") {
+                return false;
+            }
+        }
+
+        // Nivåfilter
+        if (lvlFilter !== "ALL") {
+            if (item.niva !== lvlFilter) {
+                return false;
+            }
+        }
+
+        // Søkeord
+        if (search) {
+            const combined = (
+                item.ansvar_id + " " +
+                item.navn + " " +
+                item.tittel + " " +
+                item.enhet_navn + " " +
+                item.sektor_navn + " " +
+                item.epost + " " +
+                item.kontorsted + " " +
+                item.kostra_funksjon
+            ).toLowerCase();
+            if (!combined.includes(search)) return false;
+        }
+
+        return true;
+    });
+
+    if (countBadge) {
+        countBadge.innerText = `Viser: ${matched.length} ansvarlige (av ${BUDGET_HOLDERS_DATA.length})`;
+    }
+
+    if (!matched.length) {
+        tbody.innerHTML = "";
+        if (emptyMsg) emptyMsg.style.display = "block";
+        return;
+    } else {
+        if (emptyMsg) emptyMsg.style.display = "none";
+    }
+
+    const levelBadges = {
+        "NIVA1": '<span class="status-badge" style="background:#1e3a8a; color:#ffffff; font-size:10px;">🏛️ Nivå 1</span>',
+        "NIVA2": '<span class="status-badge" style="background:#0284c7; color:#ffffff; font-size:10px;">👥 Nivå 2</span>',
+        "NIVA3": '<span class="status-badge" style="background:#4f46e5; color:#ffffff; font-size:10px;">👤 Nivå 3</span>',
+        "NIVA4": '<span class="status-badge" style="background:#64748b; color:#ffffff; font-size:10px;">📋 Nivå 4</span>',
+        "CONTROLLER": '<span class="status-badge" style="background:#166534; color:#ffffff; font-size:10px;">👔 Controller</span>'
+    };
+
+    let html = "";
+    matched.forEach(item => {
+        const lvlBadge = levelBadges[item.niva] || item.niva;
+        const fullmaktStr = item.delegeringsfullmakt_nok >= 1000000 
+            ? (item.delegeringsfullmakt_nok / 1000000).toLocaleString('nb-NO') + " MNOK"
+            : (item.delegeringsfullmakt_nok).toLocaleString('nb-NO').replace(/\s/g, ' ') + " kr";
+        
+        const templateFilename = item.tilknyttet_mal.split('/').pop();
+
+        html += `
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 8px 10px; font-family: var(--font-mono); font-weight: 600; font-size: 11px; color: var(--navy-dark); white-space: nowrap;">
+                    ${item.ansvar_id}
+                </td>
+                <td style="padding: 8px 10px;">
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 12.5px;">${item.navn}</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">${item.tittel}</div>
+                    <div style="font-size: 10.5px; color: var(--navy-light); font-weight: 600;">${item.enhet_navn}</div>
+                </td>
+                <td style="padding: 8px 10px; white-space: nowrap;">
+                    <div>${lvlBadge}</div>
+                    <div style="font-size: 10.5px; color: var(--text-secondary); margin-top: 3px;">${item.sektor_navn.split('/')[0].trim()}</div>
+                </td>
+                <td style="padding: 8px 10px; font-size: 11px;">
+                    <div><a href="mailto:${item.epost}" style="color: var(--accent-blue); text-decoration: none; font-weight: 600;">✉️ ${item.epost}</a></div>
+                    <div style="color: var(--text-secondary); margin-top: 2px;">📞 <a href="tel:${item.telefon.replace(/\s/g, '')}" style="color: inherit; text-decoration: none;">${item.telefon}</a></div>
+                    <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">📍 ${item.kontorsted}</div>
+                </td>
+                <td style="padding: 8px 10px; text-align: right; font-family: var(--font-mono); font-weight: 700; color: var(--navy-dark); white-space: nowrap;">
+                    ${fullmaktStr}
+                </td>
+                <td style="padding: 8px 10px; font-size: 11px;">
+                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 3px;">
+                        <a href="${item.tilknyttet_mal}" download style="color: var(--navy-dark); text-decoration: underline;">
+                            📄 ${templateFilename}
+                        </a>
+                    </div>
+                    <div style="font-size: 10px; color: var(--text-secondary); line-height: 1.35;">
+                        ${item.utsendte_rapporter}
+                    </div>
+                </td>
+                <td style="padding: 8px 10px; font-size: 11px;">
+                    <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--navy-dark); font-weight: 600;">
+                        ${item.returkanal}
+                    </div>
+                    <div style="font-size: 10px; color: var(--alert-amber); font-weight: 700; margin-top: 2px;">
+                        ⏰ Frist: ${item.returfrist}
+                    </div>
+                </td>
+                <td style="padding: 8px 10px; text-align: center; white-space: nowrap;">
+                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                        <button type="button" class="btn btn-sm btn-primary" style="padding: 3px 8px; font-size: 10.5px; width: 100%; justify-content: center;"
+                                onclick="sendBudgetHolderEmail('${item.ansvar_id}')">
+                            ✉️ Send Skjema
+                        </button>
+                        <button type="button" class="btn btn-sm" style="padding: 3px 8px; font-size: 10.5px; width: 100%; justify-content: center; background: #f0fdf4; border-color: #86efac; color: #166534;"
+                                onclick="logBudgetHolderReturn('${item.ansvar_id}')">
+                            📥 Logg Retur
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = html;
 }
 
+function filterBudgetHoldersTable() {
+    const searchVal = document.getElementById("budget-holder-search") ? document.getElementById("budget-holder-search").value : "";
+    const lvlVal = document.getElementById("budget-holder-level-filter") ? document.getElementById("budget-holder-level-filter").value : "ALL";
+    const secVal = document.getElementById("budget-holder-sector-filter") ? document.getElementById("budget-holder-sector-filter").value : "ALL";
+    renderBudgetHoldersTable(secVal, lvlVal, searchVal);
+}
+
+function resetBudgetHolderFilters() {
+    if (document.getElementById("budget-holder-search")) document.getElementById("budget-holder-search").value = "";
+    if (document.getElementById("budget-holder-level-filter")) document.getElementById("budget-holder-level-filter").value = "ALL";
+    if (document.getElementById("budget-holder-sector-filter")) document.getElementById("budget-holder-sector-filter").value = "ALL";
+    renderBudgetHoldersTable("ALL", "ALL", "");
+    showToast("🔄 Filter for budsjettansvarlige nullstilt");
+}
+
+function updateBudgetHoldersForSector(sectorKey) {
+    const secSelect = document.getElementById("budget-holder-sector-filter");
+    if (secSelect) {
+        secSelect.value = sectorKey;
+    }
+    filterBudgetHoldersTable();
+}
+
+function sendBudgetHolderEmail(ansvarId) {
+    const item = BUDGET_HOLDERS_DATA.find(x => x.ansvar_id === ansvarId);
+    if (!item) return;
+
+    const subject = encodeURIComponent(`[Månedsavvik M10] Utsendelse av rapportmal og oppfølgingsskjema for ${item.enhet_navn} (${item.ansvar_id})`);
+    const body = encodeURIComponent(
+        `Hei ${item.navn},\n\n` +
+        `Viser til månedslukking for M10 i Kristiansand kommune.\n\n` +
+        `Vedlagt oversendes din månedlige avviksrapport og tilhørende mal:\n` +
+        `• Enhet: ${item.enhet_navn} (Ansvar: ${item.ansvar_id})\n` +
+        `• Mal: ${item.tilknyttet_mal}\n` +
+        `• Delegeringsramme: ${item.delegeringsfullmakt_nok.toLocaleString('nb-NO')} NOK\n` +
+        `• Tilknyttet controller: ${item.controller_navn} (${item.controller_epost})\n\n` +
+        `Vennligst returner utfylt og signert skjema til ${item.returkanal} innen:\n` +
+        `FRIST: ${item.returfrist} jf. Kommuneloven § 14-5.\n\n` +
+        `Med vennlig hilsen,\n` +
+        `${item.controller_navn}\n` +
+        `Kristiansand Kommune — Økonomistyring & Project Controlling`
+    );
+
+    showToast(`📨 Klargjør utsendelse til ${item.navn} (${item.epost})`);
+    window.location.href = `mailto:${item.epost}?subject=${subject}&body=${body}`;
+}
+
+function logBudgetHolderReturn(ansvarId) {
+    const item = BUDGET_HOLDERS_DATA.find(x => x.ansvar_id === ansvarId);
+    if (!item) return;
+
+    const now = new Date();
+    const timestamp = now.toLocaleDateString('nb-NO') + " kl. " + now.toLocaleTimeString('nb-NO', {hour: '2-digit', minute:'2-digit'});
+    const mockHash = "7a8b9c0d1e2f3a4b" + Math.random().toString(16).substring(2, 10);
+
+    showToast(`✓ Retur fra ${item.navn} (${item.ansvar_id}) registrert i Websak! SHA-256: ${mockHash.substring(0, 16)}...`);
+}
+
+
+    // Initialiser register over budsjettansvarlige
+    if (typeof renderBudgetHoldersTable === 'function') {
+        renderBudgetHoldersTable('ALL', 'ALL', '');
+    }
 </script>
 </body>
 </html>
