@@ -1,3 +1,16 @@
+---
+title: "Controller Sjekkliste & Periodelukkingsrutine"
+domain: "revisjon-og-kontroll"
+category: "operativ-rutine"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Kommuneloven § 14-5"
+  - "Kommuneloven § 14-6"
+  - "Forskrift om økonomiplan, årsbudsjett, årsregnskap og årsberetning for kommuner"
+summary: "Operativ sjekkliste for månedsavslutning, tertialrapportering (T1/T2), prosjektkontroll (EVM) og revisjonsdokumentasjon i Kristiansand kommune."
+keywords: ["periodelukking", "månedsavslutning", "tertialrapport", "avstemming", "bankavstemming", "EVM", "Tufte"]
+---
+
 # 🛡️ Controller Sjekkliste & Periodelukkingsrutine
 > **Operativ sjekkliste for månedsavslutning, tertialrapportering (T1/T2), prosjektkontroll (EVM) og revisjonsdokumentasjon i Kristiansand kommune.**  
 > *Samsvarer med Edward Tufte Data-Ink standard, Kommuneloven §§ 14-5/14-6, internkontrollforskriften og EU AI Act.*

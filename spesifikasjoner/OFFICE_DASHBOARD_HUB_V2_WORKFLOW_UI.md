@@ -1,3 +1,16 @@
+---
+title: "Office Hub V2 Brukergrensesnitt & Friksjonsfri Arbeidsflyt"
+domain: "spesifikasjoner"
+category: "brukergrensesnitt-spec"
+document_id: "SPEC-OFFICE-HUB-UI-002"
+author: "Frank Ellingsen"
+statutory_references:
+  - "WCAG 2.1 AA"
+  - "Edward Tufte Data-Ink Ratio"
+summary: "Brukergrensesnitt- og interaksjonsspesifikasjon for Control Office Hub V2 med Zero-Click Triage, 4-trinns arbeidsflyt, hurtigtaster og sektorsynkronisering."
+keywords: ["Office Hub", "UI", "Zero-Click Triage", "hurtigtaster", "Tufte", "interaksjonsdesign", "Kristiansand"]
+---
+
 # 🖥️ Spesifikasjon V2: Office Hub Brukergrensesnitt & Friksjonsfri Arbeidsflyt
 
 **Dokument-ID:** SPEC-OFFICE-HUB-UI-002  

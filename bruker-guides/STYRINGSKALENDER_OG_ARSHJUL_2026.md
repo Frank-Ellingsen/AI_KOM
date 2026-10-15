@@ -1,3 +1,15 @@
+---
+title: "Styringskalender & Årshjul 2026/2027"
+domain: "bruker-guides"
+category: "årshjul"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Kommuneloven §§ 14-2, 14-3, 14-5, 14-6"
+  - "Forskrift om økonomiplan og årsbudsjett"
+summary: "Operativt årshjul for økonomi og virksomhetsstyring, KOSTRA-rapportering, tertialavslutninger (T1/T2), HØP-rammer og politiske frister i Kristiansand kommune."
+keywords: ["årshjul", "styringskalender", "frister", "KOSTRA", "RNB", "T1", "T2", "HØP", "budsjettvedtak"]
+---
+
 # 📅 Kristiansand Kommune — Styringskalender & Årshjul 2026/2027
 > **Operativt årshjul for Økonomi og Virksomhetsstyring, Project Controlling, KOSTRA og politisk saksbehandling.**  
 > *Forankret i Kommuneloven §§ 14-2, 14-3, 14-5, 14-6, forskrift om økonomiplan og gjeldende økonomireglement.*

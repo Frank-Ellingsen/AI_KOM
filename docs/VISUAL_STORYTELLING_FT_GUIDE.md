@@ -1,3 +1,16 @@
+---
+title: "Visuell Datakommunikasjon og Storytelling med Data (FT Visual Vocabulary)"
+domain: "docs"
+category: "visual-communication"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Edward Tufte Data-Ink Ratio"
+  - "Cleveland & McGill Graphical Perception"
+  - "Financial Times Visual Vocabulary"
+summary: "Guide for visuell datakommunikasjon i kommunal økonomistyring basert på Financial Times Visual Vocabulary, Cleveland & McGill og IBCS-standarder for 5 ledelsesnivåer."
+keywords: ["datavisualisering", "Financial Times", "Cleveland-McGill", "Tufte", "waterfall", "bullet graph", "IBCS", "Kristiansand"]
+---
+
 # 📊 Visuell Datakommunikasjon og Storytelling med Data
 ## Basert på Financial Times Visual Vocabulary for Økonomi og Virksomhetsstyring i Kristiansand Kommune
 

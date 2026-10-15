@@ -1,3 +1,17 @@
+---
+title: "Saksnotat til Kontrollutvalget og Kommunerevisjonen"
+domain: "revisjon-og-kontroll"
+category: "saksnotat"
+document_id: "NOTAT-KU-REV-2026-01"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Kommuneloven kap. 24"
+  - "GDPR Art. 22"
+  - "EU AI Act Art. 26/27"
+summary: "Redegjørelse for sikkerhets-, personverns- og internkontrollmekanismer ved innføring av Kommune AI Guardrails som beslutningsstøtteverktøy i Kristiansand kommune."
+keywords: ["kontrollutvalget", "kommunerevisjonen", "sikkerhet", "personvern", "internkontroll", "HITL", "SHA-256", "PII"]
+---
+
 # 🏛️ Saksnotat til Kontrollutvalget og Kommunerevisjonen
 
 **Dokument-ID:** NOTAT-KU-REV-2026-01  

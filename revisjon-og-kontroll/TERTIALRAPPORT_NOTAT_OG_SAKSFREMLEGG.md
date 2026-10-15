@@ -1,3 +1,16 @@
+---
+title: "Politisk Saksframlegg & Notat til Formannskapet: 2. Tertialrapport (T2) 2026"
+domain: "revisjon-og-kontroll"
+category: "politisk-saksframlegg"
+case_id: "26/04812-1"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Kommuneloven § 14-5"
+  - "Kommuneloven § 14-6"
+summary: "Finansiell status per 2. tertial 2026 for Kristiansand kommune med EVM-analyse (BAC, PV, AC, CPI, EAC, VAC) og vedtak om korrigerende tiltak for budsjettbalanse."
+keywords: ["tertialrapport", "formannskapet", "bystyret", "merforbruk", "EVM", "CPI", "EAC", "VAC", "Kommuneloven § 14-5"]
+---
+
 # 🏛️ Politisk Saksframlegg & Notat til Formannskapet
 > **Sak: 2. Tertialrapport (T2) 2026 — Finansiell Status, Avviksanalyse og Forslag til Tiltak**  
 > **Saksbehandler:** Frank Ellingsen, Senior Financial Controller / Project Controller  

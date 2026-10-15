@@ -1,3 +1,16 @@
+---
+title: "Prediktiv AI & Scenariomodellering i Kommunal Økonomi"
+domain: "spesifikasjoner"
+category: "prediktiv-ai"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Kommuneloven § 14-5"
+  - "Statens Prosjektmodell (KS2 / P50/P85)"
+  - "EU AI Act Art. 26/86"
+summary: "Teknisk og finansiell spesifikasjon for rullende EOY-prognoser, Monte Carlo P10/P50/P90 usikkerhet, EVM prosjektkontroll (BAC, EAC, ETC, CPI, SPI) og SHA-256 forsegling."
+keywords: ["prediktiv AI", "prognoser", "Monte Carlo", "EVM", "EAC", "ETC", "CPI", "KS2", "P50", "P85", "Tufte"]
+---
+
 # 📊 Spesifikasjon: Prediktiv AI & Scenariomodellering i Kommunal Økonomi (`PREDICTIVE_AI_FORECASTING_SPEC.md`)
 
 > **System:** Kommune AI Guardrails – Kristiansand kommune  

@@ -91,10 +91,12 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 ## 4. Brukerveiledninger & Månedshjul (`bruker-guides/`)
 
 * **Månedlig Avviksrapport Rammeverk**: [`bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md`](./bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md)
-* **Årshjul og Kritiske Frister**: [`bruker-guides/AARSHJUL_OG_KRITISKE_FRISTER.md`](./bruker-guides/AARSHJUL_OG_KRITISKE_FRISTER.md)
-* **Operativ Sjekkliste for Controllere**: [`bruker-guides/KONTROLLERENS_OPERATIVE_SJEKKLISTE.md`](./bruker-guides/KONTROLLERENS_OPERATIVE_SJEKKLISTE.md)
-* **Juridisk Lovlighetssjekk jf. Kommuneloven**: [`bruker-guides/JURIDISK_LOVLIGHETSSJEKK_KOMMUNELOVEN.md`](./bruker-guides/JURIDISK_LOVLIGHETSSJEKK_KOMMUNELOVEN.md)
-* **4-Punkts Avviks- og Effektprognose**: [`bruker-guides/4_PUNKTS_AVVIKSRAPPORT_STANDARD.md`](./bruker-guides/4_PUNKTS_AVVIKSRAPPORT_STANDARD.md)
+* **Styringskalender & Årshjul 2026**: [`bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md`](./bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md)
+* **Operativ Brukerguide & Sjekkliste**: [`bruker-guides/BRUKERGUIDE.md`](./bruker-guides/BRUKERGUIDE.md)
+* **Budsjettansvarlige & Delegeringskatalog 2026**: [`bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md`](./bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md)
+* **Stage-Gate Rammeverk (Port 1–10)**: [`bruker-guides/stage_gate_rammeverk.md`](./bruker-guides/stage_gate_rammeverk.md)
+* **Oppstartsveileder & Startknapp**: [`bruker-guides/OPPSTARTSVEILEDER_STARTKNAPP.md`](./bruker-guides/OPPSTARTSVEILEDER_STARTKNAPP.md)
+* **RAG-arkitektur og Kunnskapsbase Forklaring**: [`bruker-guides/rag_forklaring.md`](./bruker-guides/rag_forklaring.md)
 
 ---
 
@@ -121,7 +123,7 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 
 ### C. Excel FAST Modellering (`excel/excel_kommune_spec_bundle_v1/`)
 * **FAST Financial Modelling Standard**: [`EXCEL_FPA_FINANCIAL_MODELLING_FAST.md`](./excel/excel_kommune_spec_bundle_v1/EXCEL_FPA_FINANCIAL_MODELLING_FAST.md)
-* **Power Query & Dataintegrasjon**: [`EXCEL_POWER_QUERY_DATA_INTEGRATION.md`](./excel/excel_kommune_spec_bundle_v1/EXCEL_POWER_QUERY_DATA_INTEGRATION.md)
+* **Excel Automatisering & MCP Server**: [`EXCEL_AUTOMATION_AND_MCP_SERVER.md`](./excel/excel_kommune_spec_bundle_v1/EXCEL_AUTOMATION_AND_MCP_SERVER.md)
 * **Python & Copilot Integrasjon**: [`EXCEL_PYTHON_AND_COPILOT_INTEGRATION.md`](./excel/excel_kommune_spec_bundle_v1/EXCEL_PYTHON_AND_COPILOT_INTEGRATION.md)
 
 ### D. Power BI & DAX Library (`powerbi/power_bi_kommune_spec_bundle_v1/`)

@@ -1,3 +1,19 @@
+---
+title: "Sjekkliste for Kommunerevisjonen: Årlig Kontroll og Revisjon av AI-systemer"
+domain: "revisjon-og-kontroll"
+category: "revisjon-sjekkliste"
+document_id: "REV-AI-2026-v1"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Kommuneloven kap. 24"
+  - "EU AI Act Art. 26/27/86"
+  - "GDPR Art. 15/22/30/35"
+  - "Eurocities Algorithmic Transparency Standard"
+  - "ISO/IEC 42001"
+summary: "Metodisk ramme for Kommunerevisjonens og Kontrollutvalgets årlige kontroll av kommunens AI-systemer, RAG-modeller, SHA-256 forsegling og Stage-Gate Port 9 HITL."
+keywords: ["revisjon", "kontrollutvalget", "kommunerevisjonen", "SHA-256", "HITL", "DPIA", "FRIA", "EU AI Act"]
+---
+
 # 🛡️ Sjekkliste for Kommunerevisjonen: Årlig Kontroll og Revision av AI-systemer
 
 **Dokument-ID:** REV-AI-2026-v1  

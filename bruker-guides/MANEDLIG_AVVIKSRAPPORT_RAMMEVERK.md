@@ -1,3 +1,16 @@
+---
+title: "Rammeverk for Månedlig Avviks- og Tiltaksrapportering"
+domain: "bruker-guides"
+category: "avviksrapportering"
+author: "Frank Ellingsen"
+statutory_references:
+  - "Kommuneloven § 14-5"
+  - "Kommuneloven § 14-6"
+  - "Økonomireglementet for Kristiansand kommune"
+summary: "Månedlig rutine for automatisert avviksrapportering og tiltaksplaner på 5 organisatoriske nivåer (Bystyret, Kommunedirektør, Kommunalsjef, Seksjonsleder, Enhetsleder)."
+keywords: ["avviksrapportering", "tiltaksplan", "terskelverdier", "Visma ERP", "Framsikt EPM", "KOSTRA", "5 ledelsesnivåer"]
+---
+
 # 📊 Rammeverk for Månedlig Avviks- og Tiltaksrapportering
 **Kristiansand Kommune -- Økonomi og Virksomhetsstyring**
 
