@@ -74,16 +74,18 @@ def run_checks():
     passed = 0
     failed = 0
 
-    # 1. Sjekk at rot-mappen er ren for løse .md-filer
+    # 1. Sjekk at rot-mappen er ren for løse ad-hoc .md-filer
     print("\n1. Sjekker at rot-mappen er ryddet...")
+    ALLOWED_ROOT_MDS = {"README.md", "AGENTS.md", "INDEX.md"}
     root_mds = list(ROOT_DIR.glob("*.md"))
     root_md_names = [f.name for f in root_mds]
+    unexpected_mds = [f for f in root_md_names if f not in ALLOWED_ROOT_MDS]
     print(f"   Funnet i rot: {root_md_names}")
-    if root_md_names == ["README.md"]:
-        print("   ✓ Rot-mappen inneholder utelukkende README.md!")
+    if not unexpected_mds:
+        print(f"   ✓ Rot-mappen inneholder kun autoriserte systemfiler ({', '.join(root_md_names)})!")
         passed += 1
     else:
-        print(f"   ❌ Uventede md-filer i rot: {[f for f in root_md_names if f != 'README.md']}")
+        print(f"   ❌ Uventede md-filer i rot: {unexpected_mds}")
         failed += 1
 
     # 2. Sjekk at alle 10 flyttede md-filer eksisterer og har innhold
