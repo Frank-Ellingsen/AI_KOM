@@ -2678,12 +2678,12 @@
                 <a href="#avvik-seksjon" class="sidebar-nav-item">
                     <span>🚨 KOSTRA Artsavvik</span>
                 </a>
-                <a href="#triage-seksjon" class="sidebar-nav-item">
-                    <span>📋 Smart Triage (16 Enheter)</span>
-                </a>
                 <a href="#mote-rapportering-seksjon" class="sidebar-nav-item" id="side-mote-rapportering">
                     <span>👥 Månedsmøter (Nivå 1–3)</span>
                     <span class="badge-phase" style="background:var(--navy-dark); color:#fff;">M10</span>
+                </a>
+                <a href="#triage-seksjon" class="sidebar-nav-item">
+                    <span>📋 Smart Triage (16 Enheter)</span>
                 </a>
                 <a href="#saksflyt" class="sidebar-nav-item">
                     <span>🔄 Saksgenerator & Notat</span>
@@ -3026,7 +3026,43 @@
         </div>
     </div>
 
-    <!-- 5. ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
+    <!-- =======================================================================
+         5. MÅNEDLIG MØTERAPPORTERING & NIVÅSTYRING (NIVÅ 1, 2, 3)
+         ======================================================================= -->
+    <section class="workflow-section" id="mote-rapportering-seksjon">
+        <div class="section-header">
+            <span>👥 Månedsmøter & Nivårapportering — Økonomirådgiverens Oppfølging</span>
+            <span class="status-badge" id="meeting-header-badge">Månedssyklus M10 (Oktober) | Port 9 HITL</span>
+        </div>
+        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+            Hver måned følger økonomirådgiveren opp hver budsjettansvarlig med skreddersydd status, kritiske avvik og handlingsplan for å sikre budsjettbalanse ved årets slutt (EOY per 31.12) jf. <strong>Kommuneloven § 14-5</strong>. Rapporteringen er organisert i 3 styringsnivåer tilpasset beslutningsmyndighet og lovpålagte rammer.
+        </p>
+
+        <!-- Nivåvelger Faner (Nivå 1, Nivå 2, Nivå 3) -->
+        <div class="level-pills-bar" id="level-pills-bar">
+            <button class="level-pill-btn active" id="btn-lvl-niva1" onclick="switchMeetingLevel('NIVA1')">
+                <span>👤 Nivå 1: Avdelings- / Seksjonsleder</span>
+                <span class="level-badge">Operativ Enhet</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva2" onclick="switchMeetingLevel('NIVA2')">
+                <span>👥 Nivå 2: Kommunalsjef</span>
+                <span class="level-badge">Taktisk Sektor</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva3" onclick="switchMeetingLevel('NIVA3')">
+                <span>🏛️ Nivå 3: Kommunaldirektør</span>
+                <span class="level-badge">Toppledelse</span>
+            </button>
+        </div>
+
+        <!-- Møtedetaljer Hovedkort (Innhold injiseres dynamisk) -->
+        <div class="meeting-card" id="meeting-main-card">
+            <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                Laster møtepakke for valgt nivå og sektor...
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
     <div class="monthly-cycle-banner" id="workflow-cycle-banner">
         <div class="monthly-cycle-header">
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -3520,41 +3556,7 @@
         </div>
     </div>
 
-    <!-- =======================================================================
-         5C. MÅNEDLIG MØTERAPPORTERING & NIVÅSTYRING (NIVÅ 1, 2, 3)
-         ======================================================================= -->
-    <section class="workflow-section" id="mote-rapportering-seksjon">
-        <div class="section-header">
-            <span>👥 Månedsmøter & Nivårapportering — Økonomirådgiverens Oppfølging</span>
-            <span class="status-badge" id="meeting-header-badge">Månedssyklus M10 (Oktober) | Port 9 HITL</span>
-        </div>
-        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
-            Hver måned følger økonomirådgiveren opp hver budsjettansvarlig med skreddersydd status, kritiske avvik og handlingsplan for å sikre budsjettbalanse ved årets slutt (EOY per 31.12) jf. <strong>Kommuneloven § 14-5</strong>. Rapporteringen er organisert i 3 styringsnivåer tilpasset beslutningsmyndighet og lovpålagte rammer.
-        </p>
 
-        <!-- Nivåvelger Faner (Nivå 1, Nivå 2, Nivå 3) -->
-        <div class="level-pills-bar" id="level-pills-bar">
-            <button class="level-pill-btn active" id="btn-lvl-niva1" onclick="switchMeetingLevel('NIVA1')">
-                <span>👤 Nivå 1: Avdelings- / Seksjonsleder</span>
-                <span class="level-badge">Operativ Enhet</span>
-            </button>
-            <button class="level-pill-btn" id="btn-lvl-niva2" onclick="switchMeetingLevel('NIVA2')">
-                <span>👥 Nivå 2: Kommunalsjef</span>
-                <span class="level-badge">Taktisk Sektor</span>
-            </button>
-            <button class="level-pill-btn" id="btn-lvl-niva3" onclick="switchMeetingLevel('NIVA3')">
-                <span>🏛️ Nivå 3: Kommunaldirektør</span>
-                <span class="level-badge">Toppledelse</span>
-            </button>
-        </div>
-
-        <!-- Møtedetaljer Hovedkort (Innhold injiseres dynamisk) -->
-        <div class="meeting-card" id="meeting-main-card">
-            <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
-                Laster møtepakke for valgt nivå og sektor...
-            </div>
-        </div>
-    </section>
 
     <!-- =======================================================================
          6. OPERATIV SAKSBEHANDLINGSFLYT & STAGE-GATE SLØYFE
@@ -3642,8 +3644,550 @@
         </div>
     </section>
 
+
+
     <!-- =======================================================================
-         7. DOKUMENT- OG MALBANK (TEMPLATES, EXCEL, POWER BI & JUS)
+         7. POWER BI & DAX ENTERPRISE SHOWCASE
+         ======================================================================= -->
+    <section class="powerbi-section" id="powerbi-showcase">
+        <div class="section-header">
+            <span>📊 Power BI & DAX Enterprise Showcase (Interaktiv Drifts- og Investeringskontroll)</span>
+            <span class="status-badge">Tufte Data-Ink / ISINSCOPE</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
+            Simulering av Power BI Desktop / Fabric rapportmodell. Viser dynamisk KOSTRA-hierarki, Earned Value Management (EVM) for Capex, og offisielle DAX-mål.
+        </p>
+
+        <div class="pbi-tabs-bar">
+            <div class="pbi-tab active" onclick="switchPbiTab('TAB1')">1. KOSTRA Driftsmatrise (Hierarki)</div>
+            <div class="pbi-tab" onclick="switchPbiTab('TAB2')">2. Prosjektkontroll EVM (S-kurver)</div>
+            <div class="pbi-tab" onclick="switchPbiTab('TAB3')">3. DAX Kjerneformler (Ett-klikks kopi)</div>
+            <div class="pbi-tab" onclick="switchPbiTab('TAB4')">4. 7 Power BI Rapportsider (.pbip)</div>
+        </div>
+
+        <!-- TAB 1: KOSTRA MATRISE -->
+        <div id="pbi-tab-1">
+            <table class="tufte-table">
+                <thead>
+                    <tr>
+                        <th>Nivå / KOSTRA Hierarki</th>
+                        <th>Enhet / Kostnadssted</th>
+                        <th class="num">Årsbudsjett (BAC)</th>
+                        <th class="num">Regnskap YTD (AC)</th>
+                        <th class="num">EOY Rullende Prognose</th>
+                        <th class="num">Est. Årsavvik</th>
+                        <th>Varslingsstatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8fafc; font-weight: 700;">
+                        <td>▼ 01 OPPVEKST OG UTDANNING</td>
+                        <td>Sektor Oppvekst</td>
+                        <td class="num">33 591 000</td>
+                        <td class="num">36 080 000</td>
+                        <td class="num">49 164 212</td>
+                        <td class="num cf-rag-red">-15 573 212</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 KRITISK MERFORBRUK</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 24px;">• Funksjon 202 Grunnskoleopplæring</td>
+                        <td>4100 Kommunal Skole</td>
+                        <td class="num">33 591 000</td>
+                        <td class="num">36 080 000</td>
+                        <td class="num">49 164 212</td>
+                        <td class="num cf-rag-red">-15 573 212</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 § 14-5 Sak påkrevd</span></td>
+                    </tr>
+                    <tr style="background: #f8fafc; font-weight: 700;">
+                        <td>▼ 02 HELSE OG MESTRING</td>
+                        <td>Sektor Helse</td>
+                        <td class="num">50 339 572</td>
+                        <td class="num">47 426 244</td>
+                        <td class="num">67 072 639</td>
+                        <td class="num cf-rag-red">-16 733 067</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 KRITISK MERFORBRUK</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 24px;">• Funksjon 254 Kommunal Boenhet</td>
+                        <td>5200 Bo og Miljø</td>
+                        <td class="num">50 339 572</td>
+                        <td class="num">47 426 244</td>
+                        <td class="num">67 072 639</td>
+                        <td class="num cf-rag-red">-16 733 067</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 Overtid art 1090</span></td>
+                    </tr>
+                    <tr class="summary-row">
+                        <td>TOTALT KONSOLIDERT KONTROLLUTVALG</td>
+                        <td>2 Enheter</td>
+                        <td class="num">83 930 572</td>
+                        <td class="num">83 506 244</td>
+                        <td class="num">116 236 851</td>
+                        <td class="num cf-rag-red">-32 306 279</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 Bystyrets bord 28. sep</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB 2: PROSJEKTKONTROLL EVM -->
+        <div id="pbi-tab-2" style="display: none;">
+            <table class="tufte-table">
+                <thead>
+                    <tr>
+                        <th>Prosjektnavn (Kontoklasse 2)</th>
+                        <th>Prosjekt-ID</th>
+                        <th class="num">P50 Styringsramme (BAC)</th>
+                        <th class="num">Påløpt Kostnad (AC)</th>
+                        <th class="num">Earned Value (EV)</th>
+                        <th class="num">CPI</th>
+                        <th class="num">SPI</th>
+                        <th class="num">EAC (Sluttkostnad)</th>
+                        <th>Risikostatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vågsbygd Barneskole (Nybygg)</td>
+                        <td>PROJ-101</td>
+                        <td class="num">185 000 000</td>
+                        <td class="num">115 000 000</td>
+                        <td class="num">104 500 000</td>
+                        <td class="num cf-rag-red">0.909</td>
+                        <td class="num cf-rag-yellow">0.950</td>
+                        <td class="num cf-rag-red">208 251 070</td>
+                        <td><span class="rag-badge rag-badge-yellow">🟡 MIDDELS RISIKO</span></td>
+                    </tr>
+                    <tr>
+                        <td>Randesund Døgnbemannet Boenhet</td>
+                        <td>PROJ-201</td>
+                        <td class="num">240 000 000</td>
+                        <td class="num">165 000 000</td>
+                        <td class="num">139 100 000</td>
+                        <td class="num cf-rag-red">0.843</td>
+                        <td class="num cf-rag-red">0.887</td>
+                        <td class="num cf-rag-red">299 529 558</td>
+                        <td><span class="rag-badge rag-badge-red">🔴 HØY RISIKO</span></td>
+                    </tr>
+                    <tr>
+                        <td>VA-Hovedledning Selvkost</td>
+                        <td>PROJ-301</td>
+                        <td class="num">92 000 000</td>
+                        <td class="num">48 000 000</td>
+                        <td class="num">49 300 000</td>
+                        <td class="num cf-rag-green">1.027</td>
+                        <td class="num cf-rag-yellow">0.997</td>
+                        <td class="num cf-rag-green">89 668 168</td>
+                        <td><span class="rag-badge rag-badge-green">🟢 I RUTE (LAV RISIKO)</span></td>
+                    </tr>
+                    <tr class="summary-row">
+                        <td>TOTAL INVESTERINGSPORTFOLJE</td>
+                        <td>3 Prosjekter</td>
+                        <td class="num">517 000 000</td>
+                        <td class="num">328 000 000</td>
+                        <td class="num">292 900 000</td>
+                        <td class="num cf-rag-red">0.893</td>
+                        <td class="num cf-rag-yellow">0.927</td>
+                        <td class="num cf-rag-red">597 448 796</td>
+                        <td><span class="rag-badge rag-badge-yellow">🟡 Trekk på P85-reserve</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="margin-top: 10px; font-size: 11px; color: var(--text-muted);">
+                EVM-metodikk: CPI < 1.00 indikerer overskridelse per produsert enhet. P85-rammer og usikkerhetsavsetninger styres av prosjektcontroller.
+            </div>
+        </div>
+
+        <!-- TAB 3: DAX FORMLER -->
+        <div id="pbi-tab-3" style="display: none;">
+            <div class="dax-code-block">
+                <button class="copy-code-btn" onclick="copyDaxCode()">📋 Kopier Alle Mål</button>
+<pre id="dax-display-code">// ==============================================================================
+// KRISTIANSAND KOMMUNE — DAX PROGNOSE- OG KOSTRA MÅLTALL
+// ==============================================================================
+
+// 1. Akkumulert Regnskap YTD (Drift)
+[Regnskap YTD] = 
+CALCULATE(
+    SUM(Fact_Regnskap[korrigert_belop]),
+    Dim_Kontoklasse[kontoklasse_kode] = "1"
+)
+
+// 2. Gjenstående Budsjettert Ramme (T3)
+[Budsjett Gjenstående] = 
+CALCULATE(
+    SUM(Fact_Regnskap[budsjett_belop]),
+    Dim_Dato[maned] > 8
+)
+
+// 3. Trendjustert Merforbruk (Konservativ 50 % videreføring)
+[Trendjustert Merforbruk] = 
+VAR Avvik = [Avvik YTD]
+RETURN
+    IF(Avvik > 0, Avvik * 0.50, 0)
+
+// 4. Rullerende End of Year (EOY) Prognose
+[EOY Rullende Prognose] = 
+[Regnskap YTD] + [Budsjett Gjenstående] + [Trendjustert Merforbruk]
+
+// 5. Forventet Årsavvik (Varsling jf. Kommuneloven § 14-5)
+[EOY Forventet Årsavvik] = 
+[EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
+
+// 6. Dynamisk Hierarkimatrise (ISINSCOPE)
+[Dynamisk Visning] = 
+SWITCH(
+    TRUE(),
+    ISINSCOPE(Dim_Art[art_kode]), [Avvik YTD],
+    ISINSCOPE(Dim_Funksjon[funksjon_kode]), [Avvik YTD],
+    ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), [Avvik YTD],
+    [Avvik YTD]
+)</pre>
+            </div>
+        </div>
+        <!-- TAB 4: 7 POWER BI RAPPORTSIDER (.PBIP) -->
+        <div id="pbi-tab-4" style="display: none;">
+            <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: 4px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span style="font-size: 13px; font-weight: 700; color: var(--navy-dark);">📁 Prosjektkilde: powerbi/pbi_reporting_project.pbip</span>
+                    <span style="margin-left: 10px; font-size: 11px; background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 3px; font-weight: 600;">PBIR Format</span>
+                    <span style="margin-left: 6px; font-size: 11px; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 3px; font-weight: 600;">TMDL Semantisk Modell</span>
+                    <span style="margin-left: 6px; font-size: 11px; background: #f0fdf4; color: #166534; padding: 2px 8px; border-radius: 3px; font-weight: 600;">50 Visual Containers</span>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <a href="powerbi/pbi_reporting_project.pbip" download class="btn btn-sm btn-primary" style="background: #b45309; border-color: #b45309;">⬇️ Last ned .pbip</a>
+                    <a href="powerbi/07_PowerBI_7_Layouts_Spec_Guide.md" target="_blank" class="btn btn-sm">📖 Se 7 Layouts Guide</a>
+                </div>
+            </div>
+
+            <!-- Undermeny for 7 rapportsider -->
+            <div style="display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap;" id="pbi-page-selector-bar">
+                <button class="btn btn-sm active" id="btn-page-1" onclick="switchPbiReportPage(1)">1. CFO Panel</button>
+                <button class="btn btn-sm" id="btn-page-2" onclick="switchPbiReportPage(2)">2. Grunnskole</button>
+                <button class="btn btn-sm" id="btn-page-3" onclick="switchPbiReportPage(3)">3. Helse & Mestring</button>
+                <button class="btn btn-sm" id="btn-page-4" onclick="switchPbiReportPage(4)">4. Lønn & Vikar</button>
+                <button class="btn btn-sm" id="btn-page-5" onclick="switchPbiReportPage(5)">5. Prognose & What-If</button>
+                <button class="btn btn-sm" id="btn-page-6" onclick="switchPbiReportPage(6)">6. Capex / EVM</button>
+                <button class="btn btn-sm" id="btn-page-7" onclick="switchPbiReportPage(7)">7. Revisjon & Port 9</button>
+            </div>
+
+            <!-- SIDE 1: CFO EXECUTIVE -->
+            <div id="pbi-page-container-1" class="pbi-page-container">
+                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
+                    Kristiansand Kommune — Finansiell Topplederoversikt & Sluttprognose 2026 (FT Action Title)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Regnskap YTD</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 36 080 000</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">Per august 2026</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Budsjett YTD</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 33 591 000</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">Periodisert ramme</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Avvik YTD</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">+kr 2 489 000 (+7,4%)</div>
+                        <div style="font-size: 11px; color: var(--alert-red);">Kritisk merforbruk</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Forventet Årsavvik (EOY)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">+kr 3 733 500</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">Før tiltakspakke T3</div>
+                    </div>
+                </div>
+                <table class="tufte-table">
+                    <thead>
+                        <tr>
+                            <th>Sektor / Enhet</th>
+                            <th class="num">Budsjett YTD</th>
+                            <th class="num">Regnskap YTD</th>
+                            <th class="num">Avvik YTD</th>
+                            <th class="num">Avvik %</th>
+                            <th class="num">EOY Sluttavvik</th>
+                            <th>Status / Varsel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>01 Sektor Oppvekst (Enhet 202)</strong></td>
+                            <td class="num">12 450 000</td>
+                            <td class="num">13 870 000</td>
+                            <td class="num cf-rag-red">+1 420 000</td>
+                            <td class="num cf-rag-red">+11,4%</td>
+                            <td class="num cf-rag-red">+2 130 000</td>
+                            <td><span class="rag-badge rag-badge-red">🔴 MERFORBRUK</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>02 Sektor Helse & Mestring (Enhet 2540)</strong></td>
+                            <td class="num">21 141 000</td>
+                            <td class="num">22 210 000</td>
+                            <td class="num cf-rag-yellow">+1 069 000</td>
+                            <td class="num cf-rag-yellow">+5,1%</td>
+                            <td class="num cf-rag-yellow">+1 603 500</td>
+                            <td><span class="rag-badge rag-badge-yellow">🟡 AKTSOMHET</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SIDE 2: GRUNNSKOLE -->
+            <div id="pbi-page-container-2" class="pbi-page-container" style="display: none;">
+                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
+                    Enhet 202 Grunnskole: Vikarforbruk og sykefravær krever omdisponering (FT Action Title)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Forbruk Grunnskole</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 13 870 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Innkjøp Vikarer (Art 1020)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 1 420 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Vikarandel av Lønn</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">16,2%</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Netto Kostnad pr. Elev</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 9 768 /elev</div>
+                    </div>
+                </div>
+                <table class="tufte-table">
+                    <thead>
+                        <tr>
+                            <th>Kontoart / KOSTRA Art</th>
+                            <th>Kontonavn</th>
+                            <th class="num">Budsjett YTD</th>
+                            <th class="num">Regnskap YTD</th>
+                            <th class="num">Avvik YTD</th>
+                            <th class="num">Avvik %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Art 1010</td><td>Fastlønn og faste tillegg</td><td class="num">9 200 000</td><td class="num">9 180 000</td><td class="num" style="color: var(--success-green);">-20 000</td><td class="num">-0,2%</td></tr>
+                        <tr><td>Art 1020</td><td>Vikarer ved fravær</td><td class="num">550 000</td><td class="num">1 420 000</td><td class="num" style="color: var(--alert-red);">+870 000</td><td class="num" style="color: var(--alert-red);">+158,2%</td></tr>
+                        <tr><td>Art 1090</td><td>Overtid og ekstrahjelp</td><td class="num">300 000</td><td class="num">720 000</td><td class="num" style="color: var(--alert-red);">+420 000</td><td class="num" style="color: var(--alert-red);">+140,0%</td></tr>
+                        <tr><td>Art 1600</td><td>NAV Sykepengerefusjoner</td><td class="num">-800 000</td><td class="num">-650 000</td><td class="num" style="color: var(--alert-amber);">+150 000</td><td class="num">+18,8%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SIDE 3: HELSE & MESTRING -->
+            <div id="pbi-page-container-3" class="pbi-page-container" style="display: none;">
+                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
+                    Enhet 401 Boenhet: Turnus- og overtidspress i døgnkontinuerlig drift (FT Action Title)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Forbruk Helse & Mestring</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 22 210 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overtid & Tillegg (Art 1090)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 2 150 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overtidsandel i Turnus</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">14,8%</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Est. Sluttavvik etter Tiltak</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">kr -324 921 (I balanse)</div>
+                    </div>
+                </div>
+                <table class="tufte-table">
+                    <thead>
+                        <tr>
+                            <th>Lokasjon / Boenhet</th>
+                            <th>Tjenesteområde</th>
+                            <th class="num">Budsjett YTD</th>
+                            <th class="num">Regnskap YTD</th>
+                            <th class="num">Avvik YTD</th>
+                            <th class="num">Overtidsandel %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Boenhet A (Døgnpost 1)</td><td>Miljøarbeidertjeneste</td><td class="num">8 100 000</td><td class="num">8 650 000</td><td class="num" style="color: var(--alert-red);">+550 000</td><td class="num">15,4%</td></tr>
+                        <tr><td>Boenhet B (Døgnpost 2)</td><td>Psykisk helse & rus</td><td class="num">7 500 000</td><td class="num">7 820 000</td><td class="num" style="color: var(--alert-red);">+320 000</td><td class="num">14,2%</td></tr>
+                        <tr><td>Dagsenter & Avlastning</td><td>Aktivitetstilbud</td><td class="num">5 541 000</td><td class="num">5 740 000</td><td class="num" style="color: var(--alert-amber);">+199 000</td><td class="num">11,8%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SIDE 4: LØNN & VIKAR -->
+            <div id="pbi-page-container-4" class="pbi-page-container" style="display: none;">
+                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
+                    HR & Lønnsmonitor: Artsanalyse for 1000 Fastlønn, 1020 Vikar og 1090 Overtid (FT Action Title)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Total Lønn YTD</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 28 850 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Vikarforbruk (Art 1020)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 2 480 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overtid (Art 1090)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">kr 2 870 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Bokførte NAV-Refusjoner</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">kr 1 120 000</div>
+                    </div>
+                </div>
+                <table class="tufte-table">
+                    <thead>
+                        <tr>
+                            <th>Måned</th>
+                            <th class="num">Fastlønn (1010)</th>
+                            <th class="num">Vikarer (1020)</th>
+                            <th class="num">Overtid (1090)</th>
+                            <th class="num">NAV Refusjon (1600)</th>
+                            <th class="num">Netto Lønnskostnad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Mai 2026</td><td class="num">2 920 000</td><td class="num">290 000</td><td class="num">340 000</td><td class="num">-140 000</td><td class="num">3 410 000</td></tr>
+                        <tr><td>Juni 2026</td><td class="num">3 050 000</td><td class="num">380 000</td><td class="num">410 000</td><td class="num">-155 000</td><td class="num">3 685 000</td></tr>
+                        <tr><td>Juli 2026</td><td class="num">3 110 000</td><td class="num">460 000</td><td class="num">450 000</td><td class="num">-160 000</td><td class="num">3 860 000</td></tr>
+                        <tr><td>August 2026</td><td class="num">3 180 000</td><td class="num">520 000</td><td class="num">480 000</td><td class="num">-175 000</td><td class="num">4 005 000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SIDE 5: PROGNOSE & WHAT-IF -->
+            <div id="pbi-page-container-5" class="pbi-page-container" style="display: none;">
+                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
+                    What-If Simulering: Framsikt deflator, vikarreduksjon og helårsbalanse (FT Action Title)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Vedtatt Årsramme</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 52 400 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Prognose EOY Uten Tiltak</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 56 133 500</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Tiltaksbesparelse T3</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">-kr 2 791 421</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Simulert EOY Sluttavvik</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">+kr 942 079</div>
+                    </div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 12px 16px; border-radius: 3px; font-size: 12px; margin-bottom: 14px;">
+                    🎛️ <strong>Simuleringsparametere:</strong> Framsikt Lønnsdeflator: <code>4,1%</code> | Fraværstiltak Effektreduksjon: <code>1,5%</code> | <em>Kombinasjonen av vikarstopp i skolen (170k/mnd) og turnusomlegging i døgnpost (210k/mnd) bringer samlet helårsdrift innenfor kontrollerte rammer.</em>
+                </div>
+            </div>
+
+            <!-- SIDE 6: CAPEX / EVM -->
+            <div id="pbi-page-container-6" class="pbi-page-container" style="display: none;">
+                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
+                    Project Controlling: Investeringsportefølje, Earned Value & Sluttkostnad (EAC) (FT Action Title)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Planlagt Verdi (PV YTD)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 328 000 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Påløpt Kostnad (AC YTD)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 292 900 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Kostnadsavvik (CV)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">-kr 35 100 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Kostnadsindeks (CPI)</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">0,893</div>
+                    </div>
+                </div>
+                <table class="tufte-table">
+                    <thead>
+                        <tr>
+                            <th>Investeringsprosjekt</th>
+                            <th>Prosjektkode</th>
+                            <th class="num">Årsbudsjett (BAC)</th>
+                            <th class="num">Planlagt Verdi (PV)</th>
+                            <th class="num">Påløpt Kostnad (AC)</th>
+                            <th class="num">Kostnadsindeks (CPI)</th>
+                            <th class="num">Sluttprognose (EAC)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Vågsbygd Skole Utvidelse</td><td>PROJ-101</td><td class="num">185 000 000</td><td class="num">115 000 000</td><td class="num">104 500 000</td><td class="num">0,909</td><td class="num">208 251 070</td></tr>
+                        <tr><td>Randesund Døgnbemannet Boenhet</td><td>PROJ-201</td><td class="num">240 000 000</td><td class="num">165 000 000</td><td class="num">139 100 000</td><td class="num">0,843</td><td class="num">299 529 558</td></tr>
+                        <tr><td>VA-Hovedledning Selvkost</td><td>PROJ-301</td><td class="num">92 000 000</td><td class="num">48 000 000</td><td class="num">49 300 000</td><td class="num">1,027</td><td class="num">89 668 168</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SIDE 7: REVISJON & AUDIT TRAIL -->
+            <div id="pbi-page-container-7" class="pbi-page-container" style="display: none;">
+                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
+                    Revisjonsspor & Kontrollutvalget: SHA-256 forsegling og Human-in-the-Loop (FT Action Title)
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Verifisert Transaksjonssum</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 36 080 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Totalavvik Gransket</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 2 489 000</div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Signerte Tiltak i Port 9</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">kr 2 791 421</div>
+                    </div>
+                </div>
+                <table class="tufte-table">
+                    <thead>
+                        <tr>
+                            <th>Tidsstempel</th>
+                            <th>Enhet</th>
+                            <th>AI-Anbefalt Tiltak</th>
+                            <th>Beslutning</th>
+                            <th>Saksbehandler</th>
+                            <th>SHA-256 Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2026-08-20 14:30</td>
+                            <td>2020 Grunnskole</td>
+                            <td>Vikarstopp korttidsfravær &lt; 3 dager</td>
+                            <td><span class="status-badge" style="background:#f0fdf4; color:#166534;">APPROVED</span></td>
+                            <td>Frank Ellingsen</td>
+                            <td><code>a8f9c2e411b98d24...</code></td>
+                        </tr>
+                        <tr>
+                            <td>2026-08-22 11:15</td>
+                            <td>2540 Boenhet</td>
+                            <td>Turnusendring og overtidstak døgnpost</td>
+                            <td><span class="status-badge" style="background:#fef3c7; color:#b45309;">MODIFIED</span></td>
+                            <td>Frank Ellingsen</td>
+                            <td><code>f34b9982a74c1022...</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+    
+    <!-- =======================================================================
+         8. DOKUMENT- OG MALBANK (TEMPLATES, EXCEL, POWER BI & JUS)
          ======================================================================= -->
     <section class="docbank-section" id="dokumentbank">
         <div class="section-header">
@@ -4609,545 +5153,6 @@
             </div>
 
         </div>
-    </section>
-
-    <!-- =======================================================================
-         8. POWER BI & DAX ENTERPRISE SHOWCASE
-         ======================================================================= -->
-    <section class="powerbi-section" id="powerbi-showcase">
-        <div class="section-header">
-            <span>📊 Power BI & DAX Enterprise Showcase (Interaktiv Drifts- og Investeringskontroll)</span>
-            <span class="status-badge">Tufte Data-Ink / ISINSCOPE</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
-            Simulering av Power BI Desktop / Fabric rapportmodell. Viser dynamisk KOSTRA-hierarki, Earned Value Management (EVM) for Capex, og offisielle DAX-mål.
-        </p>
-
-        <div class="pbi-tabs-bar">
-            <div class="pbi-tab active" onclick="switchPbiTab('TAB1')">1. KOSTRA Driftsmatrise (Hierarki)</div>
-            <div class="pbi-tab" onclick="switchPbiTab('TAB2')">2. Prosjektkontroll EVM (S-kurver)</div>
-            <div class="pbi-tab" onclick="switchPbiTab('TAB3')">3. DAX Kjerneformler (Ett-klikks kopi)</div>
-            <div class="pbi-tab" onclick="switchPbiTab('TAB4')">4. 7 Power BI Rapportsider (.pbip)</div>
-        </div>
-
-        <!-- TAB 1: KOSTRA MATRISE -->
-        <div id="pbi-tab-1">
-            <table class="tufte-table">
-                <thead>
-                    <tr>
-                        <th>Nivå / KOSTRA Hierarki</th>
-                        <th>Enhet / Kostnadssted</th>
-                        <th class="num">Årsbudsjett (BAC)</th>
-                        <th class="num">Regnskap YTD (AC)</th>
-                        <th class="num">EOY Rullende Prognose</th>
-                        <th class="num">Est. Årsavvik</th>
-                        <th>Varslingsstatus</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background: #f8fafc; font-weight: 700;">
-                        <td>▼ 01 OPPVEKST OG UTDANNING</td>
-                        <td>Sektor Oppvekst</td>
-                        <td class="num">33 591 000</td>
-                        <td class="num">36 080 000</td>
-                        <td class="num">49 164 212</td>
-                        <td class="num cf-rag-red">-15 573 212</td>
-                        <td><span class="rag-badge rag-badge-red">🔴 KRITISK MERFORBRUK</span></td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 24px;">• Funksjon 202 Grunnskoleopplæring</td>
-                        <td>4100 Kommunal Skole</td>
-                        <td class="num">33 591 000</td>
-                        <td class="num">36 080 000</td>
-                        <td class="num">49 164 212</td>
-                        <td class="num cf-rag-red">-15 573 212</td>
-                        <td><span class="rag-badge rag-badge-red">🔴 § 14-5 Sak påkrevd</span></td>
-                    </tr>
-                    <tr style="background: #f8fafc; font-weight: 700;">
-                        <td>▼ 02 HELSE OG MESTRING</td>
-                        <td>Sektor Helse</td>
-                        <td class="num">50 339 572</td>
-                        <td class="num">47 426 244</td>
-                        <td class="num">67 072 639</td>
-                        <td class="num cf-rag-red">-16 733 067</td>
-                        <td><span class="rag-badge rag-badge-red">🔴 KRITISK MERFORBRUK</span></td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 24px;">• Funksjon 254 Kommunal Boenhet</td>
-                        <td>5200 Bo og Miljø</td>
-                        <td class="num">50 339 572</td>
-                        <td class="num">47 426 244</td>
-                        <td class="num">67 072 639</td>
-                        <td class="num cf-rag-red">-16 733 067</td>
-                        <td><span class="rag-badge rag-badge-red">🔴 Overtid art 1090</span></td>
-                    </tr>
-                    <tr class="summary-row">
-                        <td>TOTALT KONSOLIDERT KONTROLLUTVALG</td>
-                        <td>2 Enheter</td>
-                        <td class="num">83 930 572</td>
-                        <td class="num">83 506 244</td>
-                        <td class="num">116 236 851</td>
-                        <td class="num cf-rag-red">-32 306 279</td>
-                        <td><span class="rag-badge rag-badge-red">🔴 Bystyrets bord 28. sep</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- TAB 2: PROSJEKTKONTROLL EVM -->
-        <div id="pbi-tab-2" style="display: none;">
-            <table class="tufte-table">
-                <thead>
-                    <tr>
-                        <th>Prosjektnavn (Kontoklasse 2)</th>
-                        <th>Prosjekt-ID</th>
-                        <th class="num">P50 Styringsramme (BAC)</th>
-                        <th class="num">Påløpt Kostnad (AC)</th>
-                        <th class="num">Earned Value (EV)</th>
-                        <th class="num">CPI</th>
-                        <th class="num">SPI</th>
-                        <th class="num">EAC (Sluttkostnad)</th>
-                        <th>Risikostatus</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Vågsbygd Barneskole (Nybygg)</td>
-                        <td>PROJ-101</td>
-                        <td class="num">185 000 000</td>
-                        <td class="num">115 000 000</td>
-                        <td class="num">104 500 000</td>
-                        <td class="num cf-rag-red">0.909</td>
-                        <td class="num cf-rag-yellow">0.950</td>
-                        <td class="num cf-rag-red">208 251 070</td>
-                        <td><span class="rag-badge rag-badge-yellow">🟡 MIDDELS RISIKO</span></td>
-                    </tr>
-                    <tr>
-                        <td>Randesund Døgnbemannet Boenhet</td>
-                        <td>PROJ-201</td>
-                        <td class="num">240 000 000</td>
-                        <td class="num">165 000 000</td>
-                        <td class="num">139 100 000</td>
-                        <td class="num cf-rag-red">0.843</td>
-                        <td class="num cf-rag-red">0.887</td>
-                        <td class="num cf-rag-red">299 529 558</td>
-                        <td><span class="rag-badge rag-badge-red">🔴 HØY RISIKO</span></td>
-                    </tr>
-                    <tr>
-                        <td>VA-Hovedledning Selvkost</td>
-                        <td>PROJ-301</td>
-                        <td class="num">92 000 000</td>
-                        <td class="num">48 000 000</td>
-                        <td class="num">49 300 000</td>
-                        <td class="num cf-rag-green">1.027</td>
-                        <td class="num cf-rag-yellow">0.997</td>
-                        <td class="num cf-rag-green">89 668 168</td>
-                        <td><span class="rag-badge rag-badge-green">🟢 I RUTE (LAV RISIKO)</span></td>
-                    </tr>
-                    <tr class="summary-row">
-                        <td>TOTAL INVESTERINGSPORTFOLJE</td>
-                        <td>3 Prosjekter</td>
-                        <td class="num">517 000 000</td>
-                        <td class="num">328 000 000</td>
-                        <td class="num">292 900 000</td>
-                        <td class="num cf-rag-red">0.893</td>
-                        <td class="num cf-rag-yellow">0.927</td>
-                        <td class="num cf-rag-red">597 448 796</td>
-                        <td><span class="rag-badge rag-badge-yellow">🟡 Trekk på P85-reserve</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="margin-top: 10px; font-size: 11px; color: var(--text-muted);">
-                EVM-metodikk: CPI < 1.00 indikerer overskridelse per produsert enhet. P85-rammer og usikkerhetsavsetninger styres av prosjektcontroller.
-            </div>
-        </div>
-
-        <!-- TAB 3: DAX FORMLER -->
-        <div id="pbi-tab-3" style="display: none;">
-            <div class="dax-code-block">
-                <button class="copy-code-btn" onclick="copyDaxCode()">📋 Kopier Alle Mål</button>
-<pre id="dax-display-code">// ==============================================================================
-// KRISTIANSAND KOMMUNE — DAX PROGNOSE- OG KOSTRA MÅLTALL
-// ==============================================================================
-
-// 1. Akkumulert Regnskap YTD (Drift)
-[Regnskap YTD] = 
-CALCULATE(
-    SUM(Fact_Regnskap[korrigert_belop]),
-    Dim_Kontoklasse[kontoklasse_kode] = "1"
-)
-
-// 2. Gjenstående Budsjettert Ramme (T3)
-[Budsjett Gjenstående] = 
-CALCULATE(
-    SUM(Fact_Regnskap[budsjett_belop]),
-    Dim_Dato[maned] > 8
-)
-
-// 3. Trendjustert Merforbruk (Konservativ 50 % videreføring)
-[Trendjustert Merforbruk] = 
-VAR Avvik = [Avvik YTD]
-RETURN
-    IF(Avvik > 0, Avvik * 0.50, 0)
-
-// 4. Rullerende End of Year (EOY) Prognose
-[EOY Rullende Prognose] = 
-[Regnskap YTD] + [Budsjett Gjenstående] + [Trendjustert Merforbruk]
-
-// 5. Forventet Årsavvik (Varsling jf. Kommuneloven § 14-5)
-[EOY Forventet Årsavvik] = 
-[EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
-
-// 6. Dynamisk Hierarkimatrise (ISINSCOPE)
-[Dynamisk Visning] = 
-SWITCH(
-    TRUE(),
-    ISINSCOPE(Dim_Art[art_kode]), [Avvik YTD],
-    ISINSCOPE(Dim_Funksjon[funksjon_kode]), [Avvik YTD],
-    ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), [Avvik YTD],
-    [Avvik YTD]
-)</pre>
-            </div>
-        </div>
-        <!-- TAB 4: 7 POWER BI RAPPORTSIDER (.PBIP) -->
-        <div id="pbi-tab-4" style="display: none;">
-            <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: 4px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div>
-                    <span style="font-size: 13px; font-weight: 700; color: var(--navy-dark);">📁 Prosjektkilde: powerbi/pbi_reporting_project.pbip</span>
-                    <span style="margin-left: 10px; font-size: 11px; background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 3px; font-weight: 600;">PBIR Format</span>
-                    <span style="margin-left: 6px; font-size: 11px; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 3px; font-weight: 600;">TMDL Semantisk Modell</span>
-                    <span style="margin-left: 6px; font-size: 11px; background: #f0fdf4; color: #166534; padding: 2px 8px; border-radius: 3px; font-weight: 600;">50 Visual Containers</span>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <a href="powerbi/pbi_reporting_project.pbip" download class="btn btn-sm btn-primary" style="background: #b45309; border-color: #b45309;">⬇️ Last ned .pbip</a>
-                    <a href="powerbi/07_PowerBI_7_Layouts_Spec_Guide.md" target="_blank" class="btn btn-sm">📖 Se 7 Layouts Guide</a>
-                </div>
-            </div>
-
-            <!-- Undermeny for 7 rapportsider -->
-            <div style="display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap;" id="pbi-page-selector-bar">
-                <button class="btn btn-sm active" id="btn-page-1" onclick="switchPbiReportPage(1)">1. CFO Panel</button>
-                <button class="btn btn-sm" id="btn-page-2" onclick="switchPbiReportPage(2)">2. Grunnskole</button>
-                <button class="btn btn-sm" id="btn-page-3" onclick="switchPbiReportPage(3)">3. Helse & Mestring</button>
-                <button class="btn btn-sm" id="btn-page-4" onclick="switchPbiReportPage(4)">4. Lønn & Vikar</button>
-                <button class="btn btn-sm" id="btn-page-5" onclick="switchPbiReportPage(5)">5. Prognose & What-If</button>
-                <button class="btn btn-sm" id="btn-page-6" onclick="switchPbiReportPage(6)">6. Capex / EVM</button>
-                <button class="btn btn-sm" id="btn-page-7" onclick="switchPbiReportPage(7)">7. Revisjon & Port 9</button>
-            </div>
-
-            <!-- SIDE 1: CFO EXECUTIVE -->
-            <div id="pbi-page-container-1" class="pbi-page-container">
-                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
-                    Kristiansand Kommune — Finansiell Topplederoversikt & Sluttprognose 2026 (FT Action Title)
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Regnskap YTD</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 36 080 000</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Per august 2026</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Budsjett YTD</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 33 591 000</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Periodisert ramme</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Avvik YTD</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">+kr 2 489 000 (+7,4%)</div>
-                        <div style="font-size: 11px; color: var(--alert-red);">Kritisk merforbruk</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Forventet Årsavvik (EOY)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">+kr 3 733 500</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Før tiltakspakke T3</div>
-                    </div>
-                </div>
-                <table class="tufte-table">
-                    <thead>
-                        <tr>
-                            <th>Sektor / Enhet</th>
-                            <th class="num">Budsjett YTD</th>
-                            <th class="num">Regnskap YTD</th>
-                            <th class="num">Avvik YTD</th>
-                            <th class="num">Avvik %</th>
-                            <th class="num">EOY Sluttavvik</th>
-                            <th>Status / Varsel</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>01 Sektor Oppvekst (Enhet 202)</strong></td>
-                            <td class="num">12 450 000</td>
-                            <td class="num">13 870 000</td>
-                            <td class="num cf-rag-red">+1 420 000</td>
-                            <td class="num cf-rag-red">+11,4%</td>
-                            <td class="num cf-rag-red">+2 130 000</td>
-                            <td><span class="rag-badge rag-badge-red">🔴 MERFORBRUK</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>02 Sektor Helse & Mestring (Enhet 2540)</strong></td>
-                            <td class="num">21 141 000</td>
-                            <td class="num">22 210 000</td>
-                            <td class="num cf-rag-yellow">+1 069 000</td>
-                            <td class="num cf-rag-yellow">+5,1%</td>
-                            <td class="num cf-rag-yellow">+1 603 500</td>
-                            <td><span class="rag-badge rag-badge-yellow">🟡 AKTSOMHET</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- SIDE 2: GRUNNSKOLE -->
-            <div id="pbi-page-container-2" class="pbi-page-container" style="display: none;">
-                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
-                    Enhet 202 Grunnskole: Vikarforbruk og sykefravær krever omdisponering (FT Action Title)
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Forbruk Grunnskole</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 13 870 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Innkjøp Vikarer (Art 1020)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 1 420 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Vikarandel av Lønn</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">16,2%</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Netto Kostnad pr. Elev</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 9 768 /elev</div>
-                    </div>
-                </div>
-                <table class="tufte-table">
-                    <thead>
-                        <tr>
-                            <th>Kontoart / KOSTRA Art</th>
-                            <th>Kontonavn</th>
-                            <th class="num">Budsjett YTD</th>
-                            <th class="num">Regnskap YTD</th>
-                            <th class="num">Avvik YTD</th>
-                            <th class="num">Avvik %</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Art 1010</td><td>Fastlønn og faste tillegg</td><td class="num">9 200 000</td><td class="num">9 180 000</td><td class="num" style="color: var(--success-green);">-20 000</td><td class="num">-0,2%</td></tr>
-                        <tr><td>Art 1020</td><td>Vikarer ved fravær</td><td class="num">550 000</td><td class="num">1 420 000</td><td class="num" style="color: var(--alert-red);">+870 000</td><td class="num" style="color: var(--alert-red);">+158,2%</td></tr>
-                        <tr><td>Art 1090</td><td>Overtid og ekstrahjelp</td><td class="num">300 000</td><td class="num">720 000</td><td class="num" style="color: var(--alert-red);">+420 000</td><td class="num" style="color: var(--alert-red);">+140,0%</td></tr>
-                        <tr><td>Art 1600</td><td>NAV Sykepengerefusjoner</td><td class="num">-800 000</td><td class="num">-650 000</td><td class="num" style="color: var(--alert-amber);">+150 000</td><td class="num">+18,8%</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- SIDE 3: HELSE & MESTRING -->
-            <div id="pbi-page-container-3" class="pbi-page-container" style="display: none;">
-                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
-                    Enhet 401 Boenhet: Turnus- og overtidspress i døgnkontinuerlig drift (FT Action Title)
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Forbruk Helse & Mestring</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 22 210 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overtid & Tillegg (Art 1090)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 2 150 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overtidsandel i Turnus</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">14,8%</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Est. Sluttavvik etter Tiltak</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">kr -324 921 (I balanse)</div>
-                    </div>
-                </div>
-                <table class="tufte-table">
-                    <thead>
-                        <tr>
-                            <th>Lokasjon / Boenhet</th>
-                            <th>Tjenesteområde</th>
-                            <th class="num">Budsjett YTD</th>
-                            <th class="num">Regnskap YTD</th>
-                            <th class="num">Avvik YTD</th>
-                            <th class="num">Overtidsandel %</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Boenhet A (Døgnpost 1)</td><td>Miljøarbeidertjeneste</td><td class="num">8 100 000</td><td class="num">8 650 000</td><td class="num" style="color: var(--alert-red);">+550 000</td><td class="num">15,4%</td></tr>
-                        <tr><td>Boenhet B (Døgnpost 2)</td><td>Psykisk helse & rus</td><td class="num">7 500 000</td><td class="num">7 820 000</td><td class="num" style="color: var(--alert-red);">+320 000</td><td class="num">14,2%</td></tr>
-                        <tr><td>Dagsenter & Avlastning</td><td>Aktivitetstilbud</td><td class="num">5 541 000</td><td class="num">5 740 000</td><td class="num" style="color: var(--alert-amber);">+199 000</td><td class="num">11,8%</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- SIDE 4: LØNN & VIKAR -->
-            <div id="pbi-page-container-4" class="pbi-page-container" style="display: none;">
-                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
-                    HR & Lønnsmonitor: Artsanalyse for 1000 Fastlønn, 1020 Vikar og 1090 Overtid (FT Action Title)
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Total Lønn YTD</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 28 850 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Vikarforbruk (Art 1020)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 2 480 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overtid (Art 1090)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">kr 2 870 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Bokførte NAV-Refusjoner</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">kr 1 120 000</div>
-                    </div>
-                </div>
-                <table class="tufte-table">
-                    <thead>
-                        <tr>
-                            <th>Måned</th>
-                            <th class="num">Fastlønn (1010)</th>
-                            <th class="num">Vikarer (1020)</th>
-                            <th class="num">Overtid (1090)</th>
-                            <th class="num">NAV Refusjon (1600)</th>
-                            <th class="num">Netto Lønnskostnad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Mai 2026</td><td class="num">2 920 000</td><td class="num">290 000</td><td class="num">340 000</td><td class="num">-140 000</td><td class="num">3 410 000</td></tr>
-                        <tr><td>Juni 2026</td><td class="num">3 050 000</td><td class="num">380 000</td><td class="num">410 000</td><td class="num">-155 000</td><td class="num">3 685 000</td></tr>
-                        <tr><td>Juli 2026</td><td class="num">3 110 000</td><td class="num">460 000</td><td class="num">450 000</td><td class="num">-160 000</td><td class="num">3 860 000</td></tr>
-                        <tr><td>August 2026</td><td class="num">3 180 000</td><td class="num">520 000</td><td class="num">480 000</td><td class="num">-175 000</td><td class="num">4 005 000</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- SIDE 5: PROGNOSE & WHAT-IF -->
-            <div id="pbi-page-container-5" class="pbi-page-container" style="display: none;">
-                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
-                    What-If Simulering: Framsikt deflator, vikarreduksjon og helårsbalanse (FT Action Title)
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Vedtatt Årsramme</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 52 400 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Prognose EOY Uten Tiltak</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">kr 56 133 500</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Tiltaksbesparelse T3</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">-kr 2 791 421</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Simulert EOY Sluttavvik</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">+kr 942 079</div>
-                    </div>
-                </div>
-                <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 12px 16px; border-radius: 3px; font-size: 12px; margin-bottom: 14px;">
-                    🎛️ <strong>Simuleringsparametere:</strong> Framsikt Lønnsdeflator: <code>4,1%</code> | Fraværstiltak Effektreduksjon: <code>1,5%</code> | <em>Kombinasjonen av vikarstopp i skolen (170k/mnd) og turnusomlegging i døgnpost (210k/mnd) bringer samlet helårsdrift innenfor kontrollerte rammer.</em>
-                </div>
-            </div>
-
-            <!-- SIDE 6: CAPEX / EVM -->
-            <div id="pbi-page-container-6" class="pbi-page-container" style="display: none;">
-                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
-                    Project Controlling: Investeringsportefølje, Earned Value & Sluttkostnad (EAC) (FT Action Title)
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Planlagt Verdi (PV YTD)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 328 000 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Påløpt Kostnad (AC YTD)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 292 900 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Kostnadsavvik (CV)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-red);">-kr 35 100 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Kostnadsindeks (CPI)</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--alert-amber);">0,893</div>
-                    </div>
-                </div>
-                <table class="tufte-table">
-                    <thead>
-                        <tr>
-                            <th>Investeringsprosjekt</th>
-                            <th>Prosjektkode</th>
-                            <th class="num">Årsbudsjett (BAC)</th>
-                            <th class="num">Planlagt Verdi (PV)</th>
-                            <th class="num">Påløpt Kostnad (AC)</th>
-                            <th class="num">Kostnadsindeks (CPI)</th>
-                            <th class="num">Sluttprognose (EAC)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Vågsbygd Skole Utvidelse</td><td>PROJ-101</td><td class="num">185 000 000</td><td class="num">115 000 000</td><td class="num">104 500 000</td><td class="num">0,909</td><td class="num">208 251 070</td></tr>
-                        <tr><td>Randesund Døgnbemannet Boenhet</td><td>PROJ-201</td><td class="num">240 000 000</td><td class="num">165 000 000</td><td class="num">139 100 000</td><td class="num">0,843</td><td class="num">299 529 558</td></tr>
-                        <tr><td>VA-Hovedledning Selvkost</td><td>PROJ-301</td><td class="num">92 000 000</td><td class="num">48 000 000</td><td class="num">49 300 000</td><td class="num">1,027</td><td class="num">89 668 168</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- SIDE 7: REVISJON & AUDIT TRAIL -->
-            <div id="pbi-page-container-7" class="pbi-page-container" style="display: none;">
-                <div style="border-left: 4px solid var(--navy-dark); padding: 8px 12px; background: #f1f5f9; font-weight: 700; font-size: 13.5px; color: var(--navy-dark); margin-bottom: 14px;">
-                    Revisjonsspor & Kontrollutvalget: SHA-256 forsegling og Human-in-the-Loop (FT Action Title)
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Verifisert Transaksjonssum</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 36 080 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Totalavvik Gransket</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">kr 2 489 000</div>
-                    </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 12px 14px; border-radius: 3px;">
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Signerte Tiltak i Port 9</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--success-green);">kr 2 791 421</div>
-                    </div>
-                </div>
-                <table class="tufte-table">
-                    <thead>
-                        <tr>
-                            <th>Tidsstempel</th>
-                            <th>Enhet</th>
-                            <th>AI-Anbefalt Tiltak</th>
-                            <th>Beslutning</th>
-                            <th>Saksbehandler</th>
-                            <th>SHA-256 Hash</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2026-08-20 14:30</td>
-                            <td>2020 Grunnskole</td>
-                            <td>Vikarstopp korttidsfravær &lt; 3 dager</td>
-                            <td><span class="status-badge" style="background:#f0fdf4; color:#166534;">APPROVED</span></td>
-                            <td>Frank Ellingsen</td>
-                            <td><code>a8f9c2e411b98d24...</code></td>
-                        </tr>
-                        <tr>
-                            <td>2026-08-22 11:15</td>
-                            <td>2540 Boenhet</td>
-                            <td>Turnusendring og overtidstak døgnpost</td>
-                            <td><span class="status-badge" style="background:#fef3c7; color:#b45309;">MODIFIED</span></td>
-                            <td>Frank Ellingsen</td>
-                            <td><code>f34b9982a74c1022...</code></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
     </section>
 
     </main>
