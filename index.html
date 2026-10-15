@@ -2158,7 +2158,218 @@
             margin-top: 2px;
         }
 
-    </style>
+    
+        /* ==========================================================================
+           DYNAMISK SIDEBAR: TOTALER, MOM KONTEKST & LINJEDIAGRAM (TUFTE STANDARD)
+           ========================================================================== */
+        .sidebar-overview-card {
+            margin: 8px 10px 12px 10px;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-top: 3px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 11px;
+            box-shadow: none;
+        }
+
+        .sidebar-overview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .sidebar-overview-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .sidebar-overview-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-overview-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            line-height: 1.1;
+        }
+
+        .sidebar-overview-title {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.25;
+        }
+
+        .sidebar-totals-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px 8px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-total-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sb-tot-label {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .sb-tot-val {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            line-height: 1.25;
+        }
+
+        .sb-tot-val.alert {
+            color: var(--alert-red);
+        }
+
+        .sb-tot-val.positive {
+            color: var(--success-green);
+        }
+
+        /* MoM Kontekst */
+        .sidebar-mom-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            border-left: 2.5px solid var(--accent-blue);
+            border-radius: 3px;
+            padding: 6px 8px;
+            margin-bottom: 8px;
+            font-size: 10px;
+        }
+
+        .sb-mom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 9.5px;
+            color: var(--navy-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 3px;
+        }
+
+        .sb-mom-badge {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 6px;
+            background: #e2e8f0;
+            color: var(--navy-dark);
+        }
+
+        .sb-mom-badge.alert {
+            background: var(--alert-red-bg);
+            color: var(--alert-red);
+        }
+
+        .sb-mom-badge.positive {
+            background: var(--success-green-bg);
+            color: var(--success-green);
+        }
+
+        .sb-mom-details {
+            color: var(--text-secondary);
+            line-height: 1.35;
+            font-size: 10px;
+        }
+
+        /* Linjediagram Sparkline */
+        .sidebar-chart-box {
+            margin-top: 4px;
+        }
+
+        .sidebar-chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--text-muted);
+        }
+
+        .sidebar-chart-tabs {
+            display: flex;
+            gap: 2px;
+        }
+
+        .sb-chart-tab {
+            background: none;
+            border: 1px solid var(--border-light);
+            border-radius: 2px;
+            font-size: 8.5px;
+            font-weight: 600;
+            padding: 1px 5px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.15s;
+        }
+
+        .sb-chart-tab.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+
+        .sidebar-chart-svg-wrap {
+            width: 100%;
+            height: 76px;
+            position: relative;
+            background: #fafbfc;
+            border: 1px solid var(--border-subtle);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .sidebar-chart-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .sidebar-chart-tooltip {
+            position: absolute;
+            display: none;
+            background: rgba(27, 54, 93, 0.95);
+            color: #ffffff;
+            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 3px;
+            pointer-events: none;
+            font-family: var(--font-sans);
+            z-index: 1000;
+            white-space: nowrap;
+        }
+</style>
 </head>
 <body>
 <div class="hub-container">
@@ -2184,8 +2395,104 @@
             <span class="status-badge" style="font-size:10px; padding:2px 5px;">M9 Aktiv</span>
         </div>
 
+        
         <div class="hub-sidebar-scroll">
-            <!-- 1. Månedlig Arbeidsflyt Meny -->
+            <!-- DYNAMISK OVERSIKT & TOTALER FOR VALGT VIRKSOMHETSOMRÅDE (TUFTE STANDARD) -->
+            <div class="sidebar-overview-card" id="sidebar-sector-overview">
+                <div class="sidebar-overview-header">
+                    <div class="sidebar-overview-title-wrap">
+                        <span class="sidebar-overview-icon" id="sb-ov-icon">🌐</span>
+                        <div style="min-width:0;">
+                            <div class="sidebar-overview-label">Virksomhetsområde</div>
+                            <div class="sidebar-overview-title" id="sb-ov-title">Konsern (Alle)</div>
+                        </div>
+                    </div>
+                    <span class="status-badge" id="sb-ov-status" style="font-size:9.5px; padding:2px 5px; flex-shrink:0;">🟢 Konsernstyring</span>
+                </div>
+
+                <!-- Nøkkeltall / Totaler for valgt område -->
+                <div class="sidebar-totals-grid">
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">Ramme (BAC)</span>
+                        <span class="sb-tot-val" id="sb-tot-bac">7,24 Mrd</span>
+                    </div>
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">Forbruk YTD (AC)</span>
+                        <span class="sb-tot-val" id="sb-tot-ac">4 865,9M</span>
+                    </div>
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">Avvik YTD (CV)</span>
+                        <span class="sb-tot-val alert" id="sb-tot-cv">-19,00M</span>
+                    </div>
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">CPI / EAC</span>
+                        <span class="sb-tot-val" id="sb-tot-cpi-eac">0,996 / 7,27 Mrd</span>
+                    </div>
+                </div>
+
+                <!-- MoM Kontekst (Month-over-Month) -->
+                <div class="sidebar-mom-card" id="sb-mom-card">
+                    <div class="sb-mom-header">
+                        <span>MoM Kontekst (M9 vs M8)</span>
+                        <span class="sb-mom-badge alert" id="sb-mom-badge">Δ -3,23M</span>
+                    </div>
+                    <div class="sb-mom-details" id="sb-mom-details">
+                        <!-- Dynamisk fylt via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Linjediagram av avvik pr måned YTD (M1–M9) -->
+                <div class="sidebar-chart-box">
+                    <div class="sidebar-chart-header">
+                        <span>Avvik pr måned YTD</span>
+                        <div class="sidebar-chart-tabs">
+                            <button type="button" class="sb-chart-tab active" id="sb-tab-cum" onclick="setSidebarChartMode('CUM')">YTD Akk</button>
+                            <button type="button" class="sb-chart-tab" id="sb-tab-month" onclick="setSidebarChartMode('MONTH')">Mnd</button>
+                        </div>
+                    </div>
+                    <div class="sidebar-chart-svg-wrap" id="sb-chart-container">
+                        <!-- Dynamisk SVG tegnet av renderSidebarLineChart() -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. VIRKSOMHETSOMRÅDER (SEKTORER) — KONSERN ØVERST I MENYEN -->
+            <div class="sidebar-nav-group">
+                <div class="sidebar-nav-header">
+                    <span>Virksomhetsområder</span>
+                    <span style="font-size:9.5px; text-transform:none; color:var(--text-muted); font-weight:600;">6 Sektorer</span>
+                </div>
+                <a class="sidebar-nav-item active" id="side-sec-all" onclick="selectSector('ALL')">
+                    <span>🌐 Konsern (Alle)</span>
+                    <span class="badge-phase" id="side-sec-badge-all">Total -19.0M</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-helse" onclick="selectSector('HELSE')">
+                    <span>🏥 1. Helse og mestring</span>
+                    <span class="badge-phase" id="side-sec-badge-helse" style="background:var(--alert-amber); color:#fff;">-9.85M</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-oppvekst" onclick="selectSector('OPPVEKST')">
+                    <span>🏫 2. Oppvekst</span>
+                    <span class="badge-phase" id="side-sec-badge-oppvekst" style="background:var(--alert-red); color:#fff;">-11.87M</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-by" onclick="selectSector('BYUTVIKLING')">
+                    <span>🏗️ 3. By- og stedsutvikling</span>
+                    <span class="badge-phase" id="side-sec-badge-byutvikling" style="background:var(--success-green-bg); color:var(--success-green);">+310k</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-kultur" onclick="selectSector('KULTUR')">
+                    <span>🎭 4. Kultur og dialog</span>
+                    <span class="badge-phase" id="side-sec-badge-kultur">-45k</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-org" onclick="selectSector('ORG_TEK')">
+                    <span>💻 5. Org & teknologi</span>
+                    <span class="badge-phase" id="side-sec-badge-org_tek">-120k</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-sec-oko" onclick="selectSector('OKONOMI')">
+                    <span>⚖️ 6. Økonomi & styring</span>
+                    <span class="badge-phase" id="side-sec-badge-okonomi" style="background:var(--success-green-bg); color:var(--success-green);">+2.58M</span>
+                </a>
+            </div>
+
+            <!-- 2. MÅNEDLIG ARBEIDSFLYT MENY -->
             <div class="sidebar-nav-group">
                 <div class="sidebar-nav-header">
                     <span>Månedlig Arbeidsflyt</span>
@@ -2210,41 +2517,6 @@
                 <a class="sidebar-nav-item" id="side-step-5" onclick="selectWorkflowPhase(5)">
                     <span>5️⃣ Politisk Sak & Vedtak</span>
                     <span class="badge-phase">Dag 25–30</span>
-                </a>
-            </div>
-
-            <!-- ANSVARSOMRÅDER & ØKONOMIRÅDGIVERE -->
-            <div class="sidebar-nav-group">
-                <div class="sidebar-nav-header">
-                    <span>Ansvarsområder (Sektorer)</span>
-                </div>
-                <a class="sidebar-nav-item active" id="side-sec-all" onclick="selectSector('ALL')">
-                    <span>🌐 Konsern (Alle)</span>
-                    <span class="badge-phase">Total</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-sec-helse" onclick="selectSector('HELSE')">
-                    <span>🏥 1. Helse og mestring</span>
-                    <span class="badge-phase" style="background:var(--alert-amber); color:#fff;">+850k</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-sec-oppvekst" onclick="selectSector('OPPVEKST')">
-                    <span>🏫 2. Oppvekst</span>
-                    <span class="badge-phase" style="background:var(--alert-red); color:#fff;">+1.24M</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-sec-by" onclick="selectSector('BYUTVIKLING')">
-                    <span>🏗️ 3. By- og stedsutvikling</span>
-                    <span class="badge-phase">VAR</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-sec-kultur" onclick="selectSector('KULTUR')">
-                    <span>🎭 4. Kultur og dialog</span>
-                    <span class="badge-phase">OK</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-sec-org" onclick="selectSector('ORG_TEK')">
-                    <span>💻 5. Org & teknologi</span>
-                    <span class="badge-phase">IKT</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-sec-oko" onclick="selectSector('OKONOMI')">
-                    <span>⚖️ 6. Økonomi & styring</span>
-                    <span class="badge-phase">Finans</span>
                 </a>
             </div>
 
@@ -7018,6 +7290,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 disposisjonsfond: { saldo: "485 000 000 NOK", andel: "6.7 %", krav: "6.0 %", buffer: "+50.8 MNOK over krav" }
             },
             "HELSE": {
+                monthly: {
+                    pv: [143103448, 143103448, 143103448, 143103448, 143103448, 143103448, 107327586, 135948276, 143103450],
+                    ac: [143703448, 143953448, 144003448, 144203448, 144303448, 144503448, 108477586, 137298276, 144403450],
+                    cv: [-600000, -850000, -900000, -1100000, -1200000, -1400000, -1150000, -1350000, -1300000]
+                },
                 title: "1. Helse og mestring",
                 icon: "🏥",
                 subtitle: "Pleie, omsorg, legevakt, rehabilitering og livsmestring",
@@ -7062,6 +7339,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 }
             },
             "OPPVEKST": {
+                monthly: {
+                    pv: [164022989, 164022989, 164022989, 164022989, 164022989, 164022989, 123017241, 155821839, 164022986],
+                    ac: [164822989, 165072989, 165222989, 165472989, 165672989, 165522989, 122817241, 157971839, 166295446],
+                    cv: [-800000, -1050000, -1200000, -1450000, -1650000, -1500000, 200000, -2150000, -2272460]
+                },
                 title: "2. Oppvekst",
                 icon: "🏫",
                 subtitle: "Barnehager, grunnskoler, SFO, PPT og familietjenester",
@@ -7096,6 +7378,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 nav_radar: { under_3mnd: "250 000 NOK", mellom_3_6mnd: "110 000 NOK", over_6mnd: "50 000 NOK (Foreldelsesrisiko)", totalt: "410 000 NOK" }
             },
             "BYUTVIKLING": {
+                monthly: {
+                    pv: [71264368, 71264368, 71264368, 71264368, 71264368, 71264368, 53448276, 67701149, 71264367],
+                    ac: [71214368, 71344368, 71144368, 71324368, 71174368, 71194368, 53298276, 67781149, 71214367],
+                    cv: [50000, -80000, 120000, -60000, 90000, 70000, 150000, -80000, 50000]
+                },
                 title: "3. By- og stedsutvikling",
                 icon: "🏗️",
                 subtitle: "Plan, byggesak, samferdsel, VAR-selvkost, eiendom og klima",
@@ -7130,6 +7417,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 ks2_portefolje: { aktive: 14, p85_buffer: "45.0 MNOK", disponert: "12.4 MNOK (27.6 %)", status: "🟢 God kontroll (Port 9 HITL)" }
             },
             "KULTUR": {
+                monthly: {
+                    pv: [28965517, 28965517, 28965517, 28965517, 28965517, 28965517, 21724138, 27517241, 28965519],
+                    ac: [28975517, 28950517, 28990517, 28980517, 28945517, 28995517, 21684138, 27542241, 28980519],
+                    cv: [-10000, 15000, -25000, -15000, 20000, -30000, 40000, -25000, -15000]
+                },
                 title: "4. Kultur og innbyggerdialog",
                 icon: "🎭",
                 subtitle: "Kultur, bibliotek, kulturskole, idrett, tilskudd og innbyggertorg",
@@ -7164,6 +7456,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 kulturskole: { egenbetaling_dekn: "32.4 %", elevplasser: 1450, venteliste: 182, status: "Stabil elevmasse" }
             },
             "ORG_TEK": {
+                monthly: {
+                    pv: [35402299, 35402299, 35402299, 35402299, 35402299, 35402299, 26551724, 33632184, 35402298],
+                    ac: [35422299, 35432299, 35392299, 35442299, 35412299, 35377299, 26566724, 33652184, 35422298],
+                    cv: [-20000, -30000, 10000, -40000, -10000, 25000, -15000, -20000, -20000]
+                },
                 title: "5. Organisasjon og teknologi",
                 icon: "💻",
                 subtitle: "HR, rekruttering, arbeidsmiljø, IKT, digitalisering og fellestjenester",
@@ -7198,6 +7495,11 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                 cyber_beredskap: { ramme: "18 000 000 NOK", fremdrift: "68 %", nist: "3.8 / 5.0 (🟢 Tilfredsstillende)" }
             },
             "OKONOMI": {
+                monthly: {
+                    pv: [114353156, 114353156, 114353156, 114353156, 114353156, 114353156, 85764867, 108635499, 114353158],
+                    ac: [114103156, 114073156, 114043156, 114093156, 114063156, 114033156, 85524867, 108335499, 114025698],
+                    cv: [250000, 280000, 310000, 260000, 290000, 320000, 240000, 300000, 327460]
+                },
                 title: "6. Økonomi og virksomhetsstyring",
                 icon: "⚖️",
                 subtitle: "Overordnet plan, budsjett, regnskap, innkjøp, internkontroll og staber",
@@ -7233,6 +7535,361 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
             }
         };
 
+        
+        // ==========================================================================
+        // DYNAMISK SIDEBAR: TOTALER, MOM KONTEKST & LINJEDIAGRAM (INGEN HARDKODING)
+        // ==========================================================================
+        let currentSidebarChartMode = 'CUM'; // 'CUM' (Akkumulert YTD) eller 'MONTH' (Pr måned)
+        let activeSidebarSector = 'ALL';
+
+        function formatNOK(num, decimals = 1) {
+            if (num === undefined || num === null || isNaN(num)) return "0 kr";
+            const abs = Math.abs(num);
+            const sign = num < 0 ? "-" : (num > 0 ? "+" : "");
+            if (abs >= 1000000000) {
+                return sign + (abs / 1000000000).toLocaleString('no-NO', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + " Mrd";
+            } else if (abs >= 1000000) {
+                return sign + (abs / 1000000).toLocaleString('no-NO', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + "M";
+            } else if (abs >= 1000) {
+                return sign + (abs / 1000).toLocaleString('no-NO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "k";
+            } else {
+                return num.toLocaleString('no-NO') + " kr";
+            }
+        }
+
+        function formatNOKFull(num) {
+            if (num === undefined || num === null || isNaN(num)) return "0 kr";
+            return num.toLocaleString('no-NO') + " kr";
+        }
+
+        function getSectorMonthlyData(sectorKey) {
+            const months = 9; // M1 (Jan) til M9 (Sep)
+            const subSectors = ['HELSE', 'OPPVEKST', 'BYUTVIKLING', 'KULTUR', 'ORG_TEK', 'OKONOMI'];
+            
+            if (sectorKey === 'ALL') {
+                const res = {
+                    monthly_pv: new Array(months).fill(0),
+                    monthly_ac: new Array(months).fill(0),
+                    monthly_cv: new Array(months).fill(0),
+                    cum_cv: new Array(months).fill(0),
+                    cum_pv: new Array(months).fill(0),
+                    cum_ac: new Array(months).fill(0)
+                };
+                for (let m = 0; m < months; m++) {
+                    for (const s of subSectors) {
+                        const sData = SEKTOR_DATA[s];
+                        if (sData && sData.monthly) {
+                            res.monthly_pv[m] += sData.monthly.pv[m];
+                            res.monthly_ac[m] += sData.monthly.ac[m];
+                            res.monthly_cv[m] += sData.monthly.cv[m];
+                        }
+                    }
+                }
+                let run_cv = 0, run_pv = 0, run_ac = 0;
+                for (let m = 0; m < months; m++) {
+                    run_cv += res.monthly_cv[m];
+                    run_pv += res.monthly_pv[m];
+                    run_ac += res.monthly_ac[m];
+                    res.cum_cv[m] = run_cv;
+                    res.cum_pv[m] = run_pv;
+                    res.cum_ac[m] = run_ac;
+                }
+                return res;
+            } else {
+                const sData = SEKTOR_DATA[sectorKey];
+                if (!sData || !sData.monthly) return null;
+                const res = {
+                    monthly_pv: [...sData.monthly.pv],
+                    monthly_ac: [...sData.monthly.ac],
+                    monthly_cv: [...sData.monthly.cv],
+                    cum_cv: [],
+                    cum_pv: [],
+                    cum_ac: []
+                };
+                let run_cv = 0, run_pv = 0, run_ac = 0;
+                for (let m = 0; m < sData.monthly.cv.length; m++) {
+                    run_cv += sData.monthly.cv[m];
+                    run_pv += sData.monthly.pv[m];
+                    run_ac += sData.monthly.ac[m];
+                    res.cum_cv.push(run_cv);
+                    res.cum_pv.push(run_pv);
+                    res.cum_ac.push(run_ac);
+                }
+                return res;
+            }
+        }
+
+        function setSidebarChartMode(mode) {
+            currentSidebarChartMode = mode;
+            const tabCum = document.getElementById("sb-tab-cum");
+            const tabMonth = document.getElementById("sb-tab-month");
+            if (tabCum) tabCum.classList.toggle("active", mode === 'CUM');
+            if (tabMonth) tabMonth.classList.toggle("active", mode === 'MONTH');
+            renderSidebarLineChart(activeSidebarSector);
+        }
+
+        function updateSidebarOverview(sectorKey) {
+            activeSidebarSector = sectorKey;
+            const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
+            if (!data) return;
+
+            // 1. Tittel, Ikon & Status
+            const iconEl = document.getElementById("sb-ov-icon");
+            if (iconEl) iconEl.textContent = data.icon;
+            const titleEl = document.getElementById("sb-ov-title");
+            if (titleEl) {
+                titleEl.textContent = sectorKey === 'ALL' ? "Konsern (Alle)" : data.title;
+                titleEl.title = data.title;
+            }
+            const statusEl = document.getElementById("sb-ov-status");
+            if (statusEl) {
+                statusEl.textContent = data.status_badge.replace(/^[^\w\s]+\s*/, '');
+                if (data.status_badge.includes("Kritisk") || data.status_badge.includes("Advarsel")) {
+                    statusEl.style.background = "var(--alert-red-bg)";
+                    statusEl.style.color = "var(--alert-red)";
+                    statusEl.style.borderColor = "rgba(192, 57, 43, 0.3)";
+                } else {
+                    statusEl.style.background = "var(--success-green-bg)";
+                    statusEl.style.color = "var(--success-green)";
+                    statusEl.style.borderColor = "rgba(39, 174, 96, 0.3)";
+                }
+            }
+
+            // 2. Kjerne-totaler for valgt område (Dynamisk beregnet/hentet)
+            const mData = getSectorMonthlyData(sectorKey);
+            const ytd_pv = mData ? mData.cum_pv[8] : (parseInt(data.ramme.replace(/\D/g, '')) * 0.67);
+            const ytd_ac = mData ? mData.cum_ac[8] : parseInt(data.forbruk.replace(/\D/g, ''));
+            const ytd_cv = mData ? mData.cum_cv[8] : (ytd_pv - ytd_ac);
+            const bac_val = parseInt(data.ramme.replace(/\D/g, ''));
+            const cpi_val = ytd_ac > 0 ? (ytd_pv / ytd_ac) : 1.0;
+            const eac_val = cpi_val > 0 ? Math.round(bac_val / cpi_val) : bac_val;
+
+            const bacEl = document.getElementById("sb-tot-bac");
+            if (bacEl) bacEl.textContent = formatNOK(bac_val, 2).replace("+", "");
+
+            const acEl = document.getElementById("sb-tot-ac");
+            if (acEl) acEl.textContent = formatNOK(ytd_ac, 1).replace("+", "");
+
+            const cvEl = document.getElementById("sb-tot-cv");
+            if (cvEl) {
+                cvEl.textContent = formatNOK(ytd_cv, 2);
+                if (ytd_cv < 0) {
+                    cvEl.className = "sb-tot-val alert";
+                } else if (ytd_cv > 0) {
+                    cvEl.className = "sb-tot-val positive";
+                } else {
+                    cvEl.className = "sb-tot-val";
+                }
+            }
+
+            const cpiEacEl = document.getElementById("sb-tot-cpi-eac");
+            if (cpiEacEl) {
+                cpiEacEl.textContent = `${cpi_val.toFixed(3)} / ${formatNOK(eac_val, 2).replace("+", "")}`;
+                cpiEacEl.style.color = cpi_val < 0.995 ? "var(--alert-red)" : (cpi_val > 1.002 ? "var(--success-green)" : "var(--navy-dark)");
+            }
+
+            // 3. MoM Kontekst (Month-over-Month: M9 vs M8)
+            const momDetailsEl = document.getElementById("sb-mom-details");
+            const momBadgeEl = document.getElementById("sb-mom-badge");
+            if (mData) {
+                const m9_cv = mData.monthly_cv[8];
+                const m8_cv = mData.monthly_cv[7];
+                const delta_cv = m9_cv - m8_cv; // M9 vs M8 månedlig avviksendring
+                const m9_cum = mData.cum_cv[8];
+                const m8_cum = mData.cum_cv[7];
+                const cum_delta = m9_cum - m8_cum; // YTD avviksutvidelse i M9
+                
+                let trendText = "";
+                let badgeClass = "sb-mom-badge";
+                if (delta_cv < -50000) {
+                    trendText = `<span style="color:var(--alert-red); font-weight:600;">▼ Økende månedsavvik</span> (${formatNOK(delta_cv, 0)} mot M8)`;
+                    badgeClass = "sb-mom-badge alert";
+                } else if (delta_cv > 50000) {
+                    trendText = `<span style="color:var(--success-green); font-weight:600;">▲ Avviksdemping</span> (${formatNOK(delta_cv, 0)} bedre enn M8)`;
+                    badgeClass = "sb-mom-badge positive";
+                } else {
+                    trendText = `<span style="color:var(--text-muted); font-weight:600;">▶ Stabil takt</span> (${formatNOK(delta_cv, 0)} mot M8)`;
+                }
+
+                if (momBadgeEl) {
+                    momBadgeEl.textContent = `Δ ${formatNOK(delta_cv, 0)}`;
+                    momBadgeEl.className = badgeClass;
+                }
+
+                if (momDetailsEl) {
+                    momDetailsEl.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                            <span>Månedsavvik M9:</span>
+                            <strong style="font-family:var(--font-mono); color:${m9_cv < 0 ? 'var(--alert-red)' : (m9_cv > 0 ? 'var(--success-green)' : 'inherit')};">${formatNOK(m9_cv, 2)}</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+                            <span>Månedsavvik M8:</span>
+                            <span style="font-family:var(--font-mono);">${formatNOK(m8_cv, 2)}</span>
+                        </div>
+                        <div style="padding-top:2px; border-top:1px dashed var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                            <span>Akk. YTD MoM:</span>
+                            <span style="font-family:var(--font-mono); font-weight:700;">${formatNOK(m8_cum, 1)} → ${formatNOK(m9_cum, 1)}</span>
+                        </div>
+                        <div style="font-size:9.5px; margin-top:3px; color:var(--text-secondary);">
+                            Status: ${trendText}
+                        </div>
+                    `;
+                }
+            }
+
+            // 4. Tegn SVG Linjediagram
+            renderSidebarLineChart(sectorKey);
+        }
+
+        function renderSidebarLineChart(sectorKey) {
+            const container = document.getElementById("sb-chart-container");
+            if (!container) return;
+
+            const mData = getSectorMonthlyData(sectorKey);
+            if (!mData) {
+                container.innerHTML = '<div style="padding:10px; font-size:10px; color:var(--text-muted);">Ingen månedstall tilgjengelig</div>';
+                return;
+            }
+
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep"];
+            const monthLetters = ["J", "F", "M", "A", "M", "J", "J", "A", "S"];
+            const dataSeries = currentSidebarChartMode === 'CUM' ? mData.cum_cv : mData.monthly_cv;
+
+            const svgWidth = 246;
+            const svgHeight = 76;
+            const padLeft = 24;
+            const padRight = 38;
+            const padTop = 10;
+            const padBottom = 16;
+            const plotW = svgWidth - padLeft - padRight;
+            const plotH = svgHeight - padTop - padBottom;
+
+            let minVal = Math.min(...dataSeries, 0);
+            let maxVal = Math.max(...dataSeries, 0);
+            let span = maxVal - minVal;
+            if (span === 0) span = 1;
+            const valFloor = minVal - span * 0.08;
+            const valCeil = maxVal + span * 0.08;
+            const valRange = valCeil - valFloor;
+
+            function getX(i) {
+                return padLeft + i * (plotW / (dataSeries.length - 1));
+            }
+
+            function getY(val) {
+                return (padTop + plotH) - ((val - valFloor) / valRange) * plotH;
+            }
+
+            const yZero = getY(0);
+
+            // Bygg linjesti (SVG path)
+            const points = dataSeries.map((v, i) => ({ x: getX(i), y: getY(v), val: v, month: monthNames[i], letter: monthLetters[i] }));
+            let pathD = `M ${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`;
+            for (let i = 1; i < points.length; i++) {
+                pathD += ` L ${points[i].x.toFixed(1)},${points[i].y.toFixed(1)}`;
+            }
+
+            // Arealfyll (under eller over 0)
+            let areaD = `${pathD} L ${points[points.length - 1].x.toFixed(1)},${yZero.toFixed(1)} L ${points[0].x.toFixed(1)},${yZero.toFixed(1)} Z`;
+
+            // Farge: Hvis siste verdi er negativ (merforbruk) -> rød, positiv -> grønn, nøytral -> navy
+            const lastVal = dataSeries[dataSeries.length - 1];
+            const strokeColor = lastVal < 0 ? "#c0392b" : (lastVal > 0 ? "#27ae60" : "#1b365d");
+            const fillColor = lastVal < 0 ? "rgba(192, 57, 43, 0.08)" : (lastVal > 0 ? "rgba(39, 174, 96, 0.08)" : "rgba(27, 54, 93, 0.05)");
+
+            let svgHtml = `
+            <svg class="sidebar-chart-svg" viewBox="0 0 ${svgWidth} ${svgHeight}">
+                <!-- Null-linje (Budsjettreferanse jf. Tufte) -->
+                <line x1="${padLeft - 4}" y1="${yZero.toFixed(1)}" x2="${padLeft + plotW + 2}" y2="${yZero.toFixed(1)}" stroke="#cbd5e1" stroke-dasharray="2,2" stroke-width="1"/>
+                <text x="${padLeft - 6}" y="${(yZero + 3).toFixed(1)}" font-size="8" fill="#94a3b8" text-anchor="end" font-family="monospace">0</text>
+
+                <!-- Områdefyll -->
+                <path d="${areaD}" fill="${fillColor}" />
+
+                <!-- Hovedkurve -->
+                <path d="${pathD}" fill="none" stroke="${strokeColor}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+
+                <!-- Månedsbokstaver x-akse -->
+                ${points.map(p => `
+                    <text x="${p.x.toFixed(1)}" y="${svgHeight - 3}" font-size="8" fill="#94a3b8" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif">${p.letter}</text>
+                `).join('')}
+
+                <!-- Datapunkter for hver måned med hover-tooltip -->
+                ${points.map((p, idx) => {
+                    const isLast = idx === points.length - 1;
+                    const r = isLast ? 3.5 : 2;
+                    const fill = isLast ? strokeColor : "#ffffff";
+                    const stroke = strokeColor;
+                    const tooltipText = `M${idx + 1} (${p.month}): ${formatNOK(p.val, 2)} (${currentSidebarChartMode === 'CUM' ? 'Akkumulert YTD' : 'Månedsavvik'})`;
+                    return `
+                        <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${isLast ? 1.8 : 1.2}" style="cursor:pointer;" onmouseenter="showSidebarChartTooltip(event, '${tooltipText}')" onmouseleave="hideSidebarChartTooltip()">
+                            <title>${tooltipText}</title>
+                        </circle>
+                    `;
+                }).join('')}
+
+                <!-- Direkte merking på siste punkt (M9) jf. Edward Tufte Data-Ink prinsipp -->
+                <text x="${(points[points.length - 1].x + 4).toFixed(1)}" y="${(points[points.length - 1].y + 3).toFixed(1)}" font-size="8.5" font-weight="700" fill="${strokeColor}" font-family="monospace">
+                    ${formatNOK(lastVal, 1)}
+                </text>
+            </svg>
+            `;
+
+            container.innerHTML = svgHtml;
+        }
+
+        function showSidebarChartTooltip(e, text) {
+            let tip = document.getElementById("sb-chart-tooltip");
+            if (!tip) return;
+            tip.textContent = text;
+            tip.style.display = "block";
+            const rect = e.target.getBoundingClientRect();
+            const parentRect = document.getElementById("hub-sidebar").getBoundingClientRect();
+            tip.style.left = (rect.left - parentRect.left - 10) + "px";
+            tip.style.top = (rect.top - parentRect.top - 24) + "px";
+        }
+
+        function hideSidebarChartTooltip() {
+            let tip = document.getElementById("sb-chart-tooltip");
+            if (tip) tip.style.display = "none";
+        }
+
+        function updateSidebarSectorBadges() {
+            const map = {
+                "ALL": "side-sec-badge-all",
+                "HELSE": "side-sec-badge-helse",
+                "OPPVEKST": "side-sec-badge-oppvekst",
+                "BYUTVIKLING": "side-sec-badge-byutvikling",
+                "KULTUR": "side-sec-badge-kultur",
+                "ORG_TEK": "side-sec-badge-org_tek",
+                "OKONOMI": "side-sec-badge-okonomi"
+            };
+
+            for (const [secKey, badgeId] of Object.entries(map)) {
+                const badgeEl = document.getElementById(badgeId);
+                if (!badgeEl) continue;
+                const mData = getSectorMonthlyData(secKey);
+                if (!mData) continue;
+                const cvYtd = mData.cum_cv[8];
+                badgeEl.textContent = formatNOK(cvYtd, 1);
+                
+                if (cvYtd < -1000000) {
+                    badgeEl.style.background = "var(--alert-red)";
+                    badgeEl.style.color = "#ffffff";
+                } else if (cvYtd < 0) {
+                    badgeEl.style.background = "var(--alert-amber)";
+                    badgeEl.style.color = "#ffffff";
+                } else if (cvYtd > 0) {
+                    badgeEl.style.background = "var(--success-green-bg)";
+                    badgeEl.style.color = "var(--success-green)";
+                    badgeEl.style.border = "1px solid rgba(39, 174, 96, 0.4)";
+                } else {
+                    badgeEl.style.background = "#e2e8f0";
+                    badgeEl.style.color = "var(--navy-dark)";
+                }
+            }
+        }
+
         function selectSector(sectorKey) {
             const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
 
@@ -7249,8 +7906,23 @@ Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 1
                     link.classList.remove("active");
                 }
             });
-            const activeSideLink = document.getElementById(`side-sec-${sectorKey.toLowerCase()}`);
+            const sideIdMap = {
+                "ALL": "side-sec-all",
+                "HELSE": "side-sec-helse",
+                "OPPVEKST": "side-sec-oppvekst",
+                "BYUTVIKLING": "side-sec-by",
+                "KULTUR": "side-sec-kultur",
+                "ORG_TEK": "side-sec-org",
+                "OKONOMI": "side-sec-oko"
+            };
+            const targetSideId = sideIdMap[sectorKey] || `side-sec-${sectorKey.toLowerCase()}`;
+            const activeSideLink = document.getElementById(targetSideId);
             if (activeSideLink) activeSideLink.classList.add("active");
+
+            // 2B. Oppdater dynamisk sidebar oversiktskort, totaler, MoM og linjediagram
+            if (typeof updateSidebarOverview === 'function') {
+                updateSidebarOverview(sectorKey);
+            }
 
             // 3. Rendre Sektor Detaljkort
             const detailCard = document.getElementById("sector-detail-card");
@@ -9440,6 +10112,16 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             selectSector("ALL");
             if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
         }, 200);
+
+    
+        // Initialiser dynamisk sidebar ved oppstart
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof updateSidebarSectorBadges === 'function') updateSidebarSectorBadges();
+            if (typeof updateSidebarOverview === 'function') updateSidebarOverview('ALL');
+        });
+        // Sikre også umiddelbar oppdatering hvis DOM allerede er klar
+        if (typeof updateSidebarSectorBadges === 'function') updateSidebarSectorBadges();
+        if (typeof updateSidebarOverview === 'function') updateSidebarOverview('ALL');
 
     </script>
 </body>
