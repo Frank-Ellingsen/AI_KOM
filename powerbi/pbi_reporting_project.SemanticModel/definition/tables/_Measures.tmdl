@@ -96,3 +96,28 @@ table _Measures
 	measure 'Dynamisk_Tittel_Nivaa' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Detaljnivå: " & SELECTEDVALUE(Dim_Ansvar[ansvar_navn]), "Samlet Kommunenivå — Kristiansand")
 
 	measure 'FT_Aksjonstittel_Avvik' = IF([Avvik YTD] > 500000, "Kritisk merforbruk på kr " & FORMAT([Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")
+
+	measure 'EOY Forecast' = [EOY Rullende Prognose]
+		formatString: #,##0 "kr"
+
+	measure 'EOY Avvik' = [EOY Forventet Årsavvik]
+		formatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+
+	measure 'EOY Avvik %' = DIVIDE([EOY Forventet Årsavvik], ABS([Vedtatt Årsbudsjett]), 0)
+		formatString: 0.0%
+
+	measure 'RAG Status' = VAR AvvikPct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(AvvikPct), "N/A", AvvikPct < -0.05 || AvvikPct > 0.05, "Red", AvvikPct < -0.02 || AvvikPct > 0.02, "Amber", "Green")
+
+	measure 'RAG Color' = SWITCH([RAG Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
+
+	measure 'RAG Symbol' = SWITCH([RAG Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
+
+	measure 'RAG YTD' = VAR x = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x < -0.05 || x > 0.05, "🔴", x < -0.02 || x > 0.02, "🟠", "🟢")
+
+	measure 'RAG EOY' = VAR x = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x < -0.05 || x > 0.05, "🔴", x < -0.02 || x > 0.02, "🟠", "🟢")
+
+	measure 'KPI Avvik YTD Med RAG' = [RAG YTD] & "  " & FORMAT([Avvik YTD], "#,##0 kr") & " (" & FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & ")"
+
+	measure 'KPI EOY Prognose Med RAG' = [RAG EOY] & "  " & FORMAT([EOY Forventet Årsavvik], "#,##0 kr") & " (" & FORMAT([EOY Avvik %], "+0.0%;-0.0%;0.0%") & ")"
+
+	measure 'Executive Summary' = VAR Avvik = [Avvik YTD] VAR AvvikPct = [Avvik YTD %] VAR Rag = [RAG Status] VAR StatusTekst = SWITCH(Rag, "Red", "🔴 Ugunstig utvikling: Betydelig budsjettavvik identifisert. Tiltak og kostnadskontroll kreves jf. Kommuneloven § 14-5.", "Amber", "🟠 Moderat avvik: Avviket krever skjerpet oppfølging og kontinuerlig månedskontroll.", "Green", "🟢 Økonomisk drift i balanse innenfor tildelt budsjettramme.", "Status uavklart") RETURN StatusTekst & " | Regnskap YTD: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Budsjett YTD: " & FORMAT([Budsjett YTD], "#,##0 kr") & " | Avvik: " & FORMAT(Avvik, "#,##0 kr") & " (" & FORMAT(AvvikPct, "+0.0%;-0.0%;0.0%") & ") | Sluttprognose EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr")

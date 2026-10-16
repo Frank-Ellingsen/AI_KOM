@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "v01_col1",
+  "name": "v01_bar_enhet",
   "position": {
-    "x": 1000,
-    "y": 180,
-    "z": 8,
-    "width": 560,
-    "height": 340,
-    "tabOrder": 8
+    "x": 20,
+    "y": 285,
+    "z": 9,
+    "width": 770,
+    "height": 230,
+    "tabOrder": 9
   },
   "visual": {
-    "visualType": "columnChart",
+    "visualType": "barChart",
     "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
@@ -21,14 +21,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Dim_Art"
+                      "Entity": "Dim_Ansvar"
                     }
                   },
-                  "Property": "Hovedgruppe"
+                  "Property": "ansvar_navn"
                 }
               },
-              "queryRef": "Dim_Art.Hovedgruppe",
-              "nativeQueryRef": "Hovedgruppe",
+              "queryRef": "Dim_Ansvar.ansvar_navn",
+              "nativeQueryRef": "ansvar_navn",
               "active": true
             }
           ]
@@ -43,11 +43,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Regnskap YTD"
+                  "Property": "Avvik YTD"
                 }
               },
-              "queryRef": "_Measures.Regnskap YTD",
-              "nativeQueryRef": "Regnskap YTD",
+              "queryRef": "_Measures.Avvik YTD",
+              "nativeQueryRef": "Avvik YTD",
               "active": true
             }
           ]
@@ -68,7 +68,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Forbruk per Hovedgruppe'"
+                  "Value": "'01  HVOR OPPSTÅR AVVIKET? — Avvik per Enhet (Diverging Bar)'"
                 }
               }
             }

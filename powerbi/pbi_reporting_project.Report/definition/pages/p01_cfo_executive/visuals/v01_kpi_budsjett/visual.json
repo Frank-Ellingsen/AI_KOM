@@ -1,33 +1,34 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "v01_slicer2",
+  "name": "v01_kpi_budsjett",
   "position": {
-    "x": 20,
-    "y": 440,
-    "z": 6,
-    "width": 260,
-    "height": 420,
-    "tabOrder": 6
+    "x": 410,
+    "y": 90,
+    "z": 5,
+    "width": 370,
+    "height": 110,
+    "tabOrder": 5
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "card",
+    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Values": {
           "projections": [
             {
               "field": {
-                "Column": {
+                "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Dim_Dato"
+                      "Entity": "_Measures"
                     }
                   },
-                  "Property": "tertial"
+                  "Property": "Budsjett YTD"
                 }
               },
-              "queryRef": "Dim_Dato.tertial",
-              "nativeQueryRef": "tertial",
+              "queryRef": "_Measures.Budsjett YTD",
+              "nativeQueryRef": "Budsjett YTD",
               "active": true
             }
           ]
@@ -48,7 +49,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tertialfilter'"
+                  "Value": "'PERIODISERT BUDSJETT YTD'"
                 }
               }
             }

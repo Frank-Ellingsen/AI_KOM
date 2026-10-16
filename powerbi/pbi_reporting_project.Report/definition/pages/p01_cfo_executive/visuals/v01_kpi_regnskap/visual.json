@@ -1,33 +1,34 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "v01_slicer1",
+  "name": "v01_kpi_regnskap",
   "position": {
     "x": 20,
-    "y": 180,
-    "z": 5,
-    "width": 260,
-    "height": 240,
-    "tabOrder": 5
+    "y": 90,
+    "z": 4,
+    "width": 370,
+    "height": 110,
+    "tabOrder": 4
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "card",
+    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Values": {
           "projections": [
             {
               "field": {
-                "Column": {
+                "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Dim_Ansvar"
+                      "Entity": "_Measures"
                     }
                   },
-                  "Property": "kommunalsjefomrade"
+                  "Property": "Regnskap YTD"
                 }
               },
-              "queryRef": "Dim_Ansvar.kommunalsjefomrade",
-              "nativeQueryRef": "kommunalsjefomrade",
+              "queryRef": "_Measures.Regnskap YTD",
+              "nativeQueryRef": "Regnskap YTD",
               "active": true
             }
           ]
@@ -48,7 +49,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Sektorfilter'"
+                  "Value": "'REGNSKAP YTD (Bokført)'"
                 }
               }
             }

@@ -689,6 +689,31 @@ relationship AuditResponsibility
 \tmeasure 'Dynamisk_Tittel_Nivaa' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Detaljnivå: " & SELECTEDVALUE(Dim_Ansvar[ansvar_navn]), "Samlet Kommunenivå — Kristiansand")
 
 \tmeasure 'FT_Aksjonstittel_Avvik' = IF([Avvik YTD] > 500000, "Kritisk merforbruk på kr " & FORMAT([Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")
+
+\tmeasure 'EOY Forecast' = [EOY Rullende Prognose]
+\t\tformatString: #,##0 "kr"
+
+\tmeasure 'EOY Avvik' = [EOY Forventet Årsavvik]
+\t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+
+\tmeasure 'EOY Avvik %' = DIVIDE([EOY Forventet Årsavvik], ABS([Vedtatt Årsbudsjett]), 0)
+\t\tformatString: 0.0%
+
+\tmeasure 'RAG Status' = VAR AvvikPct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(AvvikPct), "N/A", AvvikPct < -0.05 || AvvikPct > 0.05, "Red", AvvikPct < -0.02 || AvvikPct > 0.02, "Amber", "Green")
+
+\tmeasure 'RAG Color' = SWITCH([RAG Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
+
+\tmeasure 'RAG Symbol' = SWITCH([RAG Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
+
+\tmeasure 'RAG YTD' = VAR x = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x < -0.05 || x > 0.05, "🔴", x < -0.02 || x > 0.02, "🟠", "🟢")
+
+\tmeasure 'RAG EOY' = VAR x = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x < -0.05 || x > 0.05, "🔴", x < -0.02 || x > 0.02, "🟠", "🟢")
+
+\tmeasure 'KPI Avvik YTD Med RAG' = [RAG YTD] & "  " & FORMAT([Avvik YTD], "#,##0 kr") & " (" & FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & ")"
+
+\tmeasure 'KPI EOY Prognose Med RAG' = [RAG EOY] & "  " & FORMAT([EOY Forventet Årsavvik], "#,##0 kr") & " (" & FORMAT([EOY Avvik %], "+0.0%;-0.0%;0.0%") & ")"
+
+\tmeasure 'Executive Summary' = VAR Avvik = [Avvik YTD] VAR AvvikPct = [Avvik YTD %] VAR Rag = [RAG Status] VAR StatusTekst = SWITCH(Rag, "Red", "🔴 Ugunstig utvikling: Betydelig budsjettavvik identifisert. Tiltak og kostnadskontroll kreves jf. Kommuneloven § 14-5.", "Amber", "🟠 Moderat avvik: Avviket krever skjerpet oppfølging og kontinuerlig månedskontroll.", "Green", "🟢 Økonomisk drift i balanse innenfor tildelt budsjettramme.", "Status uavklart") RETURN StatusTekst & " | Regnskap YTD: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Budsjett YTD: " & FORMAT([Budsjett YTD], "#,##0 kr") & " | Avvik: " & FORMAT(Avvik, "#,##0 kr") & " (" & FORMAT(AvvikPct, "+0.0%;-0.0%;0.0%") & ") | Sluttprognose EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr")
 """
     (tables_dir / "_Measures.tmdl").write_text(measures_tmdl, encoding="utf-8")
     print("✓ Semantic Model (TMDL) ferdigstilt.")
@@ -884,6 +909,109 @@ def make_visual_table(name, x, y, w, h, col_specs, measure_specs, title_text, z=
         }
     }
 
+def make_visual_waterfall_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, z=3):
+    return {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+        "name": name,
+        "position": {"x": x, "y": y, "z": z, "width": w, "height": h, "tabOrder": z},
+        "visual": {
+            "visualType": "waterfallChart",
+            "drillFilterOtherVisuals": True,
+            "query": {
+                "queryState": {
+                    "Category": {
+                        "projections": [{
+                            "field": {
+                                "Column": {
+                                    "Expression": {"SourceRef": {"Entity": cat_table}},
+                                    "Property": cat_col
+                                }
+                            },
+                            "queryRef": f"{cat_table}.{cat_col}",
+                            "nativeQueryRef": cat_col,
+                            "active": True
+                        }]
+                    },
+                    "Y": {
+                        "projections": [{
+                            "field": {
+                                "Measure": {
+                                    "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                                    "Property": measure_name
+                                }
+                            },
+                            "queryRef": f"_Measures.{measure_name}",
+                            "nativeQueryRef": measure_name,
+                            "active": True
+                        }]
+                    }
+                }
+            },
+            "visualContainerObjects": {
+                "title": [{
+                    "properties": {
+                        "show": {"expr": {"Literal": {"Value": "true"}}},
+                        "text": {"expr": {"Literal": {"Value": f"'{title_text}'"}}}
+                    }
+                }]
+            }
+        }
+    }
+
+def make_visual_table_flexible(name, x, y, w, h, items, title_text, z=4):
+    projections = []
+    for item in items:
+        if item[0] == "column":
+            _, t_name, c_name = item
+            projections.append({
+                "field": {
+                    "Column": {
+                        "Expression": {"SourceRef": {"Entity": t_name}},
+                        "Property": c_name
+                    }
+                },
+                "queryRef": f"{t_name}.{c_name}",
+                "nativeQueryRef": c_name,
+                "active": True
+            })
+        elif item[0] == "measure":
+            _, m_name = item
+            projections.append({
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": m_name
+                    }
+                },
+                "queryRef": f"_Measures.{m_name}",
+                "nativeQueryRef": m_name,
+                "active": True
+            })
+    return {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+        "name": name,
+        "position": {"x": x, "y": y, "z": z, "width": w, "height": h, "tabOrder": z},
+        "visual": {
+            "visualType": "tableEx",
+            "drillFilterOtherVisuals": True,
+            "query": {
+                "queryState": {
+                    "Values": {
+                        "projections": projections
+                    }
+                }
+            },
+            "visualContainerObjects": {
+                "title": [{
+                    "properties": {
+                        "show": {"expr": {"Literal": {"Value": "true"}}},
+                        "text": {"expr": {"Literal": {"Value": f"'{title_text}'"}}}
+                    }
+                }]
+            }
+        }
+    }
+
 def make_visual_slicer(name, x, y, w, h, table_name, col_name, title_text, z=5):
     return {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
@@ -931,18 +1059,44 @@ def build_report_pages():
     pages_config = [
         {
             "id": "p01_cfo_executive",
-            "displayName": "1. Toppledelse (CFO Panel)",
-            "actionTitle": "Kristiansand Kommune — Finansiell Topplederoversikt & Prognose 2026",
+            "displayName": "1. Økonomisk Status (Storytelling & RAG)",
+            "height": 1020,
+            "width": 1600,
+            "actionTitle": "Kristiansand Kommune — Økonomisk Status: Status → Diagnose → Drivere → Prognose → Handling",
             "visuals": [
-                make_visual_card("v01_card1", 20, 20, 360, 140, "Regnskap YTD", "Regnskap Hittil i År", z=1),
-                make_visual_card("v01_card2", 400, 20, 360, 140, "Budsjett YTD", "Periodisert Budsjett", z=2),
-                make_visual_card("v01_card3", 780, 20, 360, 140, "Avvik YTD", "Avvik Hittil i År", z=3),
-                make_visual_card("v01_card4", 1160, 20, 380, 140, "EOY Forventet Årsavvik", "Forventet Årsavvik (EOY)", z=4),
-                make_visual_slicer("v01_slicer1", 20, 180, 260, 240, "Dim_Ansvar", "kommunalsjefomrade", "Sektorfilter", z=5),
-                make_visual_slicer("v01_slicer2", 20, 440, 260, 420, "Dim_Dato", "tertial", "Tertialfilter", z=6),
-                make_visual_bar_chart("v01_bar1", 300, 180, 680, 340, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "Avvik per Enhet (Diverging Bar)", z=7),
-                make_visual_column_chart("v01_col1", 1000, 180, 560, 340, "Dim_Art", "Hovedgruppe", "Regnskap YTD", "Forbruk per Hovedgruppe", z=8),
-                make_visual_table("v01_tab1", 300, 540, 1260, 320, [("Dim_Ansvar", "ansvar_navn"), ("Dim_Ansvar", "kommunalsjefomrade")], ["Budsjett YTD", "Regnskap YTD", "Avvik YTD", "Avvik YTD %", "EOY Forventet Årsavvik"], "Enhetsoversikt og Sluttprognose", z=9)
+                # Rad 1: Tittel og filtre (Horisontalt toppområde)
+                make_visual_slicer("v01_slic_sektor", 20, 15, 500, 65, "Dim_Ansvar", "kommunalsjefomrade", "Sektor (Kommunalsjefområde)", z=1),
+                make_visual_slicer("v01_slic_tertial", 540, 15, 500, 65, "Dim_Dato", "tertial", "Tertial", z=2),
+                make_visual_slicer("v01_slic_enhet", 1060, 15, 520, 65, "Dim_Ansvar", "ansvar_navn", "Enhet / Virksomhetsområde", z=3),
+
+                # Rad 2: KPI-rad (Status)
+                make_visual_card("v01_kpi_regnskap", 20, 90, 370, 110, "Regnskap YTD", "REGNSKAP YTD (Bokført)", z=4),
+                make_visual_card("v01_kpi_budsjett", 410, 90, 370, 110, "Budsjett YTD", "PERIODISERT BUDSJETT YTD", z=5),
+                make_visual_card("v01_kpi_avvik", 800, 90, 385, 110, "KPI Avvik YTD Med RAG", "AVVIK YTD (RAG STATUS)", z=6),
+                make_visual_card("v01_kpi_eoy", 1205, 90, 375, 110, "KPI EOY Prognose Med RAG", "EOY PROGNOSE (FORVENTET ÅRSAVVIK)", z=7),
+
+                # Rad 3: Executive Summary (Dynamisk tolkningsboks)
+                make_visual_card("v01_card_exec_summary", 20, 210, 1560, 65, "Executive Summary", "EXECUTIVE SUMMARY — STATUS, DIAGNOSE & DRIFTSTOLKNING", z=8),
+
+                # Rad 4: Diagnose (01 Hvor oppstår avviket? & 02 Hva driver avviket?)
+                make_visual_bar_chart("v01_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "01  HVOR OPPSTÅR AVVIKET? — Avvik per Enhet (Diverging Bar)", z=9),
+                make_visual_bar_chart("v01_bar_driver", 810, 285, 770, 230, "Dim_Art", "Hovedgruppe", "Avvik YTD", "02  HVA DRIVER AVVIKET? — Avvik per Hovedgruppe", z=10),
+
+                # Rad 5: Prognose (03 Hvor forventer vi å ende?)
+                make_visual_waterfall_chart("v01_waterfall_eoy", 20, 525, 1560, 195, "Dim_Art", "Hovedgruppe", "Avvik YTD", "03  HVOR FORVENTER VI Å ENDE? — Avviksdrivere mot Sluttprognose (Waterfall)", z=11),
+
+                # Rad 6: Handling (04 Hvilke enheter krever oppfølging?)
+                make_visual_table_flexible("v01_tab_oppfolging", 20, 730, 1560, 270, [
+                    ("measure", "RAG Symbol"),
+                    ("column", "Dim_Ansvar", "ansvar_navn"),
+                    ("column", "Dim_Ansvar", "kommunalsjefomrade"),
+                    ("measure", "Budsjett YTD"),
+                    ("measure", "Regnskap YTD"),
+                    ("measure", "Avvik YTD"),
+                    ("measure", "Avvik YTD %"),
+                    ("measure", "EOY Forventet Årsavvik"),
+                    ("measure", "RAG EOY")
+                ], "04  HVILKE ENHETER KREVER OPPFØLGING? — Prioritert Styrings- og Tiltakstabell (RAG)", z=12)
             ]
         },
         {
@@ -1044,8 +1198,8 @@ def build_report_pages():
             "name": pid,
             "displayName": p_cfg["displayName"],
             "displayOption": "FitToPage",
-            "height": 900,
-            "width": 1600
+            "height": p_cfg.get("height", 900),
+            "width": p_cfg.get("width", 1600)
         }
         (p_dir / "page.json").write_text(json.dumps(page_json_data, indent=2, ensure_ascii=False), encoding="utf-8")
 

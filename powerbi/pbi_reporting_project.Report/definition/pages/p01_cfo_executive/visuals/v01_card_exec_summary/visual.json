@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "v01_card1",
+  "name": "v01_card_exec_summary",
   "position": {
     "x": 20,
-    "y": 20,
-    "z": 1,
-    "width": 360,
-    "height": 140,
-    "tabOrder": 1
+    "y": 210,
+    "z": 8,
+    "width": 1560,
+    "height": 65,
+    "tabOrder": 8
   },
   "visual": {
     "visualType": "card",
@@ -24,11 +24,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Regnskap YTD"
+                  "Property": "Executive Summary"
                 }
               },
-              "queryRef": "_Measures.Regnskap YTD",
-              "nativeQueryRef": "Regnskap YTD",
+              "queryRef": "_Measures.Executive Summary",
+              "nativeQueryRef": "Executive Summary",
               "active": true
             }
           ]
@@ -49,7 +49,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Regnskap Hittil i År'"
+                  "Value": "'EXECUTIVE SUMMARY — STATUS, DIAGNOSE & DRIFTSTOLKNING'"
                 }
               }
             }
