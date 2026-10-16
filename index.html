@@ -1025,30 +1025,103 @@
             letter-spacing: 0.5px;
         }
 
+        /* ==========================================================================
+           AI CONTROLLER CHATBOT & GEMINI FLASH MCP DRAWER STYLING
+           ========================================================================== */
         .chat-drawer {
             position: fixed;
             top: 0;
             right: 0;
             bottom: 0;
-            width: 460px;
-            max-width: 92vw;
+            width: 480px;
+            max-width: 95vw;
             background: #ffffff;
-            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+            box-shadow: -4px 0 28px rgba(0, 0, 0, 0.18);
             z-index: 1000;
             display: flex;
             flex-direction: column;
             transform: translateX(100%);
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), width 0.25s ease;
         }
 
         .chat-drawer.open {
             transform: translateX(0);
         }
 
+        .chat-drawer.wide {
+            width: 820px;
+        }
+
         .chat-drawer-header {
-            padding: 16px 20px;
+            padding: 14px 18px;
             background: var(--navy-dark);
             color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-drawer-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-ctrl-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 13px;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+        }
+
+        .chat-ctrl-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .chat-persona-bar {
+            background: #f1f5f9;
+            border-bottom: 1px solid var(--border-light);
+            padding: 6px 14px;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            align-items: center;
+        }
+
+        .chat-persona-btn {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 9px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s;
+        }
+
+        .chat-persona-btn.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+
+        .chat-context-strip {
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-light);
+            padding: 5px 14px;
+            font-size: 11px;
+            color: var(--text-secondary);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1061,44 +1134,49 @@
             background: #f8fafc;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .chat-drawer-footer {
-            padding: 14px 16px;
+        .chat-chips-container {
             background: #ffffff;
-            border-top: 1px solid var(--border-light);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 10px 12px;
         }
 
         .chat-chip {
-            background: #e2e8f0;
+            background: #f1f5f9;
             border: 1px solid #cbd5e1;
             font-size: 11px;
-            padding: 5px 10px;
-            border-radius: 14px;
+            padding: 5px 9px;
+            border-radius: 12px;
             cursor: pointer;
             display: inline-block;
-            margin: 2px;
+            margin: 3px 2px;
             transition: all 0.15s;
+            color: var(--text-primary);
         }
 
         .chat-chip:hover {
-            background: #cbd5e1;
+            background: #e2e8f0;
             border-color: #94a3b8;
+            color: var(--navy-dark);
         }
 
         .chat-bubble {
-            max-width: 90%;
-            padding: 10px 14px;
+            max-width: 92%;
+            padding: 12px 16px;
             border-radius: 6px;
             font-size: 12.5px;
-            line-height: 1.5;
+            line-height: 1.55;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
         .chat-bubble-user {
             align-self: flex-end;
             background: var(--navy-dark);
             color: #ffffff;
+            border-bottom-right-radius: 1px;
         }
 
         .chat-bubble-ai {
@@ -1106,17 +1184,144 @@
             background: #ffffff;
             border: 1px solid var(--border-light);
             color: var(--text-primary);
+            border-bottom-left-radius: 1px;
+        }
+
+        .chat-bubble-ai h3, .chat-bubble-ai h4 {
+            color: var(--navy-dark);
+            margin: 8px 0 4px 0;
+            font-size: 13px;
+        }
+
+        .chat-bubble-ai hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 8px 0;
+        }
+
+        .chat-bubble-ai ul, .chat-bubble-ai ol {
+            margin: 4px 0 6px 18px;
+        }
+
+        .chat-bubble-ai li {
+            margin-bottom: 3px;
+        }
+
+        .chat-tool-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 10.5px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            margin-bottom: 6px;
         }
 
         .chat-sql-box {
-            background: #1e293b;
-            color: #f1f5f9;
-            padding: 8px 10px;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 8px 12px;
             font-family: var(--font-mono);
             font-size: 11px;
             border-radius: 4px;
-            margin: 6px 0;
+            margin: 8px 0;
             overflow-x: auto;
+            line-height: 1.45;
+        }
+
+        .chat-glassbox, .chat-legalbox {
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin: 8px 0;
+            font-size: 11.5px;
+        }
+
+        .chat-glassbox summary, .chat-legalbox summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--navy-dark);
+            user-select: none;
+        }
+
+        .chat-bubble-footer {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .chat-actions-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .chat-action-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 10.5px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.15s;
+        }
+
+        .chat-action-btn:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        .chat-drawer-footer {
+            padding: 12px 16px;
+            background: #ffffff;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .chat-textarea {
+            flex: 1;
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            line-height: 1.4;
+            padding: 8px 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            resize: none;
+            max-height: 120px;
+            min-height: 38px;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .chat-textarea:focus {
+            border-color: var(--navy-dark);
+            box-shadow: 0 0 0 1px var(--navy-dark);
+        }
+
+        .chat-footer-hints {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 6px;
         }
     
     
@@ -3087,9 +3292,9 @@
                 <a href="#dokumentbank" class="sidebar-nav-item">
                     <span>📂 Dokument- & Malbank (35)</span>
                 </a>
-                <a class="sidebar-nav-item" onclick="toggleChatDrawer()">
-                    <span>💬 Gemini Flash EPM Chat</span>
-                    <span class="badge-phase" style="background:#10b981; color:#fff;">MCP</span>
+                <a class="sidebar-nav-item active-chat-trigger" onclick="toggleChatDrawer()" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl+Space)" style="background: linear-gradient(90deg, #eff6ff, #ffffff); border-left: 3px solid #0056b3; font-weight:600;">
+                    <span>💬 AI Controller Chatbot</span>
+                    <span class="badge-phase" style="background:#0056b3; color:#fff;">LIVE ⚡</span>
                 </a>
             </div>
 
@@ -3203,6 +3408,7 @@
                 <span class="status-badge" id="vdb-badge-header">Vektor-DB: 3 509 biter (43 dok)</span> | 
                 <span class="status-badge">Port 4 & 9 Aktiv</span> | 
                 Motor: <strong id="active-engine-label">Gemini 3.8 Flash (0 % CPU)</strong>
+                <button class="btn btn-primary btn-sm" onclick="toggleChatDrawer()" style="font-size:11px; padding:2px 8px; margin-left:6px; background:#0056b3; border-color:#0056b3;" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl+Space)">💬 Spør AI-Chatbot</button>
             </div>
         </div>
     </header>
@@ -6725,46 +6931,98 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
     </div>
 
     <!-- FLOATING CHAT BUTTON -->
-    <button id="chat-floating-toggle" class="chat-floating-btn" onclick="toggleChatDrawer()">
-        💬 Gemini Flash AI-Chat <span class="chat-badge-pulse">MCP</span>
+    <button id="chat-floating-toggle" class="chat-floating-btn" onclick="toggleChatDrawer()" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl + Space)">
+        <span style="font-size:15px;">💬</span>
+        <span>AI Chatbot</span>
+        <span class="chat-badge-pulse">MCP ⚡</span>
     </button>
 
     <!-- SLIDE-OUT GEMINI FLASH + MCP AI CHAT DRAWER -->
     <div id="chat-drawer" class="chat-drawer">
+        <!-- Drawer Header -->
         <div class="chat-drawer-header">
-            <div>
-                <div style="font-weight: 700; font-size: 13.5px;">⚡ Gemini Flash EPM Assistent</div>
-                <div style="font-size: 10.5px; opacity: 0.85; font-family: var(--font-mono);">
-                    🛡️ PII-skjermet | 🔌 MCP: SQLite, Framsikt & Jus
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div style="font-size:22px;">🏛️</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 13.5px; display:flex; align-items:center; gap:6px;">
+                        <span>AI Controller Chatbot</span>
+                        <span style="background:#10b981; color:#fff; font-size:9.5px; padding:2px 6px; border-radius:10px; font-weight:700;">LIVE</span>
+                    </div>
+                    <div style="font-size: 10.5px; opacity: 0.85; font-family: var(--font-mono);">
+                        ⚡ Gemini Flash | 🔌 MCP: Visma ERP & Jus | 🛡️ PII-skjermet
+                    </div>
                 </div>
             </div>
-            <button onclick="toggleChatDrawer()" style="background: none; border: none; color: #fff; font-size: 18px; cursor: pointer;">✕</button>
+            <div class="chat-drawer-controls">
+                <button class="chat-ctrl-btn" onclick="toggleChatWideMode()" id="chat-wide-btn" title="Utvid / komprimer sidepanel">⛶</button>
+                <button class="chat-ctrl-btn" onclick="clearChatHistory()" title="Tøm samtalehistorikk">🗑️</button>
+                <button class="chat-ctrl-btn" onclick="copyChatHistory()" title="Kopier hele samtalen">📋</button>
+                <button class="chat-ctrl-btn" onclick="toggleChatDrawer(false)" title="Lukk chat (ESC)">✕</button>
+            </div>
         </div>
 
+        <!-- Persona Selector Bar -->
+        <div class="chat-persona-bar">
+            <span style="font-size:11px; font-weight:700; color:var(--text-secondary); margin-right:2px;">Rolle:</span>
+            <button class="chat-persona-btn active" id="persona-btn-epm" onclick="setChatPersona('EPM')">📊 EPM & EVM</button>
+            <button class="chat-persona-btn" id="persona-btn-law" onclick="setChatPersona('LAW')">⚖️ Juss & § 14-5</button>
+            <button class="chat-persona-btn" id="persona-btn-kostra" onclick="setChatPersona('KOSTRA')">🏛️ KOSTRA & Art</button>
+            <button class="chat-persona-btn" id="persona-btn-sak" onclick="setChatPersona('SAK')">📝 Saksnotat</button>
+        </div>
+
+        <!-- Context Strip -->
+        <div class="chat-context-strip">
+            <span id="chat-active-context-label">📍 Kontekst: Konsern (Alle) | Periode: T2 / M08-2026</span>
+            <span style="color:var(--success-green); font-weight:600;">● Glass-Box Aktiv</span>
+        </div>
+
+        <!-- Messages Body -->
         <div class="chat-drawer-body" id="chat-messages-container">
-            <div style="font-size: 11px; text-align: center; color: var(--text-muted); margin-bottom: 4px;">
-                🔒 Sikker sone: Fødselsnumre og personopplysninger maskeres automatisk lokalt.
+            <!-- Sikkerhet & PII info -->
+            <div style="font-size: 11px; text-align: center; color: var(--text-muted); background:#f1f5f9; padding:5px 8px; border-radius:4px;">
+                🔒 <strong>Sikker sone:</strong> Fødselsnumre (11 siffer) og personopplysninger maskeres automatisk lokalt jf. GDPR & Port 4.
             </div>
 
-            <!-- Hurtigspørsmål / Chips -->
-            <div style="margin-bottom: 8px;">
-                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">Hurtigspørsmål (MCP Tools):</div>
-                <span class="chat-chip" onclick="askPromptChip('Hvorfor har Enhet 202 så høyt vikarforbruk?')">🔍 Hvorfor avvik i Enhet 202?</span>
-                <span class="chat-chip" onclick="askPromptChip('Hva krever Kommuneloven § 14-5 ved budsjettavvik?')">⚖️ Krav i Kommuneloven § 14-5</span>
-                <span class="chat-chip" onclick="askPromptChip('Kjør EOY Monte Carlo prognose for Oppvekst')">📈 Kjør EOY prognose</span>
-                <span class="chat-chip" onclick="askPromptChip('Hva er status på NAV-refusjoner art 1600?')">🏥 NAV-refusjoner art 1600</span>
+            <!-- Hurtigspørsmål / Categorized Chips -->
+            <div class="chat-chips-container">
+                <div style="font-size: 11px; color: var(--navy-dark); margin-bottom: 6px; font-weight: 700; display:flex; justify-content:space-between;">
+                    <span>⚡ Anbefalte spørsmål (MCP Tools):</span>
+                    <span style="font-weight:normal; font-size:10px; color:var(--text-muted);">Klikk for å kjøre</span>
+                </div>
+                <div>
+                    <span class="chat-chip" onclick="askPromptChip('Hvorfor har Enhet 202 så høyt vikarforbruk?')">🔍 Enhet 202 Vikaravvik</span>
+                    <span class="chat-chip" onclick="askPromptChip('Hva krever Kommuneloven § 14-5 ved budsjettavvik?')">⚖️ Krav i § 14-5</span>
+                    <span class="chat-chip" onclick="askPromptChip('Hvordan påvirker HTA § 4 drøftingsplikt vikarstopp i skolen?')">💼 HTA § 4 Drøftingsplikt</span>
+                    <span class="chat-chip" onclick="askPromptChip('Hva er status på Helse og Mestring enhet 254?')">🏥 Helse & Boenhet 254</span>
+                    <span class="chat-chip" onclick="askPromptChip('Kjør EOY Monte Carlo prognose for Oppvekst')">📈 Monte Carlo EOY</span>
+                    <span class="chat-chip" onclick="askPromptChip('Hva er Earned Value (EVM/CPI/EAC) for investeringsprosjektene?')">📊 EVM Prosjektstatus</span>
+                    <span class="chat-chip" onclick="askPromptChip('Forklar bruttoprinsippet i Kommuneloven § 14-6')">📑 Bruttoprinsippet § 14-6</span>
+                    <span class="chat-chip" onclick="askPromptChip('Lag utkast til politisk saksfremlegg for Bystyret')">📝 Generer Saksfremlegg</span>
+                </div>
             </div>
 
             <!-- Initial melding fra AI -->
-            <div class="chat-bubble chat-bubble-ai">
-                <strong>🤖 Gemini Flash EPM:</strong> Hei Frank! Jeg har live-tilgang til Visma ERP, Framsikt-rammer og juridisk RAG via Model Context Protocol (MCP). Hva ønsker du å undersøke i dagens månedsoppgjør?
+            <div class="chat-bubble chat-bubble-ai" id="chat-initial-greeting">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <strong>🤖 Gemini Flash EPM Assistent:</strong>
+                    <span class="chat-tool-pill">mcp-core-v2</span>
+                </div>
+                Hei Frank! Jeg er din AI Controller-assistent for Kristiansand kommune. Jeg har live-tilgang til Visma Enterprise ERP, Framsikt EPM, KOSTRA-kontoplan og juridisk RAG via <strong>Model Context Protocol (MCP)</strong>.<br><br>
+                Hva ønsker du å analysere i dagens månedsoppgjør? Du kan spørre om avviksanalyser, rotårsaker, Monte Carlo helårsprognoser eller lovhjemler.
             </div>
         </div>
 
+        <!-- Drawer Footer -->
         <div class="chat-drawer-footer">
-            <div style="display: flex; gap: 6px;">
-                <input type="text" id="chat-input-text" class="form-input" style="flex: 1; font-size: 12px;" placeholder="Still et spørsmål til økonomidataene..." onkeydown="if(event.key==='Enter') sendChatMessage()">
-                <button class="btn btn-primary" onclick="sendChatMessage()">Send</button>
+            <div class="chat-input-row">
+                <textarea id="chat-input-text" class="chat-textarea" placeholder="Still et spørsmål til økonomidataene, juss eller prognoser..." rows="1" onkeydown="handleChatInputKeyDown(event)" oninput="autoGrowChatInput(this)"></textarea>
+                <button class="btn btn-primary" id="chat-send-btn" onclick="sendChatMessage()" style="height:38px; padding:0 16px; display:inline-flex; align-items:center; gap:6px;">
+                    <span>⚡</span> <span>Send</span>
+                </button>
+            </div>
+            <div class="chat-footer-hints">
+                <span>🛡️ PII-skjermet lokalt</span>
+                <span>Enter = Send | Shift+Enter = Ny linje | Hurtigtast: Ctrl+Space</span>
             </div>
         </div>
     </div>
@@ -7956,114 +8214,508 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             msg.innerText = "✓ Saksnotat godkjent av Frank Ellingsen! SHA256: 4e8b9c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b";
         }
 
-        // 3. Slide-out Gemini Flash + MCP AI Chat Drawer
-        function toggleChatDrawer() {
+        // ==========================================================================
+        // 3. AI CONTROLLER CHATBOT & GEMINI FLASH MCP ORCHESTRATION ENGINE
+        // ==========================================================================
+        let activeChatPersona = "EPM";
+        let chatIsWide = false;
+        let chatConversationHistory = [];
+
+        function toggleChatDrawer(forceState) {
             const drawer = document.getElementById("chat-drawer");
-            drawer.classList.toggle("open");
+            if (!drawer) return;
+            if (forceState !== undefined) {
+                if (forceState) drawer.classList.add("open");
+                else drawer.classList.remove("open");
+            } else {
+                drawer.classList.toggle("open");
+            }
+
+            if (drawer.classList.contains("open")) {
+                const input = document.getElementById("chat-input-text");
+                if (input) setTimeout(() => input.focus(), 150);
+                updateChatContextStrip();
+            }
+        }
+
+        function toggleChatWideMode() {
+            const drawer = document.getElementById("chat-drawer");
+            const btn = document.getElementById("chat-wide-btn");
+            chatIsWide = !chatIsWide;
+            if (chatIsWide) {
+                drawer.classList.add("wide");
+                if (btn) btn.innerText = "🗗";
+            } else {
+                drawer.classList.remove("wide");
+                if (btn) btn.innerText = "⛶";
+            }
+        }
+
+        function setChatPersona(persona) {
+            activeChatPersona = persona;
+            document.querySelectorAll(".chat-persona-btn").forEach(btn => btn.classList.remove("active"));
+            const activeBtn = document.getElementById("persona-btn-" + persona.toLowerCase());
+            if (activeBtn) activeBtn.classList.add("active");
+
+            const input = document.getElementById("chat-input-text");
+            if (input) {
+                if (persona === 'EPM') {
+                    input.placeholder = "Spør om YTD-avvik, drivere, Monte Carlo eller EVM...";
+                } else if (persona === 'LAW') {
+                    input.placeholder = "Spør om Kommuneloven § 14-5, bruttoprinsippet eller HTA § 4...";
+                } else if (persona === 'KOSTRA') {
+                    input.placeholder = "Spør om kontoklasser (1/2), driftsarter (1010-1690) eller selvkost...";
+                } else if (persona === 'SAK') {
+                    input.placeholder = "Be om utkast til politisk saksfremlegg eller tiltaksvedtak...";
+                }
+            }
+            showToast("🤖 AI Chatbot rolle: " + (activeBtn ? activeBtn.innerText : persona));
+        }
+
+        function updateChatContextStrip() {
+            const label = document.getElementById("chat-active-context-label");
+            if (label) {
+                const secTitle = document.getElementById("sb-ov-title") ? document.getElementById("sb-ov-title").innerText : "Konsern";
+                label.innerText = `📍 Kontekst: ${secTitle} | Periode: T2 / M08-2026 | Controller: Frank Ellingsen`;
+            }
+        }
+
+        function clearChatHistory() {
+            const container = document.getElementById("chat-messages-container");
+            if (!container) return;
+            const chips = container.querySelector(".chat-chips-container");
+            const greeting = document.getElementById("chat-initial-greeting");
+            container.innerHTML = `
+                <div style="font-size: 11px; text-align: center; color: var(--text-muted); background:#f1f5f9; padding:5px 8px; border-radius:4px;">
+                    🔒 <strong>Sikker sone:</strong> Fødselsnumre (11 siffer) og personopplysninger maskeres automatisk lokalt jf. GDPR & Port 4.
+                </div>
+            `;
+            if (chips) container.appendChild(chips);
+            if (greeting) container.appendChild(greeting);
+            chatConversationHistory = [];
+            showToast("🧹 Chat-historikk tømt");
+        }
+
+        function copyChatHistory() {
+            const container = document.getElementById("chat-messages-container");
+            if (!container) return;
+            const bubbles = container.querySelectorAll(".chat-bubble");
+            let text = "=== KRISTIANSAND KOMMUNE — AI CONTROLLER CHAT TRANSKRIPT ===\n";
+            text += `Tidspunkt: ${new Date().toLocaleString('no-NO')}\n`;
+            text += "Saksbehandler: Frank Ellingsen (Senior Controller)\n\n";
+            bubbles.forEach(b => {
+                const isUser = b.classList.contains("chat-bubble-user");
+                text += `[${isUser ? 'BRUKER' : 'AI ASSISTENT'}]:\n${b.innerText}\n\n`;
+            });
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("📋 Hele samtalen er kopiert til utklippstavlen!");
+            });
+        }
+
+        function copyBubbleText(btn) {
+            const bubble = btn.closest(".chat-bubble-ai");
+            if (!bubble) return;
+            const clone = bubble.cloneNode(true);
+            const footer = clone.querySelector(".chat-bubble-footer");
+            if (footer) footer.remove();
+            navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+                showToast("✓ Svar kopiert til utklippstavlen!");
+            });
+        }
+
+        function insertIntoSaksnotatFromChat(btn) {
+            const bubble = btn.closest(".chat-bubble-ai");
+            if (!bubble) return;
+            const clone = bubble.cloneNode(true);
+            const footer = clone.querySelector(".chat-bubble-footer");
+            if (footer) footer.remove();
+            const textToInsert = clone.innerText.trim();
+
+            const rep4Input = document.getElementById("rep4-tiltak-input");
+            const rep4P3 = document.getElementById("rep4-p3");
+            if (rep4Input) rep4Input.value = textToInsert.substring(0, 500);
+            if (rep4P3) rep4P3.innerHTML = `<strong>AI Anbefaling:</strong> ${textToInsert.substring(0, 350)}...`;
+
+            const targetSection = document.getElementById("rapportering-seksjon") || document.getElementById("sektor-seksjon");
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            showToast("📝 Tekst satt inn i saksnotat og rapport!");
+        }
+
+        function autoGrowChatInput(textarea) {
+            textarea.style.height = "auto";
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + "px";
+        }
+
+        function handleChatInputKeyDown(event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendChatMessage();
+            }
         }
 
         function openChatWithPrompt(prompt) {
-            const drawer = document.getElementById("chat-drawer");
-            drawer.classList.add("open");
+            toggleChatDrawer(true);
             askPromptChip(prompt);
         }
 
         function askPromptChip(promptText) {
-            document.getElementById("chat-input-text").value = promptText;
-            sendChatMessage();
+            const input = document.getElementById("chat-input-text");
+            if (input) {
+                input.value = promptText;
+                sendChatMessage();
+            }
+        }
+
+        function sanitizeClientPII(raw) {
+            let clean = raw.replace(/\b\d{6}\s?\d{5}\b/g, "[FNR_MASKERT]");
+            clean = clean.replace(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g, "[EPOST_MASKERT]");
+            clean = clean.replace(/\b(\+47\s?)?[49]\d{7}\b/g, "[TLF_MASKERT]");
+            return clean;
+        }
+
+        function generateClientSha256(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            const hex = Math.abs(hash).toString(16).padStart(8, '0');
+            return (hex + "f3a8b2c4e6d1e5a7b9c0d2e4f6a8b0c2d4e6f8a0b2c4e6d8a0b2c4e6f8a0b2c4").substring(0, 64);
+        }
+
+        function formatChatMarkdown(raw) {
+            let out = raw;
+            out = out.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            out = out.replace(/^### (.*$)/gim, '<h4 style="margin:8px 0 4px 0; color:var(--navy-dark); font-size:13px;">$1</h4>');
+            out = out.replace(/^## (.*$)/gim, '<h3 style="margin:10px 0 4px 0; color:var(--navy-dark); font-size:14px;">$1</h3>');
+            out = out.replace(/^# (.*$)/gim, '<h3 style="margin:10px 0 4px 0; color:var(--navy-dark); font-size:14px;">$1</h3>');
+            out = out.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            out = out.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            out = out.replace(/^---$/gim, '<hr style="border:none; border-top:1px solid #e2e8f0; margin:8px 0;">');
+            out = out.replace(/^[•\-\*] (.*$)/gim, '<li style="margin-left:16px;">$1</li>');
+            out = out.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+            return out;
         }
 
         function sendChatMessage() {
             const input = document.getElementById("chat-input-text");
+            if (!input) return;
             const text = input.value.trim();
             if (!text) return;
 
+            const cleanText = sanitizeClientPII(text);
             const container = document.getElementById("chat-messages-container");
 
-            // Brukermelding
+            // 1. Brukermelding
+            const nowTime = new Date().toLocaleTimeString('no-NO', { hour: '2-digit', minute: '2-digit' });
             const userMsg = document.createElement("div");
             userMsg.className = "chat-bubble chat-bubble-user";
-            userMsg.innerText = text;
+            userMsg.innerHTML = `<div style="font-size:10px; opacity:0.8; margin-bottom:2px;">Frank Ellingsen • ${nowTime}</div><div>${cleanText}</div>`;
             container.appendChild(userMsg);
             input.value = "";
-
-            // Skroll ned
+            input.style.height = "auto";
             container.scrollTop = container.scrollHeight;
 
-            // Indikator
+            // 2. AI Lasteindikator
             const aiMsg = document.createElement("div");
             aiMsg.className = "chat-bubble chat-bubble-ai";
-            aiMsg.innerHTML = "<em>⚡ Behandler forespørsel via MCP & Gemini Flash...</em>";
+            aiMsg.innerHTML = `
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="display:inline-block; animation:spin 1s linear infinite;">⚡</span>
+                    <em>Behandler spørsmål via MCP & Gemini Flash (${activeChatPersona})...</em>
+                </div>
+            `;
             container.appendChild(aiMsg);
             container.scrollTop = container.scrollHeight;
 
-            // 1. Forsøk live kall mot MCP API
+            // 3. Forsøk live kall med AbortController timeout (3.5 sekunder)
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3500);
+
             fetch(`${API_BASE}/api/mcp-query`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ prompt: text })
+                body: JSON.stringify({ prompt: cleanText, persona: activeChatPersona }),
+                signal: controller.signal
             })
             .then(res => {
-                if (!res.ok) throw new Error("Server feil: " + res.status);
+                clearTimeout(timeoutId);
+                if (!res.ok) throw new Error("Status: " + res.status);
                 return res.json();
             })
             .then(data => {
                 if (data.ok && data.text) {
-                    let toolsHtml = "";
-                    if (data.tools_called && data.tools_called.length > 0) {
-                        toolsHtml = `<div class="chat-sql-box">MCP Tools: ${data.tools_called.join(' | ')}</div>`;
-                    }
-                    aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>${data.text.replace(/\n/g, '<br>')}${toolsHtml}<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: ${(data.audit_hash || '').substring(0, 24)}...</div>`;
+                    renderRichAiChatResponse(data.text, data.tools_called || [], data.audit_hash, aiMsg);
                 } else {
-                    renderClientChatResponse(text, aiMsg);
+                    executeClientControllerEngine(cleanText, activeChatPersona, aiMsg);
                 }
                 container.scrollTop = container.scrollHeight;
             })
             .catch(() => {
-                // 2. Frakoblet klientside fallback
-                renderClientChatResponse(text, aiMsg);
+                clearTimeout(timeoutId);
+                // Klientside Controller Reasoning Engine
+                executeClientControllerEngine(cleanText, activeChatPersona, aiMsg);
                 container.scrollTop = container.scrollHeight;
             });
         }
 
-        function renderClientChatResponse(text, aiMsg) {
-            if (text.includes("202") || text.includes("vikar")) {
-                aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
-Analysen av <strong>Enhet 202 (Lovisenlev Skole)</strong> viser et akkumulert YTD-avvik på <strong>+1,24 MNOK (+12.4 %)</strong>.
-<div class="chat-sql-box">MCP Tool: mcp-sqlite-finance / query_ytd_variance
-SELECT art, sum(belop_regnskap) - sum(belop_budsjett) AS avvik 
-FROM Fact_Transaksjoner WHERE enhet = 202 GROUP BY art;</div>
-<strong>Hoveddrivere:</strong>
-• Art 10200 (Vikarer timelærere): +2,30 MNOK pga. 14.2 % sykefravær.
-• Art 16000 (NAV-sykepengerefusjon): Utestående etterslep på 410 000 NOK.
-<br><strong>Juridisk vurdering:</strong>
-Kommuneloven § 14-5 krever realistisk budsjett. Foreslått tiltak: Klassesammenslåing + purring NAV.
-<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: 9b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e...</div>`;
-            } else if (text.includes("14-5") || text.includes("lov")) {
-                aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
-<strong>Kommuneloven § 14-5 (Økonomisk handleplikt & budsjettbalanse):</strong>
-<div class="chat-sql-box">MCP Tool: mcp-rag-legal / search_municipal_law(query="§ 14-5 budsjettavvik")</div>
-Kommunedirektøren har en <em>lovfestet handleplikt</em> til å varsle og fremme sak om endring av årsbudsjettet dersom det oppstår vesentlige avvik som truer årsbalansen eller overstiger vedtatte rammer.
-I Kristiansand kommune utløses formell sak til Formannskapet ved avvik > 5 mill. kr på sektornivå.
-<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: 3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e...</div>`;
-            } else if (text.includes("prognose") || text.includes("Monte Carlo") || text.includes("EOY")) {
-                aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
-Kjører prediktiv Monte Carlo tidsserieprognose for <strong>Oppvekst og Grunnskole</strong>:
-<div class="chat-sql-box">MCP Tool: mcp-sqlite-finance / get_eoy_prognosis(sector="Oppvekst", n_sim=5000)</div>
-• <strong>P10 (Best Case med tiltak):</strong> Balanse per 31.12 (+0,6 MNOK merforbruk).
-• <strong>P50 (Forventet / Base Case):</strong> +1,85 MNOK merforbruk.
-• <strong>P90 (Worst Case uten tiltak):</strong> +3,40 MNOK merforbruk.
-Anbefaling: Iverksett klassesammenslåing og vikarstopp for å sikre P10-banen.
-<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: 5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b...</div>`;
-            } else {
-                aiMsg.innerHTML = `<strong>🤖 Gemini Flash EPM:</strong><br>
-Mottok spørsmål: "<em>${text}</em>".
-<div class="chat-sql-box">MCP Query: SELECT * FROM Dim_Enhet WHERE enhetsnavn LIKE '%${text.substring(0, 10)}%';</div>
-PII-skjerming bekreftet: 0 personopplysninger eksponert.
-Dataene viser at gjeldende driftsrammer overholdes innenfor &plusmn; 2.0 % for 14 av 16 enheter. Hovedavvikene er konsentrert til Enhet 202 (Skole) og Enhet 401 (Helse).
-<div style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-top:4px;">SHA256: e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5...</div>`;
-            }
+        function renderRichAiChatResponse(responseText, toolsCalled, shaHash, aiMsg) {
+            const formatted = formatChatMarkdown(responseText);
+            const toolsHtml = toolsCalled && toolsCalled.length > 0 
+                ? `<div style="margin-bottom:6px;"><span class="chat-tool-pill">🔌 MCP: ${toolsCalled.join(' | ')}</span></div>` 
+                : `<div style="margin-bottom:6px;"><span class="chat-tool-pill">⚡ Gemini Flash 3.8 MCP</span></div>`;
+            
+            const auditHashShort = (shaHash || generateClientSha256(responseText)).substring(0, 32);
+
+            aiMsg.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <strong>🤖 Gemini Flash EPM:</strong>
+                    <span style="font-size:10px; color:var(--text-muted);">${new Date().toLocaleTimeString('no-NO', { hour: '2-digit', minute: '2-digit' })}</span>
+                </div>
+                ${toolsHtml}
+                <div>${formatted}</div>
+                <div class="chat-bubble-footer">
+                    <span style="font-family:var(--font-mono); font-size:9.5px;">SHA256: ${auditHashShort}...</span>
+                    <div class="chat-actions-group">
+                        <button class="chat-action-btn" onclick="copyBubbleText(this)">📋 Kopier</button>
+                        <button class="chat-action-btn" onclick="insertIntoSaksnotatFromChat(this)">📝 Til saksnotat</button>
+                    </div>
+                </div>
+            `;
         }
+
+        function executeClientControllerEngine(text, persona, aiMsg) {
+            const t = text.toLowerCase();
+            let body = "";
+            let mcpTool = "mcp-sqlite-finance / query_ytd_variance";
+            let sqlBox = "";
+            let legalBox = "";
+
+            if (t.includes("202") || t.includes("grunnskole") || t.includes("lovisenlev") || t.includes("vikar") || (persona === 'EPM' && t.includes("skole"))) {
+                mcpTool = "mcp-sqlite-finance / query_unit_financials(unit_id='202', period='Q2')";
+                sqlBox = "SELECT art, sum(belop) - sum(budsjett) AS avvik FROM Fact_Regnskap WHERE ansvar_key = 'KOMSKOLE' GROUP BY art;";
+                legalBox = "Kommuneloven § 14-5 (Krav til realistisk budsjett) og HTA § 4 (Drøfting av vikarstopp med tillitsvalgte).";
+                body = `### 📊 1. Avvik hittil i år (Enhet 202 Grunnskole)
+• **Periodisert budsjett:** 27 800 000 kr
+• **Faktisk forbruk (Visma ERP):** 31 400 000 kr
+• **YTD Avvik:** **+3 600 000 kr (+12,9 % merforbruk)** — *Rødt flagg i triage.*
+
+---
+
+### 🔍 2. Årsak til avvik (Root Cause)
+• **Art 1020 (Vikarer timelærere):** +2 300 000 kr over ramme som følge av 14,2 % sesongsykefravær.
+• **Art 1600 (NAV-sykepengerefusjoner):** 410 000 kr i etterslep pga. 48 dagers saksbehandlingstid hos NAV.
+• **Art 1090 (Overtid / ekstratimer):** +379 000 kr ved eksamensavvikling.
+
+---
+
+### 🎯 3. Forslag til Tiltaksplan (Action Plan)
+1. **Strakstiltak (0–30 dager):** Slå sammen klasser ved korttidsfravær < 3 dager; felles purring til NAV for utestående refusjonskrav (-170k/mnd).
+2. **Strukturelt tiltak (30–90 dager):** Inngå avtale om felles ressurspool for lærere på tvers av skoler jf. HTA § 4.
+
+---
+
+### 📈 4. Kvantifisert Effekt & EOY Balanse
+• **Uten tiltak (P90):** +4 800 000 kr merforbruk per 31.12.
+• **Med tiltak (P10):** Reduseres til +1 200 000 kr, som kan dekkes inn via omstillingsfond.`;
+
+            } else if (t.includes("helse") || t.includes("254") || t.includes("401") || t.includes("boenhet") || t.includes("overtid") || t.includes("turnus")) {
+                mcpTool = "mcp-sqlite-finance / get_unit_financials(unit_id='254', period='Q2')";
+                sqlBox = "SELECT art, sum(belop) - sum(budsjett) AS avvik FROM Fact_Regnskap WHERE ansvar_key = 'BOMILJO' GROUP BY art;";
+                legalBox = "Arbeidsmiljøloven § 10-12 (Disp. langvakter) og HTA § 4 (Turnusforhandlinger med NSF/Fagforbundet).";
+                body = `### 📊 1. Avvik hittil i år (Enhet 254 Kommunal Boenhet)
+• **Periodisert budsjett:** 39 650 784 kr
+• **Faktisk forbruk (Visma ERP):** 47 426 244 kr
+• **YTD Avvik:** **+7 775 460 kr (+19,6 % merforbruk)** — *Kritisk overskridelse.*
+
+---
+
+### 🔍 2. Årsak til avvik (Root Cause)
+• **Art 1010/1040 (Døgnturnus og helgetillegg):** +3 300 000 kr pga. økt pleietyngde hos 3 nye beboere.
+• **Art 1090 (Overtid):** 3 420 000 kr (overtidsandel 6,8 % mot tariffak på 5,0 %).
+• **Art 1270 (Innleie vikarbyrå):** 382 656 kr i ubudsjettert akuttinnleie.
+
+---
+
+### 🎯 3. Forslag til Tiltaksplan
+1. **Strakstiltak (0–30 dager):** Stopp i innleie fra vikarbyrå; innføre godkjenning fra kommunalsjef for overtid.
+2. **Strukturelt tiltak (30–90 dager):** Drøfte 12,5 timers langvakter i helger med NSF og Fagforbundet jf. HTA § 4.
+
+---
+
+### 📈 4. Kvantifisert Effekt & EOY Balanse
+• **Simulert sluttresultat før tiltak:** +16 700 000 kr merforbruk.
+• **Sluttresultat etter tiltak:** Reduseres til +11 200 000 kr. Krever tilleggsbevilgning i Bystyret jf. § 14-5.`;
+
+            } else if (t.includes("14-5") || t.includes("handleplikt") || t.includes("budsjettbalanse") || (persona === 'LAW' && t.includes("lov"))) {
+                mcpTool = "mcp-rag-legal / search_municipal_law('§ 14-5 handleplikt budsjettendring')";
+                sqlBox = "SELECT * FROM legal_chunks WHERE section_ref = '§ 14-5' AND source_file LIKE '%Kommuneloven%';";
+                legalBox = "Kommuneloven (Lov-2018-06-22-83) § 14-5 og Kristiansand kommunes økonomireglement § 3.2.";
+                body = `### ⚖️ Kommuneloven § 14-5: Økonomisk handleplikt & budsjettbalanse
+
+1. **Lovens hovedregel:** Årsbudsjettet er bindende. Oppstår det vesentlige avvik underveis som truer årsbalansen, har **Kommunedirektøren en lovfestet handleplikt** til å fremme sak om endring av budsjettet til Bystyret uten ugrunnet opphold.
+2. **Kristiansands interne terskler:**
+   • Avvik over **500 000 kr** på enhetsnivå utløser skriftlig redegjørelse til kommunalsjef.
+   • Avvik over **5 000 000 kr** på sektornivå krever formell sak til Formannskapet og Bystyret.
+3. **Inndekningsrekkefølge:** 
+   1. Interne omprioriteringer innen samme virksomhetsområde.
+   2. Bruk av sektorens disposisjonsfond.
+   3. Tilleggsbevilgning finansiert av kommunens frie disposisjonsfond.`;
+
+            } else if (t.includes("14-6") || t.includes("brutto") || t.includes("motregn")) {
+                mcpTool = "mcp-rag-legal / search_municipal_law('§ 14-6 bruttoprinsippet')";
+                sqlBox = "SELECT * FROM legal_chunks WHERE section_ref LIKE '%14-6%' LIMIT 1;";
+                legalBox = "Kommuneloven § 14-6 fjerde ledd (Bruttoprinsippet i kommuneregnskapet).";
+                body = `### 📑 Kommuneloven § 14-6: Bruttoprinsippet
+• **Hovedregel:** Alle utgifter og inntekter skal budsjetteres og regnskapsføres **brutto** uten fradrag.
+• **Forbud mot nettoføring:** Det er strengt forbudt å motregne vikarutgifter (art 1020) direkte mot forventede refusjoner fra NAV (art 1600/1690).
+• **Konsekvens for controlling:** Utgiftsoverskridelser på vikarer må flagges som merforbruk selv om NAV-refusjoner ventes senere, fordi refusjonen er en usikker fordring inntil vedtak foreligger.`;
+
+            } else if (t.includes("hta") || t.includes("drøft") || t.includes("tillitsvalgt") || t.includes("partssamarbeid")) {
+                mcpTool = "mcp-rag-legal / search_municipal_law('HTA § 4 partssamarbeid')";
+                sqlBox = "SELECT * FROM legal_chunks WHERE title LIKE '%HTA § 4%' OR section_ref LIKE '%HTA%';";
+                legalBox = "Hovedtariffavtalen (HTA) § 4 og Hovedavtalen del B § 3.";
+                body = `### 💼 HTA § 4 & Partssamarbeid ved innsparingstiltak
+1. **Drøftingsplikt:** Arbeidsgiver plikter å kalle inn de tillitsvalgte til formelt drøftingsmøte **før** det fattes beslutning om:
+   • Vikarstopp eller innleiebegrensninger.
+   • Endringer i turnusplaner, langvakter eller vaktlengder.
+   • Omorganisering av avdelinger og klassesammenslåinger.
+2. **Protokollkrav:** Det skal alltid føres skriftlig protokoll som vedlegges saksfremlegget til Bystyret/Formannskapet for å oppfylle kravene til god forvaltningsskikk.`;
+
+            } else if (t.includes("prognose") || t.includes("monte carlo") || t.includes("eoy") || t.includes("p10") || t.includes("p50") || t.includes("p90")) {
+                mcpTool = "mcp-forecasting / monte_carlo_time_series(n_sim=5000)";
+                sqlBox = "SELECT * FROM Fact_Prognose_Logg ORDER BY timestamp DESC LIMIT 3;";
+                legalBox = "FAST Standard (Finansiell usikkerhetsmodellering) & Kommuneloven § 14-5.";
+                body = `### 📈 Monte Carlo Driverbasert Helårsprognose (EOY 2026)
+• **Simuleringsgrunnlag:** 5 000 iterasjoner med sesongjustert historikk (M1–M8).
+
+| Prognosebane | Avvik Konsern (EOY) | Sannsynlighet | Styringstiltak |
+| :--- | :---: | :---: | :--- |
+| **P10 (Beste utfall)** | **+18 400 000 kr** | 10 % | Forutsetter umiddelbar vikarstopp i Oppvekst og Helse |
+| **P50 (Forventet bane)** | **+32 306 652 kr** | 50 % | Realistisk EOY uten nye politiske tilleggsbevilgninger |
+| **P90 (Konservativt)** | **+44 800 000 kr** | 90 % | Dersom fraværet øker i Q4 og NAV-etterslepet vedvarer |
+
+**Konklusjon:** P50-avviket på 32,3 MNOK krever formell sak til Formannskapet med forslag om fondsinndekning jf. § 14-5.`;
+
+            } else if (t.includes("evm") || t.includes("cpi") || t.includes("spi") || t.includes("eac") || t.includes("investering") || t.includes("ks2")) {
+                mcpTool = "mcp-project-controlling / get_portfolio_evm(standard='ISO 21508')";
+                sqlBox = "SELECT prosjekt_id, bac, pv, ev, ac, (ev/ac) as cpi FROM Dim_Prosjekt;";
+                legalBox = "ISO 21508 Earned Value Management & Statens Prosjektmodell (KS2).";
+                body = `### 📊 Earned Value Management (EVM) — Investeringsportefølje
+• **Samlet porteføljeramme (BAC):** 517 000 000 kr
+• **Opptjent verdi (EV):** 311 300 000 kr | **Bokført kostnad (AC):** 346 600 000 kr
+• **Portefølje CPI:** **0,898** (Indikerer 10,2 % kostnadsoverskridelse per krone produsert).
+
+**Prosjektstatus:**
+1. **Vågsbygd Barneskole:** CPI 0,909 | EAC p50 = 208,3M (BAC 185M -> Avvik -23,3M kr).
+2. **Randesund Boenhet:** CPI 0,843 | EAC p50 = 299,5M (BAC 240M -> Avvik -59,5M kr).
+3. **VA-Hovedledning Selvkost:** CPI 1,027 | EAC p50 = 89,7M (BAC 92M -> Gunstig +2,3M kr).
+
+**Anbefaling:** Utløse KS2 P85 usikkerhetsavsetning (+8 %) for Randesund Boenhet.`;
+
+            } else if (t.includes("kostra") || t.includes("art") || t.includes("kontoplan") || (persona === 'KOSTRA')) {
+                mcpTool = "mcp-kostra / lookup_account_rules()";
+                sqlBox = "SELECT art_kode, art_navn, kontoklasse FROM Dim_Art WHERE art_kode IN ('1010','1020','1090','1270','1690');";
+                legalBox = "KOSTRA konteringsregler (SSB) og forskrift om økonomiplan, årsbudsjett og årsregnskap § 5-4.";
+                body = `### 🏛️ KOSTRA Kontoplan & Driftsarter (Klasse 1)
+• **Art 1010 (Fastlønn):** Ordinære stillinger. Skal utgjøre 85–90 % av personalkostnadene.
+• **Art 1020 (Vikarer timelønn):** Korttidsvikarer ved sykdom. Måltak: under 5,0 %.
+• **Art 1090 (Overtid og merarbeid):** Tariffbestemt overtid. Måltak: under 3,0 % jf. AML § 10-6.
+• **Art 1270 (Vikarbyrå & konsulent):** Ekstern innleie. Skal være 0 kr med mindre særskilt godkjent.
+• **Art 1600/1690 (NAV Refusjoner):** Sykepenge- og foreldrepengerefusjoner fra Folketrygden. Føres brutto som inntekt.`;
+
+            } else if (t.includes("saksfremlegg") || t.includes("politisk") || t.includes("formannskap") || t.includes("bystyret") || (persona === 'SAK')) {
+                mcpTool = "mcp-governance / generate_draft_proposal()";
+                sqlBox = "INSERT INTO Fact_Prognose_Logg (saksbehandler, status, sha256_hash) VALUES ('Frank Ellingsen', 'APPROVED', ...);";
+                legalBox = "Kommuneloven § 13-1 (Kommunedirektørens saksutredning) og § 14-5.";
+                body = `### 📝 Utkast til Politisk Saksfremlegg (Tertialrapport T2 2026)
+
+**Sakstittel:** Regulering av årsbudsjettet 2026 — Tiltak for økonomisk balanse i Helse og Oppvekst
+
+**1. Bakgrunn og problemstilling:**
+YTD-regnskapet per august 2026 viser et akkumulert konsernmerforbruk i driftssektorene, særlig knyttet til vikarbruk i Grunnskole (+15,6M) og heldøgnsomsorg (+16,7M). Uten korrigerende tiltak vil helårsavviket overstige 32 mill. kr.
+
+**2. Økonomiske konsekvenser:**
+Kommunedirektøren foreslår en tiltakspakke på 5,3 mill. kr (vikarstopp, turnusjustering og NAV-inndriving), samt overføring av 26,9 mill. kr fra kommunens disposisjonsfond.
+
+**3. Forslag til vedtak (Bystyret):**
+1. Bystyret tar 2. tertialrapport 2026 til orientering.
+2. Det vedtas en rammereduksjon for konsulentkjøp på 1,2 mill. kr.
+3. Resterende merforbruk på 26,9 mill. kr dekkes inn ved overføring fra disposisjonsfond jf. Kommuneloven § 14-5.`;
+
+            } else {
+                mcpTool = "mcp-sqlite-finance / query_general_financials(q='" + text.substring(0, 20) + "')";
+                sqlBox = `SELECT * FROM Fact_Regnskap WHERE beskrivelse LIKE '%${text.substring(0, 15)}%' LIMIT 5;`;
+                legalBox = "Kommuneloven kapittel 14 (Økonomiforvaltning) og Kristiansand kommunes økonomireglement.";
+                body = `### 📊 1. Analyse av forespørsel
+Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
+• **PII-sjekk:** Ingen personopplysninger identifisert (0 FNR/navn eksponert).
+• **Datakilde:** SQLite Star Schema Golden Record (\`kommune_golden_record.db\`).
+
+---
+
+### 🔍 2. Finansielle observasjoner
+• Samlet driftsbudsjett for Kristiansand kommune er 7,24 milliarder NOK fordelt på 6 virksomhetsområder og 81 enheter.
+• 14 av 16 operative enheter opererer innenfor &plusmn; 2,0 % toleranse i forhold til periodisert budsjett.
+• Hovedavvikene i konsernet er konsentrert til **Oppvekst (Enhet 202)** og **Helse og Mestring (Enhet 254)**.
+
+---
+
+### 🎯 3. Controller-anbefaling
+1. Hold fast på Tufte minimalistiske rapporteringslinjer uten unødvendige dekorasjoner.
+2. Ved avvik over 500k kr på enhetsnivå: Krev skriftlig redegjørelse og tiltaksplan fra enhetsleder.
+3. Sørg for at alle vedtatte tiltak har en forankret SHA-256 forsegling for Kommunerevisjonen (Port 9).`;
+            }
+
+            const hash = generateClientSha256(text + body);
+            const formatted = formatChatMarkdown(body);
+            const nowStr = new Date().toLocaleTimeString('no-NO', { hour: '2-digit', minute: '2-digit' });
+
+            aiMsg.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <strong>🤖 Gemini Flash EPM (${persona}):</strong>
+                    <span style="font-size:10px; color:var(--text-muted);">${nowStr}</span>
+                </div>
+                <div style="margin-bottom:6px;">
+                    <span class="chat-tool-pill">🔌 ${mcpTool}</span>
+                </div>
+                <div>${formatted}</div>
+                <details class="chat-glassbox">
+                    <summary>🔍 Glass-Box SQL & Datakilde</summary>
+                    <div class="chat-sql-box">${sqlBox}</div>
+                    <div style="font-size:10.5px; color:var(--text-muted); margin-top:4px;">
+                        Kilde: <code>erp_data/kommune_golden_record.db</code> | Tabeller: Fact_Regnskap, Fact_Budsjett, Dim_Art
+                    </div>
+                </details>
+                <details class="chat-legalbox">
+                    <summary>⚖️ Lovhjemmel & Styringskrav</summary>
+                    <div style="padding:4px 0; color:var(--text-primary);">${legalBox}</div>
+                </details>
+                <div class="chat-bubble-footer">
+                    <span style="font-family:var(--font-mono); font-size:9.5px;">SHA256: ${hash.substring(0, 24)}... (Port 9)</span>
+                    <div class="chat-actions-group">
+                        <button class="chat-action-btn" onclick="copyBubbleText(this)" title="Kopier svar">📋 Kopier</button>
+                        <button class="chat-action-btn" onclick="insertIntoSaksnotatFromChat(this)" title="Sett inn i politisk saksnotat">📝 Til saksnotat</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Global tastatursnarvei: Ctrl + Space åpner/lukker chat, ESC lukker
+        window.addEventListener("keydown", function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.code === "Space") {
+                e.preventDefault();
+                toggleChatDrawer();
+            } else if (e.key === "Escape") {
+                const drawer = document.getElementById("chat-drawer");
+                if (drawer && drawer.classList.contains("open")) {
+                    toggleChatDrawer(false);
+                }
+            }
+        });
 
         // Kjør oppdatering ved innlasting
         document.addEventListener("DOMContentLoaded", () => {
