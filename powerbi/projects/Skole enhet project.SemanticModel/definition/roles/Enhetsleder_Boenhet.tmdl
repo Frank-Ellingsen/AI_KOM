@@ -1,0 +1,4 @@
+role Enhetsleder_Boenhet
+	modelPermission: read
+
+	tablePermission Dim_Ansvar = [ansvar_kode] = "2540"

@@ -1,0 +1,4 @@
+role Kommunalsjef_Helse
+	modelPermission: read
+
+	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Helse og mestring"

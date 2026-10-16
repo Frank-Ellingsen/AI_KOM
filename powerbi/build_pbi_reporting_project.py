@@ -40,7 +40,7 @@ DATA_ROOT = r"C:\Users\frank\Desktop\AI_KOM\erp_data\\"
 def setup_directories():
     """Oppretter katalogstrukturen for TMDL og PBIR."""
     (MODEL_DIR / "definition" / "tables").mkdir(parents=True, exist_ok=True)
-    (MODEL_DIR / "definition" / "cultures").mkdir(parents=True, exist_ok=True)
+    (MODEL_DIR / "definition" / "roles").mkdir(parents=True, exist_ok=True)
     (REPORT_DIR / "definition" / "pages").mkdir(parents=True, exist_ok=True)
     (REPORT_DIR / "StaticResources" / "SharedResources" / "BaseThemes").mkdir(parents=True, exist_ok=True)
 
@@ -65,28 +65,22 @@ def build_semantic_model():
 \tculture: nb-NO
 \tdefaultPowerBIDataSourceVersion: powerBI_V3
 \tsourceQueryCulture: en-US
-\tvalueFilterBehavior: independent
 
-\tref table Fact_Regnskap
-\tref table Dim_Dato
-\tref table Dim_Ansvar
-\tref table Dim_Funksjon
-\tref table Dim_Art
-\tref table Framsikt_Deflator
-\tref table Fravaer_Reduksjon
-\tref table Audit_AI_Actions
-\tref table _Measures
-\tref relationship FactDate
-\tref relationship FactAnsvar
-\tref relationship FactFunksjon
-\tref relationship FactArt
-\tref relationship AuditResponsibility
-\tref role Enhetsleder_Skole
-\tref role Enhetsleder_Boenhet
-\tref role Kommunalsjef_Oppvekst
-\tref role Kommunalsjef_Helse
-\tref role Konsern_Okonomi
-\tref expression DataRoot
+ref table Fact_Regnskap
+ref table Dim_Dato
+ref table Dim_Ansvar
+ref table Dim_Funksjon
+ref table Dim_Art
+ref table Framsikt_Deflator
+ref table Fravaer_Reduksjon
+ref table Audit_AI_Actions
+ref table _Measures
+
+ref role Enhetsleder_Skole
+ref role Enhetsleder_Boenhet
+ref role Kommunalsjef_Oppvekst
+ref role Kommunalsjef_Helse
+ref role Konsern_Okonomi
 """
     (MODEL_DIR / "definition" / "model.tmdl").write_text(model_content, encoding="utf-8")
 
@@ -128,31 +122,36 @@ relationship AuditResponsibility
 """
     (MODEL_DIR / "definition" / "relationships.tmdl").write_text(relationships_content, encoding="utf-8")
 
-    # roles.tmdl
-    roles_content = """role Enhetsleder_Skole
-\tmodelPermission: read
-\ttablePermission Dim_Ansvar
-\t\tfilterExpression: [ansvar_kode] = "2020"
-
-role Enhetsleder_Boenhet
-\tmodelPermission: read
-\ttablePermission Dim_Ansvar
-\t\tfilterExpression: [ansvar_kode] = "2540"
-
-role Kommunalsjef_Oppvekst
-\tmodelPermission: read
-\ttablePermission Dim_Ansvar
-\t\tfilterExpression: [kommunalsjefomrade] = "Oppvekst"
-
-role Kommunalsjef_Helse
-\tmodelPermission: read
-\ttablePermission Dim_Ansvar
-\t\tfilterExpression: [kommunalsjefomrade] = "Helse og mestring"
-
-role Konsern_Okonomi
-\tmodelPermission: read
-"""
-    (MODEL_DIR / "definition" / "roles.tmdl").write_text(roles_content, encoding="utf-8")
+    # roles/
+    roles_dir = MODEL_DIR / "definition" / "roles"
+    roles_dir.mkdir(parents=True, exist_ok=True)
+    (roles_dir / "Enhetsleder_Skole.tmdl").write_text(
+        "role Enhetsleder_Skole\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [ansvar_kode] = \"2020\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Enhetsleder_Boenhet.tmdl").write_text(
+        "role Enhetsleder_Boenhet\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [ansvar_kode] = \"2540\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Kommunalsjef_Oppvekst.tmdl").write_text(
+        "role Kommunalsjef_Oppvekst\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [kommunalsjefomrade] = \"Oppvekst\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Kommunalsjef_Helse.tmdl").write_text(
+        "role Kommunalsjef_Helse\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [kommunalsjefomrade] = \"Helse og mestring\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Konsern_Okonomi.tmdl").write_text(
+        "role Konsern_Okonomi\n\tmodelPermission: read\n",
+        encoding="utf-8"
+    )
+    # Rydd opp eventuelle foreldede flate filer eller tomme kataloger
+    old_roles = MODEL_DIR / "definition" / "roles.tmdl"
+    if old_roles.exists():
+        old_roles.unlink()
+    cultures_dir = MODEL_DIR / "definition" / "cultures"
+    if cultures_dir.exists():
+        shutil.rmtree(cultures_dir)
 
     # --------------------------------------------------------------------------
     # TABLES

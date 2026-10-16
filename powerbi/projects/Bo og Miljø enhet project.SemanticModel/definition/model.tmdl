@@ -2,24 +2,19 @@ model Model
 	culture: nb-NO
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
-	valueFilterBehavior: independent
 
-	ref table Fact_Regnskap
-	ref table Dim_Dato
-	ref table Dim_Ansvar
-	ref table Dim_Funksjon
-	ref table Dim_Art
-	ref table Framsikt_Deflator
-	ref table Fravaer_Reduksjon
-	ref table Audit_AI_Actions
-	ref table _Measures
-	ref relationship FactDate
-	ref relationship FactAnsvar
-	ref relationship FactFunksjon
-	ref relationship FactArt
-	ref role Enhetsleder_Skole
-	ref role Enhetsleder_Boenhet
-	ref role Kommunalsjef_Oppvekst
-	ref role Kommunalsjef_Helse
-	ref role Konsern_Okonomi
-	ref expression DataRoot
+ref table Fact_Regnskap
+ref table Dim_Dato
+ref table Dim_Ansvar
+ref table Dim_Funksjon
+ref table Dim_Art
+ref table Framsikt_Deflator
+ref table Fravaer_Reduksjon
+ref table Audit_AI_Actions
+ref table _Measures
+
+ref role Enhetsleder_Skole
+ref role Enhetsleder_Boenhet
+ref role Kommunalsjef_Oppvekst
+ref role Kommunalsjef_Helse
+ref role Konsern_Okonomi

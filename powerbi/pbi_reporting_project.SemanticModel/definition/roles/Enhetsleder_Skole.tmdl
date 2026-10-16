@@ -1,0 +1,4 @@
+role Enhetsleder_Skole
+	modelPermission: read
+
+	tablePermission Dim_Ansvar = [ansvar_kode] = "2020"

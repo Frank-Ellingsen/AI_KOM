@@ -1,0 +1,4 @@
+role Kommunalsjef_Oppvekst
+	modelPermission: read
+
+	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Oppvekst"
