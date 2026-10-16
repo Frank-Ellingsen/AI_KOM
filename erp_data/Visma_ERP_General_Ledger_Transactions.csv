@@ -1,195 +1,195 @@
 dato,Måned_Nr,Måned,Tertial,Status,KOSTRA_Funksjon,KOSTRA_Art,Kontokode,Kontonavn,Hovedgruppe,Undergruppe,Budsjett,Regnskap,Avvik
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Fastlønn,Lønn,Lønn,358000.00,357000.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Fast lønn lærere,Lønn,Lønn,1068000.00,988000.00,-80000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Sykevikarer,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,15000.00,15000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Overtidslønn,Lønn,Lønn,0.00,18000.00,18000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,2000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,1000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,73000.00,66000.00,-7000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Pensjon SPK,Lønn,Lønn,83000.00,75000.00,-8000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,1000.00,0.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Arbeidsgiveravgift,Lønn,Lønn,168000.00,161000.00,-7000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kontormateriell/abonnement aviser og fagtidsskrifter,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,1000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak ansatte og erkjentlighetsgaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,9000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Innholdstjenester Mytos,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,-1000.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Trykking/kopiering,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Representasjon/gaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,4000.00,4000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Opplæring og kurs,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,5000.00,5000.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,3000.00,4000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,3000.00,3000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Avgifter, gebyrer, lisenser o.l.",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,6000.00,6000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,7000.00,7000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,IKT-utstyr og telefon,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,20000.00,25000.00,5000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Serviceavtaler, reparasjoner og vaktmestertjenester",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,22000.00,22000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,17000.00,17000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,-3000.00,-3000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,-34000.00,-34000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-17000.00,-17000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Finansintekter,Bruk av bundne driftsfond - 1B,Finansintekter,Finansinntekter,-27000.00,0.00,27000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Fastlønn,Lønn,Lønn,1645000.00,1678000.00,33000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Fast lønn lærere,Lønn,Lønn,6430000.00,7542000.00,1112000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Helg/kveld fast tilsette,Lønn,Lønn,0.00,2000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Faste tillegg,Lønn,Lønn,281000.00,434000.00,153000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Påløpt løn m.m,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Lønn til vikarer,Lønn,Lønn,101000.00,360000.00,259000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,203,Lønn,Sykevikarer,Lønn,Lønn,0.00,223000.00,223000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,204,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,82000.00,82000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Overtidslønn,Lønn,Lønn,19000.00,148000.00,129000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,5000.00,5000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Lønn lærlinger,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Avgiftspliktig honorar,Lønn,Lønn,0.00,8000.00,8000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,10000.00,10000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Godtgjørelse folkevalgte,Lønn,Lønn,0.00,4000.00,4000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,338000.00,411000.00,73000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Pensjon SPK,Lønn,Lønn,531000.00,597000.00,66000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,14000.00,0.00,-14000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Arbeidsgiveravgift,Lønn,Lønn,989000.00,1123000.00,134000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kontormateriell/abonnement aviser og fagtidsskrifter,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,3000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,139000.00,129000.00,-10000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Skolebibliotek,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,3000.00,0.00,-3000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lærebøker,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,107000.00,157000.00,50000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Medisinsk forbruksmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,378000.00,294000.00,-84000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Samlepost annet forbruksmateriell, varer og tjenester",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,3000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kun lønn motpost sk.pl. fordel ansatte,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,-4000.00,-4000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak ansatte og erkjentlighetsgaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,65000.00,30000.00,-35000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak brukere,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,9000.00,11000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Purregebyr, inkassosalær,annet",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Finansutgifter,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,2000.00,4000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Bankgebyrer, div. forsinkelses gebyrer",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Finansutgifter,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Innholdstjenester Mytos,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Trykking/kopiering,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,19000.00,9000.00,-10000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Representasjon/gaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Opplæring og kurs,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,21000.00,8000.00,-13000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Diett/natt-tillegg,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,13000.00,27000.00,14000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Skoleskyss,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,14000.00,14000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kun i lønn Reiseutgifter, ikke oppgavepliktig",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,1000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,20000.00,19000.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,18000.00,11000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Leie av lokaler/bolig,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,4000.00,4000.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Avgifter, gebyrer, lisenser o.l.",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,54000.00,54000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,61000.00,71000.00,10000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,146000.00,110000.00,-36000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,IKT-utstyr og telefon,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,122000.00,163000.00,41000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Serviceavtaler, reparasjoner og vaktmestertjenester",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,10000.00,26000.00,16000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Konsulenttjenester,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,7000.00,5000.00,-2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,32000.00,32000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra interkommunale selskap/private,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,7000.00,7000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,177000.00,177000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Overføringsutgifter,Tap på fordringer,Overføringsutgifter,Finansutgifter,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Finansutgifter,Avsetninger til bundne fond - 1B,Finansutgifter,Finansutgifter,0.00,250000.00,250000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Annet salg av varer og tjenester, gebyrer o.l. utenfor avg",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Annet salg av varer og tjenester, gebyrer o.l. utenfor avg",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,-37000.00,-37000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,203,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra NAV,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,0.00,-222000.00,-222000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,204,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,-389000.00,-389000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,-945000.00,-945000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-177000.00,-177000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra fylkeskommuner,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,0.00,-250000.00,-250000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra kommuner,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,-35000.00,0.00,35000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,0.00,-29000.00,-29000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Overføringsinntekter,Andre statlige overføringer - 1B,Overføringsinntekter,Overføringer,0.00,-176000.00,-176000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Overføring fra fylkeskommunen,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Overføringer,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Finansintekter,Bruk av bundne driftsfond - 1B,Finansintekter,Finansinntekter,-65000.00,0.00,65000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Fastlønn,Lønn,Lønn,554000.00,639000.00,85000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Fast lønn lærere,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Faste tillegg,Lønn,Lønn,18000.00,9000.00,-9000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Påløpt løn m.m,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Lønn til vikarer,Lønn,Lønn,0.00,25000.00,25000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Sykevikarer,Lønn,Lønn,0.00,13000.00,13000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,7000.00,7000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Overtidslønn,Lønn,Lønn,0.00,16000.00,16000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,116000.00,121000.00,5000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Pensjon SPK,Lønn,Lønn,0.00,1000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Arbeidsgiveravgift,Lønn,Lønn,72000.00,88000.00,16000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,10000.00,3000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,45000.00,43000.00,-2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,IKT-utstyr og telefon,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,10000.00,10000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,12000.00,12000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Foreldrebetaling,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukerbetaling,0.00,-1000.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,221,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-12000.00,-12000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Fastlønn,Lønn,Lønn,1022000.00,883000.00,-139000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Fast lønn lærere,Lønn,Lønn,733000.00,1137000.00,404000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Faste tillegg,Lønn,Lønn,140000.00,0.00,-140000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Påløpt løn m.m,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Lønn til vikarer,Lønn,Lønn,0.00,92000.00,92000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Sykevikarer,Lønn,Lønn,0.00,36000.00,36000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,215,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,32000.00,32000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Overtidslønn,Lønn,Lønn,0.00,46000.00,46000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,1000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,210000.00,182000.00,-28000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Pensjon SPK,Lønn,Lønn,68000.00,81000.00,13000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Arbeidsgiveravgift,Lønn,Lønn,230000.00,258000.00,28000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,2000.00,-5000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lærebøker,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,3000.00,1000.00,-2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak ansatte og erkjentlighetsgaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak brukere,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Representasjon/gaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Opplæring og kurs,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,26000.00,5000.00,-21000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kun i lønn Reiseutgifter, ikke oppgavepliktig",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,6000.00,6000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,1000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra kommuner/vertskommune,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,1000.00,1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,107000.00,81000.00,-26000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,-57000.00,-57000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,214,Finansintekter,Bruk av bundne driftsfond - 1B,Finansintekter,Finansinntekter,-50000.00,0.00,50000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Helg/kveld fast tilsette,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Lønn til vikarer,Lønn,Lønn,0.00,5000.00,5000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Helg/kveld vikar,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,40000.00,27000.00,-13000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Overtidslønn,Lønn,Lønn,0.00,21000.00,21000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Pensjon SPK,Lønn,Lønn,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Lønn,Arbeidsgiveravgift,Lønn,Lønn,4000.00,6000.00,2000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Transport/drift av egne og leide transportmidler ( herun,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,4000.00,4000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,30000.00,16000.00,-14000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,50000.00,49000.00,-1000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-4000.00,-4000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Transport/drift av egne og leide transportmidler ( herun,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,23000.00,1000.00,-22000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra kommuner/vertskommune,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,490000.00,490000.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra interkommunalt samarbeid §27,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Refusjoner,Refusjon fra staten,Refusjoner,Refusjoner,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,213,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,223,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Skoleskyss,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,516000.00,469000.00,-47000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,223,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,56000.00,56000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,223,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-56000.00,-56000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,222,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,222,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,222,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,0.00,0.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra kommuner/vertskommune,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,350000.00,245000.00,-105000.00
-2026-08-01T00:00:00,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som erstatter kommunalegenproduksjon,Kjøp fra interkommunalt samarbeid §27  ,Kjøp av varer og tjenester som erstatter kommunalegenproduksjon,Kjøp av produksjon,0.00,41000.00,41000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Fastlønn,Lønn,Lønn,358000.00,357000.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Fast lønn lærere,Lønn,Lønn,1068000.00,988000.00,-80000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Sykevikarer,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,15000.00,15000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Overtidslønn,Lønn,Lønn,0.00,18000.00,18000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,2000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,1000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,73000.00,66000.00,-7000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Pensjon SPK,Lønn,Lønn,83000.00,75000.00,-8000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,1000.00,0.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Arbeidsgiveravgift,Lønn,Lønn,168000.00,161000.00,-7000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kontormateriell/abonnement aviser og fagtidsskrifter,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,1000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak ansatte og erkjentlighetsgaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,9000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Innholdstjenester Mytos,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,-1000.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Trykking/kopiering,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Representasjon/gaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,4000.00,4000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Opplæring og kurs,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,5000.00,5000.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,3000.00,4000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,3000.00,3000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Avgifter, gebyrer, lisenser o.l.",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,6000.00,6000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,7000.00,7000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,IKT-utstyr og telefon,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,20000.00,25000.00,5000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Serviceavtaler, reparasjoner og vaktmestertjenester",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,22000.00,22000.00
+2026-08-01,8,August,T2,Bokført,202,202,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,17000.00,17000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,-3000.00,-3000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,-34000.00,-34000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-17000.00,-17000.00
+2026-08-01,8,August,T2,Bokført,202,202,Finansintekter,Bruk av bundne driftsfond - 1B,Finansintekter,Finansinntekter,-27000.00,0.00,27000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Fastlønn,Lønn,Lønn,1645000.00,1678000.00,33000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Fast lønn lærere,Lønn,Lønn,6430000.00,7542000.00,1112000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Helg/kveld fast tilsette,Lønn,Lønn,0.00,2000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Faste tillegg,Lønn,Lønn,281000.00,434000.00,153000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Påløpt løn m.m,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Lønn til vikarer,Lønn,Lønn,101000.00,360000.00,259000.00
+2026-08-01,8,August,T2,Bokført,202,203,Lønn,Sykevikarer,Lønn,Lønn,0.00,223000.00,223000.00
+2026-08-01,8,August,T2,Bokført,202,204,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,82000.00,82000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Overtidslønn,Lønn,Lønn,19000.00,148000.00,129000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,5000.00,5000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Lønn lærlinger,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Avgiftspliktig honorar,Lønn,Lønn,0.00,8000.00,8000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,10000.00,10000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Godtgjørelse folkevalgte,Lønn,Lønn,0.00,4000.00,4000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,338000.00,411000.00,73000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Pensjon SPK,Lønn,Lønn,531000.00,597000.00,66000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,14000.00,0.00,-14000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Arbeidsgiveravgift,Lønn,Lønn,989000.00,1123000.00,134000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kontormateriell/abonnement aviser og fagtidsskrifter,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,3000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,139000.00,129000.00,-10000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Skolebibliotek,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,3000.00,0.00,-3000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lærebøker,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,107000.00,157000.00,50000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Medisinsk forbruksmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,378000.00,294000.00,-84000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Samlepost annet forbruksmateriell, varer og tjenester",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,3000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kun lønn motpost sk.pl. fordel ansatte,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,-4000.00,-4000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak ansatte og erkjentlighetsgaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,65000.00,30000.00,-35000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak brukere,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,9000.00,11000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Purregebyr, inkassosalær,annet",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Finansutgifter,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,2000.00,4000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Bankgebyrer, div. forsinkelses gebyrer",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Finansutgifter,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Innholdstjenester Mytos,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Trykking/kopiering,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,19000.00,9000.00,-10000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Representasjon/gaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Opplæring og kurs,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,21000.00,8000.00,-13000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Diett/natt-tillegg,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,13000.00,27000.00,14000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Skoleskyss,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,14000.00,14000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kun i lønn Reiseutgifter, ikke oppgavepliktig",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,1000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,20000.00,19000.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,18000.00,11000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Leie av lokaler/bolig,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,4000.00,4000.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Avgifter, gebyrer, lisenser o.l.",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,54000.00,54000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,61000.00,71000.00,10000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,146000.00,110000.00,-36000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,IKT-utstyr og telefon,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,122000.00,163000.00,41000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Serviceavtaler, reparasjoner og vaktmestertjenester",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,10000.00,26000.00,16000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Konsulenttjenester,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,7000.00,5000.00,-2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,32000.00,32000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra interkommunale selskap/private,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,7000.00,7000.00
+2026-08-01,8,August,T2,Bokført,202,202,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,177000.00,177000.00
+2026-08-01,8,August,T2,Bokført,202,202,Overføringsutgifter,Tap på fordringer,Overføringsutgifter,Finansutgifter,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Finansutgifter,Avsetninger til bundne fond - 1B,Finansutgifter,Finansutgifter,0.00,250000.00,250000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Annet salg av varer og tjenester, gebyrer o.l. utenfor avg",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Annet salg av varer og tjenester, gebyrer o.l. utenfor avg",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,-37000.00,-37000.00
+2026-08-01,8,August,T2,Bokført,202,203,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra NAV,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,0.00,-222000.00,-222000.00
+2026-08-01,8,August,T2,Bokført,202,204,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,-389000.00,-389000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,-945000.00,-945000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-177000.00,-177000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra fylkeskommuner,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,0.00,-250000.00,-250000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra kommuner,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,-35000.00,0.00,35000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjon fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Refusjoner,0.00,-29000.00,-29000.00
+2026-08-01,8,August,T2,Bokført,202,202,Overføringsinntekter,Andre statlige overføringer - 1B,Overføringsinntekter,Overføringer,0.00,-176000.00,-176000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Overføring fra fylkeskommunen,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Overføringer,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Finansintekter,Bruk av bundne driftsfond - 1B,Finansintekter,Finansinntekter,-65000.00,0.00,65000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Fastlønn,Lønn,Lønn,554000.00,639000.00,85000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Fast lønn lærere,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Faste tillegg,Lønn,Lønn,18000.00,9000.00,-9000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Påløpt løn m.m,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Lønn til vikarer,Lønn,Lønn,0.00,25000.00,25000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Sykevikarer,Lønn,Lønn,0.00,13000.00,13000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,7000.00,7000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Overtidslønn,Lønn,Lønn,0.00,16000.00,16000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,116000.00,121000.00,5000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Pensjon SPK,Lønn,Lønn,0.00,1000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Arbeidsgiveravgift,Lønn,Lønn,72000.00,88000.00,16000.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,10000.00,3000.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,45000.00,43000.00,-2000.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,1000.00,0.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,IKT-utstyr og telefon,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,10000.00,10000.00
+2026-08-01,8,August,T2,Bokført,202,221,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,12000.00,12000.00
+2026-08-01,8,August,T2,Bokført,202,221,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Foreldrebetaling,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukerbetaling,0.00,-1000.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,221,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-12000.00,-12000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Fastlønn,Lønn,Lønn,1022000.00,883000.00,-139000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Fast lønn lærere,Lønn,Lønn,733000.00,1137000.00,404000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Faste tillegg,Lønn,Lønn,140000.00,0.00,-140000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Påløpt løn m.m,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Lønn til vikarer,Lønn,Lønn,0.00,92000.00,92000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Sykevikarer,Lønn,Lønn,0.00,36000.00,36000.00
+2026-08-01,8,August,T2,Bokført,202,215,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,0.00,32000.00,32000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Overtidslønn,Lønn,Lønn,0.00,46000.00,46000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Annen lønn og trekkpliktige godtgjørelser,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Trekkpliktige reiseutg.(lønn),Lønn,Lønn,0.00,1000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,210000.00,182000.00,-28000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Pensjon SPK,Lønn,Lønn,68000.00,81000.00,13000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Skattepl. forsikringsordn.,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Arbeidsgiveravgift,Lønn,Lønn,230000.00,258000.00,28000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,7000.00,2000.00,-5000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lærebøker,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,3000.00,1000.00,-2000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak ansatte og erkjentlighetsgaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Velferdstiltak brukere,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Telefoni,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Representasjon/gaver,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,2000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Opplæring og kurs,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Lønn Km-godtgjørelse,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,26000.00,5000.00,-21000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kun i lønn Reiseutgifter, ikke oppgavepliktig",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Forsikring tilsette/elevar,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,6000.00,6000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,1000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra kommuner/vertskommune,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,1000.00,1000.00
+2026-08-01,8,August,T2,Bokført,202,214,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,107000.00,81000.00,-26000.00
+2026-08-01,8,August,T2,Bokført,202,214,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Sykelønnsrefusjon,Lønn,Refusjon lønn,0.00,-57000.00,-57000.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Refusjon av fødselspenger,Lønn,Refusjon lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Lønn,Refusjon feriepenger,Lønn,Refusjon lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,214,Finansintekter,Bruk av bundne driftsfond - 1B,Finansintekter,Finansinntekter,-50000.00,0.00,50000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Helg/kveld fast tilsette,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Lønn til vikarer,Lønn,Lønn,0.00,5000.00,5000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Helg/kveld vikar,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Lønn til ekstrahjelp,Lønn,Lønn,40000.00,27000.00,-13000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Overtidslønn,Lønn,Lønn,0.00,21000.00,21000.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Pensjonsinnskudd og trekkpliktige forsikringsordninger,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Pensjon SPK,Lønn,Lønn,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Lønn,Arbeidsgiveravgift,Lønn,Lønn,4000.00,6000.00,2000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Undervisningsmateriell,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Matvarer,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Transport/drift av egne og leide transportmidler ( herun,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,4000.00,4000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,30000.00,16000.00,-14000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra andre (private),Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,50000.00,49000.00,-1000.00
+2026-08-01,8,August,T2,Bokført,202,202,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-4000.00,-4000.00
+2026-08-01,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Transport/drift av egne og leide transportmidler ( herun,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Brukertransport,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,23000.00,1000.00,-22000.00
+2026-08-01,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kontingent, lisens, gebyr",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra kommuner/vertskommune,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,490000.00,490000.00,0.00
+2026-08-01,8,August,T2,Bokført,202,213,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra interkommunalt samarbeid §27,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,213,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,213,Refusjoner,Refusjon fra staten,Refusjoner,Refusjoner,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,213,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,223,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Skoleskyss,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,516000.00,469000.00,-47000.00
+2026-08-01,8,August,T2,Bokført,202,223,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,56000.00,56000.00
+2026-08-01,8,August,T2,Bokført,202,223,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,-56000.00,-56000.00
+2026-08-01,8,August,T2,Bokført,202,222,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,"Kjøp av inventar, utstyr, værktøy, redskap",Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Drift,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,222,Overføringsutgifter,Merverdiavgift som gir rett til merverdiavgiftskompensa,Overføringsutgifter,Overføringer,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,222,Refusjoner,Kompensasjon moms påløpt i driftsregnskapet,Refusjoner,Refusjoner,0.00,0.00,0.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp fra kommuner/vertskommune,Kjøp av varer og tjenester som inngår i kommunal egenproduksjon,Kjøp av produksjon,350000.00,245000.00,-105000.00
+2026-08-01,8,August,T2,Bokført,202,202,Kjøp av varer og tjenester som erstatter kommunalegenproduksjon,Kjøp fra interkommunalt samarbeid §27  ,Kjøp av varer og tjenester som erstatter kommunalegenproduksjon,Kjøp av produksjon,0.00,41000.00,41000.00

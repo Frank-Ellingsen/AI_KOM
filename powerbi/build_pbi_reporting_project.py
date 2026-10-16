@@ -67,7 +67,7 @@ def ensure_erp_csv_data():
             w.writeheader()
             for r in r_bo:
                 per = r.get("Periode", "2024-01").strip()
-                dt = f"{per}-01T00:00:00"
+                dt = f"{per}-01"
                 b = float(r.get("Budsjett", 0) or 0)
                 reg = float(r.get("Regnskap", 0) or 0)
                 w.writerow({
@@ -111,7 +111,7 @@ def ensure_erp_csv_data():
                 bud = bud_raw * 1000.0
                 avv = reg - bud
                 w.writerow({
-                    'dato': '2026-08-01T00:00:00',
+                    'dato': '2026-08-01',
                     'Måned_Nr': '8',
                     'Måned': 'August',
                     'Tertial': 'T2',
@@ -352,9 +352,9 @@ relationship AuditResponsibility
 \t\t\t\t    SourceSkole = Csv.Document(File.Contents(DataRoot & "Visma_ERP_General_Ledger_Transactions.csv"), [Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 \t\t\t\t    HeadersSkole = Table.PromoteHeaders(SourceSkole, [PromoteAllScalars=true]),
 \t\t\t\t    TypeSkole = Table.TransformColumnTypes(HeadersSkole, {
-\t\t\t\t        {"dato", type datetime}, {"Måned_Nr", Int64.Type}, {"Måned", type text}, {"Tertial", type text},
-\t\t\t\t        {"Status", type text}, {"KOSTRA_Funksjon", Int64.Type}, {"KOSTRA_Art", Int64.Type},
-\t\t\t\t        {"Kontokode", Int64.Type}, {"Kontonavn", type text}, {"Hovedgruppe", type text},
+\t\t\t\t        {"dato", type date}, {"Måned_Nr", Int64.Type}, {"Måned", type text}, {"Tertial", type text},
+\t\t\t\t        {"Status", type text}, {"KOSTRA_Funksjon", type text}, {"KOSTRA_Art", type text},
+\t\t\t\t        {"Kontokode", type text}, {"Kontonavn", type text}, {"Hovedgruppe", type text},
 \t\t\t\t        {"Undergruppe", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}
 \t\t\t\t    }, "en-US"),
 \t\t\t\t    AddMerforbrukSkole = Table.AddColumn(TypeSkole, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
@@ -371,9 +371,9 @@ relationship AuditResponsibility
 \t\t\t\t    SourceBo = Csv.Document(File.Contents(DataRoot & "Visma_ERP_BoMiljo_Transactions_2026.csv"), [Delimiter=",", Columns=15, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 \t\t\t\t    HeadersBo = Table.PromoteHeaders(SourceBo, [PromoteAllScalars=true]),
 \t\t\t\t    TypeBo = Table.TransformColumnTypes(HeadersBo, {
-\t\t\t\t        {"dato", type datetime}, {"Måned_Nr", Int64.Type}, {"Måned", type text}, {"Tertial", type text},
+\t\t\t\t        {"dato", type date}, {"Måned_Nr", Int64.Type}, {"Måned", type text}, {"Tertial", type text},
 \t\t\t\t        {"Status", type text}, {"Avdeling", type text}, {"Tjenesteområde", type text},
-\t\t\t\t        {"KOSTRA_Funksjon", Int64.Type}, {"KOSTRA_Art", Int64.Type}, {"Kontokode", Int64.Type},
+\t\t\t\t        {"KOSTRA_Funksjon", type text}, {"KOSTRA_Art", type text}, {"Kontokode", type text},
 \t\t\t\t        {"Kontonavn", type text}, {"Hovedgruppe", type text}, {"Undergruppe", type text},
 \t\t\t\t        {"Budsjett", type number}, {"Regnskap", type number}
 \t\t\t\t    }, "en-US"),
