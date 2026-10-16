@@ -1,0 +1,14 @@
+{
+  "project": "Antigravity AI Pilot Kristiansand",
+  "target_faithfulness": 1.00,
+  "target_context_precision": 0.95,
+  "target_context_recall": 0.95,
+  "test_cases": [
+    {
+      "id": "TC-001",
+      "question": "Hva er reglene for attestasjon av overtidskostnader i helsesektoren?",
+      "golden_passages": ["Økonomireglement § 4-2", "Attestasjonsinstruks side 8"],
+      "expected_ground_truth": "Overtid skal forhåndsgodkjennes av avdelingsleder (Nivå 1) før utbetaling jf. § 4-2."
+    }
+  ]
+}
