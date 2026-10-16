@@ -1,0 +1,32 @@
+// ==============================================================================
+// GENERISK DAX AVVIKSKORREKSJON & RAG FORMATERING (Vendor Neutral)
+// ==============================================================================
+
+// 1. Basismålinger
+[Regnskap YTD] = SUM(Fact_Regnskap[regnskap_belop])
+[Budsjett YTD] = SUM(Fact_Budsjett[budsjett_belop])
+
+// 2. Korrigert Avvik YTD (Positivt = Gunstig / Grønt | Negativt = Ugunstig / Rødt)
+[Avvik YTD Korrigert] = 
+VAR ArtsKode = SELECTEDVALUE(Dim_Kontoplan[konto_kode])
+VAR ErInntekt = (NOT ISBLANK(ArtsKode) && ArtsKode >= "3000") // Inntektstype
+
+VAR UtgiftsAvvik = [Budsjett YTD] - [Regnskap YTD]   // Utgift: Budsjett > Regnskap er gunstig (+)
+VAR InntektsAvvik = [Regnskap YTD] - [Budsjett YTD]  // Inntekt: Regnskap > Budsjett er gunstig (+)
+
+RETURN IF(ErInntekt, InntektsAvvik, UtgiftsAvvik)
+
+// 3. Prosentvis Avvik
+[Avvik YTD %] = DIVIDE([Avvik YTD Korrigert], ABS([Budsjett YTD]), 0)
+
+// 4. Betinget Formatering (Hex)
+[RAG_Fargekode_Hex] = 
+VAR AvvikSats = [Avvik YTD %]
+VAR AvvikBelop = [Avvik YTD Korrigert]
+RETURN
+    SWITCH(
+        TRUE(),
+        AvvikSats < -0.020 || AvvikBelop < -500000, "#D32F2F", // Mørkerød (Kritisk)
+        AvvikSats < -0.005 || AvvikBelop < -50000,  "#FBC02D", // Gul (Advarsel)
+        "#388E3C"                                             // Mørkegrønn (I balanse)
+    )
