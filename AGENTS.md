@@ -77,12 +77,14 @@ This repository is fully configured for Antigravity native progressive disclosur
 | :--- | :--- | :--- |
 | **`.agents/`** | Antigravity AI Customizations | 19 native skills, 3 rule files, progressive disclosure |
 | **`agenter/`** | 12 Agent Role Specifications | Detailed roles for ETL, DAX, RAG, Controller, etc. |
+| **`antigravity-ms-pilot/`** | M365 Copilot & Antigravity Subproject | Subproject Python motor (`src/`), `run_pilot.py`, PII-vask, evaluatorer og tester |
 | **`app/`** | Web Applications & APIs | FastAPI server, Streamlit pilots, UI components |
 | **`archive/`** | Historical Backups & Scratch | `backups/`, `scratch/`, legacy exports |
 | **`budsjett-framsikt/`** | Framsikt EPM & KOSTRA Master Package | `budsjettering-kristiansand-kommune.md`, `lonnsbudsjettering-kristiansand-framsikt.md`, `driftsarter-og-selvkost-alle-omrader-framsikt.md`, `kostra-artskontoer-konteringsregler-framsikt.md` |
 | **`docs/`** | Unified Documentation | Architecture, user guides, specifications, and PDF publications |
 | **`erp_data/`** | Municipal Data Lake | `kommune_golden_record.db`, Visma ERP CSVs, Framsikt extracts |
 | **`excel/`** | Financial Modeling | FAST models, `Kommune_Project_Controller_Reporting_2026.xlsx` |
+| **`generic-ai-pilot-pakke/`** | Vendor-Neutral Enterprise AI Pilot | Generisk malverk (`enterprise-ai-pilot/`), DAX, prompts, evals, målarkitektur |
 | **`powerbi/`** | Power BI Enterprise Assets | `pbi_reporting_project.pbip`, DAX library, semantic models |
 | **`powerpoint/`** | Presentation Decks | 16:9 executive decks for Bystyret, Kommunedirektøren, Oppvekst |
 | **`reports/`** | Published Reports | Executive briefings, waterfall charts, status reports |

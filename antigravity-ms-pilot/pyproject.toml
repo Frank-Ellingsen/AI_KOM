@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "antigravity-ms-pilot"
+version = "1.0.0"
+description = "Antigravity & Microsoft 365 Copilot AI Pilot for Kristiansand Kommune Økonomistyring"
+readme = "README.md"
+authors = [
+    { name = "Frank Ellingsen", email = "frankellingsen@hotmail.com" }
+]
+license = { text = "Proprietary / Kristiansand Kommune" }
+requires-python = ">=3.10"
+dependencies = [
+    "pytest>=7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black",
+    "ruff",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

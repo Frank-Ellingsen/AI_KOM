@@ -67,7 +67,7 @@ def test_office_hub_v2_and_templates_verification():
     assert len(parser.errors) == 0, f"HTML parser feil: {parser.errors}"
 
     # 5. Alle dokumentlenker i index.html skal peke til eksisterende filer
-    file_hrefs = re.findall(r'href=[\"\'](templates/.*?|reports/.*?|docs/.*?|bruker-guides/.*?)[\"\']', html_content)
+    file_hrefs = re.findall(r'href=[\"\'](templates/.*?|reports/.*?|docs/.*?|bruker-guides/.*?|generic-ai-pilot-pakke/.*?|antigravity-ms-pilot/.*?)[\"\']', html_content)
     for href in set(file_hrefs):
         assert (ROOT_DIR / href).exists(), f"Brutt lenke: {href}"
 
@@ -177,3 +177,48 @@ def test_hub_api_server_endpoints():
     assert fin_summary["ok"] is True
     assert fin_summary["actual_ytd_nok"] > 0
     assert fin_summary["budget_ytd_nok"] > 0
+
+
+def test_antigravity_ms_pilot_and_generic_package_compliance():
+    """Validerer at antigravity-ms-pilot og generic-ai-pilot-pakke er intakte og funksjonelle."""
+    import json
+
+    # 1. Sjekk generic-ai-pilot-pakke
+    gen_root = ROOT_DIR / "generic-ai-pilot-pakke"
+    assert (gen_root / "README.md").exists(), "Mangler generic-ai-pilot-pakke/README.md"
+    assert (gen_root / "enterprise-ai-pilot" / "README.md").exists(), "Mangler enterprise-ai-pilot/README.md"
+    assert (gen_root / "enterprise-ai-pilot" / "dax_and_analytics" / "01_generisk_dax_og_rag_formatering.dax").exists()
+
+    # 2. Sjekk antigravity-ms-pilot subprosjektstruktur
+    sub_root = ROOT_DIR / "antigravity-ms-pilot"
+    assert (sub_root / "README.md").exists()
+    assert (sub_root / "pyproject.toml").exists()
+    assert (sub_root / "requirements.txt").exists()
+    assert (sub_root / "run_pilot.py").exists()
+
+    # 3. Test subprosjekt kildekode import
+    sub_src = sub_root / "src"
+    if str(sub_src) not in sys.path:
+        sys.path.insert(0, str(sub_src))
+
+    from gateway.pii_scrubber import sanitize_pii
+    from utils.audit_logger import AuditLogger
+
+    # Test PII vask
+    clean = sanitize_pii("Enhet 202 saksbehandler FNR 12058512345 tlf 98765432")
+    assert "12058512345" not in clean
+    assert "98765432" not in clean
+    assert "[SKJERMET_FNR]" in clean
+
+    # Test SHA-256 forsegling
+    logger = AuditLogger()
+    entry = logger.log_action("Test query", "Test response", actor="Frank Ellingsen")
+    assert len(entry.sha256_hash) == 64
+    assert entry.actor == "Frank Ellingsen"
+
+    # 4. Sjekk Ground Truth eval data
+    eval_file = sub_root / "evals" / "01_ground_truth_eval_template.json"
+    assert eval_file.exists()
+    eval_data = json.loads(eval_file.read_text(encoding="utf-8"))
+    assert eval_data["target_faithfulness"] == 1.00
+

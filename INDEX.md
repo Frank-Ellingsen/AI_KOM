@@ -19,6 +19,8 @@
 * [9. Kjørbare Verktøy & Skript (`tools/`)](#9-kjørbare-verktøy--skript-tools)
 * [10. Data & Golden Record (`erp_data/`)](#10-data--golden-record-erp_data)
 * [11. Framsikt EPM & Budsjettstyring (`budsjett-framsikt/`)](#11-framsikt-epm--budsjettstyring-budsjett-framsikt)
+* [12. Generisk Enterprise AI Pilot-Pakke (`generic-ai-pilot-pakke/`)](#12-generisk-enterprise-ai-pilot-pakke-generic-ai-pilot-pakke)
+* [13. Antigravity & MS Copilot Pilot Subprosjekt (`antigravity-ms-pilot/`)](#13-antigravity--ms-copilot-pilot-subprosjekt-antigravity-ms-pilot)
 
 ---
 
@@ -184,4 +186,43 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 | **Driftsarter & Selvkost** | Varekjøp (1100–1270), overføringer (1300–1480), finans/fond (1500–1930), selvkostkalkyler for VAR & Byggesak (3400/3450/3500/3600) med 5-årsregel. | [`budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md`](./budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md) |
 | **KOSTRA Konteringsregler** | Lønnsarter, sosiale kostnader og refusjoner (1690). Bruttoføringskrav og controller-sjekkliste før budsjettlåsing i Framsikt. | [`budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md`](./budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md) |
 | **Framsikt Master Index (README)** | Samlet inngangsport og hurtigreferanse for AI-agenter og controllere. | [`budsjett-framsikt/README.md`](./budsjett-framsikt/README.md) |
+
+---
+
+## 12. Generisk Enterprise AI Pilot-Pakke (`generic-ai-pilot-pakke/`)
+
+> **Leverandøruavhengig og flyttbart malverk for AI-piloter i kommunal og offentlig sektor.**
+
+| Dokument | Hovedinnhold & Målgruppe | Filsti |
+| :--- | :--- | :--- |
+| **Generisk Pilot Hovedindeks** | Masterveileder for pilotpakken, formål og bruksanvisning | [`generic-ai-pilot-pakke/README.md`](./generic-ai-pilot-pakke/README.md) |
+| **Single Source of Truth (SSOT)** | Struktur, moduler og status for enterprise-piloten | [`generic-ai-pilot-pakke/enterprise-ai-pilot/README.md`](./generic-ai-pilot-pakke/enterprise-ai-pilot/README.md) |
+| **Enterprise Målarkitektur** | AI Gateway, PII-filter, RAG og Zero Trust kontrollplan | [`enterprise-ai-pilot/docs/architecture/01_maalarkitektur...`](./generic-ai-pilot-pakke/enterprise-ai-pilot/docs/architecture/01_maalarkitektur-okonomi-ai-kristiansand.md) |
+| **Gevinstmodell & Følsomhet** | FinOps-kalkyle, break-even og gevinstrealisering | [`enterprise-ai-pilot/docs/financials/01_folsomhetsanalyse...`](./generic-ai-pilot-pakke/enterprise-ai-pilot/docs/financials/01_folsomhetsanalyse-gevinstmodell-ai.md) |
+| **Politisk Saksfremlegg** | Formelt saksfremlegg om AI-veikart for økonomi | [`enterprise-ai-pilot/docs/governance/01_saksframlegg...`](./generic-ai-pilot-pakke/enterprise-ai-pilot/docs/governance/01_saksframlegg-ai-veikart-okonomi.md) |
+| **Sponsorkort (Cheat Sheet)** | 1-sides beslutningsgrunnlag til toppledelsen | [`enterprise-ai-pilot/docs/governance/02_cheat-sheet...`](./generic-ai-pilot-pakke/enterprise-ai-pilot/docs/governance/02_cheat-sheet-sponsormote-ai.md) |
+| **Oppstartsnotat for Pilot** | Operativ veiledning, superbruker-instruks og tidsplan | [`enterprise-ai-pilot/docs/pilot_and_ops/01_oppstartsnotat...`](./generic-ai-pilot-pakke/enterprise-ai-pilot/docs/pilot_and_ops/01_oppstartsnotat-pilotgruppe-ai.md) |
+| **Risikovurdering (FRIA/DPIA)** | EU AI Act, GDPR art. 35 og forvaltningsloven § 25 | [`enterprise-ai-pilot/docs/security_and_legal/01_risiko...`](./generic-ai-pilot-pakke/enterprise-ai-pilot/docs/security_and_legal/01_risikovurdering-og-evalueringsskjema-ai-pilot.md) |
+| **Ground Truth Fasitsett** | RAGAS fasitsett for Faithfulness og Context Recall | [`enterprise-ai-pilot/evals/01_ground_truth_eval_template.json`](./generic-ai-pilot-pakke/enterprise-ai-pilot/evals/01_ground_truth_eval_template.json) |
+| **Copilot Mønsterprompter** | Kvalitetssikrede prompter for Excel (`=PY`), BI og Word | [`enterprise-ai-pilot/prompts/01_promptsett-m365-copilot-kostra.md`](./generic-ai-pilot-pakke/enterprise-ai-pilot/prompts/01_promptsett-m365-copilot-kostra.md) |
+| **Generisk DAX & RAG** | Standardisert DAX-formatering (korrigert avvik & RAG-hex) | [`enterprise-ai-pilot/dax_and_analytics/01_generisk_dax...`](./generic-ai-pilot-pakke/enterprise-ai-pilot/dax_and_analytics/01_generisk_dax_og_rag_formatering.dax) |
+
+---
+
+## 13. Antigravity & MS Copilot Pilot Subprosjekt (`antigravity-ms-pilot/`)
+
+> **Operasjonelt subprosjekt for Kristiansand kommune med kildekode, tester og M365 Copilot-prompter.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **Subproject Master (README)** | Komplett arkitektur, status og hurtigkommandoer | [`antigravity-ms-pilot/README.md`](./antigravity-ms-pilot/README.md) |
+| **Subproject Package Config** | Python `pyproject.toml` og `requirements.txt` | [`antigravity-ms-pilot/pyproject.toml`](./antigravity-ms-pilot/pyproject.toml) |
+| **CLI Runner (`run_pilot.py`)** | Operativ test- og compliance-motor for piloten | [`antigravity-ms-pilot/run_pilot.py`](./antigravity-ms-pilot/run_pilot.py) |
+| **PII Scrubber & Rate Limiter** | PII-maskering (FNR/TLF/E-post) og FinOps token-begrenser | [`antigravity-ms-pilot/src/gateway/pii_scrubber.py`](./antigravity-ms-pilot/src/gateway/pii_scrubber.py) |
+| **Hybrid Retriever & Chunker** | Tabellbevarende chunking og BM25 hybrid-søk | [`antigravity-ms-pilot/src/rag/hybrid_retriever.py`](./antigravity-ms-pilot/src/rag/hybrid_retriever.py) |
+| **Kryptografisk Audit Logger** | SHA-256 forsegling for Kommunerevisjonen (Port 9) | [`antigravity-ms-pilot/src/utils/audit_logger.py`](./antigravity-ms-pilot/src/utils/audit_logger.py) |
+| **Automatisert Testsuite** | Pytest-tester for PII, token limits, RAG og revisjon | [`antigravity-ms-pilot/tests/test_pilot_subproject.py`](./antigravity-ms-pilot/tests/test_pilot_subproject.py) |
+| **Kristiansand Promptsett** | KOSTRA- og vikaravviksprompter for Excel `=PY` og Teams | [`antigravity-ms-pilot/prompts/01_promptsett-m365-copilot-kostra.md`](./antigravity-ms-pilot/prompts/01_promptsett-m365-copilot-kostra.md) |
+| **Fasitsett (Evals)** | Ground truth fasitsett for Kristiansand kommune | [`antigravity-ms-pilot/evals/01_ground_truth_eval_template.json`](./antigravity-ms-pilot/evals/01_ground_truth_eval_template.json) |
+
 

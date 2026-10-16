@@ -1,0 +1,2 @@
+# Dependencies for Antigravity MS Pilot Subproject
+pytest>=7.0.0

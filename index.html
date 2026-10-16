@@ -3364,6 +3364,12 @@
                 <a href="#dokumentbank" onclick="filterDocs('MLOPS')" class="sidebar-nav-item" title="Filter for 6 MLOps-maler">
                     <span>⚙️ MLOps-Pakke (6)</span>
                 </a>
+                <a href="#dokumentbank" onclick="filterDocs('PILOT')" class="sidebar-nav-item" title="Leverandøruavhengig Enterprise AI Pilot-pakke">
+                    <span>🌐 Generisk AI Pilot (9)</span>
+                </a>
+                <a href="#dokumentbank" onclick="filterDocs('MS_PILOT')" class="sidebar-nav-item" title="Operasjonelt Antigravity & M365 Copilot subprosjekt">
+                    <span>🚀 Antigravity MS Pilot (5)</span>
+                </a>
             </div>
         </div>
 
@@ -5490,6 +5496,8 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
             <button class="tab-btn" onclick="filterDocs('MCP')" style="font-weight: 700; color: #7c3aed; border-bottom: 2px solid #7c3aed;">⚡ Gemini Flash MCP</button>
             <button class="tab-btn" onclick="filterDocs('AIPAKKE')">🎯 AI-Implementering</button>
             <button class="tab-btn" onclick="filterDocs('MLOPS')">⚙️ MLOps & LLMOps</button>
+            <button class="tab-btn" onclick="filterDocs('PILOT')" style="font-weight: 700; color: #0284c7; border-bottom: 2px solid #0284c7;">🌐 Generisk AI Pilot</button>
+            <button class="tab-btn" onclick="filterDocs('MS_PILOT')" style="font-weight: 700; color: #059669; border-bottom: 2px solid #059669;">🚀 Antigravity MS Pilot</button>
             <button class="tab-btn" onclick="filterDocs('JUS')">🛡️ Revisjon & Jus</button>
         </div>
 
@@ -6079,6 +6087,252 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
                 <div class="doc-actions">
                     <button class="btn btn-sm btn-primary" onclick="previewDocument('MLOPS_06')">👁️ Forhåndsvis</button>
                     <a href="mlops-implementeringspakke/06_MLOps_Anbud_og_Innkjoepsmal.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GENERISK ENTERPRISE AI PILOT-PAKKE (data-category="PILOT")
+                 =============================================================== -->
+            
+            <!-- PILOT KORT 1 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #0284c7; color: #fff;">PILOT SSOT</span>
+                        <span style="font-size: 11px; color: #0284c7; font-weight: 700;">Enterprise Malverk</span>
+                    </div>
+                    <div class="doc-title">Generisk AI Pilot: Masterindeks & SSOT</div>
+                    <div class="doc-law">Standard: Leverandøruavhengig, flyttbar enterprise-arkitektur</div>
+                    <div class="doc-desc">Samlet Single Source of Truth for etablering av AI-piloter i kommunal sektor. Parametrisert for fri gjenbruk ([VIRKSOMHETENS NAVN]).</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_README')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/README.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 2 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #0284c7; color: #fff;">ARKITEKTUR</span>
+                        <span style="font-size: 11px; color: #0284c7; font-weight: 700;">AI Gateway & Zero Trust</span>
+                    </div>
+                    <div class="doc-title">Enterprise Målarkitektur for AI</div>
+                    <div class="doc-law">Sikkerhet: PII-maskering, RAG hybrid søk og isolert kontrollplan</div>
+                    <div class="doc-desc">Teknisk blueprint for sentral AI Gateway, Entra ID tilgangsstyring, dataflyt, modelluavhengighet og MLOps livsløp.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_MAALARK')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/docs/architecture/01_maalarkitektur-okonomi-ai-kristiansand.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 3 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-xlsx">GEVINST</span>
+                        <span style="font-size: 11px; color: var(--success-green); font-weight: 700;">FinOps & ROI</span>
+                    </div>
+                    <div class="doc-title">Gevinstmodell & Finansiell Følsomhetsanalyse</div>
+                    <div class="doc-law">Kalkyle: +1,06 mill. kr netto gevinst, 4,9 mnd payback</div>
+                    <div class="doc-desc">FinOps-håndbok med break-even uttaksprosent (12,9 %), Monte Carlo-følsomhet og 3-års gevinstrealiseringsplan.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_GEVINST')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/docs/financials/01_folsomhetsanalyse-gevinstmodell-ai.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 4 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge badge-docx">GOVERNANCE</span>
+                        <span style="font-size: 11px; color: var(--navy-dark); font-weight: 700;">Politiske Saksnotat</span>
+                    </div>
+                    <div class="doc-title">Politisk Saksfremlegg: AI-Veikart for Økonomi</div>
+                    <div class="doc-law">Hjemmel: Kommuneloven & Digitaliseringsstrategien</div>
+                    <div class="doc-desc">Formelt saksfremlegg til formannskap/bystyre om modenhetsreise fra L1 (Readiness) til L5 (Kontinuerlig revisjon jf. ISO 42001).</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_SAK')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/docs/governance/01_saksframlegg-ai-veikart-okonomi.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 5 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #0284c7; color: #fff;">SPONSOR</span>
+                        <span style="font-size: 11px; color: #0284c7; font-weight: 700;">Topplederkort</span>
+                    </div>
+                    <div class="doc-title">Cheat Sheet for Sponsormøte med Ledelsen</div>
+                    <div class="doc-law">Beslutningsport: G2 Pilot-oppstart (1-sides notat)</div>
+                    <div class="doc-desc">Kompakt 1-sides notat til Kommunedirektøren med 3 kjernebudskap, 3 svar på typiske motargumenter og suksesskriterier.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_SPONSOR')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/docs/governance/02_cheat-sheet-sponsormote-ai.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 6 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #0284c7; color: #fff;">PILOTDRIFT</span>
+                        <span style="font-size: 11px; color: #0284c7; font-weight: 700;">Superbrukere</span>
+                    </div>
+                    <div class="doc-title">Oppstartsnotat & Husregler for Pilotgruppen</div>
+                    <div class="doc-law">Prinsipp: 100% HITL & 0% Feiltoleranse på Tall</div>
+                    <div class="doc-desc">Veiledning for økonomirådgivere og superbrukere i piloten (Uke 1–8). Husregler for kildekontroll, taushetsplikt og avviksføring.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_OPPSTART')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/docs/pilot_and_ops/01_oppstartsnotat-pilotgruppe-ai.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 7 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #c0392b; color: #fff;">DPIA & FRIA</span>
+                        <span style="font-size: 11px; color: #c0392b; font-weight: 700;">EU AI Act Art. 26</span>
+                    </div>
+                    <div class="doc-title">Risikovurdering & Evalueringsskjema (FRIA/DPIA)</div>
+                    <div class="doc-law">Compliance: GDPR Art. 35, EU AI Act & Forvaltningsloven § 25</div>
+                    <div class="doc-desc">Operasjonelt juridisk vurderingsskjema for grunnleggende rettigheter (FRIA), personvern (DPIA) og ukentlig loggsjekk for avvik.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_RISIKO')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/docs/security_and_legal/01_risikovurdering-og-evalueringsskjema-ai-pilot.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 8 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #0284c7; color: #fff;">PROMPTER</span>
+                        <span style="font-size: 11px; color: #0284c7; font-weight: 700;">M365 Copilot</span>
+                    </div>
+                    <div class="doc-title">Promptsett for M365 Copilot & KOSTRA</div>
+                    <div class="doc-law">Verktøy: Excel (=PY), Power BI Fabric & Word</div>
+                    <div class="doc-desc">Mønsterprompter for automatisert vikaravviksanalyse (art 1020/1090), scenario-simuleringer og saksfremlegg.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_PROMPTS')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/prompts/01_promptsett-m365-copilot-kostra.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- PILOT KORT 9 -->
+            <div class="doc-card" data-category="PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #107c41; color: #fff;">DAX ANALYTICS</span>
+                        <span style="font-size: 11px; color: #107c41; font-weight: 700;">Power BI</span>
+                    </div>
+                    <div class="doc-title">Generisk DAX Avvikskorreksjon & RAG Hex</div>
+                    <div class="doc-law">Logikk: Inntekt vs Utgift fortegnskorreksjon & Tufte hex</div>
+                    <div class="doc-desc">Leverandøruavhengig DAX-kode for feilfrie avviksberegninger og standardiserte trafikklysfarger (#D32F2F, #FBC02D, #388E3C).</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('GEN_DAX')">👁️ Forhåndsvis</button>
+                    <a href="generic-ai-pilot-pakke/enterprise-ai-pilot/dax_and_analytics/01_generisk_dax_og_rag_formatering.dax" target="_blank" class="btn btn-sm">📄 Åpne (.dax)</a>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 ANTIGRAVITY MS PILOT SUBPROSJEKT (data-category="MS_PILOT")
+                 =============================================================== -->
+            
+            <!-- MS_PILOT KORT 1 -->
+            <div class="doc-card" data-category="MS_PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #059669; color: #fff;">SUBPROSJEKT</span>
+                        <span style="font-size: 11px; color: #059669; font-weight: 700;">Kristiansand Kommune</span>
+                    </div>
+                    <div class="doc-title">Antigravity MS Pilot: Subproject Master</div>
+                    <div class="doc-law">Konfig: pyproject.toml, requirements.txt, run_pilot.py</div>
+                    <div class="doc-desc">Operasjonelt subprosjekt dedikert til utrulling av Microsoft 365 Copilot og Antigravity AI i Kristiansand kommunes økonomiavdeling.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MSPILOT_README')">👁️ Forhåndsvis</button>
+                    <a href="antigravity-ms-pilot/README.md" target="_blank" class="btn btn-sm">📄 Åpne (.md)</a>
+                </div>
+            </div>
+
+            <!-- MS_PILOT KORT 2 -->
+            <div class="doc-card" data-category="MS_PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #059669; color: #fff;">CLI RUNNER</span>
+                        <span style="font-size: 11px; color: #059669; font-weight: 700;">run_pilot.py</span>
+                    </div>
+                    <div class="doc-title">Operativ Pilot Runner & Testsele</div>
+                    <div class="doc-law">Kommando: python run_pilot.py --check-compliance</div>
+                    <div class="doc-desc">Kjørbart CLI-verktøy for automatisk verifisering av PII-maskering, token limits, ground truth evaluering og SHA-256 forsegling.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MSPILOT_RUNNER')">👁️ Forhåndsvis</button>
+                    <a href="antigravity-ms-pilot/run_pilot.py" target="_blank" class="btn btn-sm">📄 Åpne (.py)</a>
+                </div>
+            </div>
+
+            <!-- MS_PILOT KORT 3 -->
+            <div class="doc-card" data-category="MS_PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #059669; color: #fff;">AI GATEWAY</span>
+                        <span style="font-size: 11px; color: #059669; font-weight: 700;">pii_scrubber.py</span>
+                    </div>
+                    <div class="doc-title">PII Scrubber & FinOps Token Rate Limiter</div>
+                    <div class="doc-law">Sikkerhet: FNR (11 siffer), tlf og e-post token-vask</div>
+                    <div class="doc-desc">Python-modul som renser alle prompts for personopplysninger før de når språkmodeller, med token bucket algoritme for kostnadskontroll.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MSPILOT_PII')">👁️ Forhåndsvis</button>
+                    <a href="antigravity-ms-pilot/src/gateway/pii_scrubber.py" target="_blank" class="btn btn-sm">📄 Åpne (.py)</a>
+                </div>
+            </div>
+
+            <!-- MS_PILOT KORT 4 -->
+            <div class="doc-card" data-category="MS_PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #059669; color: #fff;">RAG MOTOR</span>
+                        <span style="font-size: 11px; color: #059669; font-weight: 700;">hybrid_retriever.py</span>
+                    </div>
+                    <div class="doc-title">Hybrid Retriever & Table-Aware Chunker</div>
+                    <div class="doc-law">Metode: BM25 leksikalsk søk med hel tabellbevaring</div>
+                    <div class="doc-desc">Sikrer at markdown-tabeller i KOSTRA-kontoplan og reglement aldri splittes over chunk-grenser, med hybrid paragraf-scoring.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MSPILOT_RAG')">👁️ Forhåndsvis</button>
+                    <a href="antigravity-ms-pilot/src/rag/hybrid_retriever.py" target="_blank" class="btn btn-sm">📄 Åpne (.py)</a>
+                </div>
+            </div>
+
+            <!-- MS_PILOT KORT 5 -->
+            <div class="doc-card" data-category="MS_PILOT">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #059669; color: #fff;">PORT 9 REVISJON</span>
+                        <span style="font-size: 11px; color: #059669; font-weight: 700;">audit_logger.py</span>
+                    </div>
+                    <div class="doc-title">Kryptografisk SHA-256 Audit Logger</div>
+                    <div class="doc-law">Revisjon: Kommuneloven § 14-5 & Kommunerevisjonen</div>
+                    <div class="doc-desc">Uforanderlig revisjonslogger som forsegler enhver AI-anbefaling med navngitt saksbehandler (Frank Ellingsen) og tidsstempel.</div>
+                </div>
+                <div class="doc-actions">
+                    <button class="btn btn-sm btn-primary" onclick="previewDocument('MSPILOT_AUDIT')">👁️ Forhåndsvis</button>
+                    <a href="antigravity-ms-pilot/src/utils/audit_logger.py" target="_blank" class="btn btn-sm">📄 Åpne (.py)</a>
                 </div>
             </div>
 
@@ -7784,6 +8038,198 @@ Status: Godkjent administrativt innenfor rammen. Forseglet i Audit_AI_Actions.`
     <li><strong>K-08 (B-krav):</strong> Automatisert benchmarking mot Ground Truth-testsett.</li>
     <li><strong>K-09 (A-krav):</strong> Teknisk nødknapp (Kill-Switch) med manuell fallback.</li>
     <li><strong>K-10 (B-krav):</strong> SLA på minimum 99,5 % oppetid for produksjonsendepunkter.</li>
+</ul>`
+            },
+            "GEN_README": {
+                title: "Generisk Enterprise AI Pilot: Masterindeks & SSOT",
+                file: "generic-ai-pilot-pakke/README.md",
+                body: `<h3>GENERISK ENTERPRISE AI PILOT-PAKKE (SSOT)</h3>
+<p><strong>Standard:</strong> Leverandøruavhengig malverk for AI-piloter i kommunal sektor | ISO 42001 & EU AI Act</p>
+<hr>
+<h4>HOVEDKOMPONENTER I PAKKEN:</h4>
+<ul>
+    <li><strong>docs/architecture:</strong> Enterprise Målarkitektur, AI Gateway, PII-vask og Zero Trust.</li>
+    <li><strong>docs/financials:</strong> Gevinstmodell (+1,06 mill. kr netto), 4,9 mnd payback og FinOps.</li>
+    <li><strong>docs/governance:</strong> Saksfremlegg (Veikart) og 1-sides sponsorkort til Kommunedirektøren.</li>
+    <li><strong>docs/pilot_and_ops:</strong> Oppstartsnotat, superbruker-instruks (Uke 1–8) og husregler.</li>
+    <li><strong>docs/security_and_legal:</strong> DPIA/FRIA-risikovurdering jf. GDPR art. 35 og EU AI Act art. 26.</li>
+    <li><strong>prompts & evals:</strong> Mønsterprompter for Copilot og Ground Truth fasitsett.</li>
+    <li><strong>dax_and_analytics:</strong> Korrigert DAX-avvikslogikk og standardiserte trafikklysfarger.</li>
+</ul>`
+            },
+            "GEN_MAALARK": {
+                title: "Enterprise Målarkitektur for AI i Økonomistyring",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/docs/architecture/01_maalarkitektur-okonomi-ai-kristiansand.md",
+                body: `<h3>ENTERPRISE MÅLARKITEKTUR: ZERO TRUST CONTROL PLANE</h3>
+<p><strong>Målgruppe:</strong> IT-arkitekter og løsningsdesignere | Sikker integrasjon mot ERP og språkmodeller</p>
+<hr>
+<h4>KJERNESØYLER I MÅLARKITEKTUREN:</h4>
+<ul>
+    <li><strong>Sentral AI Gateway:</strong> Token-rate limiting, PII-maskering og hybrid ruting mot lokale og skymodeller.</li>
+    <li><strong>RAG Hybrid Søkemotor:</strong> Kombinerer semantisk vektorsøk og BM25 med tabellbevarende chunking.</li>
+    <li><strong>Identitet & Tilgang:</strong> Entra ID SSO med rollebasert tilgangskontroll (RBAC/ABAC).</li>
+    <li><strong>MLOps Lifecycle:</strong> Kontinuerlig overvåking av modellglidning (drift), latency og kostnadskontroll.</li>
+</ul>`
+            },
+            "GEN_GEVINST": {
+                title: "Gevinstmodell og Finansiell Følsomhetsanalyse",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/docs/financials/01_folsomhetsanalyse-gevinstmodell-ai.md",
+                body: `<h3>FINANSIELL GEVINSTMODELL & FØLSOMHETSANALYSE</h3>
+<p><strong>Metode:</strong> 3-års nåverdi, Monte Carlo-simulering og FinOps-kostnadsstyring</p>
+<hr>
+<h4>NØKKELTALL FRA GEVINSTMODELLEN:</h4>
+<ul>
+    <li><strong>Brutto årlig gevinst:</strong> 1 450 000 kr (frigjort tid for controllere og rådgivere).</li>
+    <li><strong>Drifts- og lisenskostnader:</strong> 386 000 kr per år (Azure/Copilot lisenser og gateway-drift).</li>
+    <li><strong>Netto årlig gevinst:</strong> <strong>+1 064 000 kr</strong>.</li>
+    <li><strong>Break-even uttaksprosent:</strong> Kun <strong>12,9 %</strong> realisering kreves for nullpunkt.</li>
+    <li><strong>Payback-periode:</strong> <strong>4,9 måneder</strong> fra produksjonsstart.</li>
+</ul>`
+            },
+            "GEN_SAK": {
+                title: "Politisk Saksfremlegg: AI-Veikart for Økonomistyring",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/docs/governance/01_saksframlegg-ai-veikart-okonomi.md",
+                body: `<h3>SAKSFREMLEGG: STRATEGISK AI-VEIKART FOR ØKONOMISTYRING</h3>
+<p><strong>Møtedato:</strong> Høst 2026 | <strong>Utvalg:</strong> Formannskapet og Bystyret</p>
+<hr>
+<h4>KOMMUNEDIREKTØRENS ANBEFALING:</h4>
+<ol>
+    <li>Bystyret vedtar strategisk AI-veikart for økonomi- og virksomhetsstyring for perioden 2026–2030.</li>
+    <li>Bølge 1 pilot (RAG-søk og avviksforklaringer) igangsettes i henhold til oppsatt tidsplan.</li>
+    <li>Alle AI-løsninger skal underlegges obligatorisk PII-vasking og human-in-the-loop (HITL) godkjenning.</li>
+    <li>Gevinstrealiseringsplan for 2027–2030 innarbeides i handlings- og økonomiplanen (HØP).</li>
+</ol>`
+            },
+            "GEN_SPONSOR": {
+                title: "Cheat Sheet: Sponsormøte med Kommunedirektøren",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/docs/governance/02_cheat-sheet-sponsormote-ai.md",
+                body: `<h3>1-SIDES CHEAT SHEET TIL SPONSORMØTE</h3>
+<p><strong>Beslutningsport:</strong> G2 Pilot-oppstart | <strong>Varighet:</strong> 15 minutter</p>
+<hr>
+<h4>3 KJERNEBUDSKAP:</h4>
+<ul>
+    <li><strong>1. Null risiko for feilutbetaling:</strong> Piloten er strengt begrenset til leseorienterte (read-only) oppgaver.</li>
+    <li><strong>2. Høy gevinst på kort tid:</strong> Break-even nås ved kun 12,9 % tidsfrigjøring (payback 4,9 mnd).</li>
+    <li><strong>3. Full kontroll på juss og etikk:</strong> 100 % menneskelig overprøving (HITL) og lokal PII-skjerming.</li>
+</ul>`
+            },
+            "GEN_OPPSTART": {
+                title: "Oppstartsnotat og Veiledning for Pilotgruppen",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/docs/pilot_and_ops/01_oppstartsnotat-pilotgruppe-ai.md",
+                body: `<h3>OPPSTARTSNOTAT FOR PILOTGRUPPEN (UKE 1–8)</h3>
+<p><strong>Målgruppe:</strong> Superbrukere, økonomirådgivere og prosjektcontrollere</p>
+<hr>
+<h4>4 UFRAVIKELIGE HUSREGLER:</h4>
+<ul>
+    <li><strong>1. 100 % Menneskelig Kontroll (HITL):</strong> AI leverer kun utkast. Du har ansvaret for godkjenning.</li>
+    <li><strong>2. 0 % Feiltoleranse på Regnskapstall:</strong> Verifiser alltid beløp og kontokoder mot ERP.</li>
+    <li><strong>3. Kun Leseadgang (Read-Only):</strong> Ingen automatisk bokføring eller budsjettendring.</li>
+    <li><strong>4. Databeskyttelse:</strong> Lim aldri inn uprosesserte personopplysninger eller taushetsbelagte data.</li>
+</ul>`
+            },
+            "GEN_RISIKO": {
+                title: "Risikovurdering og Evalueringsskjema (FRIA/DPIA)",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/docs/security_and_legal/01_risikovurdering-og-evalueringsskjema-ai-pilot.md",
+                body: `<h3>JURIDISK RISIKOVURDERING (FRIA & DPIA)</h3>
+<p><strong>Lovhjemler:</strong> EU AI Act Art. 26/27, GDPR Art. 35 og Forvaltningsloven § 25</p>
+<hr>
+<h4>VURDERINGSPUNKTER:</h4>
+<ul>
+    <li><strong>Grunnleggende rettigheter (FRIA):</strong> Ingen inngrep i innbyggernes rettigheter ettersom systemet kun støtter interne analyseoppgaver.</li>
+    <li><strong>Personvern (DPIA):</strong> Residualrisiko vurdert som LAV etter implementering av regex-basert PII-filter.</li>
+    <li><strong>Ansvar og overprøving:</strong> Tydelig definert saksbehandleransvar før politisk eller administrativ behandling.</li>
+</ul>`
+            },
+            "GEN_PROMPTS": {
+                title: "Promptsett for Microsoft 365 Copilot & KOSTRA",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/prompts/01_promptsett-m365-copilot-kostra.md",
+                body: `<h3>MØNSTERPROMPTER FOR M365 COPILOT & EXCEL (=PY)</h3>
+<p><strong>Bruksområde:</strong> Avviksanalyser, vikar- og overtidssmitte og scenariesimuleringer</p>
+<hr>
+<h4>EKSEMPLER PÅ KVALITETSSIKREDE PROMPTER:</h4>
+<ul>
+    <li><strong>Prompt 1.1 (Vikar & overtid):</strong> Filtrer ut Art 1020/1090 i Oppvekst og finn de 5 enhetene med størst kroneavvik via Python.</li>
+    <li><strong>Prompt 1.2 (Scenariosimulering):</strong> Beregn helårseffekt ved 40 % vs. 100 % vikarstopp fra 1. oktober.</li>
+    <li><strong>Prompt 1.3 (KOSTRA-avvik):</strong> Forklar regnskapsavvik på funksjonsnivå fordelt på lønn, drift og refusjoner.</li>
+</ul>`
+            },
+            "GEN_DAX": {
+                title: "Generisk DAX Avvikskorreksjon & RAG Hex",
+                file: "generic-ai-pilot-pakke/enterprise-ai-pilot/dax_and_analytics/01_generisk_dax_og_rag_formatering.dax",
+                body: `<h3>GENERISK DAX AVVIKS- OG FARGEKODINGSLOGIKK</h3>
+<p><strong>Formål:</strong> Leverandøruavhengig DAX for Power BI og Analysis Services</p>
+<hr>
+<h4>DAX STRUKTUR:</h4>
+<pre><code>// Korrigert Avvik: Utgift Budsjett - Regnskap | Inntekt Regnskap - Budsjett
+[Avvik YTD Korrigert] = 
+VAR ArtsKode = SELECTEDVALUE(Dim_Kontoplan[konto_kode])
+VAR ErInntekt = (NOT ISBLANK(ArtsKode) && ArtsKode >= "3000")
+RETURN IF(ErInntekt, [Regnskap YTD] - [Budsjett YTD], [Budsjett YTD] - [Regnskap YTD])
+
+// Betinget Hex-formatering (Tufte RAG):
+// #D32F2F (Mørkerød ved < -2%), #FBC02D (Gul ved < -0.5%), #388E3C (Grønn)</code></pre>`
+            },
+            "MSPILOT_README": {
+                title: "Antigravity MS Pilot: Subproject Master & SSOT",
+                file: "antigravity-ms-pilot/README.md",
+                body: `<h3>ANTIGRAVITY & M365 COPILOT SUBPROSJEKT</h3>
+<p><strong>Virksomhet:</strong> Kristiansand kommune | <strong>Lead Controller:</strong> Frank Ellingsen</p>
+<hr>
+<h4>SUBPROSJEKTETS ROLLE:</h4>
+<ul>
+    <li><strong>Operativ pilotmotor:</strong> Inneholder full Python-kildekode i <code>src/</code> for PII-maskering, hybrid-søk og revisjon.</li>
+    <li><strong>Automatisert CLI-runner:</strong> <code>run_pilot.py</code> for øyeblikkelig compliance- og testkjøring.</li>
+    <li><strong>Dedikert testsuite:</strong> 7 automatiserte enhets- og integrasjonstester i <code>tests/</code>.</li>
+    <li><strong>Kommunal forankring:</strong> Tilpasset Kristiansand kommunes kontoplan, delegeringsreglement og HTA § 4.</li>
+</ul>`
+            },
+            "MSPILOT_RUNNER": {
+                title: "Operativ Pilot Runner & Testsele (run_pilot.py)",
+                file: "antigravity-ms-pilot/run_pilot.py",
+                body: `<h3>OPERATIV CLI RUNNER: run_pilot.py</h3>
+<p><strong>Bruk:</strong> Kommandolinjeverktøy for controllere og utviklere</p>
+<hr>
+<h4>TILGJENGELIGE FUNKSJONER:</h4>
+<ul>
+    <li><code>python run_pilot.py --check-compliance</code>: Kjører automatisk PII-maskeringstest, FinOps rate-limiter, Ground Truth evaluering og SHA-256 stempling.</li>
+    <li><code>python run_pilot.py --test</code>: Kjører den integrerte pytest-suiten for subprosjektet.</li>
+</ul>`
+            },
+            "MSPILOT_PII": {
+                title: "AI Gateway: PII Scrubber & FinOps Rate Limiter",
+                file: "antigravity-ms-pilot/src/gateway/pii_scrubber.py",
+                body: `<h3>AI GATEWAY: PII SCRUBBER & FINOPS BEGRENSER</h3>
+<p><strong>Modul:</strong> src/gateway/pii_scrubber.py | Sikkerhet og kostnadskontroll</p>
+<hr>
+<h4>SIKKERHETSMETODER:</h4>
+<ul>
+    <li><strong>FNR Maskering:</strong> Regex-gjenkjenning av 11-sifrede fødselsnumre (FNR/DNR) med token-erstatning.</li>
+    <li><strong>Kontaktinfo:</strong> Automatisk maskering av norske telefonnumre (+47) og personlige e-postadresser.</li>
+    <li><strong>Token Bucket Rate Limiter:</strong> Hindrer overforbruk av tokens og håndhever budsjettak per bruker/avdeling.</li>
+</ul>`
+            },
+            "MSPILOT_RAG": {
+                title: "RAG Motor: Hybrid Retriever & Table Chunker",
+                file: "antigravity-ms-pilot/src/rag/hybrid_retriever.py",
+                body: `<h3>HYBRID RETRIEVER & TABELLBEVARENDE CHUNKING</h3>
+<p><strong>Modul:</strong> src/rag/hybrid_retriever.py | Høy presisjon for økonomidata</p>
+<hr>
+<h4>ARKITEKTUR:</h4>
+<ul>
+    <li><strong>TableAwareChunker:</strong> Parser dokumenter slik at markdown-tabeller aldri kuttes i to midt i en rad.</li>
+    <li><strong>HybridRetriever:</strong> Kombinerer leksikalsk BM25 termfrekvens med eksakt paragrafgjenkjenning (§ 14-5, § 14-6, HTA § 4).</li>
+</ul>`
+            },
+            "MSPILOT_AUDIT": {
+                title: "Port 9 Revisjonslogger (audit_logger.py)",
+                file: "antigravity-ms-pilot/src/utils/audit_logger.py",
+                body: `<h3>KRYPTOGRAFISK SHA-256 AUDIT LOGGER</h3>
+<p><strong>Modul:</strong> src/utils/audit_logger.py | Kommunerevisjonen & Kontrollutvalget</p>
+<hr>
+<h4>REVISJONSSTANDARD:</h4>
+<ul>
+    <li><strong>Uforanderlig hash:</strong> SHA-256 beregnes over tidsstempel, saksbehandler, prompt og generert respons.</li>
+    <li><strong>Stage-Gate Port 9:</strong> Hver handling knyttes til navngitt saksbehandler (Frank Ellingsen) før godkjenning.</li>
 </ul>`
             },
             "SAKSFREMLEGG": {

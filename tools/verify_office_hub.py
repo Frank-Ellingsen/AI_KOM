@@ -134,8 +134,8 @@ def run_checks():
         for err in parser.errors[:5]:
             print(f"     - {err}")
 
-    # Sjekk at alle href-lenker i index.html som peker til templates/reports/docs/bruker-guides faktisk finnes på disk
-    file_hrefs = re.findall(r'href=[\"\'](templates/.*?|reports/.*?|docs/.*?|bruker-guides/.*?)[\"\']', html_content)
+    # Sjekk at alle href-lenker i index.html som peker til templates/reports/docs/bruker-guides/pilot-pakker faktisk finnes på disk
+    file_hrefs = re.findall(r'href=[\"\'](templates/.*?|reports/.*?|docs/.*?|bruker-guides/.*?|generic-ai-pilot-pakke/.*?|antigravity-ms-pilot/.*?)[\"\']', html_content)
     print(f"\n5. Verifiserer {len(file_hrefs)} dokumentlenker i index.html mot filsystemet...")
     missing_links = 0
     for href in set(file_hrefs):

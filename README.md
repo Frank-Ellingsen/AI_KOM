@@ -156,6 +156,8 @@ AI_KOM/
 ├── bruker-guides/                 # Brukerveiledninger, månedshjul, årskalender og delegeringskatalog
 ├── spesifikasjoner/               # Tekniske spesifikasjoner for web-hub, prediksjon og MLOps
 ├── mvp-pilot/                     # Operativ pilot for Bo og Miljø (Streamlit, DuckDB, SQLite)
+├── generic-ai-pilot-pakke/        # Leverandøruavhengig Enterprise AI Pilot-pakke (malverk for alle virksomheter)
+├── antigravity-ms-pilot/          # Kristiansand M365 Copilot & Antigravity subprosjekt (motor, evaluator, tester)
 ├── ai-implementeringspakke-okonomi/  # 9-delt Håndbok for kommunal AI-implementering
 ├── mlops-implementeringspakke/        # 6-delt MLOps & LLMOps styrings- og anskaffelsespakke
 ├── start_kommune_ai.bat           # Hurtigoppstart av Control Office Hub
@@ -267,6 +269,27 @@ For å sikre trygg, skalerbar og regelverkskonform drift i tråd med **EU AI Act
 | **04** | [`04_MLOps_Governance_og_Sikkerhet.md`](./mlops-implementeringspakke/04_MLOps_Governance_og_Sikkerhet.md) | **MLOps Governance, EU AI Act & Sikkerhet**<br>*(CISO, Personvernombud & Jurister)* | Deployer-krav, 4-delt operativ rollestruktur, lovpålagt audit logg (art. 26) og Kill-Switch. |
 | **05** | [`05_MLOps_Test_og_Kvalitetssikring.md`](./mlops-implementeringspakke/05_MLOps_Test_og_Kvalitetssikring.md) | **Testing, Ground Truth & Kvalitetssikring**<br>*(Kvalitetsledere & Fagøkonomer)* | Test-pyramide for AI, Ground Truth fasitsett, Faithfulness og Gate G3 akseptkriterier. |
 | **06** | [`06_MLOps_Anbud_og_Innkjoepsmal.md`](./mlops-implementeringspakke/06_MLOps_Anbud_og_Innkjoepsmal.md) | **Kravspesifikasjon & Anbudsmal**<br>*(Innkjøpere & Fagledere)* | K-01 til K-10 A/B-kravmatrise, datasuverenitet og forbud mot leverandørtrening på data. |
+
+---
+
+## 🌐 Generisk Enterprise AI Pilot-Pakke (`generic-ai-pilot-pakke/`)
+
+For virksomheter som ønsker en **leverandøruavhengig, flyttbar standard**, inkluderer repositoriet [`generic-ai-pilot-pakke/`](./generic-ai-pilot-pakke/README.md). Den inneholder det komplette enterprise-malverket [`enterprise-ai-pilot/`](./generic-ai-pilot-pakke/enterprise-ai-pilot/README.md) med parametriserte moduler for:
+* **Målarkitektur**: AI Gateway, PII-vask og Zero Trust Control Plane.
+* **FinOps & Følsomhet**: +1,06 mill. kr netto gevinstmodell og break-even kalkyle.
+* **Governance**: Formelt saksfremlegg og 1-sides sponsorkort.
+* **Juss & Risiko**: Full DPIA/FRIA-sjekkliste og evalueringsskjema.
+* **Prompter & DAX**: Standardiserte KOSTRA-prompter og korrigert DAX-avvikslogikk.
+
+---
+
+## 🚀 Antigravity & Microsoft 365 Copilot Subprosjekt (`antigravity-ms-pilot/`)
+
+[`antigravity-ms-pilot/`](./antigravity-ms-pilot/README.md) er et fullverdig, operasjonelt subprosjekt skreddersydd for Kristiansand kommune:
+* **Kildekode (`src/`)**: Innebygd PII-maskering (`src/gateway/`), hybrid retrieval med tabellbevaring (`src/rag/`), og SHA-256 revisjonslogging (`src/utils/`).
+* **CLI Runner**: `python run_pilot.py --check-compliance` for automatisk verifikasjon av PII, token limits og revisjonsstempel.
+* **Testsuite**: Egen pytest-suite i `antigravity-ms-pilot/tests/`.
+* **Standarder**: Full etterlevelse av Kommuneloven §§ 14-5/14-6, HTA § 4 og Stage-Gate Port 9 HITL.
 
 ---
 
