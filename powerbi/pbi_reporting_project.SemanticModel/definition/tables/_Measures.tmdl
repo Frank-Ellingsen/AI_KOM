@@ -10,7 +10,6 @@ table _Measures
 		mode: import
 		source = #table(type table [Placeholder = Int64.Type], {{1}})
 
-	// --- BASISMÅLINGER ---
 	measure 'Regnskap YTD' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
 		formatString: #,##0 "kr"
 
@@ -32,7 +31,6 @@ table _Measures
 	measure 'Vedtatt Årsbudsjett' = CALCULATE(SUM(Fact_Regnskap[Aarsbudsjett]), REMOVEFILTERS(Dim_Dato))
 		formatString: #,##0 "kr"
 
-	// --- FORECASTING / EOY ---
 	measure 'EOY Rullende Prognose' = VAR AnnualBudget = [Vedtatt Årsbudsjett] VAR RemainingBudget = MAX(AnnualBudget - [Budsjett YTD], 0) RETURN [Regnskap YTD] + RemainingBudget + MAX([Avvik YTD], 0) * 0.5
 		formatString: #,##0 "kr"
 
@@ -45,10 +43,8 @@ table _Measures
 	measure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] - [Planlagt Tiltakseffekt T3]
 		formatString: #,##0 "kr";[Red](#,##0 "kr");"-"
 
-	// --- TUFTE FARGESTYRING ---
 	measure 'Tufte_Avvik_Farge_HEX' = SWITCH(TRUE(), [Avvik YTD %] > 0.05, "#DC2626", [Avvik YTD %] > 0.02, "#F59E0B", "#16A34A")
 
-	// --- KOSTRA KPIS ---
 	measure 'Vikarutgifter Art 1020' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020")
 		formatString: #,##0 "kr"
 
@@ -70,7 +66,6 @@ table _Measures
 	measure 'Netto Driftsutgift Per Elev' = DIVIDE(CALCULATE([Regnskap YTD], Dim_Ansvar[ansvar_kode] = "2020"), 1420, 0)
 		formatString: #,##0 "kr/elev"
 
-	// --- WHAT-IF PARAMETERE ---
 	measure 'Framsikt Deflator Value' = SELECTEDVALUE(Framsikt_Deflator[Value], 0.041)
 		formatString: 0.0%
 
@@ -83,7 +78,6 @@ table _Measures
 	measure 'Simulert EOY Forventet Avvik' = [Simulert EOY Netto Driftsresultat] - [Vedtatt Årsbudsjett]
 		formatString: #,##0 "kr";[Red](#,##0 "kr");"-"
 
-	// --- PROJECT CONTROLLING (EVM) ---
 	measure 'Planlagt Verdi (PV)' = [Budsjett YTD]
 		formatString: #,##0 "kr"
 
@@ -99,7 +93,6 @@ table _Measures
 	measure 'Sluttprognose (EAC)' = DIVIDE([Vedtatt Årsbudsjett], [Kostnadsindeks (CPI)], [Vedtatt Årsbudsjett])
 		formatString: #,##0 "kr"
 
-	// --- DYNAMISKE TITLER & AKSJONSTITLER ---
 	measure 'Dynamisk_Tittel_Nivaa' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Detaljnivå: " & SELECTEDVALUE(Dim_Ansvar[ansvar_navn]), "Samlet Kommunenivå — Kristiansand")
 
 	measure 'FT_Aksjonstittel_Avvik' = IF([Avvik YTD] > 500000, "Kritisk merforbruk på kr " & FORMAT([Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")

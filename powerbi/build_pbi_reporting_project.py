@@ -603,7 +603,6 @@ relationship AuditResponsibility
 \t\tmode: import
 \t\tsource = #table(type table [Placeholder = Int64.Type], {{1}})
 
-\t// --- BASISMÅLINGER ---
 \tmeasure 'Regnskap YTD' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
 \t\tformatString: #,##0 "kr"
 
@@ -625,7 +624,6 @@ relationship AuditResponsibility
 \tmeasure 'Vedtatt Årsbudsjett' = CALCULATE(SUM(Fact_Regnskap[Aarsbudsjett]), REMOVEFILTERS(Dim_Dato))
 \t\tformatString: #,##0 "kr"
 
-\t// --- FORECASTING / EOY ---
 \tmeasure 'EOY Rullende Prognose' = VAR AnnualBudget = [Vedtatt Årsbudsjett] VAR RemainingBudget = MAX(AnnualBudget - [Budsjett YTD], 0) RETURN [Regnskap YTD] + RemainingBudget + MAX([Avvik YTD], 0) * 0.5
 \t\tformatString: #,##0 "kr"
 
@@ -638,10 +636,8 @@ relationship AuditResponsibility
 \tmeasure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] - [Planlagt Tiltakseffekt T3]
 \t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
 
-\t// --- TUFTE FARGESTYRING ---
 \tmeasure 'Tufte_Avvik_Farge_HEX' = SWITCH(TRUE(), [Avvik YTD %] > 0.05, "#DC2626", [Avvik YTD %] > 0.02, "#F59E0B", "#16A34A")
 
-\t// --- KOSTRA KPIS ---
 \tmeasure 'Vikarutgifter Art 1020' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020")
 \t\tformatString: #,##0 "kr"
 
@@ -663,7 +659,6 @@ relationship AuditResponsibility
 \tmeasure 'Netto Driftsutgift Per Elev' = DIVIDE(CALCULATE([Regnskap YTD], Dim_Ansvar[ansvar_kode] = "2020"), 1420, 0)
 \t\tformatString: #,##0 "kr/elev"
 
-\t// --- WHAT-IF PARAMETERE ---
 \tmeasure 'Framsikt Deflator Value' = SELECTEDVALUE(Framsikt_Deflator[Value], 0.041)
 \t\tformatString: 0.0%
 
@@ -676,7 +671,6 @@ relationship AuditResponsibility
 \tmeasure 'Simulert EOY Forventet Avvik' = [Simulert EOY Netto Driftsresultat] - [Vedtatt Årsbudsjett]
 \t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
 
-\t// --- PROJECT CONTROLLING (EVM) ---
 \tmeasure 'Planlagt Verdi (PV)' = [Budsjett YTD]
 \t\tformatString: #,##0 "kr"
 
@@ -692,7 +686,6 @@ relationship AuditResponsibility
 \tmeasure 'Sluttprognose (EAC)' = DIVIDE([Vedtatt Årsbudsjett], [Kostnadsindeks (CPI)], [Vedtatt Årsbudsjett])
 \t\tformatString: #,##0 "kr"
 
-\t// --- DYNAMISKE TITLER & AKSJONSTITLER ---
 \tmeasure 'Dynamisk_Tittel_Nivaa' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Detaljnivå: " & SELECTEDVALUE(Dim_Ansvar[ansvar_navn]), "Samlet Kommunenivå — Kristiansand")
 
 \tmeasure 'FT_Aksjonstittel_Avvik' = IF([Avvik YTD] > 500000, "Kritisk merforbruk på kr " & FORMAT([Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")
