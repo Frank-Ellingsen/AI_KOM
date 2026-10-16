@@ -4271,6 +4271,12 @@
                 </div>
 
                 <div class="bank-controls-right">
+                    <button class="btn btn-sm" onclick="openShareModal('email')" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe; font-weight:600;" title="Send månedlig status og kontoutskrift på e-post til leder og controller">
+                        📧 Send E-post
+                    </button>
+                    <button class="btn btn-sm" onclick="openShareModal('teams')" style="background:#f3e8ff; color:#6b21a8; border-color:#e9d5ff; font-weight:600;" title="Del månedlig status og kontoutskrift direkte i Microsoft Teams">
+                        💬 Del i Teams
+                    </button>
                     <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
                         🖨️ Skriv ut / PDF
                     </button>
@@ -4838,6 +4844,7 @@
             <div class="pbi-tab" onclick="switchPbiTab('TAB2')">2. Prosjektkontroll EVM (S-kurver)</div>
             <div class="pbi-tab" onclick="switchPbiTab('TAB3')">3. DAX Kjerneformler (Ett-klikks kopi)</div>
             <div class="pbi-tab" onclick="switchPbiTab('TAB4')">4. 7 Power BI Rapportsider (.pbip)</div>
+            <div class="pbi-tab" id="pbi-tab-btn-5" onclick="switchPbiTab('TAB5')" style="border-left: 2px solid #464775; color: #464775; font-weight:700;">5. 👥 Power BI i Teams & RLS Simulator</div>
         </div>
 
         <!-- TAB 1: KOSTRA MATRISE -->
@@ -5355,6 +5362,149 @@ SWITCH(
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- TAB 5: POWER BI FOR MICROSOFT TEAMS MED ROW-LEVEL SECURITY (RLS) -->
+        <div id="pbi-tab-5" style="display: none; padding-top: 6px;">
+            <!-- Teams App Container Header (Microsoft Teams Visual Identity) -->
+            <div style="background: #464775; color: #ffffff; padding: 12px 18px; border-radius: 4px 4px 0 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="background: #ffffff; color: #464775; font-weight: 900; font-size: 16px; width: 32px; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                        T
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <span>Microsoft Teams</span>
+                            <span style="opacity: 0.7;">&gt;</span>
+                            <span id="teams-channel-name">Helse og mestring</span>
+                            <span style="opacity: 0.7;">&gt;</span>
+                            <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 3px; font-size: 11.5px;">📊 Fane: Økonomistyring 2026</span>
+                        </div>
+                        <div style="font-size: 11px; opacity: 0.9; margin-top: 2px;">
+                            Power BI Embedded med automatisk Single Sign-On (SSO) og dynamisk RLS (Azure AD UPN)
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="background: #107c41; color: #ffffff; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 3px;">
+                        ● RLS AKTIV I TEAMS
+                    </span>
+                    <button class="btn btn-sm" onclick="copyTeamsDaxFormula()" style="background: #ffffff; color: #464775; border-color: #ffffff; font-size: 11px; padding: 4px 10px;">
+                        📋 Kopier DAX RLS-kode
+                    </button>
+                </div>
+            </div>
+
+            <!-- Teams Simulator Kontrollpanel: Bruker- og Lederbytte -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-light); border-top: none; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <span style="font-size: 12px; font-weight: 700; color: var(--navy-dark);">
+                        👤 Simuler innlogget leder i Teams (Test RLS-filtrering):
+                    </span>
+                    <select id="teams-rls-user-select" onchange="onTeamsRlsUserChange(this.value)" style="padding: 6px 12px; border: 1.5px solid #464775; border-radius: 3px; font-size: 12.5px; font-weight: 600; background: #ffffff; color: #1c1c1c; cursor: pointer;">
+                        <option value="SOLVEIG_GRIMSTAD" selected>Solveig Grimstad — Enhetsleder 401 Strai Sykehjem (Nivå 3: Enhet)</option>
+                        <option value="TROND_JENSEN">Trond Jensen — Rektor 202 Lovisenlev Skole (Nivå 3: Enhet)</option>
+                        <option value="HANS_PETTER_VIK">Hans Petter Vik — Enhetsleder 301 Byggesak &amp; Tilsyn (Nivå 3: Enhet)</option>
+                        <option value="BREDE_SKEIE">Brede Skeie — Kommunalsjef Helse og mestring (Nivå 1: Sektor Helse)</option>
+                        <option value="KRISTIN_ROBSTAD">Kristin Eidet Robstad — Kommunalsjef Oppvekst (Nivå 1: Sektor Oppvekst)</option>
+                        <option value="FRANK_ELLINGSEN">Frank Ellingsen — Senior Project Controller (Konsern: Full tilgang 7.24 mrd)</option>
+                    </select>
+                </div>
+                <div id="teams-rls-auth-badge" style="font-size: 11.5px; color: #475569; font-family: var(--font-mono);">
+                    UPN: solveig.grimstad@kristiansand.kommune.no
+                </div>
+            </div>
+
+            <!-- RLS Status & Sikkerhetsomfang Banner (Edward Tufte Data-Ink) -->
+            <div id="teams-rls-banner" style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--success-green); padding: 12px 16px; margin: 14px 0; font-size: 12px; line-height: 1.55;">
+                <div style="font-weight: 700; color: #166534; display: flex; align-items: center; gap: 6px;">
+                    <span>🔒 RLS Filterregel Aktiv:</span>
+                    <code style="background: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 11px; border: 1px solid #bbf7d0;" id="teams-rls-active-rule">[Ansvar_ID] = "5200-ENH-401"</code>
+                </div>
+                <div style="color: #1e3a5f; margin-top: 4px;" id="teams-rls-explanation">
+                    Som enhetsleder ser <strong>Solveig Grimstad</strong> kun Strai Sykehjem (14,85 MNOK). Alle andre enheter (skoler, barnehager, byggesak og konsern) er 100 % skjermet jf. Kommuneloven § 13-1 og GDPR Art. 5 dataminimering.
+                </div>
+            </div>
+
+            <!-- Nøkkeltall for valgt RLS-scope (Tufte Cards) -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                <div class="kpi-card" style="border-left: 3px solid var(--navy-dark); padding: 10px 14px; background: #ffffff;">
+                    <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Synlig Årsbudsjett (BAC)</div>
+                    <div style="font-size: 18px; font-weight: 700; color: var(--navy-dark);" id="teams-kpi-bac">14 850 000 kr</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);" id="teams-kpi-units-count">1 enhet autorisert</div>
+                </div>
+                <div class="kpi-card" style="border-left: 3px solid var(--accent-blue); padding: 10px 14px; background: #ffffff;">
+                    <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Synlig Forbruk YTD (AC)</div>
+                    <div style="font-size: 18px; font-weight: 700; color: var(--navy-dark);" id="teams-kpi-ac">12 180 500 kr</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);" id="teams-kpi-forbruk-pct">82.0 % forbrukt</div>
+                </div>
+                <div class="kpi-card" style="border-left: 3px solid var(--success-green); padding: 10px 14px; background: #ffffff;">
+                    <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Disponibel Saldo 2026</div>
+                    <div style="font-size: 18px; font-weight: 700; color: var(--success-green);" id="teams-kpi-saldo">2 669 500 kr</div>
+                    <div style="font-size: 11px; color: var(--success-green);" id="teams-kpi-status-tag">🟢 Drift i balanse</div>
+                </div>
+                <div class="kpi-card" style="border-left: 3px solid #6b21a8; padding: 10px 14px; background: #ffffff;">
+                    <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Teams Returfrist</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #6b21a8;">M+6 kl. 12:00</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">Avviksnotat til controller</div>
+                </div>
+            </div>
+
+            <!-- Interaktiv Tabell: Data filtrert etter valgt leders RLS-rolle -->
+            <div style="border: 1px solid var(--border-light); border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
+                <div style="background: #f1f5f9; padding: 8px 14px; font-size: 12px; font-weight: 700; color: var(--navy-dark); display: flex; justify-content: space-between; align-items: center;">
+                    <span>📋 Power BI Datavisning i Teams (Filtrert sanntidsvisning for aktiv leder)</span>
+                    <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Kilde: Golden Record (Visma ERP &amp; Framsikt)</span>
+                </div>
+                <table class="tufte-table" style="margin-bottom: 0;">
+                    <thead>
+                        <tr>
+                            <th>Ansvar ID</th>
+                            <th>Enhet / Kostnadssted</th>
+                            <th>Budsjettansvarlig Leder</th>
+                            <th>Sektor</th>
+                            <th class="num">Årsbudsjett (BAC)</th>
+                            <th class="num">Regnskap YTD (AC)</th>
+                            <th class="num">Disponibel Saldo</th>
+                            <th class="num">Forbruk %</th>
+                            <th>Status jf. § 14-5</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teams-rls-table-body">
+                        <!-- Rader oppdateres dynamisk via updateTeamsRlsView() -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- DAX RLS Kodeviser & Implementasjonsveiledning -->
+            <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div>
+                        <strong style="font-size: 13px; color: var(--navy-dark);">📐 Offisiell DAX RLS-formel for Power BI Service &amp; Teams Embedded</strong>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">
+                            Fil: <code>powerbi/06_PowerBI_Teams_Embedded_Dynamic_RLS.dax</code> | Koblet til Azure AD UPN
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary" onclick="copyTeamsDaxFormula()">
+                        📋 Kopier Formel til Power BI Desktop
+                    </button>
+                </div>
+                <pre style="background: #0f172a; color: #f8fafc; padding: 14px; border-radius: 4px; font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5; overflow-x: auto;" id="teams-dax-code-block">[RLS_Filter_Teams_Dynamic] = 
+VAR CurrentUserEmail = LOWER(USERPRINCIPALNAME())
+VAR UserRow = FILTER(Dim_Budsjettansvarlige, LOWER(Dim_Budsjettansvarlige[Leder_Epost]) = CurrentUserEmail)
+VAR UserRole = MAXX(UserRow, Dim_Budsjettansvarlige[Rolle])
+VAR UserSector = MAXX(UserRow, Dim_Budsjettansvarlige[Sektor_Kode])
+VAR UserUnit = MAXX(UserRow, Dim_Budsjettansvarlige[Ansvar_ID])
+
+RETURN
+    SWITCH(
+        TRUE(),
+        UserRole IN {"CONTROLLER", "TOPPLEDELSE", "REVISJON"}, TRUE(),  // Fullt innsyn (7.24 mrd)
+        UserRole = "SEKTORSJEF", [Sektor_Kode] = UserSector,            // Sektorinnsyn (1.4 mrd)
+        UserRole = "ENHETSLEDER", [Ansvar_ID] = UserUnit,               // Kun eget ansvarssted
+        FALSE()                                                         // Sikkerhetsblokkering
+    )</pre>
             </div>
         </div>
 
@@ -5978,6 +6128,7 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
         <!-- Filter-faner -->
         <div class="filter-tabs">
             <button class="tab-btn active-tab" onclick="filterDocs('ALL')">📁 Alle Ressurser</button>
+            <button class="tab-btn" onclick="filterDocs('SELVHJELP')" style="font-weight: 700; color: #047857; border-bottom: 2px solid #047857;">🤝 Lederens Selvhjelpspakke</button>
             <button class="tab-btn" onclick="filterDocs('PPTX')" style="font-weight: 700; color: #1e3a8a; border-bottom: 2px solid #1e3a8a;">🖥️ PowerPoint Bystyret</button>
             <button class="tab-btn" onclick="filterDocs('EXCEL')" style="font-weight: 700; color: #107c41; border-bottom: 2px solid #107c41;">📊 Excel FAST Modell</button>
             <button class="tab-btn" onclick="filterDocs('WORD')" style="font-weight: 700; color: #0056b3; border-bottom: 2px solid #0056b3;">📝 Word Saksfremlegg</button>
@@ -5993,8 +6144,111 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
         <!-- Dokumentkort Grid -->
         <div class="doc-cards-grid" id="doc-cards-container">
             <!-- ===============================================================
-                 NYE SPESIFIKASJONSBUNTER: PPTX, EXCEL FAST, WORD, POWERBI, MCP
+                 LEDERENS SELVHJELPSPAKKE (STYRING, KONTROLL, BUDSJETTERING)
+                 Spesialtilpasset budsjettansvarlige uten økonomibakgrunn
                  =============================================================== -->
+
+            <!-- KORT 1: STYRING - MÅNEDSRAPPORT & PROGNOSE -->
+            <div class="doc-card" data-category="SELVHJELP WORD">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #047857; color: #fff;">.DOCX STYRING</span>
+                        <span style="font-size: 11px; color: #047857; font-weight: 700;">Lederens Månedsrapport</span>
+                    </div>
+                    <div class="doc-title">Lederens Månedsstatus &amp; Budsjettprognose</div>
+                    <div class="doc-law">Hjemmel: Kommuneloven § 14-5 &amp; Delegeringsreglement Nivå 3</div>
+                    <div class="doc-desc">Klarspråklig 3-minutters mal for enhetsledere og rektorer. Forklarer månedens regnskapstall, disponibel saldo, bemanningsprognose og prioriterte tiltak uten regnskapssjargong.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/MAL_LEDERENS_MANEDSSTATUS_OG_PROGNOSE.docx" download class="btn btn-sm btn-primary">⬇️ Last ned (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('SELVHJELP_MANEDSSTATUS')">👁️ Forhåndsvis</button>
+                </div>
+            </div>
+
+            <!-- KORT 2: STYRING - BEMANNINGSPLAN & VIKARKALKYLE -->
+            <div class="doc-card" data-category="SELVHJELP EXCEL">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #107c41; color: #fff;">.XLSX FAST</span>
+                        <span style="font-size: 11px; color: #107c41; font-weight: 700;">Bemanningsstyring</span>
+                    </div>
+                    <div class="doc-title">Bemanningsplan &amp; Vikarbudsjett-kalkyle</div>
+                    <div class="doc-law">Hjemmel: Hovedtariffavtalen (HTA) § 4 &amp; FAST Standard</div>
+                    <div class="doc-desc">Interaktiv Excel-kalkyle som synliggjør kostnadsforskjellen mellom egne tilkallingsvikarer (ca. 380 kr/t) og private bemanningsbyråer (650–750 kr/t), med automatisk beregning av NAV-refusjon fra dag 17.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/MAL_BEMANNINGSPLAN_OG_VIKARBUDSJETT.xlsx" download class="btn btn-sm btn-primary">⬇️ Last ned (.xlsx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('SELVHJELP_BEMANNING')">👁️ Forhåndsvis</button>
+                </div>
+            </div>
+
+            <!-- KORT 3: KONTROLL - INTERNKONTROLL EGENVURDERING -->
+            <div class="doc-card" data-category="SELVHJELP WORD">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #047857; color: #fff;">.DOCX KONTROLL</span>
+                        <span style="font-size: 11px; color: #047857; font-weight: 700;">Internkontroll</span>
+                    </div>
+                    <div class="doc-title">Lederens Egenvurdering for Internkontroll</div>
+                    <div class="doc-law">Hjemmel: Kommuneloven § 25-1 &amp; Attestasjonsreglementet</div>
+                    <div class="doc-desc">Halvårlig sjekkliste og egenvurdering for enhetsleder: Attestasjon, stikkprøver av leverandørfakturaer, overtidskontroll (AML § 10-6), refusjonskrav NAV og fullmaktsetterlevelse.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/MAL_INTERNKONTROLL_EGENVURDERING_LEDER.docx" download class="btn btn-sm btn-primary">⬇️ Last ned (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('SELVHJELP_INTERNKONTROLL')">👁️ Forhåndsvis</button>
+                </div>
+            </div>
+
+            <!-- KORT 4: KONTROLL - NAV REFUSJONSOPPFØLGING -->
+            <div class="doc-card" data-category="SELVHJELP EXCEL">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #107c41; color: #fff;">.XLSX KONTROLL</span>
+                        <span style="font-size: 11px; color: #107c41; font-weight: 700;">Refusjonssikring</span>
+                    </div>
+                    <div class="doc-title">NAV-Refusjonsoppfølging &amp; Avstemming</div>
+                    <div class="doc-law">Hjemmel: Folketrygdloven § 22-13 &amp; KOSTRA art 16900</div>
+                    <div class="doc-desc">Excel-arbeidsbok for systematisk oppfølging av utestående sykelønnsrefusjoner, foreldrepenger og tilretteleggingstilskudd. Hindrer at kommunen taper inntekter ved foreldelse (3-måneders frist).</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/MAL_NAV_REFUSJONSOPPFOLGING_OG_AVSTEMMING.xlsx" download class="btn btn-sm btn-primary">⬇️ Last ned (.xlsx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('SELVHJELP_NAV_REFUSJON')">👁️ Forhåndsvis</button>
+                </div>
+            </div>
+
+            <!-- KORT 5: BUDSJETTERING - FRAMSIKT HØP INNSPILL -->
+            <div class="doc-card" data-category="SELVHJELP WORD">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #047857; color: #fff;">.DOCX BUDSJETT</span>
+                        <span style="font-size: 11px; color: #047857; font-weight: 700;">Framsikt HØP</span>
+                    </div>
+                    <div class="doc-title">Budsjettinnspill til HØP 2027–2030 (Framsikt)</div>
+                    <div class="doc-law">Hjemmel: Kommuneloven kapittel 14 &amp; Bystyrets budsjettprosess</div>
+                    <div class="doc-desc">Standardisert skjema for enhetsleders innspill til handlings- og økonomiplanen: Konsekvensjustering, demografiendringer, lovpålagte bemanningsnormer og innsparingsforslag før Framsikt-registrering.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/MAL_BUDSJETTINNSPILL_FRAMSIKT_HOP_2027.docx" download class="btn btn-sm btn-primary">⬇️ Last ned (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('SELVHJELP_BUDSJETTINNSPILL')">👁️ Forhåndsvis</button>
+                </div>
+            </div>
+
+            <!-- KORT 6: BUDSJETTERING - OMDISPONERING & RAMMEJUSTERING -->
+            <div class="doc-card" data-category="SELVHJELP WORD">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #047857; color: #fff;">.DOCX BUDSJETT</span>
+                        <span style="font-size: 11px; color: #047857; font-weight: 700;">Omdisponering</span>
+                    </div>
+                    <div class="doc-title">Protokoll for Omdisponering &amp; Rammejustering</div>
+                    <div class="doc-law">Hjemmel: Kommuneloven § 14-5 &amp; Økonomireglementet pkt 4.2</div>
+                    <div class="doc-desc">Formell protokoll for flytting av budsjettmidler mellom driftsarter (art 1100 til 1200 osv.). Tydeliggjør administrative fullmakter og når en sak må løftes politisk til formannskapet.</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="templates/MAL_OMDISPONERING_OG_RAMMEJUSTERING.docx" download class="btn btn-sm btn-primary">⬇️ Last ned (.docx)</a>
+                    <button class="btn btn-sm" onclick="previewDocument('SELVHJELP_OMDISPONERING')">👁️ Forhåndsvis</button>
+                </div>
+            </div>
             
             <!-- KORT: POWERPOINT BYSTYRET -->
             <div class="doc-card" data-category="PPTX">
@@ -7673,6 +7927,75 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
         </div>
     </div>
 
+    <!-- =======================================================================
+         TEAMS & EMAIL SHARING MODAL (FOR BUDSJETTANSVARLIGE & CONTROLLERE)
+         ======================================================================= -->
+    <div class="modal-overlay" id="teams-email-modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title" onclick="closeShareModalOnBackdrop(event)">
+        <div class="modal-box" style="max-width: 780px;">
+            <div class="modal-header" style="background: #f8fafc; border-bottom: 2px solid var(--navy-dark);">
+                <div class="modal-title" id="share-modal-title" style="display: flex; align-items: center; gap: 8px;">
+                    <span id="share-modal-icon">📧</span>
+                    <span id="share-modal-header-text">Del Månedsstatus &amp; Kontoutskrift</span>
+                </div>
+                <button class="modal-close-btn" aria-label="Lukk dele-vindu" onclick="closeShareModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 18px 24px;">
+                <!-- Modus-velger (E-post / Teams) -->
+                <div style="display: flex; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 12px;">
+                    <button class="btn btn-sm" id="share-tab-email" onclick="setShareMode('email')" style="background: #eef2ff; color: #3730a3; border-color: #c7d2fe; font-weight: 700;">
+                        📧 Outlook E-post (Klar til sending)
+                    </button>
+                    <button class="btn btn-sm" id="share-tab-teams" onclick="setShareMode('teams')" style="background: #f8fafc; color: #64748b; border-color: #cbd5e1;">
+                        💬 Microsoft Teams (Adaptive Card / Markdown)
+                    </button>
+                </div>
+
+                <!-- E-post metadata felter -->
+                <div id="share-email-fields" style="display: block;">
+                    <div style="display: grid; grid-template-columns: 85px 1fr; gap: 8px; align-items: center; margin-bottom: 12px; font-size: 12px;">
+                        <span style="font-weight: 700; color: #475569;">Til (Leder):</span>
+                        <input type="text" id="share-email-to" style="width: 100%; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;" readonly>
+                        
+                        <span style="font-weight: 700; color: #475569;">Kopi (CC):</span>
+                        <input type="text" id="share-email-cc" value="frank.ellingsen@kristiansand.kommune.no" style="width: 100%; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;" readonly>
+                        
+                        <span style="font-weight: 700; color: #475569;">Emne:</span>
+                        <input type="text" id="share-email-subject" style="width: 100%; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 12px;">
+                    </div>
+                </div>
+
+                <!-- Teams metadata felter -->
+                <div id="share-teams-fields" style="display: none; margin-bottom: 12px; font-size: 12px;">
+                    <div style="background: #f5f3ff; border: 1px solid #ddd6fe; padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; color: #5b21b6;">
+                        <strong>💬 Microsoft Teams Deling:</strong> Formatert som et Adaptive Card for direkte publisering i lederkanal eller 1:1 chat med budsjettansvarlig.
+                    </div>
+                </div>
+
+                <!-- Forhåndsvisning / Tekstboks -->
+                <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+                    Meldingsinnhold (Klarspråk uten regnskapssjargong):
+                </div>
+                <textarea id="share-message-body" rows="11" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: var(--font-mono); font-size: 12px; line-height: 1.55; resize: vertical; background: #fafafa;"></textarea>
+
+                <div id="share-status-alert" style="margin-top: 10px; display: none; padding: 8px 12px; border-radius: 4px; font-size: 12px;"></div>
+            </div>
+
+            <div class="modal-footer" style="background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 11px; color: #64748b;">
+                    🔒 Automatisert jf. Kommuneloven § 14-5 &amp; GDPR
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn" onclick="copyShareText()">📋 Kopier Tekst</button>
+                    <button class="btn btn-primary" id="share-action-primary-btn" onclick="executeShareAction()">
+                        🚀 Åpne i Outlook
+                    </button>
+                    <button class="btn" onclick="closeShareModal()">Lukk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FLOATING CHAT BUTTON -->
     <button id="chat-floating-toggle" class="chat-floating-btn" onclick="toggleChatDrawer()" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl + Space)">
         <span style="font-size:15px;">💬</span>
@@ -8173,7 +8496,8 @@ Status: Godkjent administrativt innenfor rammen. Forseglet i Audit_AI_Actions.`
 
             const cards = document.querySelectorAll(".doc-card");
             cards.forEach(c => {
-                if (cat === "ALL" || c.getAttribute("data-category") === cat) {
+                const cardCat = c.getAttribute("data-category") || "";
+                if (cat === "ALL" || cardCat === cat || cardCat.includes(cat)) {
                     c.style.display = "flex";
                 } else {
                     c.style.display = "none";
@@ -8193,6 +8517,13 @@ Status: Godkjent administrativt innenfor rammen. Forseglet i Audit_AI_Actions.`
             document.getElementById("pbi-tab-3").style.display = tabId === "TAB3" ? "block" : "none";
             const tab4 = document.getElementById("pbi-tab-4");
             if (tab4) tab4.style.display = tabId === "TAB4" ? "block" : "none";
+            const tab5 = document.getElementById("pbi-tab-5");
+            if (tab5) {
+                tab5.style.display = tabId === "TAB5" ? "block" : "none";
+                if (tabId === "TAB5") {
+                    updateTeamsRlsView();
+                }
+            }
         }
 
         function showPbiReportingTab() {
@@ -8250,6 +8581,158 @@ Status: Godkjent administrativt innenfor rammen. Forseglet i Audit_AI_Actions.`
 
         /* Modal Forhåndsvisning */
         const DOC_CONTENT = {
+            "SELVHJELP_MANEDSSTATUS": {
+                title: "Lederens Månedsstatus & Budsjettprognose (Styring Nivå 3)",
+                file: "templates/MAL_LEDERENS_MANEDSSTATUS_OG_PROGNOSE.docx",
+                body: `<h3>📋 MAL: LEDERENS MÅNEDSRAPPORT & BUDSJETTPROGNOSE</h3>
+<p><strong>Målgruppe:</strong> Enhetsledere, rektorer, avdelingsledere og styrere i Kristiansand kommune</p>
+<p><strong>Hjemmel:</strong> Kommuneloven § 14-5 (Budsjettbalanse) & Delegeringsreglementet</p>
+<hr>
+<h4>1. NØKKELTALL FOR ENHETEN</h4>
+<ul>
+    <li><strong>Budsjettansvarlig:</strong> [Lederens Navn og tittel]</li>
+    <li><strong>Tildelt Årsramme 2026:</strong> kr [Årsramme]</li>
+    <li><strong>Hittil Brukt YTD:</strong> kr [Forbruk hittil] ([Forbruk %] av ramme)</li>
+    <li><strong>Gjenstående Disponibel Saldo:</strong> kr [Restbeløp] (🟢 Grønn / 🟡 Gul / 🔴 Rød)</li>
+    <li><strong>Månedlig Rådighetsbeløp ut året:</strong> kr [Beløp / måned]</li>
+</ul>
+<h4>2. 3-MINUTTERS LEDEROPPSUMMERING (KLARSPRÅK)</h4>
+<p>Kortfattet forklaring for overordnet ledelse og controller:</p>
+<ul>
+    <li>Hva skyldes eventuelle avvik i måneden (sykefravær, forsinkede fakturaer, sesong)?</li>
+    <li>Er driften i balanse i forhold til tildelt månedlig forbrukskvote?</li>
+    <li>Kreves det omdisponering eller varsling jf. § 14-5?</li>
+</ul>
+<h4>3. BEMANNING OG VIKARFORBRUK</h4>
+<ul>
+    <li><strong>Vikarbyråtimer:</strong> [Antall vakter / timer kjøpt fra eksternt byrå]</li>
+    <li><strong>Total vikarkostnad denne måneden:</strong> kr [Beløp]</li>
+    <li><strong>Sykefraværsprosent:</strong> [X.X %] (Egenmeldt / Legemeldt)</li>
+    <li><strong>Innsendte refusjonskrav til NAV:</strong> kr [Beløp sendt inn]</li>
+</ul>
+<h4>4. PRIORITERTE TILTAK NESTE MÅNED</h4>
+<ol>
+    <li>Restriktiv godkjenning av innleide vikarer ved korttidsfravær &lt; 3 dager.</li>
+    <li>Purre opp NAV-refusjoner for langtidssykmeldinger over 16 dager.</li>
+    <li>Attestere leverandørfakturaer og overtid innen fastsatte tidsfrister.</li>
+</ol>`
+            },
+            "SELVHJELP_BEMANNING": {
+                title: "Bemanningsplan & Vikarbudsjett-kalkyle (FAST Excel Modell)",
+                file: "templates/MAL_BEMANNINGSPLAN_OG_VIKARBUDSJETT.xlsx",
+                body: `<h3>📊 MAL: BEMANNINGSPLAN OG VIKARKALKYLE</h3>
+<p><strong>Filformat:</strong> Microsoft Excel (.xlsx) | FAST Standard</p>
+<p><strong>Hjemmel:</strong> Hovedtariffavtalen (HTA) § 4, Arbeidsmiljøloven § 10-6 & Kommuneloven § 14-5</p>
+<hr>
+<h4>FORMÅL MED ARBEIDSBOKEN:</h4>
+<ol>
+    <li><strong>Synliggjøre prisforskjeller:</strong> Egen tilkallingsvikar koster ca. kr 380/t inkl. sosiale kostnader. Privat bemanningsbyrå koster kr 650–750/t. Tabellen beregner direkte månedlig innsparing ved å bruke interne ressurser.</li>
+    <li><strong>Automatisk NAV-refusjonskalkyle:</strong> Beregner forventet refusjon fra dag 17 ved langtidssykefravær, slik at leder ser reell netto vikarkostnad.</li>
+    <li><strong>Turnus- og bemanningsplan:</strong> Kartlegger helgebemanning, vaktdekning og overtidstak for å forhindre brudd på AML § 10-6.</li>
+</ol>
+<h4>INNHOLD I ARBEIDSBOKEN:</h4>
+<ul>
+    <li><strong>Ark 1: Kontrollpanel:</strong> Stillingshjemler, grunnbemanning og sykevikarbehov.</li>
+    <li><strong>Ark 2: Vikarkalkyle:</strong> Byrå vs. intern vikar vs. overtidsberegning.</li>
+    <li><strong>Ark 3: Drøftingslogg HTA § 4:</strong> Dokumentasjon for tillitsvalgte ved turnusendringer.</li>
+</ul>`
+            },
+            "SELVHJELP_INTERNKONTROLL": {
+                title: "Lederens Egenvurdering for Internkontroll (Kommuneloven § 25-1)",
+                file: "templates/MAL_INTERNKONTROLL_EGENVURDERING_LEDER.docx",
+                body: `<h3>🛡️ MAL: LEDERENS EGENVURDERING FOR INTERNKONTROLL</h3>
+<p><strong>Målgruppe:</strong> Enhetsledere, rektorer og styrere</p>
+<p><strong>Hjemmel:</strong> Kommuneloven § 25-1 (Internkontrollplikt) & Kommunens Økonomireglement</p>
+<hr>
+<h4>KJERNEOMRÅDER FOR EGENVURDERING:</h4>
+<ul>
+    <li><strong>1. Attestasjons- og anvisningskontroll:</strong>
+        <ul>
+            <li>Er to-trinns kontroll (attestasjon + anvisning) gjennomført på 100 % av fakturaer?</li>
+            <li>Er det gjennomført månedlige stikkprøver av leverandørfakturaer og timekontrakter?</li>
+        </ul>
+    </li>
+    <li><strong>2. Bemannings- og lønnskontroll:</strong>
+        <ul>
+            <li>Er timelister og overtid attestert av leder med delegert fullmakt?</li>
+            <li>Er langvakter (12.5t) forankret i skriftlig avtale jf. AML § 10-12 og HTA § 4?</li>
+        </ul>
+    </li>
+    <li><strong>3. Inntekts- og refusjonssikring:</strong>
+        <ul>
+            <li>Er samtlige refusjonskrav oversendt NAV innen 3-måneders foreldelsesfrist?</li>
+            <li>Er brukerbetalinger, egenandeler og gebyrer fakturert i rett termin?</li>
+        </ul>
+    </li>
+    <li><strong>4. Oppfølging av avvik:</strong>
+        <ul>
+            <li>Er identifiserte merforbruk meldt skriftlig til kommunalsjef og controller?</li>
+        </ul>
+    </li>
+</ul>`
+            },
+            "SELVHJELP_NAV_REFUSJON": {
+                title: "NAV-Refusjonsoppfølging & Avstemmingsark (KOSTRA Art 16900)",
+                file: "templates/MAL_NAV_REFUSJONSOPPFOLGING_OG_AVSTEMMING.xlsx",
+                body: `<h3>💰 MAL: NAV-REFUSJONSOPPFØLGING & AVSTEMMING</h3>
+<p><strong>Filformat:</strong> Microsoft Excel (.xlsx)</p>
+<p><strong>Hjemmel:</strong> Folketrygdloven § 22-13 (Foreldelse) & KOSTRA konto 16900</p>
+<hr>
+<h4>FORMÅL MED ARBEIDSBOKEN:</h4>
+<p>Kommunen taper årlig store beløp dersom sykelønnsrefusjoner og foreldrepenger ikke kreves inn i tide. Dette verktøyet sikrer 100 % oppfølging:</p>
+<ul>
+    <li><strong>Automatisk fristvarsel:</strong> Varsler i rødt når et krav nærmer seg 3 måneders foreldelsesfrist jf. Folketrygdloven § 22-13.</li>
+    <li><strong>Avstemming mot Visma ERP:</strong> Sammenstiller bokførte refusjoner på art 16900 mot faktiske utbetalinger fra NAV i Altinn.</li>
+    <li><strong>Kravsporing:</strong> Oversikt over innsendte krav, godkjente utbetalinger, avviste krav og restkrav under klagebehandling.</li>
+</ul>`
+            },
+            "SELVHJELP_BUDSJETTINNSPILL": {
+                title: "Budsjettinnspill til Handlings- og Økonomiplan (Framsikt HØP 2027–2030)",
+                file: "templates/MAL_BUDSJETTINNSPILL_FRAMSIKT_HOP_2027.docx",
+                body: `<h3>🏛️ MAL: BUDSJETTINNSPILL TIL HØP 2027–2030 (FRAMSIKT)</h3>
+<p><strong>Målgruppe:</strong> Enhetsledere og kommunalsjefer</p>
+<p><strong>Hjemmel:</strong> Kommuneloven kapittel 14 & Bystyrets budsjettretningslinjer</p>
+<hr>
+<h4>1. GRUNNLAG FOR BUDSJETTENDRING:</h4>
+<ul>
+    <li><strong>Konsekvensjustering:</strong> Pris- og lønnsvekst utover deflator (f.eks. strøm, drivstoff, spesialistkonsulenter).</li>
+    <li><strong>Demografi- og volumendringer:</strong> Endring i antall elever, beboere eller brukere med ressurskrevende vedtak.</li>
+    <li><strong>Lovpålagte krav:</strong> Nye statlige bemanningsnormer, tilsynskrav eller forskriftsendringer.</li>
+</ul>
+<h4>2. INNSPARINGSTILTAK & EFFEKTIVISERING:</h4>
+<ul>
+    <li>Forslag til strukturelle tiltak for å saldere eventuelle merbehov.</li>
+    <li>Redusert vikarinnleie gjennom heltidskultur og turnusomlegging.</li>
+</ul>
+<h4>3. KONTROLLSPØRSMÅL FØR FRAMSIKT-REGISTRERING:</h4>
+<p>Innspillet må være forankret med kommunalsjef og kvalitetssikret av sektorcontroller før endelig registrering i Framsikt EPM.</p>`
+            },
+            "SELVHJELP_OMDISPONERING": {
+                title: "Protokoll for Omdisponering & Rammejustering (Fullmaktsreglementet)",
+                file: "templates/MAL_OMDISPONERING_OG_RAMMEJUSTERING.docx",
+                body: `<h3>📝 PROTOKOLL FOR OMDISPONERING & RAMMEJUSTERING</h3>
+<p><strong>Målgruppe:</strong> Enhetsledere og rådgivere</p>
+<p><strong>Hjemmel:</strong> Kommuneloven § 14-5 & Kristiansand kommunes Delegerings- og økonomireglement</p>
+<hr>
+<h4>RETNINGSLINJER FOR BUDSJETTFLYTTING:</h4>
+<ul>
+    <li><strong>Fullmakt Nivå 3 (Enhetsleder):</strong>
+        Kan omdisponere inntil kr 200 000 mellom driftsarter innenfor samme ansvar (f.eks. fra art 1150 Opplæring til art 1200 Inventar). Krever varsling til controller.
+    </li>
+    <li><strong>Fullmakt Nivå 2 (Kommunalsjef):</strong>
+        Kan omdisponere inntil kr 1 000 000 mellom enheter innenfor samme virksomhetsområde.
+    </li>
+    <li><strong>Bystyrets myndighet:</strong>
+        Endringer i netto ramme for et virksomhetsområde eller overføring mellom drift og investering (kontoklasse 1 og 2) krever politisk saksfremlegg til Formannskapet og Bystyret.
+    </li>
+</ul>
+<h4>PROTOKOLLEN INNEHOLDER:</h4>
+<ol>
+    <li>Avsender- og mottakerkonto (Ansvar, funksjon, art).</li>
+    <li>Begrunnelse for flyttingen og varighet (engangs i år eller permanent).</li>
+    <li>Signaturer: Enhetsleder, Controller og Kommunalsjef.</li>
+</ol>`
+            },
             "AIPAKKE_00": {
                 title: "Håndbok & Rammeverk: Masteroversikt og Dokumentstruktur",
                 file: "ai-implementeringspakke-okonomi/00_INNHOLD_OG_OVERSIKT.md",
@@ -17670,6 +18153,465 @@ verifisert jf. Kommuneloven § 14-5 og Kristiansand kommunes økonomireglement.
         filterKostraDriftsarter();
         updateBmQaStatus();
     }
+
+
+        /* ==========================================================================
+           TEAMS & EMAIL SHARING MOTOR (FOR BUDSJETTANSVARLIGE & CONTROLLERE)
+           ========================================================================== */
+        let currentShareMode = "email";
+        let activeShareData = null;
+
+        const KK_LEADER_DIRECTORY = {
+            "5200-ENH-401": {
+                unitId: "5200-ENH-401",
+                unitName: "Strai Sykehjem",
+                leaderName: "Solveig Grimstad",
+                email: "solveig.grimstad@kristiansand.kommune.no",
+                sector: "Helse og mestring",
+                bac: 14850000,
+                ac: 12180500,
+                saldo: 2669500,
+                pct: 82.0,
+                status: "GRØNN",
+                eoy: "+120 000 kr (Mindreforbruk)",
+                advice: "Driften er i balanse. Oppretthold restriktiv innleie av helgevikarer (art 10200) og purr opp NAV-refusjoner."
+            },
+            "4100-ENH-202": {
+                unitId: "4100-ENH-202",
+                unitName: "Lovisenlev Skole",
+                leaderName: "Trond Jensen",
+                email: "trond.jensen@kristiansand.kommune.no",
+                sector: "Oppvekst og utdanning",
+                bac: 50339572,
+                ac: 47426244,
+                saldo: 2913328,
+                pct: 94.2,
+                status: "RØD",
+                eoy: "-4 120 000 kr (Kritisk merforbruk)",
+                advice: "Strakstiltak påkrevd jf. § 14-5: Innfør vikarstopp på korttidsfravær < 3 dager og oversend formelt avviksnotat til skolesjef."
+            },
+            "3300-ENH-301": {
+                unitId: "3300-ENH-301",
+                unitName: "Byggesak og Tilsyn",
+                leaderName: "Hans Petter Vik",
+                email: "hans.petter.vik@kristiansand.kommune.no",
+                sector: "By- og stedsutvikling",
+                bac: 28500000,
+                ac: 22800000,
+                saldo: 5700000,
+                pct: 80.0,
+                status: "GRØNN",
+                eoy: "+350 000 kr (Mindreforbruk)",
+                advice: "Gebyrinntekter art 16200 overskrider prognose. Følg opp saksbehandlingsfrister for å opprettholde inntektsstrømmen."
+            },
+            "5210-ENH-402": {
+                unitId: "5210-ENH-402",
+                unitName: "Hjemmetjenesten Vågsbygd",
+                leaderName: "Berit Olsen",
+                email: "berit.olsen@kristiansand.kommune.no",
+                sector: "Helse og mestring",
+                bac: 32100000,
+                ac: 27600000,
+                saldo: 4500000,
+                pct: 86.0,
+                status: "GUL",
+                eoy: "-450 000 kr (Moderat merforbruk)",
+                advice: "Overtid på helgevakter (art 10400) må strammes inn. Vurder omfordeling av kjøreruter for hjemmesykepleien."
+            },
+            "5000-SJEF-HELSE": {
+                unitId: "5000-SJEF-HELSE",
+                unitName: "Sektor Helse og mestring",
+                leaderName: "Brede Skeie",
+                email: "brede.skeie@kristiansand.kommune.no",
+                sector: "Helse og mestring",
+                bac: 1420000000,
+                ac: 1185000000,
+                saldo: 235000000,
+                pct: 83.5,
+                status: "GUL",
+                eoy: "-2 800 000 kr (Netto sektoravvik)",
+                advice: "Konsolidering av vikarmidler og gjennomføring av drøftingsmøter jf. HTA § 4 for samtlige sykehjem."
+            },
+            "4000-SJEF-OPPV": {
+                unitId: "4000-SJEF-OPPV",
+                unitName: "Sektor Oppvekst og utdanning",
+                leaderName: "Kristin Eidet Robstad",
+                email: "kristin.robstad@kristiansand.kommune.no",
+                sector: "Oppvekst og utdanning",
+                bac: 1890000000,
+                ac: 1590000000,
+                saldo: 300000000,
+                pct: 84.1,
+                status: "GUL",
+                eoy: "-5 200 000 kr (Netto skoleavvik)",
+                advice: "Omdisponering fra sentral lærervikarreserve til skoler med høyt spesialundervisningsbehov."
+            },
+            "6001-CTRL-FRANK": {
+                unitId: "6001-CTRL-FRANK",
+                unitName: "Konsern & Toppledelse",
+                leaderName: "Frank Ellingsen",
+                email: "frank.ellingsen@kristiansand.kommune.no",
+                sector: "Konsern / Økonomistab",
+                bac: 7240000000,
+                ac: 6081600000,
+                saldo: 1158400000,
+                pct: 84.0,
+                status: "GUL",
+                eoy: "-2 490 000 kr (Konsernprognose)",
+                advice: "Månedlig rolling forecast opprettholdes. Saker til formannskapet forberedes for enheter med merforbruk > 500k."
+            }
+        };
+
+        function getActiveUnitData() {
+            const dropdown = document.getElementById("bank-unit-dropdown");
+            const unitKey = dropdown ? dropdown.value : "5200-ENH-401";
+            return KK_LEADER_DIRECTORY[unitKey] || KK_LEADER_DIRECTORY["5200-ENH-401"];
+        }
+
+        function openShareModal(mode, unitKey) {
+            currentShareMode = mode || "email";
+            activeShareData = unitKey && KK_LEADER_DIRECTORY[unitKey] ? KK_LEADER_DIRECTORY[unitKey] : getActiveUnitData();
+            
+            const monthPill = document.querySelector(".bank-month-pill.active");
+            const monthText = monthPill ? monthPill.textContent.trim() : "M10";
+            
+            updateShareModalContent(monthText);
+            document.getElementById("teams-email-modal").style.display = "flex";
+        }
+
+        function closeShareModal() {
+            document.getElementById("teams-email-modal").style.display = "none";
+        }
+
+        function closeShareModalOnBackdrop(event) {
+            if (event.target && event.target.id === "teams-email-modal") {
+                closeShareModal();
+            }
+        }
+
+        function setShareMode(mode) {
+            currentShareMode = mode;
+            const btnEmail = document.getElementById("share-tab-email");
+            const btnTeams = document.getElementById("share-tab-teams");
+            const emailFields = document.getElementById("share-email-fields");
+            const teamsFields = document.getElementById("share-teams-fields");
+            const headerIcon = document.getElementById("share-modal-icon");
+            const primaryBtn = document.getElementById("share-action-primary-btn");
+
+            if (mode === "email") {
+                btnEmail.style.background = "#eef2ff";
+                btnEmail.style.color = "#3730a3";
+                btnEmail.style.borderColor = "#c7d2fe";
+                btnEmail.style.fontWeight = "700";
+                btnTeams.style.background = "#f8fafc";
+                btnTeams.style.color = "#64748b";
+                btnTeams.style.borderColor = "#cbd5e1";
+                btnTeams.style.fontWeight = "normal";
+
+                emailFields.style.display = "block";
+                teamsFields.style.display = "none";
+                headerIcon.textContent = "📧";
+                primaryBtn.textContent = "🚀 Åpne i Outlook";
+            } else {
+                btnTeams.style.background = "#f3e8ff";
+                btnTeams.style.color = "#6b21a8";
+                btnTeams.style.borderColor = "#e9d5ff";
+                btnTeams.style.fontWeight = "700";
+                btnEmail.style.background = "#f8fafc";
+                btnEmail.style.color = "#64748b";
+                btnEmail.style.borderColor = "#cbd5e1";
+                btnEmail.style.fontWeight = "normal";
+
+                emailFields.style.display = "none";
+                teamsFields.style.display = "block";
+                headerIcon.textContent = "💬";
+                primaryBtn.textContent = "🚀 Åpne i Microsoft Teams";
+            }
+
+            const monthPill = document.querySelector(".bank-month-pill.active");
+            const monthText = monthPill ? monthPill.textContent.trim() : "M10";
+            updateShareModalContent(monthText);
+        }
+
+        function updateShareModalContent(monthText) {
+            const data = activeShareData || KK_LEADER_DIRECTORY["5200-ENH-401"];
+            const toInput = document.getElementById("share-email-to");
+            const subjInput = document.getElementById("share-email-subject");
+            const bodyArea = document.getElementById("share-message-body");
+
+            toInput.value = `${data.leaderName} <${data.email}>`;
+            subjInput.value = `Månedsstatus ${monthText} 2026: ${data.unitName} — ${data.status} status jf. § 14-5`;
+
+            if (currentShareMode === "email") {
+                bodyArea.value = `Hei ${data.leaderName},
+
+Her er månedlig kontoutskrift og økonomisk status for din enhet (${data.unitName}) per ${monthText} 2026:
+
+💰 TILDELT ÅRSRAMME 2026: kr ${data.bac.toLocaleString("no-NO")}
+💳 FORBRUK HITTIL I ÅR:    kr ${data.ac.toLocaleString("no-NO")} (${data.pct.toFixed(1)} % av årsramme)
+🏦 DISPONIBEL SALDO:      kr ${data.saldo.toLocaleString("no-NO")}
+🚦 STATUS:                ${data.status} (${data.eoy})
+
+KORTE LEDER-RÅD FRA CONTROLLER:
+1. ${data.advice}
+2. Husk at alle refusjonskrav til NAV må sendes inn senest innen 3 måneder jf. folketrygdloven § 22-13.
+3. Eventuelle avvik eller behov for rammejustering meldes i Framsikt før tertiallukking.
+
+Den fullstendige, print-klare kontoutskriften og bilagene er tilgjengelige i den kommunale økonomiportalen.
+
+Med vennlig hilsen,
+Frank Ellingsen
+Senior Project Controller & Finansiell Rådgiver
+Kristiansand kommune — Økonomi & Virksomhetsstyring
+Tlf: +47 38 00 76 50 | frank.ellingsen@kristiansand.kommune.no`;
+            } else {
+                bodyArea.value = `### 🏦 Månedsstatus ${monthText}-2026 | ${data.unitName}
+**Budsjettansvarlig:** ${data.leaderName}  
+**Virksomhetsområde:** ${data.sector}  
+**Status:** ${data.status === "GRØNN" ? "🟢 I balanse" : data.status === "GUL" ? "🟡 Observasjon" : "🔴 Merforbruk"} (${data.pct.toFixed(1)} % forbrukt)
+
+| Nøkkeltall | Beløp (NOK) |
+| :--- | ---: |
+| **Tildelt Årsbudsjett (BAC)** | ${data.bac.toLocaleString("no-NO")} kr |
+| **Bokført Hittil YTD (AC)** | ${data.ac.toLocaleString("no-NO")} kr |
+| **Gjenstående Disponibel Saldo** | **${data.saldo.toLocaleString("no-NO")} kr** |
+| **Forventet Årsslutt (EOY)** | ${data.eoy} |
+
+💡 **Controller-anbefaling:** ${data.advice}
+🔗 [Åpne interaktiv rapport i Teams-fanen](https://app.powerbi.com/groups/me/reports/kristiansand-okonomi-2026)`;
+            }
+        }
+
+        function copyShareText() {
+            const bodyArea = document.getElementById("share-message-body");
+            if (!bodyArea) return;
+            navigator.clipboard.writeText(bodyArea.value).then(() => {
+                showShareAlert("✓ Innholdet er kopiert til utklippstavlen!", "success");
+            }).catch(() => {
+                bodyArea.select();
+                document.execCommand("copy");
+                showShareAlert("✓ Innholdet er kopiert!", "success");
+            });
+        }
+
+        function executeShareAction() {
+            const data = activeShareData || KK_LEADER_DIRECTORY["5200-ENH-401"];
+            const subj = encodeURIComponent(document.getElementById("share-email-subject").value);
+            const body = encodeURIComponent(document.getElementById("share-message-body").value);
+
+            if (currentShareMode === "email") {
+                const mailtoUrl = `mailto:${data.email}?cc=frank.ellingsen@kristiansand.kommune.no&subject=${subj}&body=${body}`;
+                window.location.href = mailtoUrl;
+                showShareAlert("🚀 Åpner Outlook med forhåndsutfylt e-post...", "success");
+            } else {
+                // Teams deling
+                copyShareText();
+                const teamsUrl = `msteams:/l/chat/0/0?users=${encodeURIComponent(data.email)}`;
+                window.open(teamsUrl, "_blank");
+                showShareAlert("💬 Teksten er kopiert! Åpner Microsoft Teams chat...", "success");
+            }
+        }
+
+        function showShareAlert(msg, type) {
+            const alertBox = document.getElementById("share-status-alert");
+            if (!alertBox) return;
+            alertBox.style.display = "block";
+            alertBox.style.background = type === "success" ? "var(--success-green-bg)" : "var(--alert-red-bg)";
+            alertBox.style.color = type === "success" ? "var(--success-green)" : "var(--alert-red)";
+            alertBox.style.border = `1px solid ${type === "success" ? "#86efac" : "#fca5a5"}`;
+            alertBox.textContent = msg;
+            setTimeout(() => { alertBox.style.display = "none"; }, 3500);
+        }
+
+
+        /* ==========================================================================
+           POWER BI FOR MICROSOFT TEAMS MED ROW-LEVEL SECURITY (RLS) SIMULATOR
+           ========================================================================== */
+        const TEAMS_RLS_PROFILES = {
+            "SOLVEIG_GRIMSTAD": {
+                name: "Solveig Grimstad",
+                title: "Enhetsleder Strai Sykehjem",
+                email: "solveig.grimstad@kristiansand.kommune.no",
+                level: "Nivå 3: Enhetsleder",
+                channel: "Helse og mestring > Enhetsledere",
+                rule: '[Ansvar_ID] = "5200-ENH-401"',
+                explanation: "Som enhetsleder ser <strong>Solveig Grimstad</strong> kun Strai Sykehjem (14,85 MNOK). Alle andre enheter (skoler, barnehager, byggesak og konsern) er 100 % skjermet jf. Kommuneloven § 13-1 og GDPR Art. 5 dataminimering.",
+                bac: "14 850 000 kr",
+                ac: "12 180 500 kr",
+                saldo: "2 669 500 kr",
+                pct: "82.0 % forbrukt",
+                unitsCount: "1 enhet autorisert",
+                statusTag: "🟢 Drift i balanse",
+                units: [
+                    { id: "5200-ENH-401", name: "Strai Sykehjem", leader: "Solveig Grimstad", sector: "Helse og mestring", bac: 14850000, ac: 12180500, saldo: 2669500, pct: 82.0, status: "🟢 I balanse" }
+                ]
+            },
+            "TROND_JENSEN": {
+                name: "Trond Jensen",
+                title: "Rektor Lovisenlev Skole",
+                email: "trond.jensen@kristiansand.kommune.no",
+                level: "Nivå 3: Enhetsleder / Rektor",
+                channel: "Oppvekst og utdanning > Rektorer",
+                rule: '[Ansvar_ID] = "4100-ENH-202"',
+                explanation: "Som rektor ser <strong>Trond Jensen</strong> kun Lovisenlev Skole (50,34 MNOK). Skolen har kritisk merforbruk på grunn av vikarinnleie og spesialundervisning. Helse, kultur og byggesak er skjermet.",
+                bac: "50 339 572 kr",
+                ac: "47 426 244 kr",
+                saldo: "2 913 328 kr",
+                pct: "94.2 % forbrukt",
+                unitsCount: "1 enhet autorisert",
+                statusTag: "🔴 Kritisk merforbruk",
+                units: [
+                    { id: "4100-ENH-202", name: "Lovisenlev Skole", leader: "Trond Jensen", sector: "Oppvekst og utdanning", bac: 50339572, ac: 47426244, saldo: 2913328, pct: 94.2, status: "🔴 § 14-5 Sak" }
+                ]
+            },
+            "HANS_PETTER_VIK": {
+                name: "Hans Petter Vik",
+                title: "Enhetsleder Byggesak og Tilsyn",
+                email: "hans.petter.vik@kristiansand.kommune.no",
+                level: "Nivå 3: Enhetsleder",
+                channel: "By- og stedsutvikling > Avdelingsledere",
+                rule: '[Ansvar_ID] = "3300-ENH-301"',
+                explanation: "Som enhetsleder ser <strong>Hans Petter Vik</strong> kun Byggesak og Tilsyn (28,5 MNOK). Gebyrinntekter overoppfyller budsjett og gir et positivt handlingsrom.",
+                bac: "28 500 000 kr",
+                ac: "22 800 000 kr",
+                saldo: "5 700 000 kr",
+                pct: "80.0 % forbrukt",
+                unitsCount: "1 enhet autorisert",
+                statusTag: "🟢 Mindreforbruk",
+                units: [
+                    { id: "3300-ENH-301", name: "Byggesak og Tilsyn", leader: "Hans Petter Vik", sector: "By- og stedsutvikling", bac: 28500000, ac: 22800000, saldo: 5700000, pct: 80.0, status: "🟢 I balanse" }
+                ]
+            },
+            "BREDE_SKEIE": {
+                name: "Brede Skeie",
+                title: "Kommunalsjef Helse og mestring",
+                email: "brede.skeie@kristiansand.kommune.no",
+                level: "Nivå 1: Kommunalsjef (Sektoransvar)",
+                channel: "Helse og mestring > Ledergruppe",
+                rule: '[Sektor_Kode] = "5000-HELSE"',
+                explanation: "Som kommunalsjef ser <strong>Brede Skeie</strong> samtlige 12 sykehjem, hjemmetjeneste- og boenheter i Sektor Helse (totalt 1,42 milliarder NOK). Skoler, barnehager og byutvikling er skjermet.",
+                bac: "1 420 000 000 kr",
+                ac: "1 185 000 000 kr",
+                saldo: "235 000 000 kr",
+                pct: "83.5 % forbrukt",
+                unitsCount: "12 helseenheter autorisert",
+                statusTag: "🟡 Moderat observasjon",
+                units: [
+                    { id: "5200-ENH-401", name: "Strai Sykehjem", leader: "Solveig Grimstad", sector: "Helse", bac: 14850000, ac: 12180500, saldo: 2669500, pct: 82.0, status: "🟢 I balanse" },
+                    { id: "5210-ENH-402", name: "Hjemmetjenesten Vågsbygd", leader: "Berit Olsen", sector: "Helse", bac: 32100000, ac: 27600000, saldo: 4500000, pct: 86.0, status: "🟡 Observasjon" },
+                    { id: "5220-ENH-403", name: "Sørlandsparken Bo & Miljø", leader: "Christian Holte", sector: "Helse", bac: 42000000, ac: 36500000, saldo: 5500000, pct: 86.9, status: "🟡 Observasjon" },
+                    { id: "5230-ENH-404", name: "Presteheia Omsorgssenter", leader: "Kari Vesterhus", sector: "Helse", bac: 26500000, ac: 21200000, saldo: 5300000, pct: 80.0, status: "🟢 I balanse" }
+                ]
+            },
+            "KRISTIN_ROBSTAD": {
+                name: "Kristin Eidet Robstad",
+                title: "Kommunalsjef Oppvekst og utdanning",
+                email: "kristin.robstad@kristiansand.kommune.no",
+                level: "Nivå 1: Kommunalsjef (Sektoransvar)",
+                channel: "Oppvekst og utdanning > Ledergruppe",
+                rule: '[Sektor_Kode] = "4000-OPPV"',
+                explanation: "Som kommunalsjef ser <strong>Kristin Eidet Robstad</strong> samtlige 28 skoler og 54 barnehager i Sektor Oppvekst (totalt 1,89 milliarder NOK). Helse og byutvikling er skjermet.",
+                bac: "1 890 000 000 kr",
+                ac: "1 590 000 000 kr",
+                saldo: "300 000 000 kr",
+                pct: "84.1 % forbrukt",
+                unitsCount: "82 skoler & barnehager",
+                statusTag: "🟡 Merforbruk skoler",
+                units: [
+                    { id: "4100-ENH-202", name: "Lovisenlev Skole", leader: "Trond Jensen", sector: "Oppvekst", bac: 50339572, ac: 47426244, saldo: 2913328, pct: 94.2, status: "🔴 § 14-5 Sak" },
+                    { id: "4101-ENH-203", name: "Vågsbygd Skole", leader: "Mona Lindstrøm", sector: "Oppvekst", bac: 38200000, ac: 31700000, saldo: 6500000, pct: 83.0, status: "🟢 I balanse" },
+                    { id: "4102-ENH-204", name: "Grim Ungdomsskole", leader: "Espen Birkeland", sector: "Oppvekst", bac: 44100000, ac: 36600000, saldo: 7500000, pct: 83.0, status: "🟢 I balanse" },
+                    { id: "4210-ENH-211", name: "Lund Kommunale Barnehage", leader: "Grete Hovden", sector: "Oppvekst", bac: 19500000, ac: 15600000, saldo: 3900000, pct: 80.0, status: "🟢 I balanse" }
+                ]
+            },
+            "FRANK_ELLINGSEN": {
+                name: "Frank Ellingsen",
+                title: "Senior Project Controller (Konsern)",
+                email: "frank.ellingsen@kristiansand.kommune.no",
+                level: "Controller & Konserninnsyn",
+                channel: "Økonomi & Virksomhetsstyring > Konsernledelse",
+                rule: 'TRUE()  // Fullt innsyn i alle 81 enheter og 7.24 mrd kr',
+                explanation: "Som sentral Project Controller har <strong>Frank Ellingsen</strong> ubegrenset innsyn (Full Admin Scope) jf. revisjonsmandat og delegert controllerfunksjon for å beregne Monte Carlo-prognoser og EVM på tvers av hele Kristiansand kommune.",
+                bac: "7 240 000 000 kr",
+                ac: "6 081 600 000 kr",
+                saldo: "1 158 400 000 kr",
+                pct: "84.0 % forbrukt",
+                unitsCount: "81 enheter (Hele kommunen)",
+                statusTag: "🌐 Konserninnsyn",
+                units: [
+                    { id: "5200-ENH-401", name: "Strai Sykehjem", leader: "Solveig Grimstad", sector: "Helse", bac: 14850000, ac: 12180500, saldo: 2669500, pct: 82.0, status: "🟢 I balanse" },
+                    { id: "4100-ENH-202", name: "Lovisenlev Skole", leader: "Trond Jensen", sector: "Oppvekst", bac: 50339572, ac: 47426244, saldo: 2913328, pct: 94.2, status: "🔴 § 14-5 Sak" },
+                    { id: "3300-ENH-301", name: "Byggesak og Tilsyn", leader: "Hans Petter Vik", sector: "Byutvikling", bac: 28500000, ac: 22800000, saldo: 5700000, pct: 80.0, status: "🟢 I balanse" },
+                    { id: "1100-DIR-IKT", name: "Digitalisering & FinOps", leader: "Siri Bentsen", sector: "Org & Teknologi", bac: 62000000, ac: 51400000, saldo: 10600000, pct: 82.9, status: "🟢 I balanse" }
+                ]
+            }
+        };
+
+        function updateTeamsRlsView(profileKey) {
+            const select = document.getElementById("teams-rls-user-select");
+            const key = profileKey || (select ? select.value : "SOLVEIG_GRIMSTAD");
+            const p = TEAMS_RLS_PROFILES[key] || TEAMS_RLS_PROFILES["SOLVEIG_GRIMSTAD"];
+
+            const chName = document.getElementById("teams-channel-name");
+            if (chName) chName.textContent = p.channel;
+
+            const authBadge = document.getElementById("teams-rls-auth-badge");
+            if (authBadge) authBadge.textContent = `UPN: ${p.email} | ${p.level}`;
+
+            const ruleEl = document.getElementById("teams-rls-active-rule");
+            if (ruleEl) ruleEl.textContent = p.rule;
+
+            const expEl = document.getElementById("teams-rls-explanation");
+            if (expEl) expEl.innerHTML = p.explanation;
+
+            const bacEl = document.getElementById("teams-kpi-bac");
+            if (bacEl) bacEl.textContent = p.bac;
+
+            const acEl = document.getElementById("teams-kpi-ac");
+            if (acEl) acEl.textContent = p.ac;
+
+            const saldoEl = document.getElementById("teams-kpi-saldo");
+            if (saldoEl) saldoEl.textContent = p.saldo;
+
+            const pctEl = document.getElementById("teams-kpi-forbruk-pct");
+            if (pctEl) pctEl.textContent = p.pct;
+
+            const countEl = document.getElementById("teams-kpi-units-count");
+            if (countEl) countEl.textContent = p.unitsCount;
+
+            const statusEl = document.getElementById("teams-kpi-status-tag");
+            if (statusEl) statusEl.textContent = p.statusTag;
+
+            // Oppdater tabellrader
+            const tbody = document.getElementById("teams-rls-table-body");
+            if (tbody) {
+                tbody.innerHTML = p.units.map(u => `
+                    <tr>
+                        <td><code>${u.id}</code></td>
+                        <td><strong>${u.name}</strong></td>
+                        <td>${u.leader}</td>
+                        <td>${u.sector}</td>
+                        <td class="num">${u.bac.toLocaleString("no-NO")} kr</td>
+                        <td class="num">${u.ac.toLocaleString("no-NO")} kr</td>
+                        <td class="num" style="font-weight:700; color: ${u.saldo >= 0 ? 'var(--navy-dark)' : 'var(--alert-red)'};">${u.saldo.toLocaleString("no-NO")} kr</td>
+                        <td class="num">${u.pct.toFixed(1)} %</td>
+                        <td><span class="status-badge" style="background:${u.status.includes('🔴') ? '#fef2f2' : u.status.includes('🟡') ? '#fffbeb' : '#f0fdf4'}; color:${u.status.includes('🔴') ? '#991b1b' : u.status.includes('🟡') ? '#92400e' : '#166534'};">${u.status}</span></td>
+                    </tr>
+                `).join("");
+            }
+        }
+
+        function onTeamsRlsUserChange(profileKey) {
+            updateTeamsRlsView(profileKey);
+        }
+
+        function copyTeamsDaxFormula() {
+            const codeEl = document.getElementById("teams-dax-code-block");
+            const text = codeEl ? codeEl.textContent : "";
+            navigator.clipboard.writeText(text).then(() => {
+                alert("✓ Power BI DAX RLS-formel kopiert til utklippstavlen!");
+            });
+        }
 
 </script>
 </body>
