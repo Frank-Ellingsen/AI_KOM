@@ -1336,6 +1336,25 @@
         ]
       }
     },
+    "card": {
+      "*": {
+        "categoryLabels": [
+          {
+            "show": false
+          }
+        ],
+        "labels": [
+          {
+            "fontSize": 22
+          }
+        ],
+        "wordWrap": [
+          {
+            "show": true
+          }
+        ]
+      }
+    },
     "cardVisual": {
       "*": {
         "layout": [

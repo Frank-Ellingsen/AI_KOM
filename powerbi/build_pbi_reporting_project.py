@@ -832,7 +832,19 @@ relationship AuditResponsibility
 # 2. POWER BI REPORT (PBIR) GENERATOR
 # ==============================================================================
 
-def make_visual_card(name, x, y, w, h, measure_name, title_text, z=1):
+def make_visual_card(name, x, y, w, h, measure_name, title_text, z=1, font_size=None, is_summary=False):
+    if font_size is None:
+        if is_summary:
+            font_size = "11D"
+        elif w < 250:
+            font_size = "16D"
+        elif w < 320:
+            font_size = "20D"
+        else:
+            font_size = "22D"
+    elif isinstance(font_size, (int, float)):
+        font_size = f"{font_size}D"
+
     return {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
         "name": name,
@@ -858,6 +870,23 @@ def make_visual_card(name, x, y, w, h, measure_name, title_text, z=1):
                         ]
                     }
                 }
+            },
+            "objects": {
+                "categoryLabels": [{
+                    "properties": {
+                        "show": {"expr": {"Literal": {"Value": "false"}}}
+                    }
+                }],
+                "labels": [{
+                    "properties": {
+                        "fontSize": {"expr": {"Literal": {"Value": str(font_size)}}}
+                    }
+                }],
+                "wordWrap": [{
+                    "properties": {
+                        "show": {"expr": {"Literal": {"Value": "true"}}}
+                    }
+                }]
             },
             "visualContainerObjects": {
                 "title": [{
@@ -1193,7 +1222,7 @@ def build_report_pages():
                 make_visual_card("v01_kpi_eoy", 1205, 90, 375, 110, "KPI EOY Prognose Med RAG", "EOY PROGNOSE (FORVENTET ÅRSAVVIK)", z=7),
 
                 # Rad 3: Executive Summary
-                make_visual_card("v01_card_exec_summary", 20, 210, 1560, 65, "Executive Summary", "EXECUTIVE SUMMARY — STATUS, DIAGNOSE & DRIFTSTOLKNING (§ 14-5)", z=8),
+                make_visual_card("v01_card_exec_summary", 20, 208, 1560, 70, "Executive Summary", "EXECUTIVE SUMMARY — STATUS, DIAGNOSE & DRIFTSTOLKNING (§ 14-5)", z=8, is_summary=True),
 
                 # Rad 4: Diagnose (01 Hvor oppstår avviket? & 02 Hva driver avviket?)
                 make_visual_bar_chart("v01_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "01  HVOR OPPSTÅR AVVIKET? — Avvik per Enhet (Diverging Bar)", tooltips=std_okonomi_tt, z=9),
@@ -1239,7 +1268,7 @@ def build_report_pages():
                 make_visual_card("v02_kpi_elev", 1290, 90, 290, 110, "Netto Driftsutgift Per Elev", "KOSTNAD PR. ELEV", z=8),
 
                 # Rad 3: Executive Summary
-                make_visual_card("v02_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Skole", "EXECUTIVE SUMMARY — OPVEKST & GRUNNSKOLE: SYKEFRAVÆR OG VIKARKOSTNADER", z=9),
+                make_visual_card("v02_card_exec_summary", 20, 208, 1560, 70, "Executive Summary Skole", "EXECUTIVE SUMMARY — OPVEKST & GRUNNSKOLE: SYKEFRAVÆR OG VIKARKOSTNADER", z=9, is_summary=True),
 
                 # Rad 4: Diagnose (01 & 02)
                 make_visual_bar_chart("v02_bar_art", 20, 285, 770, 230, "Dim_Art", "Kontonavn", "Avvik YTD", "01  HVILKE KONTOARTER DRIVER AVVIKET? — Avvik per Art (1010, 1020, 1090, 1600)", tooltips=std_lonn_tt, z=10),
@@ -1285,7 +1314,7 @@ def build_report_pages():
                 make_visual_card("v03_kpi_netzero", 1290, 90, 290, 110, "EOY Net Zero Sluttavvik", "EST. SLUTTAVVIK ETTER TILTAK", z=8),
 
                 # Rad 3: Executive Summary
-                make_visual_card("v03_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Helse", "EXECUTIVE SUMMARY — HELSE & MESTRING: DØGNKONTINUERLIG DRIFT OG OVERTIDSPRESS", z=9),
+                make_visual_card("v03_card_exec_summary", 20, 208, 1560, 70, "Executive Summary Helse", "EXECUTIVE SUMMARY — HELSE & MESTRING: DØGNKONTINUERLIG DRIFT OG OVERTIDSPRESS", z=9, is_summary=True),
 
                 # Rad 4: Diagnose (01 & 02)
                 make_visual_bar_chart("v03_bar_boenhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "01  HVILKE BOENHETER / LOKASJONER DRIVER AVVIKET? — Avvik per Enhet", tooltips=std_okonomi_tt, z=10),
@@ -1330,7 +1359,7 @@ def build_report_pages():
                 make_visual_card("v04_kpi_vikar_pct", 1290, 90, 290, 110, "KPI Vikarandel Med Benchmark", "VIKARANDEL LØNN (MÅL 7 %)", z=8),
 
                 # Rad 3: Executive Summary
-                make_visual_card("v04_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Lonn", "EXECUTIVE SUMMARY — HR & LØNNSMONITOR: FASTLØNN, VIKARINNLEIE OG REFUSJONER", z=9),
+                make_visual_card("v04_card_exec_summary", 20, 208, 1560, 70, "Executive Summary Lonn", "EXECUTIVE SUMMARY — HR & LØNNSMONITOR: FASTLØNN, VIKARINNLEIE OG REFUSJONER", z=9, is_summary=True),
 
                 # Rad 4: Diagnose (01 & 02)
                 make_visual_bar_chart("v04_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Vikarandel Lonn %", "01  HVILKE ENHETER HAR HØYEST VIKARANDEL? — Vikarandel per Enhet", tooltips=std_lonn_tt, z=10),
@@ -1375,7 +1404,7 @@ def build_report_pages():
                 make_visual_card("v05_kpi_sim_netto", 1290, 90, 290, 110, "Simulert EOY Netto Driftsresultat", "SIMULERT NETTO DRIFTSRAMME", z=8),
 
                 # Rad 3: Executive Summary
-                make_visual_card("v05_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Prognose", "EXECUTIVE SUMMARY — PROGNOSE & SCENARIO: HELÅRSBALANSE OG TILTAKSGAP (§ 14-5)", z=9),
+                make_visual_card("v05_card_exec_summary", 20, 208, 1560, 70, "Executive Summary Prognose", "EXECUTIVE SUMMARY — PROGNOSE & SCENARIO: HELÅRSBALANSE OG TILTAKSGAP (§ 14-5)", z=9, is_summary=True),
 
                 # Rad 4: Diagnose (01 & 02)
                 make_visual_bar_chart("v05_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "EOY Forventet Årsavvik", "01  FORVENTET ÅRSAVVIK PER ENHET (EOY) — Baseline Avvik", tooltips=["Vedtatt Årsbudsjett", "EOY Rullende Prognose", "EOY Forventet Årsavvik", "RAG EOY"], z=10),
@@ -1420,7 +1449,7 @@ def build_report_pages():
                 make_visual_card("v06_kpi_eac", 1290, 90, 290, 110, "Sluttprognose (EAC)", "SLUTTPROGNOSE (EAC = BAC / CPI)", z=8),
 
                 # Rad 3: Executive Summary
-                make_visual_card("v06_card_exec_summary", 20, 210, 1560, 65, "Executive Summary EVM", "EXECUTIVE SUMMARY — PROJECT CONTROLLING: EARNED VALUE MANAGEMENT & SLUTTKOSTNAD", z=9),
+                make_visual_card("v06_card_exec_summary", 20, 208, 1560, 70, "Executive Summary EVM", "EXECUTIVE SUMMARY — PROJECT CONTROLLING: EARNED VALUE MANAGEMENT & SLUTTKOSTNAD", z=9, is_summary=True),
 
                 # Rad 4: Diagnose (01 & 02)
                 make_visual_bar_chart("v06_bar_cv", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Kostnadsavvik (CV)", "01  HVILKE PROSJEKTER DRIVER KOSTNADSAVVIKET (CV)? — CV per Prosjekt", tooltips=std_evm_tt, z=10),
@@ -1463,7 +1492,7 @@ def build_report_pages():
                 make_visual_card("v07_kpi_tiltak", 1060, 90, 520, 110, "Planlagt Tiltakseffekt T3", "KVANTIFISERTE SIGNERTE TILTAK", z=6),
 
                 # Rad 3: Executive Summary
-                make_visual_card("v07_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Audit", "EXECUTIVE SUMMARY — REVISJONSSPOR & KONTROLLUTVALGET: SHA-256 OG HITL-SPORBARHET", z=7),
+                make_visual_card("v07_card_exec_summary", 20, 208, 1560, 70, "Executive Summary Audit", "EXECUTIVE SUMMARY — REVISJONSSPOR & KONTROLLUTVALGET: SHA-256 OG HITL-SPORBARHET", z=7, is_summary=True),
 
                 # Rad 4, 5 & 6: Audit Logg
                 make_visual_table_flexible("v07_tab_audit", 20, 285, 1560, 715, [
@@ -1489,7 +1518,7 @@ def build_report_pages():
             "width": 450,
             "visibility": "HiddenInViewMode",
             "visuals": [
-                make_visual_card("tt01_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "ENHET / ANSVARSOMRÅDE", z=1),
+                make_visual_card("tt01_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "ENHET / ANSVARSOMRÅDE", z=1, is_summary=True),
                 make_visual_card("tt01_card_avvik", 10, 65, 210, 75, "KPI Avvik YTD Med RAG", "AVVIK YTD", z=2),
                 make_visual_card("tt01_card_eoy", 230, 65, 210, 75, "KPI EOY Prognose Med RAG", "PROGNOSE EOY", z=3),
                 make_visual_table_flexible("tt01_tab_detalj", 10, 150, 430, 160, [
@@ -1507,7 +1536,7 @@ def build_report_pages():
             "width": 450,
             "visibility": "HiddenInViewMode",
             "visuals": [
-                make_visual_card("tt02_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "ENHET / STILLINGSKONTEKST", z=1),
+                make_visual_card("tt02_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "ENHET / STILLINGSKONTEKST", z=1, is_summary=True),
                 make_visual_card("tt02_card_vikar", 10, 65, 210, 75, "KPI Vikarandel Med Benchmark", "VIKARANDEL (MÅL 7 %)", z=2),
                 make_visual_card("tt02_card_ot", 230, 65, 210, 75, "KPI Overtid Med Benchmark", "OVERTIDSANDEL (MÅL 5 %)", z=3),
                 make_visual_table_flexible("tt02_tab_detalj", 10, 150, 430, 160, [
@@ -1525,7 +1554,7 @@ def build_report_pages():
             "width": 450,
             "visibility": "HiddenInViewMode",
             "visuals": [
-                make_visual_card("tt03_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "INVESTERINGSPROSJEKT", z=1),
+                make_visual_card("tt03_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "INVESTERINGSPROSJEKT", z=1, is_summary=True),
                 make_visual_card("tt03_card_cpi", 10, 65, 210, 75, "KPI CPI Med RAG", "CPI (MÅL >= 1.0)", z=2),
                 make_visual_card("tt03_card_cv", 230, 65, 210, 75, "Kostnadsavvik (CV)", "KOSTNADSAVVIK (CV)", z=3),
                 make_visual_table_flexible("tt03_tab_detalj", 10, 150, 430, 160, [
