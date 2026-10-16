@@ -281,6 +281,149 @@ def calculate_eoy_impact(unit_id: str = "202", action_type: str = "vikar_stopp",
     }
 
 
+def locate_hub_resource(resource_type: str = "powerbi", sector: str = "helse") -> Dict[str, Any]:
+    """
+    MCP Tool 4: locate_hub_resource
+    Finner nøyaktig plassering, rapportside, filsti og handlinger for Power BI-rapporter,
+    Excel-modeller, Word-saksfremlegg og sjekklister i Kristiansand Kommune Hub.
+    """
+    res_type = resource_type.lower()
+    sec = sector.lower()
+
+    if "powerbi" in res_type or "pbi" in res_type or "rapport" in res_type or "dash" in res_type:
+        if "helse" in sec or "bo" in sec or "401" in sec or "254" in sec or "mestring" in sec:
+            return {
+                "resource_type": "powerbi",
+                "sector": "Helse og Mestring",
+                "page_num": 3,
+                "title": "Helse & Mestring (Rapportside 3)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Enhet 401 Boenhet",
+                "action_token": "[NAV:pbi:3:Åpne Power BI Helse & Mestring (Side 3)]",
+                "description": "Driftsanalyse for døgntjenester, overtidsovervåking (14,8 % i turnus) og simulert budsjettbalanse etter HTA § 4 tiltak."
+            }
+        elif "skole" in sec or "oppvekst" in sec or "202" in sec or "grunnskole" in sec:
+            return {
+                "resource_type": "powerbi",
+                "sector": "Oppvekst & Grunnskole",
+                "page_num": 2,
+                "title": "Grunnskole (Rapportside 2)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Enhet 202 Grunnskole",
+                "action_token": "[NAV:pbi:2:Åpne Power BI Grunnskole (Side 2)]",
+                "description": "Vikarforbruk art 1020, sykefravær og elevkostnader."
+            }
+        elif "cfo" in sec or "leder" in sec or "toppleder" in sec or "konsern" in sec:
+            return {
+                "resource_type": "powerbi",
+                "sector": "Konsern Ledelse",
+                "page_num": 1,
+                "title": "CFO Executive Panel (Rapportside 1)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Konsern",
+                "action_token": "[NAV:pbi:1:Åpne CFO Executive Panel (Side 1)]",
+                "description": "Topplederoversikt, konsernavvik og EOY helårsprognose."
+            }
+        elif "lønn" in sec or "vikar" in sec or "personell" in sec:
+            return {
+                "resource_type": "powerbi",
+                "sector": "HR & Personell",
+                "page_num": 4,
+                "title": "Lønn & Vikarmonitor (Rapportside 4)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Konsern Lønn",
+                "action_token": "[NAV:pbi:4:Åpne Lønn & Vikarmonitor (Side 4)]",
+                "description": "Artsanalyse for art 1010, 1020 vikarer og 1090 overtid."
+            }
+        elif "prognose" in sec or "what" in sec or "monte" in sec:
+            return {
+                "resource_type": "powerbi",
+                "sector": "Virksomhetsstyring",
+                "page_num": 5,
+                "title": "Prognose & What-If Simulering (Rapportside 5)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Konsern",
+                "action_token": "[NAV:pbi:5:Åpne Prognose & What-If (Side 5)]",
+                "description": "Monte Carlo P10/P50/P90 konfidensbaner og følsomhetsanalyse."
+            }
+        elif "capex" in sec or "evm" in sec or "investering" in sec:
+            return {
+                "resource_type": "powerbi",
+                "sector": "Investeringsstyring",
+                "page_num": 6,
+                "title": "Capex / EVM Prosjektkontroll (Rapportside 6)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Byggeprosjekter",
+                "action_token": "[NAV:pbi:6:Åpne Capex EVM Rapport (Side 6)]",
+                "description": "ISO 21508 Earned Value Management, CPI/SPI og EAC."
+            }
+        elif "revisjon" in sec or "port" in sec or "kontroll" in sec:
+            return {
+                "resource_type": "powerbi",
+                "sector": "Internkontroll & Revisjon",
+                "page_num": 7,
+                "title": "Revisjon & Port 9 Monitor (Rapportside 7)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Kommunerevisjonen",
+                "action_token": "[NAV:pbi:7:Åpne Revisjonsmonitor (Side 7)]",
+                "description": "SHA-256 kryptografisk revisjonsspor og HITL sign-off status."
+            }
+        else:
+            return {
+                "resource_type": "powerbi",
+                "sector": "Alle Sektorer",
+                "page_num": 1,
+                "title": "Power BI & DAX Enterprise Showcase (7 Dashboards)",
+                "file_path": "powerbi/pbi_reporting_project.pbip",
+                "spec_guide": "powerbi/07_PowerBI_7_Layouts_Spec_Guide.md",
+                "unit": "Konsern",
+                "action_token": "[NAV:pbi:1:Åpne Power BI Showcase]",
+                "description": "Fullverdig interaktiv Power BI-simulator med 7 dashboards og TMDL semantisk modell."
+            }
+    elif "excel" in res_type or "regneark" in res_type or "fast" in res_type:
+        return {
+            "resource_type": "excel",
+            "sector": "Finansiell Modellering",
+            "page_num": 0,
+            "title": "Project Controller Master Excel 2026",
+            "file_path": "reports/Kommune_Project_Controller_Reporting_2026.xlsx",
+            "spec_guide": "docs/FAST_STANDARD_EXCEL_GUIDE.md",
+            "unit": "Konsern",
+            "action_token": "[DOWNLOAD:reports/Kommune_Project_Controller_Reporting_2026.xlsx:Last ned Master Excel 2026]",
+            "description": "Konsolidert arbeidsbok bygget etter FAST-standard og Edward Tufte Data-Ink prinsipper."
+        }
+    elif "sak" in res_type or "word" in res_type or "mal" in res_type:
+        return {
+            "resource_type": "template",
+            "sector": "Politisk Styring",
+            "page_num": 0,
+            "title": "Politisk Saksfremlegg: Budsjettendring (§ 14-5)",
+            "file_path": "templates/MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.docx",
+            "spec_guide": "templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx",
+            "unit": "Bystyret / Formannskapet",
+            "action_token": "[NAV:doc:SAKSFREMLEGG:Forhåndsvis Saksfremlegg]",
+            "description": "Formelt politisk saksfremlegg jf. Kommuneloven § 14-5 med bruttoprinsipp og revisjonsbevis."
+        }
+    return {
+        "resource_type": "general",
+        "sector": "Konsern",
+        "page_num": 0,
+        "title": "Control Office Hub Ressurskatalog",
+        "file_path": "index.html",
+        "spec_guide": "README.md",
+        "unit": "Konsern",
+        "action_token": "[NAV:sec:powerbi-showcase:Gå til Power BI]",
+        "description": "Hovedoversikt over moduler, sjekklister og rapporter i Kristiansand Kommune Hub."
+    }
+
+
 # ==============================================================================
 # 2. CHAT ORCHESTRATION MED GEMINI FLASH OG MCP TOOLS
 # ==============================================================================
@@ -291,10 +434,59 @@ def execute_gemini_mcp_query(prompt: str, model_name: str = "gemini-3.8-flash") 
     Følger nøyaktig 4-punktsmønsteret fra GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md.
     """
     clean_prompt = sanitize_pii(prompt)
+    q_low = clean_prompt.lower()
     now = datetime.datetime.now().isoformat()
     tools_called = []
 
-    # 1. Analyser prompt og kall relevante MCP tools
+    # Sjekk om spørsmålet er navigasjon eller ressurssøk ("hvor finner jeg...", "power bi rapport", etc.)
+    is_pbi = any(k in q_low for k in ["power bi", "powerbi", "pbi", "pbip", "rapportside", "dashboard"])
+    is_nav = any(k in q_low for k in [
+        "hvor finner", "hvor er", "hvor ligger", "finn", "vis meg", "åpne",
+        "hvordan finner", "link til", "lenke til", "rapport for", "rapporten til"
+    ])
+
+    if is_pbi or (is_nav and any(k in q_low for k in ["excel", "mal", "saksfremlegg", "sjekkliste", "årshjul"])):
+        # Navigasjonshåndtering
+        res_info = locate_hub_resource(
+            resource_type="powerbi" if is_pbi else ("excel" if "excel" in q_low else "template"),
+            sector=q_low
+        )
+        tools_called.append(f"locate_hub_resource(resource='{res_info['resource_type']}', sector='{res_info['sector']}')")
+        
+        response_text = f"""### 📊 {res_info['title']}
+
+Hei Frank! {res_info['title']} finner du direkte i **Power BI & DAX Enterprise Showcase (Side {res_info['page_num']})** i Huben, samt i prosjektfilen `{res_info['file_path']}`.
+
+**Hovedinnhold:**
+• **Sektor / Enhet:** {res_info['sector']} ({res_info['unit']})
+• **Beskrivelse:** {res_info['description']}
+• **Krav og hjemmel:** Kommuneloven § 14-5 og HTA § 4.
+
+---
+
+### 🚀 Direkte Handlinger:
+{res_info['action_token']}
+[DOWNLOAD:{res_info['file_path']}:Last ned {res_info['file_path'].split('/')[-1]}]
+[NAV:unit:ENHET_401:Vis i Triage]
+
+---
+
+### ⚡ Anbefalte oppfølgingsspørsmål:
+[CHIP:Hva er YTD-avvik for Helse og Mestring?:🔍 Vis YTD-avvik]
+[CHIP:Hva krever HTA § 4 ved turnusendringer?:💼 HTA § 4 Turnusdrøfting]"""
+
+        hash_payload = f"{now}|Frank Ellingsen|{clean_prompt}|{response_text}"
+        audit_hash = hashlib.sha256(hash_payload.encode("utf-8")).hexdigest()
+
+        return {
+            "ok": True,
+            "text": response_text,
+            "audit_hash": audit_hash,
+            "tools_called": tools_called,
+            "data": res_info
+        }
+
+    # 1. Analyser prompt og kall relevante MCP tools for finansiell analyse
     unit = "202"
     if "401" in clean_prompt or "helse" in clean_prompt.lower() or "bo" in clean_prompt.lower():
         unit = "401"

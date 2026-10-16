@@ -1284,6 +1284,138 @@
             border-color: #94a3b8;
         }
 
+        .chat-actions-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 10px 0 6px 0;
+            padding: 8px 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+
+        .chat-nav-btn {
+            background: var(--navy-dark);
+            color: #ffffff !important;
+            border: 1px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 5px 11px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-nav-btn:hover {
+            background: #1e293b;
+            border-color: #0f172a;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .chat-download-btn {
+            background: #ffffff;
+            color: var(--navy-dark) !important;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 5px 11px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .chat-download-btn:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            transform: translateY(-1px);
+        }
+
+        .chat-followup-container {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .chat-followup-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .chat-followup-chip {
+            background: #eff6ff !important;
+            border-color: #bfdbfe !important;
+            color: #1e40af !important;
+            font-size: 10.5px !important;
+            padding: 4px 8px !important;
+        }
+
+        .chat-followup-chip:hover {
+            background: #dbeafe !important;
+            border-color: #93c5fd !important;
+            color: #1d4ed8 !important;
+        }
+
+        .chat-table {
+            width: 100%;
+            margin: 8px 0;
+            font-size: 11px;
+            border-collapse: collapse;
+        }
+
+        .chat-table th {
+            background: #f8fafc;
+            color: var(--navy-dark);
+            text-align: left;
+            padding: 5px 8px;
+            font-weight: 700;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        .chat-table td {
+            padding: 5px 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .chat-table th.num, .chat-table td.num {
+            text-align: right;
+            font-family: var(--font-mono);
+        }
+
+        .chat-inline-code {
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            border: 1px solid #e2e8f0;
+        }
+
+        @keyframes elementTargetFlash {
+            0% { outline: 3px solid #3b82f6; box-shadow: 0 0 16px rgba(59, 130, 246, 0.5); }
+            50% { outline: 3px solid #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.6); }
+            100% { outline: 3px solid transparent; box-shadow: none; }
+        }
+
+        .element-highlight-pulse {
+            animation: elementTargetFlash 2.2s ease-out;
+        }
+
         .chat-drawer-footer {
             padding: 12px 16px;
             background: #ffffff;
@@ -8832,20 +8964,204 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             return (hex + "f3a8b2c4e6d1e5a7b9c0d2e4f6a8b0c2d4e6f8a0b2c4e6d8a0b2c4e6f8a0b2c4").substring(0, 64);
         }
 
+        // ==========================================================================
+        // 3.1 CHATBOT NAVIGASJONSHJELPERE & INTERAKTIVE HANDLINGER
+        // ==========================================================================
+        function navigateToPbiReport(pageNum) {
+            showPbiReportingTab();
+            switchPbiReportPage(pageNum);
+            const target = document.getElementById("pbi-page-container-" + pageNum) || document.getElementById("powerbi-showcase");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                target.classList.remove("element-highlight-pulse");
+                void target.offsetWidth;
+                target.classList.add("element-highlight-pulse");
+            }
+            const pageNames = {
+                1: "1. CFO Executive Panel",
+                2: "2. Grunnskole (Enhet 202)",
+                3: "3. Helse & Mestring (Enhet 401)",
+                4: "4. HR, Lønn & Vikar",
+                5: "5. Helårsprognose & What-If",
+                6: "6. Capex / EVM Prosjektkontroll",
+                7: "7. Revisjon & Port 9"
+            };
+            showToast("📊 Viser Power BI: " + (pageNames[pageNum] || "Side " + pageNum));
+        }
+
+        function navigateToPbiTab(tabKind) {
+            switchPbiTab(tabKind);
+            const tabs = document.querySelectorAll(".pbi-tabs-bar .pbi-tab");
+            tabs.forEach(t => t.classList.remove("active"));
+            let idx = tabKind === 'TAB1' ? 0 : tabKind === 'TAB2' ? 1 : tabKind === 'TAB3' ? 2 : 3;
+            if (tabs[idx]) tabs[idx].classList.add("active");
+            const showcase = document.getElementById("powerbi-showcase");
+            if (showcase) {
+                showcase.scrollIntoView({ behavior: 'smooth' });
+                showcase.classList.remove("element-highlight-pulse");
+                void showcase.offsetWidth;
+                showcase.classList.add("element-highlight-pulse");
+            }
+            showToast("📊 Åpnet Power BI & DAX modul: " + tabKind);
+        }
+
+        function navigateToDoc(docKey) {
+            previewDocument(docKey);
+            showToast("📄 Åpnet dokumentmal: " + docKey);
+        }
+
+        function navigateToTriage(unitKey) {
+            loadTriageUnit(unitKey);
+            const repSec = document.getElementById("rapportering-seksjon") || document.getElementById("sektor-seksjon");
+            if (repSec) {
+                repSec.scrollIntoView({ behavior: 'smooth' });
+                repSec.classList.remove("element-highlight-pulse");
+                void repSec.offsetWidth;
+                repSec.classList.add("element-highlight-pulse");
+            }
+            showToast("🏥 Lastet inn " + unitKey + " i arbeidskø og tiltaksplan");
+        }
+
+        function navigateToWorkflowPhase(phaseNum) {
+            selectWorkflowPhase(phaseNum, true);
+            const cycle = document.getElementById("cycle-card-" + phaseNum) || document.getElementById("workflow-cycle-container");
+            if (cycle) {
+                cycle.scrollIntoView({ behavior: 'smooth' });
+                cycle.classList.remove("element-highlight-pulse");
+                void cycle.offsetWidth;
+                cycle.classList.add("element-highlight-pulse");
+            }
+            showToast("🛡️ Aktivert Sjekkliste: Fase " + phaseNum);
+        }
+
+        function navigateToSection(sectionId, toastMsg) {
+            const sec = document.getElementById(sectionId);
+            if (sec) {
+                sec.scrollIntoView({ behavior: 'smooth' });
+                sec.classList.remove("element-highlight-pulse");
+                void sec.offsetWidth;
+                sec.classList.add("element-highlight-pulse");
+            }
+            if (toastMsg) showToast(toastMsg);
+        }
+
+        // ==========================================================================
+        // 3.2 FORMAT CHAT MARKDOWN (MED TABELLER, KODE OG ACTION TOKENS)
+        // ==========================================================================
         function formatChatMarkdown(raw) {
-            let out = raw;
-            out = out.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            out = out.replace(/^### (.*$)/gim, '<h4 style="margin:8px 0 4px 0; color:var(--navy-dark); font-size:13px;">$1</h4>');
-            out = out.replace(/^## (.*$)/gim, '<h3 style="margin:10px 0 4px 0; color:var(--navy-dark); font-size:14px;">$1</h3>');
-            out = out.replace(/^# (.*$)/gim, '<h3 style="margin:10px 0 4px 0; color:var(--navy-dark); font-size:14px;">$1</h3>');
+            if (!raw) return "";
+
+            // 1. Tokeniser custom actions: [NAV:...], [DOWNLOAD:...], [CHIP:...]
+            const actionPlaceholders = [];
+            let safeText = raw.replace(/\[(NAV|DOWNLOAD|CHIP):([^:\]]+):([^:\]]+)(?::([^\]]+))?\]/g, (match, type, arg1, arg2, arg3) => {
+                let html = "";
+                if (type === "NAV") {
+                    if (arg1 === "pbi") {
+                        const pageNum = parseInt(arg2, 10) || 1;
+                        const label = arg3 || `Åpne Power BI (Side ${pageNum})`;
+                        html = `<button class="chat-nav-btn" onclick="navigateToPbiReport(${pageNum})">📊 ${label}</button>`;
+                    } else if (arg1 === "tab") {
+                        const label = arg3 || `Åpne Power BI Tab ${arg2}`;
+                        html = `<button class="chat-nav-btn" onclick="navigateToPbiTab('${arg2}')">📊 ${label}</button>`;
+                    } else if (arg1 === "doc") {
+                        const label = arg3 || `Åpne dokument`;
+                        html = `<button class="chat-nav-btn" onclick="navigateToDoc('${arg2}')">📄 ${label}</button>`;
+                    } else if (arg1 === "unit") {
+                        const label = arg3 || `Vis i Triage`;
+                        html = `<button class="chat-nav-btn" onclick="navigateToTriage('${arg2}')">🏥 ${label}</button>`;
+                    } else if (arg1 === "phase") {
+                        const phaseNum = parseInt(arg2, 10) || 1;
+                        const label = arg3 || `Fase ${phaseNum}`;
+                        html = `<button class="chat-nav-btn" onclick="navigateToWorkflowPhase(${phaseNum})">🛡️ ${label}</button>`;
+                    } else if (arg1 === "sec") {
+                        const label = arg3 || `Gå til seksjon`;
+                        html = `<button class="chat-nav-btn" onclick="navigateToSection('${arg2}')">📍 ${label}</button>`;
+                    }
+                } else if (type === "DOWNLOAD") {
+                    const label = arg2;
+                    html = `<a href="${arg1}" download class="chat-download-btn">⬇️ ${label}</a>`;
+                } else if (type === "CHIP") {
+                    const label = arg2;
+                    html = `<span class="chat-chip chat-followup-chip" onclick="askPromptChip('${arg1.replace(/'/g, "\\'")}')">⚡ ${label}</span>`;
+                }
+                const token = `__ACTION_TOKEN_${actionPlaceholders.length}__`;
+                actionPlaceholders.push(html);
+                return token;
+            });
+
+            // 2. Tabeller: Markdown-tabeller (| col | col |)
+            const lines = safeText.split("\n");
+            let inTable = false;
+            let tableRows = [];
+            const processedLines = [];
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line.startsWith("|") && line.endsWith("|")) {
+                    if (line.match(/^\|(?:\s*:?-+:?\s*\|)+$/)) {
+                        continue;
+                    }
+                    if (!inTable) {
+                        inTable = true;
+                        tableRows = [];
+                    }
+                    const cells = line.split("|").slice(1, -1).map(c => c.trim());
+                    tableRows.push(cells);
+                } else {
+                    if (inTable) {
+                        processedLines.push(renderHtmlTable(tableRows));
+                        inTable = false;
+                        tableRows = [];
+                    }
+                    processedLines.push(lines[i]);
+                }
+            }
+            if (inTable) {
+                processedLines.push(renderHtmlTable(tableRows));
+            }
+
+            function renderHtmlTable(rows) {
+                if (rows.length === 0) return "";
+                let tbl = '<table class="chat-table tufte-table"><thead><tr>';
+                const headerCells = rows[0];
+                headerCells.forEach(h => {
+                    const isNum = /\d|%|kr|NOK/i.test(h) && !h.startsWith("Sektor") && !h.startsWith("Enhet") && !h.startsWith("Prognose") && !h.startsWith("Tiltak") && !h.startsWith("Lokasjon");
+                    tbl += `<th class="${isNum ? 'num' : ''}">${h}</th>`;
+                });
+                tbl += '</tr></thead><tbody>';
+                for (let r = 1; r < rows.length; r++) {
+                    tbl += '<tr>';
+                    rows[r].forEach((c, cIdx) => {
+                        const isNum = /\d|%|kr|NOK/i.test(c) && cIdx > 0;
+                        tbl += `<td class="${isNum ? 'num' : ''}">${c}</td>`;
+                    });
+                    tbl += '</tr>';
+                }
+                tbl += '</tbody></table>';
+                return tbl;
+            }
+
+            let out = processedLines.join("\n");
+            out = out.replace(/^### (.*$)/gim, '<h4 style="margin:8px 0 4px 0; color:var(--navy-dark); font-size:13px; font-weight:700;">$1</h4>');
+            out = out.replace(/^## (.*$)/gim, '<h3 style="margin:10px 0 4px 0; color:var(--navy-dark); font-size:14px; font-weight:700;">$1</h3>');
+            out = out.replace(/^# (.*$)/gim, '<h3 style="margin:10px 0 4px 0; color:var(--navy-dark); font-size:14px; font-weight:700;">$1</h3>');
             out = out.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             out = out.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            out = out.replace(/`([^`]+)`/g, '<code class="chat-inline-code">$1</code>');
             out = out.replace(/^---$/gim, '<hr style="border:none; border-top:1px solid #e2e8f0; margin:8px 0;">');
             out = out.replace(/^[•\-\*] (.*$)/gim, '<li style="margin-left:16px;">$1</li>');
             out = out.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+
+            actionPlaceholders.forEach((html, idx) => {
+                out = out.replace(`__ACTION_TOKEN_${idx}__`, html);
+            });
+
             return out;
         }
 
+        // ==========================================================================
+        // 3.3 CHAT MELDINGSUTSENDELSE & MOTOR INTEGRASJON
+        // ==========================================================================
         function sendChatMessage() {
             const input = document.getElementById("chat-input-text");
             if (!input) return;
@@ -8933,14 +9249,373 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             `;
         }
 
+        // ==========================================================================
+        // 3.4 INTELLIGENT KLIENTSIDE CONTROLLER & INTENT MOTOR
+        // ==========================================================================
         function executeClientControllerEngine(text, persona, aiMsg) {
-            const t = text.toLowerCase();
+            const t = text.toLowerCase().trim();
             let body = "";
             let mcpTool = "mcp-sqlite-finance / query_ytd_variance";
             let sqlBox = "";
             let legalBox = "";
 
-            if (t.includes("202") || t.includes("grunnskole") || t.includes("lovisenlev") || t.includes("vikar") || (persona === 'EPM' && t.includes("skole"))) {
+            // --- INTENT CLASSIFICATION ---
+            const isPbi = /power\s*bi|powerbi|pbi\b|pbip\b|rapportside|dashboard/i.test(t);
+            const isDax = /dax\b|måltall|dax-mål|dax formel|dax mål/i.test(t);
+            const isExcel = /excel\b|regneark\b|arbeidsbok\b|fast\s*modell|\.xlsx\b|mastermodell/i.test(t);
+            const isDoc = /saksfremlegg|word\b|\.docx\b|saksnotat mal|mal politisk|protokoll mal|dokumentmal/i.test(t);
+            const isWorkflow = /sjekkliste|fase\s*[1-5]|årshjul|månedshjul|kalender|tidslinje/i.test(t);
+
+            // Navigasjonsindikatorer ("hvor finner jeg...", "vis meg...", "åpne...", "finn...")
+            const isNav = /hvor\s+(?:finner|er|ligger)|finn\b|vis\s+(?:meg\b|rapport)|åpne\b|hvordan\s+(?:finner|åpner|ser)\b|link\s+til|lenke\s+til|rapport\s+for|rapporten\s+til|hvor\s+kan\s+jeg|tilgang\s+til/i.test(t);
+
+            // ======================================================================
+            // GREN 1: POWER BI & RAPPORTERING (NAVIGASJON & MODELLER)
+            // ======================================================================
+            if (isPbi) {
+                if (t.includes("helse") || t.includes("boenhet") || t.includes("mestring") || t.includes("401") || t.includes("254")) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_page(sector='Helse og Mestring', page_id=3)";
+                    sqlBox = "SELECT page_id, page_title, target_container, pbip_source, dax_model FROM sys_pbi_catalog WHERE sector = 'Helse og Mestring';";
+                    legalBox = "Kommuneloven § 14-5 (Krav til økonomisk oversikt og avviksforklaringer) & HTA § 4 (Turnusrapportering).";
+                    body = `### 📊 Power BI Rapport: Helse & Mestring (Rapportside 3)
+
+Hei Frank! Power BI-rapporten for **Helse og Mestring** (Enhet 401 Boenhet) finner du direkte her i Huben i **Power BI & DAX Enterprise Showcase (Side 3)**, samt i prosjektkatalogen \`powerbi/pbi_reporting_project.pbip\`.
+
+**Hovedinnhold i rapporten:**
+• **Driftsanalyse for døgntjenester:** Boenhet A (+550k kr avvik), Boenhet B (+320k kr) og Dagsenter (+199k kr).
+• **Kritisk overtidsovervåking:** Overtidsandel i turnus på **14,8 %** mot tariffmål under 5,0 %.
+• **Lønnsart 1040/1090 (Overtid & helgetillegg):** Bokført forbruk 2 150 000 kr YTD.
+• **Simulert sluttresultat etter tiltak:** Estimert sluttavvik **-324 921 kr (i budsjettbalanse jf. § 14-5)**.
+
+---
+
+### 🚀 Direkte Handlinger & Navigasjon:
+[NAV:pbi:3:Åpne Power BI Helse & Mestring (Side 3)]
+[DOWNLOAD:powerbi/pbi_reporting_project.pbip:Last ned .pbip Prosjektfil]
+[DOWNLOAD:powerbi/07_PowerBI_7_Layouts_Spec_Guide.md:7 Layouts Guide]
+[NAV:unit:ENHET_401:Vis Enhet 401 i Triage]
+
+---
+
+### ⚡ Anbefalte oppfølgingsspørsmål:
+[CHIP:Hva er YTD-avvik og årsak for Helse og Mestring Enhet 254?:🔍 Vis avviksanalyse for Helse Enhet 254]
+[CHIP:Hva krever HTA § 4 ved turnusendringer og vikarstopp?:💼 Hva krever HTA § 4 om turnusdrøfting?]
+[CHIP:Hva er status for investeringsprosjektet Randesund Boenhet?:📊 Se EVM for Randesund Boenhet]`;
+
+                } else if (t.includes("skole") || t.includes("grunnskole") || t.includes("oppvekst") || t.includes("202") || t.includes("lovisenlev")) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_page(sector='Oppvekst', page_id=2)";
+                    sqlBox = "SELECT page_id, page_title, target_container FROM sys_pbi_catalog WHERE sector = 'Oppvekst' AND unit_id = '202';";
+                    legalBox = "Kommuneloven § 14-5 (Realistisk budsjett) og Opplæringsloven § 8-2 (Lærernorm).";
+                    body = `### 📊 Power BI Rapport: Grunnskole & Oppvekst (Rapportside 2)
+
+Power BI-rapporten for **Grunnskole og Enhet 202 (Lovisenlev Skole)** finner du i **Power BI Showcase (Side 2)**.
+
+**Hovedinnhold:**
+• **Vikarforbruk (Art 1020):** 1 420 000 kr bokført mot periodisert ramme.
+• **Vikarandel av lønn:** 16,2 % som følge av sesongfravær.
+• **Netto kostnad per elev:** 9 768 kr/elev.
+• **Anomali-radar:** Automatisk varsel for vikarinnleie og NAV-sykepengeradar (art 1600).
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:pbi:2:Åpne Power BI Grunnskole (Side 2)]
+[NAV:unit:ENHET_202:Vis Enhet 202 i Triage]
+[DOWNLOAD:powerbi/pbi_reporting_project.pbip:Last ned .pbip Prosjektfil]`;
+
+                } else if (t.includes("cfo") || t.includes("toppleder") || t.includes("direktør") || (t.includes("leder") && isPbi)) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_page(view='CFO', page_id=1)";
+                    sqlBox = "SELECT * FROM sys_pbi_catalog WHERE view_role = 'CFO';";
+                    legalBox = "Kommuneloven kapittel 14 (Økonomistyring og rapportering til Formannskapet).";
+                    body = `### 📊 Power BI Rapport: CFO Executive Panel (Rapportside 1)
+
+**CFO Executive Panel (Side 1)** gir toppledelsen helhetsoversikt over konsernets økonomiske situasjon:
+• **Samlet regnskap YTD:** kr 36 080 000 mot budsjett kr 33 591 000 (+7,4 % avvik).
+• **Forventet helårsavvik (EOY):** +3 733 500 kr før korrigerende tiltakspakke T3.
+• **Sektorfordeling:** Oppvekst (+1,42M) og Helse & Mestring (+1,07M).
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:pbi:1:Åpne CFO Executive Panel (Side 1)]
+[NAV:sec:powerbi-showcase:Gå til Power BI Showcase]`;
+
+                } else if (t.includes("lønn") || t.includes("vikar") || t.includes("personell")) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_page(view='Lonn_Vikar', page_id=4)";
+                    sqlBox = "SELECT * FROM sys_pbi_catalog WHERE view_role = 'HR_LONN';";
+                    legalBox = "Hovedtariffavtalen (HTA) kap. 1 og Arbeidsmiljøloven § 10-6 (Overtid).";
+                    body = `### 📊 Power BI Rapport: HR & Lønnsmonitor (Rapportside 4)
+
+**HR & Lønnsmonitor (Side 4)** gir detaljert artsanalyse for:
+• **Art 1010 Fastlønn:** 28 850 000 kr YTD.
+• **Art 1020 Vikarer:** 2 480 000 kr over ramme (sykefraværsdekning).
+• **Art 1090 Overtid:** 1 820 000 kr med overtidsandel på 6,3 % mot tariffgrense på 5,0 %.
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:pbi:4:Åpne Lønn & Vikarmonitor (Side 4)]
+[NAV:tab:TAB3:Vis DAX Lønnsmål]`;
+
+                } else if (t.includes("prognose") || t.includes("what") || t.includes("monte carlo")) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_page(view='Prognose', page_id=5)";
+                    sqlBox = "SELECT * FROM Fact_Prognose_Logg ORDER BY timestamp DESC LIMIT 5;";
+                    legalBox = "FAST Standard og Kommuneloven § 14-5 (Rullende prognosekrav).";
+                    body = `### 📊 Power BI Rapport: Helårsprognose & What-If (Rapportside 5)
+
+**Helårsprognose & What-If Simulering (Side 5)** kjører rullende tidsserieanalyser og Monte Carlo:
+• **P10 (Beste utfall):** +18,4 mill. kr ved umiddelbar vikarstopp.
+• **P50 (Forventet bane):** +32,3 mill. kr uten politiske tilleggsbevilgninger.
+• **P90 (Konservativt):** +44,8 mill. kr dersom fraværet øker i Q4.
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:pbi:5:Åpne Prognose & What-If (Side 5)]
+[CHIP:Kjør EOY Monte Carlo prognose for Oppvekst:Kjør Monte Carlo-beregning]`;
+
+                } else if (t.includes("capex") || t.includes("evm") || t.includes("investering") || t.includes("byggeprosjekt")) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_page(view='Capex_EVM', page_id=6)";
+                    sqlBox = "SELECT * FROM Dim_Prosjekt JOIN Fact_Prosjekt_Maaned USING (prosjekt_id);";
+                    legalBox = "ISO 21508 Earned Value Management & Statens Prosjektmodell KS2.";
+                    body = `### 📊 Power BI Rapport: Capex / EVM Prosjektkontroll (Rapportside 6)
+
+Power BI-modulen for **investeringsprosjekter (Capex og EVM)** finnes på **Side 6** samt i **Tab 2 (Investeringskontroll EVM)**:
+• **Vågsbygd Barneskole:** BAC 185M | CPI 0,909 | EAC p50 = 208,3M kr.
+• **Randesund Boenhet:** BAC 240M | CPI 0,843 | EAC p50 = 299,5M kr.
+• **VA-Hovedledning:** BAC 92M | CPI 1,027 | EAC p50 = 89,7M kr (Gunstig).
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:pbi:6:Åpne Capex EVM Rapport (Side 6)]
+[NAV:tab:TAB2:Åpne Investeringskontroll Tabell (Tab 2)]`;
+
+                } else if (t.includes("revisjon") || t.includes("port 9") || t.includes("kontrollutvalg")) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_page(view='Revisjon', page_id=7)";
+                    sqlBox = "SELECT * FROM Audit_AI_Actions WHERE stage_gate = 'PORT_9';";
+                    legalBox = "Kommuneloven kap. 24 (Kontrollutvalgets tilsyn) og EU AI Act art. 14.";
+                    body = `### 📊 Power BI Rapport: Revisjon & Port 9 (Rapportside 7)
+
+**Revisjon & Port 9 Monitor (Side 7)** dokumenterer etterlevelse av internkontroll:
+• **Kryptografisk forsegling:** 100 % av prognoser forseglet med SHA-256.
+• **Human-in-the-Loop (HITL):** 0 autonome budsjettvedtak; alle signert av Frank Ellingsen.
+• **PII-Skjerming:** Fullstendig vask av fødselsnumre jf. GDPR art. 35.
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:pbi:7:Åpne Revisjonsmonitor (Side 7)]
+[NAV:doc:PORT9_SIGNOFF:Se HITL Sign-off Protokoll]`;
+
+                } else if (isDax) {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_dax_library()";
+                    sqlBox = "-- DAX Måltallsdefinisjoner i Fabric semantisk modell";
+                    legalBox = "FAST Standard (Finansiell formelintegritet).";
+                    body = `### 📊 Power BI DAX Measures Library (Tab 3)
+
+Offisielt DAX-måltallsbibliotek for Kristiansand kommune finner du under **Power BI Showcase (Tab 3)**:
+• \`[Avvik YTD]\` = \`[Faktisk Regnskap YTD] - [Periodisert Budsjett YTD]\`
+• \`[Avvik %]\` = \`DIVIDE([Avvik YTD], [Periodisert Budsjett YTD], 0)\`
+• \`[CPI]\` = \`DIVIDE([Opptjent Verdi EV], [Bokført Kostnad AC], 1)\`
+• \`[EAC p50]\` = \`[AC] + DIVIDE([BAC] - [EV], [CPI])\`
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:tab:TAB3:Åpne DAX Måltall (Tab 3)]
+[DOWNLOAD:powerbi/05_Komplett_Kommune_DAX_Bundle.dax:Last ned DAX Bundle]`;
+
+                } else {
+                    mcpTool = "🧭 mcp-hub-navigator / locate_powerbi_showcase()";
+                    sqlBox = "SELECT * FROM sys_pbi_catalog;";
+                    legalBox = "Kommuneloven kapittel 14 & FAST-standard.";
+                    body = `### 📊 Power BI & DAX Enterprise Showcase (7 Dashboards)
+
+Kristiansand kommunes Power BI-løsning er integrert direkte her i Huben:
+1. **Side 1: CFO Executive Panel** — Finansiell topplederoversikt & EOY-avvik.
+2. **Side 2: Grunnskole** — Vikarforbruk og sykefravær for Enhet 202.
+3. **Side 3: Helse & Mestring** — Døgntjenester og overtid for Enhet 401.
+4. **Side 4: HR, Lønn & Vikar** — Artsanalyse for 1000, 1020 og 1090.
+5. **Side 5: Prognose & What-If** — Monte Carlo konfidensintervaller.
+6. **Side 6: Capex / EVM** — Earned Value Management for byggeprosjekter.
+7. **Side 7: Revisjon & Port 9** — SHA-256 integritet og tilsyn.
+
+---
+
+### 🚀 Hurtignavigasjon:
+[NAV:pbi:1:1. CFO Panel] [NAV:pbi:2:2. Grunnskole] [NAV:pbi:3:3. Helse & Mestring]
+[NAV:pbi:4:4. Lønn & Vikar] [NAV:pbi:5:5. Prognose] [NAV:pbi:6:6. Capex EVM] [NAV:pbi:7:7. Revisjon]
+[DOWNLOAD:powerbi/pbi_reporting_project.pbip:Last ned .pbip prosjekt]`;
+                }
+
+            // ======================================================================
+            // GREN 2: DAX MÅLTALLSSPØRSMÅL
+            // ======================================================================
+            } else if (isDax) {
+                mcpTool = "🧭 mcp-hub-navigator / get_dax_measure_definition()";
+                sqlBox = "-- DAX formler for avvik og EVM";
+                legalBox = "FAST Standard (Financial Modeling Standard).";
+                body = `### 📈 DAX Måltall & Formler for Power BI
+
+De offisielle DAX-målene for kommunen er strukturert i \`powerbi/05_Komplett_Kommune_DAX_Bundle.dax\`:
+
+\`\`\`dax
+// Avvik YTD
+Avvik YTD = [Faktisk Regnskap YTD] - [Periodisert Budsjett YTD]
+
+// Avvik %
+Avvik % = DIVIDE([Avvik YTD], [Periodisert Budsjett YTD], 0)
+
+// Cost Performance Index (CPI)
+CPI = DIVIDE([Opptjent Verdi EV], [Bokført Kostnad AC], 1)
+
+// Estimate at Completion (EAC)
+EAC = [Bokført Kostnad AC] + DIVIDE([BAC] - [Opptjent Verdi EV], [CPI])
+\`\`\`
+
+---
+
+### 🚀 Handlinger:
+[NAV:tab:TAB3:Åpne DAX Måltallsbibliotek (Tab 3)]
+[DOWNLOAD:powerbi/05_Komplett_Kommune_DAX_Bundle.dax:Last ned komplett DAX-fil]`;
+
+            // ======================================================================
+            // GREN 3: WORKFLOW, SJEKKLISTE & ÅRSHJUL
+            // ======================================================================
+            } else if (isWorkflow) {
+                let phaseNum = 2;
+                if (t.includes("fase 1") || t.includes("månedsstart") || t.includes("a-melding") || t.includes("bank")) phaseNum = 1;
+                else if (t.includes("fase 3") || t.includes("leder") || t.includes("drøfting")) phaseNum = 3;
+                else if (t.includes("fase 4") || t.includes("prognose") || t.includes("eac")) phaseNum = 4;
+                else if (t.includes("fase 5") || t.includes("politisk") || t.includes("bystyret") || t.includes("vedtak")) phaseNum = 5;
+
+                mcpTool = `🧭 mcp-hub-navigator / get_workflow_phase(phase=${phaseNum})`;
+                sqlBox = "SELECT * FROM sys_workflow_schedule WHERE phase_id = " + phaseNum + ";";
+                legalBox = "Kommuneloven kapittel 14 (Økonomistyring) og Controller Instruks.";
+                body = `### 🛡️ Controller Sjekkliste & Årshjul
+
+Kristiansand kommunes standardiserte månedslukking følger 5 definerte faser:
+• **Fase 1 (Dag 1–5):** Månedsstart, bankavstemming, A-melding og PII-vasket ETL.
+• **Fase 2 (Dag 6–10):** Avviksdeteksjon, Z-score screening og smart triage (2 kritiske enheter).
+• **Fase 3 (Dag 11–18):** Lederdialog med rektorer/enhetsledere og HTA § 4 drøftingsmøter.
+• **Fase 4 (Dag 19–24):** Sluttprognose (EAC), Monte Carlo og EVM for capex.
+• **Fase 5 (Dag 25–30):** Politisk saksfremlegg jf. § 14-5 for Formannskapet og Bystyret.
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:phase:${phaseNum}:Gå til Sjekkliste Fase ${phaseNum}]
+[NAV:sec:timeline-section:Gå til Årshjul & Kalender]
+[NAV:doc:LUKKING_INSTRUK:Se Instruks for Periodelukking]`;
+
+            // ======================================================================
+            // GREN 4: EXCEL MODELLER
+            // ======================================================================
+            } else if (isExcel && (isNav || t.includes("modell") || t.includes("last ned") || t.includes("fast") || t.includes("excel"))) {
+                mcpTool = "🧭 mcp-hub-navigator / locate_excel_models()";
+                sqlBox = "SELECT model_name, path, standard FROM sys_financial_models WHERE format = 'XLSX';";
+                legalBox = "FAST Standard (Financial Modeling Standard) & Edward Tufte Data-Ink Ratio.";
+                body = `### 📑 Excel Finansmodeller for Project Controlling
+
+Kommunen har to offisielle Excel-arbeidsbøker tilgjengelig:
+
+1. **Project Controller Master Reporting 2026 (\`Kommune_Project_Controller_Reporting_2026.xlsx\`):**
+   • Konsolidert mastermodell med 6 faner: Executive Dashboard, Tertialrapport T2, Prosjektkontroll EVM, Styringskalender, Revisjonssjekkliste og KOSTRA-kontoplan.
+2. **Saksbehandling & Tiltaksavstemming (\`Mal_Saksbehandling_Tiltak_Avstemming_2026.xlsx\`):**
+   • Operativ modell for enhetsledere med obligatorisk HITL-formel jf. Port 9.
+
+---
+
+### 🚀 Direkte Handlinger:
+[NAV:doc:MASTER_INFO:Se Info om Mastermodellen]
+[DOWNLOAD:reports/Kommune_Project_Controller_Reporting_2026.xlsx:Last ned Master Excel 2026]
+[DOWNLOAD:reports/Mal_Saksbehandling_Tiltak_Avstemming_2026.xlsx:Last ned Tiltaksmodell Excel]`;
+
+            // ======================================================================
+            // GREN 5: POLITISKE SAKSFREMLEGG & WORD-MALER
+            // ======================================================================
+            } else if ((isDoc && isNav) || (t.includes("mal") && (t.includes("saksfremlegg") || t.includes("word") || t.includes("last ned") || t.includes("notat")))) {
+                mcpTool = "🧭 mcp-hub-navigator / locate_municipal_templates()";
+                sqlBox = "SELECT template_id, title, target_authority FROM sys_templates WHERE format = 'DOCX';";
+                legalBox = "Kommuneloven § 13-1 (Kommunedirektørens utredningsplikt) & § 14-5.";
+                body = `### 📝 Politiske Maler & Saksfremlegg (Word .docx)
+
+Her er de offisielle forvaltningsmalene for Kristiansand kommune:
+• **Politisk Saksfremlegg (§ 14-5 & § 14-6):** Til Formannskapet og Bystyret med inndekningsforslag og SHA-256 stempel.
+• **Avviksnotat & Tiltaksplan:** For enhetsledere til kommunalsjef (Tiltak T1–T6).
+• **HTA § 4 Drøftingsprotokoll:** Partssamarbeid med NSF og Fagforbundet.
+• **Stage-Gate Port 9 HITL Sign-off:** Protokoll for menneskelig overprøving jf. EU AI Act.
+
+---
+
+### 🚀 Forhåndsvisning & Nedlasting:
+[NAV:doc:SAKSFREMLEGG:Forhåndsvis Saksfremlegg]
+[NAV:doc:AVVIKSNOTAT:Forhåndsvis Avviksnotat]
+[NAV:doc:HTA_PROTOKOLL:Forhåndsvis HTA Protokoll]
+[DOWNLOAD:templates/MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.docx:Last ned Word (.docx)]`;
+
+            // ======================================================================
+            // GREN 6: LOV OG REGELVERK (KOMMUNELOVEN, HTA, AML)
+            // ======================================================================
+            } else if (t.includes("14-5") || t.includes("handleplikt") || t.includes("budsjettbalanse") || (persona === 'LAW' && t.includes("lov"))) {
+                mcpTool = "mcp-rag-legal / search_municipal_law('§ 14-5 handleplikt budsjettendring')";
+                sqlBox = "SELECT * FROM legal_chunks WHERE section_ref = '§ 14-5' AND source_file LIKE '%Kommuneloven%';";
+                legalBox = "Kommuneloven (Lov-2018-06-22-83) § 14-5 og Kristiansand kommunes økonomireglement § 3.2.";
+                body = `### ⚖️ Kommuneloven § 14-5: Økonomisk handleplikt & budsjettbalanse
+
+1. **Lovens hovedregel:** Årsbudsjettet er bindende. Oppstår det vesentlige avvik underveis som truer årsbalansen, har **Kommunedirektøren en lovfestet handleplikt** til å fremme sak om endring av budsjettet til Bystyret uten ugrunnet opphold.
+2. **Kristiansands interne terskler:**
+   • Avvik over **500 000 kr** på enhetsnivå utløser skriftlig redegjørelse til kommunalsjef.
+   • Avvik over **5 000 000 kr** på sektornivå krever formell sak til Formannskapet og Bystyret.
+3. **Inndekningsrekkefølge:** 
+   1. Interne omprioriteringer innen samme virksomhetsområde.
+   2. Bruk av sektorens disposisjonsfond.
+   3. Tilleggsbevilgning finansiert av kommunens frie disposisjonsfond.
+
+---
+
+### 🚀 Handlinger:
+[NAV:doc:SAKSFREMLEGG:Forhåndsvis § 14-5 Saksfremlegg]
+[CHIP:Lag utkast til politisk saksfremlegg for Bystyret:Generer forslag til vedtak]`;
+
+            } else if (t.includes("14-6") || t.includes("brutto") || t.includes("motregn")) {
+                mcpTool = "mcp-rag-legal / search_municipal_law('§ 14-6 bruttoprinsippet')";
+                sqlBox = "SELECT * FROM legal_chunks WHERE section_ref LIKE '%14-6%' LIMIT 1;";
+                legalBox = "Kommuneloven § 14-6 fjerde ledd (Bruttoprinsippet i kommuneregnskapet).";
+                body = `### 📑 Kommuneloven § 14-6: Bruttoprinsippet
+
+• **Hovedregel:** Alle utgifter og inntekter skal budsjetteres og regnskapsføres **brutto** uten fradrag.
+• **Forbud mot nettoføring:** Det er strengt forbudt å motregne vikarutgifter (art 1020) direkte mot forventede refusjoner fra NAV (art 1600/1690).
+• **Konsekvens for controlling:** Utgiftsoverskridelser på vikarer må flagges som merforbruk selv om NAV-refusjoner ventes senere, fordi refusjonen er en usikker fordring inntil vedtak foreligger.
+
+---
+
+### 🚀 Handlinger:
+[NAV:pbi:2:Se bruttoføring i Power BI Grunnskole]`;
+
+            } else if (t.includes("hta") || t.includes("drøft") || t.includes("tillitsvalgt") || t.includes("partssamarbeid")) {
+                mcpTool = "mcp-rag-legal / search_municipal_law('HTA § 4 partssamarbeid')";
+                sqlBox = "SELECT * FROM legal_chunks WHERE title LIKE '%HTA § 4%' OR section_ref LIKE '%HTA%';";
+                legalBox = "Hovedtariffavtalen (HTA) § 4 og Hovedavtalen del B § 3.";
+                body = `### 💼 HTA § 4 & Partssamarbeid ved innsparingstiltak
+
+1. **Drøftingsplikt:** Arbeidsgiver plikter å kalle inn de tillitsvalgte til formelt drøftingsmøte **før** det fattes beslutning om:
+   • Vikarstopp eller innleiebegrensninger.
+   • Endringer i turnusplaner, langvakter (12,5t) eller vaktlengder.
+   • Omorganisering av avdelinger og klassesammenslåinger.
+2. **Protokollkrav:** Det skal alltid føres skriftlig protokoll som vedlegges saksfremlegget til Bystyret/Formannskapet for å oppfylle kravene til god forvaltningsskikk.
+
+---
+
+### 🚀 Handlinger:
+[NAV:doc:HTA_PROTOKOLL:Åpne HTA § 4 Drøftingsprotokoll]
+[NAV:pbi:3:Se turnuspress i Power BI Helse]`;
+
+            // ======================================================================
+            // GREN 7: FINANSIELL AVVIKSANALYSE & CONTROLLING (ENHETSNIVÅ)
+            // ======================================================================
+            } else if (t.includes("202") || t.includes("grunnskole") || t.includes("lovisenlev") || t.includes("vikar") || (persona === 'EPM' && t.includes("skole"))) {
                 mcpTool = "mcp-sqlite-finance / query_unit_financials(unit_id='202', period='Q2')";
                 sqlBox = "SELECT art, sum(belop) - sum(budsjett) AS avvik FROM Fact_Regnskap WHERE ansvar_key = 'KOMSKOLE' GROUP BY art;";
                 legalBox = "Kommuneloven § 14-5 (Krav til realistisk budsjett) og HTA § 4 (Drøfting av vikarstopp med tillitsvalgte).";
@@ -8966,7 +9641,14 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 
 ### 📈 4. Kvantifisert Effekt & EOY Balanse
 • **Uten tiltak (P90):** +4 800 000 kr merforbruk per 31.12.
-• **Med tiltak (P10):** Reduseres til +1 200 000 kr, som kan dekkes inn via omstillingsfond.`;
+• **Med tiltak (P10):** Reduseres til +1 200 000 kr, som kan dekkes inn via omstillingsfond.
+
+---
+
+### 🚀 Handlinger:
+[NAV:pbi:2:Se i Power BI Grunnskole]
+[NAV:unit:ENHET_202:Åpne Enhet 202 i Triage]
+[CHIP:Lag utkast til politisk saksfremlegg for Bystyret:Utarbeid saksfremlegg]`;
 
             } else if (t.includes("helse") || t.includes("254") || t.includes("401") || t.includes("boenhet") || t.includes("overtid") || t.includes("turnus")) {
                 mcpTool = "mcp-sqlite-finance / get_unit_financials(unit_id='254', period='Q2')";
@@ -8994,43 +9676,72 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 
 ### 📈 4. Kvantifisert Effekt & EOY Balanse
 • **Simulert sluttresultat før tiltak:** +16 700 000 kr merforbruk.
-• **Sluttresultat etter tiltak:** Reduseres til +11 200 000 kr. Krever tilleggsbevilgning i Bystyret jf. § 14-5.`;
+• **Sluttresultat etter tiltak:** Reduseres til +11 200 000 kr. Krever tilleggsbevilgning i Bystyret jf. § 14-5.
 
-            } else if (t.includes("14-5") || t.includes("handleplikt") || t.includes("budsjettbalanse") || (persona === 'LAW' && t.includes("lov"))) {
-                mcpTool = "mcp-rag-legal / search_municipal_law('§ 14-5 handleplikt budsjettendring')";
-                sqlBox = "SELECT * FROM legal_chunks WHERE section_ref = '§ 14-5' AND source_file LIKE '%Kommuneloven%';";
-                legalBox = "Kommuneloven (Lov-2018-06-22-83) § 14-5 og Kristiansand kommunes økonomireglement § 3.2.";
-                body = `### ⚖️ Kommuneloven § 14-5: Økonomisk handleplikt & budsjettbalanse
+---
 
-1. **Lovens hovedregel:** Årsbudsjettet er bindende. Oppstår det vesentlige avvik underveis som truer årsbalansen, har **Kommunedirektøren en lovfestet handleplikt** til å fremme sak om endring av budsjettet til Bystyret uten ugrunnet opphold.
-2. **Kristiansands interne terskler:**
-   • Avvik over **500 000 kr** på enhetsnivå utløser skriftlig redegjørelse til kommunalsjef.
-   • Avvik over **5 000 000 kr** på sektornivå krever formell sak til Formannskapet og Bystyret.
-3. **Inndekningsrekkefølge:** 
-   1. Interne omprioriteringer innen samme virksomhetsområde.
-   2. Bruk av sektorens disposisjonsfond.
-   3. Tilleggsbevilgning finansiert av kommunens frie disposisjonsfond.`;
+### 🚀 Handlinger:
+[NAV:pbi:3:Se i Power BI Helse & Mestring]
+[NAV:unit:ENHET_401:Åpne Enhet 401 i Triage]
+[CHIP:Hva krever HTA § 4 for turnusdrøfting?:HTA § 4 Krav]`;
 
-            } else if (t.includes("14-6") || t.includes("brutto") || t.includes("motregn")) {
-                mcpTool = "mcp-rag-legal / search_municipal_law('§ 14-6 bruttoprinsippet')";
-                sqlBox = "SELECT * FROM legal_chunks WHERE section_ref LIKE '%14-6%' LIMIT 1;";
-                legalBox = "Kommuneloven § 14-6 fjerde ledd (Bruttoprinsippet i kommuneregnskapet).";
-                body = `### 📑 Kommuneloven § 14-6: Bruttoprinsippet
-• **Hovedregel:** Alle utgifter og inntekter skal budsjetteres og regnskapsføres **brutto** uten fradrag.
-• **Forbud mot nettoføring:** Det er strengt forbudt å motregne vikarutgifter (art 1020) direkte mot forventede refusjoner fra NAV (art 1600/1690).
-• **Konsekvens for controlling:** Utgiftsoverskridelser på vikarer må flagges som merforbruk selv om NAV-refusjoner ventes senere, fordi refusjonen er en usikker fordring inntil vedtak foreligger.`;
+            } else if (t.includes("301") || t.includes("ingeniør") || t.includes("var\b") || t.includes("selvkost") || t.includes("renseanlegg")) {
+                mcpTool = "mcp-sqlite-finance / query_unit_financials(unit_id='301', period='Q2')";
+                sqlBox = "SELECT * FROM Fact_Regnskap WHERE ansvar_key = 'VAR' GROUP BY art;";
+                legalBox = "Forskrift om selvkost § 8 og Kommuneloven § 14-9 (Investeringsregnskap).";
+                body = `### 📊 1. Avvik hittil i år (Enhet 301 Ingeniørvesenet VAR)
+• **Avvik YTD:** **+8 500 000 kr** (Overinvesteringer vann/avløp + midlertidig gebyrsvikt byggesak).
+• **Root Cause:** Grunnforhold under Lund renseanlegg (NS 8407) samt lavere igangsetting av boligbygging.
+• **Tiltaksplan:**
+  1. Fremføring mot VAR-selvkostfond (§ 8).
+  2. P85 usikkerhetsavsetning innløses.
+  3. Regulativjustering for 2027.
+• **Revidert EOY:** +1 500 000 kr (Fullt utlignet innen 5-årsregelen for selvkost).
 
-            } else if (t.includes("hta") || t.includes("drøft") || t.includes("tillitsvalgt") || t.includes("partssamarbeid")) {
-                mcpTool = "mcp-rag-legal / search_municipal_law('HTA § 4 partssamarbeid')";
-                sqlBox = "SELECT * FROM legal_chunks WHERE title LIKE '%HTA § 4%' OR section_ref LIKE '%HTA%';";
-                legalBox = "Hovedtariffavtalen (HTA) § 4 og Hovedavtalen del B § 3.";
-                body = `### 💼 HTA § 4 & Partssamarbeid ved innsparingstiltak
-1. **Drøftingsplikt:** Arbeidsgiver plikter å kalle inn de tillitsvalgte til formelt drøftingsmøte **før** det fattes beslutning om:
-   • Vikarstopp eller innleiebegrensninger.
-   • Endringer i turnusplaner, langvakter eller vaktlengder.
-   • Omorganisering av avdelinger og klassesammenslåinger.
-2. **Protokollkrav:** Det skal alltid føres skriftlig protokoll som vedlegges saksfremlegget til Bystyret/Formannskapet for å oppfylle kravene til god forvaltningsskikk.`;
+---
 
+### 🚀 Handlinger:
+[NAV:unit:ENHET_301:Åpne Enhet 301 i Triage]`;
+
+            } else if (t.includes("501") || t.includes("ikt\b") || t.includes("konsulent") || t.includes("lisens") || t.includes("m365")) {
+                mcpTool = "mcp-sqlite-finance / query_unit_financials(unit_id='501', period='Q2')";
+                sqlBox = "SELECT * FROM Fact_Regnskap WHERE ansvar_key = 'IKT' AND art = '11950';";
+                legalBox = "Statens personalhåndbok & Kommuneloven § 14-5.";
+                body = `### 📊 1. Avvik hittil i år (Enhet 501 IKT & Fellestjenester)
+• **Avvik YTD:** **+3 200 000 kr** (Merforbruk eksterne IT-konsulenter på art 11950).
+• **Root Cause:** Forsinket ansettelse av faste utviklere har medført dyr ekstern konsulentbistand (1 450 kr/t).
+• **Tiltaksplan:**
+  1. FinOps sanering av 38 inaktive M365 E5 lisenser.
+  2. Konvertering av 2 konsulenter til faste stillinger.
+  3. RPA-automatisering av bilagskontroll.
+• **Revidert EOY:** +1 400 000 kr (Holdes innenfor tildelt IKT-ramme).
+
+---
+
+### 🚀 Handlinger:
+[NAV:unit:ENHET_501:Åpne Enhet 501 i Triage]`;
+
+            } else if (t.includes("konsern") || t.includes("finans") || t.includes("rente") || t.includes("pensjon") || t.includes("klp")) {
+                mcpTool = "mcp-sqlite-finance / query_konsern_financials()";
+                sqlBox = "SELECT sum(belop) - sum(budsjett) FROM Fact_Regnskap WHERE ansvar_key = 'SENTRAL';";
+                legalBox = "Kommuneloven § 14-14 (Finansforvaltning og gjeldsforpliktelser).";
+                body = `### 📊 1. Konsern Finansforvaltning & Pensjon
+• **Eksponering:** +24 000 000 kr (Potensiell renteøkning på 42 % flytende gjeldsandel).
+• **Root Cause:** Renteøkning i NIBOR samt KLP pensjonspremieavvik på 36 MNOK.
+• **Tiltaksplan:**
+  1. Økning i rentesikringsgrad fra 58 % til 65 % (rentebytteavtaler).
+  2. Amortisering av premieavvik over 7 år.
+  3. Vern av kommunens frie disposisjonsfond.
+• **Revidert EOY:** +6 000 000 kr (Handlingsregel overholdt: Disposisjonsfond 6,7 % > 6,0 %).
+
+---
+
+### 🚀 Handlinger:
+[NAV:unit:KONSERN:Åpne Konsern i Triage]`;
+
+            // ======================================================================
+            // GREN 8: PREDIKTIV PROGNOSE & MONTE CARLO
+            // ======================================================================
             } else if (t.includes("prognose") || t.includes("monte carlo") || t.includes("eoy") || t.includes("p10") || t.includes("p50") || t.includes("p90")) {
                 mcpTool = "mcp-forecasting / monte_carlo_time_series(n_sim=5000)";
                 sqlBox = "SELECT * FROM Fact_Prognose_Logg ORDER BY timestamp DESC LIMIT 3;";
@@ -9044,9 +9755,17 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 | **P50 (Forventet bane)** | **+32 306 652 kr** | 50 % | Realistisk EOY uten nye politiske tilleggsbevilgninger |
 | **P90 (Konservativt)** | **+44 800 000 kr** | 90 % | Dersom fraværet øker i Q4 og NAV-etterslepet vedvarer |
 
-**Konklusjon:** P50-avviket på 32,3 MNOK krever formell sak til Formannskapet med forslag om fondsinndekning jf. § 14-5.`;
+**Konklusjon:** P50-avviket på 32,3 MNOK krever formell sak til Formannskapet med forslag om fondsinndekning jf. § 14-5.
 
-            } else if (t.includes("evm") || t.includes("cpi") || t.includes("spi") || t.includes("eac") || t.includes("investering") || t.includes("ks2")) {
+---
+
+### 🚀 Handlinger:
+[NAV:pbi:5:Se Monte Carlo i Power BI Side 5]`;
+
+            // ======================================================================
+            // GREN 9: EVM & PROSJEKTKONTROLL (CAPEX)
+            // ======================================================================
+            } else if (t.includes("evm") || t.includes("earned value") || t.includes("cpi") || t.includes("spi") || t.includes("eac") || t.includes("ks2") || t.includes("vågsbygd") || t.includes("randesund")) {
                 mcpTool = "mcp-project-controlling / get_portfolio_evm(standard='ISO 21508')";
                 sqlBox = "SELECT prosjekt_id, bac, pv, ev, ac, (ev/ac) as cpi FROM Dim_Prosjekt;";
                 legalBox = "ISO 21508 Earned Value Management & Statens Prosjektmodell (KS2).";
@@ -9060,8 +9779,17 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 2. **Randesund Boenhet:** CPI 0,843 | EAC p50 = 299,5M (BAC 240M -> Avvik -59,5M kr).
 3. **VA-Hovedledning Selvkost:** CPI 1,027 | EAC p50 = 89,7M (BAC 92M -> Gunstig +2,3M kr).
 
-**Anbefaling:** Utløse KS2 P85 usikkerhetsavsetning (+8 %) for Randesund Boenhet.`;
+**Anbefaling:** Utløse KS2 P85 usikkerhetsavsetning (+8 %) for Randesund Boenhet.
 
+---
+
+### 🚀 Handlinger:
+[NAV:pbi:6:Åpne Capex EVM Rapport (Side 6)]
+[NAV:tab:TAB2:Åpne EVM Tabell (Tab 2)]`;
+
+            // ======================================================================
+            // GREN 10: KOSTRA KONTOPLAN & DRIFTSARTER
+            // ======================================================================
             } else if (t.includes("kostra") || t.includes("art") || t.includes("kontoplan") || (persona === 'KOSTRA')) {
                 mcpTool = "mcp-kostra / lookup_account_rules()";
                 sqlBox = "SELECT art_kode, art_navn, kontoklasse FROM Dim_Art WHERE art_kode IN ('1010','1020','1090','1270','1690');";
@@ -9071,8 +9799,16 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 • **Art 1020 (Vikarer timelønn):** Korttidsvikarer ved sykdom. Måltak: under 5,0 %.
 • **Art 1090 (Overtid og merarbeid):** Tariffbestemt overtid. Måltak: under 3,0 % jf. AML § 10-6.
 • **Art 1270 (Vikarbyrå & konsulent):** Ekstern innleie. Skal være 0 kr med mindre særskilt godkjent.
-• **Art 1600/1690 (NAV Refusjoner):** Sykepenge- og foreldrepengerefusjoner fra Folketrygden. Føres brutto som inntekt.`;
+• **Art 1600/1690 (NAV Refusjoner):** Sykepenge- og foreldrepengerefusjoner fra Folketrygden. Føres brutto som inntekt.
 
+---
+
+### 🚀 Handlinger:
+[NAV:tab:TAB1:Se KOSTRA Hierarki & Drilldown (Tab 1)]`;
+
+            // ======================================================================
+            // GREN 11: SAKSFREMLEGG GENERERING
+            // ======================================================================
             } else if (t.includes("saksfremlegg") || t.includes("politisk") || t.includes("formannskap") || t.includes("bystyret") || (persona === 'SAK')) {
                 mcpTool = "mcp-governance / generate_draft_proposal()";
                 sqlBox = "INSERT INTO Fact_Prognose_Logg (saksbehandler, status, sha256_hash) VALUES ('Frank Ellingsen', 'APPROVED', ...);";
@@ -9090,8 +9826,16 @@ Kommunedirektøren foreslår en tiltakspakke på 5,3 mill. kr (vikarstopp, turnu
 **3. Forslag til vedtak (Bystyret):**
 1. Bystyret tar 2. tertialrapport 2026 til orientering.
 2. Det vedtas en rammereduksjon for konsulentkjøp på 1,2 mill. kr.
-3. Resterende merforbruk på 26,9 mill. kr dekkes inn ved overføring fra disposisjonsfond jf. Kommuneloven § 14-5.`;
+3. Resterende merforbruk på 26,9 mill. kr dekkes inn ved overføring fra disposisjonsfond jf. Kommuneloven § 14-5.
 
+---
+
+### 🚀 Handlinger:
+[NAV:doc:SAKSFREMLEGG:Forhåndsvis Komplett Saksfremlegg]`;
+
+            // ======================================================================
+            // GREN 12: INTELLIGENT FALLBACK MED ANBEFALTE SPØRSMÅL
+            // ======================================================================
             } else {
                 mcpTool = "mcp-sqlite-finance / query_general_financials(q='" + text.substring(0, 20) + "')";
                 sqlBox = `SELECT * FROM Fact_Regnskap WHERE beskrivelse LIKE '%${text.substring(0, 15)}%' LIMIT 5;`;
@@ -9110,10 +9854,15 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
 
 ---
 
-### 🎯 3. Controller-anbefaling
-1. Hold fast på Tufte minimalistiske rapporteringslinjer uten unødvendige dekorasjoner.
-2. Ved avvik over 500k kr på enhetsnivå: Krev skriftlig redegjørelse og tiltaksplan fra enhetsleder.
-3. Sørg for at alle vedtatte tiltak har en forankret SHA-256 forsegling for Kommunerevisjonen (Port 9).`;
+### 🎯 3. Controller-anbefaling & Snarveier:
+[NAV:pbi:1:Åpne Power BI CFO Panel] [NAV:pbi:3:Power BI Helse & Mestring] [NAV:doc:SAKSFREMLEGG:Politiske Saksfremlegg]
+
+---
+
+### ⚡ Prøv et av disse spørsmålene:
+[CHIP:Hvor finner jeg power bi rapport for helse og mestring?:Hvor finner jeg Power BI rapport for Helse?]
+[CHIP:Hvorfor har Enhet 202 så høyt vikarforbruk?:Hvorfor har Enhet 202 vikaravvik?]
+[CHIP:Hva krever Kommuneloven § 14-5 ved budsjettavvik?:Hva krever § 14-5 ved avvik?]`;
             }
 
             const hash = generateClientSha256(text + body);
@@ -9126,7 +9875,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     <span style="font-size:10px; color:var(--text-muted);">${nowStr}</span>
                 </div>
                 <div style="margin-bottom:6px;">
-                    <span class="chat-tool-pill">🔌 ${mcpTool}</span>
+                    <span class="chat-tool-pill">${mcpTool}</span>
                 </div>
                 <div>${formatted}</div>
                 <details class="chat-glassbox">
@@ -9150,7 +9899,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
             `;
         }
 
-        // Global tastatursnarvei: Ctrl + Space åpner/lukker chat, ESC lukker
+                // Global tastatursnarvei: Ctrl + Space åpner/lukker chat, ESC lukker
         window.addEventListener("keydown", function(e) {
             if ((e.ctrlKey || e.metaKey) && e.code === "Space") {
                 e.preventDefault();
