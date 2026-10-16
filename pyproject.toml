@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kristiansand-kommune-ai-hub"
+version = "2.0.0"
+description = "Kristiansand Kommune AI Project Controller Hub & Governance Guardrails"
+readme = "README.md"
+authors = [
+    { name = "Frank Ellingsen", email = "frankellingsen@hotmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pytest>=7.0.0",
+    "openpyxl>=3.1.0",
+    "pydantic>=2.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "antigravity-ms-pilot/tests"]
+python_files = ["test_*.py"]
+pythonpath = [
+    ".",
+    "kommune-ai-guardrails/src",
+    "tools",
+    "mvp-pilot",
+    "antigravity-ms-pilot/src"
+]
+addopts = "-v --tb=short"
+filterwarnings = [
+    "ignore::DeprecationWarning:google.genai.*",
+]

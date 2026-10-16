@@ -9,8 +9,12 @@
 ## 📂 Mappe- og Prosjektstruktur (Context-Optimized)
 
 ```text
-antigravity-ai-pilot/
+enterprise-ai-pilot/
 ├── README.md                            <-- Single Source of Truth (SSOT) Hovedindeks
+├── data/                                <-- Skjermet test-sett og personvernpolicy
+│   └── README_DATA_PRIVACY.md
+├── dax_and_analytics/                   <-- Vendor-nøytrale DAX-målinger & RAG-formatering
+│   └── 01_generisk_dax_og_rag_formatering.dax
 ├── docs/
 │   ├── governance/                      <-- Politiske sakspapirer, mandat, sponsorkort, RACI
 │   │   ├── 01_saksframlegg-ai-veikart-okonomi.md
@@ -26,14 +30,8 @@ antigravity-ai-pilot/
 │       └── 02_folsomhetsanalyse-diagram.png
 ├── prompts/                             <-- Kvalitetssikrede mønster-prompter for M365 Copilot & RAG
 │   └── 01_promptsett-m365-copilot-kostra.md
-├── evals/                               <-- RAGAS-konfigurasjon, Ground Truth fasit-sett, CI/CD-tester
-│   └── 01_ground_truth_eval_template.json
-├── src/                                 <-- Systemkode-stubs for RAG, PII-vask og AI Gateway
-│   ├── gateway/                         <-- PII-skjerming & Token-rate limiter
-│   ├── rag/                             <-- Hybrid-søk (Dense + BM25) & Table-Aware Chunking
-│   └── utils/                           <-- SHA-256 kryptografisk audit-logger
-└── data/                                <-- Skjermet test-sett og KOSTRA-kontoplan-referanser
-    └── README_DATA_PRIVACY.md
+└── evals/                               <-- RAGAS-konfigurasjon, Ground Truth fasit-sett, CI/CD-tester
+    └── 01_ground_truth_eval_template.json
 ```
 
 ---

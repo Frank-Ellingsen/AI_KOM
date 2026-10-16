@@ -100,4 +100,4 @@ This repository is fully configured for Antigravity native progressive disclosur
 * **Run Predictive Forecast**: `python tools/predictive_forecasting_engine.py --mode both`.
 * **Run Audit Validator**: `python tools/audit_revisjon_validator.py`.
 * **Unified Tool Runner**: `python tools/run_tool.py --help`.
-* **Run Test Suite**: `pytest tests/test_project_master.py`.
+* **Run Test Suite**: `pytest -v` (kjører samtlige 32 tester på tvers av master og subprosjekter).

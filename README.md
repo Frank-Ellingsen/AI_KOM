@@ -113,10 +113,11 @@ python tools/run_tool.py server --port 8766
 ---
 
 ### 3. Validering og Testkjøring
-Verifiser at alle 6 kjernedimensjoner (Hub UI, revisjonsmotor, EVM, MVP-pilot, MCP-server og API) fungerer feilfritt:
+Verifiser at alle 6 kjernedimensjoner (Hub UI, revisjonsmotor, EVM, MVP-pilot, MCP-server, API og MS-pilot subprosjekt) fungerer feilfritt:
 
 ```powershell
-pytest tests/test_project_master.py -v
+# Kjører full testsuite (32 tester i tests/ og antigravity-ms-pilot/tests/)
+pytest -v
 ```
 
 ---

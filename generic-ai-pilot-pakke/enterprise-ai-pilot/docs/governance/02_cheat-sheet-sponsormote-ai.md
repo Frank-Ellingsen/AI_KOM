@@ -35,14 +35,11 @@
 ## 4. Raske Svar på 3 Typiske Motargumenter
 
 * **«Hva om AI-en hallusinerer?»**  
-  $
-ightarrow$ *«RAG-arkitekturen tvinger AI-en til KUN å hente verifiserte tall fra våre egne kilder med direkte sidetallshenvisning. Finnes ikke svaret i kildegrunnlaget, svarer den 'Finner ikke'.»*
+  $\rightarrow$ *«RAG-arkitekturen tvinger AI-en til KUN å hente verifiserte tall fra våre egne kilder med direkte sidetallshenvisning. Finnes ikke svaret i kildegrunnlaget, svarer den 'Finner ikke'.»*
 * **«Er ikke dette i strid med GDPR og EU AI Act?»**  
-  $
-ightarrow$ *«Nei, vi gjennomfører full DPIA- og FRIA-screening. Siden et menneske alltid overprøver svaret, rammes vi ikke av forbudet mot helautomatiske avgjørelser jf. GDPR art. 22.»*
+  $\rightarrow$ *«Nei, vi gjennomfører full DPIA- og FRIA-screening. Siden et menneske alltid overprøver svaret, rammes vi ikke av forbudet mot helautomatiske avgjørelser jf. GDPR art. 22.»*
 * **«Hva om piloten mislykkes?»**  
-  $
-ightarrow$ *«Da utløser vi stopp-knappen ved Beslutningsport G3 etter 8 uker uten ytterligere driftsforpliktelser. Eksisterende manuelle rutiner kjører uforstyrret i parallell.»*
+  $\rightarrow$ *«Da utløser vi stopp-knappen ved Beslutningsport G3 etter 8 uker uten ytterligere driftsforpliktelser. Eksisterende manuelle rutiner kjører uforstyrret i parallell.»*
 
 ---
 
