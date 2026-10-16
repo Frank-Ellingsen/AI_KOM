@@ -8,9 +8,11 @@
     "p05_prognose_scenarier",
     "p06_investering_evm",
     "p07_revisjon_port9",
+    "p08_ai_root_cause",
     "tt_enhet_okonomi",
     "tt_vikar_overtid",
-    "tt_evm_prosjekt"
+    "tt_evm_prosjekt",
+    "tt_avvik_trend"
   ],
   "activePageName": "p01_cfo_executive"
 }

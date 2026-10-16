@@ -1,0 +1,140 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v08_decomp_tree",
+  "position": {
+    "x": 810,
+    "y": 285,
+    "z": 12,
+    "width": 770,
+    "height": 235,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "decompositionTree",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik YTD"
+                }
+              },
+              "queryRef": "_Measures.Avvik YTD",
+              "nativeQueryRef": "Avvik YTD",
+              "active": true
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "kommunalsjefomrade"
+                }
+              },
+              "queryRef": "Dim_Ansvar.kommunalsjefomrade",
+              "nativeQueryRef": "kommunalsjefomrade",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "ansvar_navn"
+                }
+              },
+              "queryRef": "Dim_Ansvar.ansvar_navn",
+              "nativeQueryRef": "ansvar_navn",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Art"
+                    }
+                  },
+                  "Property": "Hovedgruppe"
+                }
+              },
+              "queryRef": "Dim_Art.Hovedgruppe",
+              "nativeQueryRef": "Hovedgruppe",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Art"
+                    }
+                  },
+                  "Property": "KOSTRA_Art"
+                }
+              },
+              "queryRef": "Dim_Art.KOSTRA_Art",
+              "nativeQueryRef": "KOSTRA_Art",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Art"
+                    }
+                  },
+                  "Property": "Kontonavn"
+                }
+              },
+              "queryRef": "Dim_Art.Kontonavn",
+              "nativeQueryRef": "Kontonavn",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'02  HVA FORKLARER AVVIKET? — Decomposition Tree (Rotårsak)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

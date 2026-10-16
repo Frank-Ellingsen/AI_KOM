@@ -149,3 +149,59 @@ table _Measures
 	measure 'Executive Summary EVM' = VAR cpi = [Kostnadsindeks (CPI)] VAR cv = [Kostnadsavvik (CV)] VAR txt = SWITCH([RAG CPI Status], "Red", "🔴 Investeringsprosjekter underpresterer kostnadsmessig (CPI < 0.95). Risiko for overskridelse av prosjektrammer.", "Amber", "🟠 Prosjektporteføljen har moderat kostnadspress (CPI 0.95-1.00). Krever tett oppfølging av entreprenørfakturaer.", "🟢 God prosjektgjennomføring med kostnadsindeks i balanse (CPI >= 1.00).") RETURN txt & " | PV: " & FORMAT([Planlagt Verdi (PV)], "#,##0 kr") & " | AC: " & FORMAT([Påløpt Kostnad (AC)], "#,##0 kr") & " | CV: " & FORMAT(cv, "#,##0 kr") & " | CPI: " & FORMAT(cpi, "0.000") & " | EAC: " & FORMAT([Sluttprognose (EAC)], "#,##0 kr")
 
 	measure 'Executive Summary Audit' = "🔒 Revisjonsstatus: Alle AI-genererte tiltaksforslag er forseglet med SHA-256 kryptografisk sjekksum og signert av saksbehandler (HITL Port 9). Kommunerevisjonen og Kontrollutvalget har full sporbarhet."
+
+	measure 'Regnskap Måned' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
+		formatString: #,##0 "kr"
+
+	measure 'Budsjett Måned' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
+		formatString: #,##0 "kr"
+
+	measure 'Avvik Måned' = [Regnskap Måned] - [Budsjett Måned]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+
+	measure 'Avvik Måned %' = DIVIDE([Avvik Måned], ABS([Budsjett Måned]), 0)
+		formatString: 0.0%
+
+	measure 'Avvik Kumulativt' = VAR maxDato = MAX(Dim_Dato[dato]) RETURN CALCULATE([Avvik YTD], REMOVEFILTERS(Dim_Dato), Dim_Dato[dato] <= maxDato)
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+
+	measure 'RAG Status Måned' = VAR pct = [Avvik Måned %] VAR avv = [Avvik Måned] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv > 0 && (pct > 0.02 || avv > 100000), "Red", avv > 0, "Amber", "Green")
+
+	measure 'RAG Label Måned' = SWITCH([RAG Status Måned], "Red", "Ugunstig", "Amber", "Innenfor toleranse", "Green", "Gunstig", "Ikke vurdert")
+
+	measure 'Avvik Forrige Måned' = VAR currentMonth = MAX(Dim_Dato[maned]) VAR currentYear = MAX(Dim_Dato[ar]) VAR prevMonth = IF(currentMonth = 1, 12, currentMonth - 1) VAR prevYear = IF(currentMonth = 1, currentYear - 1, currentYear) RETURN CALCULATE([Avvik Måned], REMOVEFILTERS(Dim_Dato), Dim_Dato[maned] = prevMonth, Dim_Dato[ar] = prevYear)
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+
+	measure 'Avvik Endring Måned' = [Avvik Måned] - [Avvik Forrige Måned]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+
+	measure 'Avvik Trend Retning' = VAR ChangeValue = [Avvik Endring Måned] RETURN SWITCH(TRUE(), ISBLANK(ChangeValue), "Ingen sammenligning", ChangeValue < 0, "Forbedring", ChangeValue > 0, "Forverring", "Uendret")
+
+	measure 'RAG Label YTD' = SWITCH([RAG Status], "Red", "Ugunstig (merforbruk)", "Amber", "Innenfor toleranse", "Green", "Gunstig (mindreforbruk)", "Ikke vurdert")
+
+	measure 'Avvik YTD Display' = [RAG Symbol] & " " & FORMAT([Avvik YTD], "#,##0 kr")
+
+	measure 'Avvik YTD Prosent Display' = FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & " | " & [RAG Label YTD]
+
+	measure 'Valgt Virksomhetsområde' = SELECTEDVALUE(Dim_Ansvar[kommunalsjefomrade], "Alle virksomhetsområder")
+
+	measure 'Valgt Budsjettnivå' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Enhetsnivå", IF(ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), "Virksomhetsnivå", "Samlet kommunenivå"))
+
+	measure 'Tittel Avvikstrend' = "01  HVORDAN UTVIKLER AVVIKET SEG? | " & [Valgt Virksomhetsområde]
+
+	measure 'Tittel Decomposition Tree' = "02  HVA FORKLARER AVVIKET? (Decomposition Tree) | " & [Valgt Virksomhetsområde]
+
+	measure 'Executive Summary Avvik' = VAR VarianceValue = [Avvik YTD] VAR VariancePct = [Avvik YTD %] VAR StatusLabel = [RAG Label YTD] VAR Area = [Valgt Virksomhetsområde] VAR Direction = IF(VarianceValue < 0, "lavere enn budsjett (mindreforbruk)", IF(VarianceValue > 0, "høyere enn budsjett (merforbruk)", "lik budsjett")) VAR Trend = [Avvik Trend Retning] RETURN "🤖 AI ROOT CAUSE SUMMARY | " & Area & ": Regnskap er " & FORMAT(ABS(VarianceValue), "#,##0 kr") & " " & Direction & " (" & FORMAT(VariancePct, "+0.0%;-0.0%;0.0%") & "). Status: " & [RAG Symbol] & " " & StatusLabel & ". Trendretning siste periode: " & Trend & ". Klikk i Decomposition Tree eller velg enhet for dypere rotårsaksforklaring."
+
+	measure 'Copilot Q&A Veileder' = "💡 AI COPILOT & NATURLIG SPRÅK | Foreslåtte spørsmål: «Vis avvik YTD per virksomhetsområde» • «Hvilke enheter har størst merforbruk?» • «Hva driver vikarutgiftene i art 1020?» • «Vis avvik måned for måned for Oppvekst» • «Hvilke enheter krever tiltak jf. § 14-5?»"
+
+	measure 'Rang Avvik Ugunstig' = RANKX(ALLSELECTED(Dim_Art[Kontonavn]), [Avvik YTD], , DESC, DENSE)
+
+	measure 'Vis Top 10 Avvik' = IF([Rang Avvik Ugunstig] <= 10, 1, 0)
+
+	measure 'Avvik Andel av Valgt Total' = DIVIDE([Avvik YTD], CALCULATE([Avvik YTD], ALLSELECTED(Dim_Ansvar[ansvar_navn])), 0)
+		formatString: 0.0%
+
+	measure 'Siste Faktiske Dato' = CALCULATE(MAX(Dim_Dato[dato]), FILTER(ALL(Dim_Dato[dato]), NOT ISBLANK(CALCULATE([Regnskap YTD]))))
+
+	measure 'Siste Faktiske Periode' = FORMAT([Siste Faktiske Dato], "MMMM yyyy")

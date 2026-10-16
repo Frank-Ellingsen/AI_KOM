@@ -1,0 +1,121 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "tt04_tab_detalj",
+  "position": {
+    "x": 10,
+    "y": 150,
+    "z": 4,
+    "width": 430,
+    "height": 160,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Regnskap Måned"
+                }
+              },
+              "queryRef": "_Measures.Regnskap Måned",
+              "nativeQueryRef": "Regnskap Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Budsjett Måned"
+                }
+              },
+              "queryRef": "_Measures.Budsjett Måned",
+              "nativeQueryRef": "Budsjett Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Måned %"
+                }
+              },
+              "queryRef": "_Measures.Avvik Måned %",
+              "nativeQueryRef": "Avvik Måned %",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Endring Måned"
+                }
+              },
+              "queryRef": "_Measures.Avvik Endring Måned",
+              "nativeQueryRef": "Avvik Endring Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Kumulativt"
+                }
+              },
+              "queryRef": "_Measures.Avvik Kumulativt",
+              "nativeQueryRef": "Avvik Kumulativt",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'MÅNEDLIG AVVIKSSPESIFIKASJON'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

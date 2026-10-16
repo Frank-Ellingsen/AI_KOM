@@ -826,6 +826,62 @@ relationship AuditResponsibility
 \tmeasure 'Executive Summary EVM' = VAR cpi = [Kostnadsindeks (CPI)] VAR cv = [Kostnadsavvik (CV)] VAR txt = SWITCH([RAG CPI Status], "Red", "🔴 Investeringsprosjekter underpresterer kostnadsmessig (CPI < 0.95). Risiko for overskridelse av prosjektrammer.", "Amber", "🟠 Prosjektporteføljen har moderat kostnadspress (CPI 0.95-1.00). Krever tett oppfølging av entreprenørfakturaer.", "🟢 God prosjektgjennomføring med kostnadsindeks i balanse (CPI >= 1.00).") RETURN txt & " | PV: " & FORMAT([Planlagt Verdi (PV)], "#,##0 kr") & " | AC: " & FORMAT([Påløpt Kostnad (AC)], "#,##0 kr") & " | CV: " & FORMAT(cv, "#,##0 kr") & " | CPI: " & FORMAT(cpi, "0.000") & " | EAC: " & FORMAT([Sluttprognose (EAC)], "#,##0 kr")
 
 \tmeasure 'Executive Summary Audit' = "🔒 Revisjonsstatus: Alle AI-genererte tiltaksforslag er forseglet med SHA-256 kryptografisk sjekksum og signert av saksbehandler (HITL Port 9). Kommunerevisjonen og Kontrollutvalget har full sporbarhet."
+
+\tmeasure 'Regnskap Måned' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
+\t\tformatString: #,##0 "kr"
+
+\tmeasure 'Budsjett Måned' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
+\t\tformatString: #,##0 "kr"
+
+\tmeasure 'Avvik Måned' = [Regnskap Måned] - [Budsjett Måned]
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
+
+\tmeasure 'Avvik Måned %' = DIVIDE([Avvik Måned], ABS([Budsjett Måned]), 0)
+\t\tformatString: 0.0%
+
+\tmeasure 'Avvik Kumulativt' = VAR maxDato = MAX(Dim_Dato[dato]) RETURN CALCULATE([Avvik YTD], REMOVEFILTERS(Dim_Dato), Dim_Dato[dato] <= maxDato)
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
+
+\tmeasure 'RAG Status Måned' = VAR pct = [Avvik Måned %] VAR avv = [Avvik Måned] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv > 0 && (pct > 0.02 || avv > 100000), "Red", avv > 0, "Amber", "Green")
+
+\tmeasure 'RAG Label Måned' = SWITCH([RAG Status Måned], "Red", "Ugunstig", "Amber", "Innenfor toleranse", "Green", "Gunstig", "Ikke vurdert")
+
+\tmeasure 'Avvik Forrige Måned' = VAR currentMonth = MAX(Dim_Dato[maned]) VAR currentYear = MAX(Dim_Dato[ar]) VAR prevMonth = IF(currentMonth = 1, 12, currentMonth - 1) VAR prevYear = IF(currentMonth = 1, currentYear - 1, currentYear) RETURN CALCULATE([Avvik Måned], REMOVEFILTERS(Dim_Dato), Dim_Dato[maned] = prevMonth, Dim_Dato[ar] = prevYear)
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
+
+\tmeasure 'Avvik Endring Måned' = [Avvik Måned] - [Avvik Forrige Måned]
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
+
+\tmeasure 'Avvik Trend Retning' = VAR ChangeValue = [Avvik Endring Måned] RETURN SWITCH(TRUE(), ISBLANK(ChangeValue), "Ingen sammenligning", ChangeValue < 0, "Forbedring", ChangeValue > 0, "Forverring", "Uendret")
+
+\tmeasure 'RAG Label YTD' = SWITCH([RAG Status], "Red", "Ugunstig (merforbruk)", "Amber", "Innenfor toleranse", "Green", "Gunstig (mindreforbruk)", "Ikke vurdert")
+
+\tmeasure 'Avvik YTD Display' = [RAG Symbol] & " " & FORMAT([Avvik YTD], "#,##0 kr")
+
+\tmeasure 'Avvik YTD Prosent Display' = FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & " | " & [RAG Label YTD]
+
+\tmeasure 'Valgt Virksomhetsområde' = SELECTEDVALUE(Dim_Ansvar[kommunalsjefomrade], "Alle virksomhetsområder")
+
+\tmeasure 'Valgt Budsjettnivå' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Enhetsnivå", IF(ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), "Virksomhetsnivå", "Samlet kommunenivå"))
+
+\tmeasure 'Tittel Avvikstrend' = "01  HVORDAN UTVIKLER AVVIKET SEG? | " & [Valgt Virksomhetsområde]
+
+\tmeasure 'Tittel Decomposition Tree' = "02  HVA FORKLARER AVVIKET? (Decomposition Tree) | " & [Valgt Virksomhetsområde]
+
+\tmeasure 'Executive Summary Avvik' = VAR VarianceValue = [Avvik YTD] VAR VariancePct = [Avvik YTD %] VAR StatusLabel = [RAG Label YTD] VAR Area = [Valgt Virksomhetsområde] VAR Direction = IF(VarianceValue < 0, "lavere enn budsjett (mindreforbruk)", IF(VarianceValue > 0, "høyere enn budsjett (merforbruk)", "lik budsjett")) VAR Trend = [Avvik Trend Retning] RETURN "🤖 AI ROOT CAUSE SUMMARY | " & Area & ": Regnskap er " & FORMAT(ABS(VarianceValue), "#,##0 kr") & " " & Direction & " (" & FORMAT(VariancePct, "+0.0%;-0.0%;0.0%") & "). Status: " & [RAG Symbol] & " " & StatusLabel & ". Trendretning siste periode: " & Trend & ". Klikk i Decomposition Tree eller velg enhet for dypere rotårsaksforklaring."
+
+\tmeasure 'Copilot Q&A Veileder' = "💡 AI COPILOT & NATURLIG SPRÅK | Foreslåtte spørsmål: «Vis avvik YTD per virksomhetsområde» • «Hvilke enheter har størst merforbruk?» • «Hva driver vikarutgiftene i art 1020?» • «Vis avvik måned for måned for Oppvekst» • «Hvilke enheter krever tiltak jf. § 14-5?»"
+
+\tmeasure 'Rang Avvik Ugunstig' = RANKX(ALLSELECTED(Dim_Art[Kontonavn]), [Avvik YTD], , DESC, DENSE)
+
+\tmeasure 'Vis Top 10 Avvik' = IF([Rang Avvik Ugunstig] <= 10, 1, 0)
+
+\tmeasure 'Avvik Andel av Valgt Total' = DIVIDE([Avvik YTD], CALCULATE([Avvik YTD], ALLSELECTED(Dim_Ansvar[ansvar_navn])), 0)
+\t\tformatString: 0.0%
+
+\tmeasure 'Siste Faktiske Dato' = CALCULATE(MAX(Dim_Dato[dato]), FILTER(ALL(Dim_Dato[dato]), NOT ISBLANK(CALCULATE([Regnskap YTD]))))
+
+\tmeasure 'Siste Faktiske Periode' = FORMAT([Siste Faktiske Dato], "MMMM yyyy")
 """
     (tables_dir / "_Measures.tmdl").write_text(measures_tmdl, encoding="utf-8")
     print("✓ Semantic Model (TMDL) ferdigstilt.")
@@ -1162,6 +1218,125 @@ def make_visual_table_flexible(name, x, y, w, h, items, title_text, z=4):
         }
     }
 
+def make_visual_line_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, tooltips=None, z=3):
+    query_state = {
+        "Category": {
+            "projections": [{
+                "field": {
+                    "Column": {
+                        "Expression": {"SourceRef": {"Entity": cat_table}},
+                        "Property": cat_col
+                    }
+                },
+                "queryRef": f"{cat_table}.{cat_col}",
+                "nativeQueryRef": cat_col,
+                "active": True
+            }]
+        },
+        "Y": {
+            "projections": [{
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": measure_name
+                    }
+                },
+                "queryRef": f"_Measures.{measure_name}",
+                "nativeQueryRef": measure_name,
+                "active": True
+            }]
+        }
+    }
+    if tooltips:
+        tt_projs = []
+        for m in tooltips:
+            tt_projs.append({
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": m
+                    }
+                },
+                "queryRef": f"_Measures.{m}",
+                "nativeQueryRef": m,
+                "active": True
+            })
+        query_state["Tooltips"] = {"projections": tt_projs}
+
+    return {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+        "name": name,
+        "position": {"x": x, "y": y, "z": z, "width": w, "height": h, "tabOrder": z},
+        "visual": {
+            "visualType": "lineChart",
+            "drillFilterOtherVisuals": True,
+            "query": {
+                "queryState": query_state
+            },
+            "visualContainerObjects": {
+                "title": [{
+                    "properties": {
+                        "show": {"expr": {"Literal": {"Value": "true"}}},
+                        "text": {"expr": {"Literal": {"Value": f"'{title_text}'"}}}
+                    }
+                }]
+            }
+        }
+    }
+
+def make_visual_decomposition_tree(name, x, y, w, h, measure_name, explain_by_cols, title_text, z=3):
+    cat_projections = []
+    for t_name, c_name in explain_by_cols:
+        cat_projections.append({
+            "field": {
+                "Column": {
+                    "Expression": {"SourceRef": {"Entity": t_name}},
+                    "Property": c_name
+                }
+            },
+            "queryRef": f"{t_name}.{c_name}",
+            "nativeQueryRef": c_name,
+            "active": True
+        })
+
+    return {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+        "name": name,
+        "position": {"x": x, "y": y, "z": z, "width": w, "height": h, "tabOrder": z},
+        "visual": {
+            "visualType": "decompositionTree",
+            "drillFilterOtherVisuals": True,
+            "query": {
+                "queryState": {
+                    "Y": {
+                        "projections": [{
+                            "field": {
+                                "Measure": {
+                                    "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                                    "Property": measure_name
+                                }
+                            },
+                            "queryRef": f"_Measures.{measure_name}",
+                            "nativeQueryRef": measure_name,
+                            "active": True
+                        }]
+                    },
+                    "Category": {
+                        "projections": cat_projections
+                    }
+                }
+            },
+            "visualContainerObjects": {
+                "title": [{
+                    "properties": {
+                        "show": {"expr": {"Literal": {"Value": "true"}}},
+                        "text": {"expr": {"Literal": {"Value": f"'{title_text}'"}}}
+                    }
+                }]
+            }
+        }
+    }
+
 def make_visual_slicer(name, x, y, w, h, table_name, col_name, title_text, z=5):
     return {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
@@ -1198,7 +1373,7 @@ def make_visual_slicer(name, x, y, w, h, table_name, col_name, title_text, z=5):
     }
 
 def build_report_pages():
-    print("Bygger 7 standardiserte PBIR rapportsider + 3 kontekst-tooltipsider...")
+    print("Bygger 8 standardiserte PBIR rapportsider + 4 kontekst-tooltipsider...")
     pages_dir = REPORT_DIR / "definition" / "pages"
     
     # Slett eksisterende sider for å bygge et rent oppsett
@@ -1520,6 +1695,58 @@ def build_report_pages():
         },
 
         # ======================================================================
+        # 8. AVVIKSANALYSE | AI & ROOT CAUSE (Decomposition Tree, Trend, Copilot)
+        # ======================================================================
+        {
+            "id": "p08_ai_root_cause",
+            "displayName": "8. Avviksanalyse | AI & Root Cause",
+            "visuals": [
+                # Rad 1: Tittel og Slicere
+                make_visual_card("v08_card_header", 20, 15, 560, 65, "Tittel Decomposition Tree", "8. AVVIKSANALYSE | AI & ROOT CAUSE", z=1, is_summary=True),
+                make_visual_slicer("v08_slicer_omrade", 600, 15, 240, 65, "Dim_Ansvar", "kommunalsjefomrade", "VIRKSOMHETSOMRÅDE", z=2),
+                make_visual_slicer("v08_slicer_tertial", 855, 15, 180, 65, "Dim_Dato", "tertial", "TERTIAL", z=3),
+                make_visual_slicer("v08_slicer_maned", 1050, 15, 250, 65, "Dim_Dato", "manedsnavn", "MÅNED", z=4),
+                make_visual_slicer("v08_slicer_hovedgruppe", 1315, 15, 265, 65, "Dim_Art", "Hovedgruppe", "HOVEDGRUPPE", z=5),
+
+                # Rad 2: 4 KPI-kort
+                make_visual_card("v08_kpi_regnskap", 20, 90, 375, 110, "Regnskap YTD", "REGNSKAP YTD", z=6),
+                make_visual_card("v08_kpi_budsjett", 415, 90, 375, 110, "Budsjett YTD", "PERIODISERT BUDSJETT YTD", z=7),
+                make_visual_card("v08_kpi_avvik", 810, 90, 380, 110, "KPI Avvik YTD Med RAG", "AVVIK YTD (RAG STATUS)", z=8),
+                make_visual_card("v08_kpi_avvik_pct", 1210, 90, 370, 110, "Avvik YTD Prosent Display", "AVVIK YTD % | STATUS", z=9),
+
+                # Rad 3: Executive Summary AI
+                make_visual_card("v08_card_exec_summary", 20, 208, 1560, 70, "Executive Summary Avvik", "AI ROOT CAUSE SUMMARY — STATUS, TRENDRETNING & ROTÅRSAKSANALYSE", z=10, is_summary=True),
+
+                # Rad 4: Trend og Decomposition Tree
+                make_visual_line_chart("v08_line_trend", 20, 285, 770, 235, "Dim_Dato", "manedsnavn", "Avvik Måned", "01  HVORDAN UTVIKLER AVVIKET SEG? — Avvik per Måned (Trend)", tooltips=["Regnskap Måned", "Budsjett Måned", "Avvik Måned", "Avvik Måned %", "RAG Label Måned", "Avvik Endring Måned", "Avvik Trend Retning"], z=11),
+                make_visual_decomposition_tree("v08_decomp_tree", 810, 285, 770, 235, "Avvik YTD", [
+                    ("Dim_Ansvar", "kommunalsjefomrade"),
+                    ("Dim_Ansvar", "ansvar_navn"),
+                    ("Dim_Art", "Hovedgruppe"),
+                    ("Dim_Art", "KOSTRA_Art"),
+                    ("Dim_Art", "Kontonavn")
+                ], "02  HVA FORKLARER AVVIKET? — Decomposition Tree (Rotårsak)", z=12),
+
+                # Rad 5: Nøkkeldrivere og AI Copilot Prompts
+                make_visual_bar_chart("v08_bar_drivers", 20, 528, 770, 195, "Dim_Art", "Kontonavn", "Avvik YTD", "03  HVILKE FAKTORER PÅVIRKER? — Største Kostnadsavvik per Kontonavn", tooltips=["Avvik YTD %", "Regnskap YTD", "Budsjett YTD"], z=13),
+                make_visual_card("v08_card_qa_copilot", 810, 528, 770, 195, "Copilot Q&A Veileder", "04  SPØR DATAENE & AI COPILOT GUIDEDE PROMPTS", z=14, is_summary=True, font_size="11D"),
+
+                # Rad 6: Oppfølgingsmatrise
+                make_visual_table_flexible("v08_tab_oppfolging", 20, 730, 1560, 270, [
+                    ("measure", "RAG Symbol"),
+                    ("column", "Dim_Ansvar", "kommunalsjefomrade"),
+                    ("column", "Dim_Ansvar", "ansvar_navn"),
+                    ("measure", "Budsjett YTD"),
+                    ("measure", "Regnskap YTD"),
+                    ("measure", "Avvik YTD"),
+                    ("measure", "Avvik YTD %"),
+                    ("measure", "Avvik Trend Retning"),
+                    ("measure", "RAG Tekst")
+                ], "05  OPPFØLGING — Rotårsaksmatrise, Trendretning & Tiltakskontroll", z=15)
+            ]
+        },
+
+        # ======================================================================
         # REPORT PAGE TOOLTIPS (Skjulte hjelpe- og kontekstsider)
         # ======================================================================
         {
@@ -1575,6 +1802,25 @@ def build_report_pages():
                     ("measure", "Sluttprognose (EAC)")
                 ], "EVM NØKKELTALL", z=4)
             ]
+        },
+        {
+            "id": "tt_avvik_trend",
+            "displayName": "Tooltip: Avvik Trend",
+            "height": 320,
+            "width": 450,
+            "visibility": "HiddenInViewMode",
+            "visuals": [
+                make_visual_card("tt04_card_tittel", 10, 10, 430, 45, "Tittel Avvikstrend", "PERIODE & AVVIKSTREND", z=1, is_summary=True),
+                make_visual_card("tt04_card_avvik_mnd", 10, 65, 210, 75, "Avvik Måned", "AVVIK MÅNED", z=2),
+                make_visual_card("tt04_card_trend", 230, 65, 210, 75, "Avvik Trend Retning", "TRENDRETNING", z=3, is_summary=True),
+                make_visual_table_flexible("tt04_tab_detalj", 10, 150, 430, 160, [
+                    ("measure", "Regnskap Måned"),
+                    ("measure", "Budsjett Måned"),
+                    ("measure", "Avvik Måned %"),
+                    ("measure", "Avvik Endring Måned"),
+                    ("measure", "Avvik Kumulativt")
+                ], "MÅNEDLIG AVVIKSSPESIFIKASJON", z=4)
+            ]
         }
     ]
 
@@ -1614,7 +1860,7 @@ def build_report_pages():
         "activePageName": page_order[0]
     }
     (pages_dir / "pages.json").write_text(json.dumps(pages_meta, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"✓ {len(page_order)} PBIR sider (7 primærsider + 3 kontekst-tooltipsider) bygget og lagret.")
+    print(f"✓ {len(page_order)} PBIR sider (8 primærsider + 4 kontekst-tooltipsider) bygget og lagret.")
 
 def main():
     print("Starter bygging av Power BI rapporteringsprosjekt...")

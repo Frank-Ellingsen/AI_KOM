@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "tt_avvik_trend",
+  "displayName": "Tooltip: Avvik Trend",
+  "displayOption": "FitToPage",
+  "height": 320,
+  "width": 450,
+  "visibility": "HiddenInViewMode"
+}

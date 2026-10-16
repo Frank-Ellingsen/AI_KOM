@@ -1,0 +1,189 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v08_line_trend",
+  "position": {
+    "x": 20,
+    "y": 285,
+    "z": 11,
+    "width": 770,
+    "height": 235,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Dato"
+                    }
+                  },
+                  "Property": "manedsnavn"
+                }
+              },
+              "queryRef": "Dim_Dato.manedsnavn",
+              "nativeQueryRef": "manedsnavn",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Måned"
+                }
+              },
+              "queryRef": "_Measures.Avvik Måned",
+              "nativeQueryRef": "Avvik Måned",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Regnskap Måned"
+                }
+              },
+              "queryRef": "_Measures.Regnskap Måned",
+              "nativeQueryRef": "Regnskap Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Budsjett Måned"
+                }
+              },
+              "queryRef": "_Measures.Budsjett Måned",
+              "nativeQueryRef": "Budsjett Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Måned"
+                }
+              },
+              "queryRef": "_Measures.Avvik Måned",
+              "nativeQueryRef": "Avvik Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Måned %"
+                }
+              },
+              "queryRef": "_Measures.Avvik Måned %",
+              "nativeQueryRef": "Avvik Måned %",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "RAG Label Måned"
+                }
+              },
+              "queryRef": "_Measures.RAG Label Måned",
+              "nativeQueryRef": "RAG Label Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Endring Måned"
+                }
+              },
+              "queryRef": "_Measures.Avvik Endring Måned",
+              "nativeQueryRef": "Avvik Endring Måned",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Trend Retning"
+                }
+              },
+              "queryRef": "_Measures.Avvik Trend Retning",
+              "nativeQueryRef": "Avvik Trend Retning",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'01  HVORDAN UTVIKLER AVVIKET SEG? — Avvik per Måned (Trend)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v08_tab_oppfolging",
+  "position": {
+    "x": 20,
+    "y": 730,
+    "z": 15,
+    "width": 1560,
+    "height": 270,
+    "tabOrder": 15
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "RAG Symbol"
+                }
+              },
+              "queryRef": "_Measures.RAG Symbol",
+              "nativeQueryRef": "RAG Symbol",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "kommunalsjefomrade"
+                }
+              },
+              "queryRef": "Dim_Ansvar.kommunalsjefomrade",
+              "nativeQueryRef": "kommunalsjefomrade",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "ansvar_navn"
+                }
+              },
+              "queryRef": "Dim_Ansvar.ansvar_navn",
+              "nativeQueryRef": "ansvar_navn",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Budsjett YTD"
+                }
+              },
+              "queryRef": "_Measures.Budsjett YTD",
+              "nativeQueryRef": "Budsjett YTD",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Regnskap YTD"
+                }
+              },
+              "queryRef": "_Measures.Regnskap YTD",
+              "nativeQueryRef": "Regnskap YTD",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik YTD"
+                }
+              },
+              "queryRef": "_Measures.Avvik YTD",
+              "nativeQueryRef": "Avvik YTD",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik YTD %"
+                }
+              },
+              "queryRef": "_Measures.Avvik YTD %",
+              "nativeQueryRef": "Avvik YTD %",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik Trend Retning"
+                }
+              },
+              "queryRef": "_Measures.Avvik Trend Retning",
+              "nativeQueryRef": "Avvik Trend Retning",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "RAG Tekst"
+                }
+              },
+              "queryRef": "_Measures.RAG Tekst",
+              "nativeQueryRef": "RAG Tekst",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'05  OPPFØLGING — Rotårsaksmatrise, Trendretning & Tiltakskontroll'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
