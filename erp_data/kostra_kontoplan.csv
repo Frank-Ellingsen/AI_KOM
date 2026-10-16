@@ -1,4 +1,4 @@
-﻿Dimensjon;Niva_1_Kode;Niva_1_Navn;Niva_2_Kode;Niva_2_Navn;Niva_3_Kode;Niva_3_Navn;Beskrivelse_Regnskapsregel
+Dimensjon;Niva_1_Kode;Niva_1_Navn;Niva_2_Kode;Niva_2_Navn;Niva_3_Kode;Niva_3_Navn;Beskrivelse_Regnskapsregel
 Kontoklasse;1;Driftsregnskap;1;Driftsregnskap;1;Driftsregnskap;Løpende inntekter og utgifter til kommunal service og drift Jf. Kommuneloven § 14-9
 Kontoklasse;2;Investeringsregnskap;2;Investeringsregnskap;2;Investeringsregnskap;Varige formuesobjekter, nybygg, anlegg og store oppgraderinger
 Kontoklasse;3;Balanseregnskap;3;Balanseregnskap;3;Balanseregnskap;Eiendeler, egenkapital og kortsiktig/langsiktig gjeld per 31.12
@@ -11,11 +11,15 @@ Funksjon;HF1;Sentrale styringsorganer og administrasjon;170;Premieavvik og premi
 Funksjon;HF1;Sentrale styringsorganer og administrasjon;180;Diverse fellesutgifter;1800;Felles kontingenter og forsikringer;Sentralavtaler, fellesforikringer og fellesavsetninger
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;201;Barnehager;2010;Kommunale barnehager;Drift av kommunale barnehager og pedagogisk bemanning
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;202;Grunnskoleopplæring;2020;Grunnskoler (1.-10. trinn);Undervisning, lærere, skolebøker og ordinær skoledrift
+Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;203;Særskilt tilrettelagt grunnskoleopplæring;2030;Spesialundervisning og forsterkede avdelinger;Særskilte opplæringstiltak etter opplæringsloven for elever med omfattende behov
+Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;204;Skolefritidsordning (SFO);2040;SFO drift og aktivitet;Skolefritidsordning tilbud før og etter skoletid for 1.-4. trinn og særskilte behov
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;211;Skolefritidstilbud (SFO);2110;Skolefritidsordning;SFO-bemanning, opphold og aktiviteter etter skoletid
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;213;Voksenopplæring og leirskole;2130;Voksenopplæringssenter;Norskundervisning, grunnskole for voksne og leirskoleopphold
+Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;214;Skoleskyss;2140;Skoleskyss og transport;Lovpålagt skoleskyss for grunnskoleelever ved avstand eller trafikksikkerhet
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;215;Skoleskyss;2150;Skoleskyss grunnskole;Skyss for elever med lang vei eller skade/funksjonshemming
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;221;Pedagogisk-psykologisk tjeneste (PPT);2210;PPT og oppfølgingstjeneste;Sakkyndig vurdering og rådgivning for barn med særskilte behov
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;222;Skolelokaler og skoleanlegg;2220;Drift av skolebygg og uteanlegg;Forvaltning, drift og vedlikehold av skolebygninger
+Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;223;Spesialpedagogiske tiltak barnehage;2230;Spesialpedagogisk hjelp barnehage;Tidlig innsats og spesialpedagogisk støtte til førskolebarn etter barnehageloven
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;231;Barnevernstjeneste;2310;Saksbehandling og undersøkelser i barnevernet;Mottak av bekymringsmeldinger, undersøkelser og tiltaksplaner
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;232;Forebyggende barnevernstiltak;2320;Hjelpetiltak i hjemmet;Råd, veiledning, støttekontakt og avlastning i familien
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;233;Barnevernstiltak utenfor hjemmet;2330;Fosterhjem og barnevernsinstitusjoner;Plassering i fosterhjem, beredskapshjem og statlige/private institusjoner
@@ -24,6 +28,7 @@ Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;241;Forebyggende helsetjeneste
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;242;Kommunehelsetjeneste og re/habilitering;2420;Fastlegeordning, fysioterapi og ergoterapi;Fastlegetilskudd, fysioterapihjemler og ergoterapitjenester
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;243;Legevakt og medisinsk nødmeldetjeneste;2430;Interkommunal legevakt;Øyeblikkelig hjelp utenom fastlegens åpningstid
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;253;Pleie og omsorg i institusjon;2530;Sykehjem og langtidsopphold;24/7 heldøgns pleie og omsorg i kommunale omsorgssentre
+Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;254;Heldøgns pleie og omsorgstjenester;2540;Sykehjem, bofellesskap og heldøgns omsorg;Heldøgns pleie, rehabilitering, lindrende behandling og botilbud med fast bemanning
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;257;Hjemmetjenester i bofellesskap;2570;Omsorgsboliger med personellbase;Tjenester til beboere i tilrettelagte bofellesskap/omsorgsboliger
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;258;Hjemmetjenester ambulerende virksomhet;2580;Hjemmesykepleie og praktisk bistand;Ambulerende helsehjelp og rengjøring/hjelp i eget hjem
 Funksjon;HF2;Oppvekst, utdanning, helse og omsorg;261;Støtte, avlastning og omsorgsstønad;2610;Trygghetsalarm og pårørendeavlastning;Tekniske hjelpemidler, trygghetsalarmer og pårørendeavlastning

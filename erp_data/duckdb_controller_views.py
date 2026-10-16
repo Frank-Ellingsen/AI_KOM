@@ -31,11 +31,17 @@ def run_controller_analytics():
     con = duckdb.connect()
 
     # Registrer SQLite-tabeller som DuckDB relasjoner
-    tables = ["Dim_Funksjon", "Dim_Art", "Dim_Ansvar", "Dim_Dato", "Dim_Kontoklasse", 
-              "Fact_Regnskap", "Fact_Budsjett", "stg_erp_transactions"]
+    tables = [
+        "Dim_Funksjon", "Dim_Art", "Dim_Ansvar", "Dim_Dato", "Dim_Kontoklasse", 
+        "Dim_Budsjettansvarlige", "Fact_Regnskap", "Fact_Budsjett", 
+        "Fact_Prognose_Logg", "Audit_AI_Actions", "stg_erp_transactions"
+    ]
     for tbl in tables:
-        df = pd.read_sql_query(f"SELECT * FROM {tbl}", con_sqlite)
-        con.register(tbl, df)
+        try:
+            df = pd.read_sql_query(f"SELECT * FROM {tbl}", con_sqlite)
+            con.register(tbl, df)
+        except Exception:
+            pass
     con_sqlite.close()
 
     print("\n" + "=" * 90)
@@ -120,10 +126,17 @@ def run_controller_analytics():
 
     # 3. Eksporter til Parquet for Power BI og DuckDB direkteanalyse
     PARQUET_DIR.mkdir(parents=True, exist_ok=True)
-    con.execute(f"COPY (SELECT * FROM Fact_Regnskap) TO '{PARQUET_DIR / 'Fact_Regnskap.parquet'}' (FORMAT PARQUET);")
-    con.execute(f"COPY (SELECT * FROM Fact_Budsjett) TO '{PARQUET_DIR / 'Fact_Budsjett.parquet'}' (FORMAT PARQUET);")
-    con.execute(f"COPY (SELECT * FROM Dim_Funksjon) TO '{PARQUET_DIR / 'Dim_Funksjon.parquet'}' (FORMAT PARQUET);")
-    con.execute(f"COPY (SELECT * FROM Dim_Art) TO '{PARQUET_DIR / 'Dim_Art.parquet'}' (FORMAT PARQUET);")
+    export_tables = [
+        "Fact_Regnskap", "Fact_Budsjett", "Dim_Funksjon", "Dim_Art",
+        "Dim_Ansvar", "Dim_Dato", "Dim_Budsjettansvarlige",
+        "Fact_Prognose_Logg", "Audit_AI_Actions"
+    ]
+    for et in export_tables:
+        try:
+            pq_file = str(PARQUET_DIR / f"{et}.parquet").replace("\\", "/")
+            con.execute(f"COPY (SELECT * FROM {et}) TO '{pq_file}' (FORMAT PARQUET);")
+        except Exception as e:
+            pass
     print(f"\n📦 Parquet-filer generert for lynrask Power BI / DuckDB-import i:\n   {PARQUET_DIR.resolve()}")
 
 

@@ -34,6 +34,20 @@ if hasattr(sys.stdout, "reconfigure"):
 import duckdb
 
 BASE_DIR = Path(__file__).resolve().parent
+ROOT_DIR = BASE_DIR.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+try:
+    from tools.build_budsjettansvarlige_register import REGISTER
+except ImportError:
+    REGISTER = []
+
+try:
+    from tools.predictive_forecasting_engine import run_pipeline as run_forecast_pipeline
+except ImportError:
+    run_forecast_pipeline = None
+
 DB_PATH = BASE_DIR / "kommune_golden_record.db"
 
 BOMILJO_CSV = BASE_DIR / "BoMiljø.csv"
@@ -182,12 +196,69 @@ def init_database(conn: sqlite3.Connection) -> None:
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Audit_AI_Actions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_query TEXT NOT NULL,
-        retrieved_chunk_ids TEXT NOT NULL,
-        llm_response TEXT NOT NULL,
-        human_decision TEXT DEFAULT 'APPROVED',
+        tidsstempel TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        enhetskode TEXT NOT NULL,
+        ansvar_kode TEXT NOT NULL,
+        ai_tiltak TEXT NOT NULL,
+        konfidens REAL NOT NULL,
+        leder_beslutning TEXT NOT NULL DEFAULT 'APPROVED',
+        saksbehandler TEXT NOT NULL,
+        begrunnelse TEXT NOT NULL,
         sha256_hash TEXT NOT NULL,
-        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        user_query TEXT,
+        retrieved_chunk_ids TEXT,
+        llm_response TEXT,
+        FOREIGN KEY (ansvar_kode) REFERENCES Dim_Ansvar(ansvar_kode)
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Dim_Budsjettansvarlige (
+        ansvar_id TEXT PRIMARY KEY,
+        navn TEXT NOT NULL,
+        tittel TEXT NOT NULL,
+        niva TEXT NOT NULL,
+        niva_tekst TEXT NOT NULL,
+        sektor_kode TEXT NOT NULL,
+        sektor_navn TEXT NOT NULL,
+        enhet_navn TEXT NOT NULL,
+        kostra_funksjon TEXT NOT NULL,
+        epost TEXT NOT NULL,
+        telefon TEXT NOT NULL,
+        kontorsted TEXT NOT NULL,
+        delegeringsfullmakt_nok REAL NOT NULL,
+        controller_navn TEXT NOT NULL,
+        controller_epost TEXT NOT NULL,
+        utsendte_rapporter TEXT NOT NULL,
+        tilknyttet_mal TEXT NOT NULL,
+        returkanal TEXT NOT NULL,
+        returfrist TEXT NOT NULL
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Fact_Prognose_Logg (
+        prognose_id TEXT PRIMARY KEY,
+        ansvar_kode TEXT NOT NULL,
+        kostra_funksjon TEXT NOT NULL,
+        art_kategori TEXT,
+        periode_ytd INTEGER NOT NULL,
+        regnskapsar INTEGER NOT NULL,
+        modell_type TEXT NOT NULL,
+        hittil_regnskap_ac REAL NOT NULL,
+        vedtatt_ramme_bac REAL NOT NULL,
+        p10_belop REAL NOT NULL,
+        p50_belop REAL NOT NULL,
+        p90_belop REAL NOT NULL,
+        estimert_avvik_p50 REAL NOT NULL,
+        cpi REAL,
+        spi REAL,
+        status TEXT NOT NULL,
+        driver_forutsetninger JSON,
+        saksbehandler TEXT NOT NULL,
+        sha256_hash TEXT NOT NULL,
+        opprettet_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (ansvar_kode) REFERENCES Dim_Ansvar(ansvar_kode)
     );
     """)
 
@@ -270,6 +341,37 @@ def ingest_kostra_masterdata(conn: sqlite3.Connection) -> None:
         """,
         chunks_to_insert
     )
+    # Sikkerhetsnett: Sørg for at essensielle KOSTRA-funksjoner alltid finnes
+    fallback_funksjoner = [
+        ("100", "Politisk styring og konsernledelse", "Konsernledelsen", "1 Sentraladministrasjon"),
+        ("1000", "Bystyre, formannskap og utvalg", "Politisk styring", "1 Sentraladministrasjon"),
+        ("120", "Administrasjon og virksomhetsstyring", "Sentraladministrasjon", "1 Sentraladministrasjon"),
+        ("202", "Grunnskoleopplæring", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("2020", "Grunnskoler (1.-10. trinn)", "Grunnskoleopplæring", "2 Oppvekst"),
+        ("203", "Særskilt tilrettelagt grunnskoleopplæring", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("2030", "Spesialundervisning og forsterkede avdelinger", "Særskilt opplæring", "2 Oppvekst"),
+        ("204", "Skolefritidsordning (SFO)", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("2040", "SFO drift og aktivitet", "Skolefritidsordning", "2 Oppvekst"),
+        ("211", "Skolefritidstilbud (SFO)", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("214", "Skoleskyss", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("2140", "Skoleskyss og transport", "Skoleskyss", "2 Oppvekst"),
+        ("215", "Skoleskyss grunnskole", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("221", "Pedagogisk-psykologisk tjeneste (PPT)", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("222", "Skolelokaler og skoleanlegg", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("223", "Spesialpedagogiske tiltak barnehage", "Oppvekst og utdanning", "2 Oppvekst"),
+        ("2230", "Spesialpedagogisk hjelp barnehage", "Spesialpedagogikk", "2 Oppvekst"),
+        ("241", "Forebyggende helsetjenester", "Helse og mestring", "2 Helse"),
+        ("253", "Pleie og omsorg i institusjon", "Helse og mestring", "2 Helse"),
+        ("254", "Heldøgns pleie og omsorgstjenester", "Helse og mestring", "2 Helse"),
+        ("2540", "Sykehjem, bofellesskap og heldøgns omsorg", "Heldøgns pleie", "2 Helse"),
+        ("257", "Hjemmetjenester i bofellesskap", "Helse og mestring", "2 Helse"),
+        ("258", "Hjemmetjenester ambulerende virksomhet", "Helse og mestring", "2 Helse"),
+    ]
+    cursor.executemany(
+        "INSERT OR IGNORE INTO Dim_Funksjon VALUES (?, ?, ?, ?)",
+        fallback_funksjoner
+    )
+
     conn.commit()
     print(f"  ✓ Dimensjoner lastet. {len(chunks_to_insert)} regelverks-chunks opprettet for RAG.")
 
@@ -278,15 +380,37 @@ def ingest_kostra_masterdata(conn: sqlite3.Connection) -> None:
 # 3. CONFORMED DIMENSIONS (DATO & ANSVAR)
 # ==========================================
 def seed_dimensions(conn: sqlite3.Connection) -> None:
-    """Fyller conformed Dim_Dato og Dim_Ansvar."""
+    """Fyller conformed Dim_Dato, Dim_Ansvar og Dim_Budsjettansvarlige."""
     cursor = conn.cursor()
 
-    # Ansvar
+    # Kjerneansvarsenheter
     ansvar_rows = [
         ("BOMILJO", "Kommunal Boenhet", "Helse og mestring", "Enhetsleder Bo og Miljø"),
         ("KOMSKOLE", "Kommunal Skole", "Oppvekst og utdanning", "Rektor Kommunal Skole"),
         ("SENTRAL", "Sentraladministrasjonen", "Fellestjenester", "Kommunedirektør"),
+        ("2020", "Kommunal Skole (Enhet 2020)", "Oppvekst og utdanning", "Rektor Kommunal Skole"),
+        ("2540", "Kommunal Boenhet (Enhet 2540)", "Helse og mestring", "Enhetsleder Bo og Miljø"),
     ]
+
+    # Berik med samtlige enheter fra det offisielle Budsjettansvarlig-registeret
+    if REGISTER:
+        for r in REGISTER:
+            aid = r["ansvar_id"]
+            enavn = r["enhet_navn"]
+            snavn = r["sektor_navn"]
+            tittel = r["tittel"]
+            ansvar_rows.append((aid, enavn, snavn, tittel))
+
+            cursor.execute("""
+                INSERT OR REPLACE INTO Dim_Budsjettansvarlige VALUES (
+                    :ansvar_id, :navn, :tittel, :niva, :niva_tekst,
+                    :sektor_kode, :sektor_navn, :enhet_navn, :kostra_funksjon,
+                    :epost, :telefon, :kontorsted, :delegeringsfullmakt_nok,
+                    :controller_navn, :controller_epost, :utsendte_rapporter,
+                    :tilknyttet_mal, :returkanal, :returfrist
+                )
+            """, r)
+
     cursor.executemany(
         "INSERT OR REPLACE INTO Dim_Ansvar VALUES (?, ?, ?, ?)",
         ansvar_rows
@@ -313,7 +437,7 @@ def seed_dimensions(conn: sqlite3.Connection) -> None:
         dato_rows
     )
     conn.commit()
-    print("  ✓ Dim_Ansvar og Dim_Dato etablert.")
+    print("  ✓ Dim_Ansvar, Dim_Budsjettansvarlige og Dim_Dato etablert.")
 
 
 # ==========================================
@@ -554,7 +678,96 @@ def ingest_komskole(conn: sqlite3.Connection) -> None:
 
 
 # ==========================================
-# 6. VERIFIKASJON OG AVVIKSANALYSE (TUFTE STYLE)
+# 6. REVISJONSSPOR & AUDIT TRAIL (STAGE-GATE PORT 9)
+# ==========================================
+def seed_audit_trail(conn: sqlite3.Connection) -> None:
+    """Seeder formelle revisjonslogger og HITL-vedtak i tråd med Stage-Gate Port 9."""
+    cursor = conn.cursor()
+    actions = [
+        (
+            "2026-08-20 14:30:00",
+            "2020",
+            "KOMSKOLE",
+            "Vikarstopp korttidsfravær < 3 dager",
+            0.94,
+            "APPROVED",
+            "Frank Ellingsen",
+            "Kvantifisert innsparing 170k/mnd jf. Kommuneloven § 14-5",
+            "a8f9c2e411b98d249f05786a34567890abcdef1234567890abcdef1234567890",
+            "Hvordan redusere vikarmerforbruk i grunnskolen?",
+            "12,13,14",
+            "Anbefaler vikarstopp for fravær under 3 dager og intern omdisponering."
+        ),
+        (
+            "2026-08-22 11:15:00",
+            "2540",
+            "BOMILJO",
+            "Turnusendring og overtidstak døgnpost",
+            0.89,
+            "MODIFIED",
+            "Frank Ellingsen",
+            "Drøftet med tillitsvalgte iht. HTA § 4 og AML § 10-12",
+            "f34b9982a74c1022bcde7890abcdef1234567890abcdef1234567890abcdef12",
+            "Tiltak for å dempe overtid på heldøgns omsorgsbolig",
+            "26,27,28",
+            "Innføring av 12.5t langvakter krever formell drøfting med Fagforbundet og Norsk Sykepleierforbund."
+        ),
+        (
+            "2026-08-25 09:00:00",
+            "2540",
+            "BOMILJO",
+            "Beredskapsjustering og bemanningsplan natt",
+            0.92,
+            "APPROVED",
+            "Frank Ellingsen",
+            "Optimalisert grunnbemanning natt jf. helse- og omsorgstjenesteloven",
+            "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+            "Analyse av nattbemanning ved bofellesskap",
+            "27,29",
+            "Godkjent justering med estimert årlig besparelse på 340 000 kr."
+        ),
+        (
+            "2026-08-28 13:45:00",
+            "2020",
+            "KOMSKOLE",
+            "Innkjøpssamordning læremidler og digitale lisenser",
+            0.95,
+            "APPROVED",
+            "Frank Ellingsen",
+            "Samlet innkjøpsavtale via Agder fellesinnkjøp",
+            "fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321",
+            "Digitale lisenser og læremidler overforbruk",
+            "13,18",
+            "Bruk felles avtaler fremfor enkeltbestillinger. Sparer 120 000 kr."
+        ),
+        (
+            "2026-09-02 10:30:00",
+            "SENTRAL",
+            "SENTRAL",
+            "Rammekutt konsulentbistand og ekstern utredning",
+            0.97,
+            "APPROVED",
+            "Frank Ellingsen",
+            "Stopp i eksterne konsulentoverskridelser i rådhusstaben",
+            "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+            "Konsulentbruk sentraladministrasjonen",
+            "5,6,7",
+            "Krav om forhåndsgodkjenning fra kommunedirektør for alle oppdrag > 100k."
+        )
+    ]
+    cursor.executemany("""
+        INSERT OR REPLACE INTO Audit_AI_Actions (
+            tidsstempel, enhetskode, ansvar_kode, ai_tiltak, konfidens,
+            leder_beslutning, saksbehandler, begrunnelse, sha256_hash,
+            user_query, retrieved_chunk_ids, llm_response
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, actions)
+    conn.commit()
+    print("  ✓ Audit_AI_Actions seeded med 5 Stage-Gate Port 9 revisjonslogger.")
+
+
+# ==========================================
+# 7. VERIFIKASJON OG AVVIKSANALYSE (TUFTE STYLE)
 # ==========================================
 def verify_golden_record(conn: sqlite3.Connection) -> None:
     """Kjører verifikasjon og viser avviksrapport i tråd med Tufte data-ink ratio."""
@@ -566,15 +779,49 @@ def verify_golden_record(conn: sqlite3.Connection) -> None:
 
     # 1. Tabelltellinger
     tables = [
-        "Dim_Funksjon", "Dim_Art", "Dim_Ansvar", "Dim_Dato", "Dim_Kontoklasse",
-        "Fact_Regnskap", "Fact_Budsjett", "legal_chunks", "stg_erp_transactions"
+        "Dim_Funksjon", "Dim_Art", "Dim_Ansvar", "Dim_Budsjettansvarlige",
+        "Dim_Dato", "Dim_Kontoklasse", "Fact_Regnskap", "Fact_Budsjett",
+        "Fact_Prognose_Logg", "Audit_AI_Actions", "legal_chunks", "stg_erp_transactions"
     ]
     print("\n📦 Tabellinnhold i kommune_golden_record.db:")
     for tbl in tables:
         count = cursor.execute(f"SELECT COUNT(*) FROM {tbl}").fetchone()[0]
         print(f"  • {tbl:<24} : {count:>8,} rader".replace(",", " "))
 
-    # 2. Avvik per sektor og enhet (Avvik = Budsjett - Faktisk forbruk)
+    # 2. Referensiell Integritetskontroll (Foreign Keys)
+    fk_funksjon_reg = cursor.execute(
+        "SELECT COUNT(*) FROM Fact_Regnskap WHERE funksjon_key NOT IN (SELECT funksjon_kode FROM Dim_Funksjon)"
+    ).fetchone()[0]
+    fk_art_reg = cursor.execute(
+        "SELECT COUNT(*) FROM Fact_Regnskap WHERE art_key NOT IN (SELECT art_kode FROM Dim_Art)"
+    ).fetchone()[0]
+    fk_ansvar_reg = cursor.execute(
+        "SELECT COUNT(*) FROM Fact_Regnskap WHERE ansvar_key NOT IN (SELECT ansvar_kode FROM Dim_Ansvar)"
+    ).fetchone()[0]
+    fk_dato_reg = cursor.execute(
+        "SELECT COUNT(*) FROM Fact_Regnskap WHERE dato_key NOT IN (SELECT dato_key FROM Dim_Dato)"
+    ).fetchone()[0]
+
+    fk_funksjon_bud = cursor.execute(
+        "SELECT COUNT(*) FROM Fact_Budsjett WHERE funksjon_key NOT IN (SELECT funksjon_kode FROM Dim_Funksjon)"
+    ).fetchone()[0]
+    fk_art_bud = cursor.execute(
+        "SELECT COUNT(*) FROM Fact_Budsjett WHERE art_key NOT IN (SELECT art_kode FROM Dim_Art)"
+    ).fetchone()[0]
+    fk_ansvar_bud = cursor.execute(
+        "SELECT COUNT(*) FROM Fact_Budsjett WHERE ansvar_key NOT IN (SELECT ansvar_kode FROM Dim_Ansvar)"
+    ).fetchone()[0]
+
+    print("\n🔍 Referensiell Integritetskontroll (Foreign Key Integrity):")
+    print(f"  • Foreldreløse funksjonsnøkler i Fact_Regnskap: {fk_funksjon_reg} {'✅ OK' if fk_funksjon_reg == 0 else '❌ FEIL'}")
+    print(f"  • Foreldreløse artsnøkler i Fact_Regnskap       : {fk_art_reg} {'✅ OK' if fk_art_reg == 0 else '❌ FEIL'}")
+    print(f"  • Foreldreløse ansvarsnøkler i Fact_Regnskap    : {fk_ansvar_reg} {'✅ OK' if fk_ansvar_reg == 0 else '❌ FEIL'}")
+    print(f"  • Foreldreløse datonøkler i Fact_Regnskap       : {fk_dato_reg} {'✅ OK' if fk_dato_reg == 0 else '❌ FEIL'}")
+    print(f"  • Foreldreløse funksjonsnøkler i Fact_Budsjett : {fk_funksjon_bud} {'✅ OK' if fk_funksjon_bud == 0 else '❌ FEIL'}")
+    print(f"  • Foreldreløse artsnøkler i Fact_Budsjett      : {fk_art_bud} {'✅ OK' if fk_art_bud == 0 else '❌ FEIL'}")
+    print(f"  • Foreldreløse ansvarsnøkler i Fact_Budsjett   : {fk_ansvar_bud} {'✅ OK' if fk_ansvar_bud == 0 else '❌ FEIL'}")
+
+    # 3. Avvik per sektor og enhet (Avvik = Budsjett - Faktisk forbruk)
     query = """
     SELECT 
         da.enhet_navn AS Enhet,
@@ -611,7 +858,7 @@ def verify_golden_record(conn: sqlite3.Connection) -> None:
 
 
 # ==========================================
-# 7. HOVEDPROGRAM
+# 8. HOVEDPROGRAM
 # ==========================================
 def main() -> None:
     start_time = time.time()
@@ -633,9 +880,15 @@ def main() -> None:
         ingest_kostra_masterdata(conn)
         ingest_bomiljo(conn)
         ingest_komskole(conn)
+        seed_audit_trail(conn)
         verify_golden_record(conn)
     finally:
         conn.close()
+
+    # Kjører prediktiv motor for å generere Fact_Prognose_Logg
+    if run_forecast_pipeline:
+        print("\n🔮 Kjører prediktiv prognose- og EVM-beregning...")
+        run_forecast_pipeline()
 
     elapsed = time.time() - start_time
     print(f"\n🎉 Golden Record vellykket bygget på {elapsed:.2f} sekunder!")
