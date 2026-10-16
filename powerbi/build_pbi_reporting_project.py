@@ -62,7 +62,7 @@ def build_semantic_model():
 
     # model.tmdl
     model_content = """model Model
-\tculture: nb-NO
+\tculture: en-US
 \tdefaultPowerBIDataSourceVersion: powerBI_V3
 \tsourceQueryCulture: en-US
 

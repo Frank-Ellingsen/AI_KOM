@@ -1,5 +1,5 @@
 model Model
-	culture: nb-NO
+	culture: en-US
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
 
