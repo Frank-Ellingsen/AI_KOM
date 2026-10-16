@@ -1,0 +1,166 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v06_tab_evm",
+  "position": {
+    "x": 20,
+    "y": 730,
+    "z": 13,
+    "width": 1560,
+    "height": 270,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "RAG CPI Symbol"
+                }
+              },
+              "queryRef": "_Measures.RAG CPI Symbol",
+              "nativeQueryRef": "RAG CPI Symbol",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "ansvar_navn"
+                }
+              },
+              "queryRef": "Dim_Ansvar.ansvar_navn",
+              "nativeQueryRef": "ansvar_navn",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "kommunalsjefomrade"
+                }
+              },
+              "queryRef": "Dim_Ansvar.kommunalsjefomrade",
+              "nativeQueryRef": "kommunalsjefomrade",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Planlagt Verdi (PV)"
+                }
+              },
+              "queryRef": "_Measures.Planlagt Verdi (PV)",
+              "nativeQueryRef": "Planlagt Verdi (PV)",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Påløpt Kostnad (AC)"
+                }
+              },
+              "queryRef": "_Measures.Påløpt Kostnad (AC)",
+              "nativeQueryRef": "Påløpt Kostnad (AC)",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Kostnadsavvik (CV)"
+                }
+              },
+              "queryRef": "_Measures.Kostnadsavvik (CV)",
+              "nativeQueryRef": "Kostnadsavvik (CV)",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Kostnadsindeks (CPI)"
+                }
+              },
+              "queryRef": "_Measures.Kostnadsindeks (CPI)",
+              "nativeQueryRef": "Kostnadsindeks (CPI)",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Sluttprognose (EAC)"
+                }
+              },
+              "queryRef": "_Measures.Sluttprognose (EAC)",
+              "nativeQueryRef": "Sluttprognose (EAC)",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'04  EVM PORTEFØLJEMATRISE FOR PROJECT CONTROLLER (RAG)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

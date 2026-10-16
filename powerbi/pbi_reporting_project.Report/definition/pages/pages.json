@@ -7,7 +7,10 @@
     "p04_lonn_vikar_monitor",
     "p05_prognose_scenarier",
     "p06_investering_evm",
-    "p07_revisjon_port9"
+    "p07_revisjon_port9",
+    "tt_enhet_okonomi",
+    "tt_vikar_overtid",
+    "tt_evm_prosjekt"
   ],
   "activePageName": "p01_cfo_executive"
 }

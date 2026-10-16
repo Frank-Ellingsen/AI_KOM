@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "p02_oppvekst_skole",
-  "displayName": "2. Sektor Oppvekst & Grunnskole",
+  "displayName": "2. Oppvekst | Grunnskole",
   "displayOption": "FitToPage",
-  "height": 900,
+  "height": 1020,
   "width": 1600
 }

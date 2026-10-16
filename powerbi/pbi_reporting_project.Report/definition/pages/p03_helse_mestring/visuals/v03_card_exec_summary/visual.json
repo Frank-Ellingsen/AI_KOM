@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v03_card_exec_summary",
+  "position": {
+    "x": 20,
+    "y": 210,
+    "z": 9,
+    "width": 1560,
+    "height": 65,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "card",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Executive Summary Helse"
+                }
+              },
+              "queryRef": "_Measures.Executive Summary Helse",
+              "nativeQueryRef": "Executive Summary Helse",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'EXECUTIVE SUMMARY — HELSE & MESTRING: DØGNKONTINUERLIG DRIFT OG OVERTIDSPRESS'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

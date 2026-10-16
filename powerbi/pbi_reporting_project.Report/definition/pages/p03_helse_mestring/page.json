@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "p03_helse_mestring",
-  "displayName": "3. Sektor Helse & Mestring",
+  "displayName": "3. Helse & Mestring",
   "displayOption": "FitToPage",
-  "height": 900,
+  "height": 1020,
   "width": 1600
 }

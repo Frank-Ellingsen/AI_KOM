@@ -7,15 +7,21 @@ KRISTIANSAND KOMMUNE — POWER BI REPORTING PROJECT BUILDER (.PBIP)
 Dette skriptet bygger opp den offisielle Power BI rapporteringsløsningen:
 'powerbi/pbi_reporting_project.pbip'
 - Inkluderer fullverdig Stjerneschema (Star Schema) i TMDL-format
-- DAX-målinger for EVM, prognostisering (P10/P50/P90) og KOSTRA
+- DAX-målinger for EVM, prognostisering (P10/P50/P90), RAG og KOSTRA
 - 7 komplette CFO & Controller rapportsider iht. FT Visual Storytelling og Tufte:
-  1. Toppledelse (CFO Control Panel)
-  2. Sektor Oppvekst & Grunnskole
-  3. Sektor Helse & Mestring
-  4. Lønn, Vikar & Overtidsmonitor
-  5. Prognose & What-If Scenarier
-  6. Investering & Prosjektkontroll (EVM)
+  1. Økonomisk Status (Storytelling & RAG)
+  2. Oppvekst | Grunnskole
+  3. Helse & Mestring
+  4. Lønn & Vikarmonitor
+  5. Prognose & Scenario
+  6. Investering & Capex | EVM
   7. Revisjon & Audit Trail (Stage-Gate Port 9)
+- 3 dedikerte kontekst-tooltipsider (Report Page Tooltips):
+  * tt_enhet_okonomi (Enhet Økonomi & EOY)
+  * tt_vikar_overtid (Vikar, Overtid & Turnus)
+  * tt_evm_prosjekt (EVM, CPI & Sluttkostnad)
+- Rike visuelle hover-tooltips på alle diagrammer
+- Ingen rå formateringskoder som [Red] i brukergrensesnittet
 ===============================================================================
 """
 
@@ -145,7 +151,6 @@ relationship AuditResponsibility
         "role Konsern_Okonomi\n\tmodelPermission: read\n",
         encoding="utf-8"
     )
-    # Rydd opp eventuelle foreldede flate filer eller tomme kataloger
     old_roles = MODEL_DIR / "definition" / "roles.tmdl"
     if old_roles.exists():
         old_roles.unlink()
@@ -158,7 +163,7 @@ relationship AuditResponsibility
     # --------------------------------------------------------------------------
     tables_dir = MODEL_DIR / "definition" / "tables"
 
-    # 1. Fact_Regnskap.tmdl (Kombinert Skole + BoMiljø)
+    # 1. Fact_Regnskap.tmdl
     fact_regnskap_tmdl = """table Fact_Regnskap
 
 \tcolumn dato
@@ -265,38 +270,39 @@ relationship AuditResponsibility
 \t\tmode: import
 \t\tsource =
 \t\t\t\tlet
-\t\t\t\t    // 1. Skole Data
-\t\t\t\t    SourceSkole = Csv.Document(File.Contents(DataRoot & "Komskole.csv"), [Delimiter=",", Encoding=1252, QuoteStyle=QuoteStyle.Csv]),
-\t\t\t\t    SkipSkole = Table.Skip(SourceSkole, 2),
-\t\t\t\t    HeadersSkole = Table.PromoteHeaders(SkipSkole, [PromoteAllScalars=true]),
-\t\t\t\t    TypedSkole = Table.TransformColumnTypes(HeadersSkole, {{"Art", type text}, {"Regnskap hiå.", type number}, {"Budsjett hiå.", type number}, {"Avvik i kr", type number}, {"Årsbudsjett", type number}}, "en-US"),
-\t\t\t\t    AddDateSkole = Table.AddColumn(TypedSkole, "dato", each #date(2026, 8, 1), type date),
-\t\t\t\t    AddRespSkole = Table.AddColumn(AddDateSkole, "ansvar_kode", each "2020", type text),
-\t\t\t\t    AddRespNameSkole = Table.AddColumn(AddRespSkole, "ansvar_navn", each "Enhet 202 Grunnskole", type text),
-\t\t\t\t    AddFunkSkole = Table.AddColumn(AddRespNameSkole, "funksjon_kode", each "202", type text),
-\t\t\t\t    AddMndSkole = Table.AddColumn(AddFunkSkole, "maned", each 8, Int64.Type),
-\t\t\t\t    AddMndNavnSkole = Table.AddColumn(AddMndSkole, "manedsnavn", each "august", type text),
-\t\t\t\t    AddTertialSkole = Table.AddColumn(AddMndNavnSkole, "Tertial", each "T2", type text),
-\t\t\t\t    AddStatusSkole = Table.AddColumn(AddTertialSkole, "Status", each "Bokført", type text),
-\t\t\t\t    AddHovedSkole = Table.AddColumn(AddStatusSkole, "Hovedgruppe", each [Kontotype], type text),
-\t\t\t\t    AddUnderSkole = Table.AddColumn(AddHovedSkole, "Undergruppe", each [Kontotype], type text),
-\t\t\t\t    AddArtKeySkole = Table.AddColumn(AddUnderSkole, "art_key", each Text.From([Art]) & "|" & Text.From([Kontotype]) & "|" & Text.From([Post]), type text),
-\t\t\t\t    AddKostraArtSkole = Table.AddColumn(AddArtKeySkole, "KOSTRA_Art", each Text.From([Art]), type text),
-\t\t\t\t    AddBudSkole = Table.AddColumn(AddKostraArtSkole, "Budsjett", each [#"Budsjett hiå."], type number),
-\t\t\t\t    AddRegSkole = Table.AddColumn(AddBudSkole, "Regnskap", each [#"Regnskap hiå."], type number),
-\t\t\t\t    AddAvvSkole = Table.AddColumn(AddRegSkole, "Avvik", each [#"Regnskap hiå."] - [#"Budsjett hiå."], type number),
-\t\t\t\t    AddMerSkole = Table.AddColumn(AddAvvSkole, "Merforbruk", each [Avvik], type number),
-\t\t\t\t    AddSektorSkole = Table.AddColumn(AddMerSkole, "kommunalsjefomrade", each "Oppvekst", type text),
-\t\t\t\t    RenameSkole = Table.RenameColumns(AddSektorSkole, {{"Post", "Kontonavn"}, {"Kontotype", "Kontokode"}, {"Årsbudsjett", "Aarsbudsjett"}}),
+\t\t\t\t    // Skole data
+\t\t\t\t    SourceSkole = Csv.Document(File.Contents(DataRoot & "Visma_ERP_General_Ledger_Transactions.csv"), [Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+\t\t\t\t    HeadersSkole = Table.PromoteHeaders(SourceSkole, [PromoteAllScalars=true]),
+\t\t\t\t    TypeSkole = Table.TransformColumnTypes(HeadersSkole, {
+\t\t\t\t        {"dato", type datetime}, {"Måned_Nr", Int64.Type}, {"Måned", type text}, {"Tertial", type text},
+\t\t\t\t        {"Status", type text}, {"KOSTRA_Funksjon", Int64.Type}, {"KOSTRA_Art", Int64.Type},
+\t\t\t\t        {"Kontokode", Int64.Type}, {"Kontonavn", type text}, {"Hovedgruppe", type text},
+\t\t\t\t        {"Undergruppe", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}
+\t\t\t\t    }),
+\t\t\t\t    AddMerforbrukSkole = Table.AddColumn(TypeSkole, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
+\t\t\t\t    AddRespCodeSkole = Table.AddColumn(AddMerforbrukSkole, "ansvar_kode", each "2020", type text),
+\t\t\t\t    AddRespNameSkole = Table.AddColumn(AddRespCodeSkole, "ansvar_navn", each "Grunnskole Enhet 2020", type text),
+\t\t\t\t    AddFunkSkole = Table.AddColumn(AddRespNameSkole, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),
+\t\t\t\t    AddSektorSkole = Table.AddColumn(AddFunkSkole, "kommunalsjefomrade", each "Oppvekst", type text),
+\t\t\t\t    AddArtKeySkole = Table.AddColumn(AddSektorSkole, "art_key", each Text.From([KOSTRA_Art]) & "|" & Text.From([Kontokode]) & "|" & Text.From([Kontonavn]), type text),
+\t\t\t\t    AddAnnualBudgetSkole = Table.AddColumn(AddArtKeySkole, "Aarsbudsjett", each [Budsjett] * 1.5, type number),
+\t\t\t\t    RenameSkole = Table.RenameColumns(AddAnnualBudgetSkole, {{"Måned_Nr", "maned"}, {"Måned", "manedsnavn"}}),
 \t\t\t\t    ColsSkole = Table.SelectColumns(RenameSkole, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"}),
 
-\t\t\t\t    // 2. BoMiljø Data
-\t\t\t\t    SourceBo = Csv.Document(File.Contents(DataRoot & "BoMiljø.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+\t\t\t\t    // BoMiljø data
+\t\t\t\t    SourceBo = Csv.Document(File.Contents(DataRoot & "Visma_ERP_BoMiljo_Transactions_2026.csv"), [Delimiter=",", Columns=15, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 \t\t\t\t    HeadersBo = Table.PromoteHeaders(SourceBo, [PromoteAllScalars=true]),
-\t\t\t\t    TypedBo = Table.TransformColumnTypes(HeadersBo, {{"Måned_Nr", Int64.Type}, {"KOSTRA_Funksjon", type text}, {"Tjenesteområde", type text}, {"KOSTRA_Art", type text}, {"Kontokode", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}, {"Merforbruk", type number}}, "en-US"),
-\t\t\t\t    AddDateBo = Table.AddColumn(TypedBo, "dato", each Date.FromText([Periode] & "-01"), type date),
-\t\t\t\t    AddRespBo = Table.AddColumn(AddDateBo, "ansvar_kode", each "2540", type text),
-\t\t\t\t    AddRespNameBo = Table.AddColumn(AddRespBo, "ansvar_navn", each [Lokasjon], type text),
+\t\t\t\t    TypeBo = Table.TransformColumnTypes(HeadersBo, {
+\t\t\t\t        {"dato", type datetime}, {"Måned_Nr", Int64.Type}, {"Måned", type text}, {"Tertial", type text},
+\t\t\t\t        {"Status", type text}, {"Avdeling", type text}, {"Tjenesteområde", type text},
+\t\t\t\t        {"KOSTRA_Funksjon", Int64.Type}, {"KOSTRA_Art", Int64.Type}, {"Kontokode", Int64.Type},
+\t\t\t\t        {"Kontonavn", type text}, {"Hovedgruppe", type text}, {"Undergruppe", type text},
+\t\t\t\t        {"Budsjett", type number}, {"Regnskap", type number}
+\t\t\t\t    }),
+\t\t\t\t    AddAvvikBo = Table.AddColumn(TypeBo, "Avvik", each [Regnskap] - [Budsjett], type number),
+\t\t\t\t    AddMerforbrukBo = Table.AddColumn(AddAvvikBo, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
+\t\t\t\t    AddRespCodeBo = Table.AddColumn(AddMerforbrukBo, "ansvar_kode", each "2540", type text),
+\t\t\t\t    AddRespNameBo = Table.AddColumn(AddRespCodeBo, "ansvar_navn", each "Kommunal Boenhet 2540", type text),
 \t\t\t\t    AddFunkBo = Table.AddColumn(AddRespNameBo, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),
 \t\t\t\t    AddSektorBo = Table.AddColumn(AddFunkBo, "kommunalsjefomrade", each [Tjenesteområde], type text),
 \t\t\t\t    AddArtKeyBo = Table.AddColumn(AddSektorBo, "art_key", each Text.From([KOSTRA_Art]) & "|" & Text.From([Kontokode]) & "|" & Text.From([Kontonavn]), type text),
@@ -610,7 +616,7 @@ relationship AuditResponsibility
 \t\tformatString: #,##0 "kr"
 
 \tmeasure 'Avvik YTD' = [Regnskap YTD] - [Budsjett YTD]
-\t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Avvik YTD %' = DIVIDE([Avvik YTD], ABS([Budsjett YTD]), 0)
 \t\tformatString: 0.0%
@@ -628,15 +634,15 @@ relationship AuditResponsibility
 \t\tformatString: #,##0 "kr"
 
 \tmeasure 'EOY Forventet Årsavvik' = [EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
-\t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Planlagt Tiltakseffekt T3' = SWITCH(SELECTEDVALUE(Dim_Ansvar[ansvar_kode]), "2540", 1928421, "2020", 863000, 2791421)
 \t\tformatString: #,##0 "kr"
 
 \tmeasure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] - [Planlagt Tiltakseffekt T3]
-\t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
-\tmeasure 'Tufte_Avvik_Farge_HEX' = SWITCH(TRUE(), [Avvik YTD %] > 0.05, "#DC2626", [Avvik YTD %] > 0.02, "#F59E0B", "#16A34A")
+\tmeasure 'Tufte_Avvik_Farge_HEX' = SWITCH(TRUE(), [Avvik YTD %] > 0.05, "#D64545", [Avvik YTD %] > 0.02, "#E6A23C", "#3A8F5C")
 
 \tmeasure 'Vikarutgifter Art 1020' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020")
 \t\tformatString: #,##0 "kr"
@@ -669,7 +675,7 @@ relationship AuditResponsibility
 \t\tformatString: #,##0 "kr"
 
 \tmeasure 'Simulert EOY Forventet Avvik' = [Simulert EOY Netto Driftsresultat] - [Vedtatt Årsbudsjett]
-\t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Planlagt Verdi (PV)' = [Budsjett YTD]
 \t\tformatString: #,##0 "kr"
@@ -678,7 +684,7 @@ relationship AuditResponsibility
 \t\tformatString: #,##0 "kr"
 
 \tmeasure 'Kostnadsavvik (CV)' = [Planlagt Verdi (PV)] - [Påløpt Kostnad (AC)]
-\t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Kostnadsindeks (CPI)' = DIVIDE([Planlagt Verdi (PV)], [Påløpt Kostnad (AC)], 1.0)
 \t\tformatString: 0.000
@@ -694,26 +700,52 @@ relationship AuditResponsibility
 \t\tformatString: #,##0 "kr"
 
 \tmeasure 'EOY Avvik' = [EOY Forventet Årsavvik]
-\t\tformatString: #,##0 "kr";[Red](#,##0 "kr");"-"
+\t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'EOY Avvik %' = DIVIDE([EOY Forventet Årsavvik], ABS([Vedtatt Årsbudsjett]), 0)
 \t\tformatString: 0.0%
 
-\tmeasure 'RAG Status' = VAR AvvikPct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(AvvikPct), "N/A", AvvikPct < -0.05 || AvvikPct > 0.05, "Red", AvvikPct < -0.02 || AvvikPct > 0.02, "Amber", "Green")
+\tmeasure 'RAG Status' = VAR AvvikPct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(AvvikPct), "N/A", AvvikPct > 0.05, "Red", AvvikPct > 0.02, "Amber", "Green")
 
 \tmeasure 'RAG Color' = SWITCH([RAG Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
 
 \tmeasure 'RAG Symbol' = SWITCH([RAG Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
 
-\tmeasure 'RAG YTD' = VAR x = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x < -0.05 || x > 0.05, "🔴", x < -0.02 || x > 0.02, "🟠", "🟢")
+\tmeasure 'RAG Tekst' = SWITCH([RAG Status], "Red", "🔴 Krever tiltak (> 5 % merforbruk)", "Amber", "🟠 Krever oppmerksomhet (2-5 % merforbruk)", "Green", "🟢 Innenfor toleranse (<= 2 %)", "⚪ Uavklart")
 
-\tmeasure 'RAG EOY' = VAR x = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x < -0.05 || x > 0.05, "🔴", x < -0.02 || x > 0.02, "🟠", "🟢")
+\tmeasure 'RAG YTD' = VAR x = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x > 0.05, "🔴", x > 0.02, "🟠", "🟢")
+
+\tmeasure 'RAG EOY' = VAR x = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x > 0.05, "🔴", x > 0.02, "🟠", "🟢")
 
 \tmeasure 'KPI Avvik YTD Med RAG' = [RAG YTD] & "  " & FORMAT([Avvik YTD], "#,##0 kr") & " (" & FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & ")"
 
 \tmeasure 'KPI EOY Prognose Med RAG' = [RAG EOY] & "  " & FORMAT([EOY Forventet Årsavvik], "#,##0 kr") & " (" & FORMAT([EOY Avvik %], "+0.0%;-0.0%;0.0%") & ")"
 
+\tmeasure 'KPI Vikarandel Med Benchmark' = VAR vikarPct = [Vikarandel Lonn %] VAR rag = SWITCH(TRUE(), vikarPct > 0.10, "🔴", vikarPct > 0.07, "🟠", "🟢") RETURN rag & "  " & FORMAT(vikarPct, "0.0%") & " (Mål: 7.0 %)"
+
+\tmeasure 'KPI Overtid Med Benchmark' = VAR otPct = [Overtidsandel %] VAR rag = SWITCH(TRUE(), otPct > 0.08, "🔴", otPct > 0.05, "🟠", "🟢") RETURN rag & "  " & FORMAT(otPct, "0.0%") & " (Mål: 5.0 %)"
+
+\tmeasure 'RAG CPI Status' = VAR cpi = [Kostnadsindeks (CPI)] RETURN SWITCH(TRUE(), ISBLANK(cpi), "N/A", cpi < 0.95, "Red", cpi < 1.00, "Amber", "Green")
+
+\tmeasure 'RAG CPI Color' = SWITCH([RAG CPI Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
+
+\tmeasure 'RAG CPI Symbol' = SWITCH([RAG CPI Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
+
+\tmeasure 'KPI CPI Med RAG' = [RAG CPI Symbol] & "  " & FORMAT([Kostnadsindeks (CPI)], "0.000") & " (Mål: 1.000)"
+
 \tmeasure 'Executive Summary' = VAR Avvik = [Avvik YTD] VAR AvvikPct = [Avvik YTD %] VAR Rag = [RAG Status] VAR StatusTekst = SWITCH(Rag, "Red", "🔴 Ugunstig utvikling: Betydelig budsjettavvik identifisert. Tiltak og kostnadskontroll kreves jf. Kommuneloven § 14-5.", "Amber", "🟠 Moderat avvik: Avviket krever skjerpet oppfølging og kontinuerlig månedskontroll.", "Green", "🟢 Økonomisk drift i balanse innenfor tildelt budsjettramme.", "Status uavklart") RETURN StatusTekst & " | Regnskap YTD: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Budsjett YTD: " & FORMAT([Budsjett YTD], "#,##0 kr") & " | Avvik: " & FORMAT(Avvik, "#,##0 kr") & " (" & FORMAT(AvvikPct, "+0.0%;-0.0%;0.0%") & ") | Sluttprognose EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr")
+
+\tmeasure 'Executive Summary Skole' = VAR avvik = [Avvik YTD] VAR rag = [RAG Status] VAR txt = SWITCH(rag, "Red", "🔴 Merforbruk i grunnskolen drevet av høyt sykefravær og vikarforbruk (Art 1020). Tiltak for omdisponering påkrevd.", "Amber", "🟠 Moderat avvik i skoleenhetene. Følg opp vikarinnleie mot fast stillingsramme.", "🟢 Grunnskoledrift i balanse mot periodisert budsjett.") RETURN txt & " | Regnskap: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Vikarutgift: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " (" & FORMAT([Vikarandel Lonn %], "0.0%") & ") | Kostnad/elev: " & FORMAT([Netto Driftsutgift Per Elev], "#,##0 kr/elev")
+
+\tmeasure 'Executive Summary Helse' = VAR avvik = [Avvik YTD] VAR rag = [RAG Status] VAR txt = SWITCH(rag, "Red", "🔴 Turnus- og overtidspress i døgnkontinuerlige botilbud gir vesentlig merforbruk. Turnusomlegging jf. HTA § 4 nødvendig.", "Amber", "🟠 Forhøyet overtid i helse og mestring. Krever tett oppfølging av helgebemanning.", "🟢 Bofellesskap og helsetjenester opererer innenfor budsjettramme.") RETURN txt & " | Regnskap: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " (" & FORMAT([Overtidsandel %], "0.0%") & ") | Sluttavvik etter tiltak: " & FORMAT([EOY Net Zero Sluttavvik], "#,##0 kr")
+
+\tmeasure 'Executive Summary Lonn' = VAR vikarPct = [Vikarandel Lonn %] VAR txt = SWITCH(TRUE(), vikarPct > 0.08, "🔴 Vikarandel overskrider måltall (7 %). Vikarstopp ved korttidsfravær (< 3 dager) anbefalt.", vikarPct > 0.05, "🟠 Vikarforbruk er moderat forhøyet. Behov for å optimalisere intern vikarpool.", "🟢 Lønns- og vikarforbruk er innenfor budsjetterte rammer.") RETURN txt & " | Total lønn: " & FORMAT([Total Lonn], "#,##0 kr") & " | Vikar: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " | NAV-refusjon: " & FORMAT([NAV Refusjoner Art 1600], "#,##0 kr")
+
+\tmeasure 'Executive Summary Prognose' = VAR sluttAvvik = [Simulert EOY Forventet Avvik] VAR rag = SWITCH(TRUE(), sluttAvvik > 1000000, "🔴", sluttAvvik > 250000, "🟠", "🟢") VAR txt = SWITCH(rag, "Red", "🔴 Prognosen indikerer kritisk merforbruk ved årsslutt uten ytterligere innsparingstiltak. Kommuneloven § 14-5 utløses.", "Amber", "🟠 Helårsbalansen er sårbar for lønnsvekst og fraværsendringer. T3-tiltak må følges opp månedlig.", "🟢 Simulert helårsresultat er i balanse med vedtatt årsbudsjett.") RETURN txt & " | Årsbudsjett: " & FORMAT([Vedtatt Årsbudsjett], "#,##0 kr") & " | Rullende EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr") & " | Tiltakseffekt: " & FORMAT([Planlagt Tiltakseffekt T3], "#,##0 kr") & " | Simulert avvik: " & FORMAT(sluttAvvik, "#,##0 kr")
+
+\tmeasure 'Executive Summary EVM' = VAR cpi = [Kostnadsindeks (CPI)] VAR cv = [Kostnadsavvik (CV)] VAR txt = SWITCH([RAG CPI Status], "Red", "🔴 Investeringsprosjekter underpresterer kostnadsmessig (CPI < 0.95). Risiko for overskridelse av prosjektrammer.", "Amber", "🟠 Prosjektporteføljen har moderat kostnadspress (CPI 0.95-1.00). Krever tett oppfølging av entreprenørfakturaer.", "🟢 God prosjektgjennomføring med kostnadsindeks i balanse (CPI >= 1.00).") RETURN txt & " | PV: " & FORMAT([Planlagt Verdi (PV)], "#,##0 kr") & " | AC: " & FORMAT([Påløpt Kostnad (AC)], "#,##0 kr") & " | CV: " & FORMAT(cv, "#,##0 kr") & " | CPI: " & FORMAT(cpi, "0.000") & " | EAC: " & FORMAT([Sluttprognose (EAC)], "#,##0 kr")
+
+\tmeasure 'Executive Summary Audit' = "🔒 Revisjonsstatus: Alle AI-genererte tiltaksforslag er forseglet med SHA-256 kryptografisk sjekksum og signert av saksbehandler (HITL Port 9). Kommunerevisjonen og Kontrollutvalget har full sporbarhet."
 """
     (tables_dir / "_Measures.tmdl").write_text(measures_tmdl, encoding="utf-8")
     print("✓ Semantic Model (TMDL) ferdigstilt.")
@@ -760,7 +792,51 @@ def make_visual_card(name, x, y, w, h, measure_name, title_text, z=1):
         }
     }
 
-def make_visual_column_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, z=2):
+def make_visual_column_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, tooltips=None, z=2):
+    query_state = {
+        "Category": {
+            "projections": [{
+                "field": {
+                    "Column": {
+                        "Expression": {"SourceRef": {"Entity": cat_table}},
+                        "Property": cat_col
+                    }
+                },
+                "queryRef": f"{cat_table}.{cat_col}",
+                "nativeQueryRef": cat_col,
+                "active": True
+            }]
+        },
+        "Y": {
+            "projections": [{
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": measure_name
+                    }
+                },
+                "queryRef": f"_Measures.{measure_name}",
+                "nativeQueryRef": measure_name,
+                "active": True
+            }]
+        }
+    }
+    if tooltips:
+        tt_projs = []
+        for m in tooltips:
+            tt_projs.append({
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": m
+                    }
+                },
+                "queryRef": f"_Measures.{m}",
+                "nativeQueryRef": m,
+                "active": True
+            })
+        query_state["Tooltips"] = {"projections": tt_projs}
+
     return {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
         "name": name,
@@ -769,34 +845,7 @@ def make_visual_column_chart(name, x, y, w, h, cat_table, cat_col, measure_name,
             "visualType": "columnChart",
             "drillFilterOtherVisuals": True,
             "query": {
-                "queryState": {
-                    "Category": {
-                        "projections": [{
-                            "field": {
-                                "Column": {
-                                    "Expression": {"SourceRef": {"Entity": cat_table}},
-                                    "Property": cat_col
-                                }
-                            },
-                            "queryRef": f"{cat_table}.{cat_col}",
-                            "nativeQueryRef": cat_col,
-                            "active": True
-                        }]
-                    },
-                    "Y": {
-                        "projections": [{
-                            "field": {
-                                "Measure": {
-                                    "Expression": {"SourceRef": {"Entity": "_Measures"}},
-                                    "Property": measure_name
-                                }
-                            },
-                            "queryRef": f"_Measures.{measure_name}",
-                            "nativeQueryRef": measure_name,
-                            "active": True
-                        }]
-                    }
-                }
+                "queryState": query_state
             },
             "visualContainerObjects": {
                 "title": [{
@@ -809,7 +858,51 @@ def make_visual_column_chart(name, x, y, w, h, cat_table, cat_col, measure_name,
         }
     }
 
-def make_visual_bar_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, z=3):
+def make_visual_bar_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, tooltips=None, z=3):
+    query_state = {
+        "Category": {
+            "projections": [{
+                "field": {
+                    "Column": {
+                        "Expression": {"SourceRef": {"Entity": cat_table}},
+                        "Property": cat_col
+                    }
+                },
+                "queryRef": f"{cat_table}.{cat_col}",
+                "nativeQueryRef": cat_col,
+                "active": True
+            }]
+        },
+        "Y": {
+            "projections": [{
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": measure_name
+                    }
+                },
+                "queryRef": f"_Measures.{measure_name}",
+                "nativeQueryRef": measure_name,
+                "active": True
+            }]
+        }
+    }
+    if tooltips:
+        tt_projs = []
+        for m in tooltips:
+            tt_projs.append({
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": m
+                    }
+                },
+                "queryRef": f"_Measures.{m}",
+                "nativeQueryRef": m,
+                "active": True
+            })
+        query_state["Tooltips"] = {"projections": tt_projs}
+
     return {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
         "name": name,
@@ -818,34 +911,7 @@ def make_visual_bar_chart(name, x, y, w, h, cat_table, cat_col, measure_name, ti
             "visualType": "barChart",
             "drillFilterOtherVisuals": True,
             "query": {
-                "queryState": {
-                    "Category": {
-                        "projections": [{
-                            "field": {
-                                "Column": {
-                                    "Expression": {"SourceRef": {"Entity": cat_table}},
-                                    "Property": cat_col
-                                }
-                            },
-                            "queryRef": f"{cat_table}.{cat_col}",
-                            "nativeQueryRef": cat_col,
-                            "active": True
-                        }]
-                    },
-                    "Y": {
-                        "projections": [{
-                            "field": {
-                                "Measure": {
-                                    "Expression": {"SourceRef": {"Entity": "_Measures"}},
-                                    "Property": measure_name
-                                }
-                            },
-                            "queryRef": f"_Measures.{measure_name}",
-                            "nativeQueryRef": measure_name,
-                            "active": True
-                        }]
-                    }
-                }
+                "queryState": query_state
             },
             "visualContainerObjects": {
                 "title": [{
@@ -858,58 +924,51 @@ def make_visual_bar_chart(name, x, y, w, h, cat_table, cat_col, measure_name, ti
         }
     }
 
-def make_visual_table(name, x, y, w, h, col_specs, measure_specs, title_text, z=4):
-    projections = []
-    for t_name, c_name in col_specs:
-        projections.append({
-            "field": {
-                "Column": {
-                    "Expression": {"SourceRef": {"Entity": t_name}},
-                    "Property": c_name
-                }
-            },
-            "queryRef": f"{t_name}.{c_name}",
-            "nativeQueryRef": c_name,
-            "active": True
-        })
-    for m_name in measure_specs:
-        projections.append({
-            "field": {
-                "Measure": {
-                    "Expression": {"SourceRef": {"Entity": "_Measures"}},
-                    "Property": m_name
-                }
-            },
-            "queryRef": f"_Measures.{m_name}",
-            "nativeQueryRef": m_name,
-            "active": True
-        })
-    return {
-        "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-        "name": name,
-        "position": {"x": x, "y": y, "z": z, "width": w, "height": h, "tabOrder": z},
-        "visual": {
-            "visualType": "tableEx",
-            "drillFilterOtherVisuals": True,
-            "query": {
-                "queryState": {
-                    "Values": {
-                        "projections": projections
+def make_visual_waterfall_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, tooltips=None, z=3):
+    query_state = {
+        "Category": {
+            "projections": [{
+                "field": {
+                    "Column": {
+                        "Expression": {"SourceRef": {"Entity": cat_table}},
+                        "Property": cat_col
                     }
-                }
-            },
-            "visualContainerObjects": {
-                "title": [{
-                    "properties": {
-                        "show": {"expr": {"Literal": {"Value": "true"}}},
-                        "text": {"expr": {"Literal": {"Value": f"'{title_text}'"}}}
+                },
+                "queryRef": f"{cat_table}.{cat_col}",
+                "nativeQueryRef": cat_col,
+                "active": True
+            }]
+        },
+        "Y": {
+            "projections": [{
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": measure_name
                     }
-                }]
-            }
+                },
+                "queryRef": f"_Measures.{measure_name}",
+                "nativeQueryRef": measure_name,
+                "active": True
+            }]
         }
     }
+    if tooltips:
+        tt_projs = []
+        for m in tooltips:
+            tt_projs.append({
+                "field": {
+                    "Measure": {
+                        "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                        "Property": m
+                    }
+                },
+                "queryRef": f"_Measures.{m}",
+                "nativeQueryRef": m,
+                "active": True
+            })
+        query_state["Tooltips"] = {"projections": tt_projs}
 
-def make_visual_waterfall_chart(name, x, y, w, h, cat_table, cat_col, measure_name, title_text, z=3):
     return {
         "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
         "name": name,
@@ -918,34 +977,7 @@ def make_visual_waterfall_chart(name, x, y, w, h, cat_table, cat_col, measure_na
             "visualType": "waterfallChart",
             "drillFilterOtherVisuals": True,
             "query": {
-                "queryState": {
-                    "Category": {
-                        "projections": [{
-                            "field": {
-                                "Column": {
-                                    "Expression": {"SourceRef": {"Entity": cat_table}},
-                                    "Property": cat_col
-                                }
-                            },
-                            "queryRef": f"{cat_table}.{cat_col}",
-                            "nativeQueryRef": cat_col,
-                            "active": True
-                        }]
-                    },
-                    "Y": {
-                        "projections": [{
-                            "field": {
-                                "Measure": {
-                                    "Expression": {"SourceRef": {"Entity": "_Measures"}},
-                                    "Property": measure_name
-                                }
-                            },
-                            "queryRef": f"_Measures.{measure_name}",
-                            "nativeQueryRef": measure_name,
-                            "active": True
-                        }]
-                    }
-                }
+                "queryState": query_state
             },
             "visualContainerObjects": {
                 "title": [{
@@ -1048,23 +1080,30 @@ def make_visual_slicer(name, x, y, w, h, table_name, col_name, title_text, z=5):
     }
 
 def build_report_pages():
-    print("Bygger 7 standardiserte PBIR rapportsider...")
+    print("Bygger 7 standardiserte PBIR rapportsider + 3 kontekst-tooltipsider...")
     pages_dir = REPORT_DIR / "definition" / "pages"
     
-    # Slett eksisterende sider for å bygge 7 rene sider
+    # Slett eksisterende sider for å bygge et rent oppsett
     for item in pages_dir.iterdir():
         if item.is_dir():
             shutil.rmtree(item)
 
+    # Standard tooltips projections
+    std_okonomi_tt = ["Budsjett YTD", "Regnskap YTD", "Avvik YTD", "Avvik YTD %", "RAG YTD", "EOY Forecast", "RAG EOY"]
+    std_lonn_tt = ["Total Lonn", "Vikarutgifter Art 1020", "Vikarandel Lonn %", "Overtid Art 1090", "Overtidsandel %"]
+    std_evm_tt = ["Planlagt Verdi (PV)", "Påløpt Kostnad (AC)", "Kostnadsavvik (CV)", "Kostnadsindeks (CPI)", "Sluttprognose (EAC)"]
+
     pages_config = [
+        # ======================================================================
+        # SIDE 1: ØKONOMISK STATUS (Storytelling & RAG)
+        # ======================================================================
         {
             "id": "p01_cfo_executive",
-            "displayName": "1. Økonomisk Status (Storytelling & RAG)",
+            "displayName": "1. Økonomisk Status",
             "height": 1020,
             "width": 1600,
-            "actionTitle": "Kristiansand Kommune — Økonomisk Status: Status → Diagnose → Drivere → Prognose → Handling",
             "visuals": [
-                # Rad 1: Tittel og filtre (Horisontalt toppområde)
+                # Rad 1: Slicers
                 make_visual_slicer("v01_slic_sektor", 20, 15, 500, 65, "Dim_Ansvar", "kommunalsjefomrade", "Sektor (Kommunalsjefområde)", z=1),
                 make_visual_slicer("v01_slic_tertial", 540, 15, 500, 65, "Dim_Dato", "tertial", "Tertial", z=2),
                 make_visual_slicer("v01_slic_enhet", 1060, 15, 520, 65, "Dim_Ansvar", "ansvar_navn", "Enhet / Virksomhetsområde", z=3),
@@ -1075,15 +1114,15 @@ def build_report_pages():
                 make_visual_card("v01_kpi_avvik", 800, 90, 385, 110, "KPI Avvik YTD Med RAG", "AVVIK YTD (RAG STATUS)", z=6),
                 make_visual_card("v01_kpi_eoy", 1205, 90, 375, 110, "KPI EOY Prognose Med RAG", "EOY PROGNOSE (FORVENTET ÅRSAVVIK)", z=7),
 
-                # Rad 3: Executive Summary (Dynamisk tolkningsboks)
-                make_visual_card("v01_card_exec_summary", 20, 210, 1560, 65, "Executive Summary", "EXECUTIVE SUMMARY — STATUS, DIAGNOSE & DRIFTSTOLKNING", z=8),
+                # Rad 3: Executive Summary
+                make_visual_card("v01_card_exec_summary", 20, 210, 1560, 65, "Executive Summary", "EXECUTIVE SUMMARY — STATUS, DIAGNOSE & DRIFTSTOLKNING (§ 14-5)", z=8),
 
                 # Rad 4: Diagnose (01 Hvor oppstår avviket? & 02 Hva driver avviket?)
-                make_visual_bar_chart("v01_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "01  HVOR OPPSTÅR AVVIKET? — Avvik per Enhet (Diverging Bar)", z=9),
-                make_visual_bar_chart("v01_bar_driver", 810, 285, 770, 230, "Dim_Art", "Hovedgruppe", "Avvik YTD", "02  HVA DRIVER AVVIKET? — Avvik per Hovedgruppe", z=10),
+                make_visual_bar_chart("v01_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "01  HVOR OPPSTÅR AVVIKET? — Avvik per Enhet (Diverging Bar)", tooltips=std_okonomi_tt, z=9),
+                make_visual_bar_chart("v01_bar_driver", 810, 285, 770, 230, "Dim_Art", "Hovedgruppe", "Avvik YTD", "02  HVA DRIVER AVVIKET? — Avvik per Hovedgruppe", tooltips=std_okonomi_tt, z=10),
 
                 # Rad 5: Prognose (03 Hvor forventer vi å ende?)
-                make_visual_waterfall_chart("v01_waterfall_eoy", 20, 525, 1560, 195, "Dim_Art", "Hovedgruppe", "Avvik YTD", "03  HVOR FORVENTER VI Å ENDE? — Avviksdrivere mot Sluttprognose (Waterfall)", z=11),
+                make_visual_waterfall_chart("v01_waterfall_eoy", 20, 525, 1560, 195, "Dim_Art", "Hovedgruppe", "Avvik YTD", "03  HVOR FORVENTER VI Å ENDE? — Avviksdrivere mot Sluttprognose (Waterfall)", tooltips=["Avvik YTD", "EOY Forecast"], z=11),
 
                 # Rad 6: Handling (04 Hvilke enheter krever oppfølging?)
                 make_visual_table_flexible("v01_tab_oppfolging", 20, 730, 1560, 270, [
@@ -1099,87 +1138,324 @@ def build_report_pages():
                 ], "04  HVILKE ENHETER KREVER OPPFØLGING? — Prioritert Styrings- og Tiltakstabell (RAG)", z=12)
             ]
         },
+
+        # ======================================================================
+        # SIDE 2: OPPVEKST & GRUNNSKOLE
+        # ======================================================================
         {
             "id": "p02_oppvekst_skole",
-            "displayName": "2. Sektor Oppvekst & Grunnskole",
-            "actionTitle": "Enhet 202 Grunnskole: Vikarforbruk og sykefravær krever omdisponering",
+            "displayName": "2. Oppvekst | Grunnskole",
+            "height": 1020,
+            "width": 1600,
             "visuals": [
-                make_visual_card("v02_card1", 20, 20, 360, 140, "Regnskap YTD", "Forbruk Grunnskole", z=1),
-                make_visual_card("v02_card2", 400, 20, 360, 140, "Vikarutgifter Art 1020", "Innkjøp Vikarer (Art 1020)", z=2),
-                make_visual_card("v02_card3", 780, 20, 360, 140, "Vikarandel Lonn %", "Vikarandel av Lønn", z=3),
-                make_visual_card("v02_card4", 1160, 20, 380, 140, "Netto Driftsutgift Per Elev", "Netto Kostnad pr. Elev", z=4),
-                make_visual_column_chart("v02_col1", 20, 180, 850, 400, "Dim_Art", "Kontonavn", "Avvik YTD", "Avvik per Kontoart (Art 1010, 1020, 1090, 1600)", z=5),
-                make_visual_table("v02_tab1", 890, 180, 670, 680, [("Dim_Art", "Kontokode"), ("Dim_Art", "Kontonavn")], ["Budsjett YTD", "Regnskap YTD", "Avvik YTD", "Avvik YTD %"], "Kontospesifikasjon Grunnskole", z=6),
-                make_visual_table("v02_tab2", 20, 600, 850, 260, [("Dim_Ansvar", "ansvar_navn")], ["Regnskap YTD", "Vikarutgifter Art 1020", "Vikarandel Lonn %", "Netto Driftsutgift Per Elev"], "Skoleklyngesammenligning", z=7)
+                # Rad 1: Slicers
+                make_visual_slicer("v02_slic_skole", 20, 15, 500, 65, "Dim_Ansvar", "ansvar_navn", "Enhet / Skole", z=1),
+                make_visual_slicer("v02_slic_tertial", 540, 15, 500, 65, "Dim_Dato", "tertial", "Tertial", z=2),
+                make_visual_slicer("v02_slic_art", 1060, 15, 520, 65, "Dim_Art", "Hovedgruppe", "Hovedgruppe / Kostnadsart", z=3),
+
+                # Rad 2: KPI-rad
+                make_visual_card("v02_kpi_regnskap", 20, 90, 300, 110, "Regnskap YTD", "FORBRUK GRUNNSKOLE", z=4),
+                make_visual_card("v02_kpi_budsjett", 335, 90, 300, 110, "Budsjett YTD", "PERIODISERT RAMME", z=5),
+                make_visual_card("v02_kpi_avvik", 650, 90, 300, 110, "KPI Avvik YTD Med RAG", "AVVIK YTD (RAG)", z=6),
+                make_visual_card("v02_kpi_vikar", 965, 90, 310, 110, "KPI Vikarandel Med Benchmark", "VIKARANDEL LØNN (MÅL 7 %)", z=7),
+                make_visual_card("v02_kpi_elev", 1290, 90, 290, 110, "Netto Driftsutgift Per Elev", "KOSTNAD PR. ELEV", z=8),
+
+                # Rad 3: Executive Summary
+                make_visual_card("v02_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Skole", "EXECUTIVE SUMMARY — OPVEKST & GRUNNSKOLE: SYKEFRAVÆR OG VIKARKOSTNADER", z=9),
+
+                # Rad 4: Diagnose (01 & 02)
+                make_visual_bar_chart("v02_bar_art", 20, 285, 770, 230, "Dim_Art", "Kontonavn", "Avvik YTD", "01  HVILKE KONTOARTER DRIVER AVVIKET? — Avvik per Art (1010, 1020, 1090, 1600)", tooltips=std_lonn_tt, z=10),
+                make_visual_bar_chart("v02_bar_skole", 810, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "02  HVORDAN FORDELER AVVIKET SEG MELLOM SKOLER? — Avvik per Skole", tooltips=std_okonomi_tt, z=11),
+
+                # Rad 5: Trend (03)
+                make_visual_column_chart("v02_col_vikar", 20, 525, 1560, 195, "Dim_Dato", "manedsnavn", "Vikarutgifter Art 1020", "03  HVORDAN UTVIKLER VIKARFORBRUKET SEG OVER TID? — Månedlig Vikarutgift (Art 1020)", tooltips=std_lonn_tt, z=12),
+
+                # Rad 6: Handling (04)
+                make_visual_table_flexible("v02_tab_skole", 20, 730, 1560, 270, [
+                    ("measure", "RAG Symbol"),
+                    ("column", "Dim_Ansvar", "ansvar_navn"),
+                    ("measure", "Budsjett YTD"),
+                    ("measure", "Regnskap YTD"),
+                    ("measure", "Avvik YTD"),
+                    ("measure", "Avvik YTD %"),
+                    ("measure", "Vikarutgifter Art 1020"),
+                    ("measure", "Vikarandel Lonn %"),
+                    ("measure", "Netto Driftsutgift Per Elev")
+                ], "04  SKOLEKLYNGESAMMENLIGNING & OPPFØLGINGSTABELL (RAG)", z=13)
             ]
         },
+
+        # ======================================================================
+        # SIDE 3: HELSE & MESTRING
+        # ======================================================================
         {
             "id": "p03_helse_mestring",
-            "displayName": "3. Sektor Helse & Mestring",
-            "actionTitle": "Enhet 401 Boenhet: Turnus- og overtidspress i døgnkontinuerlig drift",
+            "displayName": "3. Helse & Mestring",
+            "height": 1020,
+            "width": 1600,
             "visuals": [
-                make_visual_card("v03_card1", 20, 20, 360, 140, "Regnskap YTD", "Forbruk Helse & Mestring", z=1),
-                make_visual_card("v03_card2", 400, 20, 360, 140, "Overtid Art 1090", "Overtid & Tillegg", z=2),
-                make_visual_card("v03_card3", 780, 20, 360, 140, "Overtidsandel %", "Overtidsandel i Turnus", z=3),
-                make_visual_card("v03_card4", 1160, 20, 380, 140, "EOY Net Zero Sluttavvik", "Est. Sluttavvik etter Tiltak", z=4),
-                make_visual_bar_chart("v03_bar1", 20, 180, 800, 420, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "Avvik per Boenhet / Lokasjon", z=5),
-                make_visual_table("v03_tab1", 840, 180, 720, 680, [("Dim_Art", "Kontonavn"), ("Dim_Art", "Hovedgruppe")], ["Budsjett YTD", "Regnskap YTD", "Avvik YTD", "Overtidsandel %"], "Turnus- og Overtidsfordeling", z=6),
-                make_visual_column_chart("v03_col1", 20, 620, 800, 240, "Dim_Dato", "manedsnavn", "Regnskap YTD", "Månedlig Utvikling Døgnvakter", z=7)
+                # Rad 1: Slicers
+                make_visual_slicer("v03_slic_boenhet", 20, 15, 500, 65, "Dim_Ansvar", "ansvar_navn", "Boenhet / Lokasjon", z=1),
+                make_visual_slicer("v03_slic_tertial", 540, 15, 500, 65, "Dim_Dato", "tertial", "Tertial", z=2),
+                make_visual_slicer("v03_slic_art", 1060, 15, 520, 65, "Dim_Art", "Hovedgruppe", "Kostnadskategori", z=3),
+
+                # Rad 2: KPI-rad
+                make_visual_card("v03_kpi_regnskap", 20, 90, 300, 110, "Regnskap YTD", "FORBRUK HELSE & MESTRING", z=4),
+                make_visual_card("v03_kpi_budsjett", 335, 90, 300, 110, "Budsjett YTD", "PERIODISERT RAMME", z=5),
+                make_visual_card("v03_kpi_overtid", 650, 90, 300, 110, "Overtid Art 1090", "OVERTID & TILLEGG (1090)", z=6),
+                make_visual_card("v03_kpi_ot_pct", 965, 90, 310, 110, "KPI Overtid Med Benchmark", "OVERTIDSANDEL (MÅL 5 %)", z=7),
+                make_visual_card("v03_kpi_netzero", 1290, 90, 290, 110, "EOY Net Zero Sluttavvik", "EST. SLUTTAVVIK ETTER TILTAK", z=8),
+
+                # Rad 3: Executive Summary
+                make_visual_card("v03_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Helse", "EXECUTIVE SUMMARY — HELSE & MESTRING: DØGNKONTINUERLIG DRIFT OG OVERTIDSPRESS", z=9),
+
+                # Rad 4: Diagnose (01 & 02)
+                make_visual_bar_chart("v03_bar_boenhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Avvik YTD", "01  HVILKE BOENHETER / LOKASJONER DRIVER AVVIKET? — Avvik per Enhet", tooltips=std_okonomi_tt, z=10),
+                make_visual_bar_chart("v03_bar_art", 810, 285, 770, 230, "Dim_Art", "Kontonavn", "Avvik YTD", "02  HVILKE KOSTNADSARTER PRESSER DRIFTEN? — Overtid og Tillegg per Art", tooltips=std_lonn_tt, z=11),
+
+                # Rad 5: Utvikling (03)
+                make_visual_column_chart("v03_col_maned", 20, 525, 1560, 195, "Dim_Dato", "manedsnavn", "Regnskap YTD", "03  MÅNEDLIG UTVIKLING DØGNVAKTER OG DRIFTSKOSTNADER", tooltips=["Budsjett YTD", "Regnskap YTD", "Avvik YTD", "Overtid Art 1090"], z=12),
+
+                # Rad 6: Handling (04)
+                make_visual_table_flexible("v03_tab_turnus", 20, 730, 1560, 270, [
+                    ("measure", "RAG Symbol"),
+                    ("column", "Dim_Ansvar", "ansvar_navn"),
+                    ("measure", "Budsjett YTD"),
+                    ("measure", "Regnskap YTD"),
+                    ("measure", "Avvik YTD"),
+                    ("measure", "Overtid Art 1090"),
+                    ("measure", "Overtidsandel %"),
+                    ("measure", "EOY Net Zero Sluttavvik")
+                ], "04  TURNUS- OG OVERTIDSFORDELING — Styringsmatrise for Bofellesskap (RAG)", z=13)
             ]
         },
+
+        # ======================================================================
+        # SIDE 4: LØNN & VIKARMONITOR
+        # ======================================================================
         {
             "id": "p04_lonn_vikar_monitor",
             "displayName": "4. Lønn & Vikarmonitor",
-            "actionTitle": "HR & Lønnsmonitor: Artsanalyse for 1000 Fastlønn, 1020 Vikar og 1090 Overtid",
+            "height": 1020,
+            "width": 1600,
             "visuals": [
-                make_visual_card("v04_card1", 20, 20, 360, 140, "Total Lonn", "Samlet Lønnskostnad YTD", z=1),
-                make_visual_card("v04_card2", 400, 20, 360, 140, "Vikarutgifter Art 1020", "Vikarforbruk (Art 1020)", z=2),
-                make_visual_card("v04_card3", 780, 20, 360, 140, "Overtid Art 1090", "Overtid (Art 1090)", z=3),
-                make_visual_card("v04_card4", 1160, 20, 380, 140, "NAV Refusjoner Art 1600", "Bokførte NAV-Refusjoner", z=4),
-                make_visual_column_chart("v04_col1", 20, 180, 800, 380, "Dim_Dato", "manedsnavn", "Vikarutgifter Art 1020", "Vikarutvikling per Måned", z=5),
-                make_visual_bar_chart("v04_bar1", 840, 180, 720, 380, "Dim_Ansvar", "ansvar_navn", "Vikarandel Lonn %", "Vikarandel per Enhet", z=6),
-                make_visual_table("v04_tab1", 20, 580, 1540, 280, [("Dim_Art", "Kontokode"), ("Dim_Art", "Kontonavn"), ("Dim_Ansvar", "ansvar_navn")], ["Budsjett YTD", "Regnskap YTD", "Avvik YTD", "Avvik YTD %"], "Detaljert Lønns- og Refusjonsmatrise", z=7)
+                # Rad 1: Slicers
+                make_visual_slicer("v04_slic_sektor", 20, 15, 500, 65, "Dim_Ansvar", "kommunalsjefomrade", "Sektor (Kommunalsjefområde)", z=1),
+                make_visual_slicer("v04_slic_tertial", 540, 15, 500, 65, "Dim_Dato", "tertial", "Tertial", z=2),
+                make_visual_slicer("v04_slic_enhet", 1060, 15, 520, 65, "Dim_Ansvar", "ansvar_navn", "Enhet", z=3),
+
+                # Rad 2: KPI-rad
+                make_visual_card("v04_kpi_total", 20, 90, 300, 110, "Total Lonn", "SAMLET LØNNSKOSTNAD YTD", z=4),
+                make_visual_card("v04_kpi_vikar", 335, 90, 300, 110, "Vikarutgifter Art 1020", "VIKARFORBRUK (ART 1020)", z=5),
+                make_visual_card("v04_kpi_overtid", 650, 90, 300, 110, "Overtid Art 1090", "OVERTID (ART 1090)", z=6),
+                make_visual_card("v04_kpi_nav", 965, 90, 310, 110, "NAV Refusjoner Art 1600", "BOKFØRTE NAV-REFUSJONER", z=7),
+                make_visual_card("v04_kpi_vikar_pct", 1290, 90, 290, 110, "KPI Vikarandel Med Benchmark", "VIKARANDEL LØNN (MÅL 7 %)", z=8),
+
+                # Rad 3: Executive Summary
+                make_visual_card("v04_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Lonn", "EXECUTIVE SUMMARY — HR & LØNNSMONITOR: FASTLØNN, VIKARINNLEIE OG REFUSJONER", z=9),
+
+                # Rad 4: Diagnose (01 & 02)
+                make_visual_bar_chart("v04_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Vikarandel Lonn %", "01  HVILKE ENHETER HAR HØYEST VIKARANDEL? — Vikarandel per Enhet", tooltips=std_lonn_tt, z=10),
+                make_visual_bar_chart("v04_bar_art", 810, 285, 770, 230, "Dim_Art", "Kontonavn", "Avvik YTD", "02  HVILKE LØNNSARTER FORKLARER AVVIKET? — Avvik per Art", tooltips=std_lonn_tt, z=11),
+
+                # Rad 5: Trend (03)
+                make_visual_column_chart("v04_col_vikar", 20, 525, 1560, 195, "Dim_Dato", "manedsnavn", "Vikarutgifter Art 1020", "03  HVORDAN UTVIKLER VIKARFORBRUKET SEG PER MÅNED? — Månedlig Vikarutgift", tooltips=std_lonn_tt, z=12),
+
+                # Rad 6: Handling (04)
+                make_visual_table_flexible("v04_tab_lonn", 20, 730, 1560, 270, [
+                    ("measure", "RAG Symbol"),
+                    ("column", "Dim_Ansvar", "ansvar_navn"),
+                    ("column", "Dim_Art", "Kontokode"),
+                    ("column", "Dim_Art", "Kontonavn"),
+                    ("measure", "Budsjett YTD"),
+                    ("measure", "Regnskap YTD"),
+                    ("measure", "Avvik YTD"),
+                    ("measure", "Avvik YTD %")
+                ], "04  DETALJERT LØNNS-, VIKAR- OG REFUSJONSMATRISE", z=13)
             ]
         },
+
+        # ======================================================================
+        # SIDE 5: PROGNOSE & SCENARIO
+        # ======================================================================
         {
             "id": "p05_prognose_scenarier",
-            "displayName": "5. Prognose & Scenarier",
-            "actionTitle": "What-If Simulering: Framsikt deflator, vikarreduksjon og helårsbalanse",
+            "displayName": "5. Prognose & Scenario",
+            "height": 1020,
+            "width": 1600,
             "visuals": [
-                make_visual_card("v05_card1", 20, 20, 360, 140, "Vedtatt Årsbudsjett", "Vedtatt Årsramme", z=1),
-                make_visual_card("v05_card2", 400, 20, 360, 140, "EOY Rullende Prognose", "Prognose EOY Uten Tiltak", z=2),
-                make_visual_card("v05_card3", 780, 20, 360, 140, "Planlagt Tiltakseffekt T3", "Tiltaksbesparelse T3", z=3),
-                make_visual_card("v05_card4", 1160, 20, 380, 140, "Simulert EOY Forventet Avvik", "Simulert EOY Sluttavvik", z=4),
-                make_visual_slicer("v05_slic1", 20, 180, 360, 320, "Framsikt_Deflator", "Label", "What-If Lønnsdeflator", z=5),
-                make_visual_slicer("v05_slic2", 20, 520, 360, 340, "Fravaer_Reduksjon", "Label", "What-If Fraværsreduksjon", z=6),
-                make_visual_column_chart("v05_col1", 400, 180, 600, 360, "Dim_Ansvar", "ansvar_navn", "EOY Forventet Årsavvik", "Forventet Årsavvik per Enhet", z=7),
-                make_visual_table("v05_tab1", 1020, 180, 540, 680, [("Dim_Ansvar", "ansvar_navn")], ["Vedtatt Årsbudsjett", "EOY Rullende Prognose", "Planlagt Tiltakseffekt T3", "Simulert EOY Forventet Avvik"], "Scenariooversikt EOY", z=8),
-                make_visual_card("v05_card5", 400, 560, 600, 300, "Simulert EOY Netto Driftsresultat", "Simulert Netto Driftsramme ved Årsslutt", z=9)
+                # Rad 1: Slicers & What-If
+                make_visual_slicer("v05_slic_sektor", 20, 15, 500, 65, "Dim_Ansvar", "kommunalsjefomrade", "Sektor (Kommunalsjefområde)", z=1),
+                make_visual_slicer("v05_slic_deflator", 540, 15, 500, 65, "Framsikt_Deflator", "Label", "What-If Lønnsdeflator (Framsikt)", z=2),
+                make_visual_slicer("v05_slic_fravaer", 1060, 15, 520, 65, "Fravaer_Reduksjon", "Label", "What-If Fraværsreduksjon (Tiltak)", z=3),
+
+                # Rad 2: KPI-rad
+                make_visual_card("v05_kpi_vedtatt", 20, 90, 300, 110, "Vedtatt Årsbudsjett", "VEDTATT ÅRSRAMME", z=4),
+                make_visual_card("v05_kpi_eoy_base", 335, 90, 300, 110, "EOY Rullende Prognose", "BASELINE FORECAST UTEN TILTAK", z=5),
+                make_visual_card("v05_kpi_tiltak", 650, 90, 300, 110, "Planlagt Tiltakseffekt T3", "TILTAKSBESPARELSE T3", z=6),
+                make_visual_card("v05_kpi_sim_avvik", 965, 90, 310, 110, "Simulert EOY Forventet Avvik", "SIMULERT EOY SLUTTAVVIK", z=7),
+                make_visual_card("v05_kpi_sim_netto", 1290, 90, 290, 110, "Simulert EOY Netto Driftsresultat", "SIMULERT NETTO DRIFTSRAMME", z=8),
+
+                # Rad 3: Executive Summary
+                make_visual_card("v05_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Prognose", "EXECUTIVE SUMMARY — PROGNOSE & SCENARIO: HELÅRSBALANSE OG TILTAKSGAP (§ 14-5)", z=9),
+
+                # Rad 4: Diagnose (01 & 02)
+                make_visual_bar_chart("v05_bar_enhet", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "EOY Forventet Årsavvik", "01  FORVENTET ÅRSAVVIK PER ENHET (EOY) — Baseline Avvik", tooltips=["Vedtatt Årsbudsjett", "EOY Rullende Prognose", "EOY Forventet Årsavvik", "RAG EOY"], z=10),
+                make_visual_column_chart("v05_col_deflator", 810, 285, 770, 230, "Framsikt_Deflator", "Label", "Simulert EOY Netto Driftsresultat", "02  SENSITIVITET: EFFEKT AV LØNNSDEFLATOR PÅ SLUTTRAMMEN", tooltips=["Vedtatt Årsbudsjett", "Simulert EOY Netto Driftsresultat", "Simulert EOY Forventet Avvik"], z=11),
+
+                # Rad 5: Scenario Bridge (03)
+                make_visual_waterfall_chart("v05_waterfall_bridge", 20, 525, 1560, 195, "Dim_Ansvar", "ansvar_navn", "EOY Forventet Årsavvik", "03  SCENARIO BRIDGE: FORVENTET ÅRSAVVIK PER RESULTATENHET (Waterfall)", tooltips=["Vedtatt Årsbudsjett", "EOY Rullende Prognose", "Planlagt Tiltakseffekt T3"], z=12),
+
+                # Rad 6: Handling (04)
+                make_visual_table_flexible("v05_tab_scenario", 20, 730, 1560, 270, [
+                    ("measure", "RAG EOY"),
+                    ("column", "Dim_Ansvar", "ansvar_navn"),
+                    ("column", "Dim_Ansvar", "kommunalsjefomrade"),
+                    ("measure", "Vedtatt Årsbudsjett"),
+                    ("measure", "EOY Rullende Prognose"),
+                    ("measure", "Planlagt Tiltakseffekt T3"),
+                    ("measure", "Simulert EOY Forventet Avvik"),
+                    ("measure", "Simulert EOY Netto Driftsresultat")
+                ], "04  SCENARIO- OG TILTAKSOPPFØLGING EOY (RAG)", z=13)
             ]
         },
+
+        # ======================================================================
+        # SIDE 6: INVESTERING & CAPEX (EVM)
+        # ======================================================================
         {
             "id": "p06_investering_evm",
-            "displayName": "6. Investering & Capex (EVM)",
-            "actionTitle": "Project Controlling: Investeringsportefølje, Earned Value & Sluttkostnad (EAC)",
+            "displayName": "6. Investering & Capex | EVM",
+            "height": 1020,
+            "width": 1600,
             "visuals": [
-                make_visual_card("v06_card1", 20, 20, 360, 140, "Planlagt Verdi (PV)", "Planlagt Verdi (PV YTD)", z=1),
-                make_visual_card("v06_card2", 400, 20, 360, 140, "Påløpt Kostnad (AC)", "Påløpt Kostnad (AC YTD)", z=2),
-                make_visual_card("v06_card3", 780, 20, 360, 140, "Kostnadsavvik (CV)", "Kostnadsavvik (CV = PV - AC)", z=3),
-                make_visual_card("v06_card4", 1160, 20, 380, 140, "Kostnadsindeks (CPI)", "Kostnadsindeks (CPI)", z=4),
-                make_visual_bar_chart("v06_bar1", 20, 180, 750, 380, "Dim_Ansvar", "ansvar_navn", "Kostnadsavvik (CV)", "Prosjektavvik (CV) per Enhet", z=5),
-                make_visual_column_chart("v06_col1", 790, 180, 770, 380, "Dim_Ansvar", "ansvar_navn", "Sluttprognose (EAC)", "Sluttprognose (EAC) per Prosjekt", z=6),
-                make_visual_table("v06_tab1", 20, 580, 1540, 280, [("Dim_Ansvar", "ansvar_navn"), ("Dim_Ansvar", "kommunalsjefomrade")], ["Planlagt Verdi (PV)", "Påløpt Kostnad (AC)", "Kostnadsavvik (CV)", "Kostnadsindeks (CPI)", "Sluttprognose (EAC)"], "EVM Porteføljematrise for Project Controller", z=7)
+                # Rad 1: Slicers
+                make_visual_slicer("v06_slic_sektor", 20, 15, 500, 65, "Dim_Ansvar", "kommunalsjefomrade", "Sektor (Kommunalsjefområde)", z=1),
+                make_visual_slicer("v06_slic_tertial", 540, 15, 500, 65, "Dim_Dato", "tertial", "Tertial", z=2),
+                make_visual_slicer("v06_slic_prosjekt", 1060, 15, 520, 65, "Dim_Ansvar", "ansvar_navn", "Prosjekt / Resultatenhet", z=3),
+
+                # Rad 2: KPI-rad (EVM sammenhengende historie)
+                make_visual_card("v06_kpi_pv", 20, 90, 300, 110, "Planlagt Verdi (PV)", "PLANLAGT VERDI (PV YTD)", z=4),
+                make_visual_card("v06_kpi_ac", 335, 90, 300, 110, "Påløpt Kostnad (AC)", "PÅLØPT KOSTNAD (AC YTD)", z=5),
+                make_visual_card("v06_kpi_cv", 650, 90, 300, 110, "Kostnadsavvik (CV)", "KOSTNADSAVVIK (CV = PV - AC)", z=6),
+                make_visual_card("v06_kpi_cpi", 965, 90, 310, 110, "KPI CPI Med RAG", "KOSTNADSINDEKS (CPI MÅL >= 1.0)", z=7),
+                make_visual_card("v06_kpi_eac", 1290, 90, 290, 110, "Sluttprognose (EAC)", "SLUTTPROGNOSE (EAC = BAC / CPI)", z=8),
+
+                # Rad 3: Executive Summary
+                make_visual_card("v06_card_exec_summary", 20, 210, 1560, 65, "Executive Summary EVM", "EXECUTIVE SUMMARY — PROJECT CONTROLLING: EARNED VALUE MANAGEMENT & SLUTTKOSTNAD", z=9),
+
+                # Rad 4: Diagnose (01 & 02)
+                make_visual_bar_chart("v06_bar_cv", 20, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Kostnadsavvik (CV)", "01  HVILKE PROSJEKTER DRIVER KOSTNADSAVVIKET (CV)? — CV per Prosjekt", tooltips=std_evm_tt, z=10),
+                make_visual_bar_chart("v06_bar_cpi", 810, 285, 770, 230, "Dim_Ansvar", "ansvar_navn", "Kostnadsindeks (CPI)", "02  HVORDAN PRESTERER KOSTNADSINDEKSEN (CPI)? — CPI per Prosjekt", tooltips=std_evm_tt, z=11),
+
+                # Rad 5: Sluttkostnad (03)
+                make_visual_column_chart("v06_col_eac", 20, 525, 1560, 195, "Dim_Ansvar", "ansvar_navn", "Sluttprognose (EAC)", "03  FORVENTET SLUTTKOSTNAD (EAC) PER INVESTERINGSPROSJEKT", tooltips=std_evm_tt, z=12),
+
+                # Rad 6: Handling (04)
+                make_visual_table_flexible("v06_tab_evm", 20, 730, 1560, 270, [
+                    ("measure", "RAG CPI Symbol"),
+                    ("column", "Dim_Ansvar", "ansvar_navn"),
+                    ("column", "Dim_Ansvar", "kommunalsjefomrade"),
+                    ("measure", "Planlagt Verdi (PV)"),
+                    ("measure", "Påløpt Kostnad (AC)"),
+                    ("measure", "Kostnadsavvik (CV)"),
+                    ("measure", "Kostnadsindeks (CPI)"),
+                    ("measure", "Sluttprognose (EAC)")
+                ], "04  EVM PORTEFØLJEMATRISE FOR PROJECT CONTROLLER (RAG)", z=13)
             ]
         },
+
+        # ======================================================================
+        # SIDE 7: REVISJON & AUDIT TRAIL
+        # ======================================================================
         {
             "id": "p07_revisjon_port9",
             "displayName": "7. Revisjon & Audit Trail",
-            "actionTitle": "Revisjonsspor & Kontrollutvalget: SHA-256 forsegling og Human-in-the-Loop",
+            "height": 1020,
+            "width": 1600,
             "visuals": [
-                make_visual_card("v07_card1", 20, 20, 480, 140, "Regnskap YTD", "Verifisert Transaksjonssum", z=1),
-                make_visual_card("v07_card2", 520, 20, 480, 140, "Avvik YTD", "Totalavvik Gransket", z=2),
-                make_visual_card("v07_card3", 1020, 20, 520, 140, "Planlagt Tiltakseffekt T3", "Signerte Tiltak i Port 9", z=3),
-                make_visual_table("v07_tab1", 20, 180, 1520, 680, [("Audit_AI_Actions", "Tidsstempel"), ("Audit_AI_Actions", "Enhetskode"), ("Audit_AI_Actions", "AI_Tiltak"), ("Audit_AI_Actions", "Leder_Beslutning"), ("Audit_AI_Actions", "Saksbehandler"), ("Audit_AI_Actions", "Begrunnelse"), ("Audit_AI_Actions", "SHA256_Hash")], [], "Uforanderlig Revisjonslogg (Audit_AI_Actions)", z=4)
+                # Rad 1: Slicers
+                make_visual_slicer("v07_slic_beslutning", 20, 15, 500, 65, "Audit_AI_Actions", "Leder_Beslutning", "Beslutningsstatus (Port 9)", z=1),
+                make_visual_slicer("v07_slic_enhet", 540, 15, 500, 65, "Audit_AI_Actions", "Enhetskode", "Enhetskode", z=2),
+                make_visual_slicer("v07_slic_saksb", 1060, 15, 520, 65, "Audit_AI_Actions", "Saksbehandler", "Ansvarlig Saksbehandler (HITL)", z=3),
+
+                # Rad 2: Kontrollstatus
+                make_visual_card("v07_kpi_regnskap", 20, 90, 500, 110, "Regnskap YTD", "VERIFISERT TRANSAKSJONSVOLUM", z=4),
+                make_visual_card("v07_kpi_avvik", 540, 90, 500, 110, "Avvik YTD", "TOTALAVVIK GRANSKET", z=5),
+                make_visual_card("v07_kpi_tiltak", 1060, 90, 520, 110, "Planlagt Tiltakseffekt T3", "KVANTIFISERTE SIGNERTE TILTAK", z=6),
+
+                # Rad 3: Executive Summary
+                make_visual_card("v07_card_exec_summary", 20, 210, 1560, 65, "Executive Summary Audit", "EXECUTIVE SUMMARY — REVISJONSSPOR & KONTROLLUTVALGET: SHA-256 OG HITL-SPORBARHET", z=7),
+
+                # Rad 4, 5 & 6: Audit Logg
+                make_visual_table_flexible("v07_tab_audit", 20, 285, 1560, 715, [
+                    ("column", "Audit_AI_Actions", "Tidsstempel"),
+                    ("column", "Audit_AI_Actions", "Enhetskode"),
+                    ("column", "Audit_AI_Actions", "AI_Tiltak"),
+                    ("column", "Audit_AI_Actions", "Konfidens"),
+                    ("column", "Audit_AI_Actions", "Leder_Beslutning"),
+                    ("column", "Audit_AI_Actions", "Saksbehandler"),
+                    ("column", "Audit_AI_Actions", "Begrunnelse"),
+                    ("column", "Audit_AI_Actions", "SHA256_Hash")
+                ], "UFORANDERLIG REVISJONSLOGG FOR KOMMUNEREVISJONEN OG KONTROLLUTVALGET", z=8)
+            ]
+        },
+
+        # ======================================================================
+        # REPORT PAGE TOOLTIPS (Skjulte hjelpe- og kontekstsider)
+        # ======================================================================
+        {
+            "id": "tt_enhet_okonomi",
+            "displayName": "Tooltip: Enhet Økonomi",
+            "height": 320,
+            "width": 450,
+            "visibility": "HiddenInViewMode",
+            "visuals": [
+                make_visual_card("tt01_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "ENHET / ANSVARSOMRÅDE", z=1),
+                make_visual_card("tt01_card_avvik", 10, 65, 210, 75, "KPI Avvik YTD Med RAG", "AVVIK YTD", z=2),
+                make_visual_card("tt01_card_eoy", 230, 65, 210, 75, "KPI EOY Prognose Med RAG", "PROGNOSE EOY", z=3),
+                make_visual_table_flexible("tt01_tab_detalj", 10, 150, 430, 160, [
+                    ("measure", "Budsjett YTD"),
+                    ("measure", "Regnskap YTD"),
+                    ("measure", "Avvik YTD %"),
+                    ("measure", "EOY Forecast")
+                ], "ØKONOMISK STATUS DETALJER", z=4)
+            ]
+        },
+        {
+            "id": "tt_vikar_overtid",
+            "displayName": "Tooltip: Vikar & Overtid",
+            "height": 320,
+            "width": 450,
+            "visibility": "HiddenInViewMode",
+            "visuals": [
+                make_visual_card("tt02_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "ENHET / STILLINGSKONTEKST", z=1),
+                make_visual_card("tt02_card_vikar", 10, 65, 210, 75, "KPI Vikarandel Med Benchmark", "VIKARANDEL (MÅL 7 %)", z=2),
+                make_visual_card("tt02_card_ot", 230, 65, 210, 75, "KPI Overtid Med Benchmark", "OVERTIDSANDEL (MÅL 5 %)", z=3),
+                make_visual_table_flexible("tt02_tab_detalj", 10, 150, 430, 160, [
+                    ("measure", "Total Lonn"),
+                    ("measure", "Vikarutgifter Art 1020"),
+                    ("measure", "Overtid Art 1090"),
+                    ("measure", "NAV Refusjoner Art 1600")
+                ], "LØNNS- OG VIKARSPESIFIKASJON", z=4)
+            ]
+        },
+        {
+            "id": "tt_evm_prosjekt",
+            "displayName": "Tooltip: EVM & Sluttkostnad",
+            "height": 320,
+            "width": 450,
+            "visibility": "HiddenInViewMode",
+            "visuals": [
+                make_visual_card("tt03_card_tittel", 10, 10, 430, 45, "Dynamisk_Tittel_Nivaa", "INVESTERINGSPROSJEKT", z=1),
+                make_visual_card("tt03_card_cpi", 10, 65, 210, 75, "KPI CPI Med RAG", "CPI (MÅL >= 1.0)", z=2),
+                make_visual_card("tt03_card_cv", 230, 65, 210, 75, "Kostnadsavvik (CV)", "KOSTNADSAVVIK (CV)", z=3),
+                make_visual_table_flexible("tt03_tab_detalj", 10, 150, 430, 160, [
+                    ("measure", "Planlagt Verdi (PV)"),
+                    ("measure", "Påløpt Kostnad (AC)"),
+                    ("measure", "Kostnadsindeks (CPI)"),
+                    ("measure", "Sluttprognose (EAC)")
+                ], "EVM NØKKELTALL", z=4)
             ]
         }
     ]
@@ -1198,9 +1474,12 @@ def build_report_pages():
             "name": pid,
             "displayName": p_cfg["displayName"],
             "displayOption": "FitToPage",
-            "height": p_cfg.get("height", 900),
+            "height": p_cfg.get("height", 1020),
             "width": p_cfg.get("width", 1600)
         }
+        if "visibility" in p_cfg:
+            page_json_data["visibility"] = p_cfg["visibility"]
+
         (p_dir / "page.json").write_text(json.dumps(page_json_data, indent=2, ensure_ascii=False), encoding="utf-8")
 
         # Visuals
@@ -1217,7 +1496,7 @@ def build_report_pages():
         "activePageName": page_order[0]
     }
     (pages_dir / "pages.json").write_text(json.dumps(pages_meta, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"✓ {len(page_order)} PBIR rapportsider bygget og lagret.")
+    print(f"✓ {len(page_order)} PBIR sider (7 primærsider + 3 kontekst-tooltipsider) bygget og lagret.")
 
 def main():
     print("Starter bygging av Power BI rapporteringsprosjekt...")

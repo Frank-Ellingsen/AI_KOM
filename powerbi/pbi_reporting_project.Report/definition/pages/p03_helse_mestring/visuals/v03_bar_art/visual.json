@@ -1,0 +1,159 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v03_bar_art",
+  "position": {
+    "x": 810,
+    "y": 285,
+    "z": 11,
+    "width": 770,
+    "height": 230,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "barChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Art"
+                    }
+                  },
+                  "Property": "Kontonavn"
+                }
+              },
+              "queryRef": "Dim_Art.Kontonavn",
+              "nativeQueryRef": "Kontonavn",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik YTD"
+                }
+              },
+              "queryRef": "_Measures.Avvik YTD",
+              "nativeQueryRef": "Avvik YTD",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Lonn"
+                }
+              },
+              "queryRef": "_Measures.Total Lonn",
+              "nativeQueryRef": "Total Lonn",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vikarutgifter Art 1020"
+                }
+              },
+              "queryRef": "_Measures.Vikarutgifter Art 1020",
+              "nativeQueryRef": "Vikarutgifter Art 1020",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vikarandel Lonn %"
+                }
+              },
+              "queryRef": "_Measures.Vikarandel Lonn %",
+              "nativeQueryRef": "Vikarandel Lonn %",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Overtid Art 1090"
+                }
+              },
+              "queryRef": "_Measures.Overtid Art 1090",
+              "nativeQueryRef": "Overtid Art 1090",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Overtidsandel %"
+                }
+              },
+              "queryRef": "_Measures.Overtidsandel %",
+              "nativeQueryRef": "Overtidsandel %",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'02  HVILKE KOSTNADSARTER PRESSER DRIFTEN? — Overtid og Tillegg per Art'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

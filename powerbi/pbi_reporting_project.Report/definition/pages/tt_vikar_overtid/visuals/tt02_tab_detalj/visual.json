@@ -1,0 +1,106 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "tt02_tab_detalj",
+  "position": {
+    "x": 10,
+    "y": 150,
+    "z": 4,
+    "width": 430,
+    "height": 160,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Lonn"
+                }
+              },
+              "queryRef": "_Measures.Total Lonn",
+              "nativeQueryRef": "Total Lonn",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vikarutgifter Art 1020"
+                }
+              },
+              "queryRef": "_Measures.Vikarutgifter Art 1020",
+              "nativeQueryRef": "Vikarutgifter Art 1020",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Overtid Art 1090"
+                }
+              },
+              "queryRef": "_Measures.Overtid Art 1090",
+              "nativeQueryRef": "Overtid Art 1090",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "NAV Refusjoner Art 1600"
+                }
+              },
+              "queryRef": "_Measures.NAV Refusjoner Art 1600",
+              "nativeQueryRef": "NAV Refusjoner Art 1600",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'LØNNS- OG VIKARSPESIFIKASJON'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

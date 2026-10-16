@@ -1,0 +1,159 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v04_col_vikar",
+  "position": {
+    "x": 20,
+    "y": 525,
+    "z": 12,
+    "width": 1560,
+    "height": 195,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Dato"
+                    }
+                  },
+                  "Property": "manedsnavn"
+                }
+              },
+              "queryRef": "Dim_Dato.manedsnavn",
+              "nativeQueryRef": "manedsnavn",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vikarutgifter Art 1020"
+                }
+              },
+              "queryRef": "_Measures.Vikarutgifter Art 1020",
+              "nativeQueryRef": "Vikarutgifter Art 1020",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Lonn"
+                }
+              },
+              "queryRef": "_Measures.Total Lonn",
+              "nativeQueryRef": "Total Lonn",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vikarutgifter Art 1020"
+                }
+              },
+              "queryRef": "_Measures.Vikarutgifter Art 1020",
+              "nativeQueryRef": "Vikarutgifter Art 1020",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vikarandel Lonn %"
+                }
+              },
+              "queryRef": "_Measures.Vikarandel Lonn %",
+              "nativeQueryRef": "Vikarandel Lonn %",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Overtid Art 1090"
+                }
+              },
+              "queryRef": "_Measures.Overtid Art 1090",
+              "nativeQueryRef": "Overtid Art 1090",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Overtidsandel %"
+                }
+              },
+              "queryRef": "_Measures.Overtidsandel %",
+              "nativeQueryRef": "Overtidsandel %",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'03  HVORDAN UTVIKLER VIKARFORBRUKET SEG PER MÅNED? — Månedlig Vikarutgift'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

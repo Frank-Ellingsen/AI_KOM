@@ -1,0 +1,106 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "tt03_tab_detalj",
+  "position": {
+    "x": 10,
+    "y": 150,
+    "z": 4,
+    "width": 430,
+    "height": 160,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Planlagt Verdi (PV)"
+                }
+              },
+              "queryRef": "_Measures.Planlagt Verdi (PV)",
+              "nativeQueryRef": "Planlagt Verdi (PV)",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Påløpt Kostnad (AC)"
+                }
+              },
+              "queryRef": "_Measures.Påløpt Kostnad (AC)",
+              "nativeQueryRef": "Påløpt Kostnad (AC)",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Kostnadsindeks (CPI)"
+                }
+              },
+              "queryRef": "_Measures.Kostnadsindeks (CPI)",
+              "nativeQueryRef": "Kostnadsindeks (CPI)",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Sluttprognose (EAC)"
+                }
+              },
+              "queryRef": "_Measures.Sluttprognose (EAC)",
+              "nativeQueryRef": "Sluttprognose (EAC)",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'EVM NØKKELTALL'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

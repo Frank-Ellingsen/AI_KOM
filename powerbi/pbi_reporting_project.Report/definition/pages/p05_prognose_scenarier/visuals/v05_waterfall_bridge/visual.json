@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v05_waterfall_bridge",
+  "position": {
+    "x": 20,
+    "y": 525,
+    "z": 12,
+    "width": 1560,
+    "height": 195,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "waterfallChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Ansvar"
+                    }
+                  },
+                  "Property": "ansvar_navn"
+                }
+              },
+              "queryRef": "Dim_Ansvar.ansvar_navn",
+              "nativeQueryRef": "ansvar_navn",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "EOY Forventet Årsavvik"
+                }
+              },
+              "queryRef": "_Measures.EOY Forventet Årsavvik",
+              "nativeQueryRef": "EOY Forventet Årsavvik",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Vedtatt Årsbudsjett"
+                }
+              },
+              "queryRef": "_Measures.Vedtatt Årsbudsjett",
+              "nativeQueryRef": "Vedtatt Årsbudsjett",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "EOY Rullende Prognose"
+                }
+              },
+              "queryRef": "_Measures.EOY Rullende Prognose",
+              "nativeQueryRef": "EOY Rullende Prognose",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Planlagt Tiltakseffekt T3"
+                }
+              },
+              "queryRef": "_Measures.Planlagt Tiltakseffekt T3",
+              "nativeQueryRef": "Planlagt Tiltakseffekt T3",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'03  SCENARIO BRIDGE: FORVENTET ÅRSAVVIK PER RESULTATENHET (Waterfall)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

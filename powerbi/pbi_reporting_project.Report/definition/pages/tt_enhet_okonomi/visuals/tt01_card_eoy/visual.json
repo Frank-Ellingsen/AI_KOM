@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "tt01_card_eoy",
+  "position": {
+    "x": 230,
+    "y": 65,
+    "z": 3,
+    "width": 210,
+    "height": 75,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "card",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "KPI EOY Prognose Med RAG"
+                }
+              },
+              "queryRef": "_Measures.KPI EOY Prognose Med RAG",
+              "nativeQueryRef": "KPI EOY Prognose Med RAG",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'PROGNOSE EOY'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

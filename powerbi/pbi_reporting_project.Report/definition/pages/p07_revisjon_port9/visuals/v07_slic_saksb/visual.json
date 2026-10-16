@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "v07_slic_saksb",
+  "position": {
+    "x": 1060,
+    "y": 15,
+    "z": 3,
+    "width": 520,
+    "height": 65,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Audit_AI_Actions"
+                    }
+                  },
+                  "Property": "Saksbehandler"
+                }
+              },
+              "queryRef": "Audit_AI_Actions.Saksbehandler",
+              "nativeQueryRef": "Saksbehandler",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ansvarlig Saksbehandler (HITL)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
