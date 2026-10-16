@@ -45,9 +45,9 @@
   "tableAccent": "#118DFF",
   "shapeStroke": "#D1D1D1",
   "disabledText": "#B3B3B3",
-  "good": "#9FD89F",
-  "neutral": "#FDCFB4",
-  "bad": "#EEACB2",
+  "good": "#3A8F5C",
+  "neutral": "#E6A23C",
+  "bad": "#D64545",
   "maximum": "#D4EDFC",
   "center": "#FAFAFA",
   "minimum": "#FCE4D6",
@@ -2119,6 +2119,25 @@
         "categoryAxis": [
           {
             "innerPadding": 50
+          }
+        ],
+        "sentimentColors": [
+          {
+            "increaseColor": {
+              "solid": {
+                "color": "#D64545"
+              }
+            },
+            "decreaseColor": {
+              "solid": {
+                "color": "#3A8F5C"
+              }
+            },
+            "totalColor": {
+              "solid": {
+                "color": "#1B365D"
+              }
+            }
           }
         ]
       }

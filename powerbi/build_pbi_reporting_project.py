@@ -720,7 +720,9 @@ relationship AuditResponsibility
 \tmeasure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] - [Planlagt Tiltakseffekt T3]
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
-\tmeasure 'Tufte_Avvik_Farge_HEX' = SWITCH(TRUE(), [Avvik YTD %] > 0.05, "#D64545", [Avvik YTD %] > 0.02, "#E6A23C", "#3A8F5C")
+\tmeasure 'Tufte_Avvik_Farge_HEX' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "#A0A0A0", avv > 0 && (pct > 0.03 || avv > 250000), "#D64545", avv > 0, "#E6A23C", "#3A8F5C")
+
+\tmeasure 'Tufte_EOY_Avvik_Farge_HEX' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "#A0A0A0", eoyAvv > 0 && (eoyPct > 0.03 || eoyAvv > 500000), "#D64545", eoyAvv > 0, "#E6A23C", "#3A8F5C")
 
 \tmeasure 'Vikarutgifter Art 1020' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020")
 \t\tformatString: #,##0 "kr"
@@ -783,17 +785,17 @@ relationship AuditResponsibility
 \tmeasure 'EOY Avvik %' = DIVIDE([EOY Forventet Årsavvik], ABS([Vedtatt Årsbudsjett]), 0)
 \t\tformatString: 0.0%
 
-\tmeasure 'RAG Status' = VAR AvvikPct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(AvvikPct), "N/A", AvvikPct > 0.05, "Red", AvvikPct > 0.02, "Amber", "Green")
+\tmeasure 'RAG Status' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv > 0 && (pct > 0.03 || avv > 250000), "Red", avv > 0, "Amber", "Green")
 
 \tmeasure 'RAG Color' = SWITCH([RAG Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
 
 \tmeasure 'RAG Symbol' = SWITCH([RAG Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
 
-\tmeasure 'RAG Tekst' = SWITCH([RAG Status], "Red", "🔴 Krever tiltak (> 5 % merforbruk)", "Amber", "🟠 Krever oppmerksomhet (2-5 % merforbruk)", "Green", "🟢 Innenfor toleranse (<= 2 %)", "⚪ Uavklart")
+\tmeasure 'RAG Tekst' = SWITCH([RAG Status], "Red", "🔴 Krever tiltak (> 3 % / > 250k kr merforbruk)", "Amber", "🟠 Krever oppmerksomhet (merforbruk under terskel)", "Green", "🟢 I balanse / mindreforbruk (innenfor budsjett)", "⚪ Uavklart")
 
-\tmeasure 'RAG YTD' = VAR x = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x > 0.05, "🔴", x > 0.02, "🟠", "🟢")
+\tmeasure 'RAG YTD' = [RAG Symbol]
 
-\tmeasure 'RAG EOY' = VAR x = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(x), "⚪", x > 0.05, "🔴", x > 0.02, "🟠", "🟢")
+\tmeasure 'RAG EOY' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "⚪", eoyAvv > 0 && (eoyPct > 0.03 || eoyAvv > 500000), "🔴", eoyAvv > 0, "🟠", "🟢")
 
 \tmeasure 'KPI Avvik YTD Med RAG' = [RAG YTD] & "  " & FORMAT([Avvik YTD], "#,##0 kr") & " (" & FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & ")"
 
@@ -811,7 +813,7 @@ relationship AuditResponsibility
 
 \tmeasure 'KPI CPI Med RAG' = [RAG CPI Symbol] & "  " & FORMAT([Kostnadsindeks (CPI)], "0.000") & " (Mål: 1.000)"
 
-\tmeasure 'Executive Summary' = VAR Avvik = [Avvik YTD] VAR AvvikPct = [Avvik YTD %] VAR Rag = [RAG Status] VAR StatusTekst = SWITCH(Rag, "Red", "🔴 Ugunstig utvikling: Betydelig budsjettavvik identifisert. Tiltak og kostnadskontroll kreves jf. Kommuneloven § 14-5.", "Amber", "🟠 Moderat avvik: Avviket krever skjerpet oppfølging og kontinuerlig månedskontroll.", "Green", "🟢 Økonomisk drift i balanse innenfor tildelt budsjettramme.", "Status uavklart") RETURN StatusTekst & " | Regnskap YTD: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Budsjett YTD: " & FORMAT([Budsjett YTD], "#,##0 kr") & " | Avvik: " & FORMAT(Avvik, "#,##0 kr") & " (" & FORMAT(AvvikPct, "+0.0%;-0.0%;0.0%") & ") | Sluttprognose EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr")
+\tmeasure 'Executive Summary' = VAR Avvik = [Avvik YTD] VAR AvvikPct = [Avvik YTD %] VAR Rag = [RAG Status] VAR StatusTekst = SWITCH(Rag, "Red", "🔴 Ugunstig utvikling: Betydelig merforbruk identifisert. Tiltak og kostnadskontroll kreves jf. Kommuneloven § 14-5.", "Amber", "🟠 Moderat merforbruk: Avviket krever skjerpet oppfølging og kontinuerlig månedskontroll.", "Green", "🟢 Økonomisk drift i balanse eller mindreforbruk innenfor tildelt budsjettramme.", "Status uavklart") RETURN StatusTekst & " | Regnskap YTD: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Budsjett YTD: " & FORMAT([Budsjett YTD], "#,##0 kr") & " | Avvik: " & FORMAT(Avvik, "#,##0 kr") & " (" & FORMAT(AvvikPct, "+0.0%;-0.0%;0.0%") & ") | Sluttprognose EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr")
 
 \tmeasure 'Executive Summary Skole' = VAR avvik = [Avvik YTD] VAR rag = [RAG Status] VAR txt = SWITCH(rag, "Red", "🔴 Merforbruk i grunnskolen drevet av høyt sykefravær og vikarforbruk (Art 1020). Tiltak for omdisponering påkrevd.", "Amber", "🟠 Moderat avvik i skoleenhetene. Følg opp vikarinnleie mot fast stillingsramme.", "🟢 Grunnskoledrift i balanse mot periodisert budsjett.") RETURN txt & " | Regnskap: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Vikarutgift: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " (" & FORMAT([Vikarandel Lonn %], "0.0%") & ") | Kostnad/elev: " & FORMAT([Netto Driftsutgift Per Elev], "#,##0 kr/elev")
 
@@ -819,7 +821,7 @@ relationship AuditResponsibility
 
 \tmeasure 'Executive Summary Lonn' = VAR vikarPct = [Vikarandel Lonn %] VAR txt = SWITCH(TRUE(), vikarPct > 0.08, "🔴 Vikarandel overskrider måltall (7 %). Vikarstopp ved korttidsfravær (< 3 dager) anbefalt.", vikarPct > 0.05, "🟠 Vikarforbruk er moderat forhøyet. Behov for å optimalisere intern vikarpool.", "🟢 Lønns- og vikarforbruk er innenfor budsjetterte rammer.") RETURN txt & " | Total lønn: " & FORMAT([Total Lonn], "#,##0 kr") & " | Vikar: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " | NAV-refusjon: " & FORMAT([NAV Refusjoner Art 1600], "#,##0 kr")
 
-\tmeasure 'Executive Summary Prognose' = VAR sluttAvvik = [Simulert EOY Forventet Avvik] VAR rag = SWITCH(TRUE(), sluttAvvik > 1000000, "🔴", sluttAvvik > 250000, "🟠", "🟢") VAR txt = SWITCH(rag, "Red", "🔴 Prognosen indikerer kritisk merforbruk ved årsslutt uten ytterligere innsparingstiltak. Kommuneloven § 14-5 utløses.", "Amber", "🟠 Helårsbalansen er sårbar for lønnsvekst og fraværsendringer. T3-tiltak må følges opp månedlig.", "🟢 Simulert helårsresultat er i balanse med vedtatt årsbudsjett.") RETURN txt & " | Årsbudsjett: " & FORMAT([Vedtatt Årsbudsjett], "#,##0 kr") & " | Rullende EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr") & " | Tiltakseffekt: " & FORMAT([Planlagt Tiltakseffekt T3], "#,##0 kr") & " | Simulert avvik: " & FORMAT(sluttAvvik, "#,##0 kr")
+\tmeasure 'Executive Summary Prognose' = VAR sluttAvvik = [Simulert EOY Forventet Avvik] VAR rag = SWITCH(TRUE(), sluttAvvik > 1000000, "Red", sluttAvvik > 250000, "Amber", "Green") VAR txt = SWITCH(rag, "Red", "🔴 Prognosen indikerer kritisk merforbruk ved årsslutt uten ytterligere innsparingstiltak. Kommuneloven § 14-5 utløses.", "Amber", "🟠 Helårsbalansen er sårbar for lønnsvekst og fraværsendringer. T3-tiltak må følges opp månedlig.", "🟢 Simulert helårsresultat er i balanse eller mindreforbruk mot vedtatt årsbudsjett.") RETURN txt & " | Årsbudsjett: " & FORMAT([Vedtatt Årsbudsjett], "#,##0 kr") & " | Rullende EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr") & " | Tiltakseffekt: " & FORMAT([Planlagt Tiltakseffekt T3], "#,##0 kr") & " | Simulert avvik: " & FORMAT(sluttAvvik, "#,##0 kr")
 
 \tmeasure 'Executive Summary EVM' = VAR cpi = [Kostnadsindeks (CPI)] VAR cv = [Kostnadsavvik (CV)] VAR txt = SWITCH([RAG CPI Status], "Red", "🔴 Investeringsprosjekter underpresterer kostnadsmessig (CPI < 0.95). Risiko for overskridelse av prosjektrammer.", "Amber", "🟠 Prosjektporteføljen har moderat kostnadspress (CPI 0.95-1.00). Krever tett oppfølging av entreprenørfakturaer.", "🟢 God prosjektgjennomføring med kostnadsindeks i balanse (CPI >= 1.00).") RETURN txt & " | PV: " & FORMAT([Planlagt Verdi (PV)], "#,##0 kr") & " | AC: " & FORMAT([Påløpt Kostnad (AC)], "#,##0 kr") & " | CV: " & FORMAT(cv, "#,##0 kr") & " | CPI: " & FORMAT(cpi, "0.000") & " | EAC: " & FORMAT([Sluttprognose (EAC)], "#,##0 kr")
 
@@ -1085,6 +1087,15 @@ def make_visual_waterfall_chart(name, x, y, w, h, cat_table, cat_col, measure_na
             "drillFilterOtherVisuals": True,
             "query": {
                 "queryState": query_state
+            },
+            "objects": {
+                "sentimentColors": [{
+                    "properties": {
+                        "increaseColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#D64545'"}}}}},
+                        "decreaseColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#3A8F5C'"}}}}},
+                        "totalColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#1B365D'"}}}}}
+                    }
+                }]
             },
             "visualContainerObjects": {
                 "title": [{
