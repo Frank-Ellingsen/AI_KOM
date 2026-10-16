@@ -25,6 +25,7 @@ Dette skriptet bygger opp den offisielle Power BI rapporteringsløsningen:
 ===============================================================================
 """
 
+import csv
 import json
 import shutil
 import sys
@@ -49,6 +50,83 @@ def setup_directories():
     (MODEL_DIR / "definition" / "roles").mkdir(parents=True, exist_ok=True)
     (REPORT_DIR / "definition" / "pages").mkdir(parents=True, exist_ok=True)
     (REPORT_DIR / "StaticResources" / "SharedResources" / "BaseThemes").mkdir(parents=True, exist_ok=True)
+
+def ensure_erp_csv_data():
+    """Sikrer at Visma ERP CSV-filene eksisterer i erp_data og er normalisert."""
+    erp_dir = BASE_DIR.parent / "erp_data"
+    
+    # 1. BoMiljø
+    bomiljo_src = erp_dir / "BoMiljø.csv"
+    if bomiljo_src.exists():
+        with open(bomiljo_src, "r", encoding="utf-8-sig") as f:
+            r_bo = list(csv.DictReader(f))
+        
+        with open(erp_dir / "Visma_ERP_BoMiljo_Transactions_2026.csv", "w", encoding="utf-8", newline="") as f:
+            fields = ['dato', 'Måned_Nr', 'Måned', 'Tertial', 'Status', 'Avdeling', 'Tjenesteområde', 'KOSTRA_Funksjon', 'KOSTRA_Art', 'Kontokode', 'Kontonavn', 'Hovedgruppe', 'Undergruppe', 'Budsjett', 'Regnskap']
+            w = csv.DictWriter(f, fieldnames=fields)
+            w.writeheader()
+            for r in r_bo:
+                per = r.get("Periode", "2024-01").strip()
+                dt = f"{per}-01T00:00:00"
+                b = float(r.get("Budsjett", 0) or 0)
+                reg = float(r.get("Regnskap", 0) or 0)
+                w.writerow({
+                    'dato': dt,
+                    'Måned_Nr': r.get("Måned_Nr", "1"),
+                    'Måned': r.get("Måned", "Januar"),
+                    'Tertial': r.get("Tertial", "T1"),
+                    'Status': r.get("Status", "Bokført"),
+                    'Avdeling': r.get("Lokasjon", "Kommunal Boenhet"),
+                    'Tjenesteområde': r.get("Tjenesteområde", "Helse og mestring"),
+                    'KOSTRA_Funksjon': r.get("KOSTRA_Funksjon", "254"),
+                    'KOSTRA_Art': r.get("KOSTRA_Art", "1010"),
+                    'Kontokode': r.get("Kontokode", "101000"),
+                    'Kontonavn': r.get("Kontonavn", "Fastlønn"),
+                    'Hovedgruppe': r.get("Hovedgruppe", "1 Lønn"),
+                    'Undergruppe': r.get("Undergruppe", "10 Lønn"),
+                    'Budsjett': f"{b:.2f}",
+                    'Regnskap': f"{reg:.2f}"
+                })
+        print(f"✓ Visma_ERP_BoMiljo_Transactions_2026.csv sikret ({len(r_bo)} rader).")
+
+    # 2. Skole
+    skole_src = erp_dir / "Komskole.csv"
+    if skole_src.exists():
+        with open(skole_src, "r", encoding="latin1") as f:
+            lines = f.readlines()[2:]
+            r_skole = list(csv.DictReader(lines))
+        
+        with open(erp_dir / "Visma_ERP_General_Ledger_Transactions.csv", "w", encoding="utf-8", newline="") as f:
+            fields = ['dato', 'Måned_Nr', 'Måned', 'Tertial', 'Status', 'KOSTRA_Funksjon', 'KOSTRA_Art', 'Kontokode', 'Kontonavn', 'Hovedgruppe', 'Undergruppe', 'Budsjett', 'Regnskap', 'Avvik']
+            w = csv.DictWriter(f, fieldnames=fields)
+            w.writeheader()
+            for r in r_skole:
+                try:
+                    reg_raw = float(r.get('Regnskap hiå.', 0) or 0)
+                    bud_raw = float(r.get('Budsjett hiå.', 0) or 0)
+                except ValueError:
+                    reg_raw = 0.0
+                    bud_raw = 0.0
+                reg = reg_raw * 1000.0
+                bud = bud_raw * 1000.0
+                avv = reg - bud
+                w.writerow({
+                    'dato': '2026-08-01T00:00:00',
+                    'Måned_Nr': '8',
+                    'Måned': 'August',
+                    'Tertial': 'T2',
+                    'Status': 'Bokført',
+                    'KOSTRA_Funksjon': '202',
+                    'KOSTRA_Art': r.get('Art', '1010') or '1010',
+                    'Kontokode': r.get('Kontotype', '1010') or '1010',
+                    'Kontonavn': r.get('Post', 'Drift') or 'Drift',
+                    'Hovedgruppe': r.get('Kontotype', 'Lønn') or 'Lønn',
+                    'Undergruppe': r.get('Kontoklasse', 'Lønn') or 'Lønn',
+                    'Budsjett': f"{bud:.2f}",
+                    'Regnskap': f"{reg:.2f}",
+                    'Avvik': f"{avv:.2f}"
+                })
+        print(f"✓ Visma_ERP_General_Ledger_Transactions.csv sikret ({len(r_skole)} rader).")
 
 # ==============================================================================
 # 1. SEMANTIC MODEL (TMDL) DEFINISJONER
@@ -278,7 +356,7 @@ relationship AuditResponsibility
 \t\t\t\t        {"Status", type text}, {"KOSTRA_Funksjon", Int64.Type}, {"KOSTRA_Art", Int64.Type},
 \t\t\t\t        {"Kontokode", Int64.Type}, {"Kontonavn", type text}, {"Hovedgruppe", type text},
 \t\t\t\t        {"Undergruppe", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}
-\t\t\t\t    }),
+\t\t\t\t    }, "en-US"),
 \t\t\t\t    AddMerforbrukSkole = Table.AddColumn(TypeSkole, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
 \t\t\t\t    AddRespCodeSkole = Table.AddColumn(AddMerforbrukSkole, "ansvar_kode", each "2020", type text),
 \t\t\t\t    AddRespNameSkole = Table.AddColumn(AddRespCodeSkole, "ansvar_navn", each "Grunnskole Enhet 2020", type text),
@@ -298,7 +376,7 @@ relationship AuditResponsibility
 \t\t\t\t        {"KOSTRA_Funksjon", Int64.Type}, {"KOSTRA_Art", Int64.Type}, {"Kontokode", Int64.Type},
 \t\t\t\t        {"Kontonavn", type text}, {"Hovedgruppe", type text}, {"Undergruppe", type text},
 \t\t\t\t        {"Budsjett", type number}, {"Regnskap", type number}
-\t\t\t\t    }),
+\t\t\t\t    }, "en-US"),
 \t\t\t\t    AddAvvikBo = Table.AddColumn(TypeBo, "Avvik", each [Regnskap] - [Budsjett], type number),
 \t\t\t\t    AddMerforbrukBo = Table.AddColumn(AddAvvikBo, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
 \t\t\t\t    AddRespCodeBo = Table.AddColumn(AddMerforbrukBo, "ansvar_kode", each "2540", type text),
@@ -1501,6 +1579,7 @@ def build_report_pages():
 def main():
     print("Starter bygging av Power BI rapporteringsprosjekt...")
     setup_directories()
+    ensure_erp_csv_data()
     build_semantic_model()
     build_report_pages()
     print("\n✅ Power BI Rapporteringsprosjekt (pbi_reporting_project.pbip) er 100 % ferdigstilt!")
