@@ -1,0 +1,40 @@
+﻿AnsvarID;Navn;Tittel;Sektor;Enhetsnavn;Måned;Årsramme_NOK;YTD_Brukt_NOK;Disponibel_Saldo_NOK;Rest_Mnd;Mnd_Radighet_NOK;Status;Trafikklys
+6004-CTRL-KNUT;Knut Arild Vike;Sektorcontroller Byutvikling & Selvkost;BYUTVIKLING;Økonomitjenesten Byutvikling;Oktober;12000000.0;9466558.29;2533441.71;2;1266720.85;🟢 Saldo i balanse (God kontroll);GREEN
+6002-CTRL-MARIANNE;Marianne Tellefsen;Sektorcontroller Helse og Mestring;HELSE;Økonomitjenesten Helse;Oktober;12000000.0;9466558.29;2533441.71;2;1266720.85;🟢 Saldo i balanse (God kontroll);GREEN
+6001-CTRL-FRANK;Frank Ellingsen;Senior Financial Controller & Project Controller;KONSERN;Sentrale Økonomitjenester / Hub Koordinator;Oktober;12000000.0;9466558.29;2533441.71;2;1266720.85;🟢 Saldo i balanse (God kontroll);GREEN
+6005-CTRL-SILJE;Silje Mæland;Sektorcontroller Kultur, Dialog & Fellestjenester;KULTUR;Økonomitjenesten Kultur & Felles;Oktober;12000000.0;9466558.29;2533441.71;2;1266720.85;🟢 Saldo i balanse (God kontroll);GREEN
+6003-CTRL-ERIK;Erik Halvorsen;Sektorcontroller Oppvekst og Utdanning;OPPVEKST;Økonomitjenesten Oppvekst;Oktober;12000000.0;9466558.29;2533441.71;2;1266720.85;🟢 Saldo i balanse (God kontroll);GREEN
+3000-SJEF-BYUTV;Ragnar Evensen;Kommunalsjef By- og stedsutvikling;BYUTVIKLING;Kommunalsjefens stab Byutvikling;Oktober;620000000.0;495637760.97;124362239.03;2;62181119.51;🟢 Saldo i balanse (God kontroll);GREEN
+5000-SJEF-HELSE;Brede Skeie;Kommunalsjef Helse og mestring;HELSE;Kommunalsjefens fagstab Helse;Oktober;2680000000.0;2142434192.58;537565807.42;2;268782903.71;🟢 Saldo i balanse (God kontroll);GREEN
+0000-KOMMDIR;Camilla Dunsæd;Kommunedirektør;KONSERN;Kommunedirektørens stab;Oktober;7240000000.0;5787769982.94;1452230017.06;2;726115008.53;🟢 Saldo i balanse (God kontroll);GREEN
+2000-SJEF-KULTUR;Camilla Jarlsby;Kommunalsjef Kultur og innbyggerdialog;KULTUR;Kommunalsjefens stab Kultur;Oktober;290000000.0;231830565.62;58169434.38;2;29084717.19;🟢 Saldo i balanse (God kontroll);GREEN
+6000-DIR-OKONOMI;Terje Fjellvang;Økonomidirektør;OKONOMI;Sentral økonomistab;Oktober;1160000000.0;927322262.46;232677737.54;2;116338868.77;🟢 Saldo i balanse (God kontroll);GREEN
+4000-SJEF-OPPV;Kristin Eidet Robstad;Kommunalsjef Oppvekst og utdanning;OPPVEKST;Kommunalsjefens fagstab Oppvekst;Oktober;2150000000.0;1718743848.53;431256151.47;2;215628075.74;🟢 Saldo i balanse (God kontroll);GREEN
+1000-SJEF-ORGTEK;Geir A. Askvik;Kommunalsjef Organisasjon og teknologi;ORG_TEK;Kommunalsjefens stab Org & Tek;Oktober;340000000.0;271801352.79;68198647.21;2;34099323.6;🟢 Saldo i balanse (God kontroll);GREEN
+3100-DIR-VAR;Helge Møller;VA-sjef & Kommunalteknisk Direktør;BYUTVIKLING;Ingeniørvesenet (Vann, Avløp & Renovasjon);Oktober;95000000.0;75944495.63;19055504.37;2;9527752.18;🟢 Saldo i balanse (God kontroll);GREEN
+3200-DIR-PLAN;Einar Jørgensen;Områdeleder Byplan & Byggesak;BYUTVIKLING;Plan- og bygningsetaten;Oktober;95000000.0;75944495.63;19055504.37;2;9527752.18;🟢 Saldo i balanse (God kontroll);GREEN
+5100-OMR-SYKEHJEM;Mette Syvertsen;Områdeleder Institusjon & Døgnpleie;HELSE;Døgnomsorg og Sykehjem;Oktober;95000000.0;81899905.19;13100094.81;2;6550047.4;🔴 Fare for overtrekk (Merforbruk);RED
+5200-OMR-HJEMME;Arve Sætre;Områdeleder Hjemmebaserte Tjenester;HELSE;Hjemmetjenester og rehabilitering;Oktober;95000000.0;75944495.63;19055504.37;2;9527752.18;🟢 Saldo i balanse (God kontroll);GREEN
+6100-DIR-REGNSKAP;Bente Gundersen;Konsernregnskapssjef;OKONOMI;Konsernregnskap og Lønnssentral;Oktober;95000000.0;75944495.63;19055504.37;2;9527752.18;🟢 Saldo i balanse (God kontroll);GREEN
+4100-OMR-SKOLE;Svein Tore Kvernes;Skolesjef Grunnskole;OPPVEKST;Grunnskoleavdelingen (28 skoler);Oktober;95000000.0;75944495.63;19055504.37;2;9527752.18;🟢 Saldo i balanse (God kontroll);GREEN
+4200-OMR-BHG;Anne Lise Tønnessen;Barnehagesjef;OPPVEKST;Barnehageavdelingen (54 barnehager);Oktober;95000000.0;75944495.63;19055504.37;2;9527752.18;🟢 Saldo i balanse (God kontroll);GREEN
+1100-DIR-IKT;Siri Bentsen;IKT- og Digitaliseringsdirektør;ORG_TEK;Digitaliseringsavdelingen;Oktober;45200000.0;36133591.61;9066408.39;2;4533204.2;🟢 Saldo i balanse (God kontroll);GREEN
+3100-ENH-302;Inger Johanne Foss;Enhetsleder VAR Ingeniørvesen;BYUTVIKLING;Enhet 302: Vann, Avløp og Renovasjon;Oktober;68400000.0;53490956.76;14909043.24;2;7454521.62;🟢 Saldo i balanse (God kontroll);GREEN
+3300-ENH-301;Hans Petter Vik;Enhetsleder Byggesak & Tilsyn;BYUTVIKLING;Enhet 301: Byggesak og Tilsyn;Oktober;24150000.0;18542565.26;5607434.74;2;2803717.37;🟢 Saldo i balanse (God kontroll);GREEN
+5200-ENH-401;Solveig Grimstad;Enhetsleder Strai Sykehjem;HELSE;Enhet 401: Strai Sykehjem & Omsorgsboliger;Oktober;50339000.0;43397466.61;6941533.39;2;3470766.7;🔴 Fare for overtrekk (Merforbruk);RED
+5210-ENH-402;Berit Olsen;Enhetsleder Hjemmetjeneste Vågsbygd;HELSE;Enhet 402: Hjemmetjenesten Vågsbygd;Oktober;42800000.0;33764057.9;9035942.1;2;4517971.05;🟢 Saldo i balanse (God kontroll);GREEN
+5220-ENH-403;Christian Holte;Enhetsleder Bo- og Miljøtjenester;HELSE;Enhet 403: Sørlandsparken Bo- og Miljøtjeneste;Oktober;38600000.0;30450762.5;8149237.5;2;4074618.75;🟢 Saldo i balanse (God kontroll);GREEN
+5230-ENH-404;Kari Vesterhus;Enhetsleder Presteheia Omsorgssenter;HELSE;Enhet 404: Presteheia Omsorgssenter;Oktober;29400000.0;23193067.81;6206932.19;2;3103466.09;🟢 Saldo i balanse (God kontroll);GREEN
+2200-ENH-101;Hege Gabrielsen;Biblioteksjef;KULTUR;Enhet 101: Kristiansand Folkebibliotek;Oktober;22500000.0;17749796.79;4750203.21;2;2375101.6;🟢 Saldo i balanse (God kontroll);GREEN
+6200-ENH-601;Knut Ingebrigtsen;Finans- og Gjeldsforvalter;OKONOMI;Enhet 601: Finans- og Likviditetsforvaltning;Oktober;22500000.0;17749796.79;4750203.21;2;2375101.6;🟢 Saldo i balanse (God kontroll);GREEN
+4100-ENH-202;Trond Jensen;Rektor / Enhetsleder Lovisenlev Skole;OPPVEKST;Enhet 202: Lovisenlev Skole;Oktober;33591000.0;28569642.33;5021357.67;2;2510678.83;🔴 Fare for overtrekk (Merforbruk);RED
+4101-ENH-203;Mona Lindstrøm;Rektor Vågsbygd Skole;OPPVEKST;Enhet 203: Vågsbygd Skole;Oktober;31200000.0;26536061.47;4663938.53;2;2331969.27;🔴 Fare for overtrekk (Merforbruk);RED
+4102-ENH-204;Espen Birkeland;Rektor Grim Ungdomsskole;OPPVEKST;Enhet 204: Grim Ungdomsskole;Oktober;28900000.0;22798627.88;6101372.12;2;3050686.06;🟢 Saldo i balanse (God kontroll);GREEN
+4210-ENH-211;Grete Hovden;Styrer Lund Barnehage;OPPVEKST;Enhet 211: Lund Kommunale Barnehage;Oktober;18900000.0;14909829.31;3990170.69;2;1995085.35;🟢 Saldo i balanse (God kontroll);GREEN
+1110-ENH-501;Kenneth Dale;IKT Driftssjef;ORG_TEK;Enhet 501: IKT Drift & Brukerstøtte;Oktober;22500000.0;17749796.79;4750203.21;2;2375101.6;🟢 Saldo i balanse (God kontroll);GREEN
+3101-SEK-AVLOP;Vidar Aanensen;Seksjonsleder Lund Renseanlegg;BYUTVIKLING;VAR Ingeniørvesenet — Renseanlegg Lund;Oktober;12000000.0;9384378.38;2615621.62;2;1307810.81;🟢 Saldo i balanse (God kontroll);GREEN
+5201-SEK-DEMENS;Tone Røyseland;Avdelingsleder Demensavdelingen;HELSE;Strai Sykehjem — Avd. Demens;Oktober;12000000.0;10345251.18;1654748.82;2;827374.41;🔴 Fare for overtrekk (Merforbruk);RED
+5202-SEK-KORTTID;Lars Klev;Avdelingsleder Somatikk & Korttid;HELSE;Strai Sykehjem — Somatisk Korttidsavd.;Oktober;12000000.0;10345251.18;1654748.82;2;827374.41;🔴 Fare for overtrekk (Merforbruk);RED
+4103-SEK-SFO;Cathrine Solberg;Avdelingsleder SFO Lovisenlev;OPPVEKST;Lovisenlev Skole — Skolefritidsordning;Oktober;12000000.0;10206177.49;1793822.51;2;896911.26;🔴 Fare for overtrekk (Merforbruk);RED
+4104-SEK-INSP;Bjarne Wiig;Inspektør 1.–4. trinn;OPPVEKST;Lovisenlev Skole — Småtrinnet;Oktober;12000000.0;10206177.49;1793822.51;2;896911.26;🔴 Fare for overtrekk (Merforbruk);RED
+1111-SEK-FINOPS;Thomas Berge;Seksjonsleder Skyløsninger & FinOps;ORG_TEK;IKT Drift — Cloud & FinOps;Oktober;12000000.0;9466558.29;2533441.71;2;1266720.85;🟢 Saldo i balanse (God kontroll);GREEN

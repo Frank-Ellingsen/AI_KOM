@@ -411,6 +411,43 @@ def locate_hub_resource(resource_type: str = "powerbi", sector: str = "helse") -
             "action_token": "[NAV:doc:SAKSFREMLEGG:Forhåndsvis Saksfremlegg]",
             "description": "Formelt politisk saksfremlegg jf. Kommuneloven § 14-5 med bruttoprinsipp og revisjonsbevis."
         }
+    elif "konto" in res_type or "saldo" in res_type or "nettbank" in res_type:
+        if "skole" in sec or "202" in sec or "oppvekst" in sec or "trond" in sec:
+            return {
+                "resource_type": "kontoutskrift",
+                "sector": "Oppvekst og utdanning",
+                "page_num": 0,
+                "title": "Månedlig Kontoutskrift: Enhet 202 Lovisenlev Skole",
+                "file_path": "reports/kontoutskrifter/KONTOUTSKRIFT_4100_ENH_202_M10.html",
+                "spec_guide": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+                "unit": "Enhet 202 (Rektor Trond Jensen)",
+                "action_token": "[NAV:konto:4100-ENH-202_10:Åpne Kontoutskrift Lovisenlev Skole]",
+                "description": "Nettbank-kontoutskrift med disponibel saldo, månedens uttak og konkrete råd for ledere uten økonomibakgrunn."
+            }
+        elif "byggesak" in sec or "301" in sec or "byutvikling" in sec or "vik" in sec:
+            return {
+                "resource_type": "kontoutskrift",
+                "sector": "By- og stedsutvikling",
+                "page_num": 0,
+                "title": "Månedlig Kontoutskrift: Enhet 301 Byggesak og Tilsyn",
+                "file_path": "reports/kontoutskrifter/KONTOUTSKRIFT_3300_ENH_301_M10.html",
+                "spec_guide": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+                "unit": "Enhet 301 (Hans Petter Vik)",
+                "action_token": "[NAV:konto:3300-ENH-301_10:Åpne Kontoutskrift Byggesak]",
+                "description": "Nettbank-kontoutskrift med disponibel saldo, månedens uttak og gebyrinntekter."
+            }
+        else:
+            return {
+                "resource_type": "kontoutskrift",
+                "sector": "Helse og mestring",
+                "page_num": 0,
+                "title": "Månedlig Kontoutskrift: Enhet 401 Strai Sykehjem",
+                "file_path": "reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html",
+                "spec_guide": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+                "unit": "Enhet 401 (Solveig Grimstad)",
+                "action_token": "[NAV:konto:5200-ENH-401_10:Åpne Kontoutskrift Strai Sykehjem]",
+                "description": "Nettbank-kontoutskrift med disponibel saldo, månedens uttak og pedagogiske råd mot vikarmerforbruk."
+            }
     return {
         "resource_type": "general",
         "sector": "Konsern",
@@ -437,6 +474,46 @@ def execute_gemini_mcp_query(prompt: str, model_name: str = "gemini-3.8-flash") 
     q_low = clean_prompt.lower()
     now = datetime.datetime.now().isoformat()
     tools_called = []
+
+    # Sjekk om spørsmålet er kontoutskrift / saldo ("hva er saldoen", "kontoutskrift for...", etc.)
+    is_konto = any(k in q_low for k in ["kontoutskrift", "saldo", "budsjettkonto", "nettbank", "hvor mye penger", "rådighetsbeløp", "økonomiråd"])
+    if is_konto:
+        res_info = locate_hub_resource(resource_type="kontoutskrift", sector=q_low)
+        tools_called.append(f"locate_hub_resource(resource='kontoutskrift', sector='{res_info['sector']}')")
+        
+        response_text = f"""### 🏦 {res_info['title']}
+
+Hei Frank! Månedlig kontoutskrift og disponibel saldo for **{res_info['unit']}** finner du i modulen **Kommunal Nettbank for Budsjettansvarlige** i Huben, samt i filen `{res_info['file_path']}`.
+
+**Nøkkeltall & Status:**
+• **Sektor / Enhet:** {res_info['sector']} ({res_info['unit']})
+• **Beskrivelse:** {res_info['description']}
+• **Formål:** Gi ledere uten økonomiutdanning enkel oversikt over disponibel saldo og månedlig rådighetsbeløp ut året jf. **Kommuneloven § 14-5**.
+
+---
+
+### 🚀 Direkte Handlinger:
+{res_info['action_token']}
+[DOWNLOAD:{res_info['file_path']}:Last ned A4 Kontoutskrift (PDF)]
+[DOWNLOAD:reports/kontoutskrifter/KONTOUTSKRIFT_ALLE_ENHETER_M10.csv:Last ned M10 Excel / CSV]
+
+---
+
+### ⚡ Anbefalte oppfølgingsspørsmål:
+[CHIP:Hva er saldoen for Lovisenlev skole?:🏫 Kontoutskrift Lovisenlev Skole]
+[CHIP:Vis kontoutskrift for Byggesak og tilsyn:🏗️ Kontoutskrift Byggesak]
+[CHIP:Hvilke råd gjelder ved høyt vikarforbruk?:💡 Økonomiråd mot vikarbruk]"""
+
+        hash_payload = f"{now}|Frank Ellingsen|{clean_prompt}|{response_text}"
+        audit_hash = hashlib.sha256(hash_payload.encode("utf-8")).hexdigest()
+
+        return {
+            "ok": True,
+            "text": response_text,
+            "audit_hash": audit_hash,
+            "tools_called": tools_called,
+            "data": res_info
+        }
 
     # Sjekk om spørsmålet er navigasjon eller ressurssøk ("hvor finner jeg...", "power bi rapport", etc.)
     is_pbi = any(k in q_low for k in ["power bi", "powerbi", "pbi", "pbip", "rapportside", "dashboard"])

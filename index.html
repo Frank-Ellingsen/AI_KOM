@@ -3240,7 +3240,273 @@
             color: var(--text-secondary);
         }
 
-</style>
+
+        /* ==========================================================================
+           KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT (EDWARD TUFTE STYLE)
+           ========================================================================== */
+        .bank-wrapper {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 14px;
+        }
+        .bank-controls-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 18px;
+        }
+        .bank-controls-left {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        .bank-controls-right {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+        .bank-select-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #64748b;
+            letter-spacing: 0.5px;
+        }
+        .bank-unit-select {
+            height: 34px;
+            padding: 4px 10px;
+            font-size: 12.5px;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            background: #ffffff;
+            color: #0f172a;
+            cursor: pointer;
+            outline: none;
+            max-width: 380px;
+        }
+        .bank-unit-select:focus {
+            border-color: #1b365d;
+            box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.15);
+        }
+        .bank-month-pills {
+            display: flex;
+            gap: 3px;
+            background: #f1f5f9;
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        .bank-month-pill {
+            padding: 4px 9px;
+            font-size: 11px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #475569;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.12s ease;
+        }
+        .bank-month-pill:hover {
+            color: #0f172a;
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .bank-month-pill.active {
+            background: #1b365d;
+            color: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .bank-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 24px;
+            position: relative;
+        }
+        .bank-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #1b365d;
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+        }
+        .bank-brand-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #1b365d;
+            letter-spacing: -0.2px;
+        }
+        .bank-brand-sub {
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            font-weight: 700;
+        }
+        .bank-statement-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            text-align: right;
+        }
+        .bank-statement-meta {
+            font-size: 11px;
+            color: #64748b;
+            text-align: right;
+            margin-top: 2px;
+        }
+        .bank-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .bank-kpi-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px 14px;
+            border-radius: 4px;
+        }
+        .bank-kpi-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            font-weight: 700;
+        }
+        .bank-kpi-num {
+            font-size: 18px;
+            font-weight: 800;
+            font-family: 'Segoe UI', monospace;
+            margin-top: 2px;
+            color: #0f172a;
+        }
+        .bank-kpi-sub {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .bank-saldo-box {
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #cbd5e1;
+        }
+        .bank-saldo-box.red {
+            background: #fdf2f2;
+            border-color: #fecaca;
+        }
+        .bank-saldo-box.amber {
+            background: #fef3c7;
+            border-color: #fde68a;
+        }
+        .bank-saldo-box.green {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+        .bank-saldo-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .bank-saldo-box.red .bank-saldo-label { color: #c0392b; }
+        .bank-saldo-box.amber .bank-saldo-label { color: #d97706; }
+        .bank-saldo-box.green .bank-saldo-label { color: #15803d; }
+
+        .bank-saldo-amount {
+            font-size: 23px;
+            font-weight: 800;
+            font-family: 'Segoe UI', monospace;
+        }
+        .bank-saldo-box.red .bank-saldo-amount { color: #c0392b; }
+        .bank-saldo-box.amber .bank-saldo-amount { color: #d97706; }
+        .bank-saldo-box.green .bank-saldo-amount { color: #15803d; }
+
+        .bank-speed-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+        }
+        .bank-speed-progress-wrap {
+            flex: 1;
+            max-width: 280px;
+            margin: 0 16px;
+        }
+        .bank-speed-bar {
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .bank-speed-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        table.bank-trans-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table.bank-trans-table th {
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            padding: 7px 8px;
+            text-align: left;
+            border-bottom: 1.5px solid #cbd5e1;
+        }
+        table.bank-trans-table th.num { text-align: right; }
+        table.bank-trans-table td {
+            padding: 7px 8px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 11.5px;
+        }
+        table.bank-trans-table td.num {
+            text-align: right;
+            font-family: 'Segoe UI', monospace;
+        }
+        .bank-advice-box {
+            background: #f8fafc;
+            border-left: 4px solid #1b365d;
+            padding: 16px 18px;
+            border-radius: 0 4px 4px 0;
+            margin-top: 16px;
+        }
+        .bank-advice-title {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #1b365d;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+    </style>
 </head>
 <body>
 <div class="hub-container">
@@ -3546,6 +3812,7 @@
                 <span class="status-badge" id="vdb-badge-header">Vektor-DB: 3 509 biter (43 dok)</span> | 
                 <span class="status-badge">Port 4 & 9 Aktiv</span> | 
                 Motor: <strong id="active-engine-label">Gemini 3.8 Flash (0 % CPU)</strong>
+                <button class="btn btn-secondary btn-sm" onclick="navigateToSection('nettbank-kontoutskrift-seksjon', '🏦 Åpner Kommunal Nettbank & Månedlig Kontoutskrift')" style="font-size:11px; padding:2px 8px; margin-left:6px;" title="Se månedlig kontoutskrift, saldo og økonomiråd for enhetsledere">🏦 Månedlig Kontoutskrift</button>
                 <button class="btn btn-primary btn-sm" onclick="toggleChatDrawer()" style="font-size:11px; padding:2px 8px; margin-left:6px; background:#0056b3; border-color:#0056b3;" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl+Space)">💬 Spør AI-Chatbot</button>
             </div>
         </div>
@@ -3940,6 +4207,96 @@
         </div>
 
     </section>
+
+
+    <!-- =======================================================================
+         3C. KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT FOR BUDSJETTANSVARLIGE
+         Oversiktlig bankoppsett med saldo, uttak og økonomiråd for ikke-økonomer
+         ======================================================================= -->
+    <section class="workflow-section" id="nettbank-kontoutskrift-seksjon" style="margin-bottom: 24px;">
+        <div class="section-header">
+            <span>🏦 Kommunal Nettbank & Månedlig Kontoutskrift for Budsjettansvarlige</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Fast Månedsoppsett (M01–M12) | § 14-5 Klarspråk</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+            Spesialtilpasset virksomhetsledere, rektorer, avdelingsledere og styrere uten økonomibakgrunn. 
+            Rapporten fungerer som en <strong>nettbank</strong>: Kontonummer, tildelt årsramme (startkreditt), månedens faktiske uttak og innbetalinger, 
+            <strong>disponibel saldo for resten av året</strong>, samt konkrete leder-råd for å overholde budsjettbalansen jf. <strong>Kommuneloven § 14-5</strong>.
+        </p>
+
+        <div class="bank-wrapper">
+            <!-- Kontrollpanel: Enhetsvelger & Månedsvelger (M01–M12) -->
+            <div class="bank-controls-bar">
+                <div class="bank-controls-left">
+                    <span class="bank-select-label">Budsjettkonto:</span>
+                    <select class="bank-unit-select" id="bank-unit-dropdown" onchange="onBankUnitChange(this.value)">
+                        <optgroup label="🏥 Helse og mestring">
+                            <option value="5200-ENH-401" selected>Enhet 401: Strai Sykehjem (Solveig Grimstad)</option>
+                            <option value="5210-ENH-402">Enhet 402: Hjemmetjenesten Vågsbygd (Berit Olsen)</option>
+                            <option value="5220-ENH-403">Enhet 403: Sørlandsparken Bo & Miljø (Christian Holte)</option>
+                            <option value="5230-ENH-404">Enhet 404: Presteheia Omsorgssenter (Kari Vesterhus)</option>
+                            <option value="5100-OMR-SYKEHJEM">Område Døgnomsorg & Sykehjem (Mette Syvertsen)</option>
+                            <option value="5000-SJEF-HELSE">Kommunalsjef Helse og mestring (Brede Skeie)</option>
+                        </optgroup>
+                        <optgroup label="🎓 Oppvekst og utdanning">
+                            <option value="4100-ENH-202">Enhet 202: Lovisenlev Skole (Trond Jensen)</option>
+                            <option value="4101-ENH-203">Enhet 203: Vågsbygd Skole (Mona Lindstrøm)</option>
+                            <option value="4102-ENH-204">Enhet 204: Grim Ungdomsskole (Espen Birkeland)</option>
+                            <option value="4210-ENH-211">Enhet 211: Lund Kommunale Barnehage (Grete Hovden)</option>
+                            <option value="4100-OMR-SKOLE">Grunnskoleavdelingen (Svein Tore Kvernes)</option>
+                            <option value="4000-SJEF-OPPV">Kommunalsjef Oppvekst (Kristin Eidet Robstad)</option>
+                        </optgroup>
+                        <optgroup label="🏗️ By- og stedsutvikling">
+                            <option value="3300-ENH-301">Enhet 301: Byggesak og Tilsyn (Hans Petter Vik)</option>
+                            <option value="3100-DIR-VAR">Ingeniørvesenet VAR Selvkost (Helge Møller)</option>
+                            <option value="3000-SJEF-BYUTV">Kommunalsjef Byutvikling (Ragnar Evensen)</option>
+                        </optgroup>
+                        <optgroup label="🎭 Kultur og innbyggerdialog">
+                            <option value="2100-ENH-501">Enhet 501: Kultur & Bibliotek (Camilla Jarlsby)</option>
+                            <option value="2000-SJEF-KULTUR">Kommunalsjef Kultur (Camilla Jarlsby)</option>
+                        </optgroup>
+                        <optgroup label="💻 Organisasjon og teknologi">
+                            <option value="1100-DIR-IKT">Digitaliseringsavdelingen (Siri Bentsen)</option>
+                            <option value="1000-SJEF-ORGTEK">Kommunalsjef Org & Tek (Geir Askvik)</option>
+                        </optgroup>
+                        <optgroup label="🏛️ Konsern og toppledelse">
+                            <option value="0000-KOMMDIR">Kommunedirektørens stab (Camilla Dunsæd)</option>
+                            <option value="6000-DIR-OKONOMI">Sentral økonomistab (Terje Fjellvang)</option>
+                        </optgroup>
+                    </select>
+
+                    <div class="bank-month-pills" id="bank-month-pills-bar">
+                        <!-- M01 til M12 knapper genereres dynamisk -->
+                    </div>
+                </div>
+
+                <div class="bank-controls-right">
+                    <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
+                        🖨️ Skriv ut / PDF
+                    </button>
+                    <button class="btn btn-sm btn-secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned transaksjoner som Excel/CSV">
+                        📊 Last ned CSV
+                    </button>
+                    <a class="btn btn-sm btn-secondary" id="bank-direct-html-btn" href="reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html" target="_blank" title="Åpne ren A4 bankutskrift i fullskjerm">
+                        📄 Åpne A4
+                    </a>
+                    <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
+                        💬 Spør Controller
+                    </button>
+                </div>
+            </div>
+
+            <!-- Aktiv Kontoutskrift Hovedkort -->
+            <div class="bank-card" id="bank-statement-main-card">
+                <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                    Laster kontoutskrift og saldo...
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
 
 
 
@@ -9045,6 +9402,708 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             if (toastMsg) showToast(toastMsg);
         }
 
+        
+        // ==========================================================================
+        // 3C. KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT MOTOR
+        // ==========================================================================
+        let currentKontoUnit = "5200-ENH-401";
+        let currentKontoMonth = 10;
+
+        const KONTO_MONTH_NAMES = [
+            "Januar", "Februar", "Mars", "April", "Mai", "Juni",
+            "Juli", "August", "September", "Oktober", "November", "Desember"
+        ];
+        const KONTO_MONTH_SHORT = [
+            "Jan", "Feb", "Mar", "Apr", "Mai", "Jun",
+            "Jul", "Aug", "Sep", "Okt", "Nov", "Des"
+        ];
+        const KONTO_SEASON_WEIGHTS = [
+            0.080, 0.078, 0.082, 0.081, 0.084, 0.115, 0.065, 0.083, 0.088, 0.089, 0.087, 0.068
+        ];
+        const totalW = KONTO_SEASON_WEIGHTS.reduce((a, b) => a + b, 0);
+        const KONTO_NORM_WEIGHTS = KONTO_SEASON_WEIGHTS.map(w => w / totalW);
+
+        const KONTO_UNITS_REGISTRY = {
+            "5200-ENH-401": {
+                ansvar_id: "5200-ENH-401",
+                navn: "Solveig Grimstad",
+                tittel: "Enhetsleder Strai Sykehjem",
+                sektor_kode: "HELSE",
+                sektor_navn: "Helse og mestring",
+                enhet_navn: "Enhet 401: Strai Sykehjem & Omsorgsboliger",
+                kostra_funksjon: "254 Kommunal Boenhet og Sykehjem",
+                annual_budget: 50339000,
+                variance_factor: 1.164,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_5200_ENH_401_M10.html"
+            },
+            "4100-ENH-202": {
+                ansvar_id: "4100-ENH-202",
+                navn: "Trond Jensen",
+                tittel: "Rektor Lovisenlev Skole",
+                sektor_kode: "OPPVEKST",
+                sektor_navn: "Oppvekst og utdanning",
+                enhet_navn: "Enhet 202: Lovisenlev Skole",
+                kostra_funksjon: "202 Grunnskole 1.–7. trinn",
+                annual_budget: 33591000,
+                variance_factor: 1.142,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_4100_ENH_202_M10.html"
+            },
+            "3300-ENH-301": {
+                ansvar_id: "3300-ENH-301",
+                navn: "Hans Petter Vik",
+                tittel: "Enhetsleder Byggesak & Tilsyn",
+                sektor_kode: "BYUTVIKLING",
+                sektor_navn: "By- og stedsutvikling",
+                enhet_navn: "Enhet 301: Byggesak og Tilsyn",
+                kostra_funksjon: "301 Plan og byggesak selvkost",
+                annual_budget: 24150000,
+                variance_factor: 0.985,
+                controller_navn: "Knut Arild Vike",
+                controller_epost: "knut.arild.vike@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_3300_ENH_301_M10.html"
+            },
+            "5210-ENH-402": {
+                ansvar_id: "5210-ENH-402",
+                navn: "Berit Olsen",
+                tittel: "Enhetsleder Hjemmetjeneste Vågsbygd",
+                sektor_kode: "HELSE",
+                sektor_navn: "Helse og mestring",
+                enhet_navn: "Enhet 402: Hjemmetjenesten Vågsbygd",
+                kostra_funksjon: "253 Pleie og omsorg i hjemmet",
+                annual_budget: 42800000,
+                variance_factor: 1.125,
+                controller_navn: "Marianne Tellefsen",
+                controller_epost: "marianne.tellefsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_5210_ENH_402_M10.html"
+            },
+            "5220-ENH-403": {
+                ansvar_id: "5220-ENH-403",
+                navn: "Christian Holte",
+                tittel: "Enhetsleder Bo- og Miljøtjenester",
+                sektor_kode: "HELSE",
+                sektor_navn: "Helse og mestring",
+                enhet_navn: "Enhet 403: Sørlandsparken Bo- og Miljø",
+                kostra_funksjon: "254 Heldøgns omsorgsbolig",
+                annual_budget: 38600000,
+                variance_factor: 1.155,
+                controller_navn: "Marianne Tellefsen",
+                controller_epost: "marianne.tellefsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_5200_ENH_401_M10.html"
+            },
+            "5230-ENH-404": {
+                ansvar_id: "5230-ENH-404",
+                navn: "Kari Vesterhus",
+                tittel: "Enhetsleder Presteheia Omsorgssenter",
+                sektor_kode: "HELSE",
+                sektor_navn: "Helse og mestring",
+                enhet_navn: "Enhet 404: Presteheia Omsorgssenter",
+                kostra_funksjon: "254 Sykehjem korttidsplasser",
+                annual_budget: 29400000,
+                variance_factor: 1.118,
+                controller_navn: "Marianne Tellefsen",
+                controller_epost: "marianne.tellefsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_5200_ENH_401_M10.html"
+            },
+            "5100-OMR-SYKEHJEM": {
+                ansvar_id: "5100-OMR-SYKEHJEM",
+                navn: "Mette Syvertsen",
+                tittel: "Områdeleder Døgnomsorg & Sykehjem",
+                sektor_kode: "HELSE",
+                sektor_navn: "Helse og mestring",
+                enhet_navn: "Område Døgnomsorg & Sykehjem",
+                kostra_funksjon: "254 Kommunale sykehjem",
+                annual_budget: 450000000,
+                variance_factor: 1.135,
+                controller_navn: "Marianne Tellefsen",
+                controller_epost: "marianne.tellefsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_5200_ENH_401_M10.html"
+            },
+            "5000-SJEF-HELSE": {
+                ansvar_id: "5000-SJEF-HELSE",
+                navn: "Brede Skeie",
+                tittel: "Kommunalsjef Helse og mestring",
+                sektor_kode: "HELSE",
+                sektor_navn: "Helse og mestring",
+                enhet_navn: "Helse og mestring (Alle enheter)",
+                kostra_funksjon: "241/253/254 Helse og omsorg",
+                annual_budget: 2680000000,
+                variance_factor: 1.125,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_5200_ENH_401_M10.html"
+            },
+            "4101-ENH-203": {
+                ansvar_id: "4101-ENH-203",
+                navn: "Mona Lindstrøm",
+                tittel: "Rektor Vågsbygd Skole",
+                sektor_kode: "OPPVEKST",
+                sektor_navn: "Oppvekst og utdanning",
+                enhet_navn: "Enhet 203: Vågsbygd Skole",
+                kostra_funksjon: "202 Grunnskole",
+                annual_budget: 31200000,
+                variance_factor: 1.095,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_4100_ENH_202_M10.html"
+            },
+            "4102-ENH-204": {
+                ansvar_id: "4102-ENH-204",
+                navn: "Espen Birkeland",
+                tittel: "Rektor Grim Ungdomsskole",
+                sektor_kode: "OPPVEKST",
+                sektor_navn: "Oppvekst og utdanning",
+                enhet_navn: "Enhet 204: Grim Ungdomsskole",
+                kostra_funksjon: "202 Grunnskole 8.–10. trinn",
+                annual_budget: 28900000,
+                variance_factor: 1.065,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_4100_ENH_202_M10.html"
+            },
+            "4210-ENH-211": {
+                ansvar_id: "4210-ENH-211",
+                navn: "Grete Hovden",
+                tittel: "Styrer Lund Kommunale Barnehage",
+                sektor_kode: "OPPVEKST",
+                sektor_navn: "Oppvekst og utdanning",
+                enhet_navn: "Enhet 211: Lund Kommunale Barnehage",
+                kostra_funksjon: "211 Barnehagedrift",
+                annual_budget: 18900000,
+                variance_factor: 1.085,
+                controller_navn: "Erik Halvorsen",
+                controller_epost: "erik.halvorsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_4210_ENH_211_M10.html"
+            },
+            "4100-OMR-SKOLE": {
+                ansvar_id: "4100-OMR-SKOLE",
+                navn: "Svein Tore Kvernes",
+                tittel: "Skolesjef Grunnskole",
+                sektor_kode: "OPPVEKST",
+                sektor_navn: "Oppvekst og utdanning",
+                enhet_navn: "Grunnskoleavdelingen (28 skoler)",
+                kostra_funksjon: "202 Grunnskoleopplæring",
+                annual_budget: 850000000,
+                variance_factor: 1.085,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_4100_ENH_202_M10.html"
+            },
+            "4000-SJEF-OPPV": {
+                ansvar_id: "4000-SJEF-OPPV",
+                navn: "Kristin Eidet Robstad",
+                tittel: "Kommunalsjef Oppvekst og utdanning",
+                sektor_kode: "OPPVEKST",
+                sektor_navn: "Oppvekst og utdanning",
+                enhet_navn: "Oppvekst og utdanning (Alle enheter)",
+                kostra_funksjon: "202/211 Grunnskole og barnehage",
+                annual_budget: 2150000000,
+                variance_factor: 1.075,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_4100_ENH_202_M10.html"
+            },
+            "3100-DIR-VAR": {
+                ansvar_id: "3100-DIR-VAR",
+                navn: "Helge Møller",
+                tittel: "VA-sjef & Kommunalteknisk Direktør",
+                sektor_kode: "BYUTVIKLING",
+                sektor_navn: "By- og stedsutvikling",
+                enhet_navn: "Ingeniørvesenet (Vann, Avløp & Renovasjon)",
+                kostra_funksjon: "340/345 Vann og avløp selvkost",
+                annual_budget: 68400000,
+                variance_factor: 1.012,
+                controller_navn: "Knut Arild Vike",
+                controller_epost: "knut.arild.vike@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_3100_DIR_VAR_M10.html"
+            },
+            "3000-SJEF-BYUTV": {
+                ansvar_id: "3000-SJEF-BYUTV",
+                navn: "Ragnar Evensen",
+                tittel: "Kommunalsjef By- og stedsutvikling",
+                sektor_kode: "BYUTVIKLING",
+                sektor_navn: "By- og stedsutvikling",
+                enhet_navn: "By- og stedsutvikling",
+                kostra_funksjon: "301/340/345 Plan, VAR og samferdsel",
+                annual_budget: 620000000,
+                variance_factor: 1.008,
+                controller_navn: "Knut Arild Vike",
+                controller_epost: "knut.arild.vike@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_3300_ENH_301_M10.html"
+            },
+            "2100-ENH-501": {
+                ansvar_id: "2100-ENH-501",
+                navn: "Camilla Jarlsby",
+                tittel: "Enhetsleder Kultur & Bibliotek",
+                sektor_kode: "KULTUR",
+                sektor_navn: "Kultur og innbyggerdialog",
+                enhet_navn: "Enhet 501: Kultur & Bibliotek",
+                kostra_funksjon: "380/383 Idrett og bibliotek",
+                annual_budget: 28300000,
+                variance_factor: 0.995,
+                controller_navn: "Silje Mæland",
+                controller_epost: "okonomi.kultur@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_2000_SJEF_KULTUR_M10.html"
+            },
+            "2000-SJEF-KULTUR": {
+                ansvar_id: "2000-SJEF-KULTUR",
+                navn: "Camilla Jarlsby",
+                tittel: "Kommunalsjef Kultur og innbyggerdialog",
+                sektor_kode: "KULTUR",
+                sektor_navn: "Kultur og innbyggerdialog",
+                enhet_navn: "Kultur og innbyggerdialog",
+                kostra_funksjon: "380/383/385 Idrett, bibliotek og kulturhus",
+                annual_budget: 290000000,
+                variance_factor: 0.992,
+                controller_navn: "Silje Mæland",
+                controller_epost: "okonomi.kultur@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_2000_SJEF_KULTUR_M10.html"
+            },
+            "1100-DIR-IKT": {
+                ansvar_id: "1100-DIR-IKT",
+                navn: "Siri Bentsen",
+                tittel: "IKT- og Digitaliseringsdirektør",
+                sektor_kode: "ORG_TEK",
+                sektor_navn: "Organisasjon og teknologi",
+                enhet_navn: "Digitaliseringsavdelingen",
+                kostra_funksjon: "130 IKT og fellesløsninger",
+                annual_budget: 45200000,
+                variance_factor: 1.035,
+                controller_navn: "Silje Mæland / Frank Ellingsen",
+                controller_epost: "okonomi.orgtek@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_1100_DIR_IKT_M10.html"
+            },
+            "1000-SJEF-ORGTEK": {
+                ansvar_id: "1000-SJEF-ORGTEK",
+                navn: "Geir A. Askvik",
+                tittel: "Kommunalsjef Organisasjon og teknologi",
+                sektor_kode: "ORG_TEK",
+                sektor_navn: "Organisasjon og teknologi",
+                enhet_navn: "Organisasjon og teknologi",
+                kostra_funksjon: "120/130 IKT og fellestjenester",
+                annual_budget: 340000000,
+                variance_factor: 1.025,
+                controller_navn: "Silje Mæland / Frank Ellingsen",
+                controller_epost: "okonomi.orgtek@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_1100_DIR_IKT_M10.html"
+            },
+            "0000-KOMMDIR": {
+                ansvar_id: "0000-KOMMDIR",
+                navn: "Camilla Dunsæd",
+                tittel: "Kommunedirektør",
+                sektor_kode: "KONSERN",
+                sektor_navn: "Konsernledelsen / Bystyret",
+                enhet_navn: "Kommunedirektørens stab",
+                kostra_funksjon: "100 Politisk styring og konsernledelse",
+                annual_budget: 7240000000,
+                variance_factor: 1.032,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_0000_KOMMDIR_M10.html"
+            },
+            "6000-DIR-OKONOMI": {
+                ansvar_id: "6000-DIR-OKONOMI",
+                navn: "Terje Fjellvang",
+                tittel: "Økonomidirektør",
+                sektor_kode: "OKONOMI",
+                sektor_navn: "Økonomi og virksomhetsstyring",
+                enhet_navn: "Sentral økonomistab",
+                kostra_funksjon: "170/180 Finansforvaltning",
+                annual_budget: 1160000000,
+                variance_factor: 1.015,
+                controller_navn: "Frank Ellingsen",
+                controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                clean_html_file: "KONTOUTSKRIFT_0000_KOMMDIR_M10.html"
+            }
+        };
+
+        function formatNok(num) {
+            if (num === null || num === undefined || isNaN(num)) return "0 kr";
+            return Math.round(num).toLocaleString('nb-NO', { maximumFractionDigits: 0 }) + " kr";
+        }
+
+        function calculateBankStatementClient(unitId, monthNum) {
+            const u = KONTO_UNITS_REGISTRY[unitId] || KONTO_UNITS_REGISTRY["5200-ENH-401"];
+            const m = Math.max(1, Math.min(12, monthNum || 10));
+            const annualBudget = u.annual_budget;
+            const varFactor = u.variance_factor || 1.0;
+
+            let ytdBudget = 0;
+            let ytdActualExp = 0;
+            let ytdActualInc = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const w = KONTO_NORM_WEIGHTS[i - 1];
+                const mBud = annualBudget * w;
+                const mDrift = 1.0 + (varFactor - 1.0) * (0.4 + 0.6 * (i / 12.0));
+                const mExp = mBud * mDrift;
+                const mInc = mExp * 0.082;
+
+                if (i <= m) {
+                    ytdBudget += mBud;
+                    ytdActualExp += mExp;
+                    ytdActualInc += mInc;
+                }
+            }
+
+            const curW = KONTO_NORM_WEIGHTS[m - 1];
+            const curBud = annualBudget * curW;
+            const curDrift = 1.0 + (varFactor - 1.0) * (0.4 + 0.6 * (m / 12.0));
+            const curExp = curBud * curDrift;
+            const curInc = curExp * 0.082;
+            const curNet = curExp - curInc;
+
+            const netYtdSpent = ytdActualExp - ytdActualInc;
+            const availableBalance = annualBudget - netYtdSpent;
+            const remainingMonths = Math.max(1, 12 - m);
+            const monthlyAllowance = availableBalance / remainingMonths;
+
+            const burnRatio = curNet / Math.max(1, monthlyAllowance);
+            const projectedYearEndBal = availableBalance - (curNet * remainingMonths);
+
+            let trafficLight = "green";
+            let statusLabel = "🟢 Saldo i balanse (God kontroll)";
+            let statusSub = "Du holder deg innenfor din månedlige forbrukskvote.";
+
+            if (projectedYearEndBal < -500000 || burnRatio > 1.15) {
+                trafficLight = "red";
+                statusLabel = "🔴 Fare for overtrekk (Merforbruk)";
+                statusSub = `Du bruker kr ${Math.round(curNet).toLocaleString('nb-NO')}/mnd, men har kun råd til kr ${Math.round(monthlyAllowance).toLocaleString('nb-NO')}.`;
+            } else if (projectedYearEndBal < 0 || burnRatio > 1.00) {
+                trafficLight = "amber";
+                statusLabel = "🟡 Observasjon (Saldoen minker for fort)";
+                statusSub = "Du ligger tett opp mot budsjettgrensen. Vær varsom med vikarbruk.";
+            }
+
+            // Pedagogiske råd
+            let adviceMeaning = "";
+            let adviceCause = "";
+            let adviceActions = [];
+            let adviceAvoid = "";
+
+            if (trafficLight === "red") {
+                adviceMeaning = `Du har brukt kr ${Math.round(netYtdSpent).toLocaleString('nb-NO')} av din tildelte årsramme på kr ${Math.round(annualBudget).toLocaleString('nb-NO')}. Det betyr at du kun har kr ${Math.round(availableBalance).toLocaleString('nb-NO')} igjen til å drifte enheten i de resterende ${remainingMonths} månedene. Fortsetter du med samme forbruk som i ${KONTO_MONTH_NAMES[m-1]}, går kontoen tom før nyttår!`;
+                adviceCause = `Hovedårsaken er høye utgifter til vikarer og ekstrahjelp ved sykefravær (ca. 19 % av totalbeløpet), samt forsinket innsending av refusjonskrav til NAV.`;
+                adviceActions = [
+                    "Innfør ledergodkjenning på alle vikarvakter: Vurder om oppgaver kan omfordeles blant fast personell før ekstern vikar ringes inn.",
+                    "Gå gjennom sykelønnsrefusjoner i GAT: Sørg for at alle sykemeldinger fra dag 17 er oversendt NAV for godskriving på kontoen.",
+                    "Stillingsfrys på ikke-kritiske poster: Avvent utlysning av ledige stillinger til bemanningsbehovet er avstemt med din controller."
+                ];
+                adviceAvoid = "Unngå å bestille overtid eller ekstra byråvikarer uten skriftlig forhåndsavklaring med kommunalsjefen.";
+            } else if (trafficLight === "amber") {
+                adviceMeaning = `Kontoen din har kr ${Math.round(availableBalance).toLocaleString('nb-NO')} i disponibel saldo. Dette gir deg et månedlig rådighetsbeløp på kr ${Math.round(monthlyAllowance).toLocaleString('nb-NO')} per måned ut året. Du balanserer helt på kanten av budsjettrammen.`;
+                adviceCause = `Små overskridelser på varekjøp og noe forhøyet vikarbruk spiser av bufferne dine.`;
+                adviceActions = [
+                    "Sjekk fraværsstatistikken for forrige måned og avstem mot turnusplanen.",
+                    "Påse at alle fakturaer for varekjøp konteres på riktig konto innen forfallsdato.",
+                    "Ta en 15-minutters avstemmingsprat med controller Frank Ellingsen for å planlegge neste måned."
+                ];
+                adviceAvoid = "Unngå å akkumulere ubehandlede refusjonskrav mot NAV over månedsskiftet.";
+            } else {
+                adviceMeaning = `Svært god økonomistyring! Du har kr ${Math.round(availableBalance).toLocaleString('nb-NO')} igjen på kontoen. Ditt forbruk i ${KONTO_MONTH_NAMES[m-1]} var på kr ${Math.round(curNet).toLocaleString('nb-NO')}, som er godt under tillatt månedskvote på kr ${Math.round(monthlyAllowance).toLocaleString('nb-NO')}.`;
+                adviceCause = `Stabil grunnbemanning, lavt sykefravær og god innkjøpsdisiplin gir overskudd.`;
+                adviceActions = [
+                    "Fortsett den gode turnusdisiplinen.",
+                    "Følg opp at periodiske refusjoner fra stat/fylke inntektsføres fortløpende.",
+                    "Dokumenter eventuelt mindreforbruk som buffer til uforutsette hendelser mot årsslutt."
+                ];
+                adviceAvoid = "Ikke slipp opp på godkjenning av innkjøp selv om saldoen p.t. er god.";
+            }
+
+            // Transaksjoner
+            const salFixed = curExp * 0.64;
+            const salTemp = curExp * 0.19;
+            const salOver = curExp * 0.05;
+            const goods = curExp * 0.08;
+            const rent = curExp * 0.04;
+            const navRef = curInc * 0.70;
+            const userFee = curInc * 0.30;
+
+            const dayPrefix = `2026-${String(m).padStart(2, '0')}`;
+            const transactions = [
+                { dato: `${dayPrefix}-05`, post: "Fastlønn faste ansatte (grunnbemanning)", kat: "Lønn fast", ut: salFixed, inn: 0, note: "Ordinær månedslønn" },
+                { dato: `${dayPrefix}-12`, post: "Vikarer & ekstrahjelp (bemanningsbyrå)", kat: "Vikarer", ut: salTemp, inn: 0, note: "Ekstravakter ved fravær" },
+                { dato: `${dayPrefix}-18`, post: "Kvelds-/helgetillegg og overtid", kat: "Tillegg/Overtid", ut: salOver, inn: 0, note: "Forskyvning og ubekvemstid" },
+                { dato: `${dayPrefix}-20`, post: "Innbetaling: NAV Sykelønnsrefusjon", kat: "Refusjon", ut: 0, inn: navRef, note: "Mottatt sykepengerefusjon" },
+                { dato: `${dayPrefix}-22`, post: "Driftsmateriell, medisiner & forbruksvarer", kat: "Drift/Kjøp", ut: goods, inn: 0, note: "Nødvendige driftsmidler" },
+                { dato: `${dayPrefix}-25`, post: "Innbetaling: Brukerbetalinger / egenandeler", kat: "Inntekt", ut: 0, inn: userFee, note: "Egenbetalinger registrert" },
+                { dato: `${dayPrefix}-28`, post: "Intern husleie, energi og renhold", kat: "Eiendom", ut: rent, inn: 0, note: "Kommunal internleie" }
+            ];
+
+            return {
+                unit: u,
+                monthNum: m,
+                monthName: KONTO_MONTH_NAMES[m - 1],
+                monthShort: KONTO_MONTH_SHORT[m - 1],
+                annualBudget,
+                netYtdSpent,
+                availableBalance,
+                remainingMonths,
+                monthlyAllowance,
+                curNet,
+                trafficLight,
+                statusLabel,
+                statusSub,
+                burnRatio,
+                adviceMeaning,
+                adviceCause,
+                adviceActions,
+                adviceAvoid,
+                transactions
+            };
+        }
+
+        function renderBankStatement(unitId, monthNum) {
+            currentKontoUnit = unitId || currentKontoUnit || "5200-ENH-401";
+            currentKontoMonth = monthNum || currentKontoMonth || 10;
+
+            const dropdown = document.getElementById("bank-unit-dropdown");
+            if (dropdown && dropdown.value !== currentKontoUnit) {
+                dropdown.value = currentKontoUnit;
+            }
+
+            // Rendrer måneds-pills
+            const pillsBar = document.getElementById("bank-month-pills-bar");
+            if (pillsBar) {
+                let pillsHtml = "";
+                for (let i = 1; i <= 12; i++) {
+                    const activeCls = i === currentKontoMonth ? "active" : "";
+                    pillsHtml += `<button class="bank-month-pill ${activeCls}" onclick="onBankMonthClick(${i})">${KONTO_MONTH_SHORT[i-1]}</button>`;
+                }
+                pillsBar.innerHTML = pillsHtml;
+            }
+
+            const data = calculateBankStatementClient(currentKontoUnit, currentKontoMonth);
+            const container = document.getElementById("bank-statement-main-card");
+            if (!container) return;
+
+            // Oppdater direkte A4-lenke
+            const directBtn = document.getElementById("bank-direct-html-btn");
+            if (directBtn) {
+                const cleanId = currentKontoUnit.replace(/-/g, "_");
+                directBtn.href = `reports/kontoutskrifter/KONTOUTSKRIFT_${cleanId}_M10.html`;
+            }
+
+            // Transaksjonsrader
+            let runningBal = data.annualBudget - (data.netYtdSpent - data.curNet);
+            let transRows = "";
+            data.transactions.forEach(t => {
+                if (t.ut > 0) {
+                    runningBal -= t.ut;
+                    transRows += `
+                    <tr>
+                        <td>${t.dato}</td>
+                        <td><strong>${t.post}</strong><br><span style="font-size:10px; color:#64748b;">${t.note}</span></td>
+                        <td><span class="badge" style="background:#f1f5f9; color:#475569; font-size:10px;">${t.kat}</span></td>
+                        <td class="num" style="color:#c0392b;">-${Math.round(t.ut).toLocaleString('nb-NO')} kr</td>
+                        <td class="num" style="color:#64748b;">—</td>
+                        <td class="num" style="font-weight:600;">${Math.round(runningBal).toLocaleString('nb-NO')} kr</td>
+                    </tr>`;
+                } else {
+                    runningBal += t.inn;
+                    transRows += `
+                    <tr>
+                        <td>${t.dato}</td>
+                        <td><strong>${t.post}</strong><br><span style="font-size:10px; color:#64748b;">${t.note}</span></td>
+                        <td><span class="badge" style="background:#f0fdf4; color:#15803d; font-size:10px;">${t.kat}</span></td>
+                        <td class="num" style="color:#64748b;">—</td>
+                        <td class="num" style="color:#15803d; font-weight:600;">+${Math.round(t.inn).toLocaleString('nb-NO')} kr</td>
+                        <td class="num" style="font-weight:600;">${Math.round(runningBal).toLocaleString('nb-NO')} kr</td>
+                    </tr>`;
+                }
+            });
+
+            // Action items
+            const actionItemsHtml = data.adviceActions.map(act => `<li style="margin-bottom:5px;">${act}</li>`).join("");
+
+            // Speed bar fill width & color
+            const speedPct = Math.min(100, Math.round(data.burnRatio * 100));
+            const speedColor = data.trafficLight === 'red' ? '#c0392b' : (data.trafficLight === 'amber' ? '#d97706' : '#15803d');
+
+            container.innerHTML = `
+                <!-- Bank Topptekst -->
+                <div class="bank-card-top">
+                    <div>
+                        <div class="bank-brand-title">🏛️ KRISTIANSAND KOMMUNE NETTBANK</div>
+                        <div class="bank-brand-sub">Økonomi & Virksomhetsstyring &bull; Budsjettkonto for Ledere</div>
+                        <div style="font-size:12px; margin-top:8px; color:#334155; line-height:1.5;">
+                            <strong>Kontonummer:</strong> <span style="font-family:'Segoe UI',monospace; font-weight:700;">NO-KRS-2026-${data.unit.ansvar_id.replace(/-/g, '')}</span><br>
+                            <strong>Kontoeier:</strong> ${data.unit.navn} (${data.unit.tittel})<br>
+                            <strong>Virksomhetsområde:</strong> ${data.unit.enhet_navn} (${data.unit.kostra_funksjon})
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bank-statement-title">MÅNEDLIG KONTOUTSKRIFT</div>
+                        <div class="bank-statement-meta">
+                            <strong>Periode:</strong> ${data.monthName} 2026 (M${String(data.monthNum).padStart(2, '0')})<br>
+                            <strong>Bokført per:</strong> Siste bankvirkedag<br>
+                            <strong>Tildelt Controller:</strong> ${data.unit.controller_navn}<br>
+                            <strong>E-post:</strong> ${data.unit.controller_epost}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3 Store Saldobokser (Edward Tufte stil) -->
+                <div class="bank-kpi-grid">
+                    <div class="bank-kpi-box">
+                        <div class="bank-kpi-label">Tildelt Årsramme (Startkreditt)</div>
+                        <div class="bank-kpi-num">${formatNok(data.annualBudget)}</div>
+                        <div class="bank-kpi-sub">Bystyrets vedtatte ramme for 2026</div>
+                    </div>
+                    <div class="bank-kpi-box">
+                        <div class="bank-kpi-label">Hittil Brukt YTD (Netto uttak)</div>
+                        <div class="bank-kpi-num" style="color:#c0392b;">${formatNok(data.netYtdSpent)}</div>
+                        <div class="bank-kpi-sub">Samlet forbruk t.o.m. ${data.monthName}</div>
+                    </div>
+                    <div class="bank-kpi-box">
+                        <div class="bank-kpi-label">Månedlig Rådighetsbeløp ut året</div>
+                        <div class="bank-kpi-num" style="color:#0369a1;">${formatNok(data.monthlyAllowance)} / mnd</div>
+                        <div class="bank-kpi-sub">Maks tillatt snitt i ${data.remainingMonths} gjenværende mnd</div>
+                    </div>
+                </div>
+
+                <!-- Stor Disponibel Saldo Boks med Trafikklys -->
+                <div class="bank-saldo-box ${data.trafficLight}">
+                    <div>
+                        <div class="bank-saldo-label">${data.statusLabel}</div>
+                        <div class="bank-saldo-amount">${formatNok(data.availableBalance)}</div>
+                        <div style="font-size:11px; color:#475569; margin-top:2px;">Disponibel saldo på kontoen per 31. ${data.monthName.toLowerCase()} 2026</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:11.5px; font-weight:700; color:${speedColor};">${data.statusSub}</div>
+                        <div style="font-size:11px; color:#64748b; margin-top:3px;">
+                            Forbruk i ${data.monthName}: <strong>${formatNok(data.curNet)}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forbruksfartsmåler -->
+                <div class="bank-speed-box">
+                    <div>
+                        <strong>Forbruksfart (Run-rate):</strong> Du bruker <strong>${Math.round(data.burnRatio * 100)} %</strong> av det månedlige rådighetsbeløpet.
+                    </div>
+                    <div class="bank-speed-progress-wrap">
+                        <div class="bank-speed-bar">
+                            <div class="bank-speed-fill" style="width:${speedPct}%; background:${speedColor};"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="badge" style="background:${data.trafficLight === 'red' ? '#fdf2f2' : (data.trafficLight === 'amber' ? '#fef3c7' : '#f0fdf4')}; color:${speedColor}; font-weight:700;">
+                            ${data.trafficLight === 'red' ? 'Kritisk overforbruk' : (data.trafficLight === 'amber' ? 'Høy fart' : 'Trygg balanse')}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Transaksjonstabell -->
+                <div style="font-size:12px; font-weight:700; color:#1b365d; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
+                    📋 Kontoutskrift for ${data.monthName} 2026 (Største uttak og innbetalinger)
+                </div>
+                <table class="bank-trans-table">
+                    <thead>
+                        <tr>
+                            <th style="width:85px;">Dato</th>
+                            <th>Beskrivelse / Post</th>
+                            <th style="width:110px;">Kategori</th>
+                            <th class="num" style="width:110px;">Uttak (kr)</th>
+                            <th class="num" style="width:110px;">Innskudd (kr)</th>
+                            <th class="num" style="width:125px;">Bokført Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${transRows}
+                    </tbody>
+                </table>
+
+                <!-- Pedagogisk Rådgivningsboks (Klarspråk for ledere) -->
+                <div class="bank-advice-box">
+                    <div class="bank-advice-title">
+                        <span>💡 Økonomiråd for din enhet (Veiledning for ledere uten økonomibakgrunn)</span>
+                    </div>
+                    <div style="font-size:12px; line-height:1.55; color:#334155; margin-bottom:10px;">
+                        <strong>Hva betyr dette for din avdeling?</strong><br>
+                        ${data.adviceMeaning}
+                    </div>
+                    <div style="font-size:12px; line-height:1.55; color:#334155; margin-bottom:10px;">
+                        <strong>Hvorfor renner pengene ut?</strong><br>
+                        ${data.adviceCause}
+                    </div>
+                    <div style="font-size:12px; line-height:1.55; color:#334155; margin-bottom:10px;">
+                        <strong>Dine 3 viktigste handlinger denne måneden:</strong>
+                        <ul style="margin:4px 0 0 18px; padding:0;">
+                            ${actionItemsHtml}
+                        </ul>
+                    </div>
+                    <div style="font-size:11.5px; color:#b91c1c; font-weight:600; margin-bottom:6px;">
+                        ⚠️ Hva må du unngå: ${data.adviceAvoid}
+                    </div>
+                    <div style="font-size:11px; color:#64748b; font-style:italic; border-top:1px dashed #cbd5e1; padding-top:6px; margin-top:8px;">
+                        Trenger du bistand eller drøfting? Kontakt din controller <strong>${data.unit.controller_navn}</strong> (${data.unit.controller_epost}).
+                    </div>
+                </div>
+            `;
+        }
+
+        function onBankUnitChange(unitId) {
+            currentKontoUnit = unitId;
+            renderBankStatement(currentKontoUnit, currentKontoMonth);
+            showToast(`🏦 Viser kontoutskrift for ${KONTO_UNITS_REGISTRY[unitId]?.enhet_navn || unitId}`);
+        }
+
+        function onBankMonthClick(monthNum) {
+            currentKontoMonth = monthNum;
+            renderBankStatement(currentKontoUnit, currentKontoMonth);
+            showToast(`📅 Viser kontoutskrift for ${KONTO_MONTH_NAMES[monthNum-1]}`);
+        }
+
+        function printActiveBankStatement() {
+            window.print();
+        }
+
+        function downloadActiveBankStatementCsv() {
+            const data = calculateBankStatementClient(currentKontoUnit, currentKontoMonth);
+            let csvContent = "Dato;Post;Kategori;Uttak_NOK;Innskudd_NOK\n";
+            data.transactions.forEach(t => {
+                csvContent += `${t.dato};"${t.post}";"${t.kat}";${Math.round(t.ut)};${Math.round(t.inn)}\n`;
+            });
+            const blob = new Blob(["\ufeff" + csvContent], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Kontoutskrift_${data.unit.ansvar_id}_M${String(data.monthNum).padStart(2, '0')}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("📊 Lastet ned kontoutskrift CSV!");
+        }
+
+        function askChatbotAboutCurrentKonto() {
+            const data = calculateBankStatementClient(currentKontoUnit, currentKontoMonth);
+            const prompt = `Hva er saldoen og økonomirådene for ${data.unit.enhet_navn} i ${data.monthName}?`;
+            toggleChatDrawer(true);
+            const inputEl = document.getElementById("chat-input-text");
+            if (inputEl) {
+                inputEl.value = prompt;
+                setTimeout(() => sendChatMessage(), 100);
+            }
+        }
+
+        function navigateToKonto(unitId, monthNum) {
+            if (unitId) currentKontoUnit = unitId;
+            if (monthNum) currentKontoMonth = parseInt(monthNum, 10) || 10;
+            renderBankStatement(currentKontoUnit, currentKontoMonth);
+            navigateToSection("nettbank-kontoutskrift-seksjon", `🏦 Viser kontoutskrift for ${currentKontoUnit} (${KONTO_MONTH_NAMES[currentKontoMonth-1]})`);
+        }
+
+        // Initialiser Nettbank-kontoutskrift
+        if (typeof renderBankStatement === 'function') {
+            setTimeout(() => renderBankStatement('5200-ENH-401', 10), 100);
+        }
+    
+
         // ==========================================================================
         // 3.2 FORMAT CHAT MARKDOWN (MED TABELLER, KODE OG ACTION TOKENS)
         // ==========================================================================
@@ -9073,6 +10132,12 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         const phaseNum = parseInt(arg2, 10) || 1;
                         const label = arg3 || `Fase ${phaseNum}`;
                         html = `<button class="chat-nav-btn" onclick="navigateToWorkflowPhase(${phaseNum})">🛡️ ${label}</button>`;
+                    } else if (arg1 === "konto" || arg1 === "nettbank") {
+                        const parts = (arg2 || "").split("_");
+                        const uId = parts[0] || "5200-ENH-401";
+                        const mNum = parseInt(parts[1], 10) || 10;
+                        const label = arg3 || `Åpne Kontoutskrift`;
+                        html = `<button class="chat-nav-btn" onclick="navigateToKonto('${uId}', ${mNum})">🏦 ${label}</button>`;
                     } else if (arg1 === "sec") {
                         const label = arg3 || `Gå til seksjon`;
                         html = `<button class="chat-nav-btn" onclick="navigateToSection('${arg2}')">📍 ${label}</button>`;
@@ -9260,6 +10325,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             let legalBox = "";
 
             // --- INTENT CLASSIFICATION ---
+            const isKonto = /kontoutskrift|saldo\b|budsjettkonto|bank\b|nettbank|hvor mye (?:har jeg|penger)|rådighetsbeløp|lommepenger|økonomiråd|leder-?veiledning|lederåd/i.test(t);
             const isPbi = /power\s*bi|powerbi|pbi\b|pbip\b|rapportside|dashboard/i.test(t);
             const isDax = /dax\b|måltall|dax-mål|dax formel|dax mål/i.test(t);
             const isExcel = /excel\b|regneark\b|arbeidsbok\b|fast\s*modell|\.xlsx\b|mastermodell/i.test(t);
@@ -9268,6 +10334,66 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 
             // Navigasjonsindikatorer ("hvor finner jeg...", "vis meg...", "åpne...", "finn...")
             const isNav = /hvor\s+(?:finner|er|ligger)|finn\b|vis\s+(?:meg\b|rapport)|åpne\b|hvordan\s+(?:finner|åpner|ser)\b|link\s+til|lenke\s+til|rapport\s+for|rapporten\s+til|hvor\s+kan\s+jeg|tilgang\s+til/i.test(t);
+
+            // ======================================================================
+            // GREN 0: KOMMUNAL NETTBANK, KONTOUTSKRIFT & SALDO FOR BUDSJETTANSVARLIGE
+            // ======================================================================
+            if (isKonto) {
+                let targetUnitId = "5200-ENH-401";
+                let targetMonth = 10;
+                let unitName = "Enhet 401: Strai Sykehjem";
+                let leaderName = "Solveig Grimstad";
+
+                if (t.includes("skole") || t.includes("202") || t.includes("oppvekst") || t.includes("trond") || t.includes("jensen")) {
+                    targetUnitId = "4100-ENH-202";
+                    unitName = "Enhet 202: Lovisenlev Skole";
+                    leaderName = "Rektor Trond Jensen";
+                } else if (t.includes("byggesak") || t.includes("301") || t.includes("plan") || t.includes("byutvikling") || t.includes("vik")) {
+                    targetUnitId = "3300-ENH-301";
+                    unitName = "Enhet 301: Byggesak og Tilsyn";
+                    leaderName = "Hans Petter Vik";
+                } else if (t.includes("hjemmetjeneste") || t.includes("402") || t.includes("vågsbygd")) {
+                    targetUnitId = "5210-ENH-402";
+                    unitName = "Enhet 402: Hjemmetjenesten Vågsbygd";
+                    leaderName = "Berit Olsen";
+                } else if (t.includes("barnehage") || t.includes("211") || t.includes("hovden")) {
+                    targetUnitId = "4210-ENH-211";
+                    unitName = "Enhet 211: Lund Barnehage";
+                    leaderName = "Grete Hovden";
+                } else if (t.includes("var") || t.includes("vann") || t.includes("avløp") || t.includes("ingeniørvesen")) {
+                    targetUnitId = "3100-DIR-VAR";
+                    unitName = "Ingeniørvesenet VAR";
+                    leaderName = "Helge Møller";
+                }
+
+                const kontoData = calculateBankStatementClient(targetUnitId, targetMonth);
+                const cleanId = targetUnitId.replace(/-/g, "_");
+
+                body = `### 🏦 Kommunal Nettbank: Kontoutskrift & Saldo per ${kontoData.monthName} 2026\n\n` +
+                       `* **Budsjettkonto:** \`${kontoData.unit.ansvar_id}\` — **${kontoData.unit.enhet_navn}**\n` +
+                       `* **Budsjettansvarlig leder:** ${kontoData.unit.navn} (${kontoData.unit.tittel})\n` +
+                       `* **Tildelt årsramme 2026:** **${formatNok(kontoData.annualBudget)}**\n` +
+                       `* **Brukt hittil i år (YTD):** ${formatNok(kontoData.netYtdSpent)}\n` +
+                       `* **DISPONIBEL SALDO:** **${formatNok(kontoData.availableBalance)}** (${kontoData.statusLabel})\n` +
+                       `* **Månedlig rådighetsbeløp ut året:** **${formatNok(kontoData.monthlyAllowance)} / mnd** (i ${kontoData.remainingMonths} gjenværende måneder)\n\n` +
+                       `---\n\n` +
+                       `#### 💡 Økonomiråd i klarspråk (Leder-veiledning):\n` +
+                       `1. **Hva betyr dette?** ${kontoData.adviceMeaning}\n` +
+                       `2. **Hvorfor renner pengene ut?** ${kontoData.adviceCause}\n` +
+                       `3. **Dine 3 strakstiltak:**\n` +
+                       kontoData.adviceActions.map(a => `   * ${a}`).join("\n") + `\n\n` +
+                       `[NAV:konto:${targetUnitId}_${targetMonth}:🏦 Åpne Kontoutskrift i Nettbank] ` +
+                       `[DOWNLOAD:reports/kontoutskrifter/KONTOUTSKRIFT_${cleanId}_M10.html:📄 Last ned A4 Kontoutskrift] ` +
+                       `[DOWNLOAD:reports/kontoutskrifter/KONTOUTSKRIFT_ALLE_ENHETER_M10.csv:📊 Last ned Excel / CSV]\n\n` +
+                       `[CHIP:Vis Lovisenlev Skole M10] [CHIP:Vis Byggesak M10] [CHIP:Råd om vikarbruk]`;
+
+                mcpTool = `mcp-sqlite-finance / get_bank_statement(unit='${targetUnitId}', month=${targetMonth})`;
+                sqlBox = `SELECT årsramme, brukt_ytd, disponibel_saldo, rest_måneder\nFROM Dim_Budsjettansvarlige\nJOIN Fact_Regnskap USING (ansvar_key)\nWHERE ansvar_id = '${targetUnitId}' AND periode = '2026-${String(targetMonth).padStart(2, '0')}';`;
+                legalBox = "Kommuneloven § 14-5 (Krav om realistisk budsjettbalanse og handleplikt ved overtrekk).";
+
+                renderControllerChatResponse(aiMsg, body, mcpTool, sqlBox, legalBox);
+                return;
+            }
 
             // ======================================================================
             // GREN 1: POWER BI & RAPPORTERING (NAVIGASJON & MODELLER)
@@ -13796,12 +14922,14 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             selectSector("ALL");
             if (typeof renderVariancesTable === 'function') renderVariancesTable("ALL");
             if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
+            if (typeof renderBankStatement === 'function') renderBankStatement('5200-ENH-401', 10);
         });
         setTimeout(() => {
             selectWorkflowPhase(2, false);
             selectSector("ALL");
             if (typeof renderVariancesTable === 'function') renderVariancesTable("ALL");
             if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
+            if (typeof renderBankStatement === 'function') renderBankStatement('5200-ENH-401', 10);
         }, 150);
 
     
