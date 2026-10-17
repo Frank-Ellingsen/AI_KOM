@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Månedsrapporter M9 / September 2026 — Kristiansand Kommune</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --navy: #1e293b;
+            --green: #166534;
+            --red: #991b1b;
+            --amber: #9a3412;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            padding: 32px;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--navy);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        .title { font-size: 22px; font-weight: 700; color: var(--navy); }
+        .subtitle { font-size: 13px; color: var(--text-muted); }
+        .batch-download {
+            display: inline-block;
+            background: var(--navy);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .batch-download:hover { background: #0f172a; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 16px;
+        }
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--navy);
+            color: var(--navy);
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        tr:hover td { background: #f8fafc; }
+        .num { text-align: right; }
+        .positive { color: var(--green); }
+        .negative { color: var(--red); }
+        .subtext { font-size: 11px; color: var(--text-muted); }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge.green { background: #dcfce7; color: var(--green); }
+        .badge.red { background: #fee2e2; color: var(--red); }
+        .badge.amber { background: #ffedd5; color: var(--amber); }
+        .btn-sm {
+            display: inline-block;
+            background: #e2e8f0;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+        .btn-sm:hover { background: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <div class="title">🏛️ Månedsrapporter M9 / SEPTEMBER 2026</div>
+                <div class="subtitle">Kristiansand Kommune — AI Project Controller Hub | Ansvarlige Ledere & Delegeringsfullmakter</div>
+            </div>
+            <div>
+                <a class="batch-download" href="FRAMSIKT_BATCH_OMDISPONERING_M9_2026.csv" download>📥 Last ned Framsikt Batch CSV</a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Ansvar</th>
+                    <th>Enhet & Budsjettansvarlig</th>
+                    <th>Sektor</th>
+                    <th>Nivå</th>
+                    <th class="num">Årsbudsjett</th>
+                    <th class="num">Regnskap YTD</th>
+                    <th class="num">Avvik YTD</th>
+                    <th>Status</th>
+                    <th>Dokumenter</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td><code>5000-SJEF-HELSE</code></td>
+            <td><strong>Kommunalsjefens fagstab Helse</strong><br/><span class="subtext">Brede Skeie (Kommunalsjef Helse og mestring)</span></td>
+            <td>HELSE</td>
+            <td>Nivå 1: Kommunalsjef</td>
+            <td class="num">kr 2,680,000,000</td>
+            <td class="num">kr 1,899,991,636</td>
+            <td class="num positive"><strong>+kr 126,088,364</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-sm" href="5000-SJEF-HELSE_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="5000-SJEF-HELSE_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>0000-KOMMDIR</code></td>
+            <td><strong>Kommunedirektørens stab</strong><br/><span class="subtext">Camilla Dunsæd (Kommunedirektør)</span></td>
+            <td>KONSERN</td>
+            <td>Nivå 1: Toppledelse</td>
+            <td class="num">kr 7,240,000,000</td>
+            <td class="num">kr 5,132,813,227</td>
+            <td class="num positive"><strong>+kr 340,626,773</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-sm" href="0000-KOMMDIR_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="0000-KOMMDIR_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>4000-SJEF-OPPV</code></td>
+            <td><strong>Kommunalsjefens fagstab Oppvekst</strong><br/><span class="subtext">Kristin Eidet Robstad (Kommunalsjef Oppvekst og utdanning)</span></td>
+            <td>OPPVEKST</td>
+            <td>Nivå 1: Kommunalsjef</td>
+            <td class="num">kr 2,150,000,000</td>
+            <td class="num">kr 1,524,247,022</td>
+            <td class="num positive"><strong>+kr 101,152,978</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-sm" href="4000-SJEF-OPPV_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="4000-SJEF-OPPV_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>3100-ENH-302</code></td>
+            <td><strong>Enhet 302: Vann, Avløp og Renovasjon</strong><br/><span class="subtext">Inger Johanne Foss (Enhetsleder VAR Ingeniørvesen)</span></td>
+            <td>BYUTVIKLING</td>
+            <td>Nivå 3: Enhetsleder</td>
+            <td class="num">kr 68,400,000</td>
+            <td class="num">kr 47,584,115</td>
+            <td class="num positive"><strong>+kr 4,126,285</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-sm" href="3100-ENH-302_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="3100-ENH-302_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>3300-ENH-301</code></td>
+            <td><strong>Enhet 301: Byggesak og Tilsyn</strong><br/><span class="subtext">Hans Petter Vik (Enhetsleder Byggesak & Tilsyn)</span></td>
+            <td>BYUTVIKLING</td>
+            <td>Nivå 3: Enhetsleder</td>
+            <td class="num">kr 24,150,000</td>
+            <td class="num">kr 15,876,886</td>
+            <td class="num positive"><strong>+kr 2,380,514</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-sm" href="3300-ENH-301_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="3300-ENH-301_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>2540</code></td>
+            <td><strong>Kommunal Boenhet 2540</strong><br/><span class="subtext">Christian Holte (Enhetsleder Kommunal Boenhet 2540)</span></td>
+            <td>HELSE</td>
+            <td>Nivå 3: Enhetsleder</td>
+            <td class="num">kr 50,339,000</td>
+            <td class="num">kr 38,658,592</td>
+            <td class="num negative"><strong>kr -602,308</strong></td>
+            <td><span class="badge red">Merforbruk</span></td>
+            <td>
+                <a class="btn-sm" href="2540_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="2540_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>5200-ENH-401</code></td>
+            <td><strong>Enhet 401: Strai Sykehjem & Omsorgsboliger</strong><br/><span class="subtext">Solveig Grimstad (Enhetsleder Strai Sykehjem)</span></td>
+            <td>HELSE</td>
+            <td>Nivå 3: Enhetsleder</td>
+            <td class="num">kr 50,339,000</td>
+            <td class="num">kr 38,658,592</td>
+            <td class="num negative"><strong>kr -602,308</strong></td>
+            <td><span class="badge red">Merforbruk</span></td>
+            <td>
+                <a class="btn-sm" href="5200-ENH-401_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="5200-ENH-401_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>2200-ENH-101</code></td>
+            <td><strong>Enhet 101: Kristiansand Folkebibliotek</strong><br/><span class="subtext">Hege Gabrielsen (Biblioteksjef)</span></td>
+            <td>KULTUR</td>
+            <td>Nivå 3: Enhetsleder / Biblioteksjef</td>
+            <td class="num">kr 19,500,000</td>
+            <td class="num">kr 12,981,088</td>
+            <td class="num positive"><strong>+kr 1,760,912</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-sm" href="2200-ENH-101_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="2200-ENH-101_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>2020</code></td>
+            <td><strong>Kommunal Skole Enhet 2020</strong><br/><span class="subtext">Trond Jensen (Rektor / Enhetsleder Kommunal Skole 2020)</span></td>
+            <td>OPPVEKST</td>
+            <td>Nivå 3: Enhetsleder / Rektor</td>
+            <td class="num">kr 33,591,000</td>
+            <td class="num">kr 25,515,887</td>
+            <td class="num negative"><strong>kr -121,091</strong></td>
+            <td><span class="badge amber">Observasjon</span></td>
+            <td>
+                <a class="btn-sm" href="2020_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="2020_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><code>4100-ENH-202</code></td>
+            <td><strong>Enhet 202: Lovisenlev Skole</strong><br/><span class="subtext">Trond Jensen (Rektor / Enhetsleder Lovisenlev Skole)</span></td>
+            <td>OPPVEKST</td>
+            <td>Nivå 3: Enhetsleder / Rektor</td>
+            <td class="num">kr 33,591,000</td>
+            <td class="num">kr 25,515,887</td>
+            <td class="num negative"><strong>kr -121,091</strong></td>
+            <td><span class="badge amber">Observasjon</span></td>
+            <td>
+                <a class="btn-sm" href="4100-ENH-202_Maanedsrapport_M9_2026.pdf" target="_blank">📄 PDF</a>
+                <a class="btn-sm" href="4100-ENH-202_Maanedsrapport_M9_2026.html" target="_blank">🌐 HTML</a>
+            </td>
+        </tr>
+        
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

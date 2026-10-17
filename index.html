@@ -4076,6 +4076,7 @@
                 <span class="status-badge">Port 4 & 9 Aktiv</span> | 
                 Motor: <strong id="active-engine-label">Gemini 3.8 Flash (0 % CPU)</strong>
                 <button class="btn btn-secondary btn-sm" onclick="navigateToSection('nettbank-kontoutskrift-seksjon', '🏦 Åpner Kommunal Nettbank & Månedlig Kontoutskrift')" style="font-size:11px; padding:2px 8px; margin-left:6px;" title="Se månedlig kontoutskrift, saldo og økonomiråd for enhetsledere">🏦 Månedlig Kontoutskrift</button>
+                <a class="btn btn-secondary btn-sm" href="reports/monthly_pdf_packets/index.html" target="_blank" style="font-size:11px; padding:2px 8px; margin-left:6px; text-decoration:none;" title="Åpne automatisk genererte månedlige PDF-rapporter og Framsikt-omdisponeringer">📄 Månedsrapporter (PDF)</a>
                 <button class="btn btn-primary btn-sm" onclick="toggleChatDrawer()" style="font-size:11px; padding:2px 8px; margin-left:6px; background:#0056b3; border-color:#0056b3;" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl+Space)">💬 Spør AI-Chatbot</button>
             </div>
         </div>
@@ -4148,6 +4149,7 @@
                     <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
                     <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
                     <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
+                    <a class="btn btn-sm" id="btn-apne-pdf-rapport" href="reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf" target="_blank" style="background: #1e293b; color: #ffffff; text-decoration: none; font-weight: 700;" title="Åpne formell 2-siders PDF månedsrapport med prognoser og tiltak">📄 Månedsrapport (PDF)</a>
                 </div>
             </div>
 
@@ -10822,6 +10824,10 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         function onBankUnitChange(unitId) {
             currentKontoUnit = unitId;
             renderBankStatement(currentKontoUnit, currentKontoMonth);
+            const pdfBtn = document.getElementById("btn-apne-pdf-rapport");
+            if (pdfBtn) {
+                pdfBtn.href = `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M9_2026.pdf`;
+            }
             showToast(`🏦 Viser kontoutskrift for ${KONTO_UNITS_REGISTRY[unitId]?.enhet_navn || unitId}`);
         }
 

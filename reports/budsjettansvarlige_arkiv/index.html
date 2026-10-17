@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterarkiv — Budsjettansvarlige | Kristiansand Kommune</title>
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --surface: #ffffff;
+            --navy-dark: #1e293b;
+            --navy-light: #334155;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --border-strong: #1e293b;
+            --green: #166534;
+            --green-bg: #dcfce7;
+            --red: #991b1b;
+            --red-bg: #fee2e2;
+            --amber: #9a3412;
+            --amber-bg: #ffedd5;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            padding: 32px;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid var(--navy-dark);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .title h1 { font-size: 22px; font-weight: 700; color: var(--navy-dark); }
+        .title p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+        .meta-stats { font-size: 12px; color: var(--text-muted); text-align: right; }
+        
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .filter-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .filter-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn:hover { background: #e2e8f0; }
+        .filter-btn.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+        .search-input {
+            padding: 6px 12px;
+            font-size: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            width: 240px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--navy-dark);
+            color: var(--navy-dark);
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+        tr:hover td { background: #f8fafc; }
+        .num { text-align: right; }
+        .positive { color: var(--green); }
+        .negative { color: var(--red); }
+        .subtext { font-size: 11px; color: var(--text-muted); }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge.green { background: var(--green-bg); color: var(--green); }
+        .badge.red { background: var(--red-bg); color: var(--red); }
+        .badge.amber { background: var(--amber-bg); color: var(--amber); }
+        
+        .pill-sektor {
+            background: #e2e8f0;
+            color: var(--navy-dark);
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        .btn-arkiv {
+            display: inline-block;
+            background: var(--navy-dark);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11.5px;
+        }
+        .btn-arkiv:hover { background: #0f172a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">
+                <h1>🏛️ Masterarkiv — Budsjettansvarlige (41 Enhetsarkiver)</h1>
+                <p>Kristiansand Kommune — AI Project Controller Hub | Lead Controller: Frank Ellingsen</p>
+            </div>
+            <div class="meta-stats">
+                <div>Totalt: <strong>41 budsjettansvarlige</strong></div>
+                <div>Status: <span class="badge green">RLS &amp; Stage-Gate Port 9 Aktiv</span></div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-group">
+                <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Sektor:</span>
+                <button class="filter-btn active" onclick="filterSektor('ALL', this)">Alle (41)</button>
+                <button class="filter-btn" onclick="filterSektor('HELSE', this)">🏥 Helse (12)</button>
+                <button class="filter-btn" onclick="filterSektor('OPPVEKST', this)">🎓 Oppvekst (12)</button>
+                <button class="filter-btn" onclick="filterSektor('BYUTVIKLING', this)">🏗️ Byutvikling (6)</button>
+                <button class="filter-btn" onclick="filterSektor('KULTUR', this)">🎭 Kultur (3)</button>
+                <button class="filter-btn" onclick="filterSektor('ORG_TEK', this)">💻 Org &amp; Tek (3)</button>
+                <button class="filter-btn" onclick="filterSektor('OKONOMI', this)">📊 Økonomi &amp; Finans (5)</button>
+            </div>
+            <div>
+                <input class="search-input" id="search-box" type="text" placeholder="🔍 Søk enhet, leder, ansvar..." onkeyup="filterSearch(this.value)">
+            </div>
+        </div>
+
+        <table id="arkiv-table">
+            <thead>
+                <tr>
+                    <th>Ansvar</th>
+                    <th>Enhet &amp; Budsjettansvarlig</th>
+                    <th>Sektor</th>
+                    <th>Nivå</th>
+                    <th class="num">Årsbudsjett</th>
+                    <th class="num">Regnskap YTD</th>
+                    <th class="num">Avvik (Budsjett - Actuals)</th>
+                    <th>Status</th>
+                    <th>Handlinger</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr data-sektor="BYUTVIKLING" data-niva="CONTROLLER" data-status="GREEN">
+            <td><code>6004-CTRL-KNUT</code></td>
+            <td>
+                <strong><a href="6004-CTRL-KNUT/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Økonomitjenesten Byutvikling</a></strong><br/>
+                <span class="subtext">Leder: Knut Arild Vike (Sektorcontroller Byutvikling & Selvkost) | knut.arild.vike@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">BYUTVIKLING</span></td>
+            <td>Økonomirådgiver Sektor</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 8,418,906</td>
+            <td class="num positive"><strong>+kr 653,094</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6004-CTRL-KNUT/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="CONTROLLER" data-status="GREEN">
+            <td><code>6002-CTRL-MARIANNE</code></td>
+            <td>
+                <strong><a href="6002-CTRL-MARIANNE/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Økonomitjenesten Helse</a></strong><br/>
+                <span class="subtext">Leder: Marianne Tellefsen (Sektorcontroller Helse og Mestring) | marianne.tellefsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Økonomirådgiver Sektor</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 8,418,906</td>
+            <td class="num positive"><strong>+kr 653,094</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6002-CTRL-MARIANNE/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="KONSERN" data-niva="CONTROLLER" data-status="GREEN">
+            <td><code>6001-CTRL-FRANK</code></td>
+            <td>
+                <strong><a href="6001-CTRL-FRANK/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Sentrale Økonomitjenester / Hub Koordinator</a></strong><br/>
+                <span class="subtext">Leder: Frank Ellingsen (Senior Financial Controller & Project Controller) | frank.ellingsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">KONSERN</span></td>
+            <td>Økonomirådgiver / Fagansvarlig</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 8,418,906</td>
+            <td class="num positive"><strong>+kr 653,094</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6001-CTRL-FRANK/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="KULTUR" data-niva="CONTROLLER" data-status="GREEN">
+            <td><code>6005-CTRL-SILJE</code></td>
+            <td>
+                <strong><a href="6005-CTRL-SILJE/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Økonomitjenesten Kultur & Felles</a></strong><br/>
+                <span class="subtext">Leder: Silje Mæland (Sektorcontroller Kultur, Dialog & Fellestjenester) | silje.maeland@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">KULTUR</span></td>
+            <td>Økonomirådgiver Sektor</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 8,418,906</td>
+            <td class="num positive"><strong>+kr 653,094</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6005-CTRL-SILJE/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="CONTROLLER" data-status="GREEN">
+            <td><code>6003-CTRL-ERIK</code></td>
+            <td>
+                <strong><a href="6003-CTRL-ERIK/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Økonomitjenesten Oppvekst</a></strong><br/>
+                <span class="subtext">Leder: Erik Halvorsen (Sektorcontroller Oppvekst og Utdanning) | erik.halvorsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Økonomirådgiver Sektor</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 8,418,906</td>
+            <td class="num positive"><strong>+kr 653,094</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6003-CTRL-ERIK/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="BYUTVIKLING" data-niva="NIVA1" data-status="GREEN">
+            <td><code>3000-SJEF-BYUTV</code></td>
+            <td>
+                <strong><a href="3000-SJEF-BYUTV/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunalsjefens stab Byutvikling</a></strong><br/>
+                <span class="subtext">Leder: Ragnar Evensen (Kommunalsjef By- og stedsutvikling) | ragnar.evensen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">BYUTVIKLING</span></td>
+            <td>Nivå 1</td>
+            <td class="num">kr 620,000,000</td>
+            <td class="num">kr 439,550,304</td>
+            <td class="num positive"><strong>+kr 29,169,696</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="3000-SJEF-BYUTV/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA1" data-status="GREEN">
+            <td><code>5000-SJEF-HELSE</code></td>
+            <td>
+                <strong><a href="5000-SJEF-HELSE/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunalsjefens fagstab Helse</a></strong><br/>
+                <span class="subtext">Leder: Brede Skeie (Kommunalsjef Helse og mestring) | brede.skeie@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 1</td>
+            <td class="num">kr 2,680,000,000</td>
+            <td class="num">kr 1,899,991,636</td>
+            <td class="num positive"><strong>+kr 126,088,364</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="5000-SJEF-HELSE/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="KONSERN" data-niva="NIVA1" data-status="GREEN">
+            <td><code>0000-KOMMDIR</code></td>
+            <td>
+                <strong><a href="0000-KOMMDIR/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunedirektørens stab</a></strong><br/>
+                <span class="subtext">Leder: Camilla Dunsæd (Kommunedirektør) | camilla.dunsaed@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">KONSERN</span></td>
+            <td>Nivå 1</td>
+            <td class="num">kr 7,240,000,000</td>
+            <td class="num">kr 5,132,813,227</td>
+            <td class="num positive"><strong>+kr 340,626,773</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="0000-KOMMDIR/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="KULTUR" data-niva="NIVA1" data-status="GREEN">
+            <td><code>2000-SJEF-KULTUR</code></td>
+            <td>
+                <strong><a href="2000-SJEF-KULTUR/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunalsjefens stab Kultur</a></strong><br/>
+                <span class="subtext">Leder: Camilla Jarlsby (Kommunalsjef Kultur og innbyggerdialog) | camilla.jarlsby@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">KULTUR</span></td>
+            <td>Nivå 1</td>
+            <td class="num">kr 290,000,000</td>
+            <td class="num">kr 205,596,110</td>
+            <td class="num positive"><strong>+kr 13,643,890</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="2000-SJEF-KULTUR/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OKONOMI" data-niva="NIVA1" data-status="GREEN">
+            <td><code>6000-DIR-OKONOMI</code></td>
+            <td>
+                <strong><a href="6000-DIR-OKONOMI/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Sentral økonomistab</a></strong><br/>
+                <span class="subtext">Leder: Terje Fjellvang (Økonomidirektør) | terje.fjellvang@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OKONOMI</span></td>
+            <td>Nivå 1</td>
+            <td class="num">kr 1,160,000,000</td>
+            <td class="num">kr 822,384,440</td>
+            <td class="num positive"><strong>+kr 54,575,560</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6000-DIR-OKONOMI/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA1" data-status="GREEN">
+            <td><code>4000-SJEF-OPPV</code></td>
+            <td>
+                <strong><a href="4000-SJEF-OPPV/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunalsjefens fagstab Oppvekst</a></strong><br/>
+                <span class="subtext">Leder: Kristin Eidet Robstad (Kommunalsjef Oppvekst og utdanning) | kristin.robstad@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 1</td>
+            <td class="num">kr 2,150,000,000</td>
+            <td class="num">kr 1,524,247,022</td>
+            <td class="num positive"><strong>+kr 101,152,978</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="4000-SJEF-OPPV/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="ORG_TEK" data-niva="NIVA1" data-status="GREEN">
+            <td><code>1000-SJEF-ORGTEK</code></td>
+            <td>
+                <strong><a href="1000-SJEF-ORGTEK/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunalsjefens stab Org & Tek</a></strong><br/>
+                <span class="subtext">Leder: Geir A. Askvik (Kommunalsjef Organisasjon og teknologi) | geir.askvik@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">ORG_TEK</span></td>
+            <td>Nivå 1</td>
+            <td class="num">kr 340,000,000</td>
+            <td class="num">kr 241,043,715</td>
+            <td class="num positive"><strong>+kr 15,996,285</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="1000-SJEF-ORGTEK/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="BYUTVIKLING" data-niva="NIVA2" data-status="GREEN">
+            <td><code>3100-DIR-VAR</code></td>
+            <td>
+                <strong><a href="3100-DIR-VAR/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Ingeniørvesenet (Vann, Avløp & Renovasjon)</a></strong><br/>
+                <span class="subtext">Leder: Helge Møller (VA-sjef & Kommunalteknisk Direktør) | helge.moller@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">BYUTVIKLING</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 67,350,450</td>
+            <td class="num positive"><strong>+kr 4,469,550</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="3100-DIR-VAR/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="BYUTVIKLING" data-niva="NIVA2" data-status="GREEN">
+            <td><code>3200-DIR-PLAN</code></td>
+            <td>
+                <strong><a href="3200-DIR-PLAN/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Plan- og bygningsetaten</a></strong><br/>
+                <span class="subtext">Leder: Einar Jørgensen (Områdeleder Byplan & Byggesak) | einar.jorgensen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">BYUTVIKLING</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 67,350,450</td>
+            <td class="num positive"><strong>+kr 4,469,550</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="3200-DIR-PLAN/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA2" data-status="RED">
+            <td><code>5100-OMR-SYKEHJEM</code></td>
+            <td>
+                <strong><a href="5100-OMR-SYKEHJEM/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Døgnomsorg og Sykehjem</a></strong><br/>
+                <span class="subtext">Leder: Mette Syvertsen (Områdeleder Institusjon & Døgnpleie) | mette.syvertsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 72,956,678</td>
+            <td class="num negative"><strong>kr -1,136,678</strong></td>
+            <td><span class="badge red">Merforbruk</span></td>
+            <td>
+                <a class="btn-arkiv" href="5100-OMR-SYKEHJEM/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA2" data-status="GREEN">
+            <td><code>5200-OMR-HJEMME</code></td>
+            <td>
+                <strong><a href="5200-OMR-HJEMME/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Hjemmetjenester og rehabilitering</a></strong><br/>
+                <span class="subtext">Leder: Arve Sætre (Områdeleder Hjemmebaserte Tjenester) | arve.saetre@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 67,350,450</td>
+            <td class="num positive"><strong>+kr 4,469,550</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="5200-OMR-HJEMME/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OKONOMI" data-niva="NIVA2" data-status="GREEN">
+            <td><code>6100-DIR-REGNSKAP</code></td>
+            <td>
+                <strong><a href="6100-DIR-REGNSKAP/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Konsernregnskap og Lønnssentral</a></strong><br/>
+                <span class="subtext">Leder: Bente Gundersen (Konsernregnskapssjef) | bente.gundersen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OKONOMI</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 67,350,450</td>
+            <td class="num positive"><strong>+kr 4,469,550</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6100-DIR-REGNSKAP/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA2" data-status="GREEN">
+            <td><code>4100-OMR-SKOLE</code></td>
+            <td>
+                <strong><a href="4100-OMR-SKOLE/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Grunnskoleavdelingen (28 skoler)</a></strong><br/>
+                <span class="subtext">Leder: Svein Tore Kvernes (Skolesjef Grunnskole) | svein.tore.kvernes@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 67,350,450</td>
+            <td class="num positive"><strong>+kr 4,469,550</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="4100-OMR-SKOLE/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA2" data-status="GREEN">
+            <td><code>4200-OMR-BHG</code></td>
+            <td>
+                <strong><a href="4200-OMR-BHG/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Barnehageavdelingen (54 barnehager)</a></strong><br/>
+                <span class="subtext">Leder: Anne Lise Tønnessen (Barnehagesjef) | anne.lise.tonnessen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 67,350,450</td>
+            <td class="num positive"><strong>+kr 4,469,550</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="4200-OMR-BHG/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="ORG_TEK" data-niva="NIVA2" data-status="GREEN">
+            <td><code>1100-DIR-IKT</code></td>
+            <td>
+                <strong><a href="1100-DIR-IKT/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Digitaliseringsavdelingen</a></strong><br/>
+                <span class="subtext">Leder: Siri Bentsen (IKT- og Digitaliseringsdirektør) | siri.bentsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">ORG_TEK</span></td>
+            <td>Nivå 2</td>
+            <td class="num">kr 95,000,000</td>
+            <td class="num">kr 67,350,450</td>
+            <td class="num positive"><strong>+kr 4,469,550</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="1100-DIR-IKT/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="BYUTVIKLING" data-niva="NIVA3" data-status="GREEN">
+            <td><code>3100-ENH-302</code></td>
+            <td>
+                <strong><a href="3100-ENH-302/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 302: Vann, Avløp og Renovasjon</a></strong><br/>
+                <span class="subtext">Leder: Inger Johanne Foss (Enhetsleder VAR Ingeniørvesen) | inger.foss@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">BYUTVIKLING</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 68,400,000</td>
+            <td class="num">kr 47,584,115</td>
+            <td class="num positive"><strong>+kr 4,126,285</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="3100-ENH-302/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="BYUTVIKLING" data-niva="NIVA3" data-status="GREEN">
+            <td><code>3300-ENH-301</code></td>
+            <td>
+                <strong><a href="3300-ENH-301/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 301: Byggesak og Tilsyn</a></strong><br/>
+                <span class="subtext">Leder: Hans Petter Vik (Enhetsleder Byggesak & Tilsyn) | hans.petter.vik@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">BYUTVIKLING</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 24,150,000</td>
+            <td class="num">kr 15,876,886</td>
+            <td class="num positive"><strong>+kr 2,380,514</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="3300-ENH-301/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA3" data-status="RED">
+            <td><code>2540</code></td>
+            <td>
+                <strong><a href="2540/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunal Boenhet 2540</a></strong><br/>
+                <span class="subtext">Leder: Christian Holte (Enhetsleder Kommunal Boenhet 2540) | christian.holte@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 50,339,000</td>
+            <td class="num">kr 38,658,592</td>
+            <td class="num negative"><strong>kr -602,308</strong></td>
+            <td><span class="badge red">Merforbruk</span></td>
+            <td>
+                <a class="btn-arkiv" href="2540/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA3" data-status="RED">
+            <td><code>5200-ENH-401</code></td>
+            <td>
+                <strong><a href="5200-ENH-401/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 401: Strai Sykehjem & Omsorgsboliger</a></strong><br/>
+                <span class="subtext">Leder: Solveig Grimstad (Enhetsleder Strai Sykehjem) | solveig.grimstad@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 50,339,000</td>
+            <td class="num">kr 38,658,592</td>
+            <td class="num negative"><strong>kr -602,308</strong></td>
+            <td><span class="badge red">Merforbruk</span></td>
+            <td>
+                <a class="btn-arkiv" href="5200-ENH-401/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA3" data-status="GREEN">
+            <td><code>5210-ENH-402</code></td>
+            <td>
+                <strong><a href="5210-ENH-402/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 402: Hjemmetjenesten Vågsbygd</a></strong><br/>
+                <span class="subtext">Leder: Berit Olsen (Enhetsleder Hjemmetjeneste Vågsbygd) | berit.olsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 42,800,000</td>
+            <td class="num">kr 30,027,431</td>
+            <td class="num positive"><strong>+kr 2,329,369</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="5210-ENH-402/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA3" data-status="GREEN">
+            <td><code>5220-ENH-403</code></td>
+            <td>
+                <strong><a href="5220-ENH-403/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 403: Sørlandsparken Bo- og Miljøtjeneste</a></strong><br/>
+                <span class="subtext">Leder: Christian Holte (Enhetsleder Bo- og Miljøtjenester) | christian.holte@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 38,600,000</td>
+            <td class="num">kr 27,080,814</td>
+            <td class="num positive"><strong>+kr 2,100,786</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="5220-ENH-403/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA3" data-status="GREEN">
+            <td><code>5230-ENH-404</code></td>
+            <td>
+                <strong><a href="5230-ENH-404/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 404: Presteheia Omsorgssenter</a></strong><br/>
+                <span class="subtext">Leder: Kari Vesterhus (Enhetsleder Presteheia Omsorgssenter) | kari.vesterhus@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 29,400,000</td>
+            <td class="num">kr 20,626,319</td>
+            <td class="num positive"><strong>+kr 1,600,081</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="5230-ENH-404/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="KULTUR" data-niva="NIVA3" data-status="GREEN">
+            <td><code>2200-ENH-101</code></td>
+            <td>
+                <strong><a href="2200-ENH-101/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 101: Kristiansand Folkebibliotek</a></strong><br/>
+                <span class="subtext">Leder: Hege Gabrielsen (Biblioteksjef) | hege.gabrielsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">KULTUR</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 19,500,000</td>
+            <td class="num">kr 12,981,088</td>
+            <td class="num positive"><strong>+kr 1,760,912</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="2200-ENH-101/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OKONOMI" data-niva="NIVA3" data-status="GREEN">
+            <td><code>6200-ENH-601</code></td>
+            <td>
+                <strong><a href="6200-ENH-601/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 601: Finans- og Likviditetsforvaltning</a></strong><br/>
+                <span class="subtext">Leder: Knut Ingebrigtsen (Finans- og Gjeldsforvalter) | knut.ingebrigtsen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OKONOMI</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 18,200,000</td>
+            <td class="num">kr 12,768,674</td>
+            <td class="num positive"><strong>+kr 990,526</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="6200-ENH-601/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA3" data-status="AMBER">
+            <td><code>2020</code></td>
+            <td>
+                <strong><a href="2020/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Kommunal Skole Enhet 2020</a></strong><br/>
+                <span class="subtext">Leder: Trond Jensen (Rektor / Enhetsleder Kommunal Skole 2020) | trond.jensen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 33,591,000</td>
+            <td class="num">kr 25,515,887</td>
+            <td class="num negative"><strong>kr -121,091</strong></td>
+            <td><span class="badge amber">Observasjon</span></td>
+            <td>
+                <a class="btn-arkiv" href="2020/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA3" data-status="AMBER">
+            <td><code>4100-ENH-202</code></td>
+            <td>
+                <strong><a href="4100-ENH-202/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 202: Lovisenlev Skole</a></strong><br/>
+                <span class="subtext">Leder: Trond Jensen (Rektor / Enhetsleder Lovisenlev Skole) | trond.jensen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 33,591,000</td>
+            <td class="num">kr 25,515,887</td>
+            <td class="num negative"><strong>kr -121,091</strong></td>
+            <td><span class="badge amber">Observasjon</span></td>
+            <td>
+                <a class="btn-arkiv" href="4100-ENH-202/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA3" data-status="AMBER">
+            <td><code>4101-ENH-203</code></td>
+            <td>
+                <strong><a href="4101-ENH-203/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 203: Vågsbygd Skole</a></strong><br/>
+                <span class="subtext">Leder: Mona Lindstrøm (Rektor Vågsbygd Skole) | mona.lindstrom@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 31,200,000</td>
+            <td class="num">kr 23,699,672</td>
+            <td class="num negative"><strong>kr -112,472</strong></td>
+            <td><span class="badge amber">Observasjon</span></td>
+            <td>
+                <a class="btn-arkiv" href="4101-ENH-203/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA3" data-status="GREEN">
+            <td><code>4102-ENH-204</code></td>
+            <td>
+                <strong><a href="4102-ENH-204/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 204: Grim Ungdomsskole</a></strong><br/>
+                <span class="subtext">Leder: Espen Birkeland (Rektor Grim Ungdomsskole) | espen.birkeland@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 28,900,000</td>
+            <td class="num">kr 20,275,532</td>
+            <td class="num positive"><strong>+kr 1,572,868</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="4102-ENH-204/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA3" data-status="GREEN">
+            <td><code>4210-ENH-211</code></td>
+            <td>
+                <strong><a href="4210-ENH-211/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 211: Lund Kommunale Barnehage</a></strong><br/>
+                <span class="subtext">Leder: Grete Hovden (Styrer Lund Barnehage) | grete.hovden@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 18,900,000</td>
+            <td class="num">kr 13,259,777</td>
+            <td class="num positive"><strong>+kr 1,028,623</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="4210-ENH-211/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="ORG_TEK" data-niva="NIVA3" data-status="GREEN">
+            <td><code>1110-ENH-501</code></td>
+            <td>
+                <strong><a href="1110-ENH-501/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Enhet 501: IKT Drift & Brukerstøtte</a></strong><br/>
+                <span class="subtext">Leder: Kenneth Dale (IKT Driftssjef) | kenneth.dale@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">ORG_TEK</span></td>
+            <td>Nivå 3</td>
+            <td class="num">kr 34,800,000</td>
+            <td class="num">kr 24,414,827</td>
+            <td class="num positive"><strong>+kr 1,893,973</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="1110-ENH-501/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="BYUTVIKLING" data-niva="NIVA4" data-status="GREEN">
+            <td><code>3101-SEK-AVLOP</code></td>
+            <td>
+                <strong><a href="3101-SEK-AVLOP/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">VAR Ingeniørvesenet — Renseanlegg Lund</a></strong><br/>
+                <span class="subtext">Leder: Vidar Aanensen (Seksjonsleder Lund Renseanlegg) | vidar.aanensen@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">BYUTVIKLING</span></td>
+            <td>Nivå 4</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 7,988,362</td>
+            <td class="num positive"><strong>+kr 1,083,638</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="3101-SEK-AVLOP/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA4" data-status="AMBER">
+            <td><code>5201-SEK-DEMENS</code></td>
+            <td>
+                <strong><a href="5201-SEK-DEMENS/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Strai Sykehjem — Avd. Demens</a></strong><br/>
+                <span class="subtext">Leder: Tone Røyseland (Avdelingsleder Demensavdelingen) | tone.royseland@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 4</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 9,215,580</td>
+            <td class="num negative"><strong>kr -143,580</strong></td>
+            <td><span class="badge amber">Observasjon</span></td>
+            <td>
+                <a class="btn-arkiv" href="5201-SEK-DEMENS/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="HELSE" data-niva="NIVA4" data-status="AMBER">
+            <td><code>5202-SEK-KORTTID</code></td>
+            <td>
+                <strong><a href="5202-SEK-KORTTID/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Strai Sykehjem — Somatisk Korttidsavd.</a></strong><br/>
+                <span class="subtext">Leder: Lars Klev (Avdelingsleder Somatikk & Korttid) | lars.klev@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">HELSE</span></td>
+            <td>Nivå 4</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 9,215,580</td>
+            <td class="num negative"><strong>kr -143,580</strong></td>
+            <td><span class="badge amber">Observasjon</span></td>
+            <td>
+                <a class="btn-arkiv" href="5202-SEK-KORTTID/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA4" data-status="GREEN">
+            <td><code>4103-SEK-SFO</code></td>
+            <td>
+                <strong><a href="4103-SEK-SFO/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Lovisenlev Skole — Skolefritidsordning</a></strong><br/>
+                <span class="subtext">Leder: Cathrine Solberg (Avdelingsleder SFO Lovisenlev) | cathrine.solberg@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 4</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 9,115,258</td>
+            <td class="num negative"><strong>kr -43,258</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="4103-SEK-SFO/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="OPPVEKST" data-niva="NIVA4" data-status="GREEN">
+            <td><code>4104-SEK-INSP</code></td>
+            <td>
+                <strong><a href="4104-SEK-INSP/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">Lovisenlev Skole — Småtrinnet</a></strong><br/>
+                <span class="subtext">Leder: Bjarne Wiig (Inspektør 1.–4. trinn) | bjarne.wiig@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">OPPVEKST</span></td>
+            <td>Nivå 4</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 9,115,258</td>
+            <td class="num negative"><strong>kr -43,258</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="4104-SEK-INSP/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+        <tr data-sektor="ORG_TEK" data-niva="NIVA4" data-status="GREEN">
+            <td><code>1111-SEK-FINOPS</code></td>
+            <td>
+                <strong><a href="1111-SEK-FINOPS/ARKIV_OVERSIKT.html" style="color: #1e293b; text-decoration: none;">IKT Drift — Cloud & FinOps</a></strong><br/>
+                <span class="subtext">Leder: Thomas Berge (Seksjonsleder Skyløsninger & FinOps) | thomas.berge@kristiansand.kommune.no</span>
+            </td>
+            <td><span class="pill-sektor">ORG_TEK</span></td>
+            <td>Nivå 4</td>
+            <td class="num">kr 12,000,000</td>
+            <td class="num">kr 8,418,906</td>
+            <td class="num positive"><strong>+kr 653,094</strong></td>
+            <td><span class="badge green">I balanse</span></td>
+            <td>
+                <a class="btn-arkiv" href="1111-SEK-FINOPS/ARKIV_OVERSIKT.html">📁 Åpne Arkiv</a>
+            </td>
+        </tr>
+        
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let currentSektor = 'ALL';
+
+        function filterSektor(sektor, btn) {
+            currentSektor = sektor;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyFilters();
+        }
+
+        function filterSearch(query) {
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const q = document.getElementById('search-box').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#arkiv-table tbody tr');
+
+            rows.forEach(r => {
+                const s = r.getAttribute('data-sektor');
+                const text = r.textContent.toLowerCase();
+
+                const matchSektor = (currentSektor === 'ALL' || s === currentSektor);
+                const matchSearch = (!q || text.includes(q));
+
+                if (matchSektor && matchSearch) {
+                    r.style.display = '';
+                } else {
+                    r.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
