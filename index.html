@@ -4385,6 +4385,7 @@
                 </div>
                 <div style="display: flex; gap: 6px; align-items: center;">
                     <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
+                    <button type="button" class="btn btn-sm" onclick="openProsjektregnskapSection()" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-weight:700; margin-right:6px;" title="Søk statlige støtteordninger (ENOVA, Udir, IMDi, Helsedir) og prosjektregnskap">🏛️ Støtteordninger &amp; Prosjektregnskap</button>
                     <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
                     <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
                     <a class="btn btn-sm" id="btn-apne-pdf-rapport" href="reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf" target="_blank" style="background: #1e293b; color: #ffffff; text-decoration: none; font-weight: 700;" title="Åpne formell 2-siders PDF månedsrapport med prognoser og tiltak">📄 Månedsrapport (PDF)</a>
@@ -5848,6 +5849,524 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
             </div>
         </div>
     </section>
+
+
+<!-- ============================================================================== -->
+<!-- 🏛️ STATLIGE STØTTEORDNINGER, TILSKUDDSSØKNADER & PROSJEKTREGNSKAP -->
+<!-- ============================================================================== -->
+<section class="workflow-section" id="prosjektregnskap-seksjon" style="margin-bottom: 24px;">
+    <div class="bm-header-container" style="margin-bottom: 16px;">
+        <div>
+            <div class="bm-header-title">
+                <span>🏛️ Statlige Støtteordninger, Tilskuddssøknader &amp; Prosjektregnskap</span>
+            </div>
+            <div class="bm-header-sub">
+                Helhetlig forvaltning av eksterne tilskudd og prosjektcontrolling i Kristiansand kommune: 
+                Veiviser og søknadsskjemaer for statlige ordninger (ENOVA, IMDi asyl/flyktning, Udir, Helsedirektoratet ressurskrevende brukere, Spillemidler, Digdir), 
+                automatisk finansieringsplan og kommunal egenandel, samt integrert prosjektregnskap med EVM-indekser (CPI/SPI/EAC), 
+                transaksjonsreskontro og attestasjon for Kommunerevisjonen jf. <strong>Kommuneloven § 14-6 (Bruttoprinsippet)</strong>.
+            </div>
+        </div>
+        <div class="bm-header-badges">
+            <span class="bm-badge bm-badge-primary">Kommuneloven § 14-6 Brutto</span>
+            <span class="bm-badge bm-badge-navy">EVM Fast-Track KS2</span>
+            <span class="bm-badge bm-badge-success">Telemark Revisjon IKS SHA-256</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">6 Virksomhetsområder</span>
+        </div>
+    </div>
+
+    <!-- Tufte Portefølje KPI-bånd -->
+    <div class="bm-kpi-bar" style="margin-bottom: 16px;">
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Samlet Prosjektportefølje (BAC)</div>
+            <div class="bm-kpi-val" id="pr-kpi-total-bac">102,0 mill.</div>
+            <div class="bm-kpi-note">7 aktive tilskuddsprosjekter (P50 styringsramme)</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Bokførte Bruttokostnader (AC)</div>
+            <div class="bm-kpi-val" id="pr-kpi-total-ac" style="color:var(--navy-dark);">68,65 mill.</div>
+            <div class="bm-kpi-note">Påløpt brutto i regnskapet (Art 1000–1290)</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Innvilgede Statlige Tilskudd</div>
+            <div class="bm-kpi-val" id="pr-kpi-total-grant" style="color:#0284c7;">54,76 mill.</div>
+            <div class="bm-kpi-note">ENOVA, IMDi, Helsedir, Udir, KUD &amp; Digdir</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Mottatt Tilskudd / Utestående</div>
+            <div class="bm-kpi-val" id="pr-kpi-received-pending" style="color:var(--success-green);">37,0 m / 17,8 m</div>
+            <div class="bm-kpi-note">Inntektsført art 1700 / utestående statskrav</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Kommunal Egenandel (HØP)</div>
+            <div class="bm-kpi-val" id="pr-kpi-total-egenandel" style="color:var(--navy-dark);">47,24 mill.</div>
+            <div class="bm-kpi-note">Egenfinansiering vedtatt av Bystyret</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Gjennomsnittlig CPI / Status</div>
+            <div class="bm-kpi-val" id="pr-kpi-avg-cpi" style="color:var(--success-green);">1,02 (I Rute)</div>
+            <div class="bm-kpi-note">Akkumulert VAC: +2,46 mill. kr</div>
+        </div>
+    </div>
+
+    <!-- Modul Hovednavigasjon (3 Faner) -->
+    <div class="bm-nav-tabs" style="margin-bottom: 16px;">
+        <button type="button" class="bm-tab-btn active" id="pr-btn-tab-soknad" onclick="switchProsjektregnskapTab('SOKNAD')">
+            <span>📝 1. Tilskuddsveiviser &amp; Søknadsskjemaer</span>
+        </button>
+        <button type="button" class="bm-tab-btn" id="pr-btn-tab-portefolje" onclick="switchProsjektregnskapTab('PORTEFOLJE')">
+            <span>📊 2. Prosjektregnskap &amp; Finansieringsplan</span>
+        </button>
+        <button type="button" class="bm-tab-btn" id="pr-btn-tab-kort" onclick="switchProsjektregnskapTab('KORT')">
+            <span>🔍 3. Prosjektkort, Transaksjoner &amp; Revisorattest</span>
+        </button>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- FANE 1: TILSKUDDSVEIVISER & SØKNADSSKJEMAER -->
+    <!-- ========================================================================= -->
+    <div id="pr-pane-soknad" class="pr-tab-pane" style="display:block;">
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:16px;">
+            <div style="font-size:13px; font-weight:700; color:var(--navy-dark); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
+                <span>Velg Virksomhetsområde &amp; Sektor for Støtteordning:</span>
+                <span style="font-size:11px; font-weight:400; color:var(--text-secondary);">Statlige og regionale tilskuddsordninger for Kristiansand</span>
+            </div>
+            <!-- Sektorvelger Piller -->
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
+                <button type="button" class="btn btn-sm pr-sector-pill active" id="pr-sec-BYUTVIKLING" onclick="selectGrantSector('BYUTVIKLING')" style="background:var(--navy-dark); color:#ffffff; font-weight:700;">
+                    🏗️ Byutvikling, Klima &amp; VAR
+                </button>
+                <button type="button" class="btn btn-sm pr-sector-pill" id="pr-sec-HELSE" onclick="selectGrantSector('HELSE')" style="background:#f1f5f9; color:var(--text-primary);">
+                    🏥 Helse &amp; Mestring (Ressurskrevende)
+                </button>
+                <button type="button" class="btn btn-sm pr-sector-pill" id="pr-sec-OPPVEKST" onclick="selectGrantSector('OPPVEKST')" style="background:#f1f5f9; color:var(--text-primary);">
+                    🎓 Oppvekst &amp; Utdanning (Lærernorm)
+                </button>
+                <button type="button" class="btn btn-sm pr-sector-pill" id="pr-sec-NAV" onclick="selectGrantSector('NAV')" style="background:#f1f5f9; color:var(--text-primary);">
+                    🤝 NAV, Flyktninger &amp; Asyl (IMDi)
+                </button>
+                <button type="button" class="btn btn-sm pr-sector-pill" id="pr-sec-KULTUR" onclick="selectGrantSector('KULTUR')" style="background:#f1f5f9; color:var(--text-primary);">
+                    🎭 Kultur, Idrett &amp; Frivillighet
+                </button>
+                <button type="button" class="btn btn-sm pr-sector-pill" id="pr-sec-DIG" onclick="selectGrantSector('DIG')" style="background:#f1f5f9; color:var(--text-primary);">
+                    💻 Digitalisering &amp; IKT (Digdir)
+                </button>
+            </div>
+
+            <!-- Støtteordning Dropdown & Informasjonspanel -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+                <div>
+                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; display:block; margin-bottom:4px;">
+                        Gjeldende Støtteordning:
+                    </label>
+                    <select id="pr-scheme-select" onchange="onGrantSchemeSelect(this.value)" style="width:100%; padding:8px 10px; border:1px solid var(--border-light); border-radius:4px; font-size:12px; font-weight:600; color:var(--navy-dark); background:#f8fafc;">
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; display:block; margin-bottom:4px;">
+                        Tilskuddsyter &amp; Hjemmel:
+                    </label>
+                    <div id="pr-scheme-meta" style="padding:8px 10px; background:#f1f5f9; border:1px solid var(--border-light); border-radius:4px; font-size:11px; color:var(--text-primary); line-height:1.4;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kriterier, Krav & Beskrivelse Boks -->
+            <div id="pr-scheme-desc-box" style="padding:12px 14px; background:#f8fafc; border-left:3px solid var(--navy-dark); border-radius:0 4px 4px 0; font-size:11px; line-height:1.55; color:var(--text-primary); margin-bottom:16px;">
+            </div>
+
+            <!-- Interaktivt Søknadsskjema & Finansieringskalkyle -->
+            <div style="background:#fafafa; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:16px;">
+                <div style="font-size:12px; font-weight:700; color:var(--navy-dark); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">
+                    📋 Prosjektinformasjon &amp; Finansieringsplan
+                </div>
+
+                <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:12px; margin-bottom:12px;">
+                    <div>
+                        <label style="font-size:11px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:3px;">
+                            Prosjektnavn:
+                        </label>
+                        <input type="text" id="pr-input-proj-name" value="Gimle skole — Energieffektivisering &amp; Solcelleanlegg" style="width:100%; padding:6px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:12px;">
+                    </div>
+                    <div>
+                        <label style="font-size:11px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:3px;">
+                            Ansvarlig Resultatenhet:
+                        </label>
+                        <select id="pr-input-unit" style="width:100%; padding:6px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px;">
+                            <option value="6010 Eiendom & Formålsbygg">6010 Eiendom &amp; Formålsbygg</option>
+                            <option value="2010 Skole & Grunnskole">2010 Skole &amp; Grunnskole</option>
+                            <option value="2020 Lovisenlev skole">2020 Lovisenlev skole</option>
+                            <option value="3010 Bofellesskap & Tilrettelagte Tjenester">3010 Bofellesskap &amp; Tilrettelagte</option>
+                            <option value="3020 Hjemmetjenester & Rehabilitering">3020 Hjemmetjenester</option>
+                            <option value="4010 NAV Kristiansand Flyktning">4010 NAV Flyktning</option>
+                            <option value="4020 Kongsgård Voksenopplæring">4020 Kongsgård Voksenopplæring</option>
+                            <option value="5010 Ingeniørvesen & VAR">5010 Ingeniørvesen &amp; VAR</option>
+                            <option value="7010 Idrett & Nærmiljø">7010 Idrett &amp; Nærmiljø</option>
+                            <option value="1020 Digitalisering & IT-Utvikling">1020 Digitalisering &amp; IKT</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:11px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:3px;">
+                            Kontoklasse:
+                        </label>
+                        <select id="pr-input-konto" style="width:100%; padding:6px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px; font-weight:600;">
+                            <option value="2">Kontoklasse 2 (Investering)</option>
+                            <option value="1">Kontoklasse 1 (Drift)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
+                    <div>
+                        <label style="font-size:11px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:3px;">
+                            Prosjektleder:
+                        </label>
+                        <input type="text" id="pr-input-leader" value="Lars Terje Tronstad / Prosjektleder" style="width:100%; padding:6px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px;">
+                    </div>
+                    <div>
+                        <label style="font-size:11px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:3px;">
+                            Økonomirådgiver / Controller:
+                        </label>
+                        <input type="text" id="pr-input-controller" value="Frank Ellingsen (Senior Controller)" style="width:100%; padding:6px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px;">
+                    </div>
+                    <div>
+                        <label style="font-size:11px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:3px;">
+                            Oppstarts- &amp; Sluttdato:
+                        </label>
+                        <input type="text" id="pr-input-dates" value="01.01.2026 – 31.12.2026" style="width:100%; padding:6px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px;">
+                    </div>
+                </div>
+
+                <!-- Dynamisk ordningsspesifikk kalkulatorboks -->
+                <div id="pr-dynamic-calc-container" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:12px; margin-bottom:12px;">
+                </div>
+
+                <!-- Beregnet Oppsummeringstabell for Finansiering -->
+                <div style="background:#f1f5f9; border:1px solid var(--border-light); border-radius:4px; padding:12px; margin-bottom:12px;">
+                    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; text-align:center;">
+                        <div style="background:#ffffff; padding:8px; border:1px solid var(--border-light); border-radius:3px;">
+                            <div style="font-size:10px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Totalt Prosjektbudsjett (BAC)</div>
+                            <div id="pr-calc-res-bac" style="font-size:15px; font-weight:800; color:var(--navy-dark); font-variant-numeric:tabular-nums; margin-top:2px;">12 000 000 kr</div>
+                        </div>
+                        <div style="background:#ffffff; padding:8px; border:1px solid var(--border-light); border-radius:3px;">
+                            <div style="font-size:10px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Forventet Statlig Tilskudd</div>
+                            <div id="pr-calc-res-grant" style="font-size:15px; font-weight:800; color:#0284c7; font-variant-numeric:tabular-nums; margin-top:2px;">3 600 000 kr</div>
+                            <div id="pr-calc-res-grant-pct" style="font-size:10px; color:var(--text-secondary);">30,0 % tilskuddsandel</div>
+                        </div>
+                        <div style="background:#ffffff; padding:8px; border:1px solid var(--border-light); border-radius:3px;">
+                            <div style="font-size:10px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Kommunal Egenandel (Netto)</div>
+                            <div id="pr-calc-res-egenandel" style="font-size:15px; font-weight:800; color:var(--navy-dark); font-variant-numeric:tabular-nums; margin-top:2px;">8 400 000 kr</div>
+                            <div style="font-size:10px; color:var(--text-secondary);">Dekkes via HØP 2026</div>
+                        </div>
+                        <div style="background:#ffffff; padding:8px; border:1px solid var(--border-light); border-radius:3px;">
+                            <div style="font-size:10px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">MVA-Kompensasjon (K2)</div>
+                            <div id="pr-calc-res-mva" style="font-size:15px; font-weight:800; color:var(--success-green); font-variant-numeric:tabular-nums; margin-top:2px;">2 400 000 kr</div>
+                            <div style="font-size:10px; color:var(--text-secondary);">100 % eligible art 1729</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lovmessig Hjemmel & Bruttoprinsippet Kontrollvarsel -->
+                <div style="padding:10px 12px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; font-size:11px; color:#1e40af; margin-bottom:12px; line-height:1.45;">
+                    ℹ️ <strong>Kommuneloven § 14-6 Bruttoprinsippet:</strong> Alle prosjektkostnader skal føres brutto i regnskapet (utgiftsarter 1000–1290). 
+                    Statlige tilskudd føres som brutto inntekt på <strong>Art 1700 (Statstilskudd)</strong> eller <strong>Art 1800</strong>. Nettoføring er strengt forbudt. 
+                    Prosjektet tildeles unikt prosjektnummer i Visma ERP for kontinuerlig prosjektregnskapskontroll.
+                </div>
+
+                <!-- Handlingsknapper for Søknadsskjema -->
+                <div style="display:flex; justify-content:flex-end; gap:8px; flex-wrap:wrap;">
+                    <button type="button" class="btn btn-sm" onclick="downloadSoknadJson()" style="background:#ffffff; border:1px solid var(--border-light); color:var(--text-primary);">
+                        📥 Last ned Data (JSON)
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="generateSoknadsNotat()" style="background:#0284c7; color:#ffffff; font-weight:700;">
+                        📄 Generer Formelt Søknadsnotat &amp; Saksfremlegg
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="createProjectFromApplication()" style="background:var(--navy-dark); color:#ffffff; font-weight:700;">
+                        💾 Opprett Prosjekt i Prosjektregnskapet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- FANE 2: PROSJEKTREGNSKAP & FINANSIERINGSPLAN (MASTER LEDGER) -->
+    <!-- ========================================================================= -->
+    <div id="pr-pane-portefolje" class="pr-tab-pane" style="display:none;">
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:16px;">
+            <!-- Filter- & Søkelinje -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border-light);">
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <span style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Filter:</span>
+                    <select id="pr-filter-sector" onchange="filterProjectsTable()" style="padding:4px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px; color:var(--navy-dark);">
+                        <option value="ALL">Alle Sektorer</option>
+                        <option value="BYUTVIKLING">Byutvikling &amp; VAR</option>
+                        <option value="HELSE">Helse &amp; Mestring</option>
+                        <option value="OPPVEKST">Oppvekst &amp; Utdanning</option>
+                        <option value="NAV">NAV &amp; Flyktning</option>
+                        <option value="KULTUR">Kultur &amp; Idrett</option>
+                        <option value="DIG">Digitalisering &amp; IKT</option>
+                    </select>
+
+                    <select id="pr-filter-konto" onchange="filterProjectsTable()" style="padding:4px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px; color:var(--navy-dark);">
+                        <option value="ALL">Alle Kontoklasser</option>
+                        <option value="1">Kontoklasse 1 (Drift)</option>
+                        <option value="2">Kontoklasse 2 (Investering)</option>
+                    </select>
+
+                    <select id="pr-filter-status" onchange="filterProjectsTable()" style="padding:4px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px; color:var(--navy-dark);">
+                        <option value="ALL">Alle Statuser</option>
+                        <option value="AKTIV">Aktiv</option>
+                        <option value="SLUTTREGNSKAP">Sluttregnskap</option>
+                    </select>
+                </div>
+
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input type="text" id="pr-search-input" onkeyup="filterProjectsTable()" placeholder="Søk prosjekt, ID eller ordning..." style="padding:4px 8px; border:1px solid var(--border-light); border-radius:3px; font-size:11px; width:220px;">
+                    <button type="button" class="btn btn-sm" onclick="exportProjectAccountingXlsx()" style="background:#15803d; color:#ffffff; font-weight:700;">
+                        📊 Eksporter Excel (.xlsx)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Master Prosjektregnskapstabell (Edward Tufte Data-Ink) -->
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:11px; line-height:1.4;">
+                    <thead>
+                        <tr style="background:#f8fafc; border-bottom:2px solid var(--navy-dark); color:var(--navy-dark); text-transform:uppercase; font-size:10px; letter-spacing:0.4px;">
+                            <th style="padding:8px 6px; text-align:left;">Prosjekt-ID &amp; Navn</th>
+                            <th style="padding:8px 6px; text-align:left;">Sektor / Enhet</th>
+                            <th style="padding:8px 6px; text-align:left;">Ordning</th>
+                            <th style="padding:8px 6px; text-align:center;">Konto</th>
+                            <th style="padding:8px 6px; text-align:right;">Ramme (BAC)</th>
+                            <th style="padding:8px 6px; text-align:right;">Bokført (AC)</th>
+                            <th style="padding:8px 6px; text-align:right;">Opptjent (EV)</th>
+                            <th style="padding:8px 6px; text-align:right;">Innvilget Tilskudd</th>
+                            <th style="padding:8px 6px; text-align:right;">Mottatt / Utestående</th>
+                            <th style="padding:8px 6px; text-align:right;">Egenandel</th>
+                            <th style="padding:8px 6px; text-align:center;">CPI</th>
+                            <th style="padding:8px 6px; text-align:right;">Prognose (EAC)</th>
+                            <th style="padding:8px 6px; text-align:center;">Revisorstatus</th>
+                            <th style="padding:8px 6px; text-align:center;">Handling</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pr-projects-tbody">
+                    </tbody>
+                </table>
+            </div>
+            <div style="font-size:10px; color:var(--text-secondary); margin-top:10px; display:flex; justify-content:space-between;">
+                <span>* Klikk på et prosjekt for å åpne detaljert prosjektreskontro, transaksjonslogg og revisjonsforsegling.</span>
+                <span>Kilde: Visma ERP Fact_Regnskap &amp; Framsikt EPM (Golden Record DB)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- FANE 3: PROSJEKTKORT, TRANSAKSJONER & REVISORATTEST (DEEP DIVE) -->
+    <!-- ========================================================================= -->
+    <div id="pr-pane-kort" class="pr-tab-pane" style="display:none;">
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:16px;">
+            <!-- Prosjektvelger Bånd -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border-light);">
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">Velg Prosjekt:</span>
+                    <select id="pr-detail-selector" onchange="selectProjectDetail(this.value)" style="padding:6px 10px; border:1px solid var(--border-light); border-radius:4px; font-size:12px; font-weight:700; color:var(--navy-dark); background:#f8fafc; min-width:320px;">
+                    </select>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button type="button" class="btn btn-sm" onclick="openRefusjonskravModal()" style="background:#0284c7; color:#ffffff; font-weight:700;">
+                        📤 Generer Statlig Refusjonskrav
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="signProjectAudit()" style="background:var(--navy-dark); color:#ffffff; font-weight:700;">
+                        🛡️ Forsegl Revisorattest (SHA-256)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prosjekt Hovedbanner & Nøkkeltall -->
+            <div id="pr-card-header" style="background:#f8fafc; border:1px solid var(--border-light); border-radius:4px; padding:14px; margin-bottom:16px;">
+            </div>
+
+            <!-- EVM & Finansieringsplan Split-view -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+                <!-- Venstre: Finansieringsplan (Brutto vs Tilskudd vs Egenandel) -->
+                <div style="border:1px solid var(--border-light); border-radius:4px; padding:14px; background:#ffffff;">
+                    <div style="font-size:12px; font-weight:700; color:var(--navy-dark); margin-bottom:10px; display:flex; justify-content:space-between;">
+                        <span>Finansieringsplan &amp; Refusjonsstatus (§ 14-6)</span>
+                        <span id="pr-card-konto-badge" class="badge" style="background:#e0f2fe; color:#0369a1;">Kontoklasse 2</span>
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:11px; line-height:1.6;">
+                        <tbody>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0; color:var(--text-secondary);">Vedtatt Prosjektbudsjett (BAC / P50):</td>
+                                <td id="pr-card-bac" style="padding:4px 0; text-align:right; font-weight:700; font-variant-numeric:tabular-nums;">-</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0; color:var(--text-secondary);">Autorisert Kostnadsramme (P85):</td>
+                                <td id="pr-card-p85" style="padding:4px 0; text-align:right; font-weight:600; font-variant-numeric:tabular-nums;">-</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0; color:#0284c7; font-weight:600;">Innvilget Statstilskudd:</td>
+                                <td id="pr-card-grant-total" style="padding:4px 0; text-align:right; font-weight:700; color:#0284c7; font-variant-numeric:tabular-nums;">-</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0; color:var(--text-secondary); padding-left:12px;">↳ Mottatt forskudd/refusjon (Art 1700):</td>
+                                <td id="pr-card-grant-received" style="padding:4px 0; text-align:right; color:var(--success-green); font-variant-numeric:tabular-nums;">-</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0; color:var(--text-secondary); padding-left:12px;">↳ Utestående refusjonskrav fra staten:</td>
+                                <td id="pr-card-grant-pending" style="padding:4px 0; text-align:right; color:#d97706; font-variant-numeric:tabular-nums;">-</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0; color:var(--navy-dark); font-weight:600;">Kommunal Egenfinansiering (HØP):</td>
+                                <td id="pr-card-egenandel" style="padding:4px 0; text-align:right; font-weight:700; font-variant-numeric:tabular-nums;">-</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px 0; font-weight:700; color:var(--navy-dark);">Netto Påløpt Belastning Hittil:</td>
+                                <td id="pr-card-netto-actual" style="padding:6px 0; text-align:right; font-weight:800; color:var(--navy-dark); font-variant-numeric:tabular-nums;">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Høyre: EVM Prestasjon & Tufte S-Kurve -->
+                <div style="border:1px solid var(--border-light); border-radius:4px; padding:14px; background:#ffffff;">
+                    <div style="font-size:12px; font-weight:700; color:var(--navy-dark); margin-bottom:10px; display:flex; justify-content:space-between;">
+                        <span>EVM Prosjektkontroll &amp; Sluttprognose</span>
+                        <span id="pr-card-cpi-badge" class="badge" style="background:#dcfce7; color:#15803d;">CPI 1.03 (I rute)</span>
+                    </div>
+
+                    <!-- Tufte Mini S-Kurve SVG -->
+                    <div id="pr-card-scurve-box" style="height:110px; background:#f8fafc; border:1px solid var(--border-light); border-radius:3px; margin-bottom:10px; position:relative;">
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:6px; text-align:center;">
+                        <div style="background:#f1f5f9; padding:6px; border-radius:3px;">
+                            <div style="font-size:9px; color:var(--text-secondary); text-transform:uppercase;">Opptjent (EV)</div>
+                            <div id="pr-card-ev-val" style="font-size:12px; font-weight:700; color:var(--navy-dark); font-variant-numeric:tabular-nums;">-</div>
+                        </div>
+                        <div style="background:#f1f5f9; padding:6px; border-radius:3px;">
+                            <div style="font-size:9px; color:var(--text-secondary); text-transform:uppercase;">Påløpt (AC)</div>
+                            <div id="pr-card-ac-val" style="font-size:12px; font-weight:700; color:var(--navy-dark); font-variant-numeric:tabular-nums;">-</div>
+                        </div>
+                        <div style="background:#f1f5f9; padding:6px; border-radius:3px;">
+                            <div style="font-size:9px; color:var(--text-secondary); text-transform:uppercase;">Prognose (EAC)</div>
+                            <div id="pr-card-eac-val" style="font-size:12px; font-weight:700; color:var(--navy-dark); font-variant-numeric:tabular-nums;">-</div>
+                        </div>
+                        <div style="background:#f1f5f9; padding:6px; border-radius:3px;">
+                            <div style="font-size:9px; color:var(--text-secondary); text-transform:uppercase;">Avvik (VAC)</div>
+                            <div id="pr-card-vac-val" style="font-size:12px; font-weight:700; font-variant-numeric:tabular-nums;">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visma ERP Prosjektreskontro (Transaksjonstabell) -->
+            <div style="margin-bottom:16px;">
+                <div style="font-size:12px; font-weight:700; color:var(--navy-dark); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🧾 Bokførte Prosjekttransaksjoner (Visma ERP Bilagsjournal)</span>
+                    <span style="font-size:11px; font-weight:400; color:var(--text-secondary);">Filtrert på WBS / Prosjektkode</span>
+                </div>
+                <div style="overflow-x:auto; border:1px solid var(--border-light); border-radius:4px;">
+                    <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                        <thead>
+                            <tr style="background:#f8fafc; border-bottom:1px solid var(--border-light); color:var(--navy-dark); text-transform:uppercase; font-size:10px;">
+                                <th style="padding:6px 8px; text-align:left;">Bilagsnummer</th>
+                                <th style="padding:6px 8px; text-align:left;">Dato</th>
+                                <th style="padding:6px 8px; text-align:center;">Art</th>
+                                <th style="padding:6px 8px; text-align:left;">Tekst / Leverandør</th>
+                                <th style="padding:6px 8px; text-align:center;">MVA-Kode</th>
+                                <th style="padding:6px 8px; text-align:right;">Brutto Beløp (NOK)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pr-transactions-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Revisorattestasjons- & Forseglingspanel -->
+            <div id="pr-audit-box" style="background:#f8fafc; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:0 4px 4px 0; padding:14px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================================== -->
+<!-- MODAL: FORMELT SØKNADSNOTAT & SAKSFREMLEGG -->
+<!-- ============================================================================== -->
+<div class="modal" id="pr-soknad-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(15,23,42,0.65); backdrop-filter:blur(2px);">
+    <div style="background-color:#ffffff; margin:3% auto; padding:24px 28px; border:1px solid #cbd5e1; border-radius:6px; width:92%; max-width:860px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.2);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; border-bottom:2px solid var(--navy-dark); padding-bottom:12px;">
+            <div>
+                <div style="font-size:16px; font-weight:800; color:var(--navy-dark);">
+                    🏛️ Kristiansand Kommune — Formelt Saksfremlegg / Tilskuddssøknad
+                </div>
+                <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
+                    Utarbeidet jf. Kommuneloven § 13-1, § 14-5 &amp; § 14-6 | Saksbehandler: Frank Ellingsen
+                </div>
+            </div>
+            <button type="button" onclick="closeSoknadModal()" style="background:none; border:none; font-size:20px; font-weight:700; color:var(--text-secondary); cursor:pointer;">&times;</button>
+        </div>
+
+        <div id="pr-soknad-modal-content" style="background:#f8fafc; border:1px solid var(--border-light); border-radius:4px; padding:18px; font-family:'Segoe UI', system-ui, sans-serif; font-size:12px; line-height:1.65; color:var(--text-primary); max-height:60vh; overflow-y:auto; white-space:pre-wrap;">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding-top:12px; border-top:1px solid var(--border-light);">
+            <div style="font-size:11px; color:var(--text-secondary);">
+                SHA-256 forhåndsstempel: <code id="pr-soknad-hash-preview" style="background:#e2e8f0; padding:2px 4px; border-radius:2px;">...</code>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button type="button" class="btn btn-sm" onclick="copySoknadText()" style="background:#f1f5f9; border:1px solid var(--border-light); color:var(--text-primary);">
+                    📋 Kopier Tekst
+                </button>
+                <button type="button" class="btn btn-sm" onclick="downloadSoknadDocx()" style="background:#0284c7; color:#ffffff; font-weight:700;">
+                    📥 Last ned Saksfremlegg (.docx)
+                </button>
+                <button type="button" class="btn btn-sm" onclick="closeSoknadModal()" style="background:var(--navy-dark); color:#ffffff;">
+                    Lukk
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================================== -->
+<!-- MODAL: STATLIG REFUSJONSKRAV & REVISORATTESTASJON -->
+<!-- ============================================================================== -->
+<div class="modal" id="pr-refusjon-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(15,23,42,0.65); backdrop-filter:blur(2px);">
+    <div style="background-color:#ffffff; margin:3% auto; padding:24px 28px; border:1px solid #cbd5e1; border-radius:6px; width:92%; max-width:840px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.2);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; border-bottom:2px solid var(--navy-dark); padding-bottom:12px;">
+            <div>
+                <div style="font-size:16px; font-weight:800; color:var(--navy-dark);">
+                    📑 Statlig Refusjonskrav &amp; Revisorattest (Telemark Revisjon IKS)
+                </div>
+                <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
+                    Krav om utbetaling av innvilget tilskudd | Avstemt mot Visma ERP &amp; Kommuneloven § 14-6
+                </div>
+            </div>
+            <button type="button" onclick="closeRefusjonskravModal()" style="background:none; border:none; font-size:20px; font-weight:700; color:var(--text-secondary); cursor:pointer;">&times;</button>
+        </div>
+
+        <div id="pr-refusjon-modal-content" style="background:#f8fafc; border:1px solid var(--border-light); border-radius:4px; padding:18px; font-size:12px; line-height:1.65; color:var(--text-primary); max-height:60vh; overflow-y:auto;">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding-top:12px; border-top:1px solid var(--border-light);">
+            <div style="font-size:11px; color:var(--text-secondary);">
+                Forseglet med SHA-256 for Telemark Revisjon IKS &amp; Agder Kommunerevisjon
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button type="button" class="btn btn-sm" onclick="downloadRefusjonskravDoc()" style="background:#0284c7; color:#ffffff; font-weight:700;">
+                    📥 Last ned Refusjonskrav (.docx)
+                </button>
+                <button type="button" class="btn btn-sm" onclick="closeRefusjonskravModal()" style="background:var(--navy-dark); color:#ffffff;">
+                    Lukk
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <section class="powerbi-section" id="powerbi-showcase">
         <div class="section-header">
@@ -10747,6 +11266,9 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         }
 
         function navigateToSection(sectionId, toastMsg) {
+            if (typeof SECTION_TO_TAB_MAP !== "undefined" && SECTION_TO_TAB_MAP[sectionId] && typeof openTab === "function") {
+                openTab(SECTION_TO_TAB_MAP[sectionId], false);
+            }
             const sec = document.getElementById(sectionId);
             if (sec) {
                 sec.scrollIntoView({ behavior: 'smooth' });
@@ -22817,6 +23339,7 @@ const SECTION_TO_TAB_MAP = {
     'saksflyt': 'sektor-konsern',
     'avvik-seksjon': 'controller-hub',
     'budsjett-modul-seksjon': 'controller-hub',
+    'prosjektregnskap-seksjon': 'controller-hub',
     'powerbi-showcase': 'controller-hub',
     'rag-seksjon': 'controller-hub',
     'vectordb-panel': 'controller-hub',
