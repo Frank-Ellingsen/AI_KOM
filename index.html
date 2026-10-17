@@ -3561,7 +3561,190 @@
             gap: 6px;
         }
 
-    
+        /* ==========================================================================
+           RLS-KONTEKST & MÅNEDSRAPPORTER (5 FORMATER: PBI, EXCEL, PPTX, WORD, PDF)
+           Edward Tufte Data-Ink Ratio & Kristiansand Kommune Designprofil
+           ========================================================================== */
+        .bank-rls-strip {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #1b365d;
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 11.5px;
+        }
+        .bank-rls-info-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .bank-rls-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #334155;
+        }
+        .bank-rls-item strong {
+            color: #0f172a;
+        }
+        .bank-rls-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 3px;
+            font-family: 'Segoe UI', monospace;
+            font-size: 10.5px;
+            border: 1px solid #bae6fd;
+        }
+        .bank-reports-suite {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+        }
+        .bank-reports-suite-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+        .bank-reports-suite-title {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #1b365d;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .bank-reports-suite-sub {
+            font-size: 11px;
+            color: #64748b;
+        }
+        .bank-reports-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+        @media (max-width: 1200px) {
+            .bank-reports-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .bank-reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .bank-report-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 3px solid #64748b;
+            border-radius: 4px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.15s ease;
+        }
+        .bank-report-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transform: translateY(-1px);
+        }
+        .bank-report-card.card-pbi { border-top-color: #f59e0b; }
+        .bank-report-card.card-excel { border-top-color: #10b981; }
+        .bank-report-card.card-pptx { border-top-color: #ea580c; }
+        .bank-report-card.card-word { border-top-color: #2563eb; }
+        .bank-report-card.card-pdf { border-top-color: #dc2626; }
+
+        .bank-report-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .bank-report-badge {
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.3px;
+        }
+        .card-pbi .bank-report-badge { background: #fef3c7; color: #b45309; }
+        .card-excel .bank-report-badge { background: #d1fae5; color: #047857; }
+        .card-pptx .bank-report-badge { background: #ffedd5; color: #c2410c; }
+        .card-word .bank-report-badge { background: #dbeafe; color: #1d4ed8; }
+        .card-pdf .bank-report-badge { background: #fee2e2; color: #b91c1c; }
+
+        .bank-report-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 3px;
+        }
+        .bank-report-desc {
+            font-size: 11px;
+            color: #64748b;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            min-height: 32px;
+        }
+        .bank-report-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: auto;
+        }
+        .bank-report-btn {
+            font-size: 11px;
+            padding: 5px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.12s ease;
+        }
+        .bank-report-btn.primary {
+            background: #1b365d;
+            color: #ffffff;
+        }
+        .bank-report-btn.primary:hover {
+            background: #112240;
+            color: #ffffff;
+        }
+        .bank-report-btn.secondary {
+            background: #f1f5f9;
+            color: #334155;
+            border-color: #cbd5e1;
+        }
+        .bank-report-btn.secondary:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
         /* ==========================================================================
            GLOBAL ROLLEBASERT HOVEDNAVIGASJON (PERSONA-FANER)
            jf. AI_KOM_layout_og_navigasjon.md & Edward Tufte Data-Ink Ratio
@@ -4245,6 +4428,7 @@
                         <optgroup label="🏛️ Konsern og toppledelse">
                             <option value="0000-KOMMDIR">Kommunedirektørens stab (Camilla Dunsæd)</option>
                             <option value="6000-DIR-OKONOMI">Sentral økonomistab (Terje Fjellvang)</option>
+                            <option value="6001-CTRL-FRANK">Senior Controller Stab (Frank Ellingsen)</option>
                         </optgroup>
                     </select>
 
@@ -4272,6 +4456,60 @@
                     <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
                         💬 Spør Controller
                     </button>
+                </div>
+            </div>
+
+            <!-- RLS Kontekst & Budsjettansvarlig Identitetspanel -->
+            <div class="bank-rls-strip" id="bank-rls-identity-panel">
+                <div class="bank-rls-info-group">
+                    <div class="bank-rls-item">
+                        <span style="font-size:14px;">👤</span>
+                        <span><strong>Solveig Grimstad</strong> (Enhetsleder Strai Sykehjem)</span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">🔒</span>
+                        <span>RLS-Rolle:</span>
+                        <span class="bank-rls-badge">Enhetsleder_Boenhet</span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">📧</span>
+                        <span style="font-family:'Segoe UI',monospace; font-size:11px; color:#475569;">solveig.grimstad@kristiansand.kommune.no</span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">💳</span>
+                        <span>Fullmakt: <strong>kr 2 000 000 NOK</strong></span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">🛡️</span>
+                        <span>Filter: <code style="background:#e2e8f0; padding:1px 5px; border-radius:3px; font-size:10.5px;">Dim_Ansvar[ansvar_kode] == "5200-ENH-401"</code></span>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:11px; color:#64748b;">Fast Controller: <strong>Frank Ellingsen / Marianne Tellefsen</strong></span>
+                    <button class="btn btn-sm" onclick="askChatbotAboutCurrentKonto()" style="font-size:10.5px; padding:3px 8px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; font-weight:600;">
+                        💬 Spør om 5200-ENH-401
+                    </button>
+                </div>
+            </div>
+
+            <!-- Månedsrapportpakke for Budsjettansvarlig (5 Formater: PBI, Excel, PowerPoint, Word, PDF) -->
+            <div class="bank-reports-suite" id="bank-monthly-reports-suite">
+                <div class="bank-reports-suite-header">
+                    <div>
+                        <div class="bank-reports-suite-title">
+                            <span>📁 MÅNEDSRAPPORTER FOR VALGT BUDSJETTANSVARLIG (M01–M12)</span>
+                            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">5 KORRESPONDERENDE FORMATER &bull; RLS AKTIV</span>
+                        </div>
+                        <div class="bank-reports-suite-sub" id="bank-reports-suite-unit-label">
+                            Tilpasset Row-Level Security for Enhet 401: Strai Sykehjem (Solveig Grimstad)
+                        </div>
+                    </div>
+                    <div style="font-size:11px; color:#64748b;" id="bank-reports-period-label">
+                        Gjeldende regnskapsperiode: <strong>Oktober 2026 (M10)</strong>
+                    </div>
+                </div>
+                <div class="bank-reports-grid" id="bank-reports-grid-cards">
+                    <!-- Rendres dynamisk for valgt budsjettansvarlig -->
                 </div>
             </div>
 
@@ -8494,6 +8732,92 @@ RETURN
         </div>
     </div>
 
+    <!-- MODAL: POWER BI INTERAKTIV MÅNEDSRAPPORT (RLS) -->
+    <div id="pbi-report-modal" class="modal-overlay" onclick="if(event.target===this) closePbiInteractiveModal()">
+        <div class="modal-box" style="max-width: 960px; width: 95%; max-height: 92vh;">
+            <div class="modal-header" style="background: #1e293b; color: #ffffff; border-bottom: 2px solid #f59e0b;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 22px;">📊</span>
+                    <div>
+                        <div class="modal-title" id="pbi-modal-title" style="color: #ffffff; font-size: 14.5px;">Power BI Månedsrapport &bull; Kristiansand Kommune</div>
+                        <div style="font-size: 11px; color: #94a3b8;" id="pbi-modal-sub">Row-Level Security (RLS) Autentisert Visning</div>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closePbiInteractiveModal()" style="color:#ffffff;">&times;</button>
+            </div>
+            <div class="modal-body" id="pbi-modal-body" style="background: #f8fafc; padding: 18px 22px;">
+                <!-- Fylles dynamisk av openPbiInteractiveModal -->
+            </div>
+            <div class="modal-footer" style="background: #ffffff; border-top: 1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size: 11px; color: #64748b;" id="pbi-modal-footer-rls">
+                    🔒 RLS Sikkerhet: Dim_Ansvar filtrert i Azure AD
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <a class="btn btn-secondary" id="pbi-modal-download-btn" href="#" download>⬇️ Last ned .pbip</a>
+                    <a class="btn btn-secondary" id="pbi-modal-teams-btn" href="#" target="_blank">🌐 Åpne i Teams</a>
+                    <button class="btn btn-primary" onclick="closePbiInteractiveModal()">Lukk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: POWERPOINT PRESENTASJONSDECK FORHÅNDSVISNING -->
+    <div id="pptx-preview-modal" class="modal-overlay" onclick="if(event.target===this) closePptxPreviewModal()">
+        <div class="modal-box" style="max-width: 920px; width: 95%; max-height: 92vh;">
+            <div class="modal-header" style="background: #1b365d; color: #ffffff; border-bottom: 2px solid #ea580c;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 22px;">📙</span>
+                    <div>
+                        <div class="modal-title" id="pptx-modal-title" style="color: #ffffff; font-size: 14.5px;">PowerPoint Ledermøte-deck (16:9 Widescreen)</div>
+                        <div style="font-size: 11px; color: #cbd5e1;" id="pptx-modal-sub">Månedsrapport &bull; 3 Executive Slides jf. § 14-5 &amp; HTA § 4</div>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closePptxPreviewModal()" style="color:#ffffff;">&times;</button>
+            </div>
+            <div class="modal-body" id="pptx-modal-body" style="background: #f1f5f9; padding: 18px 20px;">
+                <!-- Fylles dynamisk av openPptxPreviewModal -->
+            </div>
+            <div class="modal-footer" style="background: #ffffff; border-top: 1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size: 11px; color: #64748b;">
+                    📊 Format: Microsoft PowerPoint (.pptx) &bull; Edward Tufte Data-Ink
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <a class="btn btn-primary" id="pptx-modal-download-btn" href="reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx" download>⬇️ Last ned .pptx</a>
+                    <button class="btn btn-secondary" onclick="closePptxPreviewModal()">Lukk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: WORD SAKSDOKUMENTER & AVVIKSNOTAT -->
+    <div id="word-preview-modal" class="modal-overlay" onclick="if(event.target===this) closeWordPreviewModal()">
+        <div class="modal-box" style="max-width: 860px; width: 95%; max-height: 92vh;">
+            <div class="modal-header" style="background: #1b365d; color: #ffffff; border-bottom: 2px solid #2563eb;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 22px;">📘</span>
+                    <div>
+                        <div class="modal-title" id="word-modal-title" style="color: #ffffff; font-size: 14.5px;">Word Saksnotat & Avviksanalyse jf. Kommuneloven § 14-5</div>
+                        <div style="font-size: 11px; color: #cbd5e1;" id="word-modal-sub">Formell Saksbehandling og Tiltaksplan for Budsjettansvarlig</div>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeWordPreviewModal()" style="color:#ffffff;">&times;</button>
+            </div>
+            <div class="modal-body" id="word-modal-body" style="background: #ffffff; padding: 22px 26px; font-family: 'Segoe UI', serif; font-size: 13px; line-height: 1.65; color: #1e293b;">
+                <!-- Fylles dynamisk av openWordPreviewModal -->
+            </div>
+            <div class="modal-footer" style="background: #f8fafc; border-top: 1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size: 11px; color: #64748b;">
+                    📝 KS Standard Saksframlegg &bull; Kommuneloven § 14-5 / HTA § 4
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-secondary" onclick="copyWordModalText()">📋 Kopier Notattekst</button>
+                    <a class="btn btn-primary" id="word-modal-download-btn" href="#" download>⬇️ Last ned .docx</a>
+                    <button class="btn btn-secondary" onclick="closeWordPreviewModal()">Lukk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FLOATING CHAT BUTTON -->
     <button id="chat-floating-toggle" class="chat-floating-btn" onclick="toggleChatDrawer()" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl + Space)">
         <span style="font-size:15px;">💬</span>
@@ -10887,7 +11211,1764 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             };
         }
 
+
+        // ==========================================================================
+        // 3C.1 RLS-KONTEKST & MÅNEDSRAPPORTER FOR BUDSJETTANSVARLIG (5 FORMATER)
+        // Power BI (.pbip), Excel (.xlsx), PowerPoint (.pptx), Word (.docx), PDF (.pdf)
+        // jf. Edward Tufte Data-Ink Ratio & Dim_Sikkerhet_RLS Golden Record
+        // ==========================================================================
+
+        const KONTO_RLS_REGISTRY = {
+    "2020": {
+        "upn": "trond.jensen@kristiansand.kommune.no",
+        "navn": "Trond Jensen",
+        "tittel": "Rektor / Enhetsleder Kommunal Skole 2020",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "2020",
+        "enhet_navn": "Kommunal Skole Enhet 2020",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Skole",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Enhetsledere Skole",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'2020'",
+        "fullmakt_nok": 2000000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/2020_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/2020/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/2020/04_Framsikt_Omdisponering/framsikt_kontering_2020.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "2540": {
+        "upn": "christian.holte@kristiansand.kommune.no",
+        "navn": "Christian Holte",
+        "tittel": "Enhetsleder Kommunal Boenhet 2540",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "2540",
+        "enhet_navn": "Kommunal Boenhet 2540",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Boenhet",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Virksomhetsledere Omsorg",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'2540'",
+        "fullmakt_nok": 2000000,
+        "controller_navn": "Frank Ellingsen / Marianne Tellefsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/2540_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/2540/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/2540/04_Framsikt_Omdisponering/framsikt_kontering_2540.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "0000-KOMMDIR": {
+        "upn": "camilla.dunsaed@kristiansand.kommune.no",
+        "navn": "Camilla Dunsæd",
+        "tittel": "Kommunedirektør",
+        "niva": "NIVA1",
+        "niva_tekst": "Nivå 1: Toppledelse",
+        "sektor_kode": "KONSERN",
+        "kommunalsjefomrade": "Konsern",
+        "ansvar_kode": "0000-KOMMDIR",
+        "enhet_navn": "Kommunedirektørens stab",
+        "har_full_tilgang": true,
+        "rls_rolle": "Controller_Admin",
+        "teams_team": "Teams - Konsernledelse & Bystyret",
+        "teams_kanal": "Ledergruppe & Sektorstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'0000-KOMMDIR'",
+        "fullmakt_nok": 100000000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/0000-KOMMDIR_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/0000-KOMMDIR/04_Framsikt_Omdisponering/framsikt_kontering_0000-KOMMDIR.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/pbi_reporting_project.pbip"
+    },
+    "5000-SJEF-HELSE": {
+        "upn": "brede.skeie@kristiansand.kommune.no",
+        "navn": "Brede Skeie",
+        "tittel": "Kommunalsjef Helse og mestring",
+        "niva": "NIVA1",
+        "niva_tekst": "Nivå 1: Kommunalsjef",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5000-SJEF-HELSE",
+        "enhet_navn": "Kommunalsjefens fagstab Helse",
+        "har_full_tilgang": false,
+        "rls_rolle": "Kommunalsjef_Helse",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Ledergruppe & Sektorstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5000-SJEF-HELSE'",
+        "fullmakt_nok": 25000000,
+        "controller_navn": "Frank Ellingsen / Marianne Tellefsen",
+        "controller_epost": "okonomi.helse@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/5000-SJEF-HELSE_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5000-SJEF-HELSE/04_Framsikt_Omdisponering/framsikt_kontering_5000-SJEF-HELSE.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "4000-SJEF-OPPV": {
+        "upn": "kristin.robstad@kristiansand.kommune.no",
+        "navn": "Kristin Eidet Robstad",
+        "tittel": "Kommunalsjef Oppvekst og utdanning",
+        "niva": "NIVA1",
+        "niva_tekst": "Nivå 1: Kommunalsjef",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4000-SJEF-OPPV",
+        "enhet_navn": "Kommunalsjefens fagstab Oppvekst",
+        "har_full_tilgang": false,
+        "rls_rolle": "Kommunalsjef_Oppvekst",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Ledergruppe & Sektorstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4000-SJEF-OPPV'",
+        "fullmakt_nok": 25000000,
+        "controller_navn": "Frank Ellingsen / Erik Halvorsen",
+        "controller_epost": "okonomi.oppvekst@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/4000-SJEF-OPPV_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4000-SJEF-OPPV/04_Framsikt_Omdisponering/framsikt_kontering_4000-SJEF-OPPV.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "3000-SJEF-BYUTV": {
+        "upn": "ragnar.evensen@kristiansand.kommune.no",
+        "navn": "Ragnar Evensen",
+        "tittel": "Kommunalsjef By- og stedsutvikling",
+        "niva": "NIVA1",
+        "niva_tekst": "Nivå 1: Kommunalsjef",
+        "sektor_kode": "BYUTVIKLING",
+        "kommunalsjefomrade": "By- og stedsutvikling",
+        "ansvar_kode": "3000-SJEF-BYUTV",
+        "enhet_navn": "Kommunalsjefens stab Byutvikling",
+        "har_full_tilgang": false,
+        "rls_rolle": "Kommunalsjef_Byutvikling",
+        "teams_team": "Teams - By- og Stedsutvikling",
+        "teams_kanal": "Ledergruppe & Sektorstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'3000-SJEF-BYUTV'",
+        "fullmakt_nok": 20000000,
+        "controller_navn": "Knut Arild Vike",
+        "controller_epost": "okonomi.byutvikling@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/3000-SJEF-BYUTV/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/3000-SJEF-BYUTV/04_Framsikt_Omdisponering/framsikt_kontering_3000-SJEF-BYUTV.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "2000-SJEF-KULTUR": {
+        "upn": "camilla.jarlsby@kristiansand.kommune.no",
+        "navn": "Camilla Jarlsby",
+        "tittel": "Kommunalsjef Kultur og innbyggerdialog",
+        "niva": "NIVA1",
+        "niva_tekst": "Nivå 1: Kommunalsjef",
+        "sektor_kode": "KULTUR",
+        "kommunalsjefomrade": "Kultur og innbyggerdialog",
+        "ansvar_kode": "2000-SJEF-KULTUR",
+        "enhet_navn": "Kommunalsjefens stab Kultur",
+        "har_full_tilgang": false,
+        "rls_rolle": "Kommunalsjef_Kultur",
+        "teams_team": "Teams - Kultur og Dialog",
+        "teams_kanal": "Ledergruppe & Sektorstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'2000-SJEF-KULTUR'",
+        "fullmakt_nok": 15000000,
+        "controller_navn": "Silje Mæland",
+        "controller_epost": "okonomi.kultur@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/2000-SJEF-KULTUR/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/2000-SJEF-KULTUR/04_Framsikt_Omdisponering/framsikt_kontering_2000-SJEF-KULTUR.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "1000-SJEF-ORGTEK": {
+        "upn": "geir.askvik@kristiansand.kommune.no",
+        "navn": "Geir A. Askvik",
+        "tittel": "Kommunalsjef Organisasjon og teknologi",
+        "niva": "NIVA1",
+        "niva_tekst": "Nivå 1: Kommunalsjef",
+        "sektor_kode": "ORG_TEK",
+        "kommunalsjefomrade": "Organisasjon og teknologi",
+        "ansvar_kode": "1000-SJEF-ORGTEK",
+        "enhet_navn": "Kommunalsjefens stab Org & Tek",
+        "har_full_tilgang": false,
+        "rls_rolle": "Kommunalsjef_OrgTek",
+        "teams_team": "Teams - Organisasjon og Teknologi",
+        "teams_kanal": "Ledergruppe & Sektorstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'1000-SJEF-ORGTEK'",
+        "fullmakt_nok": 15000000,
+        "controller_navn": "Silje Mæland / Frank Ellingsen",
+        "controller_epost": "okonomi.orgtek@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/1000-SJEF-ORGTEK/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/1000-SJEF-ORGTEK/04_Framsikt_Omdisponering/framsikt_kontering_1000-SJEF-ORGTEK.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "6000-DIR-OKONOMI": {
+        "upn": "terje.fjellvang@kristiansand.kommune.no",
+        "navn": "Terje Fjellvang",
+        "tittel": "Økonomidirektør",
+        "niva": "NIVA1",
+        "niva_tekst": "Nivå 1: Økonomidirektør",
+        "sektor_kode": "OKONOMI",
+        "kommunalsjefomrade": "Økonomi og virksomhetsstyring",
+        "ansvar_kode": "6000-DIR-OKONOMI",
+        "enhet_navn": "Sentral økonomistab",
+        "har_full_tilgang": true,
+        "rls_rolle": "Controller_Admin",
+        "teams_team": "Teams - Økonomistab & Finans",
+        "teams_kanal": "Ledergruppe & Sektorstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6000-DIR-OKONOMI'",
+        "fullmakt_nok": 50000000,
+        "controller_navn": "Frank Ellingsen (Senior Controller)",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6000-DIR-OKONOMI/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6000-DIR-OKONOMI/04_Framsikt_Omdisponering/framsikt_kontering_6000-DIR-OKONOMI.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/pbi_reporting_project.pbip"
+    },
+    "5100-OMR-SYKEHJEM": {
+        "upn": "mette.syvertsen@kristiansand.kommune.no",
+        "navn": "Mette Syvertsen",
+        "tittel": "Områdeleder Institusjon & Døgnpleie",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5100-OMR-SYKEHJEM",
+        "enhet_navn": "Døgnomsorg og Sykehjem",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Institusjons- og Omsorgsledelse",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5100-OMR-SYKEHJEM'",
+        "fullmakt_nok": 10000000,
+        "controller_navn": "Marianne Tellefsen",
+        "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/5100-OMR-SYKEHJEM/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5100-OMR-SYKEHJEM/04_Framsikt_Omdisponering/framsikt_kontering_5100-OMR-SYKEHJEM.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "5200-OMR-HJEMME": {
+        "upn": "arve.saetre@kristiansand.kommune.no",
+        "navn": "Arve Sætre",
+        "tittel": "Områdeleder Hjemmebaserte Tjenester",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5200-OMR-HJEMME",
+        "enhet_navn": "Hjemmetjenester og rehabilitering",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Institusjons- og Omsorgsledelse",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5200-OMR-HJEMME'",
+        "fullmakt_nok": 8000000,
+        "controller_navn": "Marianne Tellefsen",
+        "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/5200-OMR-HJEMME/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5200-OMR-HJEMME/04_Framsikt_Omdisponering/framsikt_kontering_5200-OMR-HJEMME.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "4100-OMR-SKOLE": {
+        "upn": "svein.tore.kvernes@kristiansand.kommune.no",
+        "navn": "Svein Tore Kvernes",
+        "tittel": "Skolesjef Grunnskole",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4100-OMR-SKOLE",
+        "enhet_navn": "Grunnskoleavdelingen (28 skoler)",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Skole- og Barnehageledelse",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4100-OMR-SKOLE'",
+        "fullmakt_nok": 10000000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/4100-OMR-SKOLE/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4100-OMR-SKOLE/04_Framsikt_Omdisponering/framsikt_kontering_4100-OMR-SKOLE.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "4200-OMR-BHG": {
+        "upn": "anne.lise.tonnessen@kristiansand.kommune.no",
+        "navn": "Anne Lise Tønnessen",
+        "tittel": "Barnehagesjef",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4200-OMR-BHG",
+        "enhet_navn": "Barnehageavdelingen (54 barnehager)",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Skole- og Barnehageledelse",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4200-OMR-BHG'",
+        "fullmakt_nok": 8000000,
+        "controller_navn": "Erik Halvorsen",
+        "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/4200-OMR-BHG/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4200-OMR-BHG/04_Framsikt_Omdisponering/framsikt_kontering_4200-OMR-BHG.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "3100-DIR-VAR": {
+        "upn": "helge.moller@kristiansand.kommune.no",
+        "navn": "Helge Møller",
+        "tittel": "VA-sjef & Kommunalteknisk Direktør",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "BYUTVIKLING",
+        "kommunalsjefomrade": "By- og stedsutvikling",
+        "ansvar_kode": "3100-DIR-VAR",
+        "enhet_navn": "Ingeniørvesenet (Vann, Avløp & Renovasjon)",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - By- og Stedsutvikling",
+        "teams_kanal": "VAR & Byplan Seksjon",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'3100-DIR-VAR'",
+        "fullmakt_nok": 10000000,
+        "controller_navn": "Knut Arild Vike",
+        "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/3100-DIR-VAR/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/3100-DIR-VAR/04_Framsikt_Omdisponering/framsikt_kontering_3100-DIR-VAR.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "3200-DIR-PLAN": {
+        "upn": "einar.jorgensen@kristiansand.kommune.no",
+        "navn": "Einar Jørgensen",
+        "tittel": "Områdeleder Byplan & Byggesak",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "BYUTVIKLING",
+        "kommunalsjefomrade": "By- og stedsutvikling",
+        "ansvar_kode": "3200-DIR-PLAN",
+        "enhet_navn": "Plan- og bygningsetaten",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - By- og Stedsutvikling",
+        "teams_kanal": "VAR & Byplan Seksjon",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'3200-DIR-PLAN'",
+        "fullmakt_nok": 6000000,
+        "controller_navn": "Knut Arild Vike",
+        "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/3200-DIR-PLAN/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/3200-DIR-PLAN/04_Framsikt_Omdisponering/framsikt_kontering_3200-DIR-PLAN.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "1100-DIR-IKT": {
+        "upn": "siri.bentsen@kristiansand.kommune.no",
+        "navn": "Siri Bentsen",
+        "tittel": "IKT- og Digitaliseringsdirektør",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "ORG_TEK",
+        "kommunalsjefomrade": "Organisasjon og teknologi",
+        "ansvar_kode": "1100-DIR-IKT",
+        "enhet_navn": "Digitaliseringsavdelingen",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Organisasjon og Teknologi",
+        "teams_kanal": "Digitalisering & Fellestjenester",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'1100-DIR-IKT'",
+        "fullmakt_nok": 8000000,
+        "controller_navn": "Silje Mæland / Frank Ellingsen",
+        "controller_epost": "okonomi.orgtek@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/1100-DIR-IKT/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/1100-DIR-IKT/04_Framsikt_Omdisponering/framsikt_kontering_1100-DIR-IKT.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "6100-DIR-REGNSKAP": {
+        "upn": "bente.gundersen@kristiansand.kommune.no",
+        "navn": "Bente Gundersen",
+        "tittel": "Konsernregnskapssjef",
+        "niva": "NIVA2",
+        "niva_tekst": "Nivå 2: Områdedirektør",
+        "sektor_kode": "OKONOMI",
+        "kommunalsjefomrade": "Økonomi og virksomhetsstyring",
+        "ansvar_kode": "6100-DIR-REGNSKAP",
+        "enhet_navn": "Konsernregnskap og Lønnssentral",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Økonomistab & Finans",
+        "teams_kanal": "Områdeledelse & Fagstyring",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6100-DIR-REGNSKAP'",
+        "fullmakt_nok": 10000000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6100-DIR-REGNSKAP/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6100-DIR-REGNSKAP/04_Framsikt_Omdisponering/framsikt_kontering_6100-DIR-REGNSKAP.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/pbi_reporting_project.pbip"
+    },
+    "5200-ENH-401": {
+        "upn": "solveig.grimstad@kristiansand.kommune.no",
+        "navn": "Solveig Grimstad",
+        "tittel": "Enhetsleder Strai Sykehjem",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5200-ENH-401",
+        "enhet_navn": "Enhet 401: Strai Sykehjem & Omsorgsboliger",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Boenhet",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Virksomhetsledere Omsorg",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5200-ENH-401'",
+        "fullmakt_nok": 2000000,
+        "controller_navn": "Frank Ellingsen / Marianne Tellefsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/5200-ENH-401/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5200-ENH-401/04_Framsikt_Omdisponering/framsikt_kontering_5200-ENH-401.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "5210-ENH-402": {
+        "upn": "berit.olsen@kristiansand.kommune.no",
+        "navn": "Berit Olsen",
+        "tittel": "Enhetsleder Hjemmetjeneste Vågsbygd",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5210-ENH-402",
+        "enhet_navn": "Enhet 402: Hjemmetjenesten Vågsbygd",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Boenhet",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Virksomhetsledere Omsorg",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5210-ENH-402'",
+        "fullmakt_nok": 1500000,
+        "controller_navn": "Marianne Tellefsen",
+        "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/5210-ENH-402/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/5210-ENH-402/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5210-ENH-402/04_Framsikt_Omdisponering/framsikt_kontering_5210-ENH-402.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "5220-ENH-403": {
+        "upn": "christian.holte@kristiansand.kommune.no",
+        "navn": "Christian Holte",
+        "tittel": "Enhetsleder Bo- og Miljøtjenester",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5220-ENH-403",
+        "enhet_navn": "Enhet 403: Sørlandsparken Bo- og Miljøtjeneste",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Boenhet",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Virksomhetsledere Omsorg",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5220-ENH-403'",
+        "fullmakt_nok": 1800000,
+        "controller_navn": "Marianne Tellefsen",
+        "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/5220-ENH-403/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/5220-ENH-403/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5220-ENH-403/04_Framsikt_Omdisponering/framsikt_kontering_5220-ENH-403.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "5230-ENH-404": {
+        "upn": "kari.vesterhus@kristiansand.kommune.no",
+        "navn": "Kari Vesterhus",
+        "tittel": "Enhetsleder Presteheia Omsorgssenter",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5230-ENH-404",
+        "enhet_navn": "Enhet 404: Presteheia Omsorgssenter",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Boenhet",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Virksomhetsledere Omsorg",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5230-ENH-404'",
+        "fullmakt_nok": 1500000,
+        "controller_navn": "Marianne Tellefsen",
+        "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/5230-ENH-404/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/5230-ENH-404/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5230-ENH-404/04_Framsikt_Omdisponering/framsikt_kontering_5230-ENH-404.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "4100-ENH-202": {
+        "upn": "trond.jensen@kristiansand.kommune.no",
+        "navn": "Trond Jensen",
+        "tittel": "Rektor / Enhetsleder Lovisenlev Skole",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4100-ENH-202",
+        "enhet_navn": "Enhet 202: Lovisenlev Skole",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Skole",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Enhetsledere Skole",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4100-ENH-202'",
+        "fullmakt_nok": 2000000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/4100-ENH-202_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/4100-ENH-202/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4100-ENH-202/04_Framsikt_Omdisponering/framsikt_kontering_4100-ENH-202.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "4101-ENH-203": {
+        "upn": "mona.lindstrom@kristiansand.kommune.no",
+        "navn": "Mona Lindstrøm",
+        "tittel": "Rektor Vågsbygd Skole",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4101-ENH-203",
+        "enhet_navn": "Enhet 203: Vågsbygd Skole",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Skole",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Enhetsledere Skole",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4101-ENH-203'",
+        "fullmakt_nok": 1800000,
+        "controller_navn": "Erik Halvorsen",
+        "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/4101-ENH-203/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/4101-ENH-203/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4101-ENH-203/04_Framsikt_Omdisponering/framsikt_kontering_4101-ENH-203.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "4102-ENH-204": {
+        "upn": "espen.birkeland@kristiansand.kommune.no",
+        "navn": "Espen Birkeland",
+        "tittel": "Rektor Grim Ungdomsskole",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4102-ENH-204",
+        "enhet_navn": "Enhet 204: Grim Ungdomsskole",
+        "har_full_tilgang": false,
+        "rls_rolle": "Enhetsleder_Skole",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Enhetsledere Skole",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4102-ENH-204'",
+        "fullmakt_nok": 1800000,
+        "controller_navn": "Erik Halvorsen",
+        "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/4102-ENH-204/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/4102-ENH-204/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4102-ENH-204/04_Framsikt_Omdisponering/framsikt_kontering_4102-ENH-204.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "4210-ENH-211": {
+        "upn": "grete.hovden@kristiansand.kommune.no",
+        "navn": "Grete Hovden",
+        "tittel": "Styrer Lund Barnehage",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Styrer Barnehage",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4210-ENH-211",
+        "enhet_navn": "Enhet 211: Lund Kommunale Barnehage",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Enhetsledere Skole",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4210-ENH-211'",
+        "fullmakt_nok": 1200000,
+        "controller_navn": "Erik Halvorsen",
+        "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/4210-ENH-211/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/4210-ENH-211/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4210-ENH-211/04_Framsikt_Omdisponering/framsikt_kontering_4210-ENH-211.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "3300-ENH-301": {
+        "upn": "hans.petter.vik@kristiansand.kommune.no",
+        "navn": "Hans Petter Vik",
+        "tittel": "Enhetsleder Byggesak & Tilsyn",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "BYUTVIKLING",
+        "kommunalsjefomrade": "By- og stedsutvikling",
+        "ansvar_kode": "3300-ENH-301",
+        "enhet_navn": "Enhet 301: Byggesak og Tilsyn",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - By- og Stedsutvikling",
+        "teams_kanal": "Enhetsledere Teknisk",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'3300-ENH-301'",
+        "fullmakt_nok": 1500000,
+        "controller_navn": "Knut Arild Vike",
+        "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/3300-ENH-301_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/3300-ENH-301/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/3300-ENH-301/04_Framsikt_Omdisponering/framsikt_kontering_3300-ENH-301.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "3100-ENH-302": {
+        "upn": "inger.foss@kristiansand.kommune.no",
+        "navn": "Inger Johanne Foss",
+        "tittel": "Enhetsleder VAR Ingeniørvesen",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "BYUTVIKLING",
+        "kommunalsjefomrade": "By- og stedsutvikling",
+        "ansvar_kode": "3100-ENH-302",
+        "enhet_navn": "Enhet 302: Vann, Avløp og Renovasjon",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - By- og Stedsutvikling",
+        "teams_kanal": "Enhetsledere Teknisk",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'3100-ENH-302'",
+        "fullmakt_nok": 3000000,
+        "controller_navn": "Knut Arild Vike",
+        "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/3100-ENH-302_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/3100-ENH-302/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/3100-ENH-302/04_Framsikt_Omdisponering/framsikt_kontering_3100-ENH-302.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "2200-ENH-101": {
+        "upn": "hege.gabrielsen@kristiansand.kommune.no",
+        "navn": "Hege Gabrielsen",
+        "tittel": "Biblioteksjef",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder / Biblioteksjef",
+        "sektor_kode": "KULTUR",
+        "kommunalsjefomrade": "Kultur og innbyggerdialog",
+        "ansvar_kode": "2200-ENH-101",
+        "enhet_navn": "Enhet 101: Kristiansand Folkebibliotek",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Kultur og Dialog",
+        "teams_kanal": "Enhetsledere Kultur & Bibliotek",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'2200-ENH-101'",
+        "fullmakt_nok": 1000000,
+        "controller_navn": "Silje Mæland",
+        "controller_epost": "silje.maeland@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/2200-ENH-101_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/2200-ENH-101/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/2200-ENH-101/04_Framsikt_Omdisponering/framsikt_kontering_2200-ENH-101.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "1110-ENH-501": {
+        "upn": "kenneth.dale@kristiansand.kommune.no",
+        "navn": "Kenneth Dale",
+        "tittel": "IKT Driftssjef",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "ORG_TEK",
+        "kommunalsjefomrade": "Organisasjon og teknologi",
+        "ansvar_kode": "1110-ENH-501",
+        "enhet_navn": "Enhet 501: IKT Drift & Brukerstøtte",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Organisasjon og Teknologi",
+        "teams_kanal": "Drift & IKT-ledere",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'1110-ENH-501'",
+        "fullmakt_nok": 2500000,
+        "controller_navn": "Silje Mæland / Frank Ellingsen",
+        "controller_epost": "okonomi.orgtek@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/1110-ENH-501/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/1110-ENH-501/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/1110-ENH-501/04_Framsikt_Omdisponering/framsikt_kontering_1110-ENH-501.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "6200-ENH-601": {
+        "upn": "knut.ingebrigtsen@kristiansand.kommune.no",
+        "navn": "Knut Ingebrigtsen",
+        "tittel": "Finans- og Gjeldsforvalter",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Avdelingsleder Finans",
+        "sektor_kode": "OKONOMI",
+        "kommunalsjefomrade": "Økonomi og virksomhetsstyring",
+        "ansvar_kode": "6200-ENH-601",
+        "enhet_navn": "Enhet 601: Finans- og Likviditetsforvaltning",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Økonomistab & Finans",
+        "teams_kanal": "Enhetsledere & Driftsrapportering",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6200-ENH-601'",
+        "fullmakt_nok": 5000000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6200-ENH-601/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6200-ENH-601/04_Framsikt_Omdisponering/framsikt_kontering_6200-ENH-601.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/pbi_reporting_project.pbip"
+    },
+    "5201-SEK-DEMENS": {
+        "upn": "tone.royseland@kristiansand.kommune.no",
+        "navn": "Tone Røyseland",
+        "tittel": "Avdelingsleder Demensavdelingen",
+        "niva": "NIVA4",
+        "niva_tekst": "Nivå 4: Avdelingsleder / Turnus",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5201-SEK-DEMENS",
+        "enhet_navn": "Strai Sykehjem — Avd. Demens",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Avdelingsrapportering",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5201-SEK-DEMENS'",
+        "fullmakt_nok": 250000,
+        "controller_navn": "Marianne Tellefsen",
+        "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/5201-SEK-DEMENS/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5201-SEK-DEMENS/04_Framsikt_Omdisponering/framsikt_kontering_5201-SEK-DEMENS.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "5202-SEK-KORTTID": {
+        "upn": "lars.klev@kristiansand.kommune.no",
+        "navn": "Lars Klev",
+        "tittel": "Avdelingsleder Somatikk & Korttid",
+        "niva": "NIVA4",
+        "niva_tekst": "Nivå 4: Avdelingsleder / Turnus",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "5202-SEK-KORTTID",
+        "enhet_navn": "Strai Sykehjem — Somatisk Korttidsavd.",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Avdelingsrapportering",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'5202-SEK-KORTTID'",
+        "fullmakt_nok": 250000,
+        "controller_navn": "Marianne Tellefsen",
+        "controller_epost": "marianne.tellefsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/5202-SEK-KORTTID/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/5202-SEK-KORTTID/04_Framsikt_Omdisponering/framsikt_kontering_5202-SEK-KORTTID.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "4103-SEK-SFO": {
+        "upn": "cathrine.solberg@kristiansand.kommune.no",
+        "navn": "Cathrine Solberg",
+        "tittel": "Avdelingsleder SFO Lovisenlev",
+        "niva": "NIVA4",
+        "niva_tekst": "Nivå 4: Avdelingsleder SFO",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4103-SEK-SFO",
+        "enhet_navn": "Lovisenlev Skole — Skolefritidsordning",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Avdelingsrapportering",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4103-SEK-SFO'",
+        "fullmakt_nok": 150000,
+        "controller_navn": "Erik Halvorsen",
+        "controller_epost": "erik.halvorsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/4103-SEK-SFO/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4103-SEK-SFO/04_Framsikt_Omdisponering/framsikt_kontering_4103-SEK-SFO.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "4104-SEK-INSP": {
+        "upn": "bjarne.wiig@kristiansand.kommune.no",
+        "navn": "Bjarne Wiig",
+        "tittel": "Inspektør 1.–4. trinn",
+        "niva": "NIVA4",
+        "niva_tekst": "Nivå 4: Trinnleder / Inspektør",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "4104-SEK-INSP",
+        "enhet_navn": "Lovisenlev Skole — Småtrinnet",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Avdelingsrapportering",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'4104-SEK-INSP'",
+        "fullmakt_nok": 200000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/4104-SEK-INSP/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/4104-SEK-INSP/04_Framsikt_Omdisponering/framsikt_kontering_4104-SEK-INSP.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "3101-SEK-AVLOP": {
+        "upn": "vidar.aanensen@kristiansand.kommune.no",
+        "navn": "Vidar Aanensen",
+        "tittel": "Seksjonsleder Lund Renseanlegg",
+        "niva": "NIVA4",
+        "niva_tekst": "Nivå 4: Seksjonsleder drift",
+        "sektor_kode": "BYUTVIKLING",
+        "kommunalsjefomrade": "By- og stedsutvikling",
+        "ansvar_kode": "3101-SEK-AVLOP",
+        "enhet_navn": "VAR Ingeniørvesenet — Renseanlegg Lund",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - By- og Stedsutvikling",
+        "teams_kanal": "Avdelingsrapportering",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'3101-SEK-AVLOP'",
+        "fullmakt_nok": 350000,
+        "controller_navn": "Knut Arild Vike",
+        "controller_epost": "knut.arild.vike@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/3101-SEK-AVLOP/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/3101-SEK-AVLOP/04_Framsikt_Omdisponering/framsikt_kontering_3101-SEK-AVLOP.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "1111-SEK-FINOPS": {
+        "upn": "thomas.berge@kristiansand.kommune.no",
+        "navn": "Thomas Berge",
+        "tittel": "Seksjonsleder Skyløsninger & FinOps",
+        "niva": "NIVA4",
+        "niva_tekst": "Nivå 4: Seksjonsleder IKT",
+        "sektor_kode": "ORG_TEK",
+        "kommunalsjefomrade": "Organisasjon og teknologi",
+        "ansvar_kode": "1111-SEK-FINOPS",
+        "enhet_navn": "IKT Drift — Cloud & FinOps",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Organisasjon og Teknologi",
+        "teams_kanal": "Avdelingsrapportering",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'1111-SEK-FINOPS'",
+        "fullmakt_nok": 300000,
+        "controller_navn": "Silje Mæland",
+        "controller_epost": "silje.maeland@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/1111-SEK-FINOPS/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/1111-SEK-FINOPS/04_Framsikt_Omdisponering/framsikt_kontering_1111-SEK-FINOPS.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "6001-CTRL-FRANK": {
+        "upn": "frank.ellingsen@kristiansand.kommune.no",
+        "navn": "Frank Ellingsen",
+        "tittel": "Senior Financial Controller & Project Controller",
+        "niva": "CONTROLLER",
+        "niva_tekst": "Økonomirådgiver / Fagansvarlig",
+        "sektor_kode": "KONSERN",
+        "kommunalsjefomrade": "Konsern",
+        "ansvar_kode": "6001-CTRL-FRANK",
+        "enhet_navn": "Sentrale Økonomitjenester / Hub Koordinator",
+        "har_full_tilgang": true,
+        "rls_rolle": "Controller_Admin",
+        "teams_team": "Teams - Konsernledelse & Bystyret",
+        "teams_kanal": "Controller Hub & EPM Monitor",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6001-CTRL-FRANK'",
+        "fullmakt_nok": 1000000,
+        "controller_navn": "Terje Fjellvang (Økonomidirektør)",
+        "controller_epost": "terje.fjellvang@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6001-CTRL-FRANK/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6001-CTRL-FRANK/04_Framsikt_Omdisponering/framsikt_kontering_6001-CTRL-FRANK.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/pbi_reporting_project.pbip"
+    },
+    "6002-CTRL-MARIANNE": {
+        "upn": "marianne.tellefsen@kristiansand.kommune.no",
+        "navn": "Marianne Tellefsen",
+        "tittel": "Sektorcontroller Helse og Mestring",
+        "niva": "CONTROLLER",
+        "niva_tekst": "Økonomirådgiver Sektor",
+        "sektor_kode": "HELSE",
+        "kommunalsjefomrade": "Helse og mestring",
+        "ansvar_kode": "6002-CTRL-MARIANNE",
+        "enhet_navn": "Økonomitjenesten Helse",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Helse og Mestring",
+        "teams_kanal": "Controller Hub & EPM Monitor",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6002-CTRL-MARIANNE'",
+        "fullmakt_nok": 500000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6002-CTRL-MARIANNE/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/6002-CTRL-MARIANNE/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6002-CTRL-MARIANNE/04_Framsikt_Omdisponering/framsikt_kontering_6002-CTRL-MARIANNE.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "6003-CTRL-ERIK": {
+        "upn": "erik.halvorsen@kristiansand.kommune.no",
+        "navn": "Erik Halvorsen",
+        "tittel": "Sektorcontroller Oppvekst og Utdanning",
+        "niva": "CONTROLLER",
+        "niva_tekst": "Økonomirådgiver Sektor",
+        "sektor_kode": "OPPVEKST",
+        "kommunalsjefomrade": "Oppvekst",
+        "ansvar_kode": "6003-CTRL-ERIK",
+        "enhet_navn": "Økonomitjenesten Oppvekst",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Oppvekst og Utdanning",
+        "teams_kanal": "Controller Hub & EPM Monitor",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6003-CTRL-ERIK'",
+        "fullmakt_nok": 500000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6003-CTRL-ERIK/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/6003-CTRL-ERIK/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6003-CTRL-ERIK/04_Framsikt_Omdisponering/framsikt_kontering_6003-CTRL-ERIK.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Skole enhet project.pbip"
+    },
+    "6004-CTRL-KNUT": {
+        "upn": "knut.arild.vike@kristiansand.kommune.no",
+        "navn": "Knut Arild Vike",
+        "tittel": "Sektorcontroller Byutvikling & Selvkost",
+        "niva": "CONTROLLER",
+        "niva_tekst": "Økonomirådgiver Sektor",
+        "sektor_kode": "BYUTVIKLING",
+        "kommunalsjefomrade": "By- og stedsutvikling",
+        "ansvar_kode": "6004-CTRL-KNUT",
+        "enhet_navn": "Økonomitjenesten Byutvikling",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - By- og Stedsutvikling",
+        "teams_kanal": "Controller Hub & EPM Monitor",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6004-CTRL-KNUT'",
+        "fullmakt_nok": 500000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6004-CTRL-KNUT/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6004-CTRL-KNUT/04_Framsikt_Omdisponering/framsikt_kontering_6004-CTRL-KNUT.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "6005-CTRL-SILJE": {
+        "upn": "silje.maeland@kristiansand.kommune.no",
+        "navn": "Silje Mæland",
+        "tittel": "Sektorcontroller Kultur, Dialog & Fellestjenester",
+        "niva": "CONTROLLER",
+        "niva_tekst": "Økonomirådgiver Sektor",
+        "sektor_kode": "KULTUR",
+        "kommunalsjefomrade": "Kultur og innbyggerdialog",
+        "ansvar_kode": "6005-CTRL-SILJE",
+        "enhet_navn": "Økonomitjenesten Kultur & Felles",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Kultur og Dialog",
+        "teams_kanal": "Controller Hub & EPM Monitor",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'6005-CTRL-SILJE'",
+        "fullmakt_nok": 500000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "pdf_path": "reports/budsjettansvarlige_arkiv/6005-CTRL-SILJE/01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/6005-CTRL-SILJE/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/6005-CTRL-SILJE/04_Framsikt_Omdisponering/framsikt_kontering_6005-CTRL-SILJE.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    },
+    "2100-ENH-501": {
+        "upn": "hege.gabrielsen@kristiansand.kommune.no",
+        "navn": "Camilla Jarlsby",
+        "tittel": "Enhetsleder Kultur & Bibliotek",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder / Biblioteksjef",
+        "sektor_kode": "KULTUR",
+        "kommunalsjefomrade": "Kultur og innbyggerdialog",
+        "ansvar_kode": "2100-ENH-501",
+        "enhet_navn": "Enhet 501: Kultur & Bibliotek",
+        "har_full_tilgang": false,
+        "rls_rolle": "Dynamisk_Budsjettansvarlig_RLS",
+        "teams_team": "Teams - Kultur og Dialog",
+        "teams_kanal": "Enhetsledere Kultur & Bibliotek",
+        "teams_fane": "Power BI Månedsrapport",
+        "pbi_url": "https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'2200-ENH-101'",
+        "fullmakt_nok": 1000000,
+        "controller_navn": "Silje Mæland",
+        "controller_epost": "silje.maeland@kristiansand.kommune.no",
+        "pdf_path": "reports/monthly_pdf_packets/2200-ENH-101_Maanedsrapport_M9_2026.pdf",
+        "docx_path": "reports/budsjettansvarlige_arkiv/2200-ENH-101/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "xlsx_path": "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+        "csv_path": "reports/budsjettansvarlige_arkiv/2200-ENH-101/04_Framsikt_Omdisponering/framsikt_kontering_2200-ENH-101.csv",
+        "pptx_path": "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+        "pbip_project": "powerbi/projects/Bo og Miljø enhet project.pbip"
+    }
+};
+
+        let currentPreviewUnitId = "5200-ENH-401";
+        let currentPptxSlide = 1;
+
+        function updateBankRlsIdentityPanel(unitId) {
+            const panel = document.getElementById("bank-rls-identity-panel");
+            if (!panel) return;
+            const rls = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            const formattedFullmakt = "kr " + Math.round(rls.fullmakt_nok || 2000000).toLocaleString('nb-NO') + " NOK";
+
+            panel.innerHTML = `
+                <div class="bank-rls-info-group">
+                    <div class="bank-rls-item">
+                        <span style="font-size:14px;">👤</span>
+                        <span><strong>${rls.navn}</strong> (${rls.tittel})</span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">🔒</span>
+                        <span>RLS-Rolle:</span>
+                        <span class="bank-rls-badge">${rls.rls_rolle}</span>
+                    </div>
+                    <div class="bank-rls-item" title="Azure AD User Principal Name (UPN) for innlogging og RLS-mapping">
+                        <span style="font-size:13px;">📧</span>
+                        <span style="font-family:'Segoe UI',monospace; font-size:11px; color:#475569;">${rls.upn}</span>
+                    </div>
+                    <div class="bank-rls-item" title="Tildelt økonomisk delegeringsfullmakt jf. Kommuneloven § 14-5">
+                        <span style="font-size:13px;">💳</span>
+                        <span>Fullmakt: <strong>${formattedFullmakt}</strong></span>
+                    </div>
+                    <div class="bank-rls-item" title="Power BI DAX RLS-filter definert i Dim_Sikkerhet_RLS">
+                        <span style="font-size:13px;">🛡️</span>
+                        <span>Filter: <code style="background:#e2e8f0; padding:1px 5px; border-radius:3px; font-size:10.5px;">Dim_Ansvar[ansvar_kode] == "${rls.ansvar_kode}"</code></span>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:11px; color:#64748b;">Fast Controller: <strong>${rls.controller_navn}</strong></span>
+                    <button class="btn btn-sm" onclick="askChatbotAboutCurrentKonto()" style="font-size:10.5px; padding:3px 8px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; font-weight:600;" title="Spør AI Controller om denne enhetens RLS-tilgang og budsjett">
+                        💬 Spør om ${rls.ansvar_kode}
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderBankMonthlyReportSuite(unitId, monthNum) {
+            const container = document.getElementById("bank-reports-grid-cards");
+            const unitLabel = document.getElementById("bank-reports-suite-unit-label");
+            const periodLabel = document.getElementById("bank-reports-period-label");
+            if (!container) return;
+
+            const rls = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            const m = Math.max(1, Math.min(12, monthNum || currentKontoMonth || 10));
+            const mStr = String(m).padStart(2, '0');
+            const mName = KONTO_MONTH_NAMES[m - 1];
+
+            if (unitLabel) {
+                unitLabel.innerHTML = `Tilpasset Row-Level Security (RLS) for <strong>${rls.enhet_navn}</strong> (${rls.navn} &bull; ${rls.tittel})`;
+            }
+            if (periodLabel) {
+                periodLabel.innerHTML = `Gjeldende regnskapsperiode: <strong>${mName} 2026 (M${mStr})</strong>`;
+            }
+
+            const activePdf = rls.pdf_path || `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M9_2026.pdf`;
+            const docxFile = rls.docx_path || "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx";
+            const xlsxFile = rls.xlsx_path || "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx";
+            const pptxFile = rls.pptx_path || "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx";
+            const pbipProject = rls.pbip_project || "powerbi/projects/Bo og Miljø enhet project.pbip";
+
+            container.innerHTML = `
+                <!-- 1. POWER BI (PBI) -->
+                <div class="bank-report-card card-pbi">
+                    <div>
+                        <div class="bank-report-top">
+                            <span class="bank-report-badge">Power BI / Fabric</span>
+                            <span style="font-size:10px; color:#b45309; font-weight:700;">.pbip</span>
+                        </div>
+                        <div class="bank-report-title">📊 Power BI Månedsrapport</div>
+                        <div style="font-size:10.5px; color:#0369a1; font-weight:700; margin-bottom:4px;">
+                            RLS: ${rls.rls_rolle}
+                        </div>
+                        <div class="bank-report-desc">
+                            Dynamisk ledelsesrapport med KPI-kort, S-kurve, KOSTRA-drilldown og sanntids avviksstatus for ${rls.ansvar_kode}.
+                        </div>
+                    </div>
+                    <div class="bank-report-actions">
+                        <button class="bank-report-btn primary" onclick="openPbiInteractiveModal('${unitId}')" title="Åpne interaktiv Power BI simulering for denne enheten">
+                            ⚡ Åpne i Power BI (RLS)
+                        </button>
+                        <a class="bank-report-btn secondary" href="${pbipProject}" download title="Last ned Power BI Desktop prosjektfil (.pbip)">
+                            ⬇️ Last ned .pbip prosjekt
+                        </a>
+                        <a class="bank-report-btn secondary" href="${rls.pbi_url}" target="_blank" style="font-size:10.5px;" title="Åpne direkte i Microsoft Teams rapportfane">
+                            🌐 Teams Månedsfane
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. EXCEL (FAST .XLSX) -->
+                <div class="bank-report-card card-excel">
+                    <div>
+                        <div class="bank-report-top">
+                            <span class="bank-report-badge">Excel FAST</span>
+                            <span style="font-size:10px; color:#047857; font-weight:700;">.xlsx</span>
+                        </div>
+                        <div class="bank-report-title">📗 Excel Finansmodell</div>
+                        <div style="font-size:10.5px; color:#047857; font-weight:700; margin-bottom:4px;">
+                            FAST Standard (M01–M12)
+                        </div>
+                        <div class="bank-report-desc">
+                            Månedlig kontoutskrift og transaksjonsjournal med periodisert årsramme, lønnsavstemming og vikarkalkyle.
+                        </div>
+                    </div>
+                    <div class="bank-report-actions">
+                        <a class="bank-report-btn primary" href="${xlsxFile}" download title="Last ned fullverdig Excel FAST månedsmodell">
+                            ⬇️ Last ned Modell (.xlsx)
+                        </a>
+                        <button class="bank-report-btn secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned månedens transaksjoner som CSV">
+                            📊 Eksporter Transaksjoner (.csv)
+                        </button>
+                        <a class="bank-report-btn secondary" href="reports/kristiansand_epm_modell_v4_interactive.xlsx" download style="font-size:10.5px;" title="Last ned interaktiv EPM totalmodell">
+                            📑 EPM Totalmodell (.xlsx)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. POWERPOINT (.PPTX) -->
+                <div class="bank-report-card card-pptx">
+                    <div>
+                        <div class="bank-report-top">
+                            <span class="bank-report-badge">PowerPoint</span>
+                            <span style="font-size:10px; color:#c2410c; font-weight:700;">.pptx</span>
+                        </div>
+                        <div class="bank-report-title">📙 PowerPoint Ledermøte</div>
+                        <div style="font-size:10.5px; color:#c2410c; font-weight:700; margin-bottom:4px;">
+                            16:9 Møtedeck (3 slides)
+                        </div>
+                        <div class="bank-report-desc">
+                            Månedsrapport-lysbilder for ledergruppe og styringsmøter med Tufte-grafer, årsaksanalyse og tiltak jf. § 14-5.
+                        </div>
+                    </div>
+                    <div class="bank-report-actions">
+                        <a class="bank-report-btn primary" href="${pptxFile}" download title="Last ned ferdig 16:9 PowerPoint presentasjonsdeck">
+                            ⬇️ Last ned Møtedeck (.pptx)
+                        </a>
+                        <button class="bank-report-btn secondary" onclick="openPptxPreviewModal('${unitId}')" title="Forhåndsvis presentasjonslysbildene direkte i nettleseren">
+                            👁️ Forhåndsvis Slides
+                        </button>
+                        <a class="bank-report-btn secondary" href="reports/epm_presentasjon_okonomidirektor_v2.pptx" download style="font-size:10.5px;" title="Last ned topplederpresentasjon">
+                            🏛️ Topplederdekk (.pptx)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. WORD (.DOCX) -->
+                <div class="bank-report-card card-word">
+                    <div>
+                        <div class="bank-report-top">
+                            <span class="bank-report-badge">Word Saksnotat</span>
+                            <span style="font-size:10px; color:#1d4ed8; font-weight:700;">.docx</span>
+                        </div>
+                        <div class="bank-report-title">📘 Word Avvik & Tiltak</div>
+                        <div style="font-size:10.5px; color:#1d4ed8; font-weight:700; margin-bottom:4px;">
+                            § 14-5 &amp; HTA § 4
+                        </div>
+                        <div class="bank-report-desc">
+                            Formelt avviksnotat, handlingsplan og drøftingsprotokoll med tillitsvalgte, ferdig utfylt med enhetens tall.
+                        </div>
+                    </div>
+                    <div class="bank-report-actions">
+                        <a class="bank-report-btn primary" href="${docxFile}" download title="Last ned offisielt Word-saksnotat (.docx)">
+                            ⬇️ Last ned Saksnotat (.docx)
+                        </a>
+                        <button class="bank-report-btn secondary" onclick="openWordPreviewModal('${unitId}')" title="Les saksnotatet i klarspråk direkte i huben">
+                            📝 Vis Klarspråknotat
+                        </button>
+                        <a class="bank-report-btn secondary" href="word/Avviksnotat_og_Handlingsplan_Enhetsleder_2026.docx" download style="font-size:10.5px;" title="Last ned standard handlingsplan">
+                            📄 Handlingsplan (.docx)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5. PDF (OFFISIELL A4 RAPPORT) -->
+                <div class="bank-report-card card-pdf">
+                    <div>
+                        <div class="bank-report-top">
+                            <span class="bank-report-badge">Offisiell PDF</span>
+                            <span style="font-size:10px; color:#b91c1c; font-weight:700;">.pdf</span>
+                        </div>
+                        <div class="bank-report-title">📕 Offisiell Månedsrapport</div>
+                        <div style="font-size:10.5px; color:#b91c1c; font-weight:700; margin-bottom:4px;">
+                            A4 Statuspakke (SHA-256)
+                        </div>
+                        <div class="bank-report-desc">
+                            Formell 2-siders godkjent månedsrapportpakke med sesongjustert prognose, tiltaksstatus og signaturfelt.
+                        </div>
+                    </div>
+                    <div class="bank-report-actions">
+                        <a class="bank-report-btn primary" href="${activePdf}" target="_blank" title="Åpne formell månedsrapport i PDF-format i ny fane">
+                            📄 Åpne Formell PDF
+                        </a>
+                        <button class="bank-report-btn secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre aktiv kontoutskrift som A4 PDF">
+                            🖨️ Skriv ut Kontoutskrift
+                        </button>
+                        <a class="bank-report-btn secondary" href="reports/monthly_pdf_packets/index.html" target="_blank" style="font-size:10.5px;" title="Åpne register over samtlige 81 PDF-rapporter">
+                            📑 Alle 81 Enhetsrapporter
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================================================
+        // INTERAKTIVE MODALER FOR MÅNEDSRAPPORTENE (PBI, PPTX, WORD)
+        // ==========================================================================
+
+        function openPbiInteractiveModal(unitId) {
+            currentPreviewUnitId = unitId || currentKontoUnit || "5200-ENH-401";
+            const rls = KONTO_RLS_REGISTRY[currentPreviewUnitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            const data = calculateBankStatementClient(currentPreviewUnitId, currentKontoMonth);
+
+            const modal = document.getElementById("pbi-report-modal");
+            const titleEl = document.getElementById("pbi-modal-title");
+            const subEl = document.getElementById("pbi-modal-sub");
+            const bodyEl = document.getElementById("pbi-modal-body");
+            const rlsFootEl = document.getElementById("pbi-modal-footer-rls");
+            const dlBtn = document.getElementById("pbi-modal-download-btn");
+            const teamsBtn = document.getElementById("pbi-modal-teams-btn");
+
+            if (!modal || !bodyEl) return;
+
+            if (titleEl) titleEl.innerHTML = `Power BI & Fabric Månedsrapport &bull; ${rls.enhet_navn}`;
+            if (subEl) subEl.innerHTML = `Autentisert: <strong>${rls.navn}</strong> (${rls.upn}) | RLS-Rolle: <strong>${rls.rls_rolle}</strong>`;
+            if (rlsFootEl) rlsFootEl.innerHTML = `🔒 RLS Sikkerhet: <code>Dim_Ansvar[ansvar_kode] == "${rls.ansvar_kode}"</code> | Fullmakt: kr ${Math.round(rls.fullmakt_nok).toLocaleString('nb-NO')}`;
+
+            if (dlBtn) dlBtn.href = rls.pbip_project;
+            if (teamsBtn) teamsBtn.href = rls.pbi_url;
+
+            // KPI-beregninger
+            const cpi = (data.netYtdSpent > 0) ? (data.annualBudget * (currentKontoMonth / 12) / data.netYtdSpent).toFixed(2) : "1.00";
+            const cpiColor = parseFloat(cpi) < 0.95 ? "#c0392b" : (parseFloat(cpi) < 1.00 ? "#d97706" : "#15803d");
+            const eac = Math.round(data.annualBudget / Math.max(0.5, parseFloat(cpi)));
+            const vac = data.annualBudget - eac;
+            const vacColor = vac < 0 ? "#c0392b" : "#15803d";
+
+            // S-Kurve SVG Simulasjon (Tufte Data-Ink)
+            const m = currentKontoMonth;
+            let svgPlannedPoints = [];
+            let svgActualPoints = [];
+            let w = 840, h = 180, padL = 60, padR = 30, padT = 20, padB = 30;
+            let plotW = w - padL - padR;
+            let plotH = h - padT - padB;
+
+            let cumBud = 0;
+            let cumAct = 0;
+            for (let i = 1; i <= 12; i++) {
+                const x = padL + (i - 1) * (plotW / 11);
+                cumBud += (data.annualBudget * KONTO_NORM_WEIGHTS[i - 1]);
+                const yBud = padT + plotH - (cumBud / (data.annualBudget * 1.25)) * plotH;
+                svgPlannedPoints.push(`${x},${yBud}`);
+
+                if (i <= m) {
+                    const drift = 1.0 + ((data.unit.variance_factor || 1.0) - 1.0) * (0.4 + 0.6 * (i / 12.0));
+                    cumAct += (data.annualBudget * KONTO_NORM_WEIGHTS[i - 1] * drift);
+                    const yAct = padT + plotH - (cumAct / (data.annualBudget * 1.25)) * plotH;
+                    svgActualPoints.push(`${x},${yAct}`);
+                }
+            }
+
+            bodyEl.innerHTML = `
+                <!-- Power BI Top KPI Cards -->
+                <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin-bottom:16px;">
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-top:3px solid #1b365d; border-radius:3px; padding:10px 12px;">
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700;">Tildelt Årsramme</div>
+                        <div style="font-size:17px; font-weight:800; font-family:'Segoe UI',monospace; color:#0f172a; margin-top:3px;">${formatNok(data.annualBudget)}</div>
+                        <div style="font-size:10px; color:#64748b; margin-top:2px;">Bystyrevedtak 2026</div>
+                    </div>
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-top:3px solid #c0392b; border-radius:3px; padding:10px 12px;">
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700;">Faktisk Forbruk YTD</div>
+                        <div style="font-size:17px; font-weight:800; font-family:'Segoe UI',monospace; color:#c0392b; margin-top:3px;">${formatNok(data.netYtdSpent)}</div>
+                        <div style="font-size:10px; color:#64748b; margin-top:2px;">Periodisert t.o.m. M${m}</div>
+                    </div>
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-top:3px solid #0284c7; border-radius:3px; padding:10px 12px;">
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700;">Disponibel Saldo</div>
+                        <div style="font-size:17px; font-weight:800; font-family:'Segoe UI',monospace; color:#0284c7; margin-top:3px;">${formatNok(data.availableBalance)}</div>
+                        <div style="font-size:10px; color:#64748b; margin-top:2px;">Rest for ${data.remainingMonths} mnd</div>
+                    </div>
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-top:3px solid ${cpiColor}; border-radius:3px; padding:10px 12px;">
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700;">CPI Kostnadsindeks</div>
+                        <div style="font-size:17px; font-weight:800; font-family:'Segoe UI',monospace; color:${cpiColor}; margin-top:3px;">${cpi}</div>
+                        <div style="font-size:10px; color:${cpiColor}; margin-top:2px;">${parseFloat(cpi) >= 1.0 ? '🟢 Innenfor ramme' : '🔴 Kostnadsoverskridelse'}</div>
+                    </div>
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-top:3px solid ${vacColor}; border-radius:3px; padding:10px 12px;">
+                        <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700;">EAC Sluttprognose</div>
+                        <div style="font-size:17px; font-weight:800; font-family:'Segoe UI',monospace; color:${vacColor}; margin-top:3px;">${formatNok(eac)}</div>
+                        <div style="font-size:10px; color:${vacColor}; margin-top:2px;">VAC: ${formatNok(vac)}</div>
+                    </div>
+                </div>
+
+                <!-- S-Kurve Visualisering -->
+                <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:14px; margin-bottom:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <div style="font-size:12px; font-weight:700; color:#1b365d; text-transform:uppercase;">
+                            📈 S-Kurve: Planlagt Budsjettbane vs Faktisk Akkumulert Forbruk (M01–M12)
+                        </div>
+                        <div style="font-size:11px; display:flex; gap:14px; align-items:center;">
+                            <span style="display:inline-flex; align-items:center; gap:5px;">
+                                <span style="display:inline-block; width:14px; height:2px; background:#64748b; border-top:1px dashed #64748b;"></span>
+                                <span>Periodisert Årsbudsjett</span>
+                            </span>
+                            <span style="display:inline-flex; align-items:center; gap:5px;">
+                                <span style="display:inline-block; width:14px; height:3px; background:${cpiColor};"></span>
+                                <span><strong>Faktisk Regnskap</strong></span>
+                            </span>
+                        </div>
+                    </div>
+                    <svg viewBox="0 0 ${w} ${h}" style="width:100%; height:auto; background:#fafafa; border-radius:3px;">
+                        <!-- X-akse måneder -->
+                        ${KONTO_MONTH_SHORT.map((name, i) => {
+                            const x = padL + i * (plotW / 11);
+                            return `<text x="${x}" y="${h - 8}" font-size="10" fill="#64748b" text-anchor="middle" font-family="'Segoe UI',sans-serif">${name}</text>`;
+                        }).join('')}
+                        <!-- Horisontale referanselinjer -->
+                        <line x1="${padL}" y1="${padT}" x2="${w - padR}" y2="${padT}" stroke="#e2e8f0" stroke-width="1" />
+                        <line x1="${padL}" y1="${padT + plotH / 2}" x2="${w - padR}" y2="${padT + plotH / 2}" stroke="#e2e8f0" stroke-width="1" />
+                        <line x1="${padL}" y1="${padT + plotH}" x2="${w - padR}" y2="${padT + plotH}" stroke="#cbd5e1" stroke-width="1.5" />
+                        
+                        <!-- Planned Budget Curve (Dashed) -->
+                        <polyline fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4 3" points="${svgPlannedPoints.join(' ')}" />
+                        
+                        <!-- Actual Expenditure Curve -->
+                        <polyline fill="none" stroke="${cpiColor}" stroke-width="3.5" points="${svgActualPoints.join(' ')}" />
+                        
+                        <!-- Active Month Marker -->
+                        <circle cx="${svgActualPoints[svgActualPoints.length-1].split(',')[0]}" cy="${svgActualPoints[svgActualPoints.length-1].split(',')[1]}" r="5" fill="${cpiColor}" stroke="#ffffff" stroke-width="2" />
+                    </svg>
+                </div>
+
+                <!-- KOSTRA Drilldown Artskontoer -->
+                <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:14px;">
+                    <div style="font-size:12px; font-weight:700; color:#1b365d; text-transform:uppercase; margin-bottom:8px;">
+                        🏛️ KOSTRA Driftsutgifter & Inntekter per M${m} 2026 (Hovedarter)
+                    </div>
+                    <table class="bank-trans-table" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th>KOSTRA Art / Kategori</th>
+                                <th class="num">Årsbudsjett</th>
+                                <th class="num">Periodisert M${m}</th>
+                                <th class="num">Faktisk YTD</th>
+                                <th class="num">Avvik (NOK)</th>
+                                <th class="num">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Art 1010: Fastlønn og faste tillegg</strong></td>
+                                <td class="num">${formatNok(data.annualBudget * 0.64)}</td>
+                                <td class="num">${formatNok(data.annualBudget * 0.64 * (m/12))}</td>
+                                <td class="num">${formatNok(data.netYtdSpent * 0.62)}</td>
+                                <td class="num" style="color:#15803d;">+142 000 kr</td>
+                                <td class="num"><span class="badge" style="background:#f0fdf4; color:#15803d;">I Balanse</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Art 1020: Vikarer & ekstrahjelp</strong></td>
+                                <td class="num">${formatNok(data.annualBudget * 0.12)}</td>
+                                <td class="num">${formatNok(data.annualBudget * 0.12 * (m/12))}</td>
+                                <td class="num" style="color:#c0392b;">${formatNok(data.netYtdSpent * 0.22)}</td>
+                                <td class="num" style="color:#c0392b; font-weight:700;">-1 420 000 kr</td>
+                                <td class="num"><span class="badge" style="background:#fdf2f2; color:#c0392b;">Merforbruk</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Art 1150: Driftsmateriell & kjøp</strong></td>
+                                <td class="num">${formatNok(data.annualBudget * 0.14)}</td>
+                                <td class="num">${formatNok(data.annualBudget * 0.14 * (m/12))}</td>
+                                <td class="num">${formatNok(data.netYtdSpent * 0.12)}</td>
+                                <td class="num" style="color:#15803d;">+80 000 kr</td>
+                                <td class="num"><span class="badge" style="background:#f0fdf4; color:#15803d;">I Balanse</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Art 1600/1690: NAV Refusjoner & brukerbetaling</strong></td>
+                                <td class="num" style="color:#15803d;">+${formatNok(data.annualBudget * 0.10)}</td>
+                                <td class="num" style="color:#15803d;">+${formatNok(data.annualBudget * 0.10 * (m/12))}</td>
+                                <td class="num" style="color:#15803d;">+${formatNok(data.netYtdSpent * 0.08)}</td>
+                                <td class="num" style="color:#d97706;">-95 000 kr</td>
+                                <td class="num"><span class="badge" style="background:#fef3c7; color:#d97706;">Etterslep NAV</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            modal.style.display = "flex";
+        }
+
+        function closePbiInteractiveModal() {
+            const modal = document.getElementById("pbi-report-modal");
+            if (modal) modal.style.display = "none";
+        }
+
+        function openPptxPreviewModal(unitId) {
+            currentPreviewUnitId = unitId || currentKontoUnit || "5200-ENH-401";
+            currentPptxSlide = 1;
+            const rls = KONTO_RLS_REGISTRY[currentPreviewUnitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            const modal = document.getElementById("pptx-preview-modal");
+            const titleEl = document.getElementById("pptx-modal-title");
+            const dlBtn = document.getElementById("pptx-modal-download-btn");
+
+            if (!modal) return;
+            if (titleEl) titleEl.innerHTML = `PowerPoint Ledermøte &bull; ${rls.enhet_navn} (${rls.navn})`;
+            if (dlBtn) dlBtn.href = rls.pptx_path || "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx";
+
+            renderPptxSlideContent(currentPptxSlide);
+            modal.style.display = "flex";
+        }
+
+        function closePptxPreviewModal() {
+            const modal = document.getElementById("pptx-preview-modal");
+            if (modal) modal.style.display = "none";
+        }
+
+        function switchPptxSlide(slideNum) {
+            currentPptxSlide = slideNum;
+            renderPptxSlideContent(slideNum);
+        }
+
+        function renderPptxSlideContent(slideNum) {
+            const bodyEl = document.getElementById("pptx-modal-body");
+            if (!bodyEl) return;
+            const rls = KONTO_RLS_REGISTRY[currentPreviewUnitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            const data = calculateBankStatementClient(currentPreviewUnitId, currentKontoMonth);
+
+            let slideInner = "";
+            if (slideNum === 1) {
+                slideInner = `
+                    <!-- Slide 1: Månedsstatus & Nøkkeltall -->
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:24px; min-height:360px; box-shadow:0 2px 6px rgba(0,0,0,0.06);">
+                        <div style="display:flex; justify-content:space-between; border-bottom:2px solid #1b365d; padding-bottom:10px; margin-bottom:16px;">
+                            <div>
+                                <span style="font-size:11px; font-weight:700; color:#ea580c; text-transform:uppercase;">LYSBILDE 1 AV 3 &bull; ØKONOMISTATUS M${currentKontoMonth} 2026</span>
+                                <h3 style="margin:4px 0 0 0; color:#1b365d; font-size:18px;">${rls.enhet_navn} — Status &amp; Saldo</h3>
+                            </div>
+                            <div style="text-align:right; font-size:11px; color:#64748b;">
+                                Ansvarlig: <strong>${rls.navn}</strong><br>
+                                Controller: <strong>${rls.controller_navn}</strong>
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-bottom:18px;">
+                            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:3px; padding:12px;">
+                                <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700;">Årsramme 2026</div>
+                                <div style="font-size:20px; font-weight:800; color:#1b365d; font-family:'Segoe UI',monospace;">${formatNok(data.annualBudget)}</div>
+                                <div style="font-size:10px; color:#64748b; margin-top:2px;">Vedtatt budsjett</div>
+                            </div>
+                            <div style="background:#fdf2f2; border:1px solid #fecaca; border-radius:3px; padding:12px;">
+                                <div style="font-size:10px; color:#c0392b; text-transform:uppercase; font-weight:700;">Hittil Brukt YTD</div>
+                                <div style="font-size:20px; font-weight:800; color:#c0392b; font-family:'Segoe UI',monospace;">${formatNok(data.netYtdSpent)}</div>
+                                <div style="font-size:10px; color:#c0392b; margin-top:2px;">Bokført per 31. oktober</div>
+                            </div>
+                            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:3px; padding:12px;">
+                                <div style="font-size:10px; color:#15803d; text-transform:uppercase; font-weight:700;">Disponibel Saldo</div>
+                                <div style="font-size:20px; font-weight:800; color:#15803d; font-family:'Segoe UI',monospace;">${formatNok(data.availableBalance)}</div>
+                                <div style="font-size:10px; color:#15803d; margin-top:2px;">Maks ${formatNok(data.monthlyAllowance)}/mnd</div>
+                            </div>
+                        </div>
+                        <div style="background:#f8fafc; border-left:4px solid #1b365d; padding:12px 14px; border-radius:0 3px 3px 0;">
+                            <strong style="color:#1b365d; font-size:12px;">Ledelsesoppsummering for møtet:</strong>
+                            <p style="font-size:12px; margin:4px 0 0 0; line-height:1.5; color:#334155;">
+                                Enheten har en gjenværende kredittramme på ${formatNok(data.availableBalance)}. Med gjeldende forbruksfart i oktober må vikartimer strammes inn med 15 % for å sikre balanse jf. Kommuneloven § 14-5.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            } else if (slideNum === 2) {
+                slideInner = `
+                    <!-- Slide 2: Avviksanalyse jf. Kommuneloven § 14-5 -->
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:24px; min-height:360px; box-shadow:0 2px 6px rgba(0,0,0,0.06);">
+                        <div style="display:flex; justify-content:space-between; border-bottom:2px solid #1b365d; padding-bottom:10px; margin-bottom:16px;">
+                            <div>
+                                <span style="font-size:11px; font-weight:700; color:#ea580c; text-transform:uppercase;">LYSBILDE 2 AV 3 &bull; ÅRSAKSANALYSE JF. § 14-5</span>
+                                <h3 style="margin:4px 0 0 0; color:#1b365d; font-size:18px;">Kostnadsdrivere &amp; Avviksvurdering</h3>
+                            </div>
+                            <div style="text-align:right; font-size:11px; color:#64748b;">
+                                Juridisk referanse: <strong>Kommuneloven § 14-5</strong>
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                            <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:4px; padding:12px 14px;">
+                                <strong style="color:#c0392b; font-size:12px;">🔴 Hoveddrivere til merforbruk:</strong>
+                                <ul style="margin:8px 0 0 16px; padding:0; font-size:11.5px; color:#334155; line-height:1.6;">
+                                    <li><strong>Vikarbruk ved høyt sykefravær:</strong> Vikarer utgjør ca. 22 % av samlet lønnskostnad.</li>
+                                    <li><strong>Forsinkede NAV-refusjoner:</strong> Utbetalinger for sykepenger etter dag 16 henger 4–6 uker etter.</li>
+                                    <li><strong>Økte strøm- og råvarepriser:</strong> Indeksregulering på fellesavtaler.</li>
+                                </ul>
+                            </div>
+                            <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:4px; padding:12px 14px;">
+                                <strong style="color:#15803d; font-size:12px;">🟢 Mindreforbruk &amp; Kompenserende poster:</strong>
+                                <ul style="margin:8px 0 0 16px; padding:0; font-size:11.5px; color:#334155; line-height:1.6;">
+                                    <li><strong>Fastlønn:</strong> Vakanser på 2 stillinger gir midlertidig mindreforbruk på kr 142 000.</li>
+                                    <li><strong>Innkjøpsdisiplin:</strong> Restriktive innkjøp av inventar og kurser.</li>
+                                    <li><strong>Tilleggsbevilgning:</strong> Mulig kompensasjon ved 2. tertialjustering.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:3px; padding:10px 14px; font-size:11.5px; color:#92400e;">
+                            ⚠️ <strong>§ 14-5 Merknad:</strong> Ved fare for negativt årsavvik (VAC &lt; 0) plikter virksomhetsleder å informere kommunalsjef og iverksette tiltak umiddelbart.
+                        </div>
+                    </div>
+                `;
+            } else {
+                slideInner = `
+                    <!-- Slide 3: Handlingsplan jf. HTA § 4 -->
+                    <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:24px; min-height:360px; box-shadow:0 2px 6px rgba(0,0,0,0.06);">
+                        <div style="display:flex; justify-content:space-between; border-bottom:2px solid #1b365d; padding-bottom:10px; margin-bottom:16px;">
+                            <div>
+                                <span style="font-size:11px; font-weight:700; color:#ea580c; text-transform:uppercase;">LYSBILDE 3 AV 3 &bull; HANDLINGSPLAN &amp; TILTAK</span>
+                                <h3 style="margin:4px 0 0 0; color:#1b365d; font-size:18px;">Strakstiltak &amp; Drøftingsprotokoll (HTA § 4)</h3>
+                            </div>
+                            <div style="text-align:right; font-size:11px; color:#64748b;">
+                                Drøftingsplikt: <strong>Fagforbundet &amp; Utdanningsforbundet</strong>
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:16px;">
+                            <div style="border:1px solid #cbd5e1; border-top:3px solid #1b365d; border-radius:3px; padding:10px 12px; background:#f8fafc;">
+                                <strong style="color:#1b365d; font-size:12px;">Tiltak 1: Vikarkontroll</strong>
+                                <p style="font-size:11px; color:#475569; margin:4px 0 0 0; line-height:1.45;">
+                                    Innfør personlig ledergodkjenning på alle ekstravakter og byråbestillinger fra dag 1.
+                                </p>
+                            </div>
+                            <div style="border:1px solid #cbd5e1; border-top:3px solid #1b365d; border-radius:3px; padding:10px 12px; background:#f8fafc;">
+                                <strong style="color:#1b365d; font-size:12px;">Tiltak 2: NAV Purring</strong>
+                                <p style="font-size:11px; color:#475569; margin:4px 0 0 0; line-height:1.45;">
+                                    Avstem GAT-fraværsliste mot Visma Lønn ukentlig for å innkassere utestående sykelønnsrefusjon.
+                                </p>
+                            </div>
+                            <div style="border:1px solid #cbd5e1; border-top:3px solid #1b365d; border-radius:3px; padding:10px 12px; background:#f8fafc;">
+                                <strong style="color:#1b365d; font-size:12px;">Tiltak 3: Turnusoptimalisering</strong>
+                                <p style="font-size:11px; color:#475569; margin:4px 0 0 0; line-height:1.45;">
+                                    Gjennomfør formelt drøftingsmøte jf. HTA § 4 med tillitsvalgte om forskyvning og oppgavedeling.
+                                </p>
+                            </div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#f0fdf4; border:1px solid #bbf7d0; padding:10px 14px; border-radius:3px; font-size:11.5px; color:#166534;">
+                            <span><strong>Estimert innsparingseffekt:</strong> kr 380 000 NOK i gjenværende måneder</span>
+                            <span style="font-weight:700;">✅ Tilstrekkelig for balanse</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            bodyEl.innerHTML = `
+                <!-- Slide Navigator Bar -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn btn-sm" onclick="switchPptxSlide(1)" style="background:${slideNum===1 ? 'var(--navy-dark)' : '#ffffff'}; color:${slideNum===1 ? '#ffffff' : '#334155'}; font-weight:${slideNum===1 ? '700' : 'normal'};">1. Nøkkeltall & Status</button>
+                        <button class="btn btn-sm" onclick="switchPptxSlide(2)" style="background:${slideNum===2 ? 'var(--navy-dark)' : '#ffffff'}; color:${slideNum===2 ? '#ffffff' : '#334155'}; font-weight:${slideNum===2 ? '700' : 'normal'};">2. Årsaksanalyse (§ 14-5)</button>
+                        <button class="btn btn-sm" onclick="switchPptxSlide(3)" style="background:${slideNum===3 ? 'var(--navy-dark)' : '#ffffff'}; color:${slideNum===3 ? '#ffffff' : '#334155'}; font-weight:${slideNum===3 ? '700' : 'normal'};">3. Handlingsplan (HTA § 4)</button>
+                    </div>
+                    <div style="font-size:11px; color:#64748b;">
+                        Lysbilde <strong>${slideNum}</strong> av 3
+                    </div>
+                </div>
+
+                ${slideInner}
+            `;
+        }
+
+        function openWordPreviewModal(unitId) {
+            currentPreviewUnitId = unitId || currentKontoUnit || "5200-ENH-401";
+            const rls = KONTO_RLS_REGISTRY[currentPreviewUnitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            const data = calculateBankStatementClient(currentPreviewUnitId, currentKontoMonth);
+
+            const modal = document.getElementById("word-preview-modal");
+            const titleEl = document.getElementById("word-modal-title");
+            const bodyEl = document.getElementById("word-modal-body");
+            const dlBtn = document.getElementById("word-modal-download-btn");
+
+            if (!modal || !bodyEl) return;
+            if (titleEl) titleEl.innerHTML = `Word Saksnotat &bull; ${rls.enhet_navn}`;
+            if (dlBtn) dlBtn.href = rls.docx_path || "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx";
+
+            bodyEl.innerHTML = `
+                <div style="border-bottom:2px solid #1b365d; padding-bottom:12px; margin-bottom:18px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <div style="font-size:13px; font-weight:800; color:#1b365d; letter-spacing:0.5px;">KRISTIANSAND KOMMUNE</div>
+                            <div style="font-size:11px; color:#64748b; text-transform:uppercase;">${rls.sektor_navn || rls.kommunalsjefomrade} &bull; ${rls.enhet_navn}</div>
+                        </div>
+                        <div style="text-align:right; font-size:11px; color:#64748b;">
+                            Dato: <strong>31.10.2026</strong><br>
+                            Arkivsak: <strong>26/0418-EPM</strong>
+                        </div>
+                    </div>
+                    <h2 style="font-size:17px; color:#1b365d; margin:14px 0 4px 0;">MÅNEDSRAPPORT OG AVVIKSVURDERING JF. KOMMUNELOVEN § 14-5</h2>
+                    <div style="font-size:12px; color:#475569;">
+                        Budsjettansvarlig: <strong>${rls.navn}</strong> (${rls.tittel}) &bull; Sektorcontroller: <strong>${rls.controller_navn}</strong>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:14px;">
+                    <h4 style="font-size:13px; color:#1b365d; margin:0 0 4px 0;">1. BAKGRUNN OG RETTSLIG GRUNNLAG</h4>
+                    <p style="margin:0 0 8px 0; font-size:12.5px; line-height:1.6;">
+                        Denne rapporten utarbeides i henhold til <strong>Kommuneloven § 14-5</strong> om krav til realistisk budsjettering og løpende budsjettkontroll, samt kommunens økonomireglement. Enhetsleder skal ved vesentlige avvik rapportere årsak og iverksette kompenserende tiltak.
+                    </p>
+                </div>
+
+                <div style="margin-bottom:14px;">
+                    <h4 style="font-size:13px; color:#1b365d; margin:0 0 4px 0;">2. ØKONOMISK STATUS PER OKTOBER 2026</h4>
+                    <p style="margin:0 0 8px 0; font-size:12.5px; line-height:1.6;">
+                        Enheten har en vedtatt årsramme for 2026 på <strong>${formatNok(data.annualBudget)}</strong>. Samlet netto forbruk per 31. oktober utgjør <strong>${formatNok(data.netYtdSpent)}</strong>. Disponibel saldo for årets to siste måneder er <strong>${formatNok(data.availableBalance)}</strong>, som gir et månedlig rådighetsbeløp på <strong>${formatNok(data.monthlyAllowance)}</strong> per måned.
+                    </p>
+                </div>
+
+                <div style="margin-bottom:14px;">
+                    <h4 style="font-size:13px; color:#1b365d; margin:0 0 4px 0;">3. ÅRSAKSVURDERING OG KOSTNADSDRIVERE</h4>
+                    <p style="margin:0 0 8px 0; font-size:12.5px; line-height:1.6;">
+                        Avviket skyldes primært høyt sykefravær som har utløst behov for innleie av vikarer (art 1020). Videre er det et tidsmessig etterslep på inntektsføring av sykelønnsrefusjoner fra NAV (art 1600). Enheten har god disiplin på faste lønninger og ordinære varekjøp.
+                    </p>
+                </div>
+
+                <div style="margin-bottom:14px;">
+                    <h4 style="font-size:13px; color:#1b365d; margin:0 0 4px 0;">4. SAMARBEID MED TILLITSVALGTE (HTA § 4)</h4>
+                    <p style="margin:0 0 8px 0; font-size:12.5px; line-height:1.6;">
+                        Det er avholdt drøftingsmøte med tillitsvalgte fra Fagforbundet og Utdanningsforbundet jf. Hovedtariffavtalens § 4. Partene er enige om å prioritere intern omfordeling av oppgaver før eksterne vikarer kalles inn.
+                    </p>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:4px; padding:12px 16px; margin-top:14px;">
+                    <h4 style="font-size:13px; color:#1b365d; margin:0 0 6px 0;">5. ENHETSLEDERENS FORSLAG TIL VEDTAK:</h4>
+                    <ol style="margin:0 0 0 18px; padding:0; font-size:12px; line-height:1.6; color:#0f172a;">
+                        <li>Månedsrapporten for oktober 2026 tas til etterretning.</li>
+                        <li>Strakstiltak om forhåndsgodkjenning av vikarvakter og oppfølging av NAV-refusjoner videreføres ut året.</li>
+                        <li>Dersom prognosen per 15. november indikerer fortsatt merforbruk, fremmes sak om rammejustering til kommunalsjefen.</li>
+                    </ol>
+                </div>
+            `;
+
+            modal.style.display = "flex";
+        }
+
+        function closeWordPreviewModal() {
+            const modal = document.getElementById("word-preview-modal");
+            if (modal) modal.style.display = "none";
+        }
+
+        function copyWordModalText() {
+            const bodyEl = document.getElementById("word-modal-body");
+            if (bodyEl) {
+                navigator.clipboard.writeText(bodyEl.innerText).then(() => {
+                    showToast("📋 Saksnotat kopiert til utklippstavlen!");
+                }).catch(() => {
+                    showToast("⚠️ Kunne ikke kopiere tekst automatisk.");
+                });
+            }
+        }
+
+
         function renderBankStatement(unitId, monthNum) {
+            if (typeof updateBankRlsIdentityPanel === "function") updateBankRlsIdentityPanel(unitId || currentKontoUnit);
+            if (typeof renderBankMonthlyReportSuite === "function") renderBankMonthlyReportSuite(unitId || currentKontoUnit, monthNum || currentKontoMonth);
             currentKontoUnit = unitId || currentKontoUnit || "5200-ENH-401";
             currentKontoMonth = monthNum || currentKontoMonth || 10;
 
@@ -11084,9 +13165,11 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             renderBankStatement(currentKontoUnit, currentKontoMonth);
             const pdfBtn = document.getElementById("btn-apne-pdf-rapport");
             if (pdfBtn) {
-                pdfBtn.href = `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M9_2026.pdf`;
+                const rls = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+                pdfBtn.href = rls?.pdf_path || `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M9_2026.pdf`;
             }
-            showToast(`🏦 Viser kontoutskrift for ${KONTO_UNITS_REGISTRY[unitId]?.enhet_navn || unitId}`);
+            const rlsInfo = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            showToast(`🏛️ Viser kontoutskrift og 5 månedsrapporter for ${rlsInfo?.enhet_navn || unitId} (RLS: ${rlsInfo?.rls_rolle || 'Aktiv'})`);
         }
 
         function onBankMonthClick(monthNum) {
@@ -20714,120 +22797,8 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                 recalcKonsernKalkulator();
             }
         }
-        }
 
 
-// ==============================================================================
-// ROLLEBASERT HOVEDNAVIGASJON (4 PERSONA-FANER)
-// jf. AI_KOM_layout_og_navigasjon.md
-// ==============================================================================
-const HUB_PERSONA_TABS = ['min-enhet', 'sektor-konsern', 'controller-hub', 'veiledere-maler'];
-
-const SECTION_TO_TAB_MAP = {
-    'nettbank-kontoutskrift-seksjon': 'min-enhet',
-    'workflow-cycle-banner': 'min-enhet',
-    'mote-rapportering-seksjon': 'min-enhet',
-    'sektor-seksjon': 'sektor-konsern',
-    'kpi-seksjon-container': 'sektor-konsern',
-    'kpi-seksjon': 'sektor-konsern',
-    'triage-seksjon': 'sektor-konsern',
-    'saksflyt': 'sektor-konsern',
-    'avvik-seksjon': 'controller-hub',
-    'budsjett-modul-seksjon': 'controller-hub',
-    'powerbi-showcase': 'controller-hub',
-    'rag-seksjon': 'controller-hub',
-    'vectordb-panel': 'controller-hub',
-    'dokumentbank': 'veiledere-maler',
-    'timeline-section': 'veiledere-maler'
-};
-
-function openTab(tabKey, updateHash) {
-    if (updateHash === undefined) updateHash = true;
-    if (!HUB_PERSONA_TABS.includes(tabKey)) {
-        tabKey = 'min-enhet';
-    }
-
-    HUB_PERSONA_TABS.forEach(key => {
-        const btn = document.getElementById('tab-btn-' + key);
-        const sideBtn = document.getElementById('side-tab-' + key);
-        const pane = document.getElementById('tab-' + key);
-        if (btn) {
-            if (key === tabKey) {
-                btn.classList.add('active');
-                btn.setAttribute('aria-selected', 'true');
-            } else {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-selected', 'false');
-            }
-        }
-        if (sideBtn) {
-            if (key === tabKey) {
-                sideBtn.classList.add('active');
-            } else {
-                sideBtn.classList.remove('active');
-            }
-        }
-        if (pane) {
-            if (key === tabKey) {
-                pane.classList.add('active');
-                pane.style.display = 'block';
-            } else {
-                pane.classList.remove('active');
-                pane.style.display = 'none';
-            }
-        }
-    });
-
-    try {
-        localStorage.setItem('aikom_active_tab', tabKey);
-    } catch (e) {}
-
-    if (updateHash && window.location.hash !== '#' + tabKey) {
-        history.replaceState(null, '', '#' + tabKey);
-    }
-
-    setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-    }, 50);
-}
-
-// Intercept navigateToSection for cross-tab switching
-window.navigateToSection = function(sectionId, toastMsg) {
-    const targetTab = SECTION_TO_TAB_MAP[sectionId];
-    if (targetTab) {
-        openTab(targetTab, false);
-    }
-    setTimeout(() => {
-        const sec = document.getElementById(sectionId);
-        if (sec) {
-            sec.scrollIntoView({ behavior: 'smooth' });
-            sec.classList.remove("element-highlight-pulse");
-            void sec.offsetWidth;
-            sec.classList.add("element-highlight-pulse");
-        }
-        if (toastMsg && typeof showToast === 'function') showToast(toastMsg);
-    }, 60);
-};
-
-// Initialize active tab on page load
-document.addEventListener('DOMContentLoaded', () => {
-    let initialTab = 'min-enhet';
-    const hash = window.location.hash.replace('#', '');
-    if (HUB_PERSONA_TABS.includes(hash)) {
-        initialTab = hash;
-    } else if (SECTION_TO_TAB_MAP[hash]) {
-        initialTab = SECTION_TO_TAB_MAP[hash];
-    } else {
-        try {
-            const saved = localStorage.getItem('aikom_active_tab');
-            if (HUB_PERSONA_TABS.includes(saved)) initialTab = saved;
-        } catch (e) {}
-    }
-    openTab(initialTab, false);
-    if (hash && SECTION_TO_TAB_MAP[hash]) {
-        setTimeout(() => window.navigateToSection(hash), 120);
-    }
-});
 
 // ==============================================================================
 // ROLLEBASERT HOVEDNAVIGASJON (4 PERSONA-FANER)
