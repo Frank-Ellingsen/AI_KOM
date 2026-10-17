@@ -294,6 +294,25 @@ For virksomheter som ønsker en **leverandøruavhengig, flyttbar standard**, ink
 
 ---
 
+## ⚡ Antigravity Backend Engine Module (`antigravity_backend_module_pakke/`)
+
+[`antigravity_backend_module_pakke/`](./antigravity_backend_module_pakke/) utgjør den tekniske mikrotjeneste- og backend-spesifikasjonen (v2.4.0) for enterprise-drift av AI_KOM:
+* **[`ANTIGRAVITY_backend_architecture.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_backend_architecture.md)**: Teknisk systemarkitektur: FastAPI router, Polars/DuckDB in-memory analytisk motor, Celery/Redis bakgrunnskø og Stage-Gate Port 9 audit motor.
+* **[`ANTIGRAVITY_data_pipeline_and_connectors.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_data_pipeline_and_connectors.md)**: Integrasjonskonnektorer for Visma Enterprise ERP, Framsikt API (REST/GraphQL) og SSB KOSTRA, med lokal HMAC-SHA256 PII-maskering.
+* **[`ANTIGRAVITY_ai_rag_services.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_ai_rag_services.md)**: Grounded RAG-arkitektur, semantisk oppstykking, Qdrant/sqlite-vec vektorindeksering og Stage-Gate Port 9 godkjenningsflyt.
+* **[`ANTIGRAVITY_api_spec_and_deployment.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_api_spec_and_deployment.md)**: RESTful OpenAPI 3.1 endepunkter (`/api/v1/finance`, `/api/v1/ai`, `/api/v1/governance`), produksjonsklar `Dockerfile` og Kubernetes manifest.
+
+---
+
+## 🧭 AI_KOM Layout, Navigasjon & MLOps Governance (`AI_KOM_MLOps_og_Navigasjon_pakke/`)
+
+[`AI_KOM_MLOps_og_Navigasjon_pakke/`](./AI_KOM_MLOps_og_Navigasjon_pakke/) definerer layoutstrukturen og sporbarhetsmodellen for webportalen:
+* **[`AI_KOM_layout_og_navigasjon-v2.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_layout_og_navigasjon-v2.md)**: Hovedspesifikasjon for portalens 4-fasede rollebaserte navigasjon (Fane 1: Min Enhet, Fane 2: Sektor & Konsern, Fane 3: Controller Hub, Fane 4: Veiledere & Maler).
+* **[`AI_KOM_MLOps_og_Data_Lineage.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_MLOps_og_Data_Lineage.md)**: Full sporbarhet (End-to-End Lineage Graph) fra rådata i Visma/Framsikt -> DAX Måltall -> RAG Vektorindeks -> AI Sak med SHA-256 kryptografisk revisjonsstempel.
+* **[`README.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/README.md)**: Pakkeoversikt og sjekkliste mot live GitHub Pages-portal.
+
+---
+
 ## 📄 Lisens & Eierskap
 
 Utviklet for og av **Kristiansand kommune**. Tilgjengelig under **MIT-lisensen** for fri gjenbruk og tilpasning i norske kommuner, fylkeskommuner og offentlige virksomheter.

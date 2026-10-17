@@ -30,6 +30,12 @@ python tools/run_tool.py server --port 8000
 
 # 6. Parse dokument (PDF / Word / Excel) til strukturert tekst
 python tools/run_tool.py parse <sti-til-fil>
+
+# 7. Generer månedlige PDF-lederpakker for budsjettansvarlige
+python tools/run_tool.py pdf-report --month 9 --all
+
+# 8. Bygg individuelle rapportarkiver for alle 41 budsjettansvarlige
+python tools/run_tool.py arkiv
 ```
 
 ---
@@ -74,3 +80,4 @@ Hver spesifikasjon dokumenterer protokoll og arkitektur for AI-agentene:
 1. **Lokal Data-Lagring**: All regnskapsinformasjon behandles utelukkende lokalt i `erp_data/kommune_golden_record.db`.
 2. **Uforanderlig Logg**: Beregninger og revisjonsrapporter forsegles med kryptografisk SHA-256 kontrollsum.
 3. **Avviksfokus**: Terminalutskrifter og rapporter fremhever kun avvik uten visuell støy.
+4. **Token-Effektivitet (CLI vs MCP)**: Autonome agenter eksekverer oppgaver via CLI (`run_tool.py`) for å eliminere JSON-schema overhead i prompten. MCP reserveres for eksterne chat-klienter.

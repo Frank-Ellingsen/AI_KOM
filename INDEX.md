@@ -21,6 +21,8 @@
 * [11. Framsikt EPM & Budsjettstyring (`budsjett-framsikt/`)](#11-framsikt-epm--budsjettstyring-budsjett-framsikt)
 * [12. Generisk Enterprise AI Pilot-Pakke (`generic-ai-pilot-pakke/`)](#12-generisk-enterprise-ai-pilot-pakke-generic-ai-pilot-pakke)
 * [13. Antigravity & MS Copilot Pilot Subprosjekt (`antigravity-ms-pilot/`)](#13-antigravity--ms-copilot-pilot-subprosjekt-antigravity-ms-pilot)
+* [14. Antigravity Backend Engine Module (`antigravity_backend_module_pakke/`)](#14-antigravity-backend-engine-module-antigravity_backend_module_pakke)
+* [15. AI_KOM Layout, Navigasjon & MLOps Governance (`AI_KOM_MLOps_og_Navigasjon_pakke/`)](#15-ai_kom-layout-navigasjon--mlops-governance-ai_kom_mlops_og_navigasjon_pakke)
 
 ---
 
@@ -256,5 +258,31 @@ Samtlige 18 maler foreligger i to formater: **Produksjonsformat** (.docx / .xlsx
 | **Automatisert Testsuite** | Pytest-tester for PII, token limits, RAG og revisjon | [`antigravity-ms-pilot/tests/test_pilot_subproject.py`](./antigravity-ms-pilot/tests/test_pilot_subproject.py) |
 | **Kristiansand Promptsett** | KOSTRA- og vikaravviksprompter for Excel `=PY` og Teams | [`antigravity-ms-pilot/prompts/01_promptsett-m365-copilot-kostra.md`](./antigravity-ms-pilot/prompts/01_promptsett-m365-copilot-kostra.md) |
 | **Fasitsett (Evals)** | Ground truth fasitsett for Kristiansand kommune | [`antigravity-ms-pilot/evals/01_ground_truth_eval_template.json`](./antigravity-ms-pilot/evals/01_ground_truth_eval_template.json) |
+
+---
+
+## 14. Antigravity Backend Engine Module (`antigravity_backend_module_pakke/`)
+
+> **Teknisk mikrotjeneste- og backend-spesifikasjon (v2.4.0) for enterprise AI_KOM-arkitektur.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **Backend Arkitektur & Spesifikasjon** | FastAPI router, Polars/DuckDB motor, Celery/Redis og Stage-Gate Port 9 audit | [`antigravity_backend_module_pakke/ANTIGRAVITY_backend_architecture.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_backend_architecture.md) |
+| **Konnektorer & ETL Dataflyt** | Integrasjon mot Visma Enterprise, Framsikt API og SSB KOSTRA med PII-maskering | [`antigravity_backend_module_pakke/ANTIGRAVITY_data_pipeline_and_connectors.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_data_pipeline_and_connectors.md) |
+| **AI, RAG & Governance Services** | Grounded RAG-arkitektur, Qdrant/sqlite-vec, og Stage-Gate Port 9 godkjenning | [`antigravity_backend_module_pakke/ANTIGRAVITY_ai_rag_services.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_ai_rag_services.md) |
+| **API Spesifikasjon & DevOps** | OpenAPI 3.1 REST-endepunkter (`/api/v1`), produksjons-Dockerfile og CI/CD | [`antigravity_backend_module_pakke/ANTIGRAVITY_api_spec_and_deployment.md`](./antigravity_backend_module_pakke/ANTIGRAVITY_api_spec_and_deployment.md) |
+
+---
+
+## 15. AI_KOM Layout, Navigasjon & MLOps Governance (`AI_KOM_MLOps_og_Navigasjon_pakke/`)
+
+> **Layoutspesifikasjon for portalens 4 persona-faner, Data Lineage graf og MLOps livsløp.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **Portallayout & Navigasjon (v2)** | 4-faset struktur: Min Enhet, Sektor & Konsern, Controller Hub, Veiledere & Maler | [`AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_layout_og_navigasjon-v2.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_layout_og_navigasjon-v2.md) |
+| **MLOps, Data Lineage & Governance** | End-to-End sporbarhet: Visma -> Framsikt -> DAX -> RAG -> Sak med SHA-256 | [`AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_MLOps_og_Data_Lineage.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_MLOps_og_Data_Lineage.md) |
+| **Pakkeoversikt (README)** | Dokumentpakke for layout, navigasjon og MLOps mot GitHub Pages | [`AI_KOM_MLOps_og_Navigasjon_pakke/README.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/README.md) |
+
 
 

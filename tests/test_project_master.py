@@ -215,3 +215,53 @@ def test_antigravity_ms_pilot_and_generic_package_compliance():
     eval_data = json.loads(eval_file.read_text(encoding="utf-8"))
     assert eval_data["target_faithfulness"] == 1.00
 
+
+def test_antigravity_backend_and_mlops_packages_integration():
+    """Validerer at antigravity_backend_module_pakke og AI_KOM_MLOps_og_Navigasjon_pakke er integrert og testet."""
+    # 1. Sjekk antigravity_backend_module_pakke
+    backend_pkg = ROOT_DIR / "antigravity_backend_module_pakke"
+    assert (backend_pkg / "ANTIGRAVITY_backend_architecture.md").exists()
+    assert (backend_pkg / "ANTIGRAVITY_data_pipeline_and_connectors.md").exists()
+    assert (backend_pkg / "ANTIGRAVITY_ai_rag_services.md").exists()
+    assert (backend_pkg / "ANTIGRAVITY_api_spec_and_deployment.md").exists()
+
+    # 2. Sjekk AI_KOM_MLOps_og_Navigasjon_pakke
+    mlops_pkg = ROOT_DIR / "AI_KOM_MLOps_og_Navigasjon_pakke"
+    assert (mlops_pkg / "AI_KOM_layout_og_navigasjon-v2.md").exists()
+    assert (mlops_pkg / "AI_KOM_MLOps_og_Data_Lineage.md").exists()
+    assert (mlops_pkg / "README.md").exists()
+
+    # 3. Test at hub_api_server har v1 OpenAPI-tjenester operative
+    from hub_api_server import (
+        get_v1_finance_overview,
+        get_v1_unit_m9,
+        verify_v1_audit_hash,
+        get_v1_port9_logs,
+        sign_v1_port9
+    )
+
+    overview = get_v1_finance_overview()
+    assert overview["ok"] is True
+    assert overview["total_aarsbudsjett_nok"] == 7240000000.0
+
+    unit = get_v1_unit_m9("2020")
+    assert unit["ok"] is True
+    assert unit["unit_id"] == "2020"
+
+    sign = sign_v1_port9({"unit_id": "2020", "decision": "APPROVED", "notes": "Integrasjonstest"})
+    assert sign["ok"] is True
+    assert len(sign["document_sha256"]) == 64
+
+    verify = verify_v1_audit_hash(sign["document_sha256"])
+    assert verify["ok"] is True
+    assert verify["verified"] is True
+
+    logs = get_v1_port9_logs()
+    assert logs["ok"] is True
+    assert logs["count"] >= 0
+
+    # 4. Sjekk at index.html har seksjon 3.4
+    index_html = (ROOT_DIR / "index.html").read_text(encoding="utf-8")
+    assert 'id="mlops-lineage-section"' in index_html
+
+

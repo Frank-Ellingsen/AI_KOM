@@ -35,6 +35,14 @@ Welcome to the **Kristiansand Kommune AI Project Controller Hub** codebase. This
 * **HTA § 4 & AML § 10-12**: Staffing reorganizations, long shifts (12.5h), and overtime require formal consultation protocols with employee unions.
 * **Stage-Gate Port 9 (HITL)**: All AI recommendations require named human sign-off (APPROVED, MODIFIED, REJECTED) with cryptographic SHA-256 sealing.
 
+### D. Token Economics & Execution: CLI vs. MCP
+* **CLI-First for Agents**: Autonomous agents MUST prioritize unified CLI commands (`python tools/run_tool.py <command>`) over fine-grained MCP calls.
+  * **Zero Schema Overhead**: Using a single execution tool avoids loading 2,000–5,000 tokens of MCP tool schemas into every prompt turn.
+  * **Progressive Disclosure**: Detailed arguments and usage are resolved just-in-time via `--help` or lean skill playbooks.
+  * **Tufte Payload Filtering**: CLI tools output concise, formatted summaries instead of dumping multi-megabyte raw JSON payloads into the conversation transcript.
+* **MCP for External Clients**: Model Context Protocol servers (`kommune_ai_guardrails.mcp_server`) are strictly reserved for external zero-trust interactive UI clients (e.g. Streamlit sidebar chat, Excel add-ins), not for autonomous agent loop operations.
+
+
 ---
 
 ## 3. Customization Architecture (`.agents/`)
@@ -77,7 +85,9 @@ This repository is fully configured for Antigravity native progressive disclosur
 | :--- | :--- | :--- |
 | **`.agents/`** | Antigravity AI Customizations | 19 native skills, 3 rule files, progressive disclosure |
 | **`agenter/`** | 12 Agent Role Specifications | Detailed roles for ETL, DAX, RAG, Controller, etc. |
+| **`AI_KOM_MLOps_og_Navigasjon_pakke/`** | Layout, Navigasjon & MLOps Governance | 4-faset navigasjonsstruktur (Min Enhet, Sektor, Controller, Veiledere), Data Lineage (SHA-256) |
 | **`ai-implementeringspakke-okonomi/`** | Municipal AI Implementation Guide | 9-part handbook (modul 00–08) for governance, ROI & roadmap |
+| **`antigravity_backend_module_pakke/`** | Antigravity Core Backend Engine (v2.4) | FastAPI router, Polars/DuckDB data engine, Celery task queue, Qdrant/RAG, Stage-Gate Port 9 audit |
 | **`antigravity-ms-pilot/`** | M365 Copilot & Antigravity Subproject | Subproject Python motor (`src/`), `run_pilot.py`, PII-vask, evaluatorer og tester |
 | **`app/`** | Web Applications & APIs | FastAPI server, Streamlit pilots, UI components |
 | **`archive/`** | Historical Backups & Scratch | `backups/`, legacy exports |
