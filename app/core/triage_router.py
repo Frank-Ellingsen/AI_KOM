@@ -38,13 +38,30 @@ class TriageRouter:
         ]
         self.rag_patterns = [
             re.compile(r"kommunelov|økonomireglement|forskrift|høp|hjemmel", re.IGNORECASE),
-            re.compile(r"paragraf|§|selvkostforskrift", re.IGNORECASE),
-            re.compile(r"arbeidsmiljølov|hta|hovedtariffavtale", re.IGNORECASE),
+            re.compile(r"paragraf|§|selvkost|kalkylerente|swaprente", re.IGNORECASE),
+            re.compile(r"arbeidsmiljølov|hta|hovedtariffavtale|turnus|langvakt|12,5", re.IGNORECASE),
+            re.compile(r"sykepengerefusjon|refusjon.*nav|bruttoprinsipp|art 1020|art 1700|art 1710", re.IGNORECASE),
+            re.compile(r"drift.*investering|investering.*drift|krs 4|lånefinansier|låneforbud|taktekking|asfalter|heisskifte", re.IGNORECASE),
+            re.compile(r"anvisning|fullmakt|delegering|beløpsgrense|avviksnotat", re.IGNORECASE),
+            re.compile(r"momskompensasjon|justeringsavtale|justeringsforpliktelse|mva.*leie", re.IGNORECASE),
+            re.compile(r"lærernorm|pedagognorm|gratisprinsipp|opplæringslov", re.IGNORECASE),
+            re.compile(r"imdi|integreringstilskudd|revisjonsattestasjon|statlig.*tilskudd|øremerket", re.IGNORECASE),
+            re.compile(r"premieavvik|klp|spk|pensjonspremie|sosiale kostnader|årsverk|stillingshjemmel", re.IGNORECASE),
+            re.compile(r"kostra|ssb.*15|dim_ansvar|egenandel|egenbetaling|vederlag", re.IGNORECASE),
+            re.compile(r"gebyr|betalingsregulativ|brukerbetaling|selvkostkalkyle", re.IGNORECASE),
+            re.compile(r"tilskudd|statsforvalter|helsedirektorat|bufdir|enova|tilbakebetal", re.IGNORECASE),
+            re.compile(r"merforbruk|mindreforbruk|budsjettregulering|tilleggsbevilgning|avviksbehandling", re.IGNORECASE),
+            re.compile(r"disposisjonsfond|driftsfond|bundet.*fond|netto driftsresultat|tbu", re.IGNORECASE),
+            re.compile(r"finansreglement|rentefølsomhet|nibor|kassakreditt|lånegjeld", re.IGNORECASE),
+            re.compile(r"renovasjon|kloakk|vannverk|renseanlegg|avfallsforbrenning", re.IGNORECASE),
+            re.compile(r"leirskole|foreldrebetaling|skoleskyss|fosterhjem", re.IGNORECASE),
+            re.compile(r"skatteinngang|skatteøre|frie inntekter|inntektssystem|rnb|statsbudsjett", re.IGNORECASE),
         ]
         self.skill_patterns = [
             re.compile(r"ompostering|korreksjon|generer|lag excel|lag word|saksfremlegg|mva-test|mva-balanse", re.IGNORECASE),
             re.compile(r"trigg|push button|run ingestion|ingester", re.IGNORECASE),
             re.compile(r"prognose|monte carlo|p10|p50|p90|eac", re.IGNORECASE),
+            re.compile(r"beregn nav|kalkuler nav|beregn refusjon|krs 4 matrise|beregn selvkost|beregn justering|beregn lønn", re.IGNORECASE),
         ]
 
     def _generate_audit_hash(self, request: TriageRequest, category: str) -> str:
@@ -107,8 +124,16 @@ class TriageRouter:
             tags = ["okonomireglement"]
             if "kommunelov" in prompt_text.lower() or "§" in prompt_text:
                 tags.append("kommuneloven")
-            if "arbeidsmiljølov" in prompt_text.lower() or "hta" in prompt_text.lower():
+            if "arbeidsmiljølov" in prompt_text.lower() or "hta" in prompt_text.lower() or "langvakt" in prompt_text.lower():
                 tags.append("hta_aml")
+            if "sykepenge" in prompt_text.lower() or "refusjon" in prompt_text.lower() or "nav" in prompt_text.lower():
+                tags.append("nav_sykepenger")
+            if "selvkost" in prompt_text.lower() or "swap" in prompt_text.lower():
+                tags.append("selvkost")
+            if "krs" in prompt_text.lower() or "investering" in prompt_text.lower() or "asfalter" in prompt_text.lower():
+                tags.append("krs4_investering")
+            if "mva" in prompt_text.lower() or "justering" in prompt_text.lower():
+                tags.append("mva_justering")
             rag_filters = {"jurisdiction": "Kristiansand", "tags": tags}
             skill_target = None
 

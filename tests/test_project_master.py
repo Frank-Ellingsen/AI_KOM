@@ -525,6 +525,109 @@ def test_municipal_advisor_knowledge_and_vector_expansion():
     assert len(search_res["results"]) > 0
 
 
+def test_municipal_advisor_decision_calculators_and_stresstest():
+    """Validerer økonomirådgiverens beslutningskalkulatorer, triage-nøyaktighet og stresstestmotor."""
+    from app.services.municipal_calculator_service import MunicipalCalculatorService
+    from app.schemas.calculator import (
+        NavGapRequest,
+        Krs4Request,
+        SelvkostVarRequest,
+        Mva10yRequest,
+    )
+    from app.core.triage_router import TriageRouter
+    from app.schemas.triage import TriageRequest, TriageCategory
+    from tools.hub_api_server import (
+        calculate_v1_nav_gap,
+        evaluate_v1_krs4,
+        calculate_v1_selvkost_var,
+        calculate_v1_mva_10y,
+    )
+
+    svc = MunicipalCalculatorService()
+
+    # 1. Test NAV-gap beregning (Bruttoprinsippet § 14-6 fjerde ledd)
+    nav_req = NavGapRequest(
+        enhet_id="2020",
+        vikar_utgifter_nok=800000.0,
+        sykedager_totalt=120,
+        sykedager_egenmeldt=20,
+        dagsats_refusjon_nok=2200.0,
+        forventet_etterslep_uker=8,
+    )
+    nav_res = svc.calculate_nav_gap(nav_req)
+    assert nav_res.ok is True
+    assert nav_res.arbeidsgiverperiode_dager == 16
+    assert nav_res.refusjonsberettigede_dager == 84  # (120 - 20) - 16
+    assert nav_res.forventet_nav_refusjon_nok == 184800.0  # 84 * 2200
+    assert nav_res.reelt_netto_avvik_nok == 615200.0  # 800000 - 184800
+    assert len(nav_res.sha256_audit_seal) == 64
+
+    # 2. Test KRS 4 Drift vs Investering (Investering case)
+    krs_inv = svc.evaluate_krs4(Krs4Request(
+        prosjekt_navn="Rehabilitering tak",
+        kostnad_ekskl_mva_nok=450000.0,
+        forventet_levetid_aar=25,
+        standardheving_eller_kapasitet=True,
+    ))
+    assert krs_inv.klassifisering == "INVESTERING"
+    assert krs_inv.anbefalt_kontoklasse == 2
+    assert krs_inv.lovlig_laaneopptak is True
+
+    # KRS 4 Drift case (Asfaltering slaghull)
+    krs_drift = svc.evaluate_krs4(Krs4Request(
+        prosjekt_navn="Asfaltering slaghull",
+        kostnad_ekskl_mva_nok=800000.0,
+        forventet_levetid_aar=2,
+        standardheving_eller_kapasitet=False,
+    ))
+    assert krs_drift.klassifisering == "DRIFT"
+    assert krs_drift.anbefalt_kontoklasse == 1
+    assert krs_drift.lovlig_laaneopptak is False
+
+    # 3. Test Selvkost VAR (Swap 3.85% + 0.50% = 4.35%)
+    var_res = svc.calculate_selvkost_var(SelvkostVarRequest(
+        sektor_navn="Vann",
+        inngaaende_fondssaldo_nok=15000000.0,
+        aarsbudsjett_driftskostnader_nok=80000000.0,
+        gebyrinntekter_prognose_nok=82000000.0,
+        swap_rente_5y_pct=3.85,
+    ))
+    assert var_res.effektiv_kalkylerente_pct == 4.35
+    assert var_res.aarets_renteinntekt_kostnad_nok == 15000000.0 * 0.0435
+
+    # 4. Test MVA 10-års justering
+    mva_res = svc.calculate_mva_10y(Mva10yRequest(
+        eiendom_navn="Idrettshall",
+        opprinnelig_anleggskost_ekskl_mva_nok=20000000.0,
+        fullfoerings_aar=2021,
+        endrings_aar=2026,
+        andel_avgiftspliktig_utleie_pct=25.0,
+    ))
+    assert mva_res.opprinnelig_mva_kompensert_nok == 5000000.0  # 25% av 20M
+    assert mva_res.gjenstaaende_justeringsaar == 5  # 10 - (2026-2021)
+    assert mva_res.samlet_tilbakebetalingskrav_nok == 625000.0  # 5 * 500k * 0.25
+
+    # 5. Test Hub API Server wrapper endpoints
+    api_nav = calculate_v1_nav_gap({"enhet_id": "2020", "vikar_utgifter_nok": 500000, "sykedager_totalt": 60, "sykedager_egenmeldt": 10})
+    assert api_nav["ok"] is True
+    assert api_nav["forventet_nav_refusjon_nok"] > 0
+
+    api_krs = evaluate_v1_krs4({"prosjekt_navn": "Heis", "kostnad_ekskl_mva_nok": 1200000, "forventet_levetid_aar": 20, "standardheving_eller_kapasitet": True})
+    assert api_krs["ok"] is True
+    assert api_krs["klassifisering"] == "INVESTERING"
+
+    # 6. Test oppgradert Triage Router nøyaktighet for rådgiverspørsmål
+    router = TriageRouter()
+    q1 = router.classify_and_route_sync(TriageRequest(prompt="Hva er regelen for sykepengerefusjon?", session_id="s1"))
+    assert q1.primary_category != TriageCategory.MEMORY_CONTEXT, "Sykepengerefusjon feilaktig rutet til MEMORY_CONTEXT"
+
+    q2 = router.classify_and_route_sync(TriageRequest(prompt="Er asfaltering drift eller investering?", session_id="s2"))
+    assert q2.primary_category != TriageCategory.MEMORY_CONTEXT, "Asfaltering feilaktig rutet til MEMORY_CONTEXT"
+
+    q3 = router.classify_and_route_sync(TriageRequest(prompt="Hvordan beregnes selvkost på vann og avløp?", session_id="s3"))
+    assert q3.primary_category != TriageCategory.MEMORY_CONTEXT, "Selvkost feilaktig rutet til MEMORY_CONTEXT"
+
+
 
 
 

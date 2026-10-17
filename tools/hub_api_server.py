@@ -34,6 +34,9 @@ if hasattr(sys.stderr, "reconfigure"):
 
 # Sett opp stier
 ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 GUARDRAILS_DIR = ROOT_DIR / "kommune-ai-guardrails"
 SRC_DIR = GUARDRAILS_DIR / "src"
 RAW_DATA_DIR = GUARDRAILS_DIR / "data" / "raw"
@@ -784,6 +787,84 @@ def search_v1_advisor(payload: dict) -> dict:
     return {"ok": True, "query": query, "total": len(results), "results": results}
 
 
+def calculate_v1_nav_gap(payload: dict) -> dict:
+    """Beregner forventet NAV sykepengerefusjon vs vikarutgifter jf. Bruttoprinsippet § 14-6."""
+    try:
+        from app.services.municipal_calculator_service import MunicipalCalculatorService
+        from app.schemas.calculator import NavGapRequest
+        svc = MunicipalCalculatorService()
+        req = NavGapRequest(
+            enhet_id=str(payload.get("enhet_id", "2020")),
+            vikar_utgifter_nok=float(payload.get("vikar_utgifter_nok", 0.0)),
+            sykedager_totalt=int(payload.get("sykedager_totalt", 0)),
+            sykedager_egenmeldt=int(payload.get("sykedager_egenmeldt", 0)),
+            dagsats_refusjon_nok=float(payload.get("dagsats_refusjon_nok", 2200.0)),
+            forventet_etterslep_uker=int(payload.get("forventet_etterslep_uker", 8)),
+        )
+        res = svc.calculate_nav_gap(req)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def evaluate_v1_krs4(payload: dict) -> dict:
+    """Evaluerer drift vs investering for bygge- og vedlikeholdstiltak jf. KRS 4 og § 14-9."""
+    try:
+        from app.services.municipal_calculator_service import MunicipalCalculatorService
+        from app.schemas.calculator import Krs4Request
+        svc = MunicipalCalculatorService()
+        req = Krs4Request(
+            prosjekt_navn=str(payload.get("prosjekt_navn", "Kommunalt tiltak")),
+            kostnad_ekskl_mva_nok=float(payload.get("kostnad_ekskl_mva_nok", 0.0)),
+            forventet_levetid_aar=int(payload.get("forventet_levetid_aar", 1)),
+            standardheving_eller_kapasitet=bool(payload.get("standardheving_eller_kapasitet", False)),
+            er_separat_funksjonell_enhet=bool(payload.get("er_separat_funksjonell_enhet", False)),
+        )
+        res = svc.evaluate_krs4(req)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def calculate_v1_selvkost_var(payload: dict) -> dict:
+    """Beregner kalkylerente og 5-års fondstrajektorie for VAR jf. Selvkostforskriften §§ 5 og 7."""
+    try:
+        from app.services.municipal_calculator_service import MunicipalCalculatorService
+        from app.schemas.calculator import SelvkostVarRequest
+        svc = MunicipalCalculatorService()
+        req = SelvkostVarRequest(
+            sektor_navn=str(payload.get("sektor_navn", "Vann")),
+            inngaaende_fondssaldo_nok=float(payload.get("inngaaende_fondssaldo_nok", 0.0)),
+            aarsbudsjett_driftskostnader_nok=float(payload.get("aarsbudsjett_driftskostnader_nok", 0.0)),
+            gebyrinntekter_prognose_nok=float(payload.get("gebyrinntekter_prognose_nok", 0.0)),
+            swap_rente_5y_pct=float(payload.get("swap_rente_5y_pct", 3.85)),
+            tillegg_margin_pct=float(payload.get("tillegg_margin_pct", 0.50)),
+        )
+        res = svc.calculate_selvkost_var(req)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def calculate_v1_mva_10y(payload: dict) -> dict:
+    """Beregner 10-års justeringsforpliktelse for fast eiendom jf. Momskompensasjonsloven § 7."""
+    try:
+        from app.services.municipal_calculator_service import MunicipalCalculatorService
+        from app.schemas.calculator import Mva10yRequest
+        svc = MunicipalCalculatorService()
+        req = Mva10yRequest(
+            eiendom_navn=str(payload.get("eiendom_navn", "Kommunalt formålsbygg")),
+            opprinnelig_anleggskost_ekskl_mva_nok=float(payload.get("opprinnelig_anleggskost_ekskl_mva_nok", 0.0)),
+            fullfoerings_aar=int(payload.get("fullfoerings_aar", 2020)),
+            endrings_aar=int(payload.get("endrings_aar", 2026)),
+            andel_avgiftspliktig_utleie_pct=float(payload.get("andel_avgiftspliktig_utleie_pct", 0.0)),
+        )
+        res = svc.calculate_mva_10y(req)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
 def handle_rag_query(query_text: str, top_k: int = 3) -> dict:
     """Søker i lov- og regelverksbasen etter relevante paragrafer og KOSTRA-retningslinjer."""
     clean_q = query_text.strip()
@@ -1271,6 +1352,54 @@ class HubApiHandler(BaseHTTPRequestHandler):
             except Exception:
                 payload = {}
             res = search_v1_advisor(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/advisor/calculate/nav-gap", "/api/advisor/calculate/nav-gap"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = calculate_v1_nav_gap(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/advisor/calculate/krs4", "/api/advisor/calculate/krs4"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = evaluate_v1_krs4(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/advisor/calculate/selvkost", "/api/advisor/calculate/selvkost"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = calculate_v1_selvkost_var(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/advisor/calculate/mva-10y", "/api/advisor/calculate/mva-10y"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = calculate_v1_mva_10y(payload)
             self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
             self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
             return

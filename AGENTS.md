@@ -134,5 +134,7 @@ This repository is fully configured for Antigravity native progressive disclosur
 * **Run MVA Balansekontroll**: `python tools/run_tool.py mva`.
 * **Run Fast-Path Triage Router**: `python tools/run_tool.py triage "Hva sier § 14-5?"`.
 * **Run Advisor Knowledge Ingest**: `python tools/run_tool.py advisor-ingest` (oppdaterer rådgivermoduler i Vektor-DB).
+* **Run Advisor Decision Calculators**: `python tools/run_tool.py advisor-calc --calc nav-gap` / `--calc krs4` / `--calc selvkost` / `--calc mva-10y`.
+* **Run Advisor Full-Year Stress Test**: `python tools/run_tool.py advisor-stress` (helårssimulering av 52 rådgiverhendelser på tvers av 6 sektorer og 12 måneder).
 * **Unified Tool Runner**: `python tools/run_tool.py --help`.
 * **Run Master Test Suite**: `pytest -v` (kjører samtlige 70+ tester på tvers av master og piloter).

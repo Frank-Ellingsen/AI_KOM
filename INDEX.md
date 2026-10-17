@@ -26,6 +26,8 @@
 * [16. M10 Oktober Month-End Staging & Ingestion Pack (`antigravity_m10_monthend_pack/`)](#16-m10-oktober-month-end-staging--ingestion-pack-antigravity_m10_monthend_pack)
 * [17. MVA & Balansekonto 2130 Test- og CI/CD-Pakker](#17-mva--balansekonto-2130-test--og-cicd-pakker)
 * [18. Fast-Path Triage Router & App Engine (`app/`)](#18-fast-path-triage-router--app-engine-app)
+* [19. Økonomirådgiverens Håndbok & Vektor-DB (`erp_data/`, `tools/`)](#22-økonomirådgiverens-håndbok--vektor-db-utvidelse-erp_data-tools-indexhtml)
+* [20. Kommunale Rådgiverkalkulatorer & Helårs Stresstest (`app/`, `tools/`, `index.html`)](#23-kommunale-rådgiverkalkulatorer--helårs-stresstest-app-tools-indexhtml)
 
 ---
 
@@ -339,6 +341,23 @@ Samtlige 18 maler foreligger i to formater: **Produksjonsformat** (.docx / .xlsx
 | **Office Hub FAQ Matrise** | Interaktivt oppslagsverk i `index.html` (Fane 4) med sanntidsfiltrering og hurtigkopiering | [`index.html`](./index.html) |
 | **Advisor REST Endepunkter** | `GET /api/v1/advisor/faq` og `POST /api/v1/advisor/search` i Hub API-serveren | [`tools/hub_api_server.py`](./tools/hub_api_server.py) |
 | **Pytest Integrasjonstest** | Enhetstest i `tests/test_project_master.py` som verifiserer kunnskapsbitene og søk | [`tests/test_project_master.py`](./tests/test_project_master.py) |
+
+---
+
+## 23. Kommunale Rådgiverkalkulatorer & Helårs Stresstest (`app/`, `tools/`, `index.html`)
+
+> **Automatisert helårssimulering for alle 6 sektorer og 12 månedshjul-milepæler, samt 4 lovbaserte rådgiverkalkulatorer med SHA-256 forsegling.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **Helårs Stresstestmotor** | 52 reelle rådgiverhendelser (Oppvekst, Helse, Byutvikling, VAR, Kultur, Finans) med benchmarking av Triage, RAG og SQLite WAL | [`tools/advisor_stresstest_engine.py`](./tools/advisor_stresstest_engine.py) |
+| **Rådgiverkalkulator Pydantic Skjemaer** | Datakontrakter for NAV-refusjonsgap, KRS 4 Drift vs Inv, Selvkost VAR og 10-års MVA-justering | [`app/schemas/calculator.py`](./app/schemas/calculator.py) |
+| **Kommunal Kalkulatortjeneste** | Presis forretnings- og lovlogikk (§ 14-6, KRS 4, Selvkostforskrift § 5/§ 7, Momskompensasjonsloven § 7) | [`app/services/municipal_calculator_service.py`](./app/services/municipal_calculator_service.py) |
+| **Kalkulator CLI Runner** | CLI-kommando for rådgiverberegninger via `run_tool.py advisor-calc` og `run_tool.py advisor-stress` | [`tools/advisor_calculator_runner.py`](./tools/advisor_calculator_runner.py) |
+| **Hub API Kalkulator-endepunkter** | `POST /api/v1/advisor/calculate/{nav-gap,krs4,selvkost,mva-10y}` | [`tools/hub_api_server.py`](./tools/hub_api_server.py) |
+| **Office Hub Kalkulatorgrensesnitt** | 4 interaktive beregningsfaner i `index.html` (Fane 4) med live beregning, Tufte-merker og klient-side fallback | [`index.html#advisor-calculators-seksjon`](./index.html#advisor-calculators-seksjon) |
+| **Pytest Integrasjonstester** | Master-testsuite for alle 4 beregningsmotorer og helårs stresstest | [`tests/test_project_master.py`](./tests/test_project_master.py) |
+
 
 
 

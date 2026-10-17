@@ -148,6 +148,13 @@ Eksempler på bruk:
     # 18. Advisor Knowledge Ingestion
     p_adv = subparsers.add_parser("advisor-ingest", help="Ingest og oppdater kunnskapsmoduler for kommunale økonomirådgivere")
 
+    # 19. Advisor Decision Calculators
+    p_calc = subparsers.add_parser("advisor-calc", help="Beslutnings- og Beregningsmotor for Økonomirådgivere (NAV-gap, KRS 4, Selvkost, MVA)")
+    p_calc.add_argument("--type", choices=["nav-gap", "krs4", "selvkost", "mva-10y"], required=True, help="Beregningstype")
+
+    # 20. Municipal Advisor Full-Year Stress Test
+    p_stress = subparsers.add_parser("advisor-stress", help="Full-Year Stresstest & Flaskehalsdiagnose for Kommunale Rådgivere (M1-M12, 6 Sektorer)")
+
     args, unknown = parser.parse_known_args()
 
     if not args.command:
@@ -277,6 +284,10 @@ Eksempler på bruk:
         run_command("ai_engineering_runner.py", cmd_args + unknown)
     elif args.command == "advisor-ingest":
         run_command("ingest_municipal_advisor_knowledge.py", unknown)
+    elif args.command == "advisor-calc":
+        run_command("advisor_calculator_runner.py", ["--type", args.type] + unknown)
+    elif args.command == "advisor-stress":
+        run_command("advisor_stresstest_engine.py", unknown)
 
 if __name__ == "__main__":
     main()

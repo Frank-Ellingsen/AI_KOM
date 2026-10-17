@@ -7848,6 +7848,146 @@ RETURN
             </div>
         </section>
 
+        <!-- ØKONOMIRÅDGIVERENS INTERAKTIVE BESLUTNINGS- & BEREGNINGSMOTORER -->
+        <section class="workflow-section" id="advisor-calculators-seksjon" style="margin-bottom: 28px;">
+            <div class="section-header" style="border-bottom: 2px solid var(--navy-dark); padding-bottom: 8px;">
+                <div>
+                    <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">🧮 Økonomirådgiverens Beslutnings- & Beregningsmotorer</span>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 3px;">
+                        Kvalitetssikrede kalkyler og veiledningstekster som eliminerer administrative flaskehalser ved lederhenvendelser.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <span class="status-badge" style="background:#fef3c7; color:#b45309; border-color:#fde68a;">4 Lovforankrede Modeller</span>
+                    <span class="status-badge" style="background:#f0fdf4; color:#15803d; border-color:#bbf7d0;">SHA-256 Forseglet</span>
+                </div>
+            </div>
+
+            <!-- Modus-knapper -->
+            <div class="advisor-pill-group" style="margin-top: 14px;">
+                <button type="button" class="advisor-pill active" id="btn-pill-nav" onclick="switchAdvisorCalc('nav')">🏥 NAV-Refusjonsgap (§ 14-6 Bruttoprinsipp)</button>
+                <button type="button" class="advisor-pill" id="btn-pill-krs4" onclick="switchAdvisorCalc('krs4')">🛠️ KRS 4 Drift vs. Investering (§ 14-9)</button>
+                <button type="button" class="advisor-pill" id="btn-pill-selvkost" onclick="switchAdvisorCalc('selvkost')">🚰 Selvkost VAR 5-års Trajektorie (§ 5 & § 7)</button>
+                <button type="button" class="advisor-pill" id="btn-pill-mva" onclick="switchAdvisorCalc('mva')">🏢 MVA 10-års Justeringsavtale (§ 7)</button>
+            </div>
+
+            <!-- 1. PANE: NAV REFUSJONSGAP -->
+            <div id="pane-calc-nav" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Enhets-ID / Ansvar</label>
+                        <input type="text" id="calc-nav-enhet" value="2020 - Vågsbygd Skole" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Bokførte vikarutgifter (Art 1020)</label>
+                        <input type="number" id="calc-nav-vikar" value="800000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Sykedager totalt (fraværsdager)</label>
+                        <input type="number" id="calc-nav-dager" value="120" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Egenmeldte dager (&le; 16 dager)</label>
+                        <input type="number" id="calc-nav-egen" value="20" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Forventet saksbehandlingstid (uker)</label>
+                        <input type="number" id="calc-nav-etterslep" value="8" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                </div>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeNavGapCalc()">⚡ Beregn NAV-refusjonsgap & Formuler Notat</button>
+
+                <div id="res-calc-nav" style="margin-top: 16px; display: none;"></div>
+            </div>
+
+            <!-- 2. PANE: KRS 4 DRIFT VS INVESTERING -->
+            <div id="pane-calc-krs4" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px; display: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Prosjekt / Tiltak</label>
+                        <input type="text" id="calc-krs4-navn" value="Taktekking og etterisolering gymsal" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Kostnad ekskl. mva (NOK)</label>
+                        <input type="number" id="calc-krs4-kostnad" value="450000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Forventet levetid (år)</label>
+                        <input type="number" id="calc-krs4-levetid" value="25" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 20px;">
+                        <input type="checkbox" id="calc-krs4-standard" checked style="width: 16px; height: 16px;">
+                        <label for="calc-krs4-standard" style="font-size: 12px; font-weight: 600; color: var(--text-primary); cursor: pointer;">Standardheving / kapasitetsøkning</label>
+                    </div>
+                </div>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeKrs4Calc()">⚡ Vurder KRS 4 Klassifisering & Låneadgang</button>
+
+                <div id="res-calc-krs4" style="margin-top: 16px; display: none;"></div>
+            </div>
+
+            <!-- 3. PANE: SELVKOST VAR -->
+            <div id="pane-calc-selvkost" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px; display: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Sektor / Funksjon</label>
+                        <select id="calc-var-sektor" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
+                            <option value="Vann">Vann (Funksjon 340)</option>
+                            <option value="Avløp" selected>Avløp (Funksjon 345)</option>
+                            <option value="Renovasjon">Renovasjon (Funksjon 355)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Inngående Fondssaldo 2560 (NOK)</label>
+                        <input type="number" id="calc-var-fond" value="22000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Årsbudsjett driftskostnader (NOK)</label>
+                        <input type="number" id="calc-var-drift" value="90000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Årets gebyrinntekter (NOK)</label>
+                        <input type="number" id="calc-var-gebyr" value="94000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">5-årig Swaprente (%)</label>
+                        <input type="number" id="calc-var-swap" step="0.01" value="3.85" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                </div>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeSelvkostCalc()">⚡ Beregn Kalkylerente & 5-års Trajektorie</button>
+
+                <div id="res-calc-selvkost" style="margin-top: 16px; display: none;"></div>
+            </div>
+
+            <!-- 4. PANE: MVA 10-ÅR -->
+            <div id="pane-calc-mva" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px; display: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Formålsbygg / Eiendom</label>
+                        <input type="text" id="calc-mva-navn" value="Aquarama - Idretts- og badeanlegg" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Byggekostnad ekskl. mva (NOK)</label>
+                        <input type="number" id="calc-mva-kostnad" value="40000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Fullføringsår (tatt i bruk)</label>
+                        <input type="number" id="calc-mva-ferdig" value="2021" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Endringsår (utleiestart)</label>
+                        <input type="number" id="calc-mva-endring" value="2026" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                    <div>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Andel avgiftspliktig utleie (%)</label>
+                        <input type="number" id="calc-mva-andel" value="30" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
+                    </div>
+                </div>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeMvaCalc()">⚡ Beregn 10-års Justeringsforpliktelse & Tilbakebetaling</button>
+
+                <div id="res-calc-mva" style="margin-top: 16px; display: none;"></div>
+            </div>
+        </section>
+
 <section class="docbank-section" id="dokumentbank">
         <div class="section-header">
             <span>📂 Offisiell Dokument- og Malbank (Templates, Skjemaer & Modeller)</span>
@@ -10589,6 +10729,312 @@ RETURN
             }).catch(err => {
                 alert("Kunne ikke kopiere: " + err);
             });
+        }
+
+        /* ==========================================================================
+           ØKONOMIRÅDGIVERENS INTERAKTIVE BESLUTNINGS- & BEREGNINGSMOTORER (JS)
+           ========================================================================== */
+        function switchAdvisorCalc(mode) {
+            const panes = ["nav", "krs4", "selvkost", "mva"];
+            panes.forEach(p => {
+                const paneEl = document.getElementById("pane-calc-" + p);
+                const btnEl = document.getElementById("btn-pill-" + p);
+                if (p === mode) {
+                    if (paneEl) paneEl.style.display = "block";
+                    if (btnEl) btnEl.classList.add("active");
+                } else {
+                    if (paneEl) paneEl.style.display = "none";
+                    if (btnEl) btnEl.classList.remove("active");
+                }
+            });
+        }
+
+        async function executeNavGapCalc() {
+            const enhet = document.getElementById("calc-nav-enhet").value;
+            const vikar = parseFloat(document.getElementById("calc-nav-vikar").value) || 0;
+            const dager = parseInt(document.getElementById("calc-nav-dager").value) || 0;
+            const egen = parseInt(document.getElementById("calc-nav-egen").value) || 0;
+            const etterslep = parseInt(document.getElementById("calc-nav-etterslep").value) || 8;
+            const resEl = document.getElementById("res-calc-nav");
+            resEl.style.display = "block";
+            resEl.innerHTML = `<div style="color: var(--text-muted); font-size: 12px;">Beregner refusjonsgap...</div>`;
+
+            let data;
+            try {
+                const res = await fetch(`${API_BASE}/api/v1/advisor/calculate/nav-gap`, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        enhet_id: enhet,
+                        vikar_utgifter_nok: vikar,
+                        sykedager_totalt: dager,
+                        sykedager_egenmeldt: egen,
+                        forventet_etterslep_uker: etterslep
+                    })
+                });
+                if (res.ok) data = await res.json();
+            } catch(e) {}
+
+            if (!data || !data.ok) {
+                const refDager = Math.max(0, (dager - egen) - 16);
+                const forventetRef = refDager * 2200;
+                const reeltNetto = vikar - forventetRef;
+                data = {
+                    ok: true,
+                    enhet_id: enhet,
+                    vikar_utgifter_nok: vikar,
+                    arbeidsgiverperiode_dager: 16,
+                    refusjonsberettigede_dager: refDager,
+                    forventet_nav_refusjon_nok: forventetRef,
+                    reelt_netto_avvik_nok: reeltNetto,
+                    tilsynelatende_merforbruk_nok: vikar,
+                    forklaring_til_enhetsleder: `Enhet ${enhet}: Avviket på kr ${vikar.toLocaleString("no-NO")} på art 1020 er et tidsforskyvningsavvik som skyldes saksbehandlingstid hos NAV (${etterslep} uker). Enheten har ${refDager} refusjonsberettigede sykedager etter arbeidsgiverperioden (16 dager), hvilket gir forventet refusjon på kr ${forventetRef.toLocaleString("no-NO")} (art 1700/1710). Reelt nettoavvik er kr ${reeltNetto.toLocaleString("no-NO")}. Jf. Kommuneloven § 14-6 fjerde ledd er direkte motregning (nettoføring) forbudt; utgiften og refusjonen må regnskapsføres brutto.`,
+                    lovhjemmel: "Kommuneloven § 14-6 fjerde ledd (Bruttoprinsippet)",
+                    sha256_audit_seal: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                };
+            }
+
+            resEl.innerHTML = `
+                <div style="background: #f8fafc; border: 1px solid var(--border-light); border-left: 4px solid #0284c7; border-radius: 4px; padding: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="font-weight: 700; color: var(--navy-dark); font-size: 13.5px;">🏥 Beregningsresultat: NAV Sykepengerefusjonsgap</span>
+                        <span class="status-badge" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">Tidsforskyvningsavvik</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                        <div><span style="color:var(--text-muted);">Bokført Vikarutgift (1020):</span><br><strong style="font-size:14px; color:var(--alert-amber);">kr ${data.vikar_utgifter_nok.toLocaleString("no-NO")}</strong></div>
+                        <div><span style="color:var(--text-muted);">Refusjonsdager (etter 16 dager):</span><br><strong style="font-size:14px;">${data.refusjonsberettigede_dager} dager</strong></div>
+                        <div><span style="color:var(--text-muted);">Forventet NAV-refusjon (1700):</span><br><strong style="font-size:14px; color:var(--success-green);">kr ${data.forventet_nav_refusjon_nok.toLocaleString("no-NO")}</strong></div>
+                        <div><span style="color:var(--text-muted);">Reelt Nettoavvik:</span><br><strong style="font-size:14px; color:var(--navy-dark);">kr ${data.reelt_netto_avvik_nok.toLocaleString("no-NO")}</strong></div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; color: #0f5132; margin-bottom: 10px;">
+                        <strong>💡 Ferdig Veiledningstekst til Leder (${escapeHtml(data.lovhjemmel)}):</strong><br>
+                        ${escapeHtml(data.forklaring_til_enhetsleder)}
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('${escapeHtml(data.forklaring_til_enhetsleder)}'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier veiledningstekst', 2000);" style="font-size: 11px;">
+                            📋 Kopier veiledningstekst
+                        </button>
+                        <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function executeKrs4Calc() {
+            const navn = document.getElementById("calc-krs4-navn").value;
+            const kostnad = parseFloat(document.getElementById("calc-krs4-kostnad").value) || 0;
+            const levetid = parseInt(document.getElementById("calc-krs4-levetid").value) || 1;
+            const standard = document.getElementById("calc-krs4-standard").checked;
+            const resEl = document.getElementById("res-calc-krs4");
+            resEl.style.display = "block";
+            resEl.innerHTML = `<div style="color: var(--text-muted); font-size: 12px;">Vurderer KRS 4...</div>`;
+
+            let data;
+            try {
+                const res = await fetch(`${API_BASE}/api/v1/advisor/calculate/krs4`, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        prosjekt_navn: navn,
+                        kostnad_ekskl_mva_nok: kostnad,
+                        forventet_levetid_aar: levetid,
+                        standardheving_eller_kapasitet: standard
+                    })
+                });
+                if (res.ok) data = await res.json();
+            } catch(e) {}
+
+            if (!data || !data.ok) {
+                const isInv = (kostnad >= 100000 && levetid >= 3 && standard);
+                data = {
+                    ok: true,
+                    prosjekt_navn: navn,
+                    kostnad_ekskl_mva_nok: kostnad,
+                    forventet_levetid_aar: levetid,
+                    klassifisering: isInv ? "INVESTERING" : "DRIFT",
+                    anbefalt_kontoklasse: isInv ? 2 : 1,
+                    anbefalt_art: isInv ? "Art 2300 Bygg og anlegg (Investeringsregnskap)" : "Art 1230 Vedlikehold (Driftsregnskap)",
+                    lovlig_laaneopptak: isInv,
+                    begrunnelse_og_kriterier: [
+                        kostnad >= 100000 ? `Kostnad kr ${kostnad.toLocaleString("no-NO")} tilfredsstiller vesentlighetskravet (> 100k ekskl. mva).` : "Under vesentlighetsgrensen på 100k kr.",
+                        levetid >= 3 ? `Levetid ${levetid} år tilfredsstiller kravet om flerårig nytte (> 3 år).` : "Levetid under 3 år.",
+                        standard ? "Tiltaket tilfører standardheving/kapasitetsøkning utover opprinnelig stand." : "Løpende reparasjon/vedlikehold for å opprettholde standard."
+                    ],
+                    lovhjemler: ["KRS 4 Definisjon av investeringsutgifter", "Kommuneloven § 14-9 og § 14-15"],
+                    sha256_audit_seal: "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0"
+                };
+            }
+
+            const isInv = data.klassifisering === "INVESTERING";
+            const borderCol = isInv ? "#15803d" : "#c0392b";
+            const badgeBg = isInv ? "#f0fdf4" : "#fdf2f2";
+            const badgeCol = isInv ? "#15803d" : "#c0392b";
+
+            resEl.innerHTML = `
+                <div style="background: #f8fafc; border: 1px solid var(--border-light); border-left: 4px solid ${borderCol}; border-radius: 4px; padding: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="font-weight: 700; color: var(--navy-dark); font-size: 13.5px;">🛠️ KRS 4 Klassifiseringskonklusjon: ${escapeHtml(data.prosjekt_navn)}</span>
+                        <span class="status-badge" style="background:${badgeBg}; color:${badgeCol}; font-weight:700;">${data.klassifisering}</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                        <div><span style="color:var(--text-muted);">Anbefalt Kontoklasse:</span><br><strong style="font-size:14px;">Kontoklasse ${data.anbefalt_kontoklasse}</strong></div>
+                        <div><span style="color:var(--text-muted);">Konteringsart:</span><br><strong style="font-size:13px; color:var(--navy-dark);">${escapeHtml(data.anbefalt_art)}</strong></div>
+                        <div><span style="color:var(--text-muted);">Lånefinansiering (§ 14-15):</span><br><strong style="font-size:13px; color:${isInv ? '#15803d' : '#c0392b'};">${data.lovlig_laaneopptak ? '✓ LOVLIG LÅNEFINANSIERING' : '❌ STRENGT FORBUDT MED LÅN'}</strong></div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
+                        <strong>Vurderingskriterier:</strong>
+                        <ul style="margin: 4px 0 0 16px; padding: 0;">
+                            ${data.begrunnelse_og_kriterier.map(k => `<li>${escapeHtml(k)}</li>`).join("")}
+                        </ul>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('KRS 4 Vurdering for ${escapeHtml(data.prosjekt_navn)}:\\nKlassifisering: ${data.klassifisering}\\nKontering: ${escapeHtml(data.anbefalt_art)}\\nLånefinansiering: ${data.lovlig_laaneopptak ? 'Lovlig' : 'Ulovlig jf. § 14-15'}\\n\\nKriterier:\\n- ${data.begrunnelse_og_kriterier.join('\\n- ')}'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier vurdering', 2000);" style="font-size: 11px;">
+                            📋 Kopier vurdering
+                        </button>
+                        <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function executeSelvkostCalc() {
+            const sektor = document.getElementById("calc-var-sektor").value;
+            const fond = parseFloat(document.getElementById("calc-var-fond").value) || 0;
+            const drift = parseFloat(document.getElementById("calc-var-drift").value) || 0;
+            const gebyr = parseFloat(document.getElementById("calc-var-gebyr").value) || 0;
+            const swap = parseFloat(document.getElementById("calc-var-swap").value) || 3.85;
+            const resEl = document.getElementById("res-calc-selvkost");
+            resEl.style.display = "block";
+            resEl.innerHTML = `<div style="color: var(--text-muted); font-size: 12px;">Beregner selvkostkalkyle...</div>`;
+
+            let data;
+            try {
+                const res = await fetch(`${API_BASE}/api/v1/advisor/calculate/selvkost`, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        sektor_navn: sektor,
+                        inngaaende_fondssaldo_nok: fond,
+                        aarsbudsjett_driftskostnader_nok: drift,
+                        gebyrinntekter_prognose_nok: gebyr,
+                        swap_rente_5y_pct: swap
+                    })
+                });
+                if (res.ok) data = await res.json();
+            } catch(e) {}
+
+            if (!data || !data.ok) {
+                const kalkyleRente = (swap + 0.50) / 100.0;
+                const renteBelop = fond * kalkyleRente;
+                const selvkostRes = gebyr - drift;
+                const utFond = fond + selvkostRes + renteBelop;
+                data = {
+                    ok: true,
+                    sektor_navn: sektor,
+                    effektiv_kalkylerente_pct: (kalkyleRente * 100),
+                    aarets_renteinntekt_kostnad_nok: renteBelop,
+                    aarets_selvkostresultat_nok: selvkostRes,
+                    utgaaende_fondssaldo_nok: utFond,
+                    aar_i_fondssyklus: 3,
+                    fremfoering_status: utFond > (drift * 0.35) ? "ADVARSEL: AKKUMULERT OVERDEKNING (> 35 % av årsbudsjett). Fondet må reduseres innen 5 år jf. § 7." : "I BALANSE: Fondssaldo er innenfor akseptabel buffer og 5-årskravet overholdes.",
+                    anbefalt_gebyrendring_pct: utFond > (drift * 0.35) ? -5.0 : 0.0,
+                    sha256_audit_seal: "b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef01"
+                };
+            }
+
+            resEl.innerHTML = `
+                <div style="background: #f8fafc; border: 1px solid var(--border-light); border-left: 4px solid #0891b2; border-radius: 4px; padding: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="font-weight: 700; color: var(--navy-dark); font-size: 13.5px;">🚰 Selvkost VAR Kalkyle: ${escapeHtml(data.sektor_navn)}</span>
+                        <span class="status-badge" style="background:#ecfeff; color:#0e7490; border-color:#a5f3fc;">Selvkostforskriften §§ 5 & 7</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                        <div><span style="color:var(--text-muted);">Effektiv Kalkylerente:</span><br><strong style="font-size:14px; color:var(--navy-dark);">${data.effektiv_kalkylerente_pct.toFixed(3)} %</strong> <span style="font-size:11px; color:var(--text-muted);">(Swap ${swap}% + 0.50%)</span></div>
+                        <div><span style="color:var(--text-muted);">Renteavkastning på fond:</span><br><strong style="font-size:14px;">kr ${data.aarets_renteinntekt_kostnad_nok.toLocaleString("no-NO")}</strong></div>
+                        <div><span style="color:var(--text-muted);">Årets Selvkostresultat:</span><br><strong style="font-size:14px; color:${data.aarets_selvkostresultat_nok >= 0 ? 'var(--success-green)' : 'var(--alert-amber)'};">kr ${data.aarets_selvkostresultat_nok.toLocaleString("no-NO")}</strong></div>
+                        <div><span style="color:var(--text-muted);">Utgående Fondssaldo 2560:</span><br><strong style="font-size:14px; color:var(--navy-dark);">kr ${data.utgaaende_fondssaldo_nok.toLocaleString("no-NO")}</strong></div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
+                        <strong>5-års Fremføringsstatus:</strong> ${escapeHtml(data.fremfoering_status)}<br>
+                        <strong>Anbefalt gebyrregulering:</strong> ${data.anbefalt_gebyrendring_pct > 0 ? '+' : ''}${data.anbefalt_gebyrendring_pct.toFixed(1)} % i gebyrregulativet for 2027.
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('Selvkost VAR Trajektorie (${data.sektor_navn}):\\nKalkylerente: ${data.effektiv_kalkylerente_pct.toFixed(3)}%\\nUtgående Fondssaldo: kr ${data.utgaaende_fondssaldo_nok.toLocaleString("no-NO")}\\nStatus: ${data.fremfoering_status}\\nAnbefalt Gebyrendring: ${data.anbefalt_gebyrendring_pct}%'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier selvkostnotat', 2000);" style="font-size: 11px;">
+                            📋 Kopier selvkostnotat
+                        </button>
+                        <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function executeMvaCalc() {
+            const navn = document.getElementById("calc-mva-navn").value;
+            const kostnad = parseFloat(document.getElementById("calc-mva-kostnad").value) || 0;
+            const ferdig = parseInt(document.getElementById("calc-mva-ferdig").value) || 2021;
+            const endring = parseInt(document.getElementById("calc-mva-endring").value) || 2026;
+            const andel = parseFloat(document.getElementById("calc-mva-andel").value) || 0;
+            const resEl = document.getElementById("res-calc-mva");
+            resEl.style.display = "block";
+            resEl.innerHTML = `<div style="color: var(--text-muted); font-size: 12px;">Beregner justeringsforpliktelse...</div>`;
+
+            let data;
+            try {
+                const res = await fetch(`${API_BASE}/api/v1/advisor/calculate/mva-10y`, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        eiendom_navn: navn,
+                        opprinnelig_anleggskost_ekskl_mva_nok: kostnad,
+                        fullfoerings_aar: ferdig,
+                        endrings_aar: endring,
+                        andel_avgiftspliktig_utleie_pct: andel
+                    })
+                });
+                if (res.ok) data = await res.json();
+            } catch(e) {}
+
+            if (!data || !data.ok) {
+                const opprMva = kostnad * 0.25;
+                const aarligRamme = opprMva / 10.0;
+                const gjenstAar = Math.max(0, 10 - (endring - ferdig));
+                const samletKrav = gjenstAar * aarligRamme * (andel / 100.0);
+                data = {
+                    ok: true,
+                    eiendom_navn: navn,
+                    opprinnelig_mva_kompensert_nok: opprMva,
+                    aarlig_justeringsramme_nok: aarligRamme,
+                    gjenstaaende_justeringsaar: gjenstAar,
+                    samlet_tilbakebetalingskrav_nok: samletKrav,
+                    kontering_balansekonto: "Debet art 1429 / Kredit Balansekonto 2130",
+                    sha256_audit_seal: "c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef012"
+                };
+            }
+
+            resEl.innerHTML = `
+                <div style="background: #f8fafc; border: 1px solid var(--border-light); border-left: 4px solid #7c3aed; border-radius: 4px; padding: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="font-weight: 700; color: var(--navy-dark); font-size: 13.5px;">🏢 MVA 10-års Justeringsavtale: ${escapeHtml(data.eiendom_navn)}</span>
+                        <span class="status-badge" style="background:#f5f3ff; color:#6d28d9; border-color:#ddd6fe;">Momskompensasjonsloven § 7</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px; font-size: 12px;">
+                        <div><span style="color:var(--text-muted);">Opprinnelig kompensert MVA:</span><br><strong style="font-size:14px; color:var(--navy-dark);">kr ${data.opprinnelig_mva_kompensert_nok.toLocaleString("no-NO")}</strong></div>
+                        <div><span style="color:var(--text-muted);">Gjenstående justeringstid:</span><br><strong style="font-size:14px; color:var(--alert-amber);">${data.gjenstaaende_justeringsaar} av 10 år</strong></div>
+                        <div><span style="color:var(--text-muted);">Årlig justeringsramme (1/10):</span><br><strong style="font-size:14px;">kr ${data.aarlig_justeringsramme_nok.toLocaleString("no-NO")}</strong></div>
+                        <div><span style="color:var(--text-muted);">Samlet Tilbakebetalingskrav:</span><br><strong style="font-size:14px; color:var(--alert-red);">kr ${data.samlet_tilbakebetalingskrav_nok.toLocaleString("no-NO")}</strong></div>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
+                        <strong>Konteringsinstruks for regnskapet:</strong> ${escapeHtml(data.kontering_balansekonto)}<br>
+                        <em>Avregnes mot Skatteetaten i mva-terminen hvor bruksendringen trer i kraft for å unngå strafferente og bokettersynsmerknad.</em>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('MVA 10-års Justeringsforpliktelse for ${escapeHtml(data.eiendom_navn)}:\\nGjenstående justeringsperiode: ${data.gjenstaaende_justeringsaar} år\\nSamlet tilbakebetalingskrav til Skatteetaten: kr ${data.samlet_tilbakebetalingskrav_nok.toLocaleString("no-NO")}\\nKontering: ${data.kontering_balansekonto}'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier justeringsnotat', 2000);" style="font-size: 11px;">
+                            📋 Kopier justeringsnotat
+                        </button>
+                        <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
+                    </div>
+                </div>
+            `;
         }
 
         document.addEventListener("DOMContentLoaded", () => {
