@@ -133,5 +133,6 @@ This repository is fully configured for Antigravity native progressive disclosur
 * **Run M10 Month-End Ingestion**: `python tools/run_tool.py m10-ingest --status` eller `--execute`.
 * **Run MVA Balansekontroll**: `python tools/run_tool.py mva`.
 * **Run Fast-Path Triage Router**: `python tools/run_tool.py triage "Hva sier § 14-5?"`.
+* **Run Advisor Knowledge Ingest**: `python tools/run_tool.py advisor-ingest` (oppdaterer rådgivermoduler i Vektor-DB).
 * **Unified Tool Runner**: `python tools/run_tool.py --help`.
-* **Run Master Test Suite**: `pytest -v` (kjører samtlige 60+ tester på tvers av master og piloter).
+* **Run Master Test Suite**: `pytest -v` (kjører samtlige 70+ tester på tvers av master og piloter).

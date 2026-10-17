@@ -11,6 +11,7 @@ import hashlib
 import json
 import mimetypes
 import os
+import re
 from pathlib import Path
 import sqlite3
 import sys
@@ -732,6 +733,57 @@ def get_v1_cache_stats() -> dict:
         return {"ok": False, "error": str(exc)}
 
 
+# ======================================================================
+# MUNICIPAL ADVISOR KNOWLEDGE HUB & FAQ (V1)
+# ======================================================================
+def get_v1_advisor_faq(category: Optional[str] = None) -> dict:
+    """Henter kvalitetssikrede kunnskapsmoduler for kommunale økonomirådgivere."""
+    json_path = ERP_DIR / "municipal_advisor_knowledge_chunks.json"
+    if not json_path.exists():
+        return {"ok": False, "error": "Fant ikke municipal_advisor_knowledge_chunks.json"}
+    try:
+        with open(json_path, "r", encoding="utf-8") as f:
+            chunks = json.load(f)
+        if category and category.lower() != "all":
+            chunks = [c for c in chunks if category.lower() in c.get("category", "").lower()]
+        cats = sorted(list(set(c["category"] for c in chunks)))
+        return {
+            "ok": True,
+            "total": len(chunks),
+            "categories": cats,
+            "items": chunks
+        }
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def search_v1_advisor(payload: dict) -> dict:
+    """Søker i rådgiverhåndboken etter relevante svar på forespørsler fra ledere."""
+    query = (payload.get("query") or "").strip().lower()
+    category = payload.get("category")
+    top_k = int(payload.get("top_k", 5))
+
+    faq_res = get_v1_advisor_faq(category)
+    if not faq_res.get("ok"):
+        return faq_res
+
+    items = faq_res["items"]
+    if not query:
+        return {"ok": True, "total": len(items[:top_k]), "results": items[:top_k]}
+
+    query_words = [w for w in re.sub(r"[^\w\s]", " ", query).split() if len(w) > 2]
+    scored = []
+    for item in items:
+        text = f"{item['title']} {item['content']} {item.get('section_ref', '')} {item['category']}".lower()
+        score = sum(1 for w in query_words if w in text)
+        if score > 0 or not query_words:
+            scored.append((score, item))
+
+    scored.sort(key=lambda x: x[0], reverse=True)
+    results = [item for _, item in scored[:top_k]]
+    return {"ok": True, "query": query, "total": len(results), "results": results}
+
+
 def handle_rag_query(query_text: str, top_k: int = 3) -> dict:
     """Søker i lov- og regelverksbasen etter relevante paragrafer og KOSTRA-retningslinjer."""
     clean_q = query_text.strip()
@@ -969,6 +1021,18 @@ class HubApiHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
             return
 
+        elif path in ("/api/v1/advisor/faq", "/api/advisor/faq"):
+            cat_param = None
+            if "?" in self.path:
+                qs = self.path.split("?", 1)[1]
+                for param in qs.split("&"):
+                    if param.startswith("category="):
+                        cat_param = param.split("=", 1)[1]
+            res = get_v1_advisor_faq(cat_param)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
 
 
         # Statisk servering av index.html og filer i AI_KOM
@@ -1195,6 +1259,18 @@ class HubApiHandler(BaseHTTPRequestHandler):
             except Exception:
                 payload = {}
             res = compact_v1_context(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/advisor/search", "/api/advisor/search"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = search_v1_advisor(payload)
             self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
             self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
             return

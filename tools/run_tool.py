@@ -145,6 +145,9 @@ Eksempler på bruk:
     p_aie.add_argument("--cache-stats", action="store_true", help="Vis statistikk og besparelser for semantisk cache")
     p_aie.add_argument("--json", action="store_true", help="Formatér respons som JSON")
 
+    # 18. Advisor Knowledge Ingestion
+    p_adv = subparsers.add_parser("advisor-ingest", help="Ingest og oppdater kunnskapsmoduler for kommunale økonomirådgivere")
+
     args, unknown = parser.parse_known_args()
 
     if not args.command:
@@ -272,6 +275,8 @@ Eksempler på bruk:
         if args.json:
             cmd_args.append("--json")
         run_command("ai_engineering_runner.py", cmd_args + unknown)
+    elif args.command == "advisor-ingest":
+        run_command("ingest_municipal_advisor_knowledge.py", unknown)
 
 if __name__ == "__main__":
     main()

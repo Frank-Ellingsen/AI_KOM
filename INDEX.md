@@ -327,7 +327,19 @@ Samtlige 18 maler foreligger i to formater: **Produksjonsformat** (.docx / .xlsx
 | **Triage Pydantic Modeller** | `TriageRequest`, `TriageDecision`, `TriageCategory`, `ExecutionPriority` | [`app/schemas/triage.py`](./app/schemas/triage.py) |
 | **Triage Router Kjerne** | Fast-path regelbasert klassifiseringsmotor med SHA-256 audit stempel | [`app/core/triage_router.py`](./app/core/triage_router.py) |
 | **Triage CLI Verktøy** | CLI-kommando for direkte rutingstest via `run_tool.py triage` | [`tools/triage_cli.py`](./tools/triage_cli.py) |
-| **Triage Testsuite** | Pytest-tester for hybrid, RAG, MCP og forecasting workflows | [`tests/test_triage_router.py`](./tests/test_triage_router.py) |
+## 22. Økonomirådgiverens Håndbok & Vektor-DB Utvidelse (`erp_data/`, `tools/`, `index.html`)
+
+> **30 kvalitetssikrede kunnskapsmoduler, FTS5 fulltekstsøk, Framsikt/delegeringsreglement og interaktiv FAQ-matrise i Office Hub.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **Rådgiver Kunnskapsdatasett** | 30 strukturerte kunnskapsbiter for delegering, Framsikt, MVA, selvkost, tilskudd og HTA | [`erp_data/municipal_advisor_knowledge_chunks.json`](./erp_data/municipal_advisor_knowledge_chunks.json) |
+| **Ingestion Motor (Vektor & Golden)** | Skript som injiserer og indekserer kunnskap i `kommune_golden_record.db` og `kommune_rag_store.db` | [`tools/ingest_municipal_advisor_knowledge.py`](./tools/ingest_municipal_advisor_knowledge.py) |
+| **MCP & RAG Lovoppslag** | Utvidet `search_municipal_law` med FTS5 sparse search over selvkost, MVA og reglement | [`kommune-ai-guardrails/src/kommune_ai_guardrails/mcp_server.py`](./kommune-ai-guardrails/src/kommune_ai_guardrails/mcp_server.py) |
+| **Office Hub FAQ Matrise** | Interaktivt oppslagsverk i `index.html` (Fane 4) med sanntidsfiltrering og hurtigkopiering | [`index.html`](./index.html) |
+| **Advisor REST Endepunkter** | `GET /api/v1/advisor/faq` og `POST /api/v1/advisor/search` i Hub API-serveren | [`tools/hub_api_server.py`](./tools/hub_api_server.py) |
+| **Pytest Integrasjonstest** | Enhetstest i `tests/test_project_master.py` som verifiserer kunnskapsbitene og søk | [`tests/test_project_master.py`](./tests/test_project_master.py) |
+
 
 
 

@@ -473,6 +473,59 @@ def test_evaluation_database_and_ai_engineering_agents_integration():
     assert status.harness_layer["max_steps"] == 10
 
 
+def test_municipal_advisor_knowledge_and_vector_expansion():
+    """Validerer utvidelsen av kunnskapsbasen for kommunale økonomirådgivere (Vektor-DB & Hub)."""
+    import json
+    from pathlib import Path
+    import sqlite3
+
+    json_path = ROOT_DIR / "erp_data" / "municipal_advisor_knowledge_chunks.json"
+    assert json_path.exists(), "Fant ikke municipal_advisor_knowledge_chunks.json"
+
+    with open(json_path, "r", encoding="utf-8") as f:
+        chunks = json.load(f)
+
+    assert len(chunks) >= 30, f"Forventet minst 30 kunnskapsmoduler, fant {len(chunks)}"
+    categories = {c["category"] for c in chunks}
+    assert "Delegering & Fullmakter" in categories
+    assert "Framsikt & Lønn" in categories
+    assert "Selvkost & VAR" in categories
+    assert "MVA & Momskompensasjon" in categories
+    assert "Statlige Tilskudd" in categories
+
+    # 1. Test Golden Record DB
+    golden_db = ROOT_DIR / "erp_data" / "kommune_golden_record.db"
+    assert golden_db.exists()
+    conn = sqlite3.connect(str(golden_db))
+    cur = conn.cursor()
+    cnt = cur.execute("SELECT count(*) FROM legal_chunks").fetchone()[0]
+    assert cnt >= 170, f"Forventet minst 170 rader i legal_chunks, fant {cnt}"
+    fts_check = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='legal_fts'").fetchone()
+    assert fts_check is not None, "legal_fts tabell mangler i golden record"
+    conn.close()
+
+    # 2. Test MCP search_municipal_law
+    from kommune_ai_guardrails.mcp_server import search_municipal_law
+    selvkost_res = search_municipal_law("kalkylerente selvkost swap", top_k=2)
+    assert len(selvkost_res) > 0
+    assert any("selvkost" in str(r).lower() for r in selvkost_res)
+
+    mva_res = search_municipal_law("mva justering 10 år konto 2130", top_k=2)
+    assert len(mva_res) > 0
+    assert any("mva" in str(r).lower() or "moms" in str(r).lower() for r in mva_res)
+
+    # 3. Test Hub API rådgiver-endepunkter
+    from tools.hub_api_server import get_v1_advisor_faq, search_v1_advisor
+    faq = get_v1_advisor_faq()
+    assert faq["ok"] is True
+    assert faq["total"] >= 30
+
+    search_res = search_v1_advisor({"query": "omdisponering vikar"})
+    assert search_res["ok"] is True
+    assert len(search_res["results"]) > 0
+
+
+
 
 
 

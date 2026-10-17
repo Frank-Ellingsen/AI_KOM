@@ -478,6 +478,108 @@
             font-weight: 500;
         }
 
+        /* Økonomirådgiverens Håndbok & Oppslagsverk (Tufte Standard) */
+        .advisor-faq-container {
+            margin-bottom: 24px;
+        }
+        .advisor-pill-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 12px 0 16px 0;
+        }
+        .advisor-pill {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 14px;
+            border: 1px solid var(--border-light);
+            background: #ffffff;
+            color: var(--navy-dark);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .advisor-pill:hover, .advisor-pill.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+        .advisor-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 16px;
+        }
+        .advisor-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 12.5px;
+            line-height: 1.5;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .advisor-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transform: translateY(-1px);
+        }
+        .advisor-badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+        .advisor-cat-badge {
+            background: #f0f4f8;
+            color: var(--navy-dark);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        .advisor-sec-ref {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+        }
+        .advisor-card-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .advisor-card-content {
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .advisor-action-box {
+            background: #f8fafc;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 10px;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .advisor-advice-text {
+            font-size: 11.5px;
+            color: #0f5132;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 3px;
+            padding: 6px 10px;
+        }
+        .advisor-card-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+
         .textarea-box {
             width: 100%;
             height: 70px;
@@ -7468,13 +7570,31 @@ RETURN
 
             <div class="quick-queries" id="rag-quick-queries">
                 <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?')">
-                    § 14-5 Budsjettendring
+                    ⚖️ § 14-5 Budsjettbalanse
                 </span>
-                <span class="query-chip" onclick="setQuery('Hvordan skal vikarutgifter og sykepenger periodiseres i KOSTRA?')">
-                    KOSTRA Vikarer
+                <span class="query-chip" onclick="setQuery('Hva krever bruttoprinsippet i Kommuneloven § 14-6 for vikarer og NAV-refusjon?')">
+                    📑 Bruttoprinsippet § 14-6
                 </span>
-                <span class="query-chip" onclick="setQuery('Hvilke fullmakter har kommunedirektøren for omdisponering?')">
-                    Delegasjon fullmakt
+                <span class="query-chip" onclick="setQuery('Hvilke drøftingskrav gjelder etter HTA § 4 ved turnus og bemanningsgrep?')">
+                    👥 HTA § 4 Turnusdrøfting
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvilke fullmakter har enhetsleder til å omdisponere driftsmidler?')">
+                    📋 Omdisponering & Fullmakter
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvordan budsjetteres stillinger og pensjon i Framsikt med AGA og KLP?')">
+                    💼 Framsikt Lønn & Pensjon
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvordan beregnes kalkylerenten og selvkostfond for VAR-gebyrer?')">
+                    🚰 Selvkost VAR (Swap + 0,5 %)
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for 10 års justering av momskompensasjon og konto 2130?')">
+                    🏦 MVA Justering & Konto 2130
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvilke krav gjelder for IMDi integreringstilskudd og Helsedirektoratets tilskudd?')">
+                    💶 Statlige Tilskudd (IMDi/Helse)
+                </span>
+                <span class="query-chip" onclick="setQuery('Hva er skillet mellom løpende vedlikehold og investering etter KRS 4?')">
+                    🛠️ KRS 4 Drift vs Investering
                 </span>
             </div>
 
@@ -7682,6 +7802,52 @@ RETURN
 
     <!-- FANE 4: VEILEDERE, MALER & REGELVERK -->
     <div class="hub-tab-pane" id="tab-veiledere-maler" role="tabpanel" aria-labelledby="tab-btn-veiledere-maler" style="display: none;">
+
+        <!-- ØKONOMIRÅDGIVERENS HÅNDBOK & OPPSLAGSVERK (ADVISOR KNOWLEDGE HUB) -->
+        <section class="workflow-section" id="okonomiradgiver-handbok-seksjon" style="margin-bottom: 28px;">
+            <div class="section-header" style="border-bottom: 2px solid var(--navy-dark); padding-bottom: 8px;">
+                <div>
+                    <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">🏛️ Økonomirådgiverens Håndbok & Oppslagsverk (Advisor Knowledge Matrix)</span>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 3px;">
+                        Operative svar, fullmaktsgrenser, Framsikt-beregninger og lovhjemler for vanlige henvendelser fra enhetsledere, rektorer og styrere.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <span class="status-badge" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">30 Kunnskapsmoduler</span>
+                    <span class="status-badge" style="background:#f0fdf4; color:#15803d; border-color:#bbf7d0;">FTS5 & sqlite-vec Aktiv</span>
+                </div>
+            </div>
+
+            <!-- Søkelinje & Filter -->
+            <div style="display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
+                <input type="text" id="advisor-search-input" class="rag-input" 
+                       placeholder="🔍 Søk i rådgiverhåndboken (f.eks. omdisponere vikar, selvkost kalkylerente, mva 10 år, AGA 14,1%, KLP/SPK, HTA drøfting, KRS 4)..." 
+                       style="flex: 1; min-width: 280px;"
+                       oninput="filterAdvisorCards()">
+                <button class="btn" onclick="document.getElementById('advisor-search-input').value=''; filterAdvisorCards();" style="font-size: 12px;">Nullstill</button>
+            </div>
+
+            <!-- Kategori-piller -->
+            <div class="advisor-pill-group" id="advisor-pills">
+                <button type="button" class="advisor-pill active" onclick="selectAdvisorCategory('ALL')">📁 Alle Emner (30)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Delegering & Fullmakter')">📋 Delegering & Fullmakter (4)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Framsikt & Lønn')">💼 Framsikt & Lønn (4)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Kommuneloven & Regelverk')">⚖️ Kommuneloven (5)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('MVA & Momskompensasjon')">🏦 MVA & Justering (3)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Selvkost & VAR')">🚰 Selvkost & VAR (3)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Statlige Tilskudd')">💶 Statlige Tilskudd (4)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Drift vs Investering')">🛠️ KRS Drift vs Investering (2)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Arbeidsrett & Turnus')">👥 Turnus & HTA § 4 (2)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Anskaffelser & Innkjøp')">🛒 Anskaffelser & LOA (1)</button>
+                <button type="button" class="advisor-pill" onclick="selectAdvisorCategory('Styringskalender & Årshjul')">📅 Styringskalender (2)</button>
+            </div>
+
+            <!-- FAQ Kort Grid -->
+            <div class="advisor-card-grid" id="advisor-cards-container">
+                <!-- Renderes dynamisk av JS fra /api/v1/advisor/faq med instant client-side fallback -->
+            </div>
+        </section>
+
 <section class="docbank-section" id="dokumentbank">
         <div class="section-header">
             <span>📂 Offisiell Dokument- og Malbank (Templates, Skjemaer & Modeller)</span>
@@ -10005,8 +10171,32 @@ RETURN
                 source = "Delegeringsreglement for Kristiansand kommune § 3, Kommuneloven § 13-1";
             } else if (q.includes("hta") || q.includes("tillitsvalgt") || q.includes("drøfting") || q.includes("partssamarbeid") || q.includes("turnus")) {
                 title = "Vurdering jf. Hovedtariffavtalen (HTA) § 4 & Arbeidsmiljøloven:";
-                body = "Arbeidsgiver plikter å gjennomføre drøftingsmøter med tillitsvalgte (Fagforbundet, Delta, NSF, Utdanningsforbundet) <em>før</em> iverksettelse av vikarstopp, endring i turnusordninger eller innføring av langvakter.<br/><br/>Tiltak T2 og T3 krever signert protokoll for å overholde Stage-Gate Port 9.";
+                body = "Arbeidsgiver plikter å gjennomføre drøftingsmøter med tillitsvalgte (Fagforbundet, Delta, NSF, Utdanningsforbundet) <em>før</em> iverksettelse av vikarstopp, endring i turnusordninger eller innføring av langvakter (AML § 10-12).<br/><br/>Tiltak T2 og T3 krever signert protokoll for å overholde Stage-Gate Port 9.";
                 source = "HTA § 4, Hovedavtalen del B § 3, Arbeidsmiljøloven kap. 10";
+            } else if (q.includes("selvkost") || q.includes("kalkylerente") || q.includes("swap") || q.includes("gebyr") || q.includes("var") || q.includes("vann") || q.includes("avløp") || q.includes("renovasjon")) {
+                title = "Vurdering jf. Selvkostforskriften §§ 5 og 7 (Kalkylerente & 5-års fremføring):";
+                body = "Kalkylerenten for VAR-anleggsmidler fastsettes som <strong>5-årig swaprente + 0,5 prosentpoeng</strong>. Differansen mellom gebyrinntekter og faktiske selvkostutgifter avsettes til/dekkes fra bundet selvkostfond.<br/><br/>Etter selvkostforskriften § 7 gjelder en streng <strong>5-års fremføringsregel</strong>: Akkumulert underskudd må dekkes inn, og akkumulert overskudd må tilbakeføres til abonnentene i gebyrene innen maksimalt 5 år.";
+                source = "Forskrift om beregning av selvkost §§ 5 og 7, Kommuneloven § 14-10";
+            } else if (q.includes("mva") || q.includes("moms") || q.includes("2130") || q.includes("justering") || q.includes("kompensasjon")) {
+                title = "Vurdering jf. Momskompensasjonsloven §§ 4 og 7 & Balansekonto 2130:";
+                body = "Full momskompensasjon ytes for lovpålagte kjerneoppgaver (skole, helse, administrasjon). Ved utleie til private næringsdrivende eller avgiftspliktig aktivitet tapes kompensasjonsretten jf. § 4 annet ledd.<br/><br/>For nybygg/ombygging over 100 000 kr mva gjelder en <strong>10-årig justeringsperiode</strong> etter § 7 der fradragsført mva må tilbakebetales Skatteetaten ved formålsendring. Balansekonto 2130 avstemmes månedlig mot Skatteetatens 6 terminer.";
+                source = "Momskompensasjonsloven §§ 4 og 7, Merverdiavgiftsloven kap. 9";
+            } else if (q.includes("framsikt") || q.includes("lønn") || q.includes("aga") || q.includes("klp") || q.includes("spk") || q.includes("sosiale")) {
+                title = "Vurdering jf. Framsikt Lønnsbudsjettering & Sosiale Kostnader:";
+                body = "I Framsikt stillingsmodul budsjetteres personalkostnader på stillingshjemmel (art 1010). Automatisk påslag beregnes med <strong>Arbeidsgiveravgift (AGA) 14,1 % (Sone 1)</strong>, <strong>KLP pensjonspremie (14,5 %)</strong> for ordinære stillinger, og <strong>SPK (11,2 %)</strong> for lærere i grunnskolen.<br/><br/>Samlet påslag for sosiale kostnader er ca. 29,5–30,5 %. Premieavvik pensjon amortiseres over 7 år jf. budsjett- og regnskapsforskriften § 3-4.";
+                source = "Framsikt EPM Brukerveileder, Budsjett- og regnskapsforskriften § 3-4";
+            } else if (q.includes("tilskudd") || q.includes("imdi") || q.includes("helsedir") || q.includes("udir") || q.includes("enova") || q.includes("husbank")) {
+                title = "Vurdering jf. Statlige Tilskuddsordninger (IMDi, Helsedir, Udir, ENOVA):";
+                body = "IMDi integreringstilskudd for bosetting av flyktninger konteres på <strong>funksjon 234 art 1700</strong> (avtrappende tilskudd år 1–5). Helsedirektoratets kompetansetilskudd og skolehelsetilskudd konteres på funksjon 232/233 art 1700 med revisjonsattestasjon innen 1. april.<br/><br/>Husbankens Startlån krever tapsfondsavsetning (bundet fond). ENOVA energitilskudd føres i investeringsregnskapet art 2700 etter verifisert kWh-reduksjon.";
+                source = "IMDi Tilskuddsregelverk, Helsedirektoratets veileder, KOSTRA Kontoplan";
+            } else if (q.includes("krs") || q.includes("vedlikehold") || q.includes("investering") || q.includes("aktiver") || q.includes("påkost")) {
+                title = "Vurdering jf. KRS 4 & KRS 1 (Avgrensning Drift vs. Investering):";
+                body = "Løpende vedlikehold som opprettholder bygget i opprinnelig stand skal utgiftsføres i <strong>driftsregnskapet (art 1230)</strong>. Kun standardheving, arealutvidelse eller vesentlig levetidsforlengelse over 100 000 kr (ekskl. mva) kan aktiveres i <strong>investeringsregnskapet (art 2300)</strong> og avskrives etter KRS 1.<br/><br/>Å dekke løpende vedlikehold med lånmidler via investering er lovstridig jf. Kommuneloven § 14-9 og § 14-15!";
+                source = "KRS 4 Avgrensning drift/investering, KRS 1 Anleggsmidler, Kommuneloven § 14-9";
+            } else if (q.includes("innkjøp") || q.includes("anskaff") || q.includes("rammeavtale") || q.includes("terskel") || q.includes("doffin")) {
+                title = "Vurdering jf. Kristiansand Anskaffelsesstrategi 2026–2030 & LOA:";
+                body = "Alle enheter plikter å benytte kommunens inngåtte rammeavtaler i Visma Innkjøp. Ved enkeltanskaffelser uten rammeavtale gjelder terskler: <strong>Under 100k kr</strong> (direkte bestilling, 2-3 tilbud), <strong>100k–1,4 mill kr</strong> (forenklet tilbudskonkurranse på Doffin), <strong>over 1,4 mill kr</strong> (EØS-kunngjøring).<br/><br/>Minimum 30 % miljøvekting er lovpålagt etter LOA § 5a.";
+                source = "Kristiansand Anskaffelsesstrategi 2026–2030, LOA § 5a";
             }
 
             const hash = await computeSHA256(query + "|" + new Date().toISOString());
@@ -10231,6 +10421,179 @@ RETURN
             fetchVectorDbStatus();
         });
         setTimeout(fetchVectorDbStatus, 500);
+
+
+        /* ==========================================================================
+           ØKONOMIRÅDGIVERENS HÅNDBOK & OPPSLAGSVERK (ADVISOR KNOWLEDGE HUB)
+           ========================================================================== */
+        let ADVISOR_FAQ_DATA = [];
+        let ACTIVE_ADVISOR_CATEGORY = "ALL";
+
+        function getAdvisorPreloadedData() {
+            return [{"source_file": "bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md", "category": "Delegering & Fullmakter", "section_ref": "Delegeringsreglementet Kap. 2", "title": "Enhetsleders fullmakt til budsjettomdisponering innenfor egen ramme", "content": "Enhetsledere i Kristiansand kommune (skoler, sykehjem, barnehager, VAR) har delegert budsjettdisponeringsmyndighet innenfor tildelt nettobudsjettramme. Enhetsleder kan fritt omdisponere driftsmidler mellom ulike driftsarter (f.eks. fra art 1150/1200 forbruksmateriell til art 1020 vikarer eller art 1050 ubekvemstillegg) forutsatt at: 1) Enhetens samlede årsbudsjett overholdes, 2) Tiltaket ikke medfører varige driftskonsekvenser for påfølgende økonomiplanperiode, og 3) Faste stillingshjemler ikke opprettes uten godkjenning fra kommunalsjef jf. HTA § 4. Omdisponeringer registreres i Framsikt EPM i månedlige prognoserunder."}, {"source_file": "bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md", "category": "Delegering & Fullmakter", "section_ref": "Delegeringsreglementet Kap. 3", "title": "Anvisningsmyndighet og beløpsgrenser for fakturagodkjenning", "content": "Anvisning av fakturaer og forpliktelser i Visma Enterprise følger Kristiansand kommunes beløpshierarki: 1) Avdelingsleder / fagleder: Inntil 50 000 NOK (krever skriftlig fullmakt fra enhetsleder). 2) Enhetsleder (rektor, styrer, virksomhetsleder): Inntil 500 000 NOK innenfor godkjent budsjettpost. 3) Kommunalsjef / direktør for virksomhetsområde: Inntil 5 000 000 NOK. 4) Kommunedirektør: Inntil 20 000 000 NOK innenfor vedtatt årsbudsjett og rammer. 5) Bystyret / Formannskapet: Alle forpliktelser over 20 mill NOK eller anskaffelser som krever tilleggsbevilgning jf. Kommuneloven § 14-5. Ingen kan anvise egne utgiftsrefusjoner eller reiseruter (fire-øyne-prinsippet)."}, {"source_file": "bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md", "category": "Delegering & Fullmakter", "section_ref": "Økonomireglementet § 7", "title": "Prosedyre ved merforbruk og plikt til å fremme avviksnotat", "content": "Dersom en enhet styrer mot et merforbruk over 250 000 NOK eller 3 % av årsbudsjettet ved månedsslutt eller tertialrapportering, plikter enhetsleder umiddelbart å utarbeide et standardisert 'Avviksnotat og tiltaksplan' til økonomirådgiver og kommunalsjef. Tiltaksplanen skal angi: 1) Rotårsak (sykefravær, elevtall, strøm, prisvekst), 2) Korrigerende tiltak (ansettelsesstopp, sammenslåing av grupper, reduksjon av overtid), 3) Forventet innsparingseffekt i NOK, og 4) Revidert prognose (EOY). Kommunalsjef vurderer om merforbruket kan avregnes mot sektorens omstillingsreserve eller om sak må fremmes for kommunedirektøren."}, {"source_file": "bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md", "category": "Delegering & Fullmakter", "section_ref": "Finansreglementet § 4", "title": "Kristiansand Finansreglement: Gjeldsgrenser og rentebinding", "content": "Kristiansand kommunes finansreglement (vedtatt av Bystyret juni 2025) setter strenge finansielle styringsparametere: 1) Netto lånegjeld som andel av brutto driftsinntekter skal ikke overstige 78 % (måltall jf. bystyrevedtak). 2) Rentebindingsandel: Mellom 50 % og 70 % av kommunens samlede låneportefølje skal ha fast rente med løpetid over 1 år for å dempe rentevolatilitet. 3) Motpartsrisiko: Finansielle plasseringer og derivater (renteswapper) kan kun inngås med finansinstitusjoner med minimum kredittrating A/A2. 4) Likviditetsreserve: Kommunen skal til enhver tid ha en trekkrettighet / kassakredittramme på minimum 150 mill NOK."}, {"source_file": "budsjett-framsikt/lonnsbudsjettering-kristiansand-framsikt.md", "category": "Framsikt & Lønn", "section_ref": "Framsikt Veileder Kap. 1", "title": "Stillingshjemler og lønnsberegning i Framsikt (Stillingsmodulen)", "content": "I Framsikt budsjetteres personalkostnader på stillingsnivå knyttet til stillingskode, stillingsprosent og ansiennitetstrinn. Grunnlønn konteres på art 1010 (fast lønn). Framsikt beregner automatisk: 1) Arbeidsgiveravgift (AGA) på 14,1 % for Kristiansand kommune (Sone 1). 2) Pensjonspremie til KLP (Kommunal Landspensjonskasse) med 14,5 % for ordinære ansatte og sykepleiere. 3) Pensjonspremie til SPK (Statens pensjonskasse) med 11,2 % for lærere og pedagogisk personell i grunnskolen. 4) Gruppelivs- og yrkesskadeforsikring på ca. 0,4 %. Totalt påslag for sosiale kostnader er ca. 29,0–30,5 % av brutto grunnlønn."}, {"source_file": "budsjett-framsikt/lonnsbudsjettering-kristiansand-framsikt.md", "category": "Framsikt & Lønn", "section_ref": "Framsikt Veileder Kap. 2", "title": "Vikarer, ekstravakter og overtid: Artskoder og budsjettering", "content": "Variable personalkostnader skal budsjetteres spesifikt på egne driftsarter i Framsikt: • Art 1020: Vikarer ved sykdom, permisjoner og ferie (timelønnede vikarer og korttidsengasjementer). • Art 1040: Overtid (pålagt overtid etter AML § 10-6 med 50 % eller 100 % overtidstillegg). • Art 1050: Ubekvemstillegg (faste og variable kvelds-, natt- og helgetillegg jf. HTA kap. 1 § 5). • Art 1090: Andre godtgjørelser og kortere oppdrag. • Art 1270: Kjøp av tjenester fra eksterne vikarbyråer (Adecco, Dedicare, Randstad). Vikarbyråfakturaer skal ALDRI føres på art 1020, men på art 1270 fordi de faktureres som tjenestekjøp med moms."}, {"source_file": "budsjett-framsikt/FRAMSIKT_OMDISPONERING_OG_RAMMEREGULERING_VEILEDER.md", "category": "Framsikt & Lønn", "section_ref": "Framsikt Veileder Kap. 3", "title": "Håndtering av sykefraværsrefusjon fra NAV (Art 1700/1710) og bruttoprinsippet", "content": "Kommuneloven § 14-6 fjerde ledd krever streng bruttoføring. Ved sykefravær skal: 1) Lønn til sykmeldt ansatt føres som normalt på art 1010 (fast lønn). 2) Vikarutgifter føres brutto på art 1020 (vikar) eller art 1040 (overtid). 3) Refusjon av sykepenger og foreldrepenger fra NAV inntektsføres på art 1700 / 1710 (Refusjon fra trygdeetaten/NAV). Det er STRENGT FORBUDT å motregne NAV-refusjon direkte mot vikarutgiftene (nettoføring). Rådgiver-tips: Gjennomsnittlig saksbehandlingstid hos NAV er 4–8 uker; økonomirådgiver må månedlig avstemme ubetalte refusjonskrav i Visma mot NAV-portalen for å hindre likviditetslekkasje."}, {"source_file": "budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md", "category": "Framsikt & Lønn", "section_ref": "Periodiseringsrutine", "title": "Periodisering av driftsbudsjett i Framsikt gjennom året", "content": "For å oppnå korrekt månedlig avviksanalyse må budsjettet i Framsikt periodiseres realistisk: • Lønn art 1010: Periodiseres jevnt med 1/12 hver måned (feriepenger utbetales i juni, men periodiseres jevnt regnskapsmessig). • Overtid og vikarer art 1020/1040: Vektet mot historiske fraværstoppe (januar-mars influensatopp, mai/juni eksamenstopp, høstsesong). • Strøm og oppvarming art 1160: Vektet mot fyringssesong (høy i jan-mars og nov-des, lav mai-august). • Gebyrinntekter art 1600–1640: Kvartalsvis eller månedlig fakturering jf. innkrevingssyklus."}, {"source_file": "budsjett-framsikt/budsjettering-kristiansand-kommune.md", "category": "Kommuneloven & Regelverk", "section_ref": "Kommuneloven § 14-5", "title": "Realistisk budsjettbalanse og økonomisk handleplikt ved merforbruk", "content": "Kommuneloven § 14-5 fastslår kravet om et realistisk årsbudsjett i balanse. Dersom det i løpet av året oppstår vesentlige uforutsette avvik, merforbruk eller inntektssvikt som truer budsjettbalansen, har kommunedirektøren en lovpålagt plikt til uten ugrunnet opphold å fremme sak om endring av årsbudsjettet for Bystyret. Bystyret må enten: 1) Vedta kompenserende innsparingstiltak, 2) Omdisponere fra andre sektorer, eller 3) Dekke inn merforbruket ved bruk av disposisjonsfond jf. § 14-10. Å videreføre et udekket merforbruk inn i neste år uten vedtatt inndekningsplan er lovstridig og utløser ROBEK-fare jf. § 14-28."}, {"source_file": "budsjett-framsikt/budsjettering-kristiansand-kommune.md", "category": "Kommuneloven & Regelverk", "section_ref": "Kommuneloven § 14-6", "title": "Bruttoprinsippet og forbud mot nettoføring i kommunale oppstillinger", "content": "Kommuneloven § 14-6 fjerde ledd lovfester bruttoprinsippet for kommunale budsjetter og regnskaper. Alle utgifter og inntekter skal budsjetteres og føres med sitt fulle bruttobeløp. Fradrag for tilskudd, refusjoner, salgsinntekter eller gebyrer kan ikke trekkes fra utgiftsposten. Unntak gjelder kun for eksplisitt lovhjemlede oppstillinger (som netto driftsresultat i bevilgningsoversikten). Dette sikrer demokratisk transparens og kontroll med kommunens reelle ressursbruk."}, {"source_file": "budsjett-framsikt/budsjettering-kristiansand-kommune.md", "category": "Kommuneloven & Regelverk", "section_ref": "Kommuneloven § 14-10", "title": "Avsetninger til og bruk av disposisjonsfond og bundne fond", "content": "Disposisjonsfond (§ 14-10) er kommunens frie reservekapital opparbeidet gjennom positive netto driftsresultater. Bystyret har enerett til å disponere over disposisjonsfondet. Fondet kan brukes til å dekke uforutsette merforbruk i drift eller finansiere egenkapital i investeringsprosjekter. Bundne driftsfond (§ 14-10 annet ledd) er midler som etter lov, forskrift eller bindende avtaler er øremerket spesifikke formål (f.eks. selvkostfond for vann/avløp, statlige prosjekttilskudd, legatmidler) og kan ALDRI brukes til å dekke generelt driftsmerforbruk."}, {"source_file": "budsjett-framsikt/budsjettering-kristiansand-kommune.md", "category": "Kommuneloven & Regelverk", "section_ref": "Kommuneloven § 14-15", "title": "Låneopptak, låneramme og gjeldsforvaltning i kommunen", "content": "Kommuneloven § 14-15 gir kommunen rett til å ta opp lån til finansiering av egne varige driftsmidler (investeringer i bygg, anlegg, infrastruktur), refinansiering av eksisterende gjeld, og konvertering av kortsiktig gjeld. Det er ULOVLIG å ta opp lån for å finansiere løpende driftsutgifter. Kommunen plikter å betale et årlig minimumsavdrag på sin samlede gjeld jf. § 14-18, beregnet etter veid gjennomsnittlig levetid for anleggsmidlene. I Kristiansand kommune forvaltes låneopptak sentralt av finansseksjonen."}, {"source_file": "budsjett-framsikt/budsjettering-kristiansand-kommune.md", "category": "Kommuneloven & Regelverk", "section_ref": "Budsjett- og regnskapsforskriften § 3-4", "title": "Premieavvik pensjon og 7-års amortiseringsregel", "content": "Etter forskrift om økonomiplan, årsbudsjett og årsregnskap § 3-4 skal differansen mellom faktisk innbetalt pensjonspremie (forfallspremie til KLP/SPK) og den aktuarmessig beregnede pensjonskostnaden regnskapsføres som et premieavvik. Positivt premieavvik (innbetalt premie > pensjonskostnad) utgiftsføres i balansen og inntektsføres i driftsregnskapet. Akkumulert premieavvik skal amortiseres (avskrives) lineært over maksimalt 7 år i driftsregnskapet. Dette jevner ut voldsomme pensjonssjokk over tid for kommunens driftsenheter."}, {"source_file": "revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md", "category": "MVA & Momskompensasjon", "section_ref": "Momskompensasjonsloven § 4", "title": "Rett til kompensasjon for merverdiavgift i kommunale enheter", "content": "Kommuner har rett til kompensasjon for inngående merverdiavgift på anskaffelser av varer og tjenester etter momskompensasjonsloven § 4. Formålet er nøytralitet slik at kommunen ikke favoriserer egenproduksjon fremfor kjøp fra private aktører. Kompensasjon ytes for lovpålagte kjerneoppgaver: Grunnskole, barnehage, helse og omsorg, barnevern, administrasjon, brannvesen. Vilkår: Faktura må være stilet til Kristiansand kommune med spesifisert mva-beløp og organisasjonsnummer."}, {"source_file": "revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md", "category": "MVA & Momskompensasjon", "section_ref": "Momskompensasjonsloven § 4 annet ledd", "title": "Unntak fra kompensasjonsretten: Konkurranse og avgiftsplikt", "content": "Momskompensasjonsloven § 4 annet ledd oppstiller strenge unntak der det IKKE foreligger rett til momskompensasjon: 1) Virksomhet som kommunen driver som ledd i næringsvirksomhet eller som er avgiftspliktig etter merverdiavgiftsloven (f.eks. parkering, utleie av lokaler). 2) Økonomisk aktivitet i konkurranse med ikke-kompensasjonsberettigede private aktører (f.eks. kommunal kafé, catering, treningssenter). 3) Ytelser til privat bruk eller boligformål for ansatte. Dersom en enhet benytter et bygg til både kompensasjonsberettiget formål (skoleundervisning) og utleie til private næringsdrivende på kveldstid, må mva-kompensasjonen avkortes forholdsmessig etter areal- eller tidsbrøk."}, {"source_file": "reports/test_mva_balanse_2130_rapport.md", "category": "MVA & Momskompensasjon", "section_ref": "Momskompensasjonsloven § 7 & Mval kap. 9", "title": "Justeringsregler for fast eiendom over 10 år og Balansekonto 2130", "content": "Ved nybygg, påbygging eller ombygging av fast eiendom der inngående merverdiavgift overstiger 100 000 NOK, gjelder en 10-årig justeringsperiode etter momskompensasjonsloven § 7 og merverdiavgiftsloven kapittel 9. Dersom bygget endrer formål innen 10 år (f.eks. en kommunal skolefløy leies ut til en privat aktør eller barnehage selges), utløses plikt til å tilbakebetale kompensert merverdiavgift til Skatteetaten for gjenværende tiendedeler. Balansekonto 2130 benyttes som oppgjørskonto mot Skatteetaten for løpende mva-kompensasjon (6 terminer per år). Konto 2130 må månedlig avstemmes mot innleverte mva-meldinger for å sikre at kommunen ikke har uoppgjorte mellomværender."}, {"source_file": "budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md", "category": "Selvkost & VAR", "section_ref": "Selvkostforskriften § 3", "title": "Selvkostprinsippet og direkte vs. indirekte henførbare kostnader", "content": "Forskrift om beregning av selvkost regulerer kommunale gebyrområder (vann, avløp, renovasjon, feiing, byggesak, oppmåling, feiegebyr). Gebyrinntektene kan ikke overstige kommunens faktiske kostnader ved å yte tjenesten (100 % selvkost). Selvkostkalkylen består av: 1) Direkte driftskostnader (lønninger, vedlikehold av ledningsnett, kjemikalier, slamhåndtering, renovasjonsavtaler). 2) Indirekte henførbare kostnader (forholdsmessig andel av rådhusleie, IT-systemer, HR, sentral økonomi- og arkivfunksjon etter fordelingsnøkkel). 3) Kapitalkostnader: Avskrivninger på VAR-infrastruktur pluss kalkulatoriske rentekostnader."}, {"source_file": "budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md", "category": "Selvkost & VAR", "section_ref": "Selvkostforskriften § 5", "title": "Kalkylerente og beregning av kapitalkostnader i selvkost", "content": "Etter selvkostforskriften § 5 fastsettes kalkylerenten for anleggsmidler og selvkostfond som: Gjennomsnittlig 5-årig swaprente i budsjettåret med et tillegg på 0,5 prosentpoeng (1/2 prosentpoeng). Renten beregnes av gjennomsnittlig restverdi på anleggsmidlene gjennom året. Renten på bundne selvkostfond godskrives fondet dersom fondet er positivt, og belastes selvkostområdet dersom fondet har et akkumulert underskudd. Dette sikrer at innbyggerne verken over- eller underbelastes for kommunens kapitalbinding."}, {"source_file": "budsjett-framsikt/driftsarter-og-selvkost-alle-omrader-framsikt.md", "category": "Selvkost & VAR", "section_ref": "Selvkostforskriften § 7", "title": "Selvkostfond og 5-års fremføringsregel for overskudd og underskudd", "content": "Årlige avvik mellom gebyrinntekter og faktiske selvkostutgifter avsettes til eller dekkes fra bundne selvkostfond. Etter selvkostforskriften § 7 gjelder en streng 5-års fremføringsregel: Et fremført underskudd må dekkes inn innen 5 år gjennom justering av gebyrene. Et akkumulert overskudd på selvkostfondet skal tilbakeføres til abonnentene i form av lavere gebyrer innen maksimalt 5 år. Dersom selvkostfondet vokser utover forventet reinvesteringsbehov, plikter kommunedirektøren å foreslå gebyrreduksjon i neste års gebyrregulativ."}, {"source_file": "budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md", "category": "Statlige Tilskudd", "section_ref": "IMDi Integreringstilskudd", "title": "IMDi tilskudd ved bosetting av flyktninger: År 1–5 og kontering", "content": "Integrerings- og mangfoldsdirektoratet (IMDi) yter integreringstilskudd for bosetting av personer med flyktningstatus: • Tilskudd 1 (voksne og barn): Utbetales årlig i 5 år (år 1 høyest, avtrappende år 2–5). • Tilskudd for enslige mindreårige flyktninger (EM): Særskilt forhøyet tilskudd for å dekke døgnbemannede bofellesskap. • Barnehagetilskudd og norskopplæringstilskudd for voksne innvandrere. Kontering i Kristiansand: Inntektsføres på funksjon 234 (Aktivisering og bosetting av flyktninger) under art 1700 (Statlige tilskudd). Midler som ikke er forbrukt ved årsslutt kan settes av til bundet driftsfond dersom de knytter seg til konkrete vedtatte integreringstiltak."}, {"source_file": "budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md", "category": "Statlige Tilskudd", "section_ref": "Helsedirektoratet Tilskudd", "title": "Helsedirektoratets tilskuddsordninger til helse, omsorg og rus", "content": "Helsedirektoratet forvalter øremerkede tilskudd som kommunale enheter kan søke på: 1) Tilskudd til styrking av helsestasjons- og skolehelsetjenesten: Konteres på funksjon 232/233 art 1700. Krever dokumentert stillingsøkning. 2) Kompetanse- og innovasjonstilskudd for helse- og omsorgstjenesten: Midler til etterutdanning, sykepleieropplæring og velferdsteknologi. 3) Tilskudd til kommunalt rus- og psykisk helsearbeid: Stillingsstøtte og oppsøkende virksomhet. Rapporteringskrav: Regnskapsrapport attestert av kommunerevisjonen innen 1. april påfølgende år. Ubenyttede midler må tilbakebetales til staten dersom forlengelse ikke innvilges."}, {"source_file": "budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md", "category": "Statlige Tilskudd", "section_ref": "Udir Tilskudd", "title": "Utdanningsdirektoratet (Udir): DeKomp, ReKomp og tilrettelegging", "content": "Utdanningsdirektoratet yter tilskudd til grunnskoler og barnehager: • DeKomp (Desentralisert ordning for lokal kompetanseutvikling i skolen): Tildeles gjennom samarbeidsforum med Universitetet i Agder (UiA). • ReKomp (Regional ordning for barnehagekompetanse). • Tilskudd til svømmeopplæring i barnehage/skole og tilretteleggingstilskudd for minoritetselever. Konteres på funksjon 202/211 under art 1700. Økonomirådgiver må sikre at midlene ikke blandes sammen med skolens ordinære rammetildeling."}, {"source_file": "budsjett-framsikt/kostra-artskontoer-konteringsregler-framsikt.md", "category": "Statlige Tilskudd", "section_ref": "Husbanken & ENOVA", "title": "Husbanken Startlån og ENOVA energieffektiviseringstilskudd", "content": "• Husbanken Startlån: Låneramme tildeles Kristiansand kommune for videreutlån til vanskeligstilte (funksjon 283/art 1920/1930). Kommunen plikter å sette av midler til tapsfond for startlån (bundet fond) for å dekke eventuelle mislighold. • ENOVA-tilskudd: Støtte til energi- og klimatiltak i eksisterende formålsbygg (ventilasjon, varmepumper, solceller, SD-anlegg). Kompensasjon utbetales etter ferdigattest og tredjepartsverifisering av oppnådd kWh-reduksjon. Føres i investeringsregnskapet art 2700."}, {"source_file": "revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md", "category": "Drift vs Investering", "section_ref": "KRS 4 Avgrensning", "title": "KRS 4: Avgrensning mellom drift og investering (vedlikehold vs påkostning)", "content": "God kommunal regnskapsskikk (KRS 4) trekker et strengt skille mellom driftsutgifter og investeringsutgifter: 1) Løpende vedlikehold (Drift art 1230): Utgifter for å opprettholde anlegget i dets opprinnelige standard og funksjon (f.eks. maling av fasade, utskifting av slitte gulvbelegg, rutinemessig takreparasjon). 2) Påkostning / Rehabilitering (Investering art 2300): Utgifter som hever anleggets standard, øker levetiden vesentlig utover opprinnelig prosjektert levetid, eller endrer byggets funksjon (f.eks. etterisolering med energiklasseheving, installasjon av heis, ombygging fra kontor til klasserom). Å belaste lånefinansiert investeringsregnskap med ordinært vedlikehold er lovstridig jf. Kommuneloven § 14-9 og § 14-15!"}, {"source_file": "revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md", "category": "Drift vs Investering", "section_ref": "KRS 1 Anleggsmidler", "title": "KRS 1: Aktiveringskriterier og avskrivningsregler for anleggsmidler", "content": "Etter KRS 1 og kommuneloven skal et formuesgode aktiveres i investeringsregnskapet og balansen dersom det: 1) Har en vesentlig anskaffelseskostnad: I Kristiansand kommune er nedre aktiveringsgrense 100 000 NOK (ekskl. mva). 2) Har en forventet økonomisk levetid på minst 3 år. Innkjøp under 100 000 NOK skal utgiftsføres direkte i driftsregnskapet som inventar/utstyr (art 1120/1200) selv om levetiden er lang. Aktiverte anleggsmidler skal avskrives lineært i driftsregnskapet over levetiden (f.eks. 5 år for IKT, 20 år for biler/maskiner, 40-50 år for formålsbygg)."}, {"source_file": "reports/budsjettansvarlige_arkiv/5210-ENH-402/03_Saksdokumenter_og_Maler/MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.md", "category": "Arbeidsrett & Turnus", "section_ref": "HTA § 4", "title": "Hovedtariffavtalen (HTA) § 4: Arbeidsgivers drøftingsplikt ved bemanningsgrep", "content": "Før arbeidsgiver iverksetter tiltak som har vesentlig betydning for bemanning, arbeidsmiljø eller organisering, har arbeidsgiver en ubetinget drøftingsplikt med de tillitsvalgte etter HTA § 4 og Hovedavtalen del B § 3. Typiske situasjoner for økonomirådgiver og leder: • Ansettelsesstopp eller vikarstopp for å hente inn merforbruk. • Omlegging av turnusplaner, fjerning av faste vakter, eller sammenslåing av avdelinger. • Endring i oppgaver og stillingsbrøker. Det skal skrives formell drøftingsprotokoll med de tillitsvalgte (Fagforbundet, NSF, Delta) FØR vedtak fattes. Manglende drøfting medfører tariffbrudd og kan stoppe tiltakene juridisk."}, {"source_file": "reports/budsjettansvarlige_arkiv/5210-ENH-402/03_Saksdokumenter_og_Maler/MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.md", "category": "Arbeidsrett & Turnus", "section_ref": "AML § 10-12 & Langvakter", "title": "AML § 10-12 og langvakter (12,5 timer) i helseturnus: Økonomiske effekter", "content": "I døgntjenester (sykehjem, bo- og omsorgssentre, bofellesskap) har innføring av langvakter (12,5 timer i helger) betydelige økonomiske og faglige effekter: 1) Juridisk hjemmel: Arbeid utover 10 timer i døgnet krever skriftlig avtale med tillitsvalgte etter Arbeidsmiljøloven § 10-12 fjerde ledd. 2) Økonomisk virkning: Færre vaktbytter per helg reduserer overleveringstid, kutter overtid (art 1040) og reduserer behovet for helgevikarer (art 1020). 3) Kostnadskomponenter: Krever ofte helgetillegg eller lønnskompensasjon jf. lokal særavtale. Økonomirådgiveren må lage What-If kalkyle på helårseffekt før avtale inngås."}, {"source_file": "bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md", "category": "Anskaffelser & Innkjøp", "section_ref": "Anskaffelsesstrategi 2026-2030", "title": "Terskelverdier for innkjøp og obligatorisk bruk av kommunale rammeavtaler", "content": "Alle innkjøp i Kristiansand kommune skal skje i henhold til Lov om offentlige anskaffelser (LOA) og kommunens innkjøpsreglement: 1) Rammeavtaler: Dersom kommunen har inngått rammeavtale (forbruksmateriell, PC-utstyr, møbler, håndverkertjenester, vikarbyrå), er samtlige enheter FORPLIKTET til å handle fra avtalepartneren i Visma Innkjøp. Lojalitetsbrudd medfører merkostnader og er tariff-/avtalebrudd. 2) Terskler for enkeltanskaffelser uten rammeavtale: • Under 100 000 NOK: Direkte bestilling, men krever at leder sikrer markedsmessige betingelser (anbefalt 2-3 tilbud). • 100 000 – 1,4 mill NOK (nasjonal terskel): Forenklet tilbudskonkurranse kunngjort på Doffin. • Over 1,4 mill NOK (varer/tjenester) / Over 45 mill NOK (bygg/anlegg): EØS-kunngjøring. 3) Miljøkrav (LOA § 5a): Obligatorisk minimum 30 % vekting på klima og miljø i alle anskaffelser."}, {"source_file": "templates/MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.md", "category": "Politisk Saksfremlegg", "section_ref": "Kommuneloven § 13-1", "title": "Krav til politiske saksfremlegg om budsjettendring og tertialrapportering", "content": "Saksfremlegg til Bystyret og Formannskapet jf. Kommuneloven § 13-1 om budsjettjusteringer skal ha fast oppbygging: 1) 'Forslag til vedtak': Konsise vedtakspunkter med bevilgninger spesifisert i hele 1 000 NOK per sektor/ansvarssted. 2) 'Bakgrunn og faktagrunnlag': Regnskapstall per M04/M08, avviksanalyse og underliggende drivere. 3) 'Vurdering og økonomiske konsekvenser': Konsekvens for netto driftsresultat, disposisjonsfond og lånegjeld. 4) 'Inndekningsplan': Hvor skal pengene tas fra (kutt i andre sektorer, økte skatteinntekter eller disposisjonsfond). 5) 'Klima- og miljøvurdering' og 'Medvirkning/partssamarbeid' jf. HTA § 4. Saken må være signert av kommunedirektøren før utsendelse til politisk behandling."}, {"source_file": "bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md", "category": "Styringskalender & Årshjul", "section_ref": "Styringskalender 2026", "title": "Månedshjul og milepæler for kommunale økonomirådgivere i Kristiansand", "content": "Viktige milepæler i det kommunale styringsåret for økonomirådgiveren: • Januar/Februar: Årsavslutning, periodisering, avstemming av Balansekonto 2130 og oversendelse av årsregnskap til Kommunerevisjonen (frist 22. februar). • Mars/April: Behandling av årsregnskap i formannskapet. 1. tertialrapportering per 30. april (T1) med revidert helårsprognose i Framsikt. • Mai/Juni: Behandling av T1 i Bystyret. Start på Handlings- og økonomiplan (HØP 2027–2030) i enhetene. Lønnsoppgjør og regulering. • August/September: 2. tertialrapportering per 31. august (T2). Innlevering av budsjettinnspill fra enhetene i Framsikt. • Oktober/November: Kommunedirektørens forslag til HØP og årsbudsjett legges frem. Formannskapets innstilling. • Desember: Bystyrets endelige budsjettvedtak, tildeling av rammer til enhetene og oppstart av forberedelser til årsoppgjør."}];
+        }
+
+        function escapeHtml(str) {
+            if (!str) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        async function initAdvisorFaq() {
+            try {
+                const res = await fetch(`${API_BASE}/api/v1/advisor/faq`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.ok && data.items && data.items.length > 0) {
+                        ADVISOR_FAQ_DATA = data.items;
+                        renderAdvisorCards(ADVISOR_FAQ_DATA);
+                        return;
+                    }
+                }
+            } catch (err) {
+                // Fallback til lokal pre-loaded kunnskapsbase
+            }
+            ADVISOR_FAQ_DATA = getAdvisorPreloadedData();
+            renderAdvisorCards(ADVISOR_FAQ_DATA);
+        }
+
+        function selectAdvisorCategory(cat) {
+            ACTIVE_ADVISOR_CATEGORY = cat;
+            document.querySelectorAll(".advisor-pill").forEach(btn => {
+                if ((cat === "ALL" && btn.innerText.includes("Alle")) || btn.innerText.includes(cat)) {
+                    btn.classList.add("active");
+                } else {
+                    btn.classList.remove("active");
+                }
+            });
+            filterAdvisorCards();
+        }
+
+        function filterAdvisorCards() {
+            const q = (document.getElementById("advisor-search-input").value || "").toLowerCase().trim();
+            const filtered = ADVISOR_FAQ_DATA.filter(item => {
+                const matchesCat = (ACTIVE_ADVISOR_CATEGORY === "ALL") || 
+                                   (item.category && item.category.toLowerCase().includes(ACTIVE_ADVISOR_CATEGORY.toLowerCase()));
+                if (!matchesCat) return false;
+                if (!q) return true;
+                const text = `${item.title} ${item.content} ${item.section_ref || ''} ${item.category}`.toLowerCase();
+                return text.includes(q);
+            });
+            renderAdvisorCards(filtered);
+        }
+
+        function getAdvisorCategoryColor(cat) {
+            if (!cat) return "#1b365d";
+            if (cat.includes("Delegering")) return "#0284c7";
+            if (cat.includes("Lønn") || cat.includes("Framsikt")) return "#107c41";
+            if (cat.includes("Regelverk") || cat.includes("Kommuneloven")) return "#b45309";
+            if (cat.includes("MVA")) return "#7c3aed";
+            if (cat.includes("Selvkost")) return "#0891b2";
+            if (cat.includes("Tilskudd")) return "#059669";
+            if (cat.includes("Investering")) return "#d97706";
+            if (cat.includes("Turnus") || cat.includes("Arbeidsrett")) return "#dc2626";
+            if (cat.includes("Anskaffelser")) return "#4f46e5";
+            return "#1b365d";
+        }
+
+        function getAdvisorRecommendation(item) {
+            const t = (item.title + " " + item.content).toLowerCase();
+            if (t.includes("omdisponer") || t.includes("egen ramme")) {
+                return "Godkjenn innenfor samme formål/ansvarssted. Avvis hvis det oppretter faste stillinger eller overskrider årsrammen. Registrer i Framsikt.";
+            }
+            if (t.includes("anvisning") || t.includes("fakturagodkjenning")) {
+                return "Sjekk beløpsgrense: Avdelingsleder inntil 50k, enhetsleder inntil 500k kr. Fire-øyne-prinsippet kreves alltid på egne utlegg.";
+            }
+            if (t.includes("merforbruk og plikt")) {
+                return "Avvik > 250k krever skriftlig 'Avviksnotat og tiltaksplan' jf. § 14-5. Sendes kommunalsjef og legges ved tertialrapporten.";
+            }
+            if (t.includes("framsikt") || t.includes("sosiale kostnader")) {
+                return "Bruk Framsikt stillingsmodul: Legg inn 14,1 % AGA og 14,5 % KLP (eller 11,2 % SPK for lærere). Totalt sosiale påslag ca. 30 %.";
+            }
+            if (t.includes("vikarer") || t.includes("overtid")) {
+                return "Vikarbyrå føres på art 1270 (tjenestekjøp med mva), egne vikarer på art 1020. Overtid krever begrunnelse etter AML § 10-6 på art 1040.";
+            }
+            if (t.includes("sykefraværsrefusjon") || t.includes("bruttoprinsippet")) {
+                return "Forbud mot nettoføring jf. § 14-6! Vikarer føres på 1020, NAV-refusjon på 1700/1710. Avstem utestående krav mot NAV månedlig.";
+            }
+            if (t.includes("kalkylerente") || t.includes("selvkost")) {
+                return "Kalkylerenten er 5-årig swaprente + 0,5 %. Gebyrer må justeres slik at overskudd/underskudd nullstilles innen 5 år jf. forskriften § 7.";
+            }
+            if (t.includes("momskompensasjon") || t.includes("justering") || t.includes("2130")) {
+                return "Utleie til private aktører avkorter kompensasjonsretten. Ved nybygg over 100k mva utløses 10 års justeringsavtale. Avstem konto 2130.";
+            }
+            if (t.includes("drift og investering") || t.includes("krs 4")) {
+                return "Løpende vedlikehold = drift (art 1230). Kun standardheving > 100k kr kan aktiveres som investering (art 2300). Ulovlig å lånefinansiere drift.";
+            }
+            if (t.includes("hta § 4") || t.includes("turnus")) {
+                return "Arbeidsgiver plikter å drøfte bemanningskutt, vikarstopp og turnusendringer med tillitsvalgte FØR vedtak. Skriv protokoll jf. Port 9.";
+            }
+            if (t.includes("imdi") || t.includes("tilskudd")) {
+                return "Føres på funksjon 234 art 1700. Ubrukte midler kan avsettes til bundet driftsfond ved årsslutt dersom tiltakene er vedtatt.";
+            }
+            return "Følg Kristiansand kommunes standarder, kontakt controller Frank Ellingsen for kvalitetssikring og sjekk malverket i huben.";
+        }
+
+        function renderAdvisorCards(items) {
+            const container = document.getElementById("advisor-cards-container");
+            if (!container) return;
+            if (!items || items.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-muted); background: #ffffff; border: 1px dashed var(--border-light); border-radius: 4px;">Ingen kunnskapsmoduler matchet søket. Prøv et annet søkeord eller velg 'Alle Emner'.</div>`;
+                return;
+            }
+
+            container.innerHTML = items.map((item, idx) => {
+                const catColor = getAdvisorCategoryColor(item.category);
+                return `
+                    <div class="advisor-card" style="border-left-color: ${catColor};">
+                        <div>
+                            <div class="advisor-badge-row">
+                                <span class="advisor-cat-badge" style="color: ${catColor}; background: ${catColor}15;">${escapeHtml(item.category)}</span>
+                                <span class="advisor-sec-ref">${escapeHtml(item.section_ref || '§ Ref')}</span>
+                            </div>
+                            <div class="advisor-card-title">${escapeHtml(item.title)}</div>
+                            <div class="advisor-card-content">${escapeHtml(item.content)}</div>
+                        </div>
+                        <div class="advisor-action-box">
+                            <div class="advisor-advice-text">
+                                <strong>💡 Rådgiverens svar til leder:</strong> ${getAdvisorRecommendation(item)}
+                            </div>
+                            <div class="advisor-card-buttons">
+                                <button type="button" class="btn btn-sm" onclick="copyAdvisorText(${idx}, this)" style="font-size: 11px; padding: 4px 8px;">
+                                    📋 Kopier veiledning
+                                </button>
+                                ${item.source_file ? `<a href="${item.source_file}" target="_blank" class="btn btn-sm" style="font-size: 11px; padding: 4px 8px; text-decoration: none;">📄 Åpne Kilde</a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function copyAdvisorText(idx, btn) {
+            const item = ADVISOR_FAQ_DATA[idx];
+            if (!item) return;
+            const textToCopy = `OPPSLAG: ${item.title}\nHjemmel/Kilde: ${item.section_ref || ''} (${item.source_file || ''})\n\nRegelverk:\n${item.content}\n\nRådgiverens vurdering til leder:\n${getAdvisorRecommendation(item)}`;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const oldText = btn.innerHTML;
+                btn.innerHTML = "✓ Kopiert!";
+                btn.style.color = "var(--success-green)";
+                setTimeout(() => {
+                    btn.innerHTML = oldText;
+                    btn.style.color = "";
+                }, 2000);
+            }).catch(err => {
+                alert("Kunne ikke kopiere: " + err);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initAdvisorFaq();
+        });
 
         /* ==========================================================================
            INTERAKTIV SAKSGENERATOR, DOKUMENTBANK & POWER BI VISER

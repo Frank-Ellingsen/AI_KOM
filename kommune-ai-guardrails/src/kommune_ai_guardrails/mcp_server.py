@@ -10,6 +10,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import sqlite3
 from typing import Any, Dict, List, Optional
 
@@ -206,31 +207,116 @@ def search_municipal_law(query_text: str, top_k: int = 3) -> List[Dict[str, Any]
             "relevans_score": 0.89
         })
 
-    # Søk i lokal database dersom vi har flere queries
+    if any(k in q_lower for k in ["selvkost", "kalkylerente", "swap", "gebyr", "vann", "avløp", "renovasjon"]):
+        results.append({
+            "paragraf": "Selvkostforskriften § 5 og § 7",
+            "tittel": "Kalkylerente (swap + 0,5 %) og 5-års fremføringsregel",
+            "kilde": "Forskrift om beregning av selvkost §§ 5 og 7",
+            "tekst": "Kalkylerente fastsettes som 5-årig swaprente + 0,5 prosentpoeng. Selvkostfond kan fremføres i inntil 5 år for å jevne ut gebyrer og dekke underskudd.",
+            "relevans_score": 0.94
+        })
+
+    if any(k in q_lower for k in ["mva", "moms", "kompensasjon", "2130", "justering"]):
+        results.append({
+            "paragraf": "Momskompensasjonsloven § 4 og § 7",
+            "tittel": "Kompensasjonsrett, 10-års justeringsregel og Balansekonto 2130",
+            "kilde": "Lov om merverdiavgiftskompensasjon §§ 4 og 7",
+            "tekst": "Full kompensasjon for lovpålagte kjerneoppgaver. 10 års justeringsperiode gjelder ved nybygg/ombygging over 100k kr mva ved formålsendring.",
+            "relevans_score": 0.93
+        })
+
+    if any(k in q_lower for k in ["delegering", "fullmakt", "anvisning", "omdisponer"]):
+        results.append({
+            "paragraf": "Kristiansand Delegeringsreglement Kap. 2 & 3",
+            "tittel": "Enhetsleders fullmakter og anvisningsgrenser",
+            "kilde": "Reglement for delegering og innstilling i Kristiansand kommune",
+            "tekst": "Enhetsledere har fullmakt inntil 500k kr for driftsanvisning, og kan omdisponere innen tildelt nettobudsjett forutsatt at faste stillinger ikke opprettes.",
+            "relevans_score": 0.91
+        })
+
+    if any(k in q_lower for k in ["framsikt", "lønn", "aga", "klp", "spk", "stilling"]):
+        results.append({
+            "paragraf": "Framsikt Stillings- og Lønnsmodul",
+            "tittel": "Sosiale kostnader: AGA (14,1 %), KLP (14,5 %) og SPK (11,2 %)",
+            "kilde": "Framsikt EPM Brukerveileder for Kristiansand",
+            "tekst": "Personalkostnader budsjetteres på stillingsnivå i Framsikt med AGA 14,1 % og KLP/SPK pensjonspåslag (totalt ca. 30 % sosiale kostnader).",
+            "relevans_score": 0.90
+        })
+
+    # Søk i lokal database (prøv både rag store og golden record med FTS eller LIKE)
+    db_conns = []
     try:
-        conn = get_db_connection()
-        rows = conn.execute(
-            """
-            SELECT section_ref, title, content, source_file
-            FROM legal_chunks
-            WHERE content LIKE ? OR title LIKE ?
-            LIMIT ?
-            """,
-            (f"%{query_text[:15]}%", f"%{query_text[:15]}%", top_k)
-        ).fetchall()
-        for r in rows:
-            results.append({
-                "paragraf": r["section_ref"] or "Lovhjemmel",
-                "tittel": r["title"],
-                "kilde": r["source_file"],
-                "tekst": r["content"][:250] + "...",
-                "relevans_score": 0.85
-            })
-        conn.close()
+        db_conns.append(get_db_connection())
+    except Exception:
+        pass
+    try:
+        db_conns.append(get_golden_connection())
     except Exception:
         pass
 
-    # Fallback default
+    clean_words = [w for w in re.sub(r"[^\w\s]", " ", query_text).split() if len(w) > 2]
+    for conn in db_conns:
+        if len(results) >= top_k + 2:
+            break
+        try:
+            cur = conn.cursor()
+            # Prøv FTS først dersom tilgjengelig
+            fts_done = False
+            if clean_words:
+                fts_query = " OR ".join(clean_words[:3])
+                try:
+                    cur.execute(
+                        """
+                        SELECT c.section_ref, c.title, c.content, c.source_file
+                        FROM legal_fts f
+                        JOIN legal_chunks c ON c.id = f.rowid
+                        WHERE legal_fts MATCH ?
+                        LIMIT ?
+                        """,
+                        (fts_query, top_k)
+                    )
+                    rows = cur.fetchall()
+                    for r in rows:
+                        t = r["title"]
+                        if not any(res["tittel"] == t for res in results):
+                            results.append({
+                                "paragraf": r["section_ref"] or "Lovhjemmel",
+                                "tittel": r["title"],
+                                "kilde": r["source_file"],
+                                "tekst": r["content"][:280] + "...",
+                                "relevans_score": 0.88
+                            })
+                    fts_done = True
+                except Exception:
+                    pass
+
+            if not fts_done and clean_words:
+                search_word = clean_words[0]
+                cur.execute(
+                    """
+                    SELECT section_ref, title, content, source_file
+                    FROM legal_chunks
+                    WHERE content LIKE ? OR title LIKE ?
+                    LIMIT ?
+                    """,
+                    (f"%{search_word}%", f"%{search_word}%", top_k)
+                )
+                rows = cur.fetchall()
+                for r in rows:
+                    t = r["title"]
+                    if not any(res["tittel"] == t for res in results):
+                        results.append({
+                            "paragraf": r["section_ref"] or "Lovhjemmel",
+                            "tittel": r["title"],
+                            "kilde": r["source_file"],
+                            "tekst": r["content"][:280] + "...",
+                            "relevans_score": 0.85
+                        })
+            conn.close()
+        except Exception:
+            pass
+
+    # Fallback default dersom ingen treff
     if not results:
         results.append({
             "paragraf": "Kommuneloven § 14-5",
@@ -241,6 +327,7 @@ def search_municipal_law(query_text: str, top_k: int = 3) -> List[Dict[str, Any]
         })
 
     return results[:top_k]
+
 
 
 def calculate_eoy_impact(unit_id: str = "202", action_type: str = "vikar_stopp", monthly_saving: float = 170000.0, start_month: int = 8) -> Dict[str, Any]:
