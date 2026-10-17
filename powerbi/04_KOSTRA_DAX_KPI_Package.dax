@@ -147,7 +147,7 @@ RETURN
         PåløptRegnskap + GjenståendeBudsjett
     )
 
-// 3.4 EOY Avvik mot Opprinnelig Årsbudsjett
+// 3.4 EOY Avvik mot Opprinnelig Årsbudsjett (Avvik = Budsjett - Prognose)
 EOY Projisert Avvik = 
 VAR VedtattAarsbudsjett = 
     CALCULATE(
@@ -156,7 +156,7 @@ VAR VedtattAarsbudsjett =
         ALL(Dim_Dato[maned])
     )
 RETURN
-    [EOY Årsprognose] - VedtattAarsbudsjett
+    VedtattAarsbudsjett - [EOY Årsprognose]
 
 
 // =============================================================================

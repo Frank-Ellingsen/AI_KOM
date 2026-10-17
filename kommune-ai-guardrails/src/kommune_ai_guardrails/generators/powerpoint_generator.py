@@ -144,7 +144,7 @@ def generate_bystyret_deck(output_path: Optional[str] = None) -> str:
     )
 
     card_data = [
-        ("YTD MERFORBRUK", "+850 000 kr", "+12,4 % over budsjettramme Q2", COLOR_RED),
+        ("YTD AVVIK (MERFORBRUK)", "-850 000 kr", "-12,4 % mot budsjettramme Q2", COLOR_RED),
         ("HOVEDÅRSAK VIKAR", "620 000 kr", "Konto 1020 (14,2 % sesongsykefravær)", COLOR_NAVY),
         ("FORVENTET EOY BALANSE", "+350 000 kr", "Dekkes inn via omstillingsfond (§ 14-5)", COLOR_GREEN),
     ]
@@ -246,10 +246,10 @@ def generate_bystyret_deck(output_path: Optional[str] = None) -> str:
         p.alignment = PP_ALIGN.LEFT if col_idx == 0 else PP_ALIGN.RIGHT
 
     rows_data = [
-        ("Art 1010 Faste lønninger", "4 850 000 kr", "4 890 000 kr", "+40 000 kr", "+0,8 %"),
-        ("Art 1020 Innkjøp av vikarer (timelærere)", "1 200 000 kr", "1 820 000 kr", "+620 000 kr", "+51,7 %"),
-        ("Art 1090 Overtid og kveldstillegg", "57 000 kr", "436 000 kr", "+379 000 kr", "+664,9 %"),
-        ("Art 1600 NAV-refusjoner (sykepenger)", "-590 000 kr", "-410 000 kr", "+180 000 kr", "-30,5 %"),
+        ("Art 1010 Faste lønninger", "4 850 000 kr", "4 890 000 kr", "-40 000 kr", "-0,8 %"),
+        ("Art 1020 Innkjøp av vikarer (timelærere)", "1 200 000 kr", "1 820 000 kr", "-620 000 kr", "-51,7 %"),
+        ("Art 1090 Overtid og kveldstillegg", "57 000 kr", "436 000 kr", "-379 000 kr", "-664,9 %"),
+        ("Art 1600 NAV-refusjoner (sykepenger)", "-590 000 kr", "-410 000 kr", "-180 000 kr", "-30,5 %"),
     ]
 
     for row_idx, r_vals in enumerate(rows_data, 1):
@@ -263,14 +263,14 @@ def generate_bystyret_deck(output_path: Optional[str] = None) -> str:
             p.font.name = "Arial"
             if col_idx == 3:
                 p.font.bold = True
-                p.font.color.rgb = COLOR_RED if "+" in val and "40 000" not in val else COLOR_DARK
+                p.font.color.rgb = COLOR_RED if "-" in val else COLOR_GREEN
             p.alignment = PP_ALIGN.LEFT if col_idx == 0 else PP_ALIGN.RIGHT
 
     # Oppsummeringslinje under tabellen
     sum_box = slide3.shapes.add_textbox(Inches(0.8), Inches(5.3), Inches(11.7), Inches(1.3))
     tf_sum = sum_box.text_frame
     p_s = tf_sum.paragraphs[0]
-    p_s.text = "Totalt Enhet 202 Grunnskole: Budsjett kr 6 850 000  |  Faktisk kr 7 700 000  |  Avvik: +850 000 kr (+12,4 %)"
+    p_s.text = "Totalt Enhet 202 Grunnskole: Budsjett kr 6 850 000  |  Faktisk kr 7 700 000  |  Avvik: -850 000 kr (-12,4 %)"
     p_s.font.size = Pt(13)
     p_s.font.bold = True
     p_s.font.color.rgb = COLOR_RED
@@ -683,12 +683,12 @@ def generate_konsern_deck(output_path: Optional[str] = None) -> str:
         p.alignment = PP_ALIGN.LEFT if c_i == 0 else PP_ALIGN.RIGHT
 
     s_rows = [
-        ("01 Oppvekst og Utdanning (Grunnskole/Barnehage)", "850 000 000 kr", "851 420 000 kr", "+1 420 000 kr", "+0,17 %", COLOR_RED),
-        ("02 Helse og Mestring (Omsorgssentre/Hjemmetjeneste)", "920 000 000 kr", "921 069 000 kr", "+1 069 000 kr", "+0,12 %", COLOR_RED),
-        ("03 By- og Stedsutvikling (Eiendom, Samferdsel, Park)", "310 000 000 kr", "309 800 000 kr", "-200 000 kr", "-0,06 %", COLOR_GREEN),
-        ("04 Kultur og Innbyggerdialog (Bibliotek, Idrett)", "180 000 000 kr", "180 100 000 kr", "+100 000 kr", "+0,06 %", COLOR_MUTED),
-        ("05 Sentral Administrasjon & Fellestjenester", "140 000 000 kr", "140 100 000 kr", "+100 000 kr", "+0,07 %", COLOR_MUTED),
-        ("TOTALT KONSOLIDERT DRIFTSREGNSKAP", "2 400 000 000 kr", "2 402 489 000 kr", "+2 489 000 kr", "+0,10 %", COLOR_RED)
+        ("01 Oppvekst og Utdanning (Grunnskole/Barnehage)", "850 000 000 kr", "851 420 000 kr", "-1 420 000 kr", "-0,17 %", COLOR_RED),
+        ("02 Helse og Mestring (Omsorgssentre/Hjemmetjeneste)", "920 000 000 kr", "921 069 000 kr", "-1 069 000 kr", "-0,12 %", COLOR_RED),
+        ("03 By- og Stedsutvikling (Eiendom, Samferdsel, Park)", "310 000 000 kr", "309 800 000 kr", "+200 000 kr", "+0,06 %", COLOR_GREEN),
+        ("04 Kultur og Innbyggerdialog (Bibliotek, Idrett)", "180 000 000 kr", "180 100 000 kr", "-100 000 kr", "-0,06 %", COLOR_MUTED),
+        ("05 Sentral Administrasjon & Fellestjenester", "140 000 000 kr", "140 100 000 kr", "-100 000 kr", "-0,07 %", COLOR_MUTED),
+        ("TOTALT KONSOLIDERT DRIFTSREGNSKAP", "2 400 000 000 kr", "2 402 489 000 kr", "-2 489 000 kr", "-0,10 %", COLOR_RED)
     ]
     for r_i, (s_name, b_val, r_val, v_val, v_pct, v_col) in enumerate(s_rows, 1):
         vals = [s_name, b_val, r_val, v_val, v_pct]
@@ -965,9 +965,9 @@ def generate_oppvekst_deck(output_path: Optional[str] = None) -> str:
         "Executive Summary for rektormøtet: Bakgrunn for iverksetting av felles vikarring og vikarstopp"
     )
     kpis = [
-        ("YTD MERFORBRUK SKOLER", "+1 420 000 kr", "Grim og Vågsbygd driver 61 % av avviket", COLOR_RED),
+        ("YTD AVVIK SKOLER", "-1 420 000 kr", "Grim og Vågsbygd driver 61 % av merforbruket", COLOR_RED),
         ("SYKEFRAVÆR PED. PERSONALE", "12,8 %", "Hovedsakelig sesongpreget korttidsfravær", COLOR_NAVY),
-        ("VIKARSTOPP INNSPARING", "-680 000 kr", "Beregnet effekt 1. sept – 31. des 2026", COLOR_GREEN),
+        ("VIKARSTOPP INNSPARING", "+680 000 kr", "Beregnet effekt 1. sept – 31. des 2026", COLOR_GREEN),
     ]
     for i, (kt, kv, ks, kc) in enumerate(kpis):
         c_left = Inches(0.8 + i * 4.0)
@@ -1032,7 +1032,7 @@ def generate_oppvekst_deck(output_path: Optional[str] = None) -> str:
     table3.columns[3].width = Inches(2.0)
     table3.columns[4].width = Inches(2.0)
 
-    heads3 = ["Skoleenhet", "Elevtall", "Budsjett YTD", "Regnskap YTD", "Avvik YTD (Merforbruk)"]
+    heads3 = ["Skoleenhet", "Elevtall", "Budsjett YTD", "Regnskap YTD", "Avvik YTD"]
     for c_i, h in enumerate(heads3):
         cell = table3.cell(0, c_i)
         cell.fill.solid()
@@ -1045,10 +1045,10 @@ def generate_oppvekst_deck(output_path: Optional[str] = None) -> str:
         p.alignment = PP_ALIGN.LEFT if c_i == 0 else PP_ALIGN.RIGHT
 
     schools_data = [
-        ("Grim Skole (Enhet 2020)", "480", "4 150 000 kr", "4 720 000 kr", "+570 000 kr"),
-        ("Lovisenlev Skole", "390", "3 400 000 kr", "3 710 000 kr", "+310 000 kr"),
-        ("Tangvall Skole", "310", "2 650 000 kr", "2 890 000 kr", "+240 000 kr"),
-        ("Vågsbygd Skole", "340", "2 250 000 kr", "2 550 000 kr", "+300 000 kr"),
+        ("Grim Skole (Enhet 2020)", "480", "4 150 000 kr", "4 720 000 kr", "-570 000 kr"),
+        ("Lovisenlev Skole", "390", "3 400 000 kr", "3 710 000 kr", "-310 000 kr"),
+        ("Tangvall Skole", "310", "2 650 000 kr", "2 890 000 kr", "-240 000 kr"),
+        ("Vågsbygd Skole", "340", "2 250 000 kr", "2 550 000 kr", "-300 000 kr"),
     ]
     for r_i, (s_name, e_count, b_val, r_val, v_val) in enumerate(schools_data, 1):
         vals = [s_name, e_count, b_val, r_val, v_val]
@@ -1675,8 +1675,8 @@ def generate_enhet202_deck(output_path: Optional[str] = None) -> str:
     )
     kpis = [
         ("VEDTATT ÅRSRAMME", "18 500 000 kr", "Samlet bevilgning til Enhet 202 Grunnskole", COLOR_NAVY),
-        ("MERFORBRUK HITTIL I ÅR", "+1 420 000 kr", "+11,4 % over periodisert budsjett (Rød alarm)", COLOR_RED),
-        ("HELÅRSPROGNOSE UTEN TILTAK", "+2 130 000 kr", "Worst case-eskalering ved uendret drift", COLOR_RED),
+        ("AVVIK HITTIL I ÅR (CV)", "-1 420 000 kr", "-11,4 % mot periodisert budsjett (Rød alarm)", COLOR_RED),
+        ("FORVENTET HELÅRSAVVIK (VAC)", "-2 130 000 kr", "Worst case-eskalering uten tiltak (§ 14-5)", COLOR_RED),
     ]
     for i, (kt, kv, ks, kc) in enumerate(kpis):
         c_left = Inches(0.8 + i * 4.0)
@@ -1754,10 +1754,10 @@ def generate_enhet202_deck(output_path: Optional[str] = None) -> str:
         p.alignment = PP_ALIGN.LEFT if c_i == 0 else PP_ALIGN.RIGHT
 
     r_accs = [
-        ("Art 1020 Vikarer (Timelærere)", "1 200 000 kr", "2 070 000 kr", "+870 000 kr", "12,8 % korttidsfravær ped. personale"),
-        ("Art 1090 Overtid / Mertid", "80 000 kr", "500 000 kr", "+420 000 kr", "Sensur- og eksamensgjennomføring"),
-        ("Art 1600 NAV-Refusjoner", "-590 000 kr", "-440 000 kr", "+150 000 kr", "Refusjonsetterslep hos NAV"),
-        ("Øvrige driftsutgifter (1100–1400)", "650 000 kr", "630 000 kr", "-20 000 kr", "Mindreforbruk læremidler"),
+        ("Art 1020 Vikarer (Timelærere)", "1 200 000 kr", "2 070 000 kr", "-870 000 kr", "12,8 % korttidsfravær ped. personale"),
+        ("Art 1090 Overtid / Mertid", "80 000 kr", "500 000 kr", "-420 000 kr", "Sensur- og eksamensgjennomføring"),
+        ("Art 1600 NAV-Refusjoner", "-590 000 kr", "-440 000 kr", "-150 000 kr", "Refusjonsetterslep hos NAV"),
+        ("Øvrige driftsutgifter (1100–1400)", "650 000 kr", "630 000 kr", "+20 000 kr", "Mindreforbruk læremidler"),
     ]
     for r_i, (a_name, b_val, r_val, v_val, v_desc) in enumerate(r_accs, 1):
         vals = [a_name, b_val, r_val, v_val, v_desc]
@@ -1771,7 +1771,7 @@ def generate_enhet202_deck(output_path: Optional[str] = None) -> str:
             p.alignment = PP_ALIGN.LEFT if c_i in (0, 4) else PP_ALIGN.RIGHT
             if c_i == 3:
                 p.font.bold = True
-                p.font.color.rgb = COLOR_RED if "+" in v else COLOR_GREEN
+                p.font.color.rgb = COLOR_RED if "-" in v else COLOR_GREEN
     add_footer(slide3, audit_hash, 3)
 
     # SLIDE 4: Punkt 3 - Kvantifisert Handlingsplan

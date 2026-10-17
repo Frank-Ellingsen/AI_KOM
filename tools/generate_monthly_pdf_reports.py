@@ -166,8 +166,8 @@ def get_budget_holders_from_db() -> List[Dict[str, Any]]:
     rows = conn.execute("""
         SELECT ansvar_id, navn, tittel, niva, niva_tekst, sektor_kode,
                sektor_navn, enhet_navn, kostra_funksjon, epost, telefon,
-               kontorsted, delegeringsfullmakt_nok, controller_navn,
-               controller_epost, utsendte_rapporter, tilknyttet_mal,
+               kontorsted, delegeringsfullmakt_nok, aarsbudsjett_kr, ytd_budsjett_kr,
+               controller_navn, controller_epost, utsendte_rapporter, tilknyttet_mal,
                returkanal, returfrist
         FROM Dim_Budsjettansvarlige
         ORDER BY niva, sektor_kode, ansvar_id
@@ -226,7 +226,7 @@ def calculate_unit_metrics(holder: Dict[str, Any], month: int = 9) -> Dict[str, 
     niva = holder.get("niva", "NIVA3")
     sektor_kode = holder.get("sektor_kode", "KONSERN")
     enhet_navn = holder.get("enhet_navn", holder.get("tittel", "Enhet"))
-    annual_budget = get_annual_budget(ansvar_id, sektor_kode, niva)
+    annual_budget = float(holder.get("aarsbudsjett_kr") or get_annual_budget(ansvar_id, sektor_kode, niva))
 
     # Avviksfaktorer:
     # Sykehjem og skole har historisk merforbruk på vikarer (+14-16 %)

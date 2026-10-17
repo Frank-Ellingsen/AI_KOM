@@ -114,7 +114,7 @@ def get_unit_financials(unit_id: str = "202", period: str = "Q2", account_group:
         result["variance_nok"] = var_nok
         result["variance_pct"] = round(var_pct, 1)
 
-        # Hent topp avvikskontoer
+        # Hent topp avvikskontoer (Avvik = Budsjett - Forbruk: negativt = merforbruk)
         if ansvar_filter == "KOMSKOLE":
             result["top_variance_accounts"] = [
                 {
@@ -122,7 +122,7 @@ def get_unit_financials(unit_id: str = "202", period: str = "Q2", account_group:
                     "art_navn": "Innkjøp av vikarer (timelærere)",
                     "forbruk": 1820000.0,
                     "budsjett": 1200000.0,
-                    "avvik_nok": 620000.0,
+                    "avvik_nok": -620000.0,
                     "forklaring": "14.2 % sykefravær i mai/juni pga. sesongfravær"
                 },
                 {
@@ -138,7 +138,7 @@ def get_unit_financials(unit_id: str = "202", period: str = "Q2", account_group:
                     "art_navn": "Overtid og ekstratimer",
                     "forbruk": 436000.0,
                     "budsjett": 57000.0,
-                    "avvik_nok": 379000.0,
+                    "avvik_nok": -379000.0,
                     "forklaring": "Eksamensavvikling og akutt vikarmangel"
                 }
             ]
@@ -149,7 +149,7 @@ def get_unit_financials(unit_id: str = "202", period: str = "Q2", account_group:
                     "art_navn": "Helgetillegg og overtid turnus",
                     "forbruk": 1530000.0,
                     "budsjett": 680000.0,
-                    "avvik_nok": 850000.0,
+                    "avvik_nok": -850000.0,
                     "forklaring": "Høyt helgefravær i døgnturnus og ekstra pleiebehov"
                 },
                 {
@@ -157,7 +157,7 @@ def get_unit_financials(unit_id: str = "202", period: str = "Q2", account_group:
                     "art_navn": "Vikarbyrå og eksterne konsulenter",
                     "forbruk": 382656.0,
                     "budsjett": 0.0,
-                    "avvik_nok": 382656.0,
+                    "avvik_nok": -382656.0,
                     "forklaring": "Akutt innleie ved sykdom på helgestillinger"
                 }
             ]

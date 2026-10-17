@@ -30,13 +30,18 @@ SRC_DIR = PROJECT_ROOT / "kommune-ai-guardrails" / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from kommune_ai_guardrails.generators.powerpoint_generator import (
-    generate_bystyret_deck,
-    generate_konsern_deck,
-    generate_oppvekst_deck,
-    generate_capex_evm_deck,
-    generate_enhet202_deck,
-)
+# Import powerpoint_generator directly without loading heavy embedding models
+import importlib.util
+gen_path = SRC_DIR / "kommune_ai_guardrails" / "generators" / "powerpoint_generator.py"
+spec = importlib.util.spec_from_file_location("powerpoint_generator", str(gen_path))
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
+
+generate_bystyret_deck = mod.generate_bystyret_deck
+generate_konsern_deck = mod.generate_konsern_deck
+generate_oppvekst_deck = mod.generate_oppvekst_deck
+generate_capex_evm_deck = mod.generate_capex_evm_deck
+generate_enhet202_deck = mod.generate_enhet202_deck
 
 PPT_DIR = PROJECT_ROOT / "powerpoint"
 PPT_DIR.mkdir(parents=True, exist_ok=True)

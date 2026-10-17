@@ -5727,19 +5727,19 @@ CALCULATE(
     Dim_Dato[maned] > 8
 )
 
-// 3. Trendjustert Merforbruk (Konservativ 50 % videreføring)
+// 3. Trendjustert Merforbruk (Konservativ 50 % videreføring av merforbruk)
 [Trendjustert Merforbruk] = 
 VAR Avvik = [Avvik YTD]
 RETURN
-    IF(Avvik > 0, Avvik * 0.50, 0)
+    IF(Avvik < 0, ABS(Avvik) * 0.50, 0)
 
 // 4. Rullerende End of Year (EOY) Prognose
 [EOY Rullende Prognose] = 
 [Regnskap YTD] + [Budsjett Gjenstående] + [Trendjustert Merforbruk]
 
-// 5. Forventet Årsavvik (Varsling jf. Kommuneloven § 14-5)
+// 5. Forventet Årsavvik (Varsling jf. Kommuneloven § 14-5: Avvik = Budsjett - Prognose)
 [EOY Forventet Årsavvik] = 
-[EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
+[Vedtatt Årsbudsjett] - [EOY Rullende Prognose]
 
 // 6. Dynamisk Hierarkimatrise (ISINSCOPE)
 [Dynamisk Visning] = 
@@ -13910,7 +13910,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "52 000 000 NOK",
                         ac: "37 400 000 NOK",
-                        cv: "+3 200 000 NOK (+9.3 %)",
+                        cv: "-3 200 000  NOK (-9.3 %)",
                         cvAlert: true,
                         cpi: "0.915",
                         cpiAlert: true,
@@ -13919,11 +13919,11 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "50 520 000 NOK (🟢 BALANSERT JFR. § 14-5)"
                     },
                     variances: [
-                        { art: "10100", desc: "Fast lønn undervisningspersonale", budget: "38 000 000", actual: "25 800 000", varNok: "+400 000", varPct: "+1.1 %", driver: "Normal drift og lønnsoppgjørsvirkning" },
-                        { art: "10200", desc: "Vikarutgifter timelærere", budget: "2 500 000", actual: "4 800 000", varNok: "+2 300 000", varPct: "+92.0 %", driver: "Høyt sykefravær (12.4 %) på 1.–4. trinn; umiddelbar innleie av timelærere" },
-                        { art: "10900", desc: "Overtid / Ekstratimer", budget: "300 000", actual: "650 000", varNok: "+350 000", varPct: "+116.7 %", driver: "Manglende vikardekning i randsonetimer og ved akuttfravær" },
-                        { art: "11200", desc: "Undervisningsmateriell & lisenser", budget: "1 200 000", actual: "1 350 000", varNok: "+150 000", varPct: "+12.5 %", driver: "Prisstigning på digitale læremiddellisenser" },
-                        { art: "16000", desc: "Refusjon sykepenger NAV", budget: "-1 800 000", actual: "-1 390 000", varNok: "+410 000", varPct: "+22.8 %", driver: "Utestående refusjonskrav hos NAV Forvaltning (likviditetsavvik)" }
+                        { art: "10100", desc: "Fast lønn undervisningspersonale", budget: "38 000 000", actual: "25 800 000", varNok: "+12 200 000", varPct: "+32.1 %", driver: "Normal drift og lønnsoppgjørsvirkning" },
+                        { art: "10200", desc: "Vikarutgifter timelærere", budget: "2 500 000", actual: "4 800 000", varNok: "-2 300 000", varPct: "-92.0 %", driver: "Høyt sykefravær (12.4 %) på 1.–4. trinn; umiddelbar innleie av timelærere" },
+                        { art: "10900", desc: "Overtid / Ekstratimer", budget: "300 000", actual: "650 000", varNok: "-350 000", varPct: "-116.7 %", driver: "Manglende vikardekning i randsonetimer og ved akuttfravær" },
+                        { art: "11200", desc: "Undervisningsmateriell & lisenser", budget: "1 200 000", actual: "1 350 000", varNok: "-150 000", varPct: "-12.5 %", driver: "Prisstigning på digitale læremiddellisenser" },
+                        { art: "16000", desc: "Refusjon sykepenger NAV", budget: "-1 800 000", actual: "-1 390 000", varNok: "-410 000", varPct: "-22.8 %", driver: "Utestående refusjonskrav hos NAV Forvaltning (likviditetsavvik)" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-202-01", title: "Klassesammenslåing ved korttidsfravær (< 3 dager) på 5.–7. trinn", owner: "Rektor / Inspektør", deadline: "5 dager", impact: "-80 000 kr/md", legal: "Opplæringsloven § 8-2 (maks 1:20)", status: "🟢 Iverksatt" },
@@ -13957,7 +13957,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "2 450 000 000 NOK",
                         ac: "1 685 000 000 NOK",
-                        cv: "+38 500 000 NOK (+2.3 %)",
+                        cv: "-38 500 000  NOK (-2.3 %)",
                         cvAlert: true,
                         cpi: "0.978",
                         cpiAlert: true,
@@ -13966,10 +13966,10 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "2 450 000 000 NOK (🟢 BALANSERT VED SEKTORTILTAK)"
                     },
                     variances: [
-                        { art: "1020", desc: "Vikarutgifter grunnskole (28 skoler)", budget: "145 000 000", actual: "163 200 000", varNok: "+18 200 000", varPct: "+12.6 %", driver: "Høyt sykefravær (14.2 %) og utstrakt bruk av eksterne vikarbyråer" },
-                        { art: "1090", desc: "Overtid lærere og assistenter", budget: "22 000 000", actual: "28 400 000", varNok: "+6 400 000", varPct: "+29.1 %", driver: "Tilsyn og dekning ved akuttfravær utover ordinær arbeidstid" },
-                        { art: "1370", desc: "Kjøp av spesialundervisning & eksterne plasser", budget: "85 000 000", actual: "94 100 000", varNok: "+9 100 000", varPct: "+10.7 %", driver: "Økning i enkeltvedtak med krav om 1-til-1 oppfølging i klasserommet" },
-                        { art: "1120/1200", desc: "Øvrige driftsutgifter og læremidler", budget: "98 000 000", actual: "102 800 000", varNok: "+4 800 000", varPct: "+4.9 %", driver: "Prisstigning på lisenser og felles pedagogisk programvare" }
+                        { art: "1020", desc: "Vikarutgifter grunnskole (28 skoler)", budget: "145 000 000", actual: "163 200 000", varNok: "-18 200 000", varPct: "-12.6 %", driver: "Høyt sykefravær (14.2 %) og utstrakt bruk av eksterne vikarbyråer" },
+                        { art: "1090", desc: "Overtid lærere og assistenter", budget: "22 000 000", actual: "28 400 000", varNok: "-6 400 000", varPct: "-29.1 %", driver: "Tilsyn og dekning ved akuttfravær utover ordinær arbeidstid" },
+                        { art: "1370", desc: "Kjøp av spesialundervisning & eksterne plasser", budget: "85 000 000", actual: "94 100 000", varNok: "-9 100 000", varPct: "-10.7 %", driver: "Økning i enkeltvedtak med krav om 1-til-1 oppfølging i klasserommet" },
+                        { art: "1120/1200", desc: "Øvrige driftsutgifter og læremidler", budget: "98 000 000", actual: "102 800 000", varNok: "-4 800 000", varPct: "-4.9 %", driver: "Prisstigning på lisenser og felles pedagogisk programvare" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-OPP-01", title: "Etablere felles intern vikarring mellom 4 sentrumsnære skoler", owner: "Rektorer (Grim, Lovisenlev mfl.)", deadline: "1. nov 2026", impact: "-450 000 kr/md", legal: "HTA § 4 & Hovedavtalen", status: "🟢 Godkjent" },
@@ -14002,7 +14002,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "2 450 000 000 NOK",
                         ac: "1 685 000 000 NOK",
-                        cv: "+38 500 000 NOK (+2.3 %)",
+                        cv: "-38 500 000  NOK (-2.3 %)",
                         cvAlert: true,
                         cpi: "0.978",
                         cpiAlert: true,
@@ -14011,9 +14011,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "2 450 000 000 NOK (🟢 BALANSERT VED BYSTYREVEDTAK)"
                     },
                     variances: [
-                        { art: "Skolesektor (28 skoler)", desc: "Grunnskoledrift og vikarutgifter", budget: "1 520 000 000", actual: "1 544 600 000", varNok: "+24 600 000", varPct: "+1.6 %", driver: "Strukturelt sykefravær og spesialpedagogisk bemanningspress" },
-                        { art: "Barnehagesektor (54 enheter)", desc: "Kommunale og private barnehagetilskudd", budget: "780 000 000", actual: "791 200 000", varNok: "+11 200 000", varPct: "+1.4 %", driver: "Økt barnetall og private barnehagetilskuddsjusteringer" },
-                        { art: "Familiens hus & PPT", desc: "Tverrfaglige familietjenester og tidlig innsats", budget: "150 000 000", actual: "152 700 000", varNok: "+2 700 000", varPct: "+1.8 %", driver: "Økt behov for tidliginnsatstiltak og barnevernsoppfølging" }
+                        { art: "Skolesektor (28 skoler)", desc: "Grunnskoledrift og vikarutgifter", budget: "1 520 000 000", actual: "1 544 600 000", varNok: "-24 600 000", varPct: "-1.6 %", driver: "Strukturelt sykefravær og spesialpedagogisk bemanningspress" },
+                        { art: "Barnehagesektor (54 enheter)", desc: "Kommunale og private barnehagetilskudd", budget: "780 000 000", actual: "791 200 000", varNok: "-11 200 000", varPct: "-1.4 %", driver: "Økt barnetall og private barnehagetilskuddsjusteringer" },
+                        { art: "Familiens hus & PPT", desc: "Tverrfaglige familietjenester og tidlig innsats", budget: "150 000 000", actual: "152 700 000", varNok: "-2 700 000", varPct: "-1.8 %", driver: "Økt behov for tidliginnsatstiltak og barnevernsoppfølging" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-DIR-01", title: "Administrativt ansettelsesstopp for ikke-lovpålagte stabsstillinger", owner: "Kommunaldirektør", deadline: "Umiddelbart", impact: "-1 800 000 kr EOY", legal: "Kommuneloven § 13-1", status: "🟢 Iverksatt" },
@@ -14048,7 +14048,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "84 500 000 NOK",
                         ac: "61 200 000 NOK",
-                        cv: "+4 800 000 NOK (+8.5 %)",
+                        cv: "-4 800 000  NOK (-8.5 %)",
                         cvAlert: true,
                         cpi: "0.922",
                         cpiAlert: true,
@@ -14057,10 +14057,10 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "84 500 000 NOK (🟢 BALANSERT JFR. § 14-5)"
                     },
                     variances: [
-                        { art: "10100", desc: "Fast lønn sykepleiere og helsefagarbeidere", budget: "54 000 000", actual: "37 800 000", varNok: "+350 000", varPct: "+0.9 %", driver: "Høy stillingsbesettelse, lav naturlig avgang" },
-                        { art: "10200", desc: "Vikarbyrå sykepleiere & vikarer", budget: "6 200 000", actual: "9 850 000", varNok: "+3 650 000", varPct: "+58.9 %", driver: "Bemanningskrav i helg og høyt helgefravær (14.5 %)" },
-                        { art: "10400/10900", desc: "Overtid og forskjøvet arbeidstid", budget: "1 800 000", actual: "2 620 000", varNok: "+820 000", varPct: "+45.6 %", driver: "Dobbeltvakter ved akutt sykdom for å dekke forsvarlighetskrav" },
-                        { art: "16000", desc: "Refusjon sykepenger NAV", budget: "-3 200 000", actual: "-2 580 000", varNok: "+620 000", varPct: "+19.4 %", driver: "Utestående refusjoner for langtidssykmeldte" }
+                        { art: "10100", desc: "Fast lønn sykepleiere og helsefagarbeidere", budget: "54 000 000", actual: "37 800 000", varNok: "+16 200 000", varPct: "+30.0 %", driver: "Høy stillingsbesettelse, lav naturlig avgang" },
+                        { art: "10200", desc: "Vikarbyrå sykepleiere & vikarer", budget: "6 200 000", actual: "9 850 000", varNok: "-3 650 000", varPct: "-58.9 %", driver: "Bemanningskrav i helg og høyt helgefravær (14.5 %)" },
+                        { art: "10400/10900", desc: "Overtid og forskjøvet arbeidstid", budget: "1 800 000", actual: "2 620 000", varNok: "-820 000", varPct: "-45.6 %", driver: "Dobbeltvakter ved akutt sykdom for å dekke forsvarlighetskrav" },
+                        { art: "16000", desc: "Refusjon sykepenger NAV", budget: "-3 200 000", actual: "-2 580 000", varNok: "-620 000", varPct: "-19.4 %", driver: "Utestående refusjoner for langtidssykmeldte" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-401-01", title: "Stopp i innleie av vikarbyrå-sykepleiere; erstatte med interne ekstravakter", owner: "Avdelingsleder", deadline: "Umiddelbart", impact: "-180 000 kr/md", legal: "HTA § 2.3", status: "🟢 Iverksatt" },
@@ -14091,7 +14091,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "3 100 000 000 NOK",
                         ac: "2 140 000 000 NOK",
-                        cv: "+62 000 000 NOK (+2.9 %)",
+                        cv: "-62 000 000  NOK (-2.9 %)",
                         cvAlert: true,
                         cpi: "0.971",
                         cpiAlert: true,
@@ -14100,9 +14100,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "3 100 000 000 NOK (🟢 BALANSERT VED SEKTORTILTAK)"
                     },
                     variances: [
-                        { art: "1020", desc: "Vikarbyråer og ekstern innleie", budget: "95 000 000", actual: "128 500 000", varNok: "+33 500 000", varPct: "+35.3 %", driver: "Kritisk mangel på spesialsykepleiere i turnus" },
-                        { art: "1040/1090", desc: "Overtid og helgetillegg", budget: "48 000 000", actual: "66 400 000", varNok: "+18 400 000", varPct: "+38.3 %", driver: "Høyt sykefravær i helgene utløser dyre overtidstimer" },
-                        { art: "1150/1200", desc: "Medisinsk forbruksmateriell & legemidler", budget: "82 000 000", actual: "92 100 000", varNok: "+10 100 000", varPct: "+12.3 %", driver: "Økt antall krevende pasienter med sammensatte diagnoser" }
+                        { art: "1020", desc: "Vikarbyråer og ekstern innleie", budget: "95 000 000", actual: "128 500 000", varNok: "-33 500 000", varPct: "-35.3 %", driver: "Kritisk mangel på spesialsykepleiere i turnus" },
+                        { art: "1040/1090", desc: "Overtid og helgetillegg", budget: "48 000 000", actual: "66 400 000", varNok: "-18 400 000", varPct: "-38.3 %", driver: "Høyt sykefravær i helgene utløser dyre overtidstimer" },
+                        { art: "1150/1200", desc: "Medisinsk forbruksmateriell & legemidler", budget: "82 000 000", actual: "92 100 000", varNok: "-10 100 000", varPct: "-12.3 %", driver: "Økt antall krevende pasienter med sammensatte diagnoser" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-HEL-01", title: "Koordinert bemanningssentral for sykehjem og hjemmetjeneste", owner: "Bemanningssjef", deadline: "1. nov 2026", impact: "-750 000 kr/md", legal: "HTA § 4 & Hovedavtalen", status: "🟢 Godkjent" },
@@ -14134,7 +14134,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "3 100 000 000 NOK",
                         ac: "2 140 000 000 NOK",
-                        cv: "+62 000 000 NOK (+2.9 %)",
+                        cv: "-62 000 000  NOK (-2.9 %)",
                         cvAlert: true,
                         cpi: "0.971",
                         cpiAlert: true,
@@ -14143,9 +14143,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "3 100 000 000 NOK (🟢 BALANSERT VED BYSTYREVEDTAK)"
                     },
                     variances: [
-                        { art: "Sykehjemsdrift (11 enheter)", desc: "Døgnkontinuerlig pleie, legevakt og institusjon", budget: "1 850 000 000", actual: "1 892 000 000", varNok: "+42 000 000", varPct: "+2.3 %", driver: "Bemanningskrav og vikarbyråkostnader ved sykdom" },
-                        { art: "Hjemmebaserte tjenester", desc: "Hjemmesykepleie, praktisk bistand og BPA", budget: "950 000 000", actual: "965 200 000", varNok: "+15 200 000", varPct: "+1.6 %", driver: "Økt antall brukere med omfattende vedtak" },
-                        { art: "Rus, psykisk helse & bolig", desc: "Bo- og omsorgstilbud for rus og psykisk helse", budget: "300 000 000", actual: "304 800 000", varNok: "+4 800 000", varPct: "+1.6 %", driver: "Økt behov for miljøarbeidertilsyn i kommunale boliger" }
+                        { art: "Sykehjemsdrift (11 enheter)", desc: "Døgnkontinuerlig pleie, legevakt og institusjon", budget: "1 850 000 000", actual: "1 892 000 000", varNok: "-42 000 000", varPct: "-2.3 %", driver: "Bemanningskrav og vikarbyråkostnader ved sykdom" },
+                        { art: "Hjemmebaserte tjenester", desc: "Hjemmesykepleie, praktisk bistand og BPA", budget: "950 000 000", actual: "965 200 000", varNok: "-15 200 000", varPct: "-1.6 %", driver: "Økt antall brukere med omfattende vedtak" },
+                        { art: "Rus, psykisk helse & bolig", desc: "Bo- og omsorgstilbud for rus og psykisk helse", budget: "300 000 000", actual: "304 800 000", varNok: "-4 800 000", varPct: "-1.6 %", driver: "Økt behov for miljøarbeidertilsyn i kommunale boliger" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-DIR-H01", title: "Sikre 0 SSHF overliggerdøgn ved hurtigavklaring på korttidsavlastning", owner: "Kommunaldirektør / SSHF", deadline: "Umiddelbart", impact: "-2 800 000 kr unngått", legal: "Samhandlingsavtalen § 11-2", status: "🟢 Iverksatt" },
@@ -14180,7 +14180,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "215 000 000 NOK",
                         ac: "144 000 000 NOK",
-                        cv: "-2 100 000 NOK (-1.4 %)",
+                        cv: "+2 100 000  NOK (+1.4 %)",
                         cvAlert: false,
                         cpi: "1.015",
                         cpiAlert: false,
@@ -14189,9 +14189,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "212 500 000 NOK (🟢 SELVKOSTBALANSE)"
                     },
                     variances: [
-                        { art: "10100", desc: "Fast lønn driftspersonale VAR", budget: "68 000 000", actual: "45 200 000", varNok: "-300 000", varPct: "-0.7 %", driver: "God bemanningsstabilitet, lavt sykefravær" },
-                        { art: "11500", desc: "Kjemikalier og rensemidler", budget: "24 000 000", actual: "15 800 000", varNok: "-400 000", varPct: "-2.5 %", driver: "Gunstige innkjøpsavtaler og stabil vannkvalitet" },
-                        { art: "12300", desc: "Vedlikehold rørnett og pumpestasjoner", budget: "38 000 000", actual: "24 100 000", varNok: "-1 400 000", varPct: "-5.5 %", driver: "Planlagt vedlikehold forskyves til Q2 2027" }
+                        { art: "10100", desc: "Fast lønn driftspersonale VAR", budget: "68 000 000", actual: "45 200 000", varNok: "+22 800 000", varPct: "+33.5 %", driver: "God bemanningsstabilitet, lavt sykefravær" },
+                        { art: "11500", desc: "Kjemikalier og rensemidler", budget: "24 000 000", actual: "15 800 000", varNok: "+8 200 000", varPct: "+34.2 %", driver: "Gunstige innkjøpsavtaler og stabil vannkvalitet" },
+                        { art: "12300", desc: "Vedlikehold rørnett og pumpestasjoner", budget: "38 000 000", actual: "24 100 000", varNok: "+13 900 000", varPct: "+36.6 %", driver: "Planlagt vedlikehold forskyves til Q2 2027" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-301-01", title: "Utsette ikke-akutt grøftespyling til våren 2027", owner: "Avdelingsleder VAR", deadline: "Umiddelbart", impact: "-320 000 kr spart", legal: "Forurensningsloven", status: "🟢 Iverksatt" },
@@ -14221,7 +14221,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "850 000 000 NOK",
                         ac: "560 000 000 NOK",
-                        cv: "-4 200 000 NOK (-0.8 %)",
+                        cv: "+4 200 000  NOK (+0.8 %)",
                         cvAlert: false,
                         cpi: "1.008",
                         cpiAlert: false,
@@ -14230,9 +14230,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "843 250 000 NOK (🟢 ROBUST BUFFER)"
                     },
                     variances: [
-                        { art: "Vei, trafikk og parkering", desc: "Drift og vedlikehold av kommunale veier", budget: "320 000 000", actual: "212 500 000", varNok: "-1 800 000", varPct: "-0.8 %", driver: "Gunstige vinterdriftskostnader og færre akutte teleskader" },
-                        { art: "Byggesak og kart (Art 1620)", desc: "Gebyrinntekter byggesaksbehandling", budget: "45 000 000", actual: "26 800 000", varNok: "+3 300 000", varPct: "+11.0 %", driver: "Svikt i gebyrinntekter pga. lav igangsetting i eiendomsmarkedet" },
-                        { art: "Vann og avløp (Selvkost)", desc: "Gebyrfinansierte selvkosttjenester", budget: "485 000 000", actual: "320 700 000", varNok: "-5 700 000", varPct: "-1.7 %", driver: "Lavere energikostnader og mindreforbruk på kjemikalier" }
+                        { art: "Vei, trafikk og parkering", desc: "Drift og vedlikehold av kommunale veier", budget: "320 000 000", actual: "212 500 000", varNok: "+107 500 000", varPct: "+33.6 %", driver: "Gunstige vinterdriftskostnader og færre akutte teleskader" },
+                        { art: "Byggesak og kart (Art 1620)", desc: "Gebyrinntekter byggesaksbehandling", budget: "45 000 000", actual: "26 800 000", varNok: "+18 200 000", varPct: "+40.4 %", driver: "Svikt i gebyrinntekter pga. lav igangsetting i eiendomsmarkedet" },
+                        { art: "Vann og avløp (Selvkost)", desc: "Gebyrfinansierte selvkosttjenester", budget: "485 000 000", actual: "320 700 000", varNok: "+164 300 000", varPct: "+33.9 %", driver: "Lavere energikostnader og mindreforbruk på kjemikalier" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-BY-01", title: "Forskyve asfaltering og oppmerking uten trafikksikkerhetsrisiko til 2027", owner: "Veisjef", deadline: "Umiddelbart", impact: "-1 400 000 kr spart", legal: "Vegloven", status: "🟢 Iverksatt" },
@@ -14262,7 +14262,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "850 000 000 NOK",
                         ac: "560 000 000 NOK",
-                        cv: "-4 200 000 NOK (-0.8 %)",
+                        cv: "+4 200 000  NOK (+0.8 %)",
                         cvAlert: false,
                         cpi: "1.008",
                         cpiAlert: false,
@@ -14271,8 +14271,8 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "843 250 000 NOK (🟢 DRIFTSOVERSKUDD)"
                     },
                     variances: [
-                        { art: "Byutvikling & Samferdsel", desc: "Plan, byggesak, samferdsel og eiendomsforvaltning", budget: "365 000 000", actual: "239 300 000", varNok: "+1 500 000", varPct: "+0.6 %", driver: "Gebyrsvikt på byggesak motvirkes av vedlikeholdsutsettelse" },
-                        { art: "VAR Selvkostområde", desc: "Vann, avløp og renovasjon gebyrfinansiert", budget: "485 000 000", actual: "320 700 000", varNok: "-5 700 000", varPct: "-1.7 %", driver: "Mindreforbruk avsettes til selvkostfond" }
+                        { art: "Byutvikling & Samferdsel", desc: "Plan, byggesak, samferdsel og eiendomsforvaltning", budget: "365 000 000", actual: "239 300 000", varNok: "+125 700 000", varPct: "+34.4 %", driver: "Gebyrsvikt på byggesak motvirkes av vedlikeholdsutsettelse" },
+                        { art: "VAR Selvkostområde", desc: "Vann, avløp og renovasjon gebyrfinansiert", budget: "485 000 000", actual: "320 700 000", varNok: "+164 300 000", varPct: "+33.9 %", driver: "Mindreforbruk avsettes til selvkostfond" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-DIR-B01", title: "Aktivere 5-års selvkostbuffer for avløp jf. selvkostforskriften § 8", owner: "Kommunaldirektør / Finans", deadline: "Umiddelbart", impact: "4.8M fondsavsetning", legal: "Selvkostforskriften § 8", status: "🟢 Iverksatt" },
@@ -14304,7 +14304,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "28 000 000 NOK",
                         ac: "19 000 000 NOK",
-                        cv: "+450 000 NOK (+2.4 %)",
+                        cv: "-450 000  NOK (-2.4 %)",
                         cvAlert: true,
                         cpi: "0.976",
                         cpiAlert: false,
@@ -14313,9 +14313,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "28 000 000 NOK (🟢 I BALANSE)"
                     },
                     variances: [
-                        { art: "10100", desc: "Fast lønn bibliotekarer og veiledere", budget: "19 500 000", actual: "13 100 000", varNok: "+100 000", varPct: "+0.8 %", driver: "Normal drift" },
-                        { art: "10900", desc: "Kveldstillegg og arrangementsbistand", budget: "1 200 000", actual: "1 450 000", varNok: "+250 000", varPct: "+20.8 %", driver: "Høy arrangementsaktivitet på kveldstid" },
-                        { art: "11200", desc: "Innkjøp av bøker og digitale medier", budget: "3 800 000", actual: "2 650 000", varNok: "+100 000", varPct: "+3.9 %", driver: "Økte lisenspriser for e-bøker" }
+                        { art: "10100", desc: "Fast lønn bibliotekarer og veiledere", budget: "19 500 000", actual: "13 100 000", varNok: "+6 400 000", varPct: "+32.8 %", driver: "Normal drift" },
+                        { art: "10900", desc: "Kveldstillegg og arrangementsbistand", budget: "1 200 000", actual: "1 450 000", varNok: "-250 000", varPct: "-20.8 %", driver: "Høy arrangementsaktivitet på kveldstid" },
+                        { art: "11200", desc: "Innkjøp av bøker og digitale medier", budget: "3 800 000", actual: "2 650 000", varNok: "+1 150 000", varPct: "+30.3 %", driver: "Økte lisenspriser for e-bøker" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-101-01", title: "Begrense kveldsarrangementer med overtidsbehov i Q4", owner: "Avdelingsleder", deadline: "Umiddelbart", impact: "-30 000 kr/md", legal: "Arbeidsmiljøloven § 10-6", status: "🟢 Iverksatt" },
@@ -14343,7 +14343,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "420 000 000 NOK",
                         ac: "280 000 000 NOK",
-                        cv: "+1 100 000 NOK (+0.4 %)",
+                        cv: "+1 100 000  NOK (+0.4 %)",
                         cvAlert: false,
                         cpi: "0.996",
                         cpiAlert: false,
@@ -14352,9 +14352,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "420 000 000 NOK (🟢 BALANSERT)"
                     },
                     variances: [
-                        { art: "Idrettsanlegg og svømmehaller (Aquarama)", desc: "Energi- og driftskostnader idrettsbygg", budget: "145 000 000", actual: "97 800 000", varNok: "+1 200 000", varPct: "+1.2 %", driver: "Økte strøm- og fjernvarmepriser" },
-                        { art: "Kulturhus, musikk og kulturskole", desc: "Kilden, Knuden og bydelskulturhus", budget: "185 000 000", actual: "123 100 000", varNok: "+350 000", varPct: "+0.3 %", driver: "Mindre merforbruk på arrangementsverter" },
-                        { art: "Frivillighetstilskudd (Art 1470)", desc: "Kommunale tilskudd til frivillige lag", budget: "90 000 000", actual: "59 100 000", varNok: "-450 000", varPct: "-0.8 %", driver: "Restmidler på udisponerte søknadspotter" }
+                        { art: "Idrettsanlegg og svømmehaller (Aquarama)", desc: "Energi- og driftskostnader idrettsbygg", budget: "145 000 000", actual: "97 800 000", varNok: "+47 200 000", varPct: "+32.6 %", driver: "Økte strøm- og fjernvarmepriser" },
+                        { art: "Kulturhus, musikk og kulturskole", desc: "Kilden, Knuden og bydelskulturhus", budget: "185 000 000", actual: "123 100 000", varNok: "+61 900 000", varPct: "+33.5 %", driver: "Mindre merforbruk på arrangementsverter" },
+                        { art: "Frivillighetstilskudd (Art 1470)", desc: "Kommunale tilskudd til frivillige lag", budget: "90 000 000", actual: "59 100 000", varNok: "+30 900 000", varPct: "+34.3 %", driver: "Restmidler på udisponerte søknadspotter" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-KUL-01", title: "Energioptimalisering i svømmehaller og idrettsbygg i lavlasttimer", owner: "Driftsleder Aquarama", deadline: "Umiddelbart", impact: "-120 000 kr/md", legal: "Klima- og energiplan", status: "🟢 Iverksatt" },
@@ -14382,7 +14382,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "420 000 000 NOK",
                         ac: "280 000 000 NOK",
-                        cv: "+1 100 000 NOK (+0.4 %)",
+                        cv: "+1 100 000  NOK (+0.4 %)",
                         cvAlert: false,
                         cpi: "0.996",
                         cpiAlert: false,
@@ -14391,8 +14391,8 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "420 000 000 NOK (🟢 BALANSERT)"
                     },
                     variances: [
-                        { art: "Idrett og friluftsliv", desc: "Kommunale idrettsbygg og anlegg", budget: "190 000 000", actual: "127 200 000", varNok: "+1 100 000", varPct: "+0.9 %", driver: "Høye energipriser og varme i svømmeanlegg" },
-                        { art: "Kultur og innbyggerdialog", desc: "Bibliotek, kulturskole, innbyggertorg og tilskudd", budget: "230 000 000", actual: "152 800 000", varNok: "0", varPct: "0.0 %", driver: "I balanse" }
+                        { art: "Idrett og friluftsliv", desc: "Kommunale idrettsbygg og anlegg", budget: "190 000 000", actual: "127 200 000", varNok: "+62 800 000", varPct: "+33.1 %", driver: "Høye energipriser og varme i svømmeanlegg" },
+                        { art: "Kultur og innbyggerdialog", desc: "Bibliotek, kulturskole, innbyggertorg og tilskudd", budget: "230 000 000", actual: "152 800 000", varNok: "+77 200 000", varPct: "+33.6 %", driver: "I balanse" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-DIR-K01", title: "Hold igjen tildeling av udisponerte arrangementsstøttemidler (1.3M buffer)", owner: "Kommunaldirektør", deadline: "Umiddelbart", impact: "-450 000 kr spart", legal: "Tilskuddsreglement", status: "🟢 Iverksatt" }
@@ -14421,7 +14421,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "48 000 000 NOK",
                         ac: "31 000 000 NOK",
-                        cv: "-600 000 NOK (-1.9 %)",
+                        cv: "+600 000  NOK (+1.9 %)",
                         cvAlert: false,
                         cpi: "1.019",
                         cpiAlert: false,
@@ -14430,9 +14430,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "47 100 000 NOK (🟢 GOD KONTROLL)"
                     },
                     variances: [
-                        { art: "10100", desc: "Fast lønn IT-drift og sikkerhetspersonell", budget: "32 000 000", actual: "21 100 000", varNok: "-200 000", varPct: "-0.9 %", driver: "Stabil bemanning, lav turnover" },
-                        { art: "12700", desc: "Konsulentbistand eksterne IT-spesialister", budget: "7 000 000", actual: "4 200 000", varNok: "-400 000", varPct: "-8.7 %", driver: "Redusert konsulentbruk og økt internkompetanse" },
-                        { art: "13700", desc: "Programvarelisenser og skylagring (FinOps)", budget: "9 000 000", actual: "5 700 000", varNok: "0", varPct: "0.0 %", driver: "I tråd med budsjett" }
+                        { art: "10100", desc: "Fast lønn IT-drift og sikkerhetspersonell", budget: "32 000 000", actual: "21 100 000", varNok: "+10 900 000", varPct: "+34.1 %", driver: "Stabil bemanning, lav turnover" },
+                        { art: "12700", desc: "Konsulentbistand eksterne IT-spesialister", budget: "7 000 000", actual: "4 200 000", varNok: "+2 800 000", varPct: "+40.0 %", driver: "Redusert konsulentbruk og økt internkompetanse" },
+                        { art: "13700", desc: "Programvarelisenser og skylagring (FinOps)", budget: "9 000 000", actual: "5 700 000", varNok: "+3 300 000", varPct: "+36.7 %", driver: "I tråd med budsjett" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-501-01", title: "FinOps lisenshygiene: Sanere og terminere 42 ubrukte SaaS-lisenser", owner: "FinOps Lead", deadline: "10 dager", impact: "-180 000 kr/md", legal: "Anskaffelsesloven", status: "🟢 Iverksatt" },
@@ -14461,7 +14461,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "560 000 000 NOK",
                         ac: "375 000 000 NOK",
-                        cv: "-1 800 000 NOK (-0.5 %)",
+                        cv: "+1 800 000  NOK (+0.5 %)",
                         cvAlert: false,
                         cpi: "1.005",
                         cpiAlert: false,
@@ -14470,9 +14470,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "557 200 000 NOK (🟢 DRIFTSOVERSKUDD)"
                     },
                     variances: [
-                        { art: "Felles IKT og digitalisering", desc: "Sky-infrastruktur, nettverk og lisenser", budget: "240 000 000", actual: "161 200 000", varNok: "-1 100 000", varPct: "-0.7 %", driver: "FinOps-tiltak gir lavere skyleie" },
-                        { art: "HR og arbeidsgiverpolitikk", desc: "Bedriftshelsetjeneste, rekruttering og opplæring", budget: "160 000 000", actual: "107 800 000", varNok: "+200 000", varPct: "+0.2 %", driver: "Normal drift" },
-                        { art: "Felles administrasjon og arkiv", desc: "Dokumentsenter, politisk sekretariat og sentralbord", budget: "160 000 000", actual: "106 000 000", varNok: "-900 000", varPct: "-0.8 %", driver: "Vakanser i stabsfunksjoner" }
+                        { art: "Felles IKT og digitalisering", desc: "Sky-infrastruktur, nettverk og lisenser", budget: "240 000 000", actual: "161 200 000", varNok: "+78 800 000", varPct: "+32.8 %", driver: "FinOps-tiltak gir lavere skyleie" },
+                        { art: "HR og arbeidsgiverpolitikk", desc: "Bedriftshelsetjeneste, rekruttering og opplæring", budget: "160 000 000", actual: "107 800 000", varNok: "+52 200 000", varPct: "+32.6 %", driver: "Normal drift" },
+                        { art: "Felles administrasjon og arkiv", desc: "Dokumentsenter, politisk sekretariat og sentralbord", budget: "160 000 000", actual: "106 000 000", varNok: "+54 000 000", varPct: "+33.8 %", driver: "Vakanser i stabsfunksjoner" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-ORG-01", title: "Konsulentstopp for all ekstern administrativ rådgivning (art 1270)", owner: "Kommunalsjef", deadline: "Umiddelbart", impact: "-450 000 kr/md", legal: "Anskaffelsesloven", status: "🟢 Iverksatt" },
@@ -14500,7 +14500,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "560 000 000 NOK",
                         ac: "375 000 000 NOK",
-                        cv: "-1 800 000 NOK (-0.5 %)",
+                        cv: "+1 800 000  NOK (+0.5 %)",
                         cvAlert: false,
                         cpi: "1.005",
                         cpiAlert: false,
@@ -14509,7 +14509,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "557 200 000 NOK (🟢 POSITIV BIDRAGSYTER)"
                     },
                     variances: [
-                        { art: "IKT, digitalisering og fellestjenester", desc: "Infrastruktur, lisenser og felles stab", budget: "560 000 000", actual: "375 000 000", varNok: "-1 800 000", varPct: "-0.5 %", driver: "Kostnadsdisiplin og vellykket FinOps-optimalisering" }
+                        { art: "IKT, digitalisering og fellestjenester", desc: "Infrastruktur, lisenser og felles stab", budget: "560 000 000", actual: "375 000 000", varNok: "+185 000 000", varPct: "+33.0 %", driver: "Kostnadsdisiplin og vellykket FinOps-optimalisering" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-DIR-O01", title: "Evaluering av IKT-prosjekter i Port 4/9 for å hindre kostnadsglidning", owner: "Kommunaldirektør", deadline: "Månedlig", impact: "0 MNOK avvik", legal: "Port 9 HITL", status: "🟢 Iverksatt" }
@@ -14538,7 +14538,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "1 490 000 000 NOK",
                         ac: "985 000 000 NOK",
-                        cv: "-3 880 000 NOK (-0.4 %)",
+                        cv: "+3 880 000  NOK (+0.4 %)",
                         cvAlert: false,
                         cpi: "1.003",
                         cpiAlert: false,
@@ -14547,9 +14547,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "1 486 125 000 NOK (🟢 ROBUST BUFFER)"
                     },
                     variances: [
-                        { art: "Finansinntekter & renter", desc: "Avkastning på likviditetsplasseringer", budget: "-65 000 000", actual: "-48 200 000", varNok: "-4 500 000", varPct: "-10.3 %", driver: "Gunstig renteplassering og god likviditetsstyring" },
-                        { art: "Lånerenter & gebyrer", desc: "Rentebelastning på 7.25 Mrd gjeldsportefølje", budget: "295 000 000", actual: "201 500 000", varNok: "+1 200 000", varPct: "+0.6 %", driver: "NIBOR-svingninger dempes av 58 % fastrenteavtaler" },
-                        { art: "Drift regnskap og innkjøp", desc: "Regnskapssentral, lønn og fakturering", budget: "38 000 000", actual: "25 100 000", varNok: "-580 000", varPct: "-2.3 %", driver: "Automatisert fakturabehandling (EHF 98.4 %)" }
+                        { art: "Finansinntekter & renter", desc: "Avkastning på likviditetsplasseringer", budget: "-65 000 000", actual: "-48 200 000", varNok: "-16 800 000", varPct: "-25.8 %", driver: "Gunstig renteplassering og god likviditetsstyring" },
+                        { art: "Lånerenter & gebyrer", desc: "Rentebelastning på 7.25 Mrd gjeldsportefølje", budget: "295 000 000", actual: "201 500 000", varNok: "+93 500 000", varPct: "+31.7 %", driver: "NIBOR-svingninger dempes av 58 % fastrenteavtaler" },
+                        { art: "Drift regnskap og innkjøp", desc: "Regnskapssentral, lønn og fakturering", budget: "38 000 000", actual: "25 100 000", varNok: "+12 900 000", varPct: "+33.9 %", driver: "Automatisert fakturabehandling (EHF 98.4 %)" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-601-01", title: "Månedlig avstemming av MVA-kompensasjon (art 1729) for raskere oppgjør", owner: "Regnskapssjef", deadline: "Dag 5", impact: "+14 500 000 kr likv.", legal: "Merverdiavgiftskompensasjonsloven", status: "🟢 Iverksatt" },
@@ -14578,7 +14578,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "1 490 000 000 NOK",
                         ac: "985 000 000 NOK",
-                        cv: "-3 880 000 NOK (-0.4 %)",
+                        cv: "+3 880 000  NOK (+0.4 %)",
                         cvAlert: false,
                         cpi: "1.003",
                         cpiAlert: false,
@@ -14587,9 +14587,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "1 486 125 000 NOK (🟢 POSITIV BIDRAGSYTER)"
                     },
                     variances: [
-                        { art: "Renterisiko og finansposter", desc: "Netto rentebærende gjeld og finansplasseringer", budget: "230 000 000", actual: "153 300 000", varNok: "-3 300 000", varPct: "-2.1 %", driver: "Gunstig avkastning på overskuddslikviditet" },
-                        { art: "Pensjonspremieavvik (KLP/SPK)", desc: "Innbetalt 348M vs beregnet kostnad 312M", budget: "36 000 000", actual: "36 000 000", varNok: "0", varPct: "0.0 %", driver: "+36M premieavvik amortiseres over 7 år lineært" },
-                        { art: "Skatteinngang og rammetilskudd", desc: "Kommunens frie skatteinntekter YTD", budget: "1 224 000 000", actual: "795 700 000", varNok: "-580 000", varPct: "0.0 %", driver: "Skatteinngang 100.2 % av anslag" }
+                        { art: "Renterisiko og finansposter", desc: "Netto rentebærende gjeld og finansplasseringer", budget: "230 000 000", actual: "153 300 000", varNok: "+76 700 000", varPct: "+33.3 %", driver: "Gunstig avkastning på overskuddslikviditet" },
+                        { art: "Pensjonspremieavvik (KLP/SPK)", desc: "Innbetalt 348M vs beregnet kostnad 312M", budget: "36 000 000", actual: "36 000 000", varNok: "-0", varPct: "-0.0 %", driver: "+36M premieavvik amortiseres over 7 år lineært" },
+                        { art: "Skatteinngang og rammetilskudd", desc: "Kommunens frie skatteinntekter YTD", budget: "1 224 000 000", actual: "795 700 000", varNok: "+428 300 000", varPct: "+35.0 %", driver: "Skatteinngang 100.2 % av anslag" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-OKO-01", title: "Månedlig avstemming mellom Visma ERP og Framsikt rammer", owner: "Controllerteam", deadline: "Månedlig", impact: "0 avstemmingsavvik", legal: "Kommuneloven § 14-6", status: "🟢 Iverksatt" },
@@ -14617,7 +14617,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     kpis: {
                         bac: "7 500 000 000 NOK",
                         ac: "5 115 000 000 NOK",
-                        cv: "+94 900 000 NOK (+1.9 %)",
+                        cv: "-94 900 000  NOK (-1.9 %)",
                         cvAlert: true,
                         cpi: "0.981",
                         cpiAlert: true,
@@ -14626,9 +14626,9 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                         eacSim: "7 500 000 000 NOK (🟢 BALANSE ETTER TILTAK)"
                     },
                     variances: [
-                        { art: "Driftsavvik Helse & Mestring", desc: "Vikarbyrå, overtid og institusjonsdrift", budget: "3 100 000 000", actual: "2 140 000 000", varNok: "+62 000 000", varPct: "+2.9 %", driver: "Høyt sykefravær og rekrutteringsutfordringer" },
-                        { art: "Driftsavvik Oppvekst", desc: "Vikarutgifter grunnskole og spesialundervisning", budget: "2 450 000 000", actual: "1 685 000 000", varNok: "+38 500 000", varPct: "+2.3 %", driver: "Bemanningspress og korttidsfravær i grunnskole" },
-                        { art: "Mindreforbruk Byutvikling & Finans", desc: "VAR, samferdsel, IKT og finansavkastning", budget: "1 950 000 000", actual: "1 290 000 000", varNok: "-5 600 000", varPct: "-0.4 %", driver: "Lavere energikostnader og god renteavkastning" }
+                        { art: "Driftsavvik Helse & Mestring", desc: "Vikarbyrå, overtid og institusjonsdrift", budget: "3 100 000 000", actual: "2 140 000 000", varNok: "+960 000 000", varPct: "+31.0 %", driver: "Høyt sykefravær og rekrutteringsutfordringer" },
+                        { art: "Driftsavvik Oppvekst", desc: "Vikarutgifter grunnskole og spesialundervisning", budget: "2 450 000 000", actual: "1 685 000 000", varNok: "+765 000 000", varPct: "+31.2 %", driver: "Bemanningspress og korttidsfravær i grunnskole" },
+                        { art: "Mindreforbruk Byutvikling & Finans", desc: "VAR, samferdsel, IKT og finansavkastning", budget: "1 950 000 000", actual: "1 290 000 000", varNok: "+660 000 000", varPct: "+33.8 %", driver: "Lavere energikostnader og god renteavkastning" }
                     ],
                     shortTermActions: [
                         { id: "ACT-KORT-DIR-K01", title: "Fremme sak til Formannskapet om 2. tertialrapport med tiltakspakke", owner: "Kommunedirektør", deadline: "28. okt 2026", impact: "Rebalanserer 94.9M", legal: "Kommuneloven § 14-5", status: "🏛️ Fremmet" },
@@ -14780,7 +14780,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                                     <td>${v.desc}</td>
                                     <td class="num">${v.budget}</td>
                                     <td class="num">${v.actual}</td>
-                                    <td class="num" style="color:${v.varNok.startsWith('+') ? 'var(--alert-red)' : 'var(--success-green)'}; font-weight:700;">
+                                    <td class="num" style="color:${v.varNok.startsWith('-') ? 'var(--alert-red)' : 'var(--success-green)'}; font-weight:700;">
                                         ${v.varNok} (${v.varPct})
                                     </td>
                                     <td style="color:var(--text-secondary);">${v.driver}</td>

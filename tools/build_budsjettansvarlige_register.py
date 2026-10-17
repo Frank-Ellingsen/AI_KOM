@@ -1050,7 +1050,51 @@ def export_security_csv(path: Path, security_rows: list):
         writer.writerows(security_rows)
     print(f"✓ Eksportert Sikkerhet & RLS CSV ({len(security_rows)} poster): {path}")
 
+ANNUAL_BUDGETS = {
+    "0000-KOMMDIR": 7240000000.0,
+    "5000-SJEF-HELSE": 2680000000.0,
+    "4000-SJEF-OPPV": 2150000000.0,
+    "3000-SJEF-BYUTV": 620000000.0,
+    "2000-SJEF-KULTUR": 290000000.0,
+    "1000-SJEF-ORGTEK": 340000000.0,
+    "6000-DIR-OKONOMI": 1160000000.0,
+    "5200-ENH-401": 50339000.0,
+    "2540": 50339000.0,
+    "4100-ENH-202": 33591000.0,
+    "2020": 33591000.0,
+    "3300-ENH-301": 24150000.0,
+    "5210-ENH-402": 42800000.0,
+    "5220-ENH-403": 38600000.0,
+    "5230-ENH-404": 29400000.0,
+    "4101-ENH-203": 31200000.0,
+    "4102-ENH-204": 28900000.0,
+    "4210-ENH-211": 18900000.0,
+    "3100-ENH-302": 68400000.0,
+    "2200-ENH-101": 19500000.0,
+    "1110-ENH-501": 34800000.0,
+    "6200-ENH-601": 18200000.0,
+}
+
+def resolve_budget(ansvar_id: str, niva: str) -> float:
+    if ansvar_id in ANNUAL_BUDGETS:
+        return ANNUAL_BUDGETS[ansvar_id]
+    if niva == "NIVA1":
+        return 500000000.0
+    elif niva == "NIVA2":
+        return 95000000.0
+    elif niva == "NIVA3":
+        return 22500000.0
+    elif niva == "NIVA4":
+        return 12000000.0
+    return 500000.0
+
+def populate_budgets():
+    for r in REGISTER:
+        r["aarsbudsjett_kr"] = resolve_budget(r["ansvar_id"], r["niva"])
+        r["ytd_budsjett_kr"] = round(r["aarsbudsjett_kr"] * 0.783, 2)
+
 def update_database(db_path: Path, security_rows: list):
+    populate_budgets()
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
@@ -1071,6 +1115,8 @@ def update_database(db_path: Path, security_rows: list):
             telefon TEXT NOT NULL,
             kontorsted TEXT NOT NULL,
             delegeringsfullmakt_nok REAL NOT NULL,
+            aarsbudsjett_kr REAL NOT NULL,
+            ytd_budsjett_kr REAL NOT NULL,
             controller_navn TEXT NOT NULL,
             controller_epost TEXT NOT NULL,
             utsendte_rapporter TEXT NOT NULL,
@@ -1086,6 +1132,7 @@ def update_database(db_path: Path, security_rows: list):
                 :ansvar_id, :navn, :tittel, :niva, :niva_tekst,
                 :sektor_kode, :sektor_navn, :enhet_navn, :kostra_funksjon,
                 :epost, :telefon, :kontorsted, :delegeringsfullmakt_nok,
+                :aarsbudsjett_kr, :ytd_budsjett_kr,
                 :controller_navn, :controller_epost, :utsendte_rapporter,
                 :tilknyttet_mal, :returkanal, :returfrist
             )
