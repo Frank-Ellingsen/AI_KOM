@@ -31,6 +31,8 @@
 | **Hovedveileder for AI-Agenter** | Persona, arkitektur, Tufte-regler og styringsprinsipper | [`AGENTS.md`](./AGENTS.md) |
 | **README & Prosjektoversikt** | Rask oppstart, Docker-oppsett og systemoversikt | [`README.md`](./README.md) |
 | **Control Office Hub Web-app** | Komplett interaktivt dashboard med dynamisk sektorsynkronisering | [`index.html`](./index.html) |
+| **Sektorspesifikke Dashboards & Personaer** | Tilpassede visninger for Oppvekst, Helse, Byutvikling, Kultur, IKT & Ledelse | [`index.html#sektor-dashboards`](./index.html) |
+| **Kommunal Nettbank for Enhetsledere** | Kontoutskrifter (HTML/CSV/Excel), saldo og proaktive råd for 81 enheter | [`index.html#kommunal-nettbank`](./index.html#kommunal-nettbank) |
 | **Kommunal Budsjettmodul (Framsikt)** | Stillings- og lønnsmotor, selvkostkalkulator for VAR, KOSTRA-tabell og QA-motor | [`index.html#budsjett-modul-seksjon`](./index.html#budsjett-modul-seksjon) |
 | **Office Dashboard Hub Spec** | Teknisk funksjonsspesifikasjon for web-huben | [`spesifikasjoner/OFFICE_DASHBOARD_HUB_SPEC.md`](./spesifikasjoner/OFFICE_DASHBOARD_HUB_SPEC.md) |
 | **Office Hub V2 Workflow UI** | Brukergrensesnitt for månedshjulet og operativ arbeidsflyt | [`spesifikasjoner/OFFICE_DASHBOARD_HUB_V2_WORKFLOW_UI.md`](./spesifikasjoner/OFFICE_DASHBOARD_HUB_V2_WORKFLOW_UI.md) |
@@ -128,24 +130,43 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 * **Excel Automatisering & MCP Server**: [`EXCEL_AUTOMATION_AND_MCP_SERVER.md`](./excel/excel_kommune_spec_bundle_v1/EXCEL_AUTOMATION_AND_MCP_SERVER.md)
 * **Python & Copilot Integrasjon**: [`EXCEL_PYTHON_AND_COPILOT_INTEGRATION.md`](./excel/excel_kommune_spec_bundle_v1/EXCEL_PYTHON_AND_COPILOT_INTEGRATION.md)
 
-### D. Power BI & DAX Library (`powerbi/power_bi_kommune_spec_bundle_v1/`)
-* **Star Schema Datamodell**: [`POWER_BI_DATA_MODEL_STAR_SCHEMA.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DATA_MODEL_STAR_SCHEMA.md)
-* **DAX Mål & Beregningsmotor**: [`POWER_BI_DAX_MEASURES_LIBRARY.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DAX_MEASURES_LIBRARY.md)
-* **Dashboards & 7 Rapportoppsett**: [`POWER_BI_DASHBOARDS_AND_LAYOUTS.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DASHBOARDS_AND_LAYOUTS.md)
-* **Visuals & Tufte Storytelling**: [`POWER_BI_VISUALS_AND_STORYTELLING.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_VISUALS_AND_STORYTELLING.md)
+### D. Power BI & DAX Library (`powerbi/`)
+* **Star Schema Datamodell**: [`power_bi_kommune_spec_bundle_v1/POWER_BI_DATA_MODEL_STAR_SCHEMA.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DATA_MODEL_STAR_SCHEMA.md)
+* **DAX Mål & Beregningsmotor**: [`power_bi_kommune_spec_bundle_v1/POWER_BI_DAX_MEASURES_LIBRARY.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DAX_MEASURES_LIBRARY.md)
+* **Dashboards & 7 Rapportoppsett**: [`power_bi_kommune_spec_bundle_v1/POWER_BI_DASHBOARDS_AND_LAYOUTS.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DASHBOARDS_AND_LAYOUTS.md)
+* **Visuals & Tufte Storytelling**: [`power_bi_kommune_spec_bundle_v1/POWER_BI_VISUALS_AND_STORYTELLING.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_VISUALS_AND_STORYTELLING.md)
+* **Teams Embedded Dynamisk RLS DAX**: [`06_PowerBI_Teams_Embedded_Dynamic_RLS.dax`](./powerbi/06_PowerBI_Teams_Embedded_Dynamic_RLS.dax) *(Row-Level Security tilpasset UPN/leder)*
+* **Power BI Prosjekt (PBIP Developer Format)**: [`pbi_reporting_project.pbip`](./powerbi/pbi_reporting_project.pbip)
 
 ---
 
 ## 7. Offisielle Dokumentmaler (`templates/`)
 
-* **Rapportmal Nivå 1: Avdelingsleder**: [`templates/RAPPORTMAL_AVDELINGSLEDER.md`](./templates/RAPPORTMAL_AVDELINGSLEDER.md)
-* **Rapportmal Nivå 2: Kommunalsjef**: [`templates/RAPPORTMAL_KOMMUNALSJEF.md`](./templates/RAPPORTMAL_KOMMUNALSJEF.md)
-* **Rapportmal Nivå 3: Kommunedirektør**: [`templates/RAPPORTMAL_KOMMUNEDIREKTOR.md`](./templates/RAPPORTMAL_KOMMUNEDIREKTOR.md)
-* **Rapportmal Bystyret / Formannskapet**: [`templates/RAPPORTMAL_KOMMUNESTYRET.md`](./templates/RAPPORTMAL_KOMMUNESTYRET.md)
-* **Mønsterrapport: Avvik og Effektprognose**: [`templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.md`](./templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.md)
-* **Drøftingsprotokoll HTA § 4**: [`templates/MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.md`](./templates/MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.md)
-* **Stage-Gate Port 9 HITL Sign-off**: [`templates/MAL_STAGE_GATE_PORT_9_HITL_SIGNOFF.md`](./templates/MAL_STAGE_GATE_PORT_9_HITL_SIGNOFF.md)
-* **FRIA & DPIA Risikovurdering**: [`templates/MAL_FRIA_OG_DPIA_RISIKOVURDERING.md`](./templates/MAL_FRIA_OG_DPIA_RISIKOVURDERING.md)
+Samtlige 18 maler foreligger i to formater: **Produksjonsformat** (.docx / .xlsx for nedlasting og saksbehandling) og **Forhåndsvisningsformat** (.md for lynrask visning i Office Hub).
+
+### A. Ledelses- og Styringsrapporter (Nivå 1–4 & Bystyret)
+* **Rapportmal Nivå 1: Avdelingsleder**: [`RAPPORTMAL_AVDELINGSLEDER.docx`](./templates/RAPPORTMAL_AVDELINGSLEDER.docx) | [`RAPPORTMAL_AVDELINGSLEDER.md`](./templates/RAPPORTMAL_AVDELINGSLEDER.md)
+* **Rapportmal Nivå 2: Seksjonsleder**: [`RAPPORTMAL_SEKSJONSLEDER.docx`](./templates/RAPPORTMAL_SEKSJONSLEDER.docx) | [`RAPPORTMAL_SEKSJONSLEDER.md`](./templates/RAPPORTMAL_SEKSJONSLEDER.md)
+* **Rapportmal Nivå 3: Kommunalsjef**: [`RAPPORTMAL_KOMMUNALSJEF.docx`](./templates/RAPPORTMAL_KOMMUNALSJEF.docx) | [`RAPPORTMAL_KOMMUNALSJEF.md`](./templates/RAPPORTMAL_KOMMUNALSJEF.md)
+* **Rapportmal Nivå 4: Kommunedirektør**: [`RAPPORTMAL_KOMMUNEDIREKTOR.docx`](./templates/RAPPORTMAL_KOMMUNEDIREKTOR.docx) | [`RAPPORTMAL_KOMMUNEDIREKTOR.md`](./templates/RAPPORTMAL_KOMMUNEDIREKTOR.md)
+* **Rapportmal Bystyret / Formannskapet**: [`RAPPORTMAL_KOMMUNESTYRET.docx`](./templates/RAPPORTMAL_KOMMUNESTYRET.docx) | [`RAPPORTMAL_KOMMUNESTYRET.md`](./templates/RAPPORTMAL_KOMMUNESTYRET.md)
+* **Mønsterrapport: Avvik og Effektprognose**: [`RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx`](./templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.docx) | [`RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.md`](./templates/RAPPORTMONSTER_AVVIK_OG_EFFEKTPROGNOSE.md)
+
+### B. Styring, Avvik & Saksbehandling
+* **Avviksnotat og Tiltaksplan Enhetsleder**: [`MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx`](./templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx) | [`MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.md`](./templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.md)
+* **Politisk Saksfremlegg Budsjettendring (§ 14-5)**: [`MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.docx`](./templates/MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.docx) | [`MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.md`](./templates/MAL_POLITISK_SAKSFREMLEGG_BUDSJETTENDRING.md)
+* **Periodelukking og Avstemmingsinstruks**: [`MAL_PERIODELUKKING_OG_AVSTEMMING.docx`](./templates/MAL_PERIODELUKKING_OG_AVSTEMMING.docx) | [`MAL_PERIODELUKKING_OG_AVSTEMMING.md`](./templates/MAL_PERIODELUKKING_OG_AVSTEMMING.md)
+* **Drøftingsprotokoll HTA § 4 & AML § 10-12**: [`MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.docx`](./templates/MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.docx) | [`MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.md`](./templates/MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.md)
+* **Stage-Gate Port 9 HITL Sign-off (Kryptografisk SHA-256)**: [`MAL_STAGE_GATE_PORT_9_HITL_SIGNOFF.docx`](./templates/MAL_STAGE_GATE_PORT_9_HITL_SIGNOFF.docx) | [`MAL_STAGE_GATE_PORT_9_HITL_SIGNOFF.md`](./templates/MAL_STAGE_GATE_PORT_9_HITL_SIGNOFF.md)
+* **FRIA & DPIA Risikovurdering (AI Act & GDPR art. 35)**: [`MAL_FRIA_OG_DPIA_RISIKOVURDERING.docx`](./templates/MAL_FRIA_OG_DPIA_RISIKOVURDERING.docx) | [`MAL_FRIA_OG_DPIA_RISIKOVURDERING.md`](./templates/MAL_FRIA_OG_DPIA_RISIKOVURDERING.md)
+
+### C. Selvhjelpspakke for Budsjettansvarlige (Nettbank & Verktøykasse)
+* **Lederens Månedsstatus og Rullende Prognose**: [`MAL_LEDERENS_MANEDSSTATUS_OG_PROGNOSE.docx`](./templates/MAL_LEDERENS_MANEDSSTATUS_OG_PROGNOSE.docx) | [`MAL_LEDERENS_MANEDSSTATUS_OG_PROGNOSE.md`](./templates/MAL_LEDERENS_MANEDSSTATUS_OG_PROGNOSE.md)
+* **Bemanningsplan, Turnus og Vikarbudsjett**: [`MAL_BEMANNINGSPLAN_OG_VIKARBUDSJETT.xlsx`](./templates/MAL_BEMANNINGSPLAN_OG_VIKARBUDSJETT.xlsx) | [`MAL_BEMANNINGSPLAN_OG_VIKARBUDSJETT.md`](./templates/MAL_BEMANNINGSPLAN_OG_VIKARBUDSJETT.md)
+* **Internkontroll og Egenvurdering for Leder**: [`MAL_INTERNKONTROLL_EGENVURDERING_LEDER.docx`](./templates/MAL_INTERNKONTROLL_EGENVURDERING_LEDER.docx) | [`MAL_INTERNKONTROLL_EGENVURDERING_LEDER.md`](./templates/MAL_INTERNKONTROLL_EGENVURDERING_LEDER.md)
+* **NAV-refusjonsoppfølging og Avstemming**: [`MAL_NAV_REFUSJONSOPPFOLGING_OG_AVSTEMMING.xlsx`](./templates/MAL_NAV_REFUSJONSOPPFOLGING_OG_AVSTEMMING.xlsx) | [`MAL_NAV_REFUSJONSOPPFOLGING_OG_AVSTEMMING.md`](./templates/MAL_NAV_REFUSJONSOPPFOLGING_OG_AVSTEMMING.md)
+* **Budsjettinnspill Framsikt HØP 2027**: [`MAL_BUDSJETTINNSPILL_FRAMSIKT_HOP_2027.docx`](./templates/MAL_BUDSJETTINNSPILL_FRAMSIKT_HOP_2027.docx) | [`MAL_BUDSJETTINNSPILL_FRAMSIKT_HOP_2027.md`](./templates/MAL_BUDSJETTINNSPILL_FRAMSIKT_HOP_2027.md)
+* **Omdisponering og Rammejustering**: [`MAL_OMDISPONERING_OG_RAMMEJUSTERING.docx`](./templates/MAL_OMDISPONERING_OG_RAMMEJUSTERING.docx) | [`MAL_OMDISPONERING_OG_RAMMEJUSTERING.md`](./templates/MAL_OMDISPONERING_OG_RAMMEJUSTERING.md)
 
 ---
 
@@ -154,25 +175,36 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 * **Register over Budsjettansvarlige & Delegeringskatalog**: [`bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md`](./bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md)
 * **Månedlig Avviksrapport Rammeverk**: [`bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md`](./bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md)
 * **Styringskalender & Årshjul 2026**: [`bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md`](./bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md)
+* **Operativ Brukerguide & Sjekkliste**: [`bruker-guides/BRUKERGUIDE.md`](./bruker-guides/BRUKERGUIDE.md)
+* **Stage-Gate Rammeverk (Port 1–10)**: [`bruker-guides/stage_gate_rammeverk.md`](./bruker-guides/stage_gate_rammeverk.md)
+* **Oppstartsveileder & Startknapp**: [`bruker-guides/OPPSTARTSVEILEDER_STARTKNAPP.md`](./bruker-guides/OPPSTARTSVEILEDER_STARTKNAPP.md)
+* **RAG-arkitektur og Kunnskapsbase Forklaring**: [`bruker-guides/rag_forklaring.md`](./bruker-guides/rag_forklaring.md)
 
 ---
 
 ## 9. Kjørbare Verktøy & Skript (`tools/`)
 
 * **[`tools/run_tool.py`](./tools/run_tool.py)**: Hovedinngangsport for kommandolinjen (`forecast`, `audit`, `excel`, `verify`, `server`, `parse`).
-* **[`tools/build_budsjettansvarlige_register.py`](./tools/build_budsjettansvarlige_register.py)**: Bygger JSON, CSV og SQLite register over budsjettansvarlige på Nivå 1–4.
-* **[`tools/predictive_forecasting_engine.py`](./tools/predictive_forecasting_engine.py)**: Monte Carlo og EVM tidsserieberegning.
+* **[`tools/predictive_forecasting_engine.py`](./tools/predictive_forecasting_engine.py)**: Monte Carlo P10/P50/P90 og EVM tidsserieberegning.
 * **[`tools/audit_revisjon_validator.py`](./tools/audit_revisjon_validator.py)**: Revisjonsvalidering jf. § 14-5 og § 14-6 med SHA-256 stempel.
+* **[`tools/build_excel_master_report.py`](./tools/build_excel_master_report.py)**: 14-arks master FAST Excel-modell med dynamisk avviksanalyse.
 * **[`tools/generate_controller_excel_report.py`](./tools/generate_controller_excel_report.py)**: Bygger FAST regneark for Kristiansand kommune.
+* **[`tools/build_budsjettansvarlige_register.py`](./tools/build_budsjettansvarlige_register.py)**: Bygger JSON, CSV og SQLite register over budsjettansvarlige på Nivå 1–4.
+* **[`tools/generate_monthly_bank_statements.py`](./tools/generate_monthly_bank_statements.py)**: Kommunal nettbank: Månedlige kontoutskrifter for alle 81 enheter.
+* **[`tools/generate_budget_selfservice_templates.py`](./tools/generate_budget_selfservice_templates.py)**: Bygger 6 operative selvhjelpsmaler i Excel og Word.
+* **[`tools/generate_office_hub_templates.py`](./tools/generate_office_hub_templates.py)**: Dual-generator for 12 styringsrapporter i .docx og .md.
+* **[`tools/data_quality_validator.py`](./tools/data_quality_validator.py)**: Kanonisk datakvalitetsvalidering og skjema-integritet.
 * **[`tools/hub_api_server.py`](./tools/hub_api_server.py)**: FastAPI backend for `index.html`.
+* **[`tools/verify_office_hub.py`](./tools/verify_office_hub.py)**: Helsetest, streng HTML-parser og lenkevalidering.
 * **[`tools/document_parser.py`](./tools/document_parser.py)**: Tekstekstraksjon fra PDF, Word og Excel.
 
 ---
 
-## 10. Data & Golden Record (`erp_data/`)
+## 10. Data, Golden Record & Kontoutskrifter (`erp_data/` & `reports/`)
 
-* **`kommune_golden_record.db`**: SQLite stjernemodell med `Fact_Regnskap`, `Fact_Budsjett`, `Dim_Funksjon`, `Dim_Art`, `Dim_Ansvar`, `Dim_Budsjettansvarlige`.
-* **`budsjettansvarlige_register.json` / `.csv`**: Komplett katalog over alle budsjettansvarlige på Nivå 1–4 med kontaktinfo, delegering og skjemaflyt.
+* **`erp_data/kommune_golden_record.db`**: SQLite stjernemodell med `Fact_Regnskap`, `Fact_Budsjett`, `Dim_Funksjon`, `Dim_Art`, `Dim_Ansvar`, `Dim_Budsjettansvarlige`.
+* **`erp_data/budsjettansvarlige_register.json` / `.csv`**: Komplett katalog over alle budsjettansvarlige på Nivå 1–4 med kontaktinfo, delegering og skjemaflyt.
+* **`reports/kontoutskrifter/`**: Kommunal nettbank for alle 81 enheter (`KONTOUTSKRIFT_REGISTER_MASTER_2026.json`, `KONTOUTSKRIFT_ALLE_ENHETER_M10.csv`, `KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx`, og HTML-utskrifter per enhet).
 * **Råfiler**: Syntetiske regnskapstrekk fra Visma ERP og periodiserte budsjettrammer fra Framsikt EPM.
 
 ---

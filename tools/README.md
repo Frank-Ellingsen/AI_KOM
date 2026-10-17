@@ -38,14 +38,21 @@ python tools/run_tool.py parse <sti-til-fil>
 
 | Verktøyskript | Kjernefunksjon | Teknologi / Bibliotek | Lovhjemmel / Standard |
 | :--- | :--- | :--- | :--- |
-| **[`run_tool.py`](./run_tool.py)** | Sentral CLI-inngangsport | Python `argparse`, `subprocess` | Standardisert CLI |
+| **[`run_tool.py`](./run_tool.py)** | Sentral CLI-inngangsport (`forecast`, `audit`, `excel`, `verify`, `server`, `parse`) | Python `argparse`, `subprocess` | Standardisert CLI |
 | **[`predictive_forecasting_engine.py`](./predictive_forecasting_engine.py)** | Monte Carlo P10/P50/P90 og EVM (CPI/EAC/VAC) | NumPy, SciPy, SQLite, SHA-256 | Kommuneloven § 14-5, KS2 |
 | **[`audit_revisjon_validator.py`](./audit_revisjon_validator.py)** | Etterlevelsessjekk av budsjettbalanse og bruttoprinsipp | SQLite, hashlib, regex | Kommuneloven § 14-5 & § 14-6 |
-| **[`generate_controller_excel_report.py`](./generate_controller_excel_report.py)** | Generering av offisielle økonomirapporter | OpenPyXL, FAST financial modeling | FAST Standard, Tufte |
+| **[`build_excel_master_report.py`](./build_excel_master_report.py)** | 14-arks master FAST Excel-modell med dynamisk avviksanalyse | OpenPyXL, FAST modeling, SHA-256 | FAST Standard, Tufte |
+| **[`generate_controller_excel_report.py`](./generate_controller_excel_report.py)** | Generering av offisielle økonomirapporter i Excel | OpenPyXL, FAST financial modeling | FAST Standard, Tufte |
+| **[`build_budsjettansvarlige_register.py`](./build_budsjettansvarlige_register.py)** | Registerbygger for alle 81 enheter og ledere (Nivå 1–4) | SQLite, JSON, CSV, Pydantic | Kommuneloven § 13-1 |
+| **[`generate_monthly_bank_statements.py`](./generate_monthly_bank_statements.py)** | Kommunal nettbank: Månedlige kontoutskrifter for alle 81 enheter | HTML5, CSS Grid, CSV, OpenPyXL | Edward Tufte Data-Ink |
+| **[`generate_budget_selfservice_templates.py`](./generate_budget_selfservice_templates.py)** | Bygger 6 operative selvhjelpsmaler i Excel og Word | python-docx, openpyxl, Markdown | Kommuneloven § 14-5 / HTA § 4 |
+| **[`generate_office_hub_templates.py`](./generate_office_hub_templates.py)** | Dual-generator for 12 styringsrapporter i .docx og .md | python-docx, markdown | Offisiell malstandard |
+| **[`data_quality_validator.py`](./data_quality_validator.py)** | Kanonisk datakvalitetsvalidering og skjema-integritet | Pydantic v2, SQLite, hashlib | Port 4 & Port 9 |
 | **[`document_parser.py`](./document_parser.py)** | Parsing av PDF, Word (.docx) og Excel (.xlsx) | pypdf, python-docx, openpyxl | UTF-8 / cp1252 auto-detect |
 | **[`hub_api_server.py`](./hub_api_server.py)** | Lokal FastAPI REST API backend for huben | FastAPI, Uvicorn, SQLite | Local-first REST |
-| **[`verify_office_hub.py`](./verify_office_hub.py)** | Helsetest og validering av database og UI | SQLite, requests, assertions | Internkontroll |
+| **[`verify_office_hub.py`](./verify_office_hub.py)** | Helsetest, streng HTML-parser og lenkevalidering | HTMLParser, pathlib, regex | Internkontroll |
 | **[`update_index_hub.py`](./update_index_hub.py)** | Vedlikeholds- og byggeskript for `index.html` | Python HTML/DOM manipulation | Tufte Data-Ink |
+| **[`clean_budsjett_framsikt.py`](./clean_budsjett_framsikt.py)** | Rense- og harmoniseringsverktøy for Framsikt-ekstrakter | Python, regex, csv | ETL Datavask |
 
 ---
 

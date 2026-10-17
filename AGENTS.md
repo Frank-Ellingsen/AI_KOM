@@ -77,19 +77,27 @@ This repository is fully configured for Antigravity native progressive disclosur
 | :--- | :--- | :--- |
 | **`.agents/`** | Antigravity AI Customizations | 19 native skills, 3 rule files, progressive disclosure |
 | **`agenter/`** | 12 Agent Role Specifications | Detailed roles for ETL, DAX, RAG, Controller, etc. |
+| **`ai-implementeringspakke-okonomi/`** | Municipal AI Implementation Guide | 9-part handbook (modul 00–08) for governance, ROI & roadmap |
 | **`antigravity-ms-pilot/`** | M365 Copilot & Antigravity Subproject | Subproject Python motor (`src/`), `run_pilot.py`, PII-vask, evaluatorer og tester |
 | **`app/`** | Web Applications & APIs | FastAPI server, Streamlit pilots, UI components |
-| **`archive/`** | Historical Backups & Scratch | `backups/`, `scratch/`, legacy exports |
-| **`budsjett-framsikt/`** | Framsikt EPM & KOSTRA Master Package | `budsjettering-kristiansand-kommune.md`, `lonnsbudsjettering-kristiansand-framsikt.md`, `driftsarter-og-selvkost-alle-omrader-framsikt.md`, `kostra-artskontoer-konteringsregler-framsikt.md` |
+| **`archive/`** | Historical Backups & Scratch | `backups/`, legacy exports |
+| **`bruker-guides/`** | Operational Handbooks & Calendars | Budsjettansvarlige katalog, månedshjul, styringskalender 2026 |
+| **`budsjett-framsikt/`** | Framsikt EPM & KOSTRA Master Package | `budsjettering-kristiansand-kommune.md`, `lonnsbudsjettering-kristiansand-framsikt.md`, driftsarter, selvkost |
 | **`docs/`** | Unified Documentation | Architecture, user guides, specifications, and PDF publications |
 | **`erp_data/`** | Municipal Data Lake | `kommune_golden_record.db`, Visma ERP CSVs, Framsikt extracts |
 | **`excel/`** | Financial Modeling | FAST models, `Kommune_Project_Controller_Reporting_2026.xlsx` |
 | **`generic-ai-pilot-pakke/`** | Vendor-Neutral Enterprise AI Pilot | Generisk malverk (`enterprise-ai-pilot/`), DAX, prompts, evals, målarkitektur |
-| **`powerbi/`** | Power BI Enterprise Assets | `pbi_reporting_project.pbip`, DAX library, semantic models |
+| **`mlops-implementeringspakke/`** | MLOps & LLMOps Procurement Package | 6-part specification for municipal AI operations, observability & tenders |
+| **`mvp-pilot/`** | Bo og Miljø Operational Pilot | Streamlit interactive app, DuckDB analytics, EAC engine |
+| **`powerbi/`** | Power BI Enterprise Assets | `pbi_reporting_project.pbip`, DAX library, Teams RLS, semantic models |
 | **`powerpoint/`** | Presentation Decks | 16:9 executive decks for Bystyret, Kommunedirektøren, Oppvekst |
-| **`reports/`** | Published Reports | Executive briefings, waterfall charts, status reports |
-| **`templates/`** | Municipal Templates | Word (.docx) & Markdown templates for meetings and saksfremlegg |
-| **`tools/`** | Operational CLI Tools | Python engines (`predictive_forecasting_engine.py`, `run_tool.py`) |
+| **`reports/`** | Published Reports & Nettbank | Kontoutskrifter (81 units), executive briefings, waterfall charts |
+| **`revisjon-og-kontroll/`** | Audit & Control Standards | Checklists for Kommunerevisjonen, tertialnotater, § 14-5 |
+| **`scratch/`** | Scratch Scripts & Migration Utilities | One-off helper scripts, debug scripts, integration tools |
+| **`spesifikasjoner/`** | Technical Specifications | Office Hub V2, Gemini MCP Chat, Predictive Engine specs |
+| **`templates/`** | Municipal Templates (18 pairs) | Dual format: .docx/.xlsx for production, .md for hub preview |
+| **`tests/`** | Master Test Suite | Pytest test files (32 unit/integration tests) |
+| **`tools/`** | Operational CLI Tools | Python engines (`predictive_forecasting_engine.py`, `run_tool.py`, etc.) |
 | **`word/`** | Formal Municipal Notes | Generated Word documents (.docx) for administrative levels 1–3 |
 
 ---
