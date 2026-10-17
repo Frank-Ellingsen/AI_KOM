@@ -1,0 +1,172 @@
+{
+  "kommunenivå": {
+    "kommune": "Kristiansand kommune",
+    "periode": "2026-M10 (Oktober)",
+    "top3_kpis": {
+      "netto_driftsresultat": {
+        "navn": "Netto Driftsresultat",
+        "enhet": "%",
+        "verdi": 1.25,
+        "mål_tbu": 1.75,
+        "mål_kommune": 1.0,
+        "gauge_skala": {
+          "rød": [
+            0,
+            0.5
+          ],
+          "gul": [
+            0.5,
+            1.0
+          ],
+          "grønn": [
+            1.0,
+            2.5
+          ],
+          "mørk_grønn": [
+            2.5,
+            5.0
+          ]
+        },
+        "status": "GRØNN"
+      },
+      "disposisjonsfond": {
+        "navn": "Disposisjonsfond",
+        "enhet": "% av driftsinntekt",
+        "verdi": 4.35,
+        "mål_tbu": 5.0,
+        "mål_kommune": 4.0,
+        "gauge_skala": {
+          "rød": [
+            0,
+            2.0
+          ],
+          "gul": [
+            2.0,
+            4.0
+          ],
+          "grønn": [
+            4.0,
+            8.0
+          ],
+          "mørk_grønn": [
+            8.0,
+            15.0
+          ]
+        },
+        "status": "GRØNN"
+      },
+      "netto_lånegjeld": {
+        "navn": "Netto Lånegjeld",
+        "enhet": "% av driftsinntekt",
+        "verdi": 76.8,
+        "mål_tbu": 80.0,
+        "mål_kommune": 78.0,
+        "gauge_skala": {
+          "mørk_grønn": [
+            0,
+            60.0
+          ],
+          "grønn": [
+            60.0,
+            80.0
+          ],
+          "gul": [
+            80.0,
+            90.0
+          ],
+          "rød": [
+            90.0,
+            150.0
+          ]
+        },
+        "status": "GRØNN"
+      }
+    }
+  },
+  "budsjetthierarki": [
+    {
+      "sektor_id": "OMR-02",
+      "sektor_navn": "Område Oppvekst",
+      "direktør": "Kommunalsjef Oppvekst",
+      "ramme_ytd_nok": 1850000000,
+      "forbruk_ytd_nok": 1885000000,
+      "avvik_ytd_nok": 35000000,
+      "avvik_prosent": 1.89,
+      "triage_status": "RØD",
+      "sektor_spesifikke_kpis": {
+        "korrigert_brutto_driftsutgift_per_elev_nok": 128500,
+        "pedagogdekning_prosent": 98.2,
+        "vikar_og_overtid_andel_prosent": 8.4,
+        "sykefravær_prosent": 9.2
+      },
+      "enheter": [
+        {
+          "enhet_id": "2020-101",
+          "enhet_navn": "Vågsbygd Skole",
+          "leder": "Rektor",
+          "ramme_ytd_nok": 42000000,
+          "forbruk_ytd_nok": 43650000,
+          "avvik_ytd_nok": 1650000,
+          "avvik_prosent": 3.93,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "elevtall": 540,
+            "kr_per_elev": 80833,
+            "vikar_art_1020_avvik_nok": 1650000,
+            "nav_refusjon_etterslep_nok": 350000
+          }
+        }
+      ]
+    },
+    {
+      "sektor_id": "OMR-03",
+      "sektor_navn": "Område Helse og Mestring",
+      "direktør": "Kommunalsjef Helse",
+      "ramme_ytd_nok": 2100000000,
+      "forbruk_ytd_nok": 2142000000,
+      "avvik_ytd_nok": 42000000,
+      "avvik_prosent": 2.0,
+      "triage_status": "RØD",
+      "sektor_spesifikke_kpis": {
+        "utgift_per_plass_sykehjem_nok": 1050000,
+        "dekningsgrad_80plus_prosent": 18.5,
+        "overtid_ubekvem_art_1090_nok": 6200000,
+        "sykefravær_prosent": 11.4
+      },
+      "enheter": [
+        {
+          "enhet_id": "3010-202",
+          "enhet_navn": "Oddernes Omsorgssenter",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 68000000,
+          "forbruk_ytd_nok": 70100000,
+          "avvik_ytd_nok": 2100000,
+          "avvik_prosent": 3.09,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "beboere": 64,
+            "turnusdekning_prosent": 91.2,
+            "overtid_art_1090_nok": 2100000
+          }
+        }
+      ]
+    },
+    {
+      "sektor_id": "OMR-05",
+      "sektor_navn": "Område By- og Stedsutvikling",
+      "direktør": "Kommunalsjef Teknisk",
+      "ramme_ytd_nok": 850000000,
+      "forbruk_ytd_nok": 851500000,
+      "avvik_ytd_nok": 1500000,
+      "avvik_prosent": 0.18,
+      "triage_status": "GUL",
+      "sektor_spesifikke_kpis": {
+        "var_selvkostgrad_prosent": 100.0,
+        "snøbrøyting_art_1270_avvik_nok": 1500000,
+        "byggesak_behandlingstid_dager": 24,
+        "vedlikeholdsetterslep_m2_nok": 1450
+      },
+      "enheter": []
+    }
+  ]
+}

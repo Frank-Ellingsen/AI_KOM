@@ -514,6 +514,222 @@ def execute_m10_ingestion(payload: dict) -> dict:
     return {"ok": True, **exec_res}
 
 
+# ======================================================================
+# ANTIGRAVITY CASH MANAGEMENT & LIKVIDITETSSTYRING (V1)
+# ======================================================================
+def get_v1_cash_position() -> dict:
+    """Henter nåværende konsernsaldo og driftskredittutnyttelse."""
+    try:
+        from app.services.cash_engine import CashManagementEngine
+        engine = CashManagementEngine()
+        pos = engine.get_current_position()
+        return {"ok": True, **pos.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def get_v1_cash_forecast() -> dict:
+    """Henter 30-dagers rullende likviditetsprognose for M11 (November 2026)."""
+    try:
+        from app.services.cash_engine import CashManagementEngine
+        engine = CashManagementEngine()
+        entries = engine.get_daily_forecast()
+        return {
+            "ok": True,
+            "period": "2026-M11",
+            "granularity": "DAILY",
+            "count": len(entries),
+            "forecast": [e.model_dump() for e in entries],
+            "credit_limit_nok": engine.credit_limit_nok,
+            "min_projected_balance_nok": min(e.projected_end_balance_nok for e in entries),
+            "max_projected_credit_draw_nok": max(e.credit_draw_nok for e in entries),
+        }
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def get_v1_cash_compliance() -> dict:
+    """Validerer likviditetsrammer mot Kommuneloven § 14-14 og Finansforskriften."""
+    try:
+        from app.services.cash_engine import CashManagementEngine
+        engine = CashManagementEngine()
+        rep = engine.check_compliance()
+        return {"ok": True, **rep.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def simulate_v1_cash(payload: dict) -> dict:
+    """Kjører What-If scenariesimulering på likviditetsstrømmen."""
+    try:
+        from app.services.cash_engine import CashManagementEngine
+        from app.schemas.cash import CashSimulationScenario
+        engine = CashManagementEngine()
+        scenario = CashSimulationScenario(
+            scenario_name=payload.get("scenario_name", "Egendefinert Scenario"),
+            tax_revenue_delta_percent=float(payload.get("tax_revenue_delta_percent", 0.0)),
+            state_grant_delay_days=int(payload.get("state_grant_delay_days", 0)),
+            extraordinary_expense_nok=float(payload.get("extraordinary_expense_nok", 0.0)),
+            expense_account_art=int(payload.get("expense_account_art", 1270)),
+        )
+        res = engine.simulate_scenario(scenario)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+# ======================================================================
+# ANTIGRAVITY TOP 3 KPIS & BUDSJETTHIERARKI (V1)
+# ======================================================================
+def get_v1_top3_kpis() -> dict:
+    """Henter Top 3 kommunale nøkkeltall med gauge-skalaer og status."""
+    try:
+        from app.services.top3_kpi_service import Top3KpiService
+        svc = Top3KpiService()
+        kpis = svc.get_top3_kpis()
+        payload = svc.get_dashboard_payload()
+        return {
+            "ok": True,
+            "kommune": payload.kommune,
+            "periode": payload.periode,
+            "top3_kpis": {k: v.model_dump() for k, v in kpis.items()},
+            "sha256_audit_seal": payload.sha256_audit_seal,
+        }
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def get_v1_kpi_hierarchy() -> dict:
+    """Henter kaskaderende budsjetthierarki og sektorspesifikke KPIs."""
+    try:
+        from app.services.top3_kpi_service import Top3KpiService
+        svc = Top3KpiService()
+        payload = svc.get_dashboard_payload()
+        return {
+            "ok": True,
+            "kommune": payload.kommune,
+            "periode": payload.periode,
+            "budsjetthierarki": [s.model_dump() for s in payload.budsjetthierarki],
+            "sha256_audit_seal": payload.sha256_audit_seal,
+        }
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+# ======================================================================
+# ANTIGRAVITY AUTOMATED REPORT EXPORT ENGINE (V1)
+# ======================================================================
+def export_v1_bystyret_pptx(payload: Optional[dict] = None) -> dict:
+    """Genererer tilpasset PowerPoint saksframlegg for Bystyret/Formannskapet."""
+    try:
+        from app.services.report_export_engine import generate_bystyret_pptx
+        data = payload.get("data") if payload else None
+        res = generate_bystyret_pptx(data=data)
+        return {"ok": True, **res}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+# ======================================================================
+# AGENT 13: EVALUATION & QUALITY ASSURANCE (V1)
+# ======================================================================
+def get_v1_eval_golden() -> dict:
+    try:
+        from app.services.evaluation_service import EvaluationService
+        svc = EvaluationService()
+        cases = svc.load_golden_dataset()
+        return {"ok": True, "total": len(cases), "cases": [c.model_dump() for c in cases]}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def run_v1_eval_suite() -> dict:
+    try:
+        from app.services.evaluation_service import EvaluationService
+        svc = EvaluationService()
+        rep = svc.run_golden_suite()
+        return {"ok": True, **rep.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+# ======================================================================
+# AGENT 14: DATABASE & DATA ENGINEERING (V1)
+# ======================================================================
+def get_v1_db_schema(table_name: Optional[str] = None) -> dict:
+    try:
+        from app.services.database_agent_service import DatabaseAgentService
+        svc = DatabaseAgentService()
+        return {"ok": True, **svc.inspect_schema(table_name)}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def execute_v1_db_query(payload: dict) -> dict:
+    try:
+        from app.services.database_agent_service import DatabaseAgentService
+        from app.schemas.database import QueryRequest
+        svc = DatabaseAgentService()
+        req = QueryRequest(
+            sql=payload.get("sql", "SELECT 1;"),
+            params=payload.get("params", []),
+            hitl_approved=bool(payload.get("hitl_approved", False)),
+            limit=int(payload.get("limit", 100))
+        )
+        res = svc.execute_query(req)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def explain_v1_db_query(payload: dict) -> dict:
+    try:
+        from app.services.database_agent_service import DatabaseAgentService
+        svc = DatabaseAgentService()
+        sql = payload.get("sql", "SELECT 1;")
+        res = svc.explain_query_plan(sql)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+# ======================================================================
+# AGENT 15: AI ENGINEERING & INFRASTRUCTURE (V1)
+# ======================================================================
+def get_v1_ai_eng_status() -> dict:
+    try:
+        from app.services.ai_engineering_service import AIEngineeringService
+        svc = AIEngineeringService()
+        status = svc.get_4_layer_status()
+        return {"ok": True, **status.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def compact_v1_context(payload: dict) -> dict:
+    try:
+        from app.services.ai_engineering_service import AIEngineeringService
+        from app.schemas.ai_engineering import ContextCompactionRequest
+        svc = AIEngineeringService()
+        req = ContextCompactionRequest(
+            raw_context=payload.get("raw_context", ""),
+            max_tokens=int(payload.get("max_tokens", 2000)),
+            preserve_statutory_refs=bool(payload.get("preserve_statutory_refs", True))
+        )
+        res = svc.compact_context(req)
+        return {"ok": True, **res.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def get_v1_cache_stats() -> dict:
+    try:
+        from app.services.ai_engineering_service import AIEngineeringService
+        svc = AIEngineeringService()
+        stats = svc.cache.get_stats()
+        return {"ok": True, **stats.model_dump()}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
 
 
 def handle_rag_query(query_text: str, top_k: int = 3) -> dict:
@@ -671,6 +887,85 @@ class HubApiHandler(BaseHTTPRequestHandler):
         elif path in ("/api/v1/ingestion/m10/status", "/api/m10/status"):
             res = get_m10_staging_status()
             self._set_headers(200, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/cash/position", "/api/cash/position"):
+            res = get_v1_cash_position()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/cash/forecast", "/api/cash/forecast"):
+            res = get_v1_cash_forecast()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/cash/compliance", "/api/cash/compliance"):
+            res = get_v1_cash_compliance()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/kpi/top3", "/api/kpi/top3"):
+            res = get_v1_top3_kpis()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/kpi/hierarchy", "/api/kpi/hierarchy"):
+            res = get_v1_kpi_hierarchy()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path == "/api/v1/export/bystyret-pptx/download":
+            pptx_file = ROOT_DIR / "reports" / "Bystyret_M10_Okonomi_Rapport.pptx"
+            if not pptx_file.exists():
+                export_v1_bystyret_pptx()
+            if pptx_file.exists():
+                self.send_response(200)
+                self.send_header("Content-Type", "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+                self.send_header("Content-Disposition", 'attachment; filename="Bystyret_M10_Okonomi_Rapport.pptx"')
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                with open(pptx_file, "rb") as f:
+                    self.wfile.write(f.read())
+                return
+            else:
+                self._set_headers(404, "application/json")
+                self.wfile.write(json.dumps({"ok": False, "error": "Fant ikke PPTX-fil"}).encode("utf-8"))
+                return
+
+        elif path in ("/api/v1/eval/golden", "/api/eval/golden"):
+            res = get_v1_eval_golden()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/db/schema", "/api/db/schema"):
+            # Tillater ?table= query param
+            tbl_param = None
+            if "?" in self.path:
+                qs = self.path.split("?", 1)[1]
+                for param in qs.split("&"):
+                    if param.startswith("table="):
+                        tbl_param = param.split("=", 1)[1]
+            res = get_v1_db_schema(tbl_param)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/ai-eng/status", "/api/ai-eng/status"):
+            res = get_v1_ai_eng_status()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/ai-eng/cache-stats", "/api/ai-eng/cache-stats"):
+            res = get_v1_cache_stats()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
             self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
             return
 
@@ -835,6 +1130,72 @@ class HubApiHandler(BaseHTTPRequestHandler):
                 payload = {}
             res = execute_m10_ingestion(payload)
             self._set_headers(200, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/cash/simulate", "/api/cash/simulate"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = simulate_v1_cash(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/export/bystyret-pptx", "/api/export/bystyret-pptx"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = export_v1_bystyret_pptx(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/eval/run", "/api/eval/run"):
+            res = run_v1_eval_suite()
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/db/query", "/api/db/query"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = execute_v1_db_query(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/db/explain", "/api/db/explain"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = explain_v1_db_query(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/ai-eng/compact", "/api/ai-eng/compact"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            res = compact_v1_context(payload)
+            self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
             self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
             return
 

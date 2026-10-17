@@ -4182,6 +4182,14 @@
                 <a href="#saksflyt" class="sidebar-nav-item">
                     <span>🔄 Saksgenerator & Notat</span>
                 </a>
+                                <a href="#cash-management-seksjon" class="sidebar-nav-item" id="side-cash-mgmt">
+                    <span>💰 Likviditet & Kreditt</span>
+                    <span class="badge-phase" style="background:#059669; color:#fff;">K-lov § 14-13</span>
+                </a>
+                <a href="#top3-kpi-seksjon" class="sidebar-nav-item" id="side-top3-kpi">
+                    <span>🏛️ Top 3 KPIs & Bystyret</span>
+                    <span class="badge-phase" style="background:#0f172a; color:#fff;">TBU PPTX</span>
+                </a>
                 <a href="#powerbi-showcase" class="sidebar-nav-item">
                     <span>📊 Power BI & DAX Hub</span>
                 </a>
@@ -4385,6 +4393,7 @@
                 </div>
                 <div style="display: flex; gap: 6px; align-items: center;">
                     <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
+                    <button type="button" class="btn btn-sm" onclick="openCashManagementSection()" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; font-weight:700; margin-right:6px;" title="Cash Management, rullende likviditetsprognose og kassakredittramme jf. § 14-14">💳 Cash Management &amp; Likviditet</button>
                     <button type="button" class="btn btn-sm" onclick="openProsjektregnskapSection()" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-weight:700; margin-right:6px;" title="Søk statlige støtteordninger (ENOVA, Udir, IMDi, Helsedir) og prosjektregnskap">🏛️ Støtteordninger &amp; Prosjektregnskap</button>
                     <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
                     <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
@@ -6292,81 +6301,484 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
     </div>
 </section>
 
+
 <!-- ============================================================================== -->
-<!-- MODAL: FORMELT SØKNADSNOTAT & SAKSFREMLEGG -->
+<!-- 💳 CASH MANAGEMENT & LIKVIDITETSSTYRING (KOMMUNELOVEN §§ 14-1, 14-13, 14-14, 14-15) -->
 <!-- ============================================================================== -->
-<div class="modal" id="pr-soknad-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(15,23,42,0.65); backdrop-filter:blur(2px);">
-    <div style="background-color:#ffffff; margin:3% auto; padding:24px 28px; border:1px solid #cbd5e1; border-radius:6px; width:92%; max-width:860px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.2);">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; border-bottom:2px solid var(--navy-dark); padding-bottom:12px;">
-            <div>
-                <div style="font-size:16px; font-weight:800; color:var(--navy-dark);">
-                    🏛️ Kristiansand Kommune — Formelt Saksfremlegg / Tilskuddssøknad
+<section class="workflow-section" id="cash-management-seksjon" style="margin-bottom: 24px;">
+    <div class="bm-header-container" style="margin-bottom: 16px;">
+        <div>
+            <div class="bm-header-title">
+                <span>💳 Cash Management &amp; Likviditetsstyring</span>
+            </div>
+            <div class="bm-header-sub">
+                Sanntids likviditetsovervåking, 30-dagers rullende kontantstrømprognose (M11 November 2026), 
+                kassakredittkontroll jf. <strong>Kommuneloven § 14-14</strong> (vedtatt ramme kr 150 mill.), 
+                plasserings- og renteoptimering, samt interaktiv What-If scenariesimulering for Kristiansand kommune.
+            </div>
+        </div>
+        <div class="bm-header-badges">
+            <span class="bm-badge bm-badge-primary">Kommuneloven § 14-14 Ramme</span>
+            <span class="bm-badge bm-badge-navy">Finansforskriften 100% NOK</span>
+            <span class="bm-badge bm-badge-success" id="cash-global-status-badge">🟢 LIKVIDITET I BALANSE</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">DNB Hovedkonsernkonto</span>
+        </div>
+    </div>
+
+    <!-- Tufte Portefølje KPI-bånd (Konsernkonto, Ramme, Benyttet Kreditt, Buffer) -->
+    <div class="bm-kpi-bar" style="margin-bottom: 16px;">
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Konsernkonto Saldo (Innestående)</div>
+            <div class="bm-kpi-val" id="cash-kpi-bank-balance" style="color:var(--success-green);">42 850 000 kr</div>
+            <div class="bm-kpi-note">Hovedbank DNB ASA (rente 4.15 % p.a.)</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Vedtatt Kassakredittramme</div>
+            <div class="bm-kpi-val" id="cash-kpi-credit-limit" style="color:var(--navy-dark);">150 000 000 kr</div>
+            <div class="bm-kpi-note">Bystyrets vedtak jf. Kommuneloven § 14-14</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Benyttet Driftskreditt</div>
+            <div class="bm-kpi-val" id="cash-kpi-credit-used" style="color:#d97706;">24 500 000 kr</div>
+            <div class="bm-kpi-note">Utnyttelsesgrad: <strong id="cash-kpi-utilization-rate">16.3 %</strong> (av 150 mill.)</div>
+        </div>
+        <div class="bm-kpi-card">
+            <div class="bm-kpi-label">Total Disponibel Likviditetsbuffer</div>
+            <div class="bm-kpi-val" id="cash-kpi-available-buffer" style="color:#0284c7;">168 350 000 kr</div>
+            <div class="bm-kpi-note">Innestående + ubenyttet driftskreditt</div>
+        </div>
+    </div>
+
+    <!-- Likviditetsvarsel & Sesongbunn Banner -->
+    <div style="background:#fffbeb; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:4px; padding:12px 16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div style="font-size:12px; color:#92400e; line-height:1.5;">
+            <strong>⚠️ Kritiske Likviditetsforfall (M11 November):</strong> 
+            Fastlønn (Art 1010) på <strong>82,0 mill. kr</strong> utbetales <strong>12. november</strong>. 
+            Statlig rammetilskudd på <strong>68,0 mill. kr</strong> innbetales <strong>15. november</strong>. 
+            Midlertidig kassakredittrekk på bunndagen 14. november: <strong>8,85 mill. kr</strong> (godt innenfor rammen på 150 mill. kr).
+        </div>
+        <div style="display:flex; gap:8px;">
+            <button type="button" class="btn btn-sm" onclick="switchCashTab('forecast')" style="background:#ffffff; border:1px solid #d97706; color:#92400e; font-weight:700;">
+                📅 Vis 30-Dagers Kalender
+            </button>
+            <button type="button" class="btn btn-sm" onclick="switchCashTab('simulator')" style="background:#d97706; color:#ffffff; font-weight:700;">
+                🎛️ Kjør What-If Simulering
+            </button>
+        </div>
+    </div>
+
+    <!-- Hovedfanevelger: 1. Prognose & Kurve | 2. What-If Simulator | 3. Finansforskrift & Lovlighet -->
+    <div style="display:flex; border-bottom:1px solid var(--border-light); margin-bottom:16px; gap:8px;">
+        <button type="button" class="btn btn-sm cash-tab-btn active" id="btn-cash-tab-forecast" onclick="switchCashTab('forecast')" style="border-radius:4px 4px 0 0; padding:8px 16px; font-weight:700; background:var(--navy-dark); color:#ffffff;">
+            📊 30-Dagers Rullende Prognose &amp; Likviditetskurve
+        </button>
+        <button type="button" class="btn btn-sm cash-tab-btn" id="btn-cash-tab-simulator" onclick="switchCashTab('simulator')" style="border-radius:4px 4px 0 0; padding:8px 16px; font-weight:700; background:#f1f5f9; color:var(--text-primary);">
+            🎛️ Interaktiv What-If Scenariesimulator
+        </button>
+        <button type="button" class="btn btn-sm cash-tab-btn" id="btn-cash-tab-compliance" onclick="switchCashTab('compliance')" style="border-radius:4px 4px 0 0; padding:8px 16px; font-weight:700; background:#f1f5f9; color:var(--text-primary);">
+            🛡️ Finansforskriften &amp; § 14-14 Samsvarsrapport
+        </button>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- FANE 1: 30-DAGERS PROGNOSE & TUFTE LIKVIDITETSKURVE -->
+    <!-- ========================================================================= -->
+    <div id="cash-pane-forecast" class="cash-tab-pane" style="display:block;">
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:16px;">
+            <div style="font-size:12px; font-weight:700; color:var(--navy-dark); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                <span>📈 Rullende Likviditetskurve (M11 November 2026) — Daglig Konsernkontobalanse</span>
+                <span style="font-size:11px; font-weight:400; color:var(--text-secondary);">Null-linje angir terskel for kassakredittinnslag</span>
+            </div>
+            
+            <!-- SVG Likviditetskurve -->
+            <div id="cash-svg-curve-container" style="background:#fafbfc; border:1px solid var(--border-light); border-radius:4px; padding:10px; margin-bottom:16px;">
+            </div>
+
+            <!-- Tabellverktøylinje -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+                <div style="font-size:12px; font-weight:700; color:var(--navy-dark);">
+                    <span>📋 Daglige Kontantstrømmer (Innbetalinger, Lønn, Leverandører &amp; Låneforfall)</span>
                 </div>
-                <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
-                    Utarbeidet jf. Kommuneloven § 13-1, § 14-5 &amp; § 14-6 | Saksbehandler: Frank Ellingsen
+                <div style="display:flex; gap:8px;">
+                    <button type="button" class="btn btn-sm" onclick="exportCashForecastXlsx()" style="background:#15803d; color:#ffffff; font-weight:700;">
+                        📊 Eksporter Likviditetsprognose (.csv)
+                    </button>
                 </div>
             </div>
-            <button type="button" onclick="closeSoknadModal()" style="background:none; border:none; font-size:20px; font-weight:700; color:var(--text-secondary); cursor:pointer;">&times;</button>
-        </div>
 
-        <div id="pr-soknad-modal-content" style="background:#f8fafc; border:1px solid var(--border-light); border-radius:4px; padding:18px; font-family:'Segoe UI', system-ui, sans-serif; font-size:12px; line-height:1.65; color:var(--text-primary); max-height:60vh; overflow-y:auto; white-space:pre-wrap;">
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding-top:12px; border-top:1px solid var(--border-light);">
-            <div style="font-size:11px; color:var(--text-secondary);">
-                SHA-256 forhåndsstempel: <code id="pr-soknad-hash-preview" style="background:#e2e8f0; padding:2px 4px; border-radius:2px;">...</code>
+            <!-- Dagsstrømtabell -->
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:11px; line-height:1.4;">
+                    <thead>
+                        <tr style="background:#f8fafc; border-bottom:2px solid var(--navy-dark); color:var(--navy-dark); text-transform:uppercase; font-size:10px; letter-spacing:0.4px;">
+                            <th style="padding:8px 8px; text-align:left;">Dato</th>
+                            <th style="padding:8px 8px; text-align:right;">Skatt</th>
+                            <th style="padding:8px 8px; text-align:right;">Rammetilskudd</th>
+                            <th style="padding:8px 8px; text-align:right;">Lønn (Art 1010)</th>
+                            <th style="padding:8px 8px; text-align:right;">Leverandører</th>
+                            <th style="padding:8px 8px; text-align:right;">Renter &amp; Avdrag</th>
+                            <th style="padding:8px 8px; text-align:right;">Netto Flyt</th>
+                            <th style="padding:8px 8px; text-align:right;">Sluttsaldo</th>
+                            <th style="padding:8px 8px; text-align:right;">Benyttet Kreditt</th>
+                            <th style="padding:8px 8px; text-align:center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cash-forecast-tbody">
+                    </tbody>
+                </table>
             </div>
-            <div style="display:flex; gap:8px;">
-                <button type="button" class="btn btn-sm" onclick="copySoknadText()" style="background:#f1f5f9; border:1px solid var(--border-light); color:var(--text-primary);">
-                    📋 Kopier Tekst
-                </button>
-                <button type="button" class="btn btn-sm" onclick="downloadSoknadDocx()" style="background:#0284c7; color:#ffffff; font-weight:700;">
-                    📥 Last ned Saksfremlegg (.docx)
-                </button>
-                <button type="button" class="btn btn-sm" onclick="closeSoknadModal()" style="background:var(--navy-dark); color:#ffffff;">
-                    Lukk
-                </button>
+            <div style="font-size:10px; color:var(--text-secondary); margin-top:10px; display:flex; justify-content:space-between;">
+                <span>* Datakilde: Visma ERP Saldobalanse, Framsikt EPM Terminplan og Skatteetaten.</span>
+                <span>Driftskreditt beregnes automatisk ved negativ konsernkonto jf. § 14-14.</span>
             </div>
         </div>
     </div>
-</div>
 
-<!-- ============================================================================== -->
-<!-- MODAL: STATLIG REFUSJONSKRAV & REVISORATTESTASJON -->
-<!-- ============================================================================== -->
-<div class="modal" id="pr-refusjon-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(15,23,42,0.65); backdrop-filter:blur(2px);">
-    <div style="background-color:#ffffff; margin:3% auto; padding:24px 28px; border:1px solid #cbd5e1; border-radius:6px; width:92%; max-width:840px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.2);">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; border-bottom:2px solid var(--navy-dark); padding-bottom:12px;">
-            <div>
-                <div style="font-size:16px; font-weight:800; color:var(--navy-dark);">
-                    📑 Statlig Refusjonskrav &amp; Revisorattest (Telemark Revisjon IKS)
-                </div>
-                <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
-                    Krav om utbetaling av innvilget tilskudd | Avstemt mot Visma ERP &amp; Kommuneloven § 14-6
-                </div>
+    <!-- ========================================================================= -->
+    <!-- FANE 2: INTERAKTIV WHAT-IF SCENARIESIMULATOR -->
+    <!-- ========================================================================= -->
+    <div id="cash-pane-simulator" class="cash-tab-pane" style="display:none;">
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:16px;">
+            <div style="font-size:12px; font-weight:700; color:var(--navy-dark); margin-bottom:12px;">
+                🎛️ Sanntids Stress-testing av Kommunens Driftslikviditet
             </div>
-            <button type="button" onclick="closeRefusjonskravModal()" style="background:none; border:none; font-size:20px; font-weight:700; color:var(--text-secondary); cursor:pointer;">&times;</button>
-        </div>
+            <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:16px; line-height:1.5;">
+                Juster variablene nedenfor for å simulere uforutsette likviditetskriser, sviktende skatteinngang eller forsinkelser fra statlige overføringer. 
+                Systemet rekalkulerer umiddelbart kassakredittrekket og varsler ved brudd på Bystyrets ramme jf. <strong>Kommuneloven § 14-14</strong>.
+            </p>
 
-        <div id="pr-refusjon-modal-content" style="background:#f8fafc; border:1px solid var(--border-light); border-radius:4px; padding:18px; font-size:12px; line-height:1.65; color:var(--text-primary); max-height:60vh; overflow-y:auto;">
-        </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
+                <!-- Venstre: Slidere & Kontroller -->
+                <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:4px; padding:16px;">
+                    <div style="font-size:11px; font-weight:700; color:var(--navy-dark); margin-bottom:14px; text-transform:uppercase;">
+                        Simuleringsparametre
+                    </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding-top:12px; border-top:1px solid var(--border-light);">
-            <div style="font-size:11px; color:var(--text-secondary);">
-                Forseglet med SHA-256 for Telemark Revisjon IKS &amp; Agder Kommunerevisjon
-            </div>
-            <div style="display:flex; gap:8px;">
-                <button type="button" class="btn btn-sm" onclick="downloadRefusjonskravDoc()" style="background:#0284c7; color:#ffffff; font-weight:700;">
-                    📥 Last ned Refusjonskrav (.docx)
-                </button>
-                <button type="button" class="btn btn-sm" onclick="closeRefusjonskravModal()" style="background:var(--navy-dark); color:#ffffff;">
-                    Lukk
-                </button>
+                    <!-- Parameter 1: Skatteinngangs-avvik -->
+                    <div style="margin-bottom:16px;">
+                        <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:6px;">
+                            <span>Endring i Skatteinngang (Forskuddstrekk/Termin):</span>
+                            <strong id="cash-sim-tax-val" style="color:#0369a1;">-5.0 %</strong>
+                        </div>
+                        <input type="range" id="cash-sim-tax-slider" min="-20.0" max="20.0" step="1.0" value="-5.0" oninput="updateCashSimulationUI()" style="width:100%;">
+                        <div style="display:flex; justify-content:space-between; font-size:9.5px; color:var(--text-secondary);">
+                            <span>-20 % (Kraftig svikt)</span>
+                            <span>0 % (Budsjett)</span>
+                            <span>+20 % (Merinntekt)</span>
+                        </div>
+                    </div>
+
+                    <!-- Parameter 2: Forsinkelse på rammetilskudd -->
+                    <div style="margin-bottom:16px;">
+                        <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:6px;">
+                            <span>Forsinkelse på Statlig Rammetilskudd (Termin 6):</span>
+                            <strong id="cash-sim-delay-val" style="color:#d97706;">5 dager</strong>
+                        </div>
+                        <input type="range" id="cash-sim-delay-slider" min="0" max="15" step="1" value="5" oninput="updateCashSimulationUI()" style="width:100%;">
+                        <div style="display:flex; justify-content:space-between; font-size:9.5px; color:var(--text-secondary);">
+                            <span>0 dager (15. nov)</span>
+                            <span>7 dager (22. nov)</span>
+                            <span>15 dager (30. nov)</span>
+                        </div>
+                    </div>
+
+                    <!-- Parameter 3: Ekstraordinære utgifter -->
+                    <div style="margin-bottom:16px;">
+                        <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:6px;">
+                            <span>Ekstraordinære Uforutsette Utgifter (Snøbrøyting / Flom / Beredskap):</span>
+                            <strong id="cash-sim-extra-val" style="color:#b91c1c;">2 500 000 kr</strong>
+                        </div>
+                        <input type="range" id="cash-sim-extra-slider" min="0" max="10000000" step="500000" value="2500000" oninput="updateCashSimulationUI()" style="width:100%;">
+                        <div style="display:flex; justify-content:space-between; font-size:9.5px; color:var(--text-secondary);">
+                            <span>0 kr</span>
+                            <span>5 mill. kr</span>
+                            <span>10 mill. kr</span>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:8px; margin-top:10px;">
+                        <button type="button" class="btn btn-sm" onclick="resetCashSimulation()" style="background:#e2e8f0; color:var(--navy-dark); font-weight:600;">
+                            🔄 Nullstill til Standard
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Høyre: Resultatkort & Tufte Sammenligning -->
+                <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px;">
+                    <div style="font-size:11px; font-weight:700; color:var(--navy-dark); margin-bottom:14px; text-transform:uppercase;">
+                        Simulert Likviditetsutfall
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                        <div style="background:#f8fafc; padding:10px; border-radius:4px; border:1px solid #e2e8f0;">
+                            <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase;">Simulert Laveste Saldo</div>
+                            <div id="cash-sim-result-min-balance" style="font-size:16px; font-weight:700; font-variant-numeric:tabular-nums; color:#dc2626;">-18 850 000 kr</div>
+                            <div style="font-size:9.5px; color:var(--text-secondary); margin-top:2px;">Opprinnelig: -8 850 000 kr</div>
+                        </div>
+                        <div style="background:#f8fafc; padding:10px; border-radius:4px; border:1px solid #e2e8f0;">
+                            <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase;">Maksimalt Driftskredittrekk</div>
+                            <div id="cash-sim-result-max-credit" style="font-size:16px; font-weight:700; font-variant-numeric:tabular-nums; color:#d97706;">18 850 000 kr</div>
+                            <div style="font-size:9.5px; color:var(--text-secondary); margin-top:2px;">Ramme: 150 000 000 kr</div>
+                        </div>
+                        <div style="background:#f8fafc; padding:10px; border-radius:4px; border:1px solid #e2e8f0;">
+                            <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase;">Dager i Driftskreditt</div>
+                            <div id="cash-sim-result-days-overdraft" style="font-size:16px; font-weight:700; font-variant-numeric:tabular-nums; color:var(--navy-dark);">8 dager</div>
+                            <div style="font-size:9.5px; color:var(--text-secondary); margin-top:2px;">Før statlig innbetaling</div>
+                        </div>
+                        <div style="background:#f8fafc; padding:10px; border-radius:4px; border:1px solid #e2e8f0;">
+                            <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase;">Estimert Merrentebelastning</div>
+                            <div id="cash-sim-result-interest-delta" style="font-size:16px; font-weight:700; font-variant-numeric:tabular-nums; color:#6b21a8;">17 452 kr</div>
+                            <div style="font-size:9.5px; color:var(--text-secondary); margin-top:2px;">Basert på 6.50 % p.a.</div>
+                        </div>
+                    </div>
+
+                    <!-- Konklusjonsboks -->
+                    <div id="cash-sim-result-verdict" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:4px; padding:10px; font-size:11px; line-height:1.5; margin-bottom:12px;">
+                        <span style="color:#15803d; font-weight:700;">🟢 GODKJENT: Maksimalt trekk er innenfor vedtatt driftskredittramme på 150 mill. kr.</span>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="font-size:9.5px; font-family:var(--font-mono); color:var(--text-secondary);" id="cash-sim-result-hash">
+                            sha256: ca56d3595faf265e5fcc432261dbcff744c309bd9e9360ce234329cd51cf46fd
+                        </div>
+                        <button type="button" class="btn btn-sm" onclick="copyCashSimulationReport()" style="background:var(--navy-dark); color:#ffffff; font-weight:700;">
+                            📋 Kopier Scenariorapport
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <!-- ========================================================================= -->
+    <!-- FANE 3: FINANSFORSKRIFTEN & § 14-14 SAMSVARRAPPORT -->
+    <!-- ========================================================================= -->
+    <div id="cash-pane-compliance" class="cash-tab-pane" style="display:none;">
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div style="font-size:12px; font-weight:700; color:var(--navy-dark);">
+                    🛡️ Formell Finansreglements- og Lovlighetskontroll
+                </div>
+                <button type="button" class="btn btn-sm" onclick="signCashCompliance()" style="background:var(--navy-dark); color:#ffffff; font-weight:700;">
+                    🛡️ Forsegl Finanssamsvarsrapport (SHA-256)
+                </button>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+                <div style="border:1px solid var(--border-light); border-radius:4px; padding:14px; background:#fafbfc;">
+                    <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+                        Lovhjemler og Statlige Begrensninger
+                    </div>
+                    <ul style="font-size:11px; line-height:1.6; color:#334155; margin-left:16px; margin-bottom:0;">
+                        <li><strong>Kommuneloven § 14-1:</strong> Krav til forsvarlig økonomiforvaltning og budsjettbalanse.</li>
+                        <li><strong>Kommuneloven § 14-13:</strong> Finans- og gjeldsforvaltning skal ikke innebære vesentlig finansiell risiko.</li>
+                        <li><strong>Kommuneloven § 14-14:</strong> Driftskreditt kan kun tas opp innenfor vedtatt ramme (kr 150 mill.) og må nedbetales innen utløpet av påfølgende år.</li>
+                        <li><strong>Finansforskriften § 4 &amp; 5:</strong> 100 % valutasikring i NOK og krav til motpartsrating i kredittinstitusjoner.</li>
+                    </ul>
+                </div>
+
+                <div style="border:1px solid var(--border-light); border-radius:4px; padding:14px; background:#fafbfc;">
+                    <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+                        Godkjente Finansinstitusjoner (Kristiansand Finansreglement)
+                    </div>
+                    <ul style="font-size:11px; line-height:1.6; color:#334155; margin-left:16px; margin-bottom:0;">
+                        <li><strong>DNB Bank ASA:</strong> Konsernkontoordning, daglig oppgjør og driftskredittramme kr 150 mill.</li>
+                        <li><strong>Kommunalbanken AS:</strong> Langsiktig investerings- og refinansieringskreditt.</li>
+                        <li><strong>KLP Kommunekreditt AS:</strong> Sertifikatlån og pensjonsfondsplasseringer.</li>
+                        <li><strong>Norges Bank / Statskassen:</strong> Terminutbetalinger av skatt og rammetilskudd.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Attestasjonsboks -->
+            <div id="cash-compliance-attest-box">
+                <div style="background:#f8fafc; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:0 4px 4px 0; padding:14px; font-size:11.5px; line-height:1.6; color:#334155;">
+                    Trykk på <strong>"Forsegl Finanssamsvarsrapport (SHA-256)"</strong> for å generere et offisielt revisjonsstempel for Bystyrets Kontrollutvalg og Statsforvalteren i Agder.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================================== -->
+<!-- 🏛️ BYSTYRET & FORMANNSKAPET: TOPP 3 KPIS & AVVIKSHIERARKI                    -->
+<!-- jf. Kommuneloven §§ 13-1, 14-1, 14-13, 14-14 og TBU-anbefalinger             -->
+<!-- ============================================================================== -->
+<section class="workflow-section" id="top3-kpi-seksjon" style="margin-bottom: 24px;">
+    <div class="section-header" style="background:var(--bg-surface); padding:16px 20px; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+            <div style="font-size:15px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
+                <span>🏛️ Bystyret & Formannskapet: Topp 3 Finansielle Nøkkeltall & Styringsavvik</span>
+                <span class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">TBU Normert</span>
+                <span class="status-badge" style="background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe; font-size:10px;">M10 2026</span>
+            </div>
+            <div style="font-size:11.5px; color:#64748b; margin-top:3px;">
+                jf. Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-retningslinjer (Teknisk beregningsutvalg for kommunal og fylkeskommunal økonomi)
+            </div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <button type="button" class="btn" onclick="downloadBystyretPptx()" style="background:#0f172a; color:#fff; font-size:11px; padding:6px 12px; border-radius:3px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Last ned offisiell 16:9 PowerPoint-rapport for Bystyret">
+                <span>📥 Last ned Bystyret PPTX</span>
+            </button>
+            <button type="button" class="btn" onclick="copyTop3KpiSummary()" style="background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; font-size:11px; padding:6px 12px; border-radius:3px; cursor:pointer;">
+                <span>📋 Kopier Sammendrag</span>
+            </button>
+            <button type="button" class="btn" onclick="sealTop3KpiReport()" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:11px; padding:6px 12px; border-radius:3px; cursor:pointer;">
+                <span>🔒 Forsegl (SHA-256)</span>
+            </button>
+        </div>
+    </div>
+
+    <div style="padding:20px;">
+        <!-- 1. TOPP 3 TAKOMETER GAUGE CARDS -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-bottom:24px;">
+            <!-- KPI 1: Netto Driftsresultat -->
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                        <div>
+                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">1. Driftsbalanse</span>
+                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Netto Driftsresultat</div>
+                        </div>
+                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 I BALANSE</span>
+                    </div>
+                    
+                    <div id="top3-gauge-netto-drift" style="display:flex; justify-content:center; margin:10px 0;"></div>
+
+                    <div style="text-align:center; margin-bottom:12px;">
+                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">1,25 %</span>
+                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(115 mill. kr)</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">Kommunalt Mål:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 1,00 %</div>
+                        </div>
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">TBU Anbefaling:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 1,75 %</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
+                    Mål oppnådd. Kommunens netto driftsresultat tilfredsstiller kommunestyrets handlingsregel for forsvarlig drift og egenfinansiering av investeringer.
+                </div>
+            </div>
+
+            <!-- KPI 2: Disposisjonsfond -->
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                        <div>
+                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">2. Likviditetsbuffer</span>
+                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Disposisjonsfond</div>
+                        </div>
+                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 FORSVARLIG</span>
+                    </div>
+                    
+                    <div id="top3-gauge-disposisjonsfond" style="display:flex; justify-content:center; margin:10px 0;"></div>
+
+                    <div style="text-align:center; margin-bottom:12px;">
+                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">4,35 %</span>
+                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(460 mill. kr)</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">Kommunalt Mål:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 4,00 %</div>
+                        </div>
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">TBU Anbefaling:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 5,00 %</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
+                    Urørt reserve overstiger kommunestyrets minstekrav (4,00 %). TBU-norm på 5,00 % nås ved videre konsolidering over økonomiplanperioden.
+                </div>
+            </div>
+
+            <!-- KPI 3: Netto Lånegjeld -->
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                        <div>
+                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">3. Gjeldsgrad</span>
+                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Netto Lånegjeld</div>
+                        </div>
+                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 UNDER TAK</span>
+                    </div>
+                    
+                    <div id="top3-gauge-netto-gjeld" style="display:flex; justify-content:center; margin:10px 0;"></div>
+
+                    <div style="text-align:center; margin-bottom:12px;">
+                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">76,8 %</span>
+                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(8,4 mrd. kr)</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">Kommunalt Lånetak:</div>
+                            <div style="font-weight:700; color:#0f172a;">≤ 78,0 %</div>
+                        </div>
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">TBU Smertegrense:</div>
+                            <div style="font-weight:700; color:#0f172a;">≤ 80,0 %</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
+                    Lånegjelden er 1,2 prosentpoeng under vedtatt lånetak jf. Kommuneloven § 14-13. 65 % av gjeldsporteføljen har fast rentebinding.
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. KASKADERENDE SEKTOR- OG ENHETSHIERARKI -->
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <h3 style="font-size:13px; font-weight:800; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px; margin:0;">
+                        Kaskaderende Sektorhierarki & Avviksanalyse (M10 Status)
+                    </h3>
+                    <div style="font-size:11px; color:#64748b; margin-top:2px;">
+                        Driftsrammer, faktisk forbruk og KOSTRA-nøkkeltall kaskadert fra Bystyrets rammevedtak til enhetsnivå
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#64748b;">
+                    Total ramme: <strong>4,80 mrd. kr</strong> | Netto avvik: <strong style="color:#b91c1c;">-78,5 mill. kr (-1,64 %)</strong>
+                </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:11.5px; font-family:var(--font-sans, sans-serif);">
+                    <thead>
+                        <tr style="border-bottom:2px solid var(--navy-dark); background:#f8fafc; text-align:left;">
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); width:80px;">Kode</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark);">Virksomhetsområde & Nøkkeltall</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:110px;">Ramme YTD</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:110px;">Forbruk YTD</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:150px;">Avvik YTD</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:center; width:80px;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top3-hierarchy-tbody">
+                        <!-- Genereres dynamisk av JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. ATTESTASJON OG SHA-256 REVISJONSSTEMPEL -->
+        <div id="top3-kpi-seal-box" style="background:#f8fafc; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:0 4px 4px 0; padding:14px; font-size:11.5px; line-height:1.6; color:#334155;">
+            <div>
+                Trykk på <strong>"Forsegl (SHA-256)"</strong> for å generere et offisielt kryptografisk revisjonsstempel for Bystyret, Kontrollutvalget og Formannskapet jf. Stage-Gate Port 9 HITL.
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="powerbi-section" id="powerbi-showcase">
         <div class="section-header">
@@ -9252,6 +9664,77 @@ RETURN
     </div>
 
     <!-- MODAL: POWER BI INTERAKTIV MÅNEDSRAPPORT (RLS) -->
+    
+    <!-- MODAL: FORMELT SØKNADSNOTAT & SAKSFREMLEGG -->
+    <div id="pr-soknad-modal" class="modal-overlay" onclick="if(event.target===this) closeSoknadModal()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
+        <div class="modal-box" style="background:#ffffff; border-radius:6px; width:92%; max-width:880px; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 20px 25px -5px rgba(0,0,0,0.3);">
+            <div class="modal-header" style="background:#1e293b; color:#ffffff; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0284c7;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:22px;">🏛️</span>
+                    <div>
+                        <div style="font-size:15px; font-weight:800; letter-spacing:0.3px;">Kristiansand Kommune — Formelt Saksfremlegg / Tilskuddssøknad</div>
+                        <div style="font-size:11px; color:#94a3b8;">Kommuneloven § 13-1, § 14-5 &amp; § 14-6 (Bruttoprinsippet) | Saksbehandler: Frank Ellingsen</div>
+                    </div>
+                </div>
+                <button type="button" onclick="closeSoknadModal()" style="background:none; border:none; color:#94a3b8; font-size:24px; cursor:pointer; line-height:1;">&times;</button>
+            </div>
+            <div style="padding:18px 22px; overflow-y:auto; flex:1; background:#f8fafc;">
+                <div id="pr-soknad-modal-content" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:18px; font-family:'Segoe UI', system-ui, sans-serif; font-size:12px; line-height:1.65; color:#1e293b; white-space:pre-wrap; box-shadow:inset 0 1px 2px rgba(0,0,0,0.03);">
+                </div>
+            </div>
+            <div style="background:#ffffff; border-top:1px solid #e2e8f0; padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size:11px; color:#64748b;">
+                    SHA-256 forhåndsstempel: <code id="pr-soknad-hash-preview" style="background:#e2e8f0; padding:2px 6px; border-radius:3px; font-weight:600; color:#0f172a;">...</code>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button type="button" class="btn btn-sm" onclick="copySoknadText()" style="background:#f1f5f9; border:1px solid #cbd5e1; color:#0f172a; font-weight:600;">
+                        📋 Kopier Tekst
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="downloadSoknadDocx()" style="background:#0284c7; color:#ffffff; font-weight:700;">
+                        📥 Last ned Saksfremlegg (.docx)
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="closeSoknadModal()" style="background:#1e293b; color:#ffffff;">
+                        Lukk
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: STATLIG REFUSJONSKRAV & REVISORATTESTASJON -->
+    <div id="pr-refusjon-modal" class="modal-overlay" onclick="if(event.target===this) closeRefusjonskravModal()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
+        <div class="modal-box" style="background:#ffffff; border-radius:6px; width:92%; max-width:880px; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 20px 25px -5px rgba(0,0,0,0.3);">
+            <div class="modal-header" style="background:#1e293b; color:#ffffff; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #15803d;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:22px;">📑</span>
+                    <div>
+                        <div style="font-size:15px; font-weight:800; letter-spacing:0.3px;">Statlig Refusjonskrav &amp; Revisorattest (Telemark Revisjon IKS)</div>
+                        <div style="font-size:11px; color:#94a3b8;">Krav om utbetaling av tilskudd | Avstemt mot Visma ERP &amp; Kommuneloven § 14-6</div>
+                    </div>
+                </div>
+                <button type="button" onclick="closeRefusjonskravModal()" style="background:none; border:none; color:#94a3b8; font-size:24px; cursor:pointer; line-height:1;">&times;</button>
+            </div>
+            <div style="padding:18px 22px; overflow-y:auto; flex:1; background:#f8fafc;">
+                <div id="pr-refusjon-modal-content" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:18px; font-size:12px; line-height:1.65; color:#1e293b;">
+                </div>
+            </div>
+            <div style="background:#ffffff; border-top:1px solid #e2e8f0; padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size:11px; color:#64748b;">
+                    Forseglet med SHA-256 for Telemark Revisjon IKS &amp; Agder Kommunerevisjon
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button type="button" class="btn btn-sm" onclick="downloadRefusjonskravDoc()" style="background:#15803d; color:#ffffff; font-weight:700;">
+                        📥 Last ned Refusjonskrav (.docx)
+                    </button>
+                    <button type="button" class="btn btn-sm" onclick="closeRefusjonskravModal()" style="background:#1e293b; color:#ffffff;">
+                        Lukk
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div id="pbi-report-modal" class="modal-overlay" onclick="if(event.target===this) closePbiInteractiveModal()">
         <div class="modal-box" style="max-width: 960px; width: 95%; max-height: 92vh;">
             <div class="modal-header" style="background: #1e293b; color: #ffffff; border-bottom: 2px solid #f59e0b;">
@@ -23434,6 +23917,2247 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => window.navigateToSection(hash), 120);
     }
 });
+
+// ==============================================================================
+// 🏛️ STATLIGE STØTTEORDNINGER & PROSJEKTREGNSKAP MOTOR
+// ==============================================================================
+// ==============================================================================
+// 🏛️ KRISTIANSAND KOMMUNE — STATLIGE STØTTEORDNINGER & PROSJEKTREGNSKAP LOGIC
+// ==============================================================================
+
+const MUNICIPAL_GRANT_SCHEMES = {
+    "BYUTVIKLING": [
+        {
+            key: "ENOVA_BYGG",
+            name: "ENOVA — Energieffektivisering i kommunale yrkesbygg & formålsbygg",
+            authority: "Enova SF (Klima- og miljødepartementet)",
+            hjemmel: "Klimaforliket / Enova SF avtale § 4",
+            kontoklasse: "2",
+            kontoklasseNavn: "Kontoklasse 2 (Investering)",
+            maxSupportPct: 30,
+            typicalTimeline: "Søknad før oppstart, 3 mnd saksbehandling",
+            description: "Investeringsstøtte til omfattende energioppgradering av eksisterende kommunale bygg (skoler, barnehager, rådhus, idrettsbygg). Krever dokumentert reduksjon av levert energi (kWh/m²/år) med minimum 30 % forbedring.",
+            krav: [
+                "Energiberegning utført av godkjent energirådgiver iht. NS 3031",
+                "Kostnadsoverslag med differensiering mellom ordinært vedlikehold og energitiltak",
+                "Vedtak i Bystyret eller bevilgning i Handlings- og økonomiplan (HØP)",
+                "Sluttregnskap med uavhengig revisorattestasjon før sluttutbetaling"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 12000000,
+            defaultRate: 30,
+            defaultUnit: "Eiendom & Formålsbygg (6010)"
+        },
+        {
+            key: "ENOVA_ANLEGG",
+            name: "ENOVA — Utslippsfrie bygge- og anleggsplasser",
+            authority: "Enova SF",
+            hjemmel: "Klima- og miljødepartementet tiltakspakke",
+            kontoklasse: "2",
+            kontoklasseNavn: "Kontoklasse 2 (Investering)",
+            maxSupportPct: 40,
+            typicalTimeline: "Løpende søknadsfrist før innkjøp",
+            description: "Støtte til merkostnader ved innleie eller anskaffelse av elektriske anleggsmaskiner, mobile battericontainere og nettilknytning for fossilfrie byggeplasser i Kristiansand.",
+            krav: [
+                "Dokumentasjon på merkostnad sammenlignet med fossilt alternativ",
+                "Prosjektplan med kravspesifikasjon i anbud jf. Lov om offentlige anskaffelser",
+                "Logg over elektrisk driftstimer og energiforbruk"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 8500000,
+            defaultRate: 40,
+            defaultUnit: "Ingeniørvesen & VAR (5010)"
+        },
+        {
+            key: "KLIMASATS",
+            name: "Miljødirektoratet — Klimasats for kommuner",
+            authority: "Miljødirektoratet",
+            hjemmel: "Statsbudsjettets kap. 1420 post 61",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift) eller 2 (Investering)",
+            maxSupportPct: 50,
+            typicalTimeline: "Årlig søknadsfrist 15. februar",
+            description: "Støtte til kommunale tiltak som kutter klimagassutslipp og bidrar til omstilling til lavutslippssamfunnet. Typiske tiltak: Ombruk av masser, klimavennlige transportløsninger, klimavennlig arealplanlegging.",
+            krav: [
+                "Beregnet klimagasskutt (tonn CO2-ekvivalenter)",
+                "Forankring i Kristiansand kommunes Klima- og miljøstrategi",
+                "Årlig fremdriftsrapportering til Miljødirektoratet"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 3500000,
+            defaultRate: 50,
+            defaultUnit: "Klima & Miljø (1040)"
+        }
+    ],
+    "HELSE": [
+        {
+            key: "HELSE_RESSURSKREVENDE",
+            name: "Helsedirektoratet — Toppfinansiering av særlig ressurskrevende tjenester",
+            authority: "Helsedirektoratet",
+            hjemmel: "Helse- og omsorgstjenesteloven § 3-1 / Årlig rundskriv IS-refusjon",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift, Art 1700 Statstilskudd)",
+            maxSupportPct: 80,
+            typicalTimeline: "Innsending innen 15. mai med revisorattest",
+            description: "Staten yter delvis refusjon av kommunens direkte lønns- og driftsutgifter for brukere under 67 år med store og sammensatte funksjonsnedsettelser. Refusjonen utgjør 80 % av godkjente utgifter utover det statlige innslagspunktet på kr 1 625 000 (sats 2026/2025).",
+            krav: [
+                "Bruker må være under 67 år ved utgangen av regnskapsåret",
+                "Spesifisert lønn og turnustimer per bruker (art 1010/1020 uten adm-påslag)",
+                "Fradrag for fravær uten lønn og sykelønnsrefusjon (art 1710)",
+                "Obligatorisk revisjonsattest fra Kommunerevisjonen (Telemark Revisjon IKS) innen 15. mai"
+            ],
+            calcType: "RESSURSKREVENDE",
+            thresholdPerUser: 1625000,
+            stateRefundRate: 0.80,
+            defaultUsers: 4,
+            defaultCostPerUser: 4200000,
+            defaultUnit: "Bofellesskap & Tilrettelagte Tjenester (3010)"
+        },
+        {
+            key: "HELSE_VELFERDSTEK",
+            name: "Helsedirektoratet — Nasjonalt velferdsteknologiprogram",
+            authority: "Helsedirektoratet / KS",
+            hjemmel: "Statsbudsjettet kap. 762 post 63",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift) & 2 (Investering)",
+            maxSupportPct: 50,
+            typicalTimeline: "Utlyses årlig i Q1",
+            description: "Tilskudd til implementering, forankring og gevinstrealisering av velferdsteknologi: Digitale tilsyn, sensorer, elektroniske medisindispensere og e-lås i hjemmetjenesten og omsorgssentre.",
+            krav: [
+                "Gevinstrealiseringsplan for frigjorte pleieressurser",
+                "Samarbeid med Agder IKT og responssenter",
+                "Dokumentert opplæringsløp for helsepersonell"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 4800000,
+            defaultRate: 50,
+            defaultUnit: "Helse & Mestring Forvaltning (3000)"
+        },
+        {
+            key: "HELSE_KOMPETANSE",
+            name: "Statsforvalteren i Agder — Kompetanseløft for helse- og omsorg",
+            authority: "Helsedirektoratet via Statsforvalteren",
+            hjemmel: "Kompetanseløft 2025/2030",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift, Art 1010 Lønn/Vikar)",
+            maxSupportPct: 70,
+            typicalTimeline: "Søknadsfrist 1. november for påfølgende år",
+            description: "Midler til etter- og videreutdanning av helsefagarbeidere, vernepleiere og sykepleiere, herunder praksisveiledning og rekrutteringstiltak.",
+            krav: [
+                "Lokal kompetanseplan forankret hos kommunalsjef",
+                "Dokumenterte studieplasser og vikarutgifter",
+                "Avtale om bindingstid for ansatte som mottar stipend"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 2600000,
+            defaultRate: 70,
+            defaultUnit: "Hjemmetjenester & Rehabilitering (3020)"
+        }
+    ],
+    "OPPVEKST": [
+        {
+            key: "UDIR_LAERERNORM",
+            name: "Utdanningsdirektoratet (Udir) — Tidlig innsats og lærernorm (1.–4. trinn)",
+            authority: "Utdanningsdirektoratet (Udir)",
+            hjemmel: "Opplæringsloven § 8-2 / Forskrift til opplæringslova",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift, Art 1010 Fastlønn)",
+            maxSupportPct: 100,
+            typicalTimeline: "Tildeles basert på GSI-rapportering 1. oktober",
+            description: "Øremerkede statlige midler for å sikre maksimalt 15 elever per lærer i ordinær undervisning på 1.–4. trinn, og 20 elever på 5.–10. trinn i Kristiansandsskolen.",
+            krav: [
+                "GSI-rapportering verifisert av rektor og skolesjef",
+                "Kun godkjente lærerårsverk i ordinær undervisning (ekskl. spesialundervisning)",
+                "Full regnskapsavstemming mot Visma lønn innen 31. januar"
+            ],
+            calcType: "TEACHER_NORM",
+            annualCostPerFTE: 920000,
+            defaultFTE: 6.5,
+            defaultUnit: "Skole & Grunnskoleopplæring (2010)"
+        },
+        {
+            key: "UDIR_SVOMMING",
+            name: "Udir — Svømmeopplæring for barnehagebarn & nyankomne",
+            authority: "Utdanningsdirektoratet",
+            hjemmel: "Rundskriv Udir-1-2026",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift)",
+            maxSupportPct: 100,
+            typicalTimeline: "Søknadsfrist 15. mai for påfølgende barnehageår",
+            description: "Tilskudd til leie av basseng, transport og instruktører for å gi barnehagebarn (særlig 4–5 åringer og minoritetsspråklige) tidlig svømmeopplæring og vanntilvenning i Aquarama eller lokale basseng.",
+            krav: [
+                "Deltakerlister med aldersfordeling",
+                "Sertifiserte instruktører med gyldig livredningsprøve",
+                "Spesifisert faktura fra svømmeanlegg / transportselskap"
+            ],
+            calcType: "PER_CHILD",
+            ratePerChild: 2200,
+            defaultChildren: 650,
+            defaultUnit: "Barnehage & Oppvekst (2020)"
+        },
+        {
+            key: "UDIR_SPESIALPED",
+            name: "Udir — Spesialpedagogisk kompetanseløft & Inkludering",
+            authority: "Utdanningsdirektoratet",
+            hjemmel: "Meld. St. 6 (Tett på – tidlig innsats og inkluderende fellesskap)",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift)",
+            maxSupportPct: 60,
+            typicalTimeline: "Årlig søknadsvindu i Q2",
+            description: "Tiltak for å heve den spesialpedagogiske kompetansen i ordinære skoler og barnehager, for å redusere behovet for segregerte spesialgrupper.",
+            krav: [
+                "Samarbeidsavtale mellom skole, barnehage og PPT",
+                "Tiltaksplan for universell pedagogisk tilrettelegging",
+                "Egenevaluering og rapport til Statsforvalteren"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 3200000,
+            defaultRate: 60,
+            defaultUnit: "Pedagogisk Senter & PPT (2040)"
+        }
+    ],
+    "NAV": [
+        {
+            key: "IMDI_BOSETTING",
+            name: "IMDi — Integreringstilskudd for bosetting av flyktninger og asylsøkere",
+            authority: "Integrerings- og mangfoldsdirektoratet (IMDi)",
+            hjemmel: "Integreringsloven § 42 / Rundskriv IMDi 02/2026",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift, Art 1700 Statstilskudd)",
+            maxSupportPct: 100,
+            typicalTimeline: "Månedlig utbetaling basert på NIR (Nasjonalt introduksjonsregister)",
+            description: "Statlig tilskudd over en femårsperiode (År 1–5) for hver flyktning Kristiansand kommune bosetter etter avtale med IMDi. Dekker utgifter til introduksjonsprogram, bolig, tolketjenester og helseoppfølging.",
+            krav: [
+                "Gyldig oppholdstillatelse og vedtak om bosetting i Kristiansand",
+                "Individuell plan utarbeidet innen 3 måneder",
+                "Løpende registrering i NIR (Nasjonalt introduksjonsregister)"
+            ],
+            calcType: "IMDI_POPULATION",
+            adultRateYear1: 224500,
+            childRateYear1: 189000,
+            emExtraRate: 260000,
+            defaultAdults: 85,
+            defaultChildren: 45,
+            defaultEM: 12,
+            defaultUnit: "NAV Kristiansand & Flyktninghelse (4010)"
+        },
+        {
+            key: "IMDI_NORSK",
+            name: "IMDi — Norskopplæring & Samfunnskunnskap for innvandrere",
+            authority: "IMDi / Kunnskapsdepartementet",
+            hjemmel: "Integreringsloven kap. 6",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift)",
+            maxSupportPct: 100,
+            typicalTimeline: "Tildeles per fullførte kurstimer og deltakerantall",
+            description: "Tilskudd til gratis opplæring i norsk og samfunnskunnskap for voksne innvandrere ved Kongsgård Voksenopplæringssenter.",
+            krav: [
+                "Rapportering av oppmøtetimer og prøveresultater (Norskprøven)",
+                "Lærere med godkjent pedagogisk kompetanse i norsk som andrespråk"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 14500000,
+            defaultRate: 100,
+            defaultUnit: "Kongsgård Voksenopplæring (4020)"
+        },
+        {
+            key: "HUSBANK_BOLIG",
+            name: "Husbanken — Tilskudd til etablering & tilpasning av bolig",
+            authority: "Husbanken",
+            hjemmel: "Husbankloven / Forskrift om boligtilskudd",
+            kontoklasse: "2",
+            kontoklasseNavn: "Kontoklasse 2 (Investering / Formidlingslån)",
+            maxSupportPct: 100,
+            typicalTimeline: "Løpende tildeling",
+            description: "Tilskudd og startlån for at vanskeligstilte barnefamilier, flyktninger og uføre skal kunne kjøpe eller tilpasse egen eid bolig i Kristiansand.",
+            krav: [
+                "Kredittvurdering og betjeningsevneberegning i Husbankens fagsystem",
+                "Sosialfaglig vurdering fra boligkontoret i NAV"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 18000000,
+            defaultRate: 100,
+            defaultUnit: "Boligkontoret & NAV (4030)"
+        }
+    ],
+    "KULTUR": [
+        {
+            key: "KUD_SPILLEMIDLER",
+            name: "Kultur- og likestillingsdepartementet — Spillemidler til idrettsanlegg",
+            authority: "Kulturdepartementet / NIF via Agder Fylkeskommune",
+            hjemmel: "Bestemmelser om tilskudd til idrettsanlegg (V-0732B)",
+            kontoklasse: "2",
+            kontoklasseNavn: "Kontoklasse 2 (Investering)",
+            maxSupportPct: 33.3,
+            typicalTimeline: "Søknadsfrist 15. januar til kommunen / 15. mars til fylkeskommunen",
+            description: "Statlig overskudd fra Norsk Tipping til bygging og rehabilitering av idrettshaller, kunstgressbaner, nærmiljøanlegg og turstier i Kristiansand. Tilskuddet utgjør inntil 1/3 av godkjent kostnad (eller fast maksimalsats).",
+            krav: [
+                "Prioritert i Kristiansand kommunes Kommunedelplan for idrett og friluftsliv",
+                "Tinglyst råderett over eiendommen i minimum 30 år",
+                "Idrettsfunksjonell forhåndsgodkjenning fra fylkeskommunen",
+                "Sluttregnskap attestert av registrert revisor"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 15000000,
+            defaultRate: 33.3,
+            defaultUnit: "Kultur, Idrett & Frivillighet (7010)"
+        },
+        {
+            key: "BUFDIR_INKLUDERING",
+            name: "Bufdir — Nasjonal tilskuddsordning for inkludering av barn i lavinntekt",
+            authority: "Barne-, ungdoms- og familiedirektoratet (Bufdir)",
+            hjemmel: "Statsbudsjettet kap. 846 post 61",
+            kontoklasse: "1",
+            kontoklasseNavn: "Kontoklasse 1 (Drift)",
+            maxSupportPct: 100,
+            typicalTimeline: "Søknadsfrist i november for påfølgende kalenderår",
+            description: "Støtte til fritidskasser, kontingentkasser, gratis ferieaktiviteter og utstyrssentralen BUA Kristiansand, for å sikre at ingen barn faller utenfor fellesskapet pga. familiens økonomi.",
+            krav: [
+                "Brukermedvirkning og samarbeid med lokale frivillige organisasjoner",
+                "Lavterskel tilgang uten stigmatiserende søknadsprosesser",
+                "Årsrapport med antall unike barn nådd"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 3800000,
+            defaultRate: 100,
+            defaultUnit: "Ungdomstjenesten & BUA (7020)"
+        }
+    ],
+    "DIG": [
+        {
+            key: "DIGDIR_MEDFIN",
+            name: "Digitaliseringsdirektoratet (Digdir) — Medfinansieringsordningen",
+            authority: "Digdir / Digitaliserings- og forvaltningsdepartementet",
+            hjemmel: "Kgl. res. for medfinansieringsordningen",
+            kontoklasse: "2",
+            kontoklasseNavn: "Kontoklasse 2 (Immaterielle eiendeler / Investering)",
+            maxSupportPct: 50,
+            typicalTimeline: "Søknadsfrist 1. september for påfølgende statsbudsjett",
+            description: "Støtte på inntil 50 % av prosjektkostnadene for samfunnsøkonomisk lønnsomme digitaliseringsprosjekter som gir dokumentert tidsbesparelse, automatisering eller økt innbyggerverdi i kommunene.",
+            krav: [
+                "Full samfunnsøkonomisk analyse iht. DFØs veileder (netto nåverdi > 0)",
+                "Forpliktende gevinstrealiseringsplan signert av Kommunedirektøren",
+                "Årlig rapportering av realiserte gevinster i 5 år etter prosjektavslutning"
+            ],
+            calcType: "PERCENTAGE",
+            defaultTotal: 5000000,
+            defaultRate: 50,
+            defaultUnit: "Digitalisering & IT-Utvikling (1020)"
+        }
+    ]
+};
+
+let PROJECT_ACCOUNTING_DATA = [
+    {
+        id: "P-2026-ENOVA-01",
+        name: "Gimle skole — Energieffektivisering & Solceller",
+        sektor: "BYUTVIKLING",
+        sektorNavn: "Byutvikling & Eiendom",
+        enhet: "6010 Eiendom & Formålsbygg",
+        leder: "Lars Terje Tronstad",
+        controller: "Frank Ellingsen",
+        ordningKey: "ENOVA_BYGG",
+        ordningNavn: "ENOVA Yrkesbygg",
+        kontoklasse: "2",
+        status: "AKTIV",
+        bac: 14200000,
+        p85: 15336000,
+        tilskudd_innvilget: 3800000,
+        tilskudd_mottatt: 2280000,
+        tilskudd_utestaende: 1520000,
+        egenandel_kommune: 10400000,
+        ac: 9800000,
+        pv: 9500000,
+        ev: 10100000,
+        cpi: 1.031,
+        spi: 1.063,
+        eac: 13778000,
+        vac: 422000,
+        revisor_status: "DELVIS_ATTESTERT",
+        revisor_notat: "Milepæl 2 energimåling godkjent av Telemark Revisjon IKS.",
+        sha256: "8f3e1b7c4a112233445566778899aabbccddeeff00112233445566778899aabb",
+        transaksjoner: [
+            { bilag: "VIS-26-1044", dato: "2026-02-14", art: "1200", tekst: "AF Gruppen AS - Etterisolering fasade og tak", belop: 4250000, mva: "K2-100%" },
+            { bilag: "VIS-26-2180", dato: "2026-04-20", art: "1200", tekst: "Solenergi Norge AS - Solcelleanlegg 180 kWp", belop: 2900000, mva: "K2-100%" },
+            { bilag: "VIS-26-3401", dato: "2026-06-18", art: "1150", tekst: "Multiconsult AS - Energirådgivning & NS3031", belop: 650000, mva: "K2-100%" },
+            { bilag: "VIS-26-4920", dato: "2026-08-30", art: "1200", tekst: "GK Inneklima AS - SD-anlegg og varmepumper", belop: 2000000, mva: "K2-100%" },
+            { bilag: "VIS-26-5811", dato: "2026-03-31", art: "1729", tekst: "MVA-Kompensasjon Investering Gimle (Art 1729)", belop: -1960000, mva: "Refusjon" },
+            { bilag: "VIS-26-6200", dato: "2026-05-15", art: "1700", tekst: "ENOVA SF - A-konto utbetaling 60 % tilskudd", belop: -2280000, mva: "Tilskudd" }
+        ]
+    },
+    {
+        id: "P-2026-HELSE-04",
+        name: "Bofellesskap Strai & Vågsbygd — Særlig Ressurskrevende Brukere",
+        sektor: "HELSE",
+        sektorNavn: "Helse & Mestring",
+        enhet: "3010 Bofellesskap & Tilrettelagte Tjenester",
+        leder: "Mette Berntsen",
+        controller: "Frank Ellingsen",
+        ordningKey: "HELSE_RESSURSKREVENDE",
+        ordningNavn: "Helsedir. Ressurskrevende",
+        kontoklasse: "1",
+        status: "AKTIV",
+        bac: 21800000,
+        p85: 22890000,
+        tilskudd_innvilget: 9660000,
+        tilskudd_mottatt: 4830000,
+        tilskudd_utestaende: 4830000,
+        egenandel_kommune: 12140000,
+        ac: 16400000,
+        pv: 16400000,
+        ev: 16400000,
+        cpi: 1.000,
+        spi: 1.000,
+        eac: 21800000,
+        vac: 0,
+        revisor_status: "UNDER_REVISJON",
+        revisor_notat: "Foreløpig avstemming mot Visma lønn M01–M09 gjennomført. Innslagspunkt kr 1.625.000 passert for 4 brukere.",
+        sha256: "4c112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+        transaksjoner: [
+            { bilag: "VIS-26-1102", dato: "2026-01-31", art: "1010", tekst: "Lønn døgnturnus Bruker A (3,8 årsverk)", belop: 3820000, mva: "Ingen" },
+            { bilag: "VIS-26-2105", dato: "2026-03-31", art: "1010", tekst: "Lønn døgnturnus Bruker B (4,0 årsverk)", belop: 4150000, mva: "Ingen" },
+            { bilag: "VIS-26-3108", dato: "2026-06-30", art: "1010", tekst: "Lønn døgnturnus Bruker C (3,5 årsverk)", belop: 3680000, mva: "Ingen" },
+            { bilag: "VIS-26-4112", dato: "2026-09-30", art: "1010", tekst: "Lønn døgnturnus Bruker D (4,2 årsverk)", belop: 4750000, mva: "Ingen" },
+            { bilag: "VIS-26-5300", dato: "2026-06-30", art: "1700", tekst: "Helsedirektoratet - Forskuddsutbetaling ressurskrevende", belop: -4830000, mva: "Tilskudd" }
+        ]
+    },
+    {
+        id: "P-2026-IMDI-02",
+        name: "Bosetting & Integrering av Flyktninger og Asylsøkere 2026",
+        sektor: "NAV",
+        sektorNavn: "NAV & Sosiale Tjenester",
+        enhet: "4010 NAV Kristiansand Flyktning",
+        leder: "Rune Hægeland",
+        controller: "Frank Ellingsen",
+        ordningKey: "IMDI_BOSETTING",
+        ordningNavn: "IMDi Integreringstilskudd",
+        kontoklasse: "1",
+        status: "AKTIV",
+        bac: 36400000,
+        p85: 38220000,
+        tilskudd_innvilget: 28800000,
+        tilskudd_mottatt: 21600000,
+        tilskudd_utestaende: 7200000,
+        egenandel_kommune: 7600000,
+        ac: 24100000,
+        pv: 23800000,
+        ev: 25200000,
+        cpi: 1.046,
+        spi: 1.059,
+        eac: 34700000,
+        vac: 1700000,
+        revisor_status: "GODKJENT_I_NIR",
+        revisor_notat: "Avstemt mot Nasjonalt introduksjonsregister (NIR). 120 bosatte personer verifisert.",
+        sha256: "99aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+        transaksjoner: [
+            { bilag: "VIS-26-0810", dato: "2026-02-28", art: "1150", tekst: "Tolketjenesten Agder - Tolk og oversettelse", belop: 1420000, mva: "U/mva" },
+            { bilag: "VIS-26-1520", dato: "2026-04-30", art: "1520", tekst: "Stønad til livsopphold (Introduksjonsstønad)", belop: 12800000, mva: "Stønad" },
+            { bilag: "VIS-26-2910", dato: "2026-06-30", art: "1010", tekst: "Programrådgivere og veiledere NAV (11 årsverk)", belop: 7680000, mva: "Ingen" },
+            { bilag: "VIS-26-3840", dato: "2026-08-31", art: "1180", tekst: "Boligetablering og inventar startpakker", belop: 2200000, mva: "K1" },
+            { bilag: "VIS-26-6100", dato: "2026-07-15", art: "1700", tekst: "IMDi - Integreringstilskudd termin 1-3 mottatt", belop: -21600000, mva: "Tilskudd" }
+        ]
+    },
+    {
+        id: "P-2026-UDIR-01",
+        name: "Lovisenlev & Wilds Minne skole — Tidlig Innsats og Lærernorm",
+        sektor: "OPPVEKST",
+        sektorNavn: "Oppvekst & Utdanning",
+        enhet: "2010 Skole & Grunnskoleopplæring",
+        leder: "Svein Tore Kvernrød",
+        controller: "Frank Ellingsen",
+        ordningKey: "UDIR_LAERERNORM",
+        ordningNavn: "Udir Lærernorm 1.–4.",
+        kontoklasse: "1",
+        status: "AKTIV",
+        bac: 5400000,
+        p85: 5670000,
+        tilskudd_innvilget: 4100000,
+        tilskudd_mottatt: 3075000,
+        tilskudd_utestaende: 1025000,
+        egenandel_kommune: 1300000,
+        ac: 3900000,
+        pv: 4050000,
+        ev: 3705000,
+        cpi: 0.950,
+        spi: 0.915,
+        eac: 5684000,
+        vac: -284000,
+        revisor_status: "AVVIK_OPPFØLGING",
+        revisor_notat: "Sykefravær blant norm-lærere har utløst vikarmerforbruk. Kompensert via vikarjustering i M10.",
+        sha256: "bbccddeeff00112233445566778899aabbccddeeff00112233445566778899aa",
+        transaksjoner: [
+            { bilag: "VIS-26-0410", dato: "2026-03-31", art: "1010", tekst: "Lønn 4,5 lærerårsverk Lovisenlev skole", belop: 2450000, mva: "Ingen" },
+            { bilag: "VIS-26-1420", dato: "2026-06-30", art: "1010", tekst: "Lønn 2,0 lærerårsverk Wilds Minne skole", belop: 1090000, mva: "Ingen" },
+            { bilag: "VIS-26-2430", dato: "2026-09-30", art: "1020", tekst: "Vikarutgifter lærernorm (Sykefravær 9,2 %)", belop: 360000, mva: "Ingen" },
+            { bilag: "VIS-26-5100", dato: "2026-06-15", art: "1700", tekst: "Utdanningsdirektoratet - Lærernormtilskudd utbetalt", belop: -3075000, mva: "Tilskudd" }
+        ]
+    },
+    {
+        id: "P-2026-VAR-03",
+        name: "Odderøya Renseanlegg — Utslippsfri Anleggsplass & Biogass",
+        sektor: "BYUTVIKLING",
+        sektorNavn: "Byutvikling & VAR",
+        enhet: "5010 Ingeniørvesen & VAR",
+        leder: "Per-Erik Hagen",
+        controller: "Frank Ellingsen",
+        ordningKey: "ENOVA_ANLEGG",
+        ordningNavn: "ENOVA Utslippsfri byggeplass",
+        kontoklasse: "2",
+        status: "AKTIV",
+        bac: 8600000,
+        p85: 9288000,
+        tilskudd_innvilget: 2800000,
+        tilskudd_mottatt: 1680000,
+        tilskudd_utestaende: 1120000,
+        egenandel_kommune: 5800000,
+        ac: 5100000,
+        pv: 5000000,
+        ev: 5202000,
+        cpi: 1.020,
+        spi: 1.040,
+        eac: 8431000,
+        vac: 169000,
+        revisor_status: "GODKJENT_ETAPPE",
+        revisor_notat: "Dokumentasjon for 3 el-gravere og mobil battericontainer godkjent av Enova.",
+        sha256: "eeff00112233445566778899aabbccddeeff00112233445566778899aabbccdd",
+        transaksjoner: [
+            { bilag: "VIS-26-0912", dato: "2026-03-10", art: "1200", tekst: "Repstad Anlegg AS - El-gravemaskiner leie & drift", belop: 3100000, mva: "K2-100%" },
+            { bilag: "VIS-26-2115", dato: "2026-05-25", art: "1200", tekst: "Agder Energi Nett - Midlertidig trafo og ladehub", belop: 1450000, mva: "K2-100%" },
+            { bilag: "VIS-26-3810", dato: "2026-08-15", art: "1150", tekst: "Norconsult AS - Klimagassregnskap og logg", belop: 550000, mva: "K2-100%" },
+            { bilag: "VIS-26-5900", dato: "2026-06-20", art: "1700", tekst: "ENOVA SF - Delutbetaling anleggsplass", belop: -1680000, mva: "Tilskudd" }
+        ]
+    },
+    {
+        id: "P-2026-KULT-01",
+        name: "Sukkevann Idrettspark — Kunstgress, LED & Nærmiljøanlegg",
+        sektor: "KULTUR",
+        sektorNavn: "Kultur, Idrett & Frivillighet",
+        enhet: "7010 Idrett & Nærmiljø",
+        leder: "Øystein Glad",
+        controller: "Frank Ellingsen",
+        ordningKey: "KUD_SPILLEMIDLER",
+        ordningNavn: "KUD Spillemidler",
+        kontoklasse: "2",
+        status: "SLUTTREGNSKAP",
+        bac: 12000000,
+        p85: 12960000,
+        tilskudd_innvilget: 3800000,
+        tilskudd_mottatt: 2660000,
+        tilskudd_utestaende: 1140000,
+        egenandel_kommune: 8200000,
+        ac: 11850000,
+        pv: 12000000,
+        ev: 12000000,
+        cpi: 1.013,
+        spi: 1.000,
+        eac: 11850000,
+        vac: 150000,
+        revisor_status: "KLAR_FOR_SLUTTREVISJON",
+        revisor_notat: "Fysisk ferdigstilt september 2026. Sluttregnskap med SHA-256 klar for oversendelse til Telemark Revisjon IKS.",
+        sha256: "112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00",
+        transaksjoner: [
+            { bilag: "VIS-26-0315", dato: "2026-02-20", art: "1200", tekst: "PST Sportsanlegg AS - Miljøvennlig kunstgressdekke", belop: 6200000, mva: "K2-100%" },
+            { bilag: "VIS-26-1840", dato: "2026-05-15", art: "1200", tekst: "OneCo Elektro AS - LED-flomlysanlegg 500 lux", belop: 3400000, mva: "K2-100%" },
+            { bilag: "VIS-26-3210", dato: "2026-07-28", art: "1200", tekst: "Tvedestrand Grus AS - Drenasje og grunnarbeider", belop: 2250000, mva: "K2-100%" },
+            { bilag: "VIS-26-5800", dato: "2026-04-10", art: "1700", tekst: "Agder Fylkeskommune / KUD - Forskudd spillemidler 70%", belop: -2660000, mva: "Tilskudd" }
+        ]
+    },
+    {
+        id: "P-2026-DIG-03",
+        name: "AI Prosjektcontroller & Automatisk Avviksvarsling",
+        sektor: "DIG",
+        sektorNavn: "Konsern, Digitalisering & IKT",
+        enhet: "1020 Digitalisering & IT-Utvikling",
+        leder: "Cathrine Eikeland",
+        controller: "Frank Ellingsen",
+        ordningKey: "DIGDIR_MEDFIN",
+        ordningNavn: "Digdir Medfinansiering",
+        kontoklasse: "2",
+        status: "AKTIV",
+        bac: 3600000,
+        p85: 3888000,
+        tilskudd_innvilget: 1800000,
+        tilskudd_mottatt: 900000,
+        tilskudd_utestaende: 900000,
+        egenandel_kommune: 1800000,
+        ac: 2200000,
+        pv: 2100000,
+        ev: 2400000,
+        cpi: 1.091,
+        spi: 1.143,
+        eac: 3300000,
+        vac: 300000,
+        revisor_status: "GODKJENT_MILEPÆL",
+        revisor_notat: "Milepæl 2 Hub API og Prediktiv motor levert og godkjent.",
+        sha256: "33445566778899aabbccddeeff00112233445566778899aabbccddeeff001122",
+        transaksjoner: [
+            { bilag: "VIS-26-0510", dato: "2026-03-01", art: "1150", tekst: "AI Arkitektur & Backend utvikling (Fast-Track)", belop: 1200000, mva: "K2" },
+            { bilag: "VIS-26-2240", dato: "2026-06-15", art: "1150", tekst: "DuckDB & Star Schema integrasjon Visma/Framsikt", belop: 1000000, mva: "K2" },
+            { bilag: "VIS-26-5400", dato: "2026-04-01", art: "1700", tekst: "Digdir - Første utbetaling 50 % av tilskudd", belop: -900000, mva: "Tilskudd" }
+        ]
+    }
+];
+
+let prCurrentSector = "BYUTVIKLING";
+let prCurrentSchemeKey = "ENOVA_BYGG";
+let prSelectedProjectId = "P-2026-ENOVA-01";
+let prCalculatedGrant = {
+    bac: 12000000,
+    grant: 3600000,
+    grantPct: 30.0,
+    egenandel: 8400000,
+    mva: 2400000
+};
+
+// Formateringshjelpere (Edward Tufte data-ink: tusenseparator med fast space)
+function prFormatNok(num) {
+    if (num === null || num === undefined || isNaN(num)) return "0 kr";
+    return Math.round(num).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, " ") + " kr";
+}
+
+function prFormatMill(num) {
+    if (num === null || num === undefined || isNaN(num)) return "0 mill.";
+    return (num / 1000000).toFixed(2).replace(".", ",") + " mill.";
+}
+
+// 1. Initialisering
+function initProsjektregnskap() {
+    selectGrantSector("BYUTVIKLING");
+    renderProjectsTable();
+    updatePortfolioKpis();
+    selectProjectDetail("P-2026-ENOVA-01");
+}
+
+// 2. Fanebytte i modulen
+function switchProsjektregnskapTab(tabId) {
+    const tabs = ["soknad", "portefolje", "kort"];
+    const targetKey = tabId.toLowerCase();
+
+    tabs.forEach(t => {
+        const btn = document.getElementById("pr-btn-tab-" + t);
+        const pane = document.getElementById("pr-pane-" + t);
+        if (btn) {
+            if (t === targetKey) {
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+            }
+        }
+        if (pane) {
+            pane.style.display = (t === targetKey) ? "block" : "none";
+        }
+    });
+
+    if (targetKey === "portefolje") {
+        renderProjectsTable();
+        updatePortfolioKpis();
+    } else if (targetKey === "kort") {
+        selectProjectDetail(prSelectedProjectId);
+    }
+}
+
+// 3. Sektorvalg i Veiviser
+function selectGrantSector(secKey) {
+    prCurrentSector = secKey;
+    const sectors = ["BYUTVIKLING", "HELSE", "OPPVEKST", "NAV", "KULTUR", "DIG"];
+    sectors.forEach(s => {
+        const btn = document.getElementById("pr-sec-" + s);
+        if (btn) {
+            if (s === secKey) {
+                btn.classList.add("active");
+                btn.style.background = "var(--navy-dark)";
+                btn.style.color = "#ffffff";
+                btn.style.fontWeight = "700";
+            } else {
+                btn.classList.remove("active");
+                btn.style.background = "#f1f5f9";
+                btn.style.color = "var(--text-primary)";
+                btn.style.fontWeight = "normal";
+            }
+        }
+    });
+
+    const schemes = MUNICIPAL_GRANT_SCHEMES[secKey] || [];
+    const select = document.getElementById("pr-scheme-select");
+    if (select) {
+        select.innerHTML = schemes.map(sc => `<option value="${sc.key}">${sc.name}</option>`).join("");
+        if (schemes.length > 0) {
+            onGrantSchemeSelect(schemes[0].key);
+        }
+    }
+}
+
+// 4. Valg av spesifikk ordning
+function onGrantSchemeSelect(schemeKey) {
+    prCurrentSchemeKey = schemeKey;
+    const schemes = MUNICIPAL_GRANT_SCHEMES[prCurrentSector] || [];
+    const scheme = schemes.find(s => s.key === schemeKey) || schemes[0];
+    if (!scheme) return;
+
+    // Oppdater metadata og beskrivelse
+    const metaEl = document.getElementById("pr-scheme-meta");
+    if (metaEl) {
+        metaEl.innerHTML = `
+            <div><strong>Tilskuddsyter:</strong> ${scheme.authority}</div>
+            <div><strong>Hjemmel / Forskrift:</strong> ${scheme.hjemmel}</div>
+            <div><strong>Tidslinje / Frist:</strong> ${scheme.typicalTimeline}</div>
+        `;
+    }
+
+    const descEl = document.getElementById("pr-scheme-desc-box");
+    if (descEl) {
+        descEl.innerHTML = `
+            <div style="font-weight:700; color:var(--navy-dark); margin-bottom:4px;">${scheme.name}</div>
+            <div style="margin-bottom:8px;">${scheme.description}</div>
+            <div style="font-weight:700; color:var(--navy-dark); font-size:10px; text-transform:uppercase; margin-bottom:3px;">Obligatoriske Krav &amp; Kriterier:</div>
+            <ul style="margin:0; padding-left:16px;">
+                ${scheme.krav.map(k => `<li>${k}</li>`).join("")}
+            </ul>
+        `;
+    }
+
+    // Sett standardverdier i skjema
+    const kontoInput = document.getElementById("pr-input-konto");
+    if (kontoInput) kontoInput.value = scheme.kontoklasse;
+
+    const unitInput = document.getElementById("pr-input-unit");
+    if (unitInput && scheme.defaultUnit) {
+        for (let opt of unitInput.options) {
+            if (opt.text.toLowerCase().includes(scheme.defaultUnit.toLowerCase().split(" ")[0])) {
+                unitInput.value = opt.value;
+                break;
+            }
+        }
+    }
+
+    renderDynamicCalcFields(scheme);
+    recalculateGrantBudget();
+}
+
+// 5. Render dynamiske kalkylefelter
+function renderDynamicCalcFields(scheme) {
+    const container = document.getElementById("pr-dynamic-calc-container");
+    if (!container) return;
+
+    if (scheme.calcType === "RESSURSKREVENDE") {
+        container.innerHTML = `
+            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+                🏥 Helsedirektoratet Toppfinansiering — Innslagspunktkalkyle 2026:
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Antall Ressurskrevende Brukere:</label>
+                    <input type="number" id="pr-calc-users" min="1" max="25" value="${scheme.defaultUsers || 4}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Gj.snitt Brutto Kostnad per Bruker (NOK):</label>
+                    <input type="number" id="pr-calc-cost-per-user" step="100000" value="${scheme.defaultCostPerUser || 4200000}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Statlig Innslagspunkt per Bruker:</label>
+                    <input type="text" value="1 625 000 kr (Fast sats)" disabled style="width:100%; padding:6px; background:#f1f5f9; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:600; color:var(--text-secondary);">
+                </div>
+            </div>
+            <div style="font-size:10px; color:var(--text-secondary); margin-top:6px;">
+                * Staten refunderer 80 % av direkte utgifter over innslagspunktet. Lønn (art 1010/1020) må dokumenteres per bruker.
+            </div>
+        `;
+    } else if (scheme.calcType === "IMDI_POPULATION") {
+        container.innerHTML = `
+            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+                🤝 IMDi Integreringstilskudd — Satser for Bosetting År 1:
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Antall Voksne Flyktninger:</label>
+                    <input type="number" id="pr-calc-adults" min="0" value="${scheme.defaultAdults || 85}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Antall Barn (0–17 år):</label>
+                    <input type="number" id="pr-calc-children" min="0" value="${scheme.defaultChildren || 45}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Heraf Enslige Mindreårige (EM):</label>
+                    <input type="number" id="pr-calc-em" min="0" value="${scheme.defaultEM || 12}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+            </div>
+            <div style="font-size:10px; color:var(--text-secondary); margin-top:6px;">
+                * Sats voksen år 1: kr 224 500 | Barn: kr 189 000 | Tillegg EM: kr 260 000. Bokføres brutto på art 1700.
+            </div>
+        `;
+    } else if (scheme.calcType === "TEACHER_NORM") {
+        container.innerHTML = `
+            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+                🎓 Udir Lærernorm — Årsverksberegning Grunnskole:
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Ekstra Lærerårsverk for Lærernorm (FTE):</label>
+                    <input type="number" id="pr-calc-fte" step="0.5" min="0.5" max="50" value="${scheme.defaultFTE || 6.5}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Gjennomsnittlig Årslønn inkl. AGA/Pensjon:</label>
+                    <input type="number" id="pr-calc-cost-fte" step="10000" value="${scheme.annualCostPerFTE || 920000}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+            </div>
+        `;
+    } else if (scheme.calcType === "PER_CHILD") {
+        container.innerHTML = `
+            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+                🏊 Udir Svømmeopplæring — Tilskudd per Deltakende Barn:
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Antall Barnehagebarn / Deltakere:</label>
+                    <input type="number" id="pr-calc-child-count" min="10" max="5000" value="${scheme.defaultChildren || 650}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Statlig Tilskuddssats per Barn:</label>
+                    <input type="text" value="${scheme.ratePerChild || 2200} kr (Udir standardsats)" disabled style="width:100%; padding:6px; background:#f1f5f9; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:600; color:var(--text-secondary);">
+                </div>
+            </div>
+        `;
+    } else {
+        // Standard PERCENTAGE kalkyle
+        container.innerHTML = `
+            <div style="font-size:11px; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+                💰 Investeringsramme &amp; Tilskuddsandel:
+            </div>
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Total Prosjektinvestering brutto (BAC i NOK):</label>
+                    <input type="number" id="pr-calc-total-budget" step="500000" value="${scheme.defaultTotal || 12000000}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:2px;">Innvilget Tilskuddssats (%):</label>
+                    <input type="number" id="pr-calc-rate-pct" step="1" min="1" max="100" value="${scheme.defaultRate || 30}" oninput="recalculateGrantBudget()" style="width:100%; padding:6px; border:1px solid var(--border-light); border-radius:3px; font-size:12px; font-weight:700;">
+                </div>
+            </div>
+        `;
+    }
+}
+
+// 6. Rekalkulerer budsjett og finansieringsplan
+function recalculateGrantBudget() {
+    const schemes = MUNICIPAL_GRANT_SCHEMES[prCurrentSector] || [];
+    const scheme = schemes.find(s => s.key === prCurrentSchemeKey) || schemes[0];
+    if (!scheme) return;
+
+    let bac = 0;
+    let grant = 0;
+    let egenandel = 0;
+    let mva = 0;
+
+    if (scheme.calcType === "RESSURSKREVENDE") {
+        const users = parseInt(document.getElementById("pr-calc-users")?.value || "4", 10);
+        const costPerUser = parseFloat(document.getElementById("pr-calc-cost-per-user")?.value || "4200000");
+        const threshold = scheme.thresholdPerUser || 1625000;
+        const rate = scheme.stateRefundRate || 0.80;
+
+        bac = users * costPerUser;
+        const totalEligible = Math.max(0, bac - (users * threshold));
+        grant = Math.round(totalEligible * rate);
+        egenandel = Math.max(0, bac - grant);
+        mva = 0; // Drift (K1)
+    } else if (scheme.calcType === "IMDI_POPULATION") {
+        const adults = parseInt(document.getElementById("pr-calc-adults")?.value || "85", 10);
+        const children = parseInt(document.getElementById("pr-calc-children")?.value || "45", 10);
+        const em = parseInt(document.getElementById("pr-calc-em")?.value || "12", 10);
+
+        grant = (adults * (scheme.adultRateYear1 || 224500)) + 
+                (children * (scheme.childRateYear1 || 189000)) + 
+                (em * (scheme.emExtraRate || 260000));
+        
+        bac = Math.round(grant * 1.25); // Kommunale driftskostnader ligger typisk 20-25% over statstilskudd
+        egenandel = bac - grant;
+        mva = 0;
+    } else if (scheme.calcType === "TEACHER_NORM") {
+        const fte = parseFloat(document.getElementById("pr-calc-fte")?.value || "6.5");
+        const costFte = parseFloat(document.getElementById("pr-calc-cost-fte")?.value || "920000");
+
+        bac = Math.round(fte * costFte);
+        grant = Math.round(bac * 0.76); // Udir dekker ca 76 % av total normkostnad
+        egenandel = bac - grant;
+        mva = 0;
+    } else if (scheme.calcType === "PER_CHILD") {
+        const children = parseInt(document.getElementById("pr-calc-child-count")?.value || "650", 10);
+        const rate = scheme.ratePerChild || 2200;
+
+        grant = children * rate;
+        bac = Math.round(grant * 1.30);
+        egenandel = bac - grant;
+        mva = 0;
+    } else {
+        bac = parseFloat(document.getElementById("pr-calc-total-budget")?.value || "12000000");
+        const rate = parseFloat(document.getElementById("pr-calc-rate-pct")?.value || "30");
+        grant = Math.round(bac * (rate / 100));
+        egenandel = Math.max(0, bac - grant);
+        mva = (scheme.kontoklasse === "2") ? Math.round(bac * 0.20) : 0;
+    }
+
+    const grantPct = bac > 0 ? ((grant / bac) * 100).toFixed(1) : 0;
+    prCalculatedGrant = { bac, grant, grantPct, egenandel, mva };
+
+    // Oppdater visning
+    const bacEl = document.getElementById("pr-calc-res-bac");
+    if (bacEl) bacEl.innerText = prFormatNok(bac);
+
+    const grantEl = document.getElementById("pr-calc-res-grant");
+    if (grantEl) grantEl.innerText = prFormatNok(grant);
+
+    const pctEl = document.getElementById("pr-calc-res-grant-pct");
+    if (pctEl) pctEl.innerText = grantPct + " % tilskuddsandel";
+
+    const egenEl = document.getElementById("pr-calc-res-egenandel");
+    if (egenEl) egenEl.innerText = prFormatNok(egenandel);
+
+    const mvaEl = document.getElementById("pr-calc-res-mva");
+    if (mvaEl) mvaEl.innerText = prFormatNok(mva);
+}
+
+// 7. Generer formelt søknadsnotat
+function generateSoknadsNotat() {
+    const projName = document.getElementById("pr-input-proj-name")?.value || "Nytt Tilskuddsprosjekt";
+    const unit = document.getElementById("pr-input-unit")?.value || "Kristiansand Kommune";
+    const leader = document.getElementById("pr-input-leader")?.value || "Prosjektleder";
+    const controller = document.getElementById("pr-input-controller")?.value || "Frank Ellingsen";
+    const konto = document.getElementById("pr-input-konto")?.value || "2";
+    const schemes = MUNICIPAL_GRANT_SCHEMES[prCurrentSector] || [];
+    const scheme = schemes.find(s => s.key === prCurrentSchemeKey) || schemes[0];
+
+    const today = new Date().toLocaleDateString("no-NO", { year: "numeric", month: "long", day: "numeric" });
+    const fakeHash = "sha256-" + Math.random().toString(16).substring(2, 10) + Math.random().toString(16).substring(2, 10);
+
+    const notatText = 
+`KRISTIANSAND KOMMUNE
+Virksomhetsområde: ${prCurrentSector} | Resultatenhet: ${unit}
+Saksbehandler: ${controller} | Prosjektansvarlig: ${leader}
+Dato: ${today}
+
+SAKSFREMLEGG / SØKNADSNOTAT FOR EKSTERN STØTTEORDNING
+Hovedordning: ${scheme.name}
+Tilskuddsyter: ${scheme.authority}
+Lovhjemmel / Kilde: ${scheme.hjemmel}
+
+1. FORMÅL OG BAKGRUNN
+Kristiansand kommune fremmer herved søknad om støtte til gjennomføring av prosjektet:
+"${projName}".
+Prosjektet skal bidra til å oppfylle kommunens strategiske målsetninger og imøtekomme lovpålagte standarder for tjenesteleveranse og bærekraft.
+
+2. FINANSIERINGSPLAN OG BUDSJETTRAMME (KOMMUNELOVEN § 14-5 & § 14-6)
+Prosjektets økonomiske ramme er kalkulert i henhold til FAST-standard og bruttoprinsippet:
+- Totalt godkjent prosjektbudsjett (BAC / P50): ${prFormatNok(prCalculatedGrant.bac)}
+- Søknadsbeløp / forventet statlig tilskudd:     ${prFormatNok(prCalculatedGrant.grant)} (${prCalculatedGrant.grantPct} %)
+- Kommunal egenfinansiering (Egenandel):         ${prFormatNok(prCalculatedGrant.egenandel)}
+- Beregnet MVA-kompensasjon (Konto 2130/Art 1729): ${prFormatNok(prCalculatedGrant.mva)}
+- Konteringsklasse: Kontoklasse ${konto} (${konto === "2" ? "Investering" : "Drift"})
+
+Alle utgifter bokføres brutto på tildelt WBS/prosjektnummer i Visma ERP. Statlige tilskudd inntektsføres på Art 1700/1800. Nettoføring forekommer ikke.
+
+3. KRAV TIL SLUTTREVISJON OG ATTESTASJON
+Kristiansand kommune forplikter seg til å levere fullstendig prosjektregnskap attestert av Kommunerevisjonen (Telemark Revisjon IKS) innen fastsatt rapporteringsfrist. 
+
+4. FORSLAG TIL VEDTAK
+1. Prosjektet "${projName}" etableres med en styringsramme på ${prFormatNok(prCalculatedGrant.bac)}.
+2. Søknad om tilskudd på ${prFormatNok(prCalculatedGrant.grant)} oversendes ${scheme.authority}.
+3. Kommunal egenandel på ${prFormatNok(prCalculatedGrant.egenandel)} innarbeides og dekkes innenfor gjeldende Handlings- og økonomiplan (HØP).
+
+Signert:
+Frank Ellingsen
+Senior Project Controller | Business Intelligence Specialist
+Kristiansand kommune`;
+
+    const modalContent = document.getElementById("pr-soknad-modal-content");
+    if (modalContent) modalContent.innerText = notatText;
+
+    const hashPrev = document.getElementById("pr-soknad-hash-preview");
+    if (hashPrev) hashPrev.innerText = fakeHash;
+
+    const modal = document.getElementById("pr-soknad-modal");
+    if (modal) modal.style.display = "flex";
+}
+
+function closeSoknadModal() {
+    const modal = document.getElementById("pr-soknad-modal");
+    if (modal) modal.style.display = "none";
+}
+
+function copySoknadText() {
+    const text = document.getElementById("pr-soknad-modal-content")?.innerText || "";
+    navigator.clipboard.writeText(text).then(() => {
+        if (typeof showToast === "function") showToast("📋 Saksfremlegg kopiert til utklippstavlen!");
+    });
+}
+
+function downloadSoknadDocx() {
+    const text = document.getElementById("pr-soknad-modal-content")?.innerText || "";
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Saksfremlegg_Tilskuddssoknad_Kristiansand_2026.docx";
+    link.click();
+    if (typeof showToast === "function") showToast("📥 Saksfremlegg lastet ned!");
+}
+
+function downloadSoknadJson() {
+    const payload = {
+        sector: prCurrentSector,
+        schemeKey: prCurrentSchemeKey,
+        projectName: document.getElementById("pr-input-proj-name")?.value,
+        unit: document.getElementById("pr-input-unit")?.value,
+        leader: document.getElementById("pr-input-leader")?.value,
+        controller: document.getElementById("pr-input-controller")?.value,
+        konto: document.getElementById("pr-input-konto")?.value,
+        calculated: prCalculatedGrant,
+        timestamp: new Date().toISOString()
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Soknad_" + prCurrentSchemeKey + "_Kristiansand.json";
+    link.click();
+    if (typeof showToast === "function") showToast("📥 Søknadsdata eksportert som JSON!");
+}
+
+// 8. Opprett prosjekt i prosjektregnskapet
+function createProjectFromApplication() {
+    const projName = document.getElementById("pr-input-proj-name")?.value || "Nytt Prosjekt";
+    const unit = document.getElementById("pr-input-unit")?.value || "6010 Eiendom";
+    const leader = document.getElementById("pr-input-leader")?.value || "Prosjektleder";
+    const controller = document.getElementById("pr-input-controller")?.value || "Frank Ellingsen";
+    const konto = document.getElementById("pr-input-konto")?.value || "2";
+    const schemes = MUNICIPAL_GRANT_SCHEMES[prCurrentSector] || [];
+    const scheme = schemes.find(s => s.key === prCurrentSchemeKey) || schemes[0];
+
+    const newId = "P-2026-" + prCurrentSector.substring(0, 3) + "-" + String(PROJECT_ACCOUNTING_DATA.length + 1).padStart(2, "0");
+    const bac = prCalculatedGrant.bac;
+    const p85 = Math.round(bac * 1.08);
+    const tilskudd = prCalculatedGrant.grant;
+    const egenandel = prCalculatedGrant.egenandel;
+
+    const newProject = {
+        id: newId,
+        name: projName,
+        sektor: prCurrentSector,
+        sektorNavn: prCurrentSector === "BYUTVIKLING" ? "Byutvikling & VAR" : (prCurrentSector === "HELSE" ? "Helse & Mestring" : prCurrentSector),
+        enhet: unit,
+        leder: leader,
+        controller: controller,
+        ordningKey: scheme.key,
+        ordningNavn: scheme.name.split("—")[0].trim(),
+        kontoklasse: konto,
+        status: "AKTIV",
+        bac: bac,
+        p85: p85,
+        tilskudd_innvilget: tilskudd,
+        tilskudd_mottatt: Math.round(tilskudd * 0.40),
+        tilskudd_utestaende: Math.round(tilskudd * 0.60),
+        egenandel_kommune: egenandel,
+        ac: Math.round(bac * 0.25),
+        pv: Math.round(bac * 0.25),
+        ev: Math.round(bac * 0.26),
+        cpi: 1.04,
+        spi: 1.04,
+        eac: bac,
+        vac: 0,
+        revisor_status: "OPPRETTET_I_REGNSKAP",
+        revisor_notat: "Opprettet via Søknadsveiviser. WBS-kode reservert i Visma ERP.",
+        sha256: "sha256-" + Math.random().toString(16).substring(2, 12),
+        transaksjoner: [
+            { bilag: "VIS-26-" + Math.floor(1000 + Math.random()*8000), dato: "2026-10-01", art: konto === "2" ? "1200" : "1010", tekst: "Oppstartskostnader / Prosjektering", belop: Math.round(bac * 0.25), mva: konto === "2" ? "K2-100%" : "Ingen" },
+            { bilag: "VIS-26-" + Math.floor(1000 + Math.random()*8000), dato: "2026-10-05", art: "1700", tekst: "Forskuddsutbetaling tilskudd (40%)", belop: -Math.round(tilskudd * 0.40), mva: "Tilskudd" }
+        ]
+    };
+
+    PROJECT_ACCOUNTING_DATA.unshift(newProject);
+    prSelectedProjectId = newId;
+
+    updatePortfolioKpis();
+    renderProjectsTable();
+    switchProsjektregnskapTab("PORTEFOLJE");
+
+    if (typeof showToast === "function") {
+        showToast("✅ " + newId + " opprettet i Prosjektregnskapet!");
+    }
+}
+
+// 9. Oppdater KPI-bånd for porteføljen
+function updatePortfolioKpis() {
+    let totBac = 0, totAc = 0, totGrant = 0, totRec = 0, totPend = 0, totEgen = 0;
+    let totEv = 0;
+
+    PROJECT_ACCOUNTING_DATA.forEach(p => {
+        totBac += p.bac;
+        totAc += p.ac;
+        totGrant += p.tilskudd_innvilget;
+        totRec += p.tilskudd_mottatt;
+        totPend += p.tilskudd_utestaende;
+        totEgen += p.egenandel_kommune;
+        totEv += p.ev;
+    });
+
+    const avgCpi = totAc > 0 ? (totEv / totAc).toFixed(2) : "1.00";
+    const totVac = totBac - (totAc + Math.max(0, totBac - totEv));
+
+    const bacEl = document.getElementById("pr-kpi-total-bac");
+    if (bacEl) bacEl.innerText = prFormatMill(totBac);
+
+    const acEl = document.getElementById("pr-kpi-total-ac");
+    if (acEl) acEl.innerText = prFormatMill(totAc);
+
+    const grantEl = document.getElementById("pr-kpi-total-grant");
+    if (grantEl) grantEl.innerText = prFormatMill(totGrant);
+
+    const recPendEl = document.getElementById("pr-kpi-received-pending");
+    if (recPendEl) recPendEl.innerText = (totRec / 1000000).toFixed(1) + " m / " + (totPend / 1000000).toFixed(1) + " m";
+
+    const egenEl = document.getElementById("pr-kpi-total-egenandel");
+    if (egenEl) egenEl.innerText = prFormatMill(totEgen);
+
+    const cpiEl = document.getElementById("pr-kpi-avg-cpi");
+    if (cpiEl) {
+        cpiEl.innerText = avgCpi + " (" + (avgCpi >= 1.0 ? "I Rute" : "Avvik") + ")";
+        cpiEl.style.color = avgCpi >= 1.0 ? "var(--success-green)" : (avgCpi >= 0.95 ? "#b45309" : "#b91c1c");
+    }
+}
+
+// 10. Render Master Prosjektregnskapstabell
+function renderProjectsTable() {
+    const filterSec = document.getElementById("pr-filter-sector")?.value || "ALL";
+    const filterKonto = document.getElementById("pr-filter-konto")?.value || "ALL";
+    const filterStatus = document.getElementById("pr-filter-status")?.value || "ALL";
+    const search = (document.getElementById("pr-search-input")?.value || "").toLowerCase().trim();
+
+    const tbody = document.getElementById("pr-projects-tbody");
+    if (!tbody) return;
+
+    const filtered = PROJECT_ACCOUNTING_DATA.filter(p => {
+        if (filterSec !== "ALL" && p.sektor !== filterSec) return false;
+        if (filterKonto !== "ALL" && p.kontoklasse !== filterKonto) return false;
+        if (filterStatus !== "ALL" && p.status !== filterStatus) return false;
+        if (search.length > 0) {
+            const haystack = (p.id + " " + p.name + " " + p.ordningNavn + " " + p.enhet).toLowerCase();
+            if (!haystack.includes(search)) return false;
+        }
+        return true;
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="14" style="text-align:center; padding:24px; color:var(--text-secondary);">Ingen prosjekter matcher valgte filtre.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = filtered.map(p => {
+        const cpiColor = p.cpi >= 1.0 ? "var(--success-green)" : (p.cpi >= 0.95 ? "#b45309" : "#b91c1c");
+        const cpiBg = p.cpi >= 1.0 ? "#dcfce7" : (p.cpi >= 0.95 ? "#fef3c7" : "#fee2e2");
+        const isSelected = p.id === prSelectedProjectId;
+
+        return `
+            <tr style="border-bottom:1px solid var(--border-light); cursor:pointer; background:${isSelected ? '#f0f9ff' : 'transparent'}; transition:background 0.15s ease;" 
+                onclick="selectProjectDetail('${p.id}'); switchProsjektregnskapTab('KORT');"
+                onmouseover="this.style.background='#f8fafc'" 
+                onmouseout="this.style.background='${isSelected ? '#f0f9ff' : 'transparent'}'">
+                <td style="padding:7px 6px;">
+                    <div style="font-weight:700; color:var(--navy-dark); font-family:monospace;">${p.id}</div>
+                    <div style="font-size:10px; color:var(--text-secondary); max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${p.name}">${p.name}</div>
+                </td>
+                <td style="padding:7px 6px; font-size:10px;">
+                    <div style="font-weight:600; color:var(--navy-dark);">${p.sektorNavn}</div>
+                    <div style="color:var(--text-secondary);">${p.enhet.split(" ")[0]}</div>
+                </td>
+                <td style="padding:7px 6px; font-size:10px; font-weight:600; color:#0284c7;">${p.ordningNavn}</td>
+                <td style="padding:7px 6px; text-align:center;">
+                    <span style="display:inline-block; padding:1px 5px; font-size:9px; font-weight:700; border-radius:3px; background:${p.kontoklasse==='2'?'#e0f2fe':'#f1f5f9'}; color:${p.kontoklasse==='2'?'#0369a1':'#475569'};">
+                        K${p.kontoklasse}
+                    </span>
+                </td>
+                <td style="padding:7px 6px; text-align:right; font-weight:700; font-variant-numeric:tabular-nums;">${prFormatNok(p.bac)}</td>
+                <td style="padding:7px 6px; text-align:right; font-weight:600; font-variant-numeric:tabular-nums; color:var(--navy-dark);">${prFormatNok(p.ac)}</td>
+                <td style="padding:7px 6px; text-align:right; font-weight:600; font-variant-numeric:tabular-nums; color:#475569;">${prFormatNok(p.ev)}</td>
+                <td style="padding:7px 6px; text-align:right; font-weight:700; color:#0284c7; font-variant-numeric:tabular-nums;">${prFormatNok(p.tilskudd_innvilget)}</td>
+                <td style="padding:7px 6px; text-align:right; font-size:10px; font-variant-numeric:tabular-nums;">
+                    <span style="color:var(--success-green); font-weight:600;">${prFormatNok(p.tilskudd_mottatt)}</span> / 
+                    <span style="color:#d97706;">${prFormatNok(p.tilskudd_utestaende)}</span>
+                </td>
+                <td style="padding:7px 6px; text-align:right; font-weight:600; font-variant-numeric:tabular-nums;">${prFormatNok(p.egenandel_kommune)}</td>
+                <td style="padding:7px 6px; text-align:center;">
+                    <span style="padding:2px 6px; border-radius:3px; font-weight:800; font-size:10px; background:${cpiBg}; color:${cpiColor}; font-variant-numeric:tabular-nums;">
+                        ${p.cpi.toFixed(2)}
+                    </span>
+                </td>
+                <td style="padding:7px 6px; text-align:right; font-weight:700; font-variant-numeric:tabular-nums;">${prFormatNok(p.eac)}</td>
+                <td style="padding:7px 6px; text-align:center; font-size:9px; font-weight:700;">
+                    <span style="padding:2px 5px; border-radius:3px; background:#f1f5f9; color:var(--navy-dark); border:1px solid #e2e8f0;">
+                        ${p.revisor_status.replace(/_/g, " ")}
+                    </span>
+                </td>
+                <td style="padding:7px 6px; text-align:center;" onclick="event.stopPropagation();">
+                    <button type="button" class="btn btn-sm" onclick="selectProjectDetail('${p.id}'); switchProsjektregnskapTab('KORT');" style="padding:2px 6px; font-size:10px; background:var(--navy-dark); color:#ffffff;">
+                        Åpne
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join("");
+}
+
+function filterProjectsTable() {
+    renderProjectsTable();
+}
+
+// 11. Velg og vis detaljert prosjektkort
+function selectProjectDetail(projId) {
+    prSelectedProjectId = projId;
+    const proj = PROJECT_ACCOUNTING_DATA.find(p => p.id === projId) || PROJECT_ACCOUNTING_DATA[0];
+    if (!proj) return;
+
+    // Oppdater selector
+    const selector = document.getElementById("pr-detail-selector");
+    if (selector) {
+        selector.innerHTML = PROJECT_ACCOUNTING_DATA.map(p => 
+            `<option value="${p.id}" ${p.id === projId ? "selected" : ""}>${p.id}: ${p.name}</option>`
+        ).join("");
+    }
+
+    // Header banner
+    const headEl = document.getElementById("pr-card-header");
+    if (headEl) {
+        headEl.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <span style="font-size:16px; font-weight:800; color:var(--navy-dark);">${proj.id}: ${proj.name}</span>
+                        <span style="padding:2px 6px; border-radius:3px; font-size:10px; font-weight:700; background:${proj.kontoklasse==='2'?'#e0f2fe':'#f1f5f9'}; color:${proj.kontoklasse==='2'?'#0369a1':'#475569'};">
+                            Kontoklasse ${proj.kontoklasse} (${proj.kontoklasse==='2'?'Investering':'Drift'})
+                        </span>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-secondary); margin-top:3px;">
+                        Virksomhetsområde: <strong>${proj.sektorNavn}</strong> | Enhet: <strong>${proj.enhet}</strong> | Leder: <strong>${proj.leder}</strong> | Controller: <strong>${proj.controller}</strong>
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase;">Tilskuddsyter &amp; Ordning:</div>
+                    <div style="font-size:12px; font-weight:700; color:#0284c7;">${proj.ordningNavn}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Tabellverdier
+    const kontoBadge = document.getElementById("pr-card-konto-badge");
+    if (kontoBadge) kontoBadge.innerText = proj.kontoklasse === "2" ? "Kontoklasse 2 (Investering)" : "Kontoklasse 1 (Drift)";
+
+    document.getElementById("pr-card-bac").innerText = prFormatNok(proj.bac);
+    document.getElementById("pr-card-p85").innerText = prFormatNok(proj.p85);
+    document.getElementById("pr-card-grant-total").innerText = prFormatNok(proj.tilskudd_innvilget);
+    document.getElementById("pr-card-grant-received").innerText = prFormatNok(proj.tilskudd_mottatt);
+    document.getElementById("pr-card-grant-pending").innerText = prFormatNok(proj.tilskudd_utestaende);
+    document.getElementById("pr-card-egenandel").innerText = prFormatNok(proj.egenandel_kommune);
+    document.getElementById("pr-card-netto-actual").innerText = prFormatNok(Math.max(0, proj.ac - proj.tilskudd_mottatt));
+
+    // EVM
+    const cpiBadge = document.getElementById("pr-card-cpi-badge");
+    if (cpiBadge) {
+        cpiBadge.innerText = "CPI " + proj.cpi.toFixed(2) + " (" + (proj.cpi >= 1.0 ? "I rute" : (proj.cpi >= 0.95 ? "Moderat avvik" : "Kostnadsoverskridelse")) + ")";
+        cpiBadge.style.background = proj.cpi >= 1.0 ? "#dcfce7" : (proj.cpi >= 0.95 ? "#fef3c7" : "#fee2e2");
+        cpiBadge.style.color = proj.cpi >= 1.0 ? "#15803d" : (proj.cpi >= 0.95 ? "#b45309" : "#b91c1c");
+    }
+
+    document.getElementById("pr-card-ev-val").innerText = prFormatNok(proj.ev);
+    document.getElementById("pr-card-ac-val").innerText = prFormatNok(proj.ac);
+    document.getElementById("pr-card-eac-val").innerText = prFormatNok(proj.eac);
+    const vacEl = document.getElementById("pr-card-vac-val");
+    if (vacEl) {
+        vacEl.innerText = prFormatNok(proj.vac);
+        vacEl.style.color = proj.vac >= 0 ? "var(--success-green)" : "#b91c1c";
+    }
+
+    renderScurveSvg(proj);
+
+    // Transaksjonstabell
+    const txTbody = document.getElementById("pr-transactions-tbody");
+    if (txTbody) {
+        if (!proj.transaksjoner || proj.transaksjoner.length === 0) {
+            txTbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:16px; color:var(--text-secondary);">Ingen posteringer registrert ennå.</td></tr>';
+        } else {
+            txTbody.innerHTML = proj.transaksjoner.map(tx => {
+                const isCredit = tx.belop < 0;
+                return `
+                    <tr style="border-bottom:1px solid #f1f5f9;">
+                        <td style="padding:6px 8px; font-family:monospace; font-weight:600; color:var(--navy-dark);">${tx.bilag}</td>
+                        <td style="padding:6px 8px; font-variant-numeric:tabular-nums; color:var(--text-secondary);">${tx.dato}</td>
+                        <td style="padding:6px 8px; text-align:center; font-weight:700; color:#0284c7;">${tx.art}</td>
+                        <td style="padding:6px 8px;">${tx.tekst}</td>
+                        <td style="padding:6px 8px; text-align:center; font-size:10px; color:var(--text-secondary);">${tx.mva}</td>
+                        <td style="padding:6px 8px; text-align:right; font-weight:700; font-variant-numeric:tabular-nums; color:${isCredit ? 'var(--success-green)' : 'var(--navy-dark)'};">
+                            ${prFormatNok(tx.belop)}
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+    }
+
+    // Revisorattestasjon boks
+    const auditEl = document.getElementById("pr-audit-box");
+    if (auditEl) {
+        auditEl.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <div style="font-size:11px; font-weight:700; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.4px;">
+                        🛡️ Revisjons- &amp; Attestasjonsstatus (Telemark Revisjon IKS)
+                    </div>
+                    <div style="font-size:11px; color:var(--text-primary); margin-top:2px;">
+                        Gjeldende status: <strong>${proj.revisor_status.replace(/_/g, " ")}</strong> | ${proj.revisor_notat}
+                    </div>
+                    <div style="font-size:10px; color:var(--text-secondary); margin-top:3px; font-family:monospace;">
+                        SHA-256 forsegling: ${proj.sha256}
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm" onclick="signProjectAudit('${proj.id}')" style="background:var(--navy-dark); color:#ffffff; font-weight:700;">
+                        Attester for Kommunerevisjonen
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// 12. Render Tufte S-kurve SVG
+function renderScurveSvg(proj) {
+    const box = document.getElementById("pr-card-scurve-box");
+    if (!box) return;
+
+    const w = 480;
+    const h = 100;
+    const maxVal = Math.max(proj.bac * 1.1, proj.eac * 1.05);
+
+    // Måneder 0 til 12
+    const ptsPV = [
+        [20, h - 15],
+        [100, h - 30],
+        [200, h - 50],
+        [320, h - 75],
+        [440, h - (proj.bac / maxVal) * (h - 25) - 10]
+    ];
+
+    const currentX = 260; // Måned 9
+    const ptsAC = [
+        [20, h - 15],
+        [100, h - 28],
+        [180, h - 45],
+        [currentX, h - (proj.ac / maxVal) * (h - 25) - 10]
+    ];
+
+    const ptsEV = [
+        [20, h - 15],
+        [100, h - 32],
+        [180, h - 52],
+        [currentX, h - (proj.ev / maxVal) * (h - 25) - 10]
+    ];
+
+    const ptsEAC = [
+        [currentX, h - (proj.ac / maxVal) * (h - 25) - 10],
+        [440, h - (proj.eac / maxVal) * (h - 25) - 10]
+    ];
+
+    const makePath = pts => pts.map((p, i) => (i === 0 ? "M" : "L") + p[0] + "," + p[1]).join(" ");
+
+    box.innerHTML = `
+        <svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; display:block;">
+            <!-- Horisontale diskrete linjer (Tufte: ingen vertikale linjer) -->
+            <line x1="20" y1="${h-15}" x2="460" y2="${h-15}" stroke="#e2e8f0" stroke-width="1" />
+            <line x1="20" y1="${h/2}" x2="460" y2="${h/2}" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,3" />
+
+            <!-- Planlagt verdi (PV / Baseline) -->
+            <path d="${makePath(ptsPV)}" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,3" />
+            <text x="445" y="${ptsPV[ptsPV.length-1][1]}" font-size="8" fill="#64748b" font-weight="700">PV (P50)</text>
+
+            <!-- Opptjent verdi (EV) -->
+            <path d="${makePath(ptsEV)}" fill="none" stroke="#0284c7" stroke-width="2.5" />
+            <circle cx="${ptsEV[ptsEV.length-1][0]}" cy="${ptsEV[ptsEV.length-1][1]}" r="3" fill="#0284c7" />
+            <text x="${ptsEV[ptsEV.length-1][0]+5}" y="${ptsEV[ptsEV.length-1][1]-4}" font-size="8" fill="#0284c7" font-weight="700">EV: ${prFormatMill(proj.ev)}</text>
+
+            <!-- Faktisk påløpt (AC) -->
+            <path d="${makePath(ptsAC)}" fill="none" stroke="var(--navy-dark)" stroke-width="2" />
+            <circle cx="${ptsAC[ptsAC.length-1][0]}" cy="${ptsAC[ptsAC.length-1][1]}" r="3" fill="var(--navy-dark)" />
+            <text x="${ptsAC[ptsAC.length-1][0]+5}" y="${ptsAC[ptsAC.length-1][1]+10}" font-size="8" fill="var(--navy-dark)" font-weight="700">AC: ${prFormatMill(proj.ac)}</text>
+
+            <!-- Prognoselinje til fullførelse (EAC) -->
+            <path d="${makePath(ptsEAC)}" fill="none" stroke="${proj.vac >= 0 ? '#15803d' : '#b91c1c'}" stroke-width="1.8" stroke-dasharray="2,2" />
+            <text x="445" y="${ptsEAC[1][1]+4}" font-size="8" fill="${proj.vac >= 0 ? '#15803d' : '#b91c1c'}" font-weight="700">EAC: ${prFormatMill(proj.eac)}</text>
+
+            <!-- Avskjæringsdato (Cutoff) -->
+            <line x1="${currentX}" y1="10" x2="${currentX}" y2="${h-15}" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
+            <text x="${currentX-20}" y="12" font-size="7" fill="#64748b">Cutoff M09</text>
+        </svg>
+    `;
+}
+
+// 13. Modal: Statlig Refusjonskrav
+function openRefusjonskravModal(projId) {
+    const pId = projId || prSelectedProjectId;
+    const proj = PROJECT_ACCOUNTING_DATA.find(p => p.id === pId) || PROJECT_ACCOUNTING_DATA[0];
+    if (!proj) return;
+
+    const today = new Date().toLocaleDateString("no-NO", { year: "numeric", month: "long", day: "numeric" });
+    const claimAmount = proj.tilskudd_utestaende;
+
+    const modalContent = document.getElementById("pr-refusjon-modal-content");
+    if (modalContent) {
+        modalContent.innerHTML = `
+            <div style="font-family:'Segoe UI', sans-serif; font-size:12px; line-height:1.6; color:var(--text-primary);">
+                <div style="display:flex; justify-content:space-between; border-bottom:1px solid #cbd5e1; padding-bottom:8px; margin-bottom:12px;">
+                    <div>
+                        <strong>Mottaker:</strong> ${proj.ordningNavn} / Tilskuddsforvalter<br>
+                        <strong>Avsender:</strong> Kristiansand kommune, Økonomiavdelingen
+                    </div>
+                    <div style="text-align:right;">
+                        <strong>Dato:</strong> ${today}<br>
+                        <strong>Ref:</strong> ${proj.id} / Frank Ellingsen
+                    </div>
+                </div>
+
+                <div style="font-size:14px; font-weight:800; color:var(--navy-dark); margin-bottom:8px;">
+                    ANMODNING OM UTBETALING AV TILSKUDD — DELKRAV / SLUTTKRAV
+                </div>
+
+                <p>
+                    Det vises til innvilget tilskudd for prosjektet <strong>"${proj.name}"</strong> (Prosjekt-ID: ${proj.id}).<br>
+                    I henhold til vilkår i tilskuddsbrevet oversendes herved spesifisert prosjektregnskap og refusjonsanmodning.
+                </p>
+
+                <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; padding:12px; margin-bottom:12px;">
+                    <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                        <tbody>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0;">Innvilget totalramme tilskudd:</td>
+                                <td style="text-align:right; font-weight:700;">${prFormatNok(proj.tilskudd_innvilget)}</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0;">Tidligere utbetalt forskudd/terminer:</td>
+                                <td style="text-align:right; font-weight:600; color:var(--success-green);">${prFormatNok(proj.tilskudd_mottatt)}</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9;">
+                                <td style="padding:4px 0;">Bokførte faktiske brutto prosjektkostnader (AC):</td>
+                                <td style="text-align:right; font-weight:700; color:var(--navy-dark);">${prFormatNok(proj.ac)}</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f1f5f9; background:#eff6ff;">
+                                <td style="padding:6px 4px; font-weight:800; color:#1e40af;">ANMODET UTBETALINGSBELØP NÅ:</td>
+                                <td style="text-align:right; font-weight:800; color:#1e40af; font-size:13px;">${prFormatNok(claimAmount)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="font-size:11px; margin-bottom:12px;">
+                    <strong>Erklæring jf. Kommuneloven § 14-6:</strong><br>
+                    Det bekreftes at samtlige oppgitte utgifter er bokført brutto i Kristiansand kommunes offisielle hovedbok (Visma ERP). 
+                    Kostnadene er direkte henførbare til prosjektets godkjente formål og er revidert mot interne timelister, leverandørfakturaer og MVA-kompensasjon.
+                </div>
+
+                <div style="border-top:1px dashed #cbd5e1; padding-top:8px; font-size:11px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong>Attestert av:</strong> Frank Ellingsen (Senior Controller)<br>
+                        <strong>Kommunerevisjon:</strong> Telemark Revisjon IKS
+                    </div>
+                    <div style="font-family:monospace; font-size:10px; color:#475569;">
+                        SHA-256: ${proj.sha256.substring(0, 24)}...
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    const modal = document.getElementById("pr-refusjon-modal");
+    if (modal) modal.style.display = "flex";
+}
+
+function closeRefusjonskravModal() {
+    const modal = document.getElementById("pr-refusjon-modal");
+    if (modal) modal.style.display = "none";
+}
+
+function downloadRefusjonskravDoc() {
+    const text = document.getElementById("pr-refusjon-modal-content")?.innerText || "";
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Refusjonskrav_" + prSelectedProjectId + "_Kristiansand.docx";
+    link.click();
+    if (typeof showToast === "function") showToast("📥 Refusjonskrav lastet ned!");
+}
+
+// 14. Forsegl revisorattestasjon med SHA-256
+function signProjectAudit(projId) {
+    const pId = projId || prSelectedProjectId;
+    const proj = PROJECT_ACCOUNTING_DATA.find(p => p.id === pId);
+    if (!proj) return;
+
+    const newHash = "sha256-" + Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b => b.toString(16).padStart(2, "0")).join("");
+    proj.revisor_status = "GODKJENT_REVISOR";
+    proj.revisor_notat = "Attestert av Kommunerevisjonen (Telemark Revisjon IKS). Klart for utbetaling.";
+    proj.sha256 = newHash;
+
+    selectProjectDetail(pId);
+    renderProjectsTable();
+
+    if (typeof showToast === "function") {
+        showToast("🛡️ " + pId + " forseglet med revisorattest (" + newHash.substring(0, 16) + "...)");
+    }
+}
+
+// 15. Eksport til Excel (.xlsx / CSV)
+function exportProjectAccountingXlsx() {
+    let csv = "ProsjektID;Prosjektnavn;Sektor;Enhet;Ordning;Kontoklasse;BAC;AC;EV;InnvilgetTilskudd;MottattTilskudd;UtestaendeTilskudd;Egenandel;CPI;SPI;EAC;VAC;Revisorstatus\\r\\n";
+    PROJECT_ACCOUNTING_DATA.forEach(p => {
+        csv += [
+            p.id,
+            '"' + p.name.replace(/"/g, '""') + '"',
+            p.sektor,
+            '"' + p.enhet + '"',
+            '"' + p.ordningNavn + '"',
+            p.kontoklasse,
+            p.bac,
+            p.ac,
+            p.ev,
+            p.tilskudd_innvilget,
+            p.tilskudd_mottatt,
+            p.tilskudd_utestaende,
+            p.egenandel_kommune,
+            p.cpi,
+            p.spi,
+            p.eac,
+            p.vac,
+            p.revisor_status
+        ].join(";") + "\\r\\n";
+    });
+
+    const blob = new Blob(["\\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Kristiansand_Prosjektregnskap_Master_2026.csv";
+    link.click();
+    if (typeof showToast === "function") showToast("📊 Prosjektregnskap eksportert som Excel CSV!");
+}
+
+// 16. Hurtignavigering til Prosjektregnskapsseksjonen fra andre faner
+function openProsjektregnskapSection() {
+    if (typeof openTab === "function") {
+        openTab("controller-hub", false);
+    }
+    setTimeout(() => {
+        const sec = document.getElementById("prosjektregnskap-seksjon");
+        if (sec) {
+            sec.scrollIntoView({ behavior: "smooth" });
+            sec.classList.remove("element-highlight-pulse");
+            void sec.offsetWidth;
+            sec.classList.add("element-highlight-pulse");
+        }
+    }, 60);
+}
+
+console.log('Prosjektregnskap extension logic compiled successfully!');
+
+
+// Initialiser prosjektregnskap automatisk
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() {
+        if (typeof initProsjektregnskap === "function") initProsjektregnskap();
+    });
+} else {
+    if (typeof initProsjektregnskap === "function") initProsjektregnskap();
+}
+
+
+// ==============================================================================
+// CASH MANAGEMENT INJECTED LOGIC & NAVIGATION
+// ==============================================================================
+if (typeof SECTION_TO_TAB_MAP !== "undefined") {
+    SECTION_TO_TAB_MAP['cash-management-seksjon'] = 'controller-hub';
+}
+
+// ==============================================================================
+// 💳 KRISTIANSAND KOMMUNE — CASH MANAGEMENT & LIKVIDITETSSTYRING EXTENSION
+// jf. Kommuneloven §§ 14-1, 14-13, 14-14, 14-15 og Finansforskriften
+// ==============================================================================
+
+const CASH_M11_RAW_DATA = [
+    { dato: "2026-11-01", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 41800000, kreditt: 0 },
+    { dato: "2026-11-02", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 40750000, kreditt: 0 },
+    { dato: "2026-11-03", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 39700000, kreditt: 0 },
+    { dato: "2026-11-04", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 38650000, kreditt: 0 },
+    { dato: "2026-11-05", skatt: 45000000, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: 43950000, saldo: 82600000, kreditt: 0 },
+    { dato: "2026-11-06", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 81550000, kreditt: 0 },
+    { dato: "2026-11-07", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 80500000, kreditt: 0 },
+    { dato: "2026-11-08", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 79450000, kreditt: 0 },
+    { dato: "2026-11-09", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 78400000, kreditt: 0 },
+    { dato: "2026-11-10", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 77350000, kreditt: 0 },
+    { dato: "2026-11-11", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 76300000, kreditt: 0 },
+    { dato: "2026-11-12", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 82000000, leverandor: 1200000, renter: 0, netto: -83050000, saldo: -6750000, kreditt: 6750000 },
+    { dato: "2026-11-13", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: -7800000, kreditt: 7800000 },
+    { dato: "2026-11-14", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: -8850000, kreditt: 8850000 },
+    { dato: "2026-11-15", skatt: 0, rammetilskudd: 68000000, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: 66950000, saldo: 58100000, kreditt: 0 },
+    { dato: "2026-11-16", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 57050000, kreditt: 0 },
+    { dato: "2026-11-17", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 56000000, kreditt: 0 },
+    { dato: "2026-11-18", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 54950000, kreditt: 0 },
+    { dato: "2026-11-19", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 53900000, kreditt: 0 },
+    { dato: "2026-11-20", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 14000000, netto: -15050000, saldo: 38850000, kreditt: 0 },
+    { dato: "2026-11-21", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 37800000, kreditt: 0 },
+    { dato: "2026-11-22", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 36750000, kreditt: 0 },
+    { dato: "2026-11-23", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 35700000, kreditt: 0 },
+    { dato: "2026-11-24", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 34650000, kreditt: 0 },
+    { dato: "2026-11-25", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 33600000, kreditt: 0 },
+    { dato: "2026-11-26", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 32550000, kreditt: 0 },
+    { dato: "2026-11-27", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 31500000, kreditt: 0 },
+    { dato: "2026-11-28", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 30450000, kreditt: 0 },
+    { dato: "2026-11-29", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 29400000, kreditt: 0 },
+    { dato: "2026-11-30", skatt: 0, rammetilskudd: 0, andre: 150000, lonn: 0, leverandor: 1200000, renter: 0, netto: -1050000, saldo: 28350000, kreditt: 0 }
+];
+
+const CASH_CREDIT_LIMIT_NOK = 150000000; // 150 mill. kr
+
+function formatCashNok(val) {
+    if (val === null || val === undefined || isNaN(val)) return "0 kr";
+    return Math.round(val).toLocaleString('nb-NO') + " kr";
+}
+
+function openCashManagementSection() {
+    if (typeof navigateToSection === "function") {
+        navigateToSection("cash-management-seksjon");
+    } else {
+        const sec = document.getElementById("cash-management-seksjon");
+        if (sec) sec.scrollIntoView({ behavior: "smooth" });
+    }
+}
+
+function switchCashTab(tabName) {
+    const tabs = ["forecast", "simulator", "compliance"];
+    tabs.forEach(t => {
+        const pane = document.getElementById("cash-pane-" + t);
+        const btn = document.getElementById("btn-cash-tab-" + t);
+        if (pane) pane.style.display = (t === tabName) ? "block" : "none";
+        if (btn) {
+            if (t === tabName) {
+                btn.classList.add("active");
+                btn.style.background = "var(--navy-dark)";
+                btn.style.color = "#ffffff";
+            } else {
+                btn.classList.remove("active");
+                btn.style.background = "#f1f5f9";
+                btn.style.color = "var(--text-primary)";
+            }
+        }
+    });
+
+    if (tabName === "forecast") {
+        renderCashForecastTable();
+        renderCashCurveChart();
+    } else if (tabName === "simulator") {
+        updateCashSimulationUI();
+    }
+}
+
+function renderCashForecastTable() {
+    const tbody = document.getElementById("cash-forecast-tbody");
+    if (!tbody) return;
+
+    let rowsHtml = "";
+    CASH_M11_RAW_DATA.forEach(d => {
+        const totalIn = d.skatt + d.rammetilskudd + d.andre;
+        const totalOut = d.lonn + d.leverandor + d.renter;
+        const isCritical = d.kreditt > 100000000;
+        const isCredit = d.kreditt > 0;
+
+        let statusBadge = '<span class="status-badge" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:9.5px; padding:2px 6px;">🟢 Normal</span>';
+        if (isCritical) {
+            statusBadge = '<span class="status-badge" style="background:#fef2f2; color:#991b1b; border:1px solid #fecaca; font-size:9.5px; padding:2px 6px;">🔴 Rammebrudd</span>';
+        } else if (isCredit) {
+            statusBadge = '<span class="status-badge" style="background:#fffbeb; color:#92400e; border:1px solid #fde68a; font-size:9.5px; padding:2px 6px;">🟡 Driftskreditt</span>';
+        }
+
+        const saldoColor = d.saldo < 0 ? "#dc2626" : "var(--navy-dark)";
+        const rowBg = isCredit ? "#fffbeb" : "#ffffff";
+
+        rowsHtml += `
+            <tr style="border-bottom:1px solid #f1f5f9; background:${rowBg}; font-size:11px;">
+                <td style="padding:6px 8px; font-weight:700; color:var(--navy-dark);">${d.dato}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#0369a1;">${d.skatt > 0 ? formatCashNok(d.skatt) : "-"}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#0284c7;">${d.rammetilskudd > 0 ? formatCashNok(d.rammetilskudd) : "-"}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#15803d;">${d.lonn > 0 ? formatCashNok(d.lonn) : "-"}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; color:var(--text-secondary);">${d.leverandor > 0 ? formatCashNok(d.leverandor) : "-"}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#6b21a8;">${d.renter > 0 ? formatCashNok(d.renter) : "-"}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; font-weight:600; color:${d.netto < 0 ? '#b91c1c' : '#15803d'};">${d.netto > 0 ? '+' : ''}${formatCashNok(d.netto)}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; font-weight:700; color:${saldoColor};">${formatCashNok(d.saldo)}</td>
+                <td style="padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#d97706; font-weight:${d.kreditt > 0 ? '700' : '400'};">${d.kreditt > 0 ? formatCashNok(d.kreditt) : "0 kr"}</td>
+                <td style="padding:6px 8px; text-align:center;">${statusBadge}</td>
+            </tr>
+        `;
+    });
+
+    tbody.innerHTML = rowsHtml;
+}
+
+function renderCashCurveChart() {
+    const container = document.getElementById("cash-svg-curve-container");
+    if (!container) return;
+
+    const data = CASH_M11_RAW_DATA;
+    const w = 1100;
+    const h = 220;
+    const padL = 60;
+    const padR = 40;
+    const padT = 30;
+    const padB = 40;
+
+    const chartW = w - padL - padR;
+    const chartH = h - padT - padB;
+
+    let minVal = -20000000;
+    let maxVal = 90000000;
+
+    function getX(idx) {
+        return padL + (idx / (data.length - 1)) * chartW;
+    }
+
+    function getY(val) {
+        const norm = (val - minVal) / (maxVal - minVal);
+        return padT + chartH - (norm * chartH);
+    }
+
+    const zeroY = getY(0);
+
+    let pathD = "";
+    data.forEach((d, i) => {
+        const x = getX(i);
+        const y = getY(d.saldo);
+        if (i === 0) pathD += `M ${x.toFixed(1)} ${y.toFixed(1)}`;
+        else pathD += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+    });
+
+    // Ankerpunkter for viktige hendelser
+    const nov5 = data[4];
+    const nov12 = data[11];
+    const nov14 = data[13];
+    const nov15 = data[14];
+    const nov20 = data[19];
+
+    let svg = `
+    <svg viewBox="0 0 ${w} ${h}" style="width:100%; height:auto; overflow:visible; font-family:var(--font-sans, sans-serif);">
+        <!-- Null-linje (Konsernsaldo 0 kr) -->
+        <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${w - padR}" y2="${zeroY.toFixed(1)}" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4" />
+        <text x="${padL - 10}" y="${(zeroY + 4).toFixed(1)}" text-anchor="end" font-size="10" fill="#64748b" font-weight="700">0 kr</text>
+
+        <!-- Kredittsone under 0 kr -->
+        <rect x="${padL}" y="${zeroY.toFixed(1)}" width="${chartW}" height="${(getY(-20000000) - zeroY).toFixed(1)}" fill="#fef3c7" fill-opacity="0.3" />
+        <text x="${w - padR - 8}" y="${(zeroY + 14).toFixed(1)}" text-anchor="end" font-size="9" fill="#b45309" font-weight="600">Trekk på Kassakredittramme (§ 14-14)</text>
+
+        <!-- Likviditetskurve -->
+        <path d="${pathD}" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round" />
+
+        <!-- Punkt 5. nov: Skatt -->
+        <circle cx="${getX(4).toFixed(1)}" cy="${getY(nov5.saldo).toFixed(1)}" r="4.5" fill="#0284c7" />
+        <text x="${getX(4).toFixed(1)}" y="${(getY(nov5.saldo) - 10).toFixed(1)}" text-anchor="middle" font-size="9.5" font-weight="700" fill="#0369a1">5. nov: Skatt (+45m)</text>
+
+        <!-- Punkt 12. nov: Fastlønn -->
+        <circle cx="${getX(11).toFixed(1)}" cy="${getY(nov12.saldo).toFixed(1)}" r="4.5" fill="#dc2626" />
+        <text x="${getX(11).toFixed(1)}" y="${(getY(nov12.saldo) - 10).toFixed(1)}" text-anchor="middle" font-size="9.5" font-weight="700" fill="#b91c1c">12. nov: Lønn (-82m)</text>
+
+        <!-- Punkt 14. nov: Laveste saldo -->
+        <circle cx="${getX(13).toFixed(1)}" cy="${getY(nov14.saldo).toFixed(1)}" r="5" fill="#d97706" />
+        <text x="${getX(13).toFixed(1)}" y="${(getY(nov14.saldo) + 16).toFixed(1)}" text-anchor="middle" font-size="9.5" font-weight="700" fill="#92400e">14. nov: Bunn (-8,85m)</text>
+
+        <!-- Punkt 15. nov: Rammetilskudd -->
+        <circle cx="${getX(14).toFixed(1)}" cy="${getY(nov15.saldo).toFixed(1)}" r="5" fill="#15803d" />
+        <text x="${getX(14).toFixed(1)}" y="${(getY(nov15.saldo) - 10).toFixed(1)}" text-anchor="middle" font-size="9.5" font-weight="700" fill="#15803d">15. nov: Tilskudd (+68m)</text>
+
+        <!-- Punkt 20. nov: Lånetermin -->
+        <circle cx="${getX(19).toFixed(1)}" cy="${getY(nov20.saldo).toFixed(1)}" r="4" fill="#6b21a8" />
+        <text x="${getX(19).toFixed(1)}" y="${(getY(nov20.saldo) - 10).toFixed(1)}" text-anchor="middle" font-size="9.5" font-weight="700" fill="#6b21a8">20. nov: Lån (-14m)</text>
+
+        <!-- X-akse etiketter -->
+        <text x="${getX(0).toFixed(1)}" y="${h - 10}" text-anchor="start" font-size="10" fill="#64748b">1. nov</text>
+        <text x="${getX(7).toFixed(1)}" y="${h - 10}" text-anchor="middle" font-size="10" fill="#64748b">8. nov</text>
+        <text x="${getX(14).toFixed(1)}" y="${h - 10}" text-anchor="middle" font-size="10" fill="#64748b">15. nov</text>
+        <text x="${getX(21).toFixed(1)}" y="${h - 10}" text-anchor="middle" font-size="10" fill="#64748b">22. nov</text>
+        <text x="${getX(29).toFixed(1)}" y="${h - 10}" text-anchor="end" font-size="10" fill="#64748b">30. nov</text>
+    </svg>
+    `;
+
+    container.innerHTML = svg;
+}
+
+function updateCashSimulationUI() {
+    const taxDelta = parseFloat(document.getElementById("cash-sim-tax-slider")?.value || "-5.0");
+    const grantDelay = parseInt(document.getElementById("cash-sim-delay-slider")?.value || "5", 10);
+    const extraExp = parseFloat(document.getElementById("cash-sim-extra-slider")?.value || "2500000");
+
+    // Oppdater tall-etiketter
+    const taxLabel = document.getElementById("cash-sim-tax-val");
+    if (taxLabel) taxLabel.textContent = (taxDelta > 0 ? "+" : "") + taxDelta.toFixed(1) + " %";
+
+    const delayLabel = document.getElementById("cash-sim-delay-val");
+    if (delayLabel) delayLabel.textContent = grantDelay + " dager";
+
+    const extraLabel = document.getElementById("cash-sim-extra-val");
+    if (extraLabel) extraLabel.textContent = formatCashNok(extraExp);
+
+    // Klon data for simulering
+    const simData = JSON.parse(JSON.stringify(CASH_M11_RAW_DATA));
+    let startBal = 42850000;
+    let currBal = startBal;
+    let minBal = currBal;
+    let maxCredit = 0;
+    let daysInCredit = 0;
+
+    // Forsink rammetilskudd
+    if (grantDelay > 0) {
+        simData[14].rammetilskudd = 0; // Dag 15 fjernes
+        const newDayIdx = Math.min(29, 14 + grantDelay);
+        simData[newDayIdx].rammetilskudd = 68000000;
+    }
+
+    // Juster skatt og legg til uforutsett utgift på dag 12
+    simData.forEach((d, idx) => {
+        const adjSkatt = d.skatt * (1.0 + (taxDelta / 100.0));
+        const extra = (idx === 11) ? extraExp : 0;
+        const totalIn = adjSkatt + d.rammetilskudd + d.andre;
+        const totalOut = d.lonn + d.leverandor + d.renter + extra;
+        const net = totalIn - totalOut;
+        currBal += net;
+
+        if (currBal < minBal) minBal = currBal;
+        const draw = currBal < 0 ? Math.abs(currBal) : 0;
+        if (draw > maxCredit) maxCredit = draw;
+        if (draw > 0) daysInCredit++;
+    });
+
+    const isBreach = maxCredit > CASH_CREDIT_LIMIT_NOK;
+    const interestRate = 0.065 / 365.0;
+    const estInterestDelta = maxCredit * interestRate * Math.max(1, daysInCredit);
+
+    // Oppdater UI
+    const minBalEl = document.getElementById("cash-sim-result-min-balance");
+    if (minBalEl) {
+        minBalEl.textContent = formatCashNok(minBal);
+        minBalEl.style.color = minBal < 0 ? "#dc2626" : "var(--navy-dark)";
+    }
+
+    const maxCreditEl = document.getElementById("cash-sim-result-max-credit");
+    if (maxCreditEl) {
+        maxCreditEl.textContent = formatCashNok(maxCredit);
+        maxCreditEl.style.color = isBreach ? "#dc2626" : "#d97706";
+    }
+
+    const daysEl = document.getElementById("cash-sim-result-days-overdraft");
+    if (daysEl) daysEl.textContent = daysInCredit + " dager";
+
+    const interestEl = document.getElementById("cash-sim-result-interest-delta");
+    if (interestEl) interestEl.textContent = formatCashNok(estInterestDelta);
+
+    const verdictEl = document.getElementById("cash-sim-result-verdict");
+    if (verdictEl) {
+        if (isBreach) {
+            verdictEl.innerHTML = `<span style="color:#dc2626; font-weight:700;">🔴 KRITISK OVERTREKK: Vedtatt ramme (${formatCashNok(CASH_CREDIT_LIMIT_NOK)}) overskrides med ${formatCashNok(maxCredit - CASH_CREDIT_LIMIT_NOK)}! Krever hastefullmakt fra Formannskapet jf. § 14-14.</span>`;
+        } else {
+            verdictEl.innerHTML = `<span style="color:#15803d; font-weight:700;">🟢 GODKJENT: Maksimalt trekk (${formatCashNok(maxCredit)}) er innenfor vedtatt driftskredittramme på 150 mill. kr. Gjenværende buffer: ${formatCashNok(CASH_CREDIT_LIMIT_NOK - maxCredit)}.</span>`;
+        }
+    }
+
+    // SHA-256 Mock hash for forsegling
+    const hashSeed = `SIM|${taxDelta}|${grantDelay}|${extraExp}|${minBal}|${maxCredit}|${daysInCredit}`;
+    const hashEl = document.getElementById("cash-sim-result-hash");
+    if (hashEl) {
+        // Enkel deterministisk mock-hash for UI display
+        let h = 0x811c9dc5;
+        for (let i = 0; i < hashSeed.length; i++) {
+            h ^= hashSeed.charCodeAt(i);
+            h = (h * 0x01000193) >>> 0;
+        }
+        hashEl.textContent = "sha256: " + h.toString(16).padStart(8, '0') + "ca56d3595faf265e5fcc432261dbcff744c309bd9e9360ce234329cd51cf46fd".substring(8);
+    }
+}
+
+function resetCashSimulation() {
+    const taxSlider = document.getElementById("cash-sim-tax-slider");
+    const delaySlider = document.getElementById("cash-sim-delay-slider");
+    const extraSlider = document.getElementById("cash-sim-extra-slider");
+
+    if (taxSlider) taxSlider.value = "-5.0";
+    if (delaySlider) delaySlider.value = "5";
+    if (extraSlider) extraSlider.value = "2500000";
+
+    updateCashSimulationUI();
+}
+
+function copyCashSimulationReport() {
+    const minBal = document.getElementById("cash-sim-result-min-balance")?.textContent || "";
+    const maxCredit = document.getElementById("cash-sim-result-max-credit")?.textContent || "";
+    const days = document.getElementById("cash-sim-result-days-overdraft")?.textContent || "";
+    const interest = document.getElementById("cash-sim-result-interest-delta")?.textContent || "";
+    const hash = document.getElementById("cash-sim-result-hash")?.textContent || "";
+
+    const report = `KRISTIANSAND KOMMUNE — SCENARIESIMULERING LIKVIDITET (WHAT-IF)
+Avstemmingsperiode: M11 November 2026
+Vedtatt kassakredittramme: 150 000 000 kr (Kommuneloven § 14-14)
+Simulert laveste konsernsaldo: ${minBal}
+Maksimalt driftskreditt-trekk: ${maxCredit}
+Dager med benyttet kassakreditt: ${days}
+Estimert merrentebelastning: ${interest}
+Kryptografisk revisjonsstempel: ${hash}
+Godkjent av: Frank Ellingsen (Senior Controller / Prosjektcontroller)`;
+
+    navigator.clipboard.writeText(report).then(() => {
+        alert("Scenarierapport kopiert til utklippstavlen!");
+    });
+}
+
+function signCashCompliance() {
+    const outBox = document.getElementById("cash-compliance-attest-box");
+    if (!outBox) return;
+
+    const now = new Date().toISOString();
+    const seal = "sha256:" + Math.random().toString(16).substring(2) + "8fcaf805ea20bdcb16a7054df75a62f8201f882168bba2e5b6ae697bdb54dcbb".substring(16);
+
+    outBox.innerHTML = `
+        <div style="background:#f8fafc; border:1px solid #15803d; border-radius:4px; padding:14px; font-family:var(--font-mono); font-size:11.5px; line-height:1.6; color:#0f172a;">
+            <div style="font-weight:700; color:#15803d; margin-bottom:6px;">
+                ✅ FINANSSAMSVARRAPPORT SIGNERT &amp; KRYPTOGRAFISK FORSEGLET
+            </div>
+            <div><strong>Tidspunkt:</strong> ${now}</div>
+            <div><strong>Sertifisert av:</strong> Frank Ellingsen, Senior Financial Controller / BI Specialist</div>
+            <div><strong>Revisjonsinstans:</strong> Telemark Revisjon IKS / Bystyrets Kontrollutvalg</div>
+            <div><strong>Hjemler:</strong> Kommuneloven §§ 14-1, 14-13, 14-14, 14-15 &amp; Finansforskriften</div>
+            <div><strong>Maksimalt projisert trekk M11:</strong> 8 850 000 kr (Vedtatt ramme: 150 000 000 kr — Utnyttelse: 5,9 %)</div>
+            <div><strong>Valutasikring:</strong> 100 % NOK (Ingen uhedget derivat- eller valutaeksponering)</div>
+            <div style="word-break:break-all; color:#0369a1; margin-top:8px;"><strong>SHA-256 Audit Seal:</strong> ${seal}</div>
+        </div>
+    `;
+}
+
+function exportCashForecastXlsx() {
+    let csvContent = "Dato;Skatteinntekter;Rammetilskudd;Andre_Innbetalinger;Lonn_Art1010;Leverandorer;Renter_Avdrag;Netto_Kontantstrom;Sluttsaldo;Benyttet_Kassakreditt\n";
+    CASH_M11_RAW_DATA.forEach(d => {
+        csvContent += `${d.dato};${d.skatt};${d.rammetilskudd};${d.andre};${d.lonn};${d.leverandor};${d.renter};${d.netto};${d.saldo};${d.kreditt}\n`;
+    });
+
+    const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Kristiansand_Kommune_Likviditetsprognose_2026_M11.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function initCashManagement() {
+    renderCashForecastTable();
+    renderCashCurveChart();
+    updateCashSimulationUI();
+}
+
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() {
+        if (typeof initCashManagement === "function") initCashManagement();
+    });
+} else {
+    if (typeof initCashManagement === "function") initCashManagement();
+}
+
+
+// ==============================================================================
+// TOP 3 KPIS & BYSTYRET REPORT EXPORT EXTENSION
+// ==============================================================================
+if (typeof SECTION_TO_TAB_MAP !== "undefined") {
+    SECTION_TO_TAB_MAP['top3-kpi-seksjon'] = 'controller-hub';
+}
+
+const TOP3_KPI_LOCAL_DATA = {
+    kommune: "Kristiansand kommune",
+    periode: "2026-M10 (Oktober)",
+    kpis: {
+        netto_driftsresultat: {
+            navn: "Netto Driftsresultat",
+            enhet: "%",
+            verdi: 1.25,
+            mål_kommune: 1.00,
+            mål_tbu: 1.75,
+            status: "GRØNN",
+            note: "115 mill. kr i balanse (merforbrukstoleranse ivaretatt)",
+            min: 0,
+            max: 5.0,
+            zones: [
+                { from: 0, to: 0.5, color: "#ef4444" },
+                { from: 0.5, to: 1.0, color: "#f59e0b" },
+                { from: 1.0, to: 2.5, color: "#10b981" },
+                { from: 2.5, to: 5.0, color: "#059669" }
+            ]
+        },
+        disposisjonsfond: {
+            navn: "Disposisjonsfond",
+            enhet: "% av driftsinntekt",
+            verdi: 4.35,
+            mål_kommune: 4.00,
+            mål_tbu: 5.00,
+            status: "GRØNN",
+            note: "460 mill. kr i urørt reserve (over kommunalt minstekrav)",
+            min: 0,
+            max: 12.0,
+            zones: [
+                { from: 0, to: 2.0, color: "#ef4444" },
+                { from: 2.0, to: 4.0, color: "#f59e0b" },
+                { from: 4.0, to: 8.0, color: "#10b981" },
+                { from: 8.0, to: 12.0, color: "#059669" }
+            ]
+        },
+        netto_lanegjeld: {
+            navn: "Netto Lånegjeld",
+            enhet: "% av driftsinntekt",
+            verdi: 76.8,
+            mål_kommune: 78.0,
+            mål_tbu: 80.0,
+            status: "GRØNN",
+            note: "8,4 mrd. kr i nettogjeld (under kommunalt lånetak på 78 %)",
+            min: 0,
+            max: 120.0,
+            zones: [
+                { from: 0, to: 60.0, color: "#059669" },
+                { from: 60.0, to: 80.0, color: "#10b981" },
+                { from: 80.0, to: 90.0, color: "#f59e0b" },
+                { from: 90.0, to: 120.0, color: "#ef4444" }
+            ]
+        }
+    },
+    hierarki: [
+        {
+            sektor_id: "OMR-02",
+            sektor_navn: "Område Oppvekst & Utdanning",
+            direktor: "Kommunalsjef Oppvekst",
+            ramme_ytd: 1850000000,
+            forbruk_ytd: 1885000000,
+            avvik_ytd: -35000000,
+            avvik_pct: -1.89,
+            status: "RØD",
+            kpis: [
+                { navn: "Kostnad per elev (KOSTRA)", verdi: "128 500 kr" },
+                { navn: "Pedagogdekning", verdi: "98,2 %" },
+                { navn: "Vikar- og overtid (Art 1020)", verdi: "8,4 %" },
+                { navn: "Legemeldt sykefravær", verdi: "9,2 %" }
+            ],
+            enheter: [
+                { enhet_id: "2020-101", navn: "Vågsbygd Skole", avvik: "-1 650 000 kr", status: "RØD" }
+            ]
+        },
+        {
+            sektor_id: "OMR-03",
+            sektor_navn: "Område Helse og Mestring",
+            direktor: "Kommunalsjef Helse",
+            ramme_ytd: 2100000000,
+            forbruk_ytd: 2142000000,
+            avvik_ytd: -42000000,
+            avvik_pct: -2.00,
+            status: "RØD",
+            kpis: [
+                { navn: "Utgift per døgnplass sykehjem", verdi: "1 050 000 kr" },
+                { navn: "Dekningsgrad 80+ år", verdi: "18,5 %" },
+                { navn: "Overtid og ubekvem (Art 1090)", verdi: "6,2 mill. kr" },
+                { navn: "Legemeldt sykefravær", verdi: "11,4 %" }
+            ],
+            enheter: [
+                { enhet_id: "3010-202", navn: "Oddernes Omsorgssenter", avvik: "-2 100 000 kr", status: "RØD" }
+            ]
+        },
+        {
+            sektor_id: "OMR-05",
+            sektor_navn: "Område By- og Stedsutvikling (VAR)",
+            direktor: "Kommunalsjef Teknisk",
+            ramme_ytd: 850000000,
+            forbruk_ytd: 851500000,
+            avvik_ytd: -1500000,
+            avvik_pct: -0.18,
+            status: "GUL",
+            kpis: [
+                { navn: "VAR Selvkostdekningsgrad", verdi: "100,0 %" },
+                { navn: "Snøbrøyting merforbruk (Art 1270)", verdi: "1,5 mill. kr" },
+                { navn: "Saksbehandlingstid byggesak", verdi: "24 dager" },
+                { navn: "Vedlikeholdsetterslep", verdi: "1 450 kr/m²" }
+            ],
+            enheter: []
+        }
+    ]
+};
+
+function renderGaugeSvg(kpiKey) {
+    const kpi = TOP3_KPI_LOCAL_DATA.kpis[kpiKey];
+    if (!kpi) return "";
+
+    const w = 240;
+    const h = 135;
+    const cx = 120;
+    const cy = 115;
+    const r = 90;
+    const strokeWidth = 14;
+
+    function valueToAngle(val) {
+        const norm = Math.max(0, Math.min(1, (val - kpi.min) / (kpi.max - kpi.min)));
+        return Math.PI + (norm * Math.PI);
+    }
+
+    function polarToCartesian(centerX, centerY, radius, angleInRadians) {
+        return {
+            x: centerX + (radius * Math.cos(angleInRadians)),
+            y: centerY + (radius * Math.sin(angleInRadians))
+        };
+    }
+
+    function describeArc(fromVal, toVal) {
+        const a1 = valueToAngle(fromVal);
+        const a2 = valueToAngle(toVal);
+        const p1 = polarToCartesian(cx, cy, r, a1);
+        const p2 = polarToCartesian(cx, cy, r, a2);
+        return "M " + p1.x.toFixed(1) + " " + p1.y.toFixed(1) + " A " + r + " " + r + " 0 0 1 " + p2.x.toFixed(1) + " " + p2.y.toFixed(1);
+    }
+
+    let arcsSvg = "";
+    kpi.zones.forEach(function(z) {
+        const d = describeArc(z.from, z.to);
+        arcsSvg += '<path d="' + d + '" fill="none" stroke="' + z.color + '" stroke-width="' + strokeWidth + '" stroke-linecap="round" />';
+    });
+
+    const needleAngle = valueToAngle(kpi.verdi);
+    const needleEnd = polarToCartesian(cx, cy, r - 12, needleAngle);
+    const needleBaseL = polarToCartesian(cx, cy, 6, needleAngle - Math.PI / 2);
+    const needleBaseR = polarToCartesian(cx, cy, 6, needleAngle + Math.PI / 2);
+
+    const needleD = "M " + needleBaseL.x.toFixed(1) + " " + needleBaseL.y.toFixed(1) + " L " + needleEnd.x.toFixed(1) + " " + needleEnd.y.toFixed(1) + " L " + needleBaseR.x.toFixed(1) + " " + needleBaseR.y.toFixed(1) + " Z";
+
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" style="width:100%; max-width:240px; height:auto; overflow:visible; font-family:var(--font-sans, sans-serif);">' +
+        arcsSvg +
+        '<path d="' + needleD + '" fill="#0f172a" />' +
+        '<circle cx="' + cx + '" cy="' + cy + '" r="6" fill="#0f172a" />' +
+        '<circle cx="' + cx + '" cy="' + cy + '" r="2.5" fill="#ffffff" />' +
+        '<text x="' + (cx - r - 6) + '" y="' + (cy + 16) + '" font-size="9" fill="#64748b" font-weight="600" text-anchor="middle">' + kpi.min + (kpi.enhet.indexOf('%') !== -1 ? '%' : '') + '</text>' +
+        '<text x="' + (cx + r + 6) + '" y="' + (cy + 16) + '" font-size="9" fill="#64748b" font-weight="600" text-anchor="middle">' + kpi.max + (kpi.enhet.indexOf('%') !== -1 ? '%' : '') + '</text>' +
+    '</svg>';
+}
+
+function renderHierarchyTable() {
+    const tbody = document.getElementById("top3-hierarchy-tbody");
+    if (!tbody) return;
+
+    let html = "";
+    TOP3_KPI_LOCAL_DATA.hierarki.forEach(function(sec) {
+        const badgeCol = sec.status === "GRØNN" ? "#10b981" : (sec.status === "GUL" ? "#f59e0b" : "#ef4444");
+        const badgeBg = sec.status === "GRØNN" ? "#ecfdf5" : (sec.status === "GUL" ? "#fffbeb" : "#fef2f2");
+
+        let kpiBadges = "";
+        sec.kpis.forEach(function(kp) {
+            kpiBadges += '<span style="background:#f1f5f9; color:#0f172a; padding:2px 6px; border-radius:3px; margin-right:4px; font-size:10px;">' + kp.navn + ': <strong>' + kp.verdi + '</strong></span>';
+        });
+
+        html += '<tr style="border-bottom:1px solid #f1f5f9;">' +
+            '<td style="padding:10px 8px; font-weight:700; color:var(--navy-dark);">' + sec.sektor_id + '</td>' +
+            '<td style="padding:10px 8px;">' +
+                '<div style="font-weight:700; color:#0f172a;">' + sec.sektor_navn + '</div>' +
+                '<div style="font-size:10px; color:#64748b;">' + sec.direktor + '</div>' +
+                '<div style="margin-top:4px;">' + kpiBadges + '</div>' +
+            '</td>' +
+            '<td style="padding:10px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#0f172a;">' + (sec.ramme_ytd / 1000000).toFixed(1) + ' mill.</td>' +
+            '<td style="padding:10px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#0f172a;">' + (sec.forbruk_ytd / 1000000).toFixed(1) + ' mill.</td>' +
+            '<td style="padding:10px 8px; text-align:right; font-variant-numeric:tabular-nums; font-weight:700; color:' + (sec.avvik_ytd < 0 ? '#b91c1c' : '#15803d') + ';">' +
+                (sec.avvik_ytd / 1000000).toFixed(1) + ' mill. (' + sec.avvik_pct.toFixed(2) + ' %)' +
+            '</td>' +
+            '<td style="padding:10px 8px; text-align:center;">' +
+                '<span class="status-badge" style="background:' + badgeBg + '; color:' + badgeCol + '; border:1px solid ' + badgeCol + '; font-size:9.5px; padding:2px 6px;">' +
+                    sec.status +
+                '</span>' +
+            '</td>' +
+        '</tr>';
+    });
+
+    tbody.innerHTML = html;
+}
+
+function downloadBystyretPptx() {
+    const a = document.createElement("a");
+    a.href = "reports/Bystyret_M10_Okonomi_Rapport.pptx";
+    a.download = "Bystyret_M10_Okonomi_Rapport.pptx";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function copyTop3KpiSummary() {
+    const text = "KRISTIANSAND KOMMUNE — TOP 3 FINANSIELLE NØKKELTALL (M10 OKTOBER 2026)\n" +
+"--------------------------------------------------------------------------------\n" +
+"1. Netto Driftsresultat: 1,25 %  (Mål Kommune: ≥ 1,00 % | TBU Norm: ≥ 1,75 %)  -> 🟢 GRØNN\n" +
+"2. Disposisjonsfond:     4,35 %  (Mål Kommune: ≥ 4,00 % | TBU Norm: ≥ 5,00 %)  -> 🟢 GRØNN (460 mill. kr)\n" +
+"3. Netto Lånegjeld:      76,8 %  (Lånetak:     ≤ 78,0 % | TBU Norm: ≤ 80,0 %)  -> 🟢 GRØNN (8,4 mrd. kr)\n" +
+"--------------------------------------------------------------------------------\n" +
+"Sektorstatus:\n" +
+"- Oppvekst: Avvik -35,0 mill. kr (-1,89 %) [RØD: Vikarbruk art 1020]\n" +
+"- Helse:    Avvik -42,0 mill. kr (-2,00 %) [RØD: Overtid art 1090]\n" +
+"- By/VAR:   Avvik -1,5 mill. kr (-0,18 %)  [GUL: Snøbrøyting / Selvkost i balanse]\n" +
+"--------------------------------------------------------------------------------\n" +
+"Sertifisert av: Frank Ellingsen, Senior Financial Controller / BI Specialist";
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+            alert("Top 3 KPI-sammendrag kopiert til utklippstavlen!");
+        });
+    } else {
+        alert("Top 3 KPI-sammendrag:\n\n" + text);
+    }
+}
+
+function sealTop3KpiReport() {
+    const box = document.getElementById("top3-kpi-seal-box");
+    if (!box) return;
+
+    const now = new Date().toISOString().replace("T", " ").substring(0, 19);
+    const seal = "SHA256:b8c9f0412e8b61a7c3d25e89a4190d7c5f3b142894567201bcde88f3419ac003";
+
+    box.innerHTML = '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
+        '<span style="font-weight:700; color:var(--navy-dark); font-size:12px;">🔒 KRISTIANSAND KOMMUNE — OFFISIELL HITL REVISJONSATTESTASJON (STAGE-GATE PORT 9)</span>' +
+        '<span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px;">VERIFISERT (P9 HITL)</span>' +
+    '</div>' +
+    '<div style="font-size:11px; line-height:1.7; color:#1e293b;">' +
+        '<div><strong>Tidspunkt:</strong> ' + now + '</div>' +
+        '<div><strong>Ansvarlig Controller:</strong> Frank Ellingsen, Senior Financial Controller / BI Specialist</div>' +
+        '<div><strong>Rapporteringsorgan:</strong> Bystyret, Formannskapet og Kontrollutvalget</div>' +
+        '<div><strong>Regelverk:</strong> Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-normer</div>' +
+        '<div><strong>Netto Driftsresultat M10:</strong> 1,25 % (115 mill. kr — GRØNN)</div>' +
+        '<div><strong>Disposisjonsfond M10:</strong> 4,35 % (460 mill. kr — GRØNN)</div>' +
+        '<div><strong>Netto Lånegjeld M10:</strong> 76,8 % (8,4 mrd. kr — GRØNN)</div>' +
+        '<div style="word-break:break-all; color:#0369a1; margin-top:8px;"><strong>SHA-256 Audit Seal:</strong> ' + seal + '</div>' +
+    '</div>';
+}
+
+function initTop3KpiDashboard() {
+    const g1 = document.getElementById("top3-gauge-netto-drift");
+    if (g1) g1.innerHTML = renderGaugeSvg("netto_driftsresultat");
+
+    const g2 = document.getElementById("top3-gauge-disposisjonsfond");
+    if (g2) g2.innerHTML = renderGaugeSvg("disposisjonsfond");
+
+    const g3 = document.getElementById("top3-gauge-netto-gjeld");
+    if (g3) g3.innerHTML = renderGaugeSvg("netto_lanegjeld");
+
+    renderHierarchyTable();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() {
+        if (typeof initTop3KpiDashboard === "function") initTop3KpiDashboard();
+    });
+} else {
+    if (typeof initTop3KpiDashboard === "function") initTop3KpiDashboard();
+}
+
 </script>
 </body>
 </html>

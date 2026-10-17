@@ -20,6 +20,9 @@ Dette biblioteket inneholder den operative agentarkitekturen for **Kommune AI Gu
 | **10** | [`10_likviditet_finans_renteeksponering_agent.md`](file:///c:/Users/frank/Desktop/AI_KOM/agenter/10_likviditet_finans_renteeksponering_agent.md) | **Likviditet, Finans & Renterisiko**<br>Gjeldsportefølje og rentestresstesting | Finansforskriften, NIBOR-sensitivitet (+/- bps), gjeldstak (8,8 mrd. kr) |
 | **11** | [`11_selvkost_gebyr_kalkyle_agent.md`](file:///c:/Users/frank/Desktop/AI_KOM/agenter/11_selvkost_gebyr_kalkyle_agent.md) | **Selvkost, Gebyrregulativ & Fond**<br>Full kostnadsdekning og kalkylerente | Selvkostforskriften, 5-årsregelen, 5-årig swaprente + 0,50 %, VAR-sektoren |
 | **12** | [`12_revisjon_internkontroll_sporbarhet_agent.md`](file:///c:/Users/frank/Desktop/AI_KOM/agenter/12_revisjon_internkontroll_sporbarhet_agent.md) | **Revisjon & Mislighetskontroll**<br>Kontrollutvalget og revisjonsspor | Kommuneloven kap. 25, Anskaffelsesloven (FOA), Benfords lov, SHA-256 bevis |
+| **13** | [`13_evaluering_kvalitetssikring_agent.md`](file:///c:/Users/frank/Desktop/AI_KOM/agenter/13_evaluering_kvalitetssikring_agent.md) | **Evaluering & Kvalitetssikring (QA)**<br>Golden Dataset, RAG-evaluering, LLM-as-a-Judge | Evals over vibes, Recall@k, Faithfulness, Trajectory loop check, 90 % CI/CD Gate |
+| **14** | [`14_database_data_engineering_agent.md`](file:///c:/Users/frank/Desktop/AI_KOM/agenter/14_database_data_engineering_agent.md) | **Database & Data Engineering**<br>Optimalisering, hybridsøk og sikkerhet | Read-Only default, Parameterized SQL, FTS5 + sqlite-vec, EXPLAIN QUERY PLAN, PII-vask |
+| **15** | [`15_ai_engineering_infrastruktur_agent.md`](file:///c:/Users/frank/Desktop/AI_KOM/agenter/15_ai_engineering_infrastruktur_agent.md) | **AI Engineering & Infrastruktur**<br>4-lags arkitektur, semantisk cache og ruting | Systems first/models second, kontekstkomprimering, Ollama/Gemini ruting, TTFT/latens |
 
 ---
 
@@ -59,6 +62,12 @@ Dette biblioteket inneholder den operative agentarkitekturen for **Kommune AI Gu
 └───────────┬─────────────┘       └───────────┬─────────────┘
             │                                 │
             └────────────────┬────────────────┘
+                             ▼
+  ┌──────────────────────────────────────────────────────────┐
+  │ 13_evaluering_kvalitetssikring (90% CI/CD Gate, Evals)   │
+  │ 14_database_data_eng (Hybridsøk, Schema, PII-vask)       │
+  │ 15_ai_engineering_infra (4-Layer, Caching, LLM-Routing) │
+  └──────────────────────────┬───────────────────────────────┘
                              ▼
   ┌──────────────────────────────────────────────────────────┐
   │ 06_ledelsesrapport_skribent & 08_flerniva_rapportering   │

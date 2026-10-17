@@ -10,7 +10,7 @@
 
 * [1. System- og AI-Arkitektur](#1-system--og-ai-arkitektur)
 * [2. Antigravity Skills & Regler (`.agents/`)](#2-antigravity-skills--regler-agents)
-* [3. De 12 Spesialiserte Agentene (`agenter/`)](#3-de-12-spesialiserte-agentene-agenter)
+* [3. De 15 Spesialiserte Agentene (`agenter/`)](#3-de-15-spesialiserte-agentene-agenter)
 * [4. Brukerveiledninger & Månedshjul (`bruker-guides/`)](#4-brukerveiledninger--månedshjul-bruker-guides)
 * [5. Revisjon, Kontrollutvalg & Lover (`revisjon-og-kontroll/`)](#5-revisjon-kontrollutvalg--lover-revisjon-og-kontroll)
 * [6. Spesifikasjonsbunter per Verktøy (PowerPoint, Word, Excel, Power BI)](#6-spesifikasjonsbunter-per-verktøy)
@@ -78,7 +78,7 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 
 ---
 
-## 3. De 12 Spesialiserte Agentene (`agenter/`)
+## 3. De 15 Spesialiserte Agentene (`agenter/`)
 
 | Agent | Rolle | Filsti |
 | :--- | :--- | :--- |
@@ -94,6 +94,9 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 | **10** | Likviditet, Finans & Renteeksponering Agent | [`agenter/10_likviditet_finans_renteeksponering_agent.md`](./agenter/10_likviditet_finans_renteeksponering_agent.md) |
 | **11** | Selvkost & Gebyrkalkyle Agent | [`agenter/11_selvkost_gebyr_kalkyle_agent.md`](./agenter/11_selvkost_gebyr_kalkyle_agent.md) |
 | **12** | Revisjon, Internkontroll & Sporbarhet Agent | [`agenter/12_revisjon_internkontroll_sporbarhet_agent.md`](./agenter/12_revisjon_internkontroll_sporbarhet_agent.md) |
+| **13** | Evaluering & Kvalitetssikring (QA) Agent | [`agenter/13_evaluering_kvalitetssikring_agent.md`](./agenter/13_evaluering_kvalitetssikring_agent.md) |
+| **14** | Database & Data Engineering Agent | [`agenter/14_database_data_engineering_agent.md`](./agenter/14_database_data_engineering_agent.md) |
+| **15** | AI Engineering & Infrastruktur Agent | [`agenter/15_ai_engineering_infrastruktur_agent.md`](./agenter/15_ai_engineering_infrastruktur_agent.md) |
 
 ---
 

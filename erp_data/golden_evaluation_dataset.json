@@ -1,0 +1,65 @@
+[
+  {
+    "id": "GOLDEN-001",
+    "prompt": "Hva krever Kommuneloven § 14-5 dersom en kommune styrer mot et merforbruk?",
+    "category": "legal_rag",
+    "expected_tool": "rag-legal-query",
+    "expected_keywords": ["§ 14-5", "realistisk", "årsbudsjett", "merforbruk", "tilleggsbevilgning", "bystyret"],
+    "ground_truth_context": "Kommuneloven § 14-5 slår fast at årsbudsjettet skal være realistisk, fullstendig og i balanse. Dersom regnskapet viser merforbruk (negativt avvik), plikter kommunedirektøren straks å legge fram sak for bystyret med forslag til inndekning eller tilleggsbudsjett.",
+    "min_faithfulness": 0.90
+  },
+  {
+    "id": "GOLDEN-002",
+    "prompt": "Hvordan regulerer Kommuneloven § 14-6 bruttoprinsippet i kommuneregnskapet?",
+    "category": "legal_rag",
+    "expected_tool": "rag-legal-query",
+    "expected_keywords": ["§ 14-6", "bruttoprinsippet", "inntekter", "utgifter", "nettobudsjettering"],
+    "ground_truth_context": "Etter Kommuneloven § 14-6 skal alle forventede inntekter og utgifter i året budsjetteres og regnskapsføres brutto. Det er ikke tillatt å føre utgifter til fradrag i inntekter før bokføring (forbud mot nettobudsjettering).",
+    "min_faithfulness": 0.90
+  },
+  {
+    "id": "GOLDEN-003",
+    "prompt": "Hvilke vilkår gjelder for kommunalt låneopptak etter § 14-13?",
+    "category": "legal_rag",
+    "expected_tool": "rag-legal-query",
+    "expected_keywords": ["§ 14-13", "lånegjeld", "investeringer", "driftsutgifter", "gjeldsgrense"],
+    "ground_truth_context": "Kommuneloven § 14-13 fastslår at lån kun kan tas opp til finansiering av varige investeringer i anleggsmidler, og ikke til løpende driftsutgifter. Kommunen må ha en betryggende gjeldsgrad og overholde vedtatt lånetak.",
+    "min_faithfulness": 0.90
+  },
+  {
+    "id": "GOLDEN-004",
+    "prompt": "Hvilken KOSTRA-art skal benyttes for vikarer ved sykefravær i Oppvekst og Helse?",
+    "category": "kostra",
+    "expected_tool": "kostra-analyzer",
+    "expected_keywords": ["art 1020", "vikarer", "sykefravær", "lønn", "art 1010"],
+    "ground_truth_context": "I KOSTRA-kontoplanen skal ordinær fast lønn føres på art 1010, mens vikarutgifter ved sykefravær eller permisjoner skal konteres på art 1020 (Vikarer). Overtid konteres på art 1090.",
+    "min_faithfulness": 0.90
+  },
+  {
+    "id": "GOLDEN-005",
+    "prompt": "Hva kontrolleres ved avstemming av momskompensasjon på balansekonto 2130?",
+    "category": "mva",
+    "expected_tool": "mva-validator",
+    "expected_keywords": ["konto 2130", "momskompensasjonsloven", "termin", "oppgjør", "skatteetaten"],
+    "ground_truth_context": "Balansekonto 2130 (Krav momskompensasjon) må avstemmes mot innsendte terminoppgaver til Skatteetaten jf. Momskompensasjonsloven § 6. Akkumulert saldo må tilsvare netto tilgodehavende kompensasjon som ikke er utbetalt.",
+    "min_faithfulness": 0.92
+  },
+  {
+    "id": "GOLDEN-006",
+    "prompt": "Hva er Kristiansand kommunes vedtatte kassakredittramme og rentebetingelse i M11?",
+    "category": "cash",
+    "expected_tool": "cash-engine",
+    "expected_keywords": ["kassakreditt", "150", "ramme", "nibor", "finansforskriften"],
+    "ground_truth_context": "Kommunestyret har vedtatt en operasjonell trekkramme for kassakreditt på 150 mill. kr for å håndtere likviditetsbølger rundt lønnsutbetaling den 12. i hver måned, regulert under Finansforskriften med NIBOR 3M + 0,45 % margin.",
+    "min_faithfulness": 0.90
+  },
+  {
+    "id": "GOLDEN-007",
+    "prompt": "Hvordan beregnes Estimate at Completion (EAC) under EVM for investeringsprosjekter?",
+    "category": "evm",
+    "expected_tool": "project-controller",
+    "expected_keywords": ["EAC", "BAC", "CPI", "Earned Value", "prognose"],
+    "ground_truth_context": "Earned Value Management (EVM) beregner kostnadsindeks CPI som EV delt på AC (CPI = EV / AC). Vedvarende kostnadstrend gir sluttkostnadsprognosen EAC = BAC / CPI, som avdekker forventet sluttavvik VAC = BAC - EAC.",
+    "min_faithfulness": 0.92
+  }
+]

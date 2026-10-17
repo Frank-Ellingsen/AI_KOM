@@ -382,5 +382,98 @@ def test_mva_validering_ci_and_konto_2130_balance():
     assert "tools/mva_balanse_validator.py" in workflow_file.read_text(encoding="utf-8")
 
 
+def test_cash_management_pakke_and_engine_integration():
+    """Validerer at antigravity_cash_management_pakke er implementert og operativ."""
+    pack_dir = ROOT_DIR / "antigravity_cash_management_pakke"
+    assert pack_dir.exists(), "antigravity_cash_management_pakke mangler"
+    assert (pack_dir / "ANTIGRAVITY_Cash_Management_Modul_Spesifikasjon.md").exists()
+    assert (pack_dir / "Likviditetsprognose_2026_M11.csv").exists()
+    assert (pack_dir / "cash_engine.py").exists()
+
+    from app.services.cash_engine import CashManagementEngine
+    from app.schemas.cash import CashPosition, CashSimulationScenario
+
+    engine = CashManagementEngine()
+    pos = engine.get_current_position()
+    assert pos.credit_facility_limit_nok == 150_000_000.0
+    assert pos.bank_balance_nok > 0
+
+    forecast = engine.get_daily_forecast()
+    assert len(forecast) == 30
+    assert any(f.credit_draw_nok > 0 for f in forecast)
+
+    sim = engine.simulate_scenario(CashSimulationScenario(
+        scenario_name="Master Test Scenario",
+        tax_revenue_delta_percent=-5.0,
+        state_grant_delay_days=5,
+        extraordinary_expense_nok=2_500_000.0,
+    ))
+    assert len(sim.sha256_audit_seal) == 64
+    assert sim.days_in_overdraft > 0
+
+
+def test_top3_kpi_and_report_export_packages_integration():
+    """Validerer integrasjonen av antigravity_top3_kpi_visualisering_pakke og antigravity_report_export_pakke."""
+    # 1. Valider Top 3 KPI-pakke
+    kpi_dir = ROOT_DIR / "antigravity_top3_kpi_visualisering_pakke"
+    assert kpi_dir.exists(), "antigravity_top3_kpi_visualisering_pakke mangler"
+    assert (kpi_dir / "ANTIGRAVITY_Top3_KPI_Visualisering_og_Hierarki.md").exists()
+    assert (kpi_dir / "Top3_KPI_Gauge_Dashboard_Data.json").exists()
+
+    from app.services.top3_kpi_service import Top3KpiService
+    svc = Top3KpiService()
+    kpi_payload = svc.get_dashboard_payload()
+    assert kpi_payload.kommune == "Kristiansand kommune"
+    assert len(kpi_payload.top3_kpis) == 3
+    assert len(kpi_payload.budsjetthierarki) >= 3
+
+    # 2. Valider Report Export Engine-pakke
+    export_dir = ROOT_DIR / "antigravity_report_export_pakke"
+    assert export_dir.exists(), "antigravity_report_export_pakke mangler"
+    assert (export_dir / "ANTIGRAVITY_Automated_Report_Export_Engine.md").exists()
+    assert (export_dir / "export_bystyret_report.py").exists()
+
+    from app.services.report_export_engine import generate_bystyret_pptx
+    res = generate_bystyret_pptx()
+    assert res["ok"] is True
+    assert res["slides_count"] == 4
+    assert Path(res["file_path"]).exists()
+    assert len(res["sha256_audit_seal"]) == 64
+
+
+def test_evaluation_database_and_ai_engineering_agents_integration():
+    """Validerer integrasjonen av agentene 13, 14 og 15 (Evaluering, Database og AI Engineering)."""
+    agenter_dir = ROOT_DIR / "agenter"
+    assert (agenter_dir / "13_evaluering_kvalitetssikring_agent.md").exists()
+    assert (agenter_dir / "14_database_data_engineering_agent.md").exists()
+    assert (agenter_dir / "15_ai_engineering_infrastruktur_agent.md").exists()
+
+    # 1. Agent 13: Evaluation Service
+    from app.services.evaluation_service import EvaluationService
+    eval_svc = EvaluationService()
+    rep = eval_svc.run_golden_suite()
+    assert rep.total_tests >= 5
+    assert rep.overall_faithfulness >= 0.90
+    assert rep.ci_cd_gate_passed is True
+
+    # 2. Agent 14: Database Service
+    from app.services.database_agent_service import DatabaseAgentService
+    from app.schemas.database import QueryRequest
+    db_svc = DatabaseAgentService()
+    schema = db_svc.inspect_schema()
+    assert len(schema["tables"]) >= 5
+    q_res = db_svc.execute_query(QueryRequest(sql="SELECT 1 AS num;"))
+    assert q_res.rows[0]["num"] == 1
+
+    # 3. Agent 15: AI Engineering Service
+    from app.services.ai_engineering_service import AIEngineeringService
+    aie_svc = AIEngineeringService()
+    status = aie_svc.get_4_layer_status()
+    assert status.framework_layer["agents_count"] == 15
+    assert status.harness_layer["max_steps"] == 10
+
+
+
+
 
 

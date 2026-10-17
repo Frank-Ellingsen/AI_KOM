@@ -98,6 +98,53 @@ Eksempler på bruk:
     p_triage.add_argument("--unit", default="2020", help="Aktiv enhets-ID")
     p_triage.add_argument("--json", action="store_true", help="Formatér respons som JSON")
 
+    # 12. Cash Management & Likviditetsstyring
+    p_cash = subparsers.add_parser("cash", help="Cash Management & Likviditetsstyring (M11 rullende prognose, kassakreditt og What-If simulering)")
+    p_cash.add_argument("--position", action="store_true", help="Vis konsernkonto og kassakredittstatus")
+    p_cash.add_argument("--forecast", action="store_true", help="Vis 30-dagers rullende likviditetsprognose")
+    p_cash.add_argument("--simulate", action="store_true", help="Kjør What-If scenariesimulering")
+    p_cash.add_argument("--compliance", action="store_true", help="Valider mot Kommuneloven § 14-14 og Finansforskriften")
+    p_cash.add_argument("--scenario-name", default="Simulert Avvik", help="Navn på scenario")
+    p_cash.add_argument("--tax-delta", type=float, default=-5.0, help="Endring i skatt (prosent)")
+    p_cash.add_argument("--grant-delay", type=int, default=5, help="Forsinkelse på rammetilskudd (dager)")
+    p_cash.add_argument("--extra-expense", type=float, default=2500000.0, help="Ekstraordinær kostnad (NOK)")
+    p_cash.add_argument("--credit-limit", type=float, default=150000000.0, help="Kassakredittramme (NOK)")
+    p_cash.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 13. Top 3 KPIs & Budsjetthierarki
+    p_kpi = subparsers.add_parser("kpi", help="Top 3 Kommunale Nøkkeltall (Takometer/Gauge) og kaskaderende budsjetthierarki")
+    p_kpi.add_argument("--sector", type=str, default=None, help="Filtrer på spesifikk sektor (f.eks. OMR-02)")
+    p_kpi.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 14. Bystyret PowerPoint Export (.pptx)
+    p_pptx = subparsers.add_parser("pptx", help="Automatisert Bystyre og Formannskap PowerPoint eksport (.pptx)")
+    p_pptx.add_argument("--out", type=str, default="reports/Bystyret_M10_Okonomi_Rapport.pptx", help="Utfilsti (.pptx)")
+    p_pptx.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 15. Agent 13: Evaluation & QA Agent
+    p_eval = subparsers.add_parser("eval", help="Agent 13: Evaluation & QA Runner (Golden Dataset, RAG-evaluering, 90 %% CI/CD Gate)")
+    p_eval.add_argument("--golden", action="store_true", help="Kjør evaluering mot Golden Dataset")
+    p_eval.add_argument("--gate", action="store_true", help="Valider og håndhev 90 %% CI/CD kvalitetsport")
+    p_eval.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 16. Agent 14: Database & Data Engineering Agent
+    p_db = subparsers.add_parser("db", help="Agent 14: Database & Data Engineering Runner (Schema, Read-Only SQL, EXPLAIN, Hybridsøk)")
+    p_db.add_argument("--inspect-schema", nargs="?", const="ALL", default=None, help="Inspiser tabellskjema og indekser")
+    p_db.add_argument("--query", type=str, help="Kjør parametrisert SQL-spørring")
+    p_db.add_argument("--explain", type=str, help="Kjør EXPLAIN QUERY PLAN og gi optimaliseringsråd")
+    p_db.add_argument("--hybrid-search", type=str, help="Kjør hybridsøk (Sparse FTS5 + Dense Vektor)")
+    p_db.add_argument("--hitl", action="store_true", help="Bekreft Human-in-the-Loop for skriveoperasjon")
+    p_db.add_argument("--limit", type=int, default=50, help="Maks rader (standard: 50)")
+    p_db.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 17. Agent 15: AI Engineering & Infrastructure Agent
+    p_aie = subparsers.add_parser("ai-eng", help="Agent 15: AI Engineering & Infrastructure Runner (4-lags arkitektur, caching, benchmarking)")
+    p_aie.add_argument("--status", action="store_true", help="Vis helsestatus for de 4 arkitekturlagene")
+    p_aie.add_argument("--compact", type=str, help="Kjør kontekstkomprimering og bevar lovhenvisninger")
+    p_aie.add_argument("--benchmark", action="store_true", help="Mål inferenslatens, TTFT og tokengjennomstrømming")
+    p_aie.add_argument("--cache-stats", action="store_true", help="Vis statistikk og besparelser for semantisk cache")
+    p_aie.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
     args, unknown = parser.parse_known_args()
 
     if not args.command:
@@ -151,6 +198,80 @@ Eksempler på bruk:
         if args.json:
             cmd_args.append("--json")
         run_command("triage_cli.py", cmd_args + unknown)
+    elif args.command == "cash":
+        cmd_args = []
+        if args.position:
+            cmd_args.append("--position")
+        if args.forecast:
+            cmd_args.append("--forecast")
+        if args.simulate:
+            cmd_args.append("--simulate")
+        if args.compliance:
+            cmd_args.append("--compliance")
+        if args.scenario_name:
+            cmd_args += ["--scenario-name", args.scenario_name]
+        if args.tax_delta != -5.0:
+            cmd_args += ["--tax-delta", str(args.tax_delta)]
+        if args.grant_delay != 5:
+            cmd_args += ["--grant-delay", str(args.grant_delay)]
+        if args.extra_expense != 2500000.0:
+            cmd_args += ["--extra-expense", str(args.extra_expense)]
+        if args.credit_limit != 150000000.0:
+            cmd_args += ["--credit-limit", str(args.credit_limit)]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("cash_management_runner.py", cmd_args + unknown)
+    elif args.command == "kpi":
+        cmd_args = []
+        if args.sector:
+            cmd_args += ["--sector", args.sector]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("kpi_runner.py", cmd_args + unknown)
+    elif args.command == "pptx":
+        cmd_args = ["--out", args.out]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("report_export_runner.py", cmd_args + unknown)
+    elif args.command == "eval":
+        cmd_args = []
+        if args.golden:
+            cmd_args.append("--golden")
+        if args.gate:
+            cmd_args.append("--gate")
+        if args.json:
+            cmd_args.append("--json")
+        run_command("evaluation_runner.py", cmd_args + unknown)
+    elif args.command == "db":
+        cmd_args = []
+        if args.inspect_schema:
+            cmd_args += ["--inspect-schema", args.inspect_schema]
+        if args.query:
+            cmd_args += ["--query", args.query]
+        if args.explain:
+            cmd_args += ["--explain", args.explain]
+        if args.hybrid_search:
+            cmd_args += ["--hybrid-search", args.hybrid_search]
+        if args.hitl:
+            cmd_args.append("--hitl")
+        if args.limit != 50:
+            cmd_args += ["--limit", str(args.limit)]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("database_runner.py", cmd_args + unknown)
+    elif args.command == "ai-eng":
+        cmd_args = []
+        if args.status:
+            cmd_args.append("--status")
+        if args.compact:
+            cmd_args += ["--compact", args.compact]
+        if args.benchmark:
+            cmd_args.append("--benchmark")
+        if args.cache_stats:
+            cmd_args.append("--cache-stats")
+        if args.json:
+            cmd_args.append("--json")
+        run_command("ai_engineering_runner.py", cmd_args + unknown)
 
 if __name__ == "__main__":
     main()
