@@ -6,7 +6,7 @@ Regnskap YTD = SUM(Fact_Regnskap[Belop_YTD])
 
 Budsjett YTD = SUM(Fact_Budsjett[Budsjett_Revidert])
 
-Budsjettavvik Kr = [Regnskap YTD] - [Budsjett YTD]
+Budsjettavvik Kr = [Budsjett YTD] - [Regnskap YTD]
 
 Budsjettavvik % = 
 DIVIDE([Budsjettavvik Kr], [Budsjett YTD], 0)
@@ -40,5 +40,16 @@ IF(
         "Sektornivå: " & SELECTEDVALUE(Dim_Ansvar[Kommunalsjef_Omraade]),
         "Samlet Kommunenivå"
     )
+)
+```
+
+## 4. RAG-status & Betinget Formatering (Conditional Formatting)
+```dax
+Avvik Status Fargekode = 
+SWITCH(
+    TRUE(),
+    [Budsjettavvik %] < -0.05, "#DC2626", // Rød (Merforbruk / overskridelse > 5 %)
+    [Budsjettavvik %] < -0.02, "#F59E0B", // Gul/Amber (Moderat merforbruk 2-5 %)
+    "#16A34A"                             // Grønn (Mindreforbruk / under ramme)
 )
 ```

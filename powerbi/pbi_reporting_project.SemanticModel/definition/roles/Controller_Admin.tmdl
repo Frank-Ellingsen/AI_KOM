@@ -1,0 +1,4 @@
+role Controller_Admin
+	modelPermission: read
+
+	tablePermission Dim_Ansvar = TRUE()

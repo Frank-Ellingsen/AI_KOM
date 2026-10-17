@@ -26,7 +26,7 @@ Arbeidsbokstruktur (14 faner):
 Designstandard:
 - Edward Tuftes Data-Ink Ratio (ingen rutenett på dashboards, ingen tunge rammer)
 - FAST Financial Modelling Standard
-- Invertert RAG-regel for kostnader: Negativt avvik = Grønt (Gunstig), Positivt = Rødt (Ugunstig)
+- Standard RAG-regel: Avvik = Budsjett - Actuals. Positivt avvik = Grønt (Gunstig), Negativt = Rødt (Ugunstig)
 
 Forfatter: Frank Ellingsen (Senior Financial & Project Controller)
 ===============================================================================
@@ -70,9 +70,9 @@ COLOR_TEXT_DARK  = "212529"       # Mørkegrå primærtekst
 COLOR_TEXT_MUTED = "6C757D"       # Sekundærtekst / etiketter
 COLOR_WHITE      = "FFFFFF"
 
-# RAG-farger for kostnadsavvik (Avvik = Regnskap - Budsjett)
-# Negativt = Grønt (Mindreforbruk / Besparelse)
-# Positivt = Rødt (Merforbruk / Overskridelse)
+# RAG-farger for kostnadsavvik (Avvik = Budsjett - Actuals)
+# Positivt = Grønt (Mindreforbruk / Besparelse / Gunstig)
+# Negativt = Rødt (Merforbruk / Overskridelse / Ugunstig)
 # Nær null = Amber (Innenfor toleranse)
 FILL_RAG_GREEN   = "D4EDDA"       # Svak grønn fyll
 FONT_RAG_GREEN   = "155724"       # Grønn skrift
@@ -227,7 +227,7 @@ def build_excel_master_report() -> Path:
         ("Formål:", "Denne modellen oversetter Power BI Enterprise-styringslogikken til en fullverdig Excel Controller-modell."),
         ("Metodikk:", "Power Query ETL -> Data Model (Star Schema) -> Power Pivot DAX -> Slicers -> Dashboards -> QA."),
         ("Standarder:", "FAST Standard for finansiell modellering | Edward Tufte Data-Ink Ratio | Kommuneloven § 14-5 & § 14-6."),
-        ("Fortegnsregel:", "Avvik = Regnskap - Budsjett. Negativt avvik = Grønt (Mindreforbruk). Positivt avvik = Rødt (Merforbruk)."),
+        ("Fortegnsregel:", "Avvik = Budsjett - Regnskap. Positivt avvik = Grønt (Mindreforbruk). Negativt avvik = Rødt (Merforbruk)."),
         ("Saksbehandler:", "Frank Ellingsen, Senior Financial Controller & BI-Spesialist."),
         ("Opprettet dato:", now_str),
         ("Kryptografisk stempel:", f"SHA-256: {sha_hash}")
@@ -256,9 +256,9 @@ def build_excel_master_report() -> Path:
     dax_catalog = [
         ("Regnskap YTD", "CALCULATE(SUM(FactFinance[Amount]), FactFinance[DataType]='Actual')", "Faktisk bokførte kostnader hittil i år (AC)"),
         ("Budsjett YTD", "CALCULATE(SUM(FactFinance[Amount]), FactFinance[DataType]='Budget')", "Periodisert vedtatt budsjettramme hittil i år (PV)"),
-        ("Avvik YTD", "[Regnskap YTD] - [Budsjett YTD]", "Netto avvik i NOK. Positiv = Merforbruk (Rød), Negativ = Mindreforbruk (Grønn)"),
+        ("Avvik YTD", "[Budsjett YTD] - [Regnskap YTD]", "Netto avvik i NOK. Positiv = Mindreforbruk (Grønn), Negativ = Merforbruk (Rød)"),
         ("Avvik YTD %", "DIVIDE([Avvik YTD], ABS([Budsjett YTD]))", "Prosentvis avvik mot periodisert budsjett"),
-        ("RAG Status", "SWITCH(TRUE(), [Avvik YTD %] < -0.02, 'Green', [Avvik YTD %] > 0.02, 'Red', 'Amber')", "Toleransestyrt trafikklys med ± 2 % bånd"),
+        ("RAG Status", "SWITCH(TRUE(), [Avvik YTD %] < -0.02, 'Red', [Avvik YTD %] > 0.02, 'Green', 'Amber')", "Toleransestyrt trafikklys med ± 2 % bånd"),
         ("EAC Sluttprognose", "IF([CPI]>0, [BAC Total] / [CPI], [BAC Total])", "Estimate at Completion basert på historisk kostnadseffektivitet"),
         ("Vikarandel", "DIVIDE([Vikarutgift], [Lønnskostnad Total])", "Andel vikarinnleie av totale personalkostnader (mål < 4.5 %)"),
         ("Overtidsandel", "DIVIDE([Overtid], [Lønnskostnad Total])", "Andel overtid av totale personalkostnader (AML § 10-12 tak)")
@@ -289,8 +289,8 @@ def build_excel_master_report() -> Path:
 
     control_params = [
         ("Parameternavn", "Verdi", "FAST Type", "Enhet", "Beskrivelse / Forankring"),
-        ("RAG_Green_Threshold", -0.02, "INPUT", "Prosent", "Gunstig avviksterskel (mindreforbruk > 2.0 %)"),
-        ("RAG_Red_Threshold", 0.02, "INPUT", "Prosent", "Ugunstig avviksterskel (merforbruk > 2.0 %)"),
+        ("RAG_Green_Threshold", 0.02, "INPUT", "Prosent", "Gunstig avviksterskel (mindreforbruk > 2.0 %)"),
+        ("RAG_Red_Threshold", -0.02, "INPUT", "Prosent", "Ugunstig avviksterskel (merforbruk > 2.0 %)"),
         ("Materiality_Limit_NOK", 100000, "INPUT", "NOK", "Beløpsgrense for vesentlighet i avvikskommentar"),
         ("Critical_Merforbruk_NOK", 500000, "INPUT", "NOK", "Kommuneloven § 14-5 varselgrense til Formannskapet"),
         ("Active_Fiscal_Year", 2026, "INPUT", "År", "Gjeldende regnskapsår"),
@@ -346,7 +346,7 @@ def build_excel_master_report() -> Path:
 
     # Slicer / Filter context display
     ws_exec.merge_cells("B3:M3")
-    ws_exec["B3"] = "  Filterkontekst: Konsern samlet  |  Budsjettnivå: Alle virksomhetsområder  |  Periode: YTD Aug-2026  |  Fortegnsregel: Avvik = Regnskap - Budsjett"
+    ws_exec["B3"] = "  Filterkontekst: Konsern samlet  |  Budsjettnivå: Alle virksomhetsområder  |  Periode: YTD Aug-2026  |  Fortegnsregel: Avvik = Budsjett - Regnskap"
     ws_exec["B3"].font = Font(name="Arial", size=8.5, italic=True, color=COLOR_TEXT_MUTED)
     ws_exec["B3"].fill = PatternFill(start_color=FILL_CARD_HEADER, end_color=FILL_CARD_HEADER, fill_type="solid")
     ws_exec["B3"].alignment = Alignment(vertical="center")
@@ -361,12 +361,12 @@ def build_excel_master_report() -> Path:
     style_kpi_card(ws_exec, "E", 5, "Budsjett YTD (PV)", 83930572, "Periodisert ramme per 31.08", "NEUTRAL")
     ws_exec["E6"].number_format = FMT_NOK_CURRENCY
 
-    # 3. Avvik YTD (Regnskap - Budsjett) -> 83 506 244 - 83 930 572 = -424 328 kr (Mindreforbruk = Gunstig / Grønn)
-    style_kpi_card(ws_exec, "H", 5, "Avvik YTD (CV)", -424328, "● Gunstig (-0.5 % avvik)", "GREEN")
+    # 3. Avvik YTD (Budsjett - Regnskap) -> 83 930 572 - 83 506 244 = +424 328 kr (Mindreforbruk = Gunstig / Grønn)
+    style_kpi_card(ws_exec, "H", 5, "Avvik YTD (CV)", 424328, "● Gunstig (+0.5 % avvik)", "GREEN")
     ws_exec["H6"].number_format = FMT_VARIANCE
 
-    # 4. Prognose EOY Avvik (Monte Carlo p50) -> Merforbruk på sikt pga. vikartakt i Oppvekst og Omsorg
-    style_kpi_card(ws_exec, "K", 5, "Stipulert EOY Avvik", 32306652, "● Ugunstig (+38.5 % merforbruk)", "RED")
+    # 4. Prognose EOY Avvik (Monte Carlo p50) -> Merforbruk på sikt pga. vikartakt i Oppvekst og Omsorg: Budsjett - Prognose = -32 306 652 kr
+    style_kpi_card(ws_exec, "K", 5, "Stipulert EOY Avvik", -32306652, "● Ugunstig (-38.5 % merforbruk)", "RED")
     ws_exec["K6"].number_format = FMT_VARIANCE
 
     # Executive Summary Card (Dynamisk narrativ)
@@ -403,14 +403,14 @@ def build_excel_master_report() -> Path:
     ws_exec.row_dimensions[13].height = 20
 
     monthly_trend_data = [
-        ("Januar 2026", 9850000, 10200000, -350000, -0.034, "● Gunstig", FILL_RAG_GREEN, FONT_RAG_GREEN),
-        ("Februar 2026", 10150000, 10300000, -150000, -0.015, "● Toleranse", FILL_RAG_AMBER, FONT_RAG_AMBER),
-        ("Mars 2026", 11200000, 10450000, 750000, 0.072, "● Ugunstig", FILL_RAG_RED, FONT_RAG_RED),
-        ("April 2026", 10400000, 10500000, -100000, -0.010, "● Toleranse", FILL_RAG_AMBER, FONT_RAG_AMBER),
-        ("Mai 2026", 10600000, 10500000, 100000, 0.010, "● Toleranse", FILL_RAG_AMBER, FONT_RAG_AMBER),
-        ("Juni 2026", 11800000, 11000000, 800000, 0.073, "● Ugunstig", FILL_RAG_RED, FONT_RAG_RED),
-        ("Juli 2026", 9100000, 9500000, -400000, -0.042, "● Gunstig", FILL_RAG_GREEN, FONT_RAG_GREEN),
-        ("August 2026", 10406244, 11480572, -1074328, -0.094, "● Gunstig", FILL_RAG_GREEN, FONT_RAG_GREEN)
+        ("Januar 2026", 9850000, 10200000, 350000, 0.034, "● Gunstig", FILL_RAG_GREEN, FONT_RAG_GREEN),
+        ("Februar 2026", 10150000, 10300000, 150000, 0.015, "● Toleranse", FILL_RAG_AMBER, FONT_RAG_AMBER),
+        ("Mars 2026", 11200000, 10450000, -750000, -0.072, "● Ugunstig", FILL_RAG_RED, FONT_RAG_RED),
+        ("April 2026", 10400000, 10500000, 100000, 0.010, "● Toleranse", FILL_RAG_AMBER, FONT_RAG_AMBER),
+        ("Mai 2026", 10600000, 10500000, -100000, -0.010, "● Toleranse", FILL_RAG_AMBER, FONT_RAG_AMBER),
+        ("Juni 2026", 11800000, 11000000, -800000, -0.073, "● Ugunstig", FILL_RAG_RED, FONT_RAG_RED),
+        ("Juli 2026", 9100000, 9500000, 400000, 0.042, "● Gunstig", FILL_RAG_GREEN, FONT_RAG_GREEN),
+        ("August 2026", 10406244, 11480572, 1074328, 0.094, "● Gunstig", FILL_RAG_GREEN, FONT_RAG_GREEN)
     ]
 
     for idx, (m_navn, m_reg, m_bud, m_avv, m_pst, m_rag, f_bg, f_fg) in enumerate(monthly_trend_data, start=14):
@@ -488,8 +488,8 @@ def build_excel_master_report() -> Path:
     ws_exec.merge_cells("B23:M25")
     ws_exec["B23"] = (
         "ℹ️ FORTEGNSLOGIKK & METODEFORKLARING (EDWARD TUFTE STANDARD):\n"
-        "• Avvik er strengt definert som: Avvik = Regnskap - Budsjett. For utgifter betyr negativt tall at kommunen har brukt MINDRE enn budsjett (gunstig / besparelse = Grønt).\n"
-        "• Positivt tall betyr at utgiftene overstiger budsjettet (ugunstig / merforbruk = Rødt). Toleransebåndet er satt til ± 2,0 % (Gult).\n"
+        "• Avvik er strengt definert som: Avvik = Budsjett - Regnskap. For utgifter betyr positivt tall at kommunen har brukt MINDRE enn budsjett (gunstig / mindreforbruk = Grønt).\n"
+        "• Negativt tall betyr at utgiftene overstiger budsjettet (ugunstig / merforbruk = Rødt). Toleransebåndet er satt til ± 2,0 % (Gult).\n"
         "• Alle datagrunnlag stammer fra SQLite Golden Record og er kryptografisk forseglet iht. Stage-Gate Port 9 for Kommunerevisjonen."
     )
     ws_exec["B23"].font = Font(name="Arial", size=8.5, color=COLOR_TEXT_MUTED)
@@ -513,7 +513,7 @@ def build_excel_master_report() -> Path:
 
     # KPI-kort Oppvekst
     style_kpi_card(ws_oppv, "B", 4, "Forbruk YTD (AC)", 36080000, "Grunnskoler samlet", "NEUTRAL")
-    style_kpi_card(ws_oppv, "E", 4, "Avvik YTD (CV)", 4097000, "● Merforbruk (+12.8 %)", "RED")
+    style_kpi_card(ws_oppv, "E", 4, "Avvik YTD (CV)", -4097000, "● Merforbruk (-12.8 %)", "RED")
     style_kpi_card(ws_oppv, "H", 4, "Vikarandel Lønn", 0.046, "Mål: < 4.0 % (Over tak)", "RED")
 
     ws_oppv["B5"].number_format = FMT_NOK_CURRENCY
@@ -536,11 +536,11 @@ def build_excel_master_report() -> Path:
     ws_oppv.row_dimensions[9].height = 20
 
     oppv_rows = [
-        ("202", "Grunnskoleopplæring", 27800000, 31400000, 3600000, 0.129, "🔴 Merforbruk", "Vikarstopp < 3 dager innført"),
-        ("203", "Særskilt tilrettelagt opplæring", 2500000, 2750000, 250000, 0.100, "🔴 Merforbruk", "Ressursteam koordinering"),
-        ("204", "Skolefritidsordning (SFO)", 1200000, 1180000, -20000, -0.017, "🟢 Gunstig", "I rute jf. foreldrebetaling"),
-        ("214", "Skoleskyss", 1400000, 1620000, 220000, 0.157, "🔴 Merforbruk", "Ruteoptimalisering AKT"),
-        ("223", "Spesialpedagogisk hjelp barnehage", 1083000, 1130000, 47000, 0.043, "🟡 Toleranse", "Oppfølging bemanningsplan")
+        ("202", "Grunnskoleopplæring", 27800000, 31400000, -3600000, -0.129, "🔴 Merforbruk", "Vikarstopp < 3 dager innført"),
+        ("203", "Særskilt tilrettelagt opplæring", 2500000, 2750000, -250000, -0.100, "🔴 Merforbruk", "Ressursteam koordinering"),
+        ("204", "Skolefritidsordning (SFO)", 1200000, 1180000, 20000, 0.017, "🟢 Gunstig", "I rute jf. foreldrebetaling"),
+        ("214", "Skoleskyss", 1400000, 1620000, -220000, -0.157, "🔴 Merforbruk", "Ruteoptimalisering AKT"),
+        ("223", "Spesialpedagogisk hjelp barnehage", 1083000, 1130000, -47000, -0.043, "🟡 Toleranse", "Oppfølging bemanningsplan")
     ]
     for idx, (f_k, f_n, f_b, f_r, f_a, f_p, f_st, f_ti) in enumerate(oppv_rows, start=10):
         ws_oppv[f"B{idx}"] = f_k
@@ -557,7 +557,7 @@ def build_excel_master_report() -> Path:
         ws_oppv[f"F{idx}"].number_format = FMT_VARIANCE
         ws_oppv[f"G{idx}"].number_format = FMT_PERCENT
 
-        ws_oppv[f"F{idx}"].font = Font(name="Arial", size=8.5, bold=True, color=FONT_RAG_RED if f_a > 0 else FONT_RAG_GREEN)
+        ws_oppv[f"F{idx}"].font = Font(name="Arial", size=8.5, bold=True, color=FONT_RAG_RED if f_a < 0 else FONT_RAG_GREEN)
         for col_l in ["B", "C", "D", "E", "F", "G", "H", "I"]:
             ws_oppv[f"{col_l}{idx}"].border = BORDER_ROW
         ws_oppv.row_dimensions[idx].height = 18
@@ -575,7 +575,7 @@ def build_excel_master_report() -> Path:
     style_header_band(ws_helse, "B2:J2", "Sektordashbord: Helse og Mestring (Enhet 254 Kommunal Boenhet)", "Kommunalsjef Helse")
 
     style_kpi_card(ws_helse, "B", 4, "Forbruk YTD (AC)", 47426244, "Heldøgns omsorg per 31.08", "NEUTRAL")
-    style_kpi_card(ws_helse, "E", 4, "Avvik YTD (CV)", 7775460, "● Merforbruk (+19.6 %)", "RED")
+    style_kpi_card(ws_helse, "E", 4, "Avvik YTD (CV)", -7775460, "● Merforbruk (-19.6 %)", "RED")
     style_kpi_card(ws_helse, "H", 4, "Overtidsandel", 0.068, "Tak: 5.0 % (HTA § 4 drøftet)", "RED")
 
     ws_helse["B5"].number_format = FMT_NOK_CURRENCY
@@ -597,11 +597,11 @@ def build_excel_master_report() -> Path:
     ws_helse.row_dimensions[9].height = 20
 
     helse_rows = [
-        ("254.1010", "Fastlønn turnuspersonell", 24500000, 27800000, 3300000, 0.135, "🔴 Merforbruk turnus"),
-        ("254.1020", "Sykefraværsvikarer", 4200000, 6850000, 2650000, 0.631, "🔴 Kritisk høyt fravær (11.2%)"),
-        ("254.1090", "Overtid og ubekvemstillegg", 2100000, 3420000, 1320000, 0.629, "🔴 HTA § 4 drøfting nødvendig"),
-        ("254.1270", "Privat innleie helsefagarbeidere", 0, 382656, 382656, 1.000, "🔴 Ubudsjettert byråinnleie"),
-        ("254.1690", "Refusjon sykepenger NAV", -3500000, -2980000, 520000, -0.149, "🟡 Etterslep refusjonskrav")
+        ("254.1010", "Fastlønn turnuspersonell", 24500000, 27800000, -3300000, -0.135, "🔴 Merforbruk turnus"),
+        ("254.1020", "Sykefraværsvikarer", 4200000, 6850000, -2650000, -0.631, "🔴 Kritisk høyt fravær (11.2%)"),
+        ("254.1090", "Overtid og ubekvemstillegg", 2100000, 3420000, -1320000, -0.629, "🔴 HTA § 4 drøfting nødvendig"),
+        ("254.1270", "Privat innleie helsefagarbeidere", 0, 382656, -382656, -1.000, "🔴 Ubudsjettert byråinnleie"),
+        ("254.1690", "Refusjon sykepenger NAV", -3500000, -2980000, -520000, -0.149, "🟡 Etterslep refusjonskrav")
     ]
     for idx, (h_k, h_n, h_b, h_r, h_a, h_p, h_st) in enumerate(helse_rows, start=10):
         ws_helse[f"B{idx}"] = h_k
@@ -617,7 +617,7 @@ def build_excel_master_report() -> Path:
         ws_helse[f"F{idx}"].number_format = FMT_VARIANCE
         ws_helse[f"G{idx}"].number_format = FMT_PERCENT
 
-        ws_helse[f"F{idx}"].font = Font(name="Arial", size=8.5, bold=True, color=FONT_RAG_RED if h_a > 0 else FONT_RAG_GREEN)
+        ws_helse[f"F{idx}"].font = Font(name="Arial", size=8.5, bold=True, color=FONT_RAG_RED if h_a < 0 else FONT_RAG_GREEN)
         for col_l in ["B", "C", "D", "E", "F", "G", "H"]:
             ws_helse[f"{col_l}{idx}"].border = BORDER_ROW
         ws_helse.row_dimensions[idx].height = 18
@@ -856,14 +856,14 @@ def build_excel_master_report() -> Path:
         ws_root[f"{col_l}4"].alignment = Alignment(horizontal="right" if c_i in [6, 7, 8, 9] else "left")
 
     root_rows = [
-        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_FASTLØNN (Fastlønn)", 15729000, 18197000, 2468000, 0.157),
-        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_LØNNTILVIKAR (Vikarer)", 202000, 847000, 645000, 3.193),
-        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_ARBEIDSGIVER (AGA)", 3785000, 4216000, 431000, 0.114),
-        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_OVERTID (Overtid)", 57000, 436000, 379000, 6.649),
-        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1010 Fastlønn helsefagarbeidere", 24500000, 27800000, 3300000, 0.135),
-        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1020 Sykefraværsvikarer", 4200000, 6850000, 2650000, 0.631),
-        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1090 Overtidsgodtgjørelse", 2100000, 3420000, 1320000, 0.629),
-        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1270 Privat byråinnleie", 0, 382656, 382656, 1.000),
+        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_FASTLØNN (Fastlønn)", 15729000, 18197000, -2468000, -0.157),
+        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_LØNNTILVIKAR (Vikarer)", 202000, 847000, -645000, -3.193),
+        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_ARBEIDSGIVER (AGA)", 3785000, 4216000, -431000, -0.114),
+        ("Oppvekst og utdanning", "Kommunal Skole", "202 Grunnskoleopplæring", "SKOLE_OVERTID (Overtid)", 57000, 436000, -379000, -6.649),
+        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1010 Fastlønn helsefagarbeidere", 24500000, 27800000, -3300000, -0.135),
+        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1020 Sykefraværsvikarer", 4200000, 6850000, -2650000, -0.631),
+        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1090 Overtidsgodtgjørelse", 2100000, 3420000, -1320000, -0.629),
+        ("Helse og mestring", "Kommunal Boenhet", "254 Heldøgns pleie og omsorg", "1270 Privat byråinnleie", 0, 382656, -382656, -1.000),
     ]
 
     for idx, (s_n, e_n, f_n, a_n, b_v, r_v, a_v, p_v) in enumerate(root_rows, start=5):
@@ -881,8 +881,8 @@ def build_excel_master_report() -> Path:
         ws_root[f"H{idx}"].number_format = FMT_VARIANCE
         ws_root[f"I{idx}"].number_format = FMT_PERCENT
 
-        # Invertert farging: rød ved merforbruk
-        ws_root[f"H{idx}"].font = Font(name="Arial", size=8.5, bold=True, color=FONT_RAG_RED if a_v > 0 else FONT_RAG_GREEN)
+        # Standard farging: rød ved merforbruk (negativt avvik)
+        ws_root[f"H{idx}"].font = Font(name="Arial", size=8.5, bold=True, color=FONT_RAG_RED if a_v < 0 else FONT_RAG_GREEN)
 
         for col_l in ["B", "C", "D", "E", "F", "G", "H", "I"]:
             ws_root[f"{col_l}{idx}"].border = BORDER_ROW
@@ -1023,8 +1023,8 @@ def build_excel_master_report() -> Path:
         ws_piv[f"{col_l}5"].fill = PatternFill(start_color=FILL_NAVY_HEADER, end_color=FILL_NAVY_HEADER, fill_type="solid")
 
     piv_data = [
-        ("Kommunal Boenhet", "Helse og mestring", 50339572, 47426244, -2913328, -0.058),
-        ("Kommunal Skole", "Oppvekst og utdanning", 33591000, 36080000, 2489000, 0.074),
+        ("Kommunal Boenhet", "Helse og mestring", 50339572, 47426244, 2913328, 0.058),
+        ("Kommunal Skole", "Oppvekst og utdanning", 33591000, 36080000, -2489000, -0.074),
     ]
     for idx, (e_n, s_n, b_v, r_v, a_v, p_v) in enumerate(piv_data, start=6):
         ws_piv[f"B{idx}"] = e_n
@@ -1062,9 +1062,9 @@ def build_excel_master_report() -> Path:
         ("Celle Ref", "Formel / Innhold", "Resultat", "Funksjon"),
         ("B5", "=02_DASHBOARD_EXEC!B6", 83506244, "Henter konsern regnskap YTD"),
         ("B6", "=02_DASHBOARD_EXEC!E6", 83930572, "Henter konsern budsjett YTD"),
-        ("B7", "=B5-B6", -424328, "Beregner konsern avvik YTD"),
-        ("B8", "=B7/B6", -0.00505, "Beregner avviksprosent"),
-        ("B9", '="Konsern: Regnskap er "&TEXT(ABS(B7)/1000000,"0.0")&" M kr "&IF(B7<0,"lavere enn budsjett","høyere enn budsjett")', "Konsern: Regnskap er 0.4 M kr lavere enn budsjett", "Dynamisk narrative overskrift")
+        ("B7", "=B6-B5", 424328, "Beregner konsern avvik YTD (Budsjett - Regnskap)"),
+        ("B8", "=B7/B6", 0.00505, "Beregner avviksprosent"),
+        ("B9", '="Konsern: Regnskap er "&TEXT(ABS(B7)/1000000,"0.0")&" M kr "&IF(B7>0,"lavere enn budsjett","høyere enn budsjett")', "Konsern: Regnskap er 0.4 M kr lavere enn budsjett", "Dynamisk narrative overskrift")
     ]
     for idx, (c_ref, c_form, c_res, c_fn) in enumerate(hlp_rows, start=4):
         ws_hlp[f"B{idx}"] = c_ref

@@ -5,12 +5,12 @@ Denne pakken viser hvordan samme styringslogikk som i Power BI-pakken kan bygges
 
 > **Fast fortegnsregel i denne pakken**
 >
-> `Avvik = Regnskap - Budsjett`
+> `Avvik = Budsjett - Regnskap`
 >
 > For kostnader:
 >
-> - **Negativt avvik = grønt = gunstig**
-> - **Positivt avvik = rødt = ugunstig**
+> - **Positivt avvik = grønt = gunstig (mindreforbruk / under ramme)**
+> - **Negativt avvik = rødt = ugunstig (merforbruk / budsjettoverskridelse)**
 > - **Nær null = gult = innenfor toleranse**
 
 ---
@@ -202,7 +202,7 @@ CALCULATE(
 
 ```DAX
 Avvik :=
-[Regnskap] - [Budsjett]
+[Budsjett] - [Regnskap]
 ```
 
 ## Avvik prosent
@@ -239,7 +239,7 @@ TOTALYTD(
 
 ```DAX
 Avvik YTD :=
-[Regnskap YTD] - [Budsjett YTD]
+[Budsjett YTD] - [Regnskap YTD]
 ```
 
 ```DAX
@@ -266,7 +266,7 @@ CALCULATE(
 
 ```DAX
 Forecast Avvik :=
-[Forecast] - [Budsjett]
+[Budsjett] - [Forecast]
 ```
 
 ```DAX
@@ -286,9 +286,9 @@ DIVIDE(
 Eksempel:
 
 ```text
-Avvik < -2 %         GREEN
--2 % til +2 %        AMBER
-Avvik > +2 %         RED
+Avvik > +2 %         GREEN (mindreforbruk / under ramme)
+-2 % til +2 %        AMBER (innenfor toleranse)
+Avvik < -2 %         RED (merforbruk / budsjettoverskridelse)
 ```
 
 Tersklene skal tilpasses virksomhetens faktiske styringsregler.
@@ -302,8 +302,8 @@ RETURN
 SWITCH(
     TRUE(),
     ISBLANK(Pct), "N/A",
-    Pct < -0.02, "Green",
-    Pct >  0.02, "Red",
+    Pct >  0.02, "Green",
+    Pct < -0.02, "Red",
     "Amber"
 )
 ```
@@ -317,8 +317,8 @@ RETURN
 SWITCH(
     TRUE(),
     ISBLANK(Value), "N/A",
-    Value < 0, "Green",
-    Value > 0, "Red",
+    Value > 0, "Green",
+    Value < 0, "Red",
     "Amber"
 )
 ```
@@ -331,9 +331,9 @@ Denne er nyttig i Excel conditional formatting:
 RAG Code :=
 SWITCH(
     [RAG Status],
-    "Green", -1,
+    "Green",  1,
     "Amber",  0,
-    "Red",    1,
+    "Red",   -1,
     BLANK()
 )
 ```
@@ -347,9 +347,9 @@ SWITCH(
 På kostnadsavvik skal visuell semantikk være:
 
 ```text
-NEGATIVT = GRØNT
-NULL/NÆR NULL = GULT
-POSITIVT = RØDT
+POSITIVT = GRØNT (under budsjett / mindreforbruk)
+NULL/NÆR NULL = GULT (innenfor toleranse)
+NEGATIVT = RØDT (over budsjett / merforbruk)
 ```
 
 ## PivotTable
@@ -359,17 +359,17 @@ Bruk conditional formatting på avvikskolonnen med regler som følger styringsgr
 Eksempel med streng regel:
 
 ```text
-Cell Value < 0   → grønn skrifttype/fyll
-Cell Value = 0   → amber/gul
-Cell Value > 0   → rød skrifttype/fyll
+Cell Value > 0   → grønn skrifttype/fyll (mindreforbruk)
+Cell Value = 0   → amber/gul (i balanse)
+Cell Value < 0   → rød skrifttype/fyll (merforbruk)
 ```
 
 Eksempel med ±2 % toleranse på prosentkolonnen:
 
 ```text
-< -2 %            → grønn
--2 % til +2 %     → amber
-> +2 %             → rød
+> +2 %            → grønn (gunstig)
+-2 % til +2 %     → amber (toleranse)
+< -2 %            → rød (ugunstig)
 ```
 
 ## Designregel
@@ -443,8 +443,8 @@ Bruk enten Timeline eller en periode-slicer som primær tidskontroll. Ikke overl
 │ Budsjettnivå ▾ Virksomhetsområde ▾ År ▾ Periode ▾                  │
 ├──────────────┬──────────────┬──────────────┬─────────────────────────┤
 │ REGNSKAP YTD │ BUDSJETT YTD │ AVVIK YTD    │ FORECAST AVVIK          │
-│ 12,6 M       │ 17,3 M       │ 🟢 -4,6 M    │ 🔴 +x,x M              │
-│              │              │ -26,7 %      │ +x,x %                 │
+│ 12,6 M       │ 17,3 M       │ 🟢 +4,7 M    │ 🔴 -x,x M              │
+│              │              │ +27,2 %      │ -x,x %                 │
 ├──────────────────────────────────────────────────────────────────────┤
 │ EXECUTIVE SUMMARY                                                   │
 │ Dynamisk formeltekst som beskriver status og viktigste signal.      │
@@ -469,9 +469,9 @@ Eksempel:
 
 ```text
 AVVIK YTD
--4,6 M kr
--26,7 %
-Gunstig
++4,7 M kr
++27,2 %
+Gunstig (Mindreforbruk)
 ```
 
 ## Formeldrevet status i vanlig Excel-celle
@@ -479,13 +479,13 @@ Gunstig
 Hvis KPI-avviket står i `B5`:
 
 ```excel
-=IF(B5<0,"● Gunstig",IF(B5>0,"● Ugunstig","● Innenfor plan"))
+=IF(B5>0,"● Gunstig",IF(B5<0,"● Ugunstig","● Innenfor plan"))
 ```
 
 Med toleranse basert på prosent i `B6`:
 
 ```excel
-=IF(B6<-2%,"● Gunstig",IF(B6>2%,"● Ugunstig","● Innenfor toleranse"))
+=IF(B6>2%,"● Gunstig",IF(B6<-2%,"● Ugunstig","● Innenfor toleranse"))
 ```
 
 Bruk conditional formatting på statuscellen for å gi korrekt grønn/gul/rød farge.
@@ -506,9 +506,9 @@ Formel:
 
 ```excel
 =B7&": Regnskap er "&TEXT(ABS(B5)/1000000,"0.0")&" M kr "&
-IF(B5<0,"lavere enn budsjett",IF(B5>0,"høyere enn budsjett","lik budsjett"))&
+IF(B5>0,"lavere enn budsjett",IF(B5<0,"høyere enn budsjett","lik budsjett"))&
 " ("&TEXT(B6,"0.0%")&"). "&
-IF(B5<0,"Gunstig utvikling.",IF(B5>0,"Ugunstig utvikling.","Innenfor plan."))
+IF(B5>0,"Gunstig utvikling (mindreforbruk).",IF(B5<0,"Ugunstig utvikling (merforbruk).","Innenfor plan."))
 ```
 
 Koble en tekstboks til cellen eller la en formatert celleblokk fungere som narrative card.
@@ -541,8 +541,8 @@ Legg inn en hjelpeserie med verdien `0` for alle måneder dersom charttypen ikke
 Tolkning:
 
 ```text
-Over 0  = rødt / ugunstig
-Under 0 = grønt / gunstig
+Over 0  = grønt / gunstig (mindreforbruk)
+Under 0 = rødt / ugunstig (merforbruk)
 ```
 
 ## Trend
@@ -573,13 +573,13 @@ RETURN
 SWITCH(
     TRUE(),
     ISBLANK(ChangeValue), "N/A",
-    ChangeValue < 0, "Forbedring",
-    ChangeValue > 0, "Forverring",
+    ChangeValue > 0, "Forbedring",
+    ChangeValue < 0, "Forverring",
     "Uendret"
 )
 ```
 
-Synkende kostnadsavvik betyr forbedring i denne fortegnsmodellen.
+Økende avvik (eller reduksjon i merforbruk) betyr forbedring i denne fortegnsmodellen.
 
 ---
 
@@ -623,20 +623,20 @@ RANKX(
     ALLSELECTED(DimAccount[Kontonavn]),
     [Avvik YTD],
     ,
-    DESC,
+    ASC,
     DENSE
 )
 ```
 
-I denne modellen er de høyeste positive avvikene de største ugunstige kostnadsavvikene.
+I denne modellen er de mest negative avvikene de største ugunstige kostnadsavvikene (merforbruk).
 
 Dashboardvisual:
 
 ```text
-Fastlønn               █████████ +2,1 M 🔴
-Vikar                   █████     +0,8 M 🔴
-Overtid                 ███       +0,4 M 🔴
-Andre                   ██        +0,2 M 🟠
+Fastlønn               █████████ -2,1 M 🔴
+Vikar                   █████     -0,8 M 🔴
+Overtid                 ███       -0,4 M 🔴
+Andre                   ██        -0,2 M 🟠
 ```
 
 ---
@@ -859,9 +859,9 @@ Eksempel HELP-panel:
 
 ```text
 AVVIK
-Avvik = Regnskap - Budsjett.
-Negativt kostnadsavvik er gunstig og markeres grønt.
-Positivt kostnadsavvik er ugunstig og markeres rødt.
+Avvik = Budsjett - Regnskap.
+Positivt kostnadsavvik er gunstig (mindreforbruk) og markeres grønt.
+Negativt kostnadsavvik er ugunstig (merforbruk) og markeres rødt.
 ```
 
 ---
@@ -977,7 +977,7 @@ Dashboard:
 
 Detaljark kan vise full presisjon.
 
-I finansielle støttetabeller kan null vises som `-`. Hold dashboardets RAG-semantikk separat fra et generelt regnskapsformat som farger negative tall røde, fordi **negative kostnadsavvik skal være grønne i denne løsningen**.
+I finansielle støttetabeller kan null vises som `-`. Med definisjonen `Avvik = Budsjett - Regnskap` fungerer Excels standard tallformat `_(* #,##0_);[Red]_(* (#,##0);_(* "-"_);_(@_)` perfekt, fordi **positive kostnadsavvik (mindreforbruk) er grønne/nøytrale og negative kostnadsavvik (merforbruk) automatisk formateres røde**.
 
 ---
 
@@ -997,8 +997,8 @@ SWITCH(
     TRUE(),
     ISBLANK(VarianceValue), "N/A",
     ABS(VarianceValue) < Materiality, "Amber",
-    VariancePct < -0.02, "Green",
-    VariancePct >  0.02, "Red",
+    VariancePct >  0.02, "Green",
+    VariancePct < -0.02, "Red",
     "Amber"
 )
 ```
@@ -1012,8 +1012,8 @@ Flytt gjerne `Materiality`, grønn terskel og rød terskel til en kontroll-/para
 `01_CONTROL` bør holde synlige styringsforutsetninger:
 
 ```text
-RAG green threshold      -2,0 %
-RAG red threshold         2,0 %
+RAG green threshold       2,0 %
+RAG red threshold        -2,0 %
 Materiality              100 000 kr
 Aktivt år                2026
 Oppdateringsdato         [dato]
@@ -1076,9 +1076,9 @@ Dashboard viser ny status
 
 ## RAG
 
-- [ ] `Avvik = Regnskap - Budsjett`.
-- [ ] Negativt kostnadsavvik vises grønt.
-- [ ] Positivt kostnadsavvik vises rødt.
+- [ ] `Avvik = Budsjett - Regnskap`.
+- [ ] Positivt kostnadsavvik vises grønt (mindreforbruk).
+- [ ] Negativt kostnadsavvik vises rødt (merforbruk).
 - [ ] Toleranseområdet er dokumentert.
 - [ ] Materialitet er vurdert.
 

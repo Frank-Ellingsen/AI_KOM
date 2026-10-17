@@ -32,10 +32,19 @@ Faktisk_Belop = SUM(Fact_Regnskap[belop])
 
 Vedtatt_Budsjett = SUM(Fact_Budsjett[budsjett_belop])
 
-Budsjettavvik_Kr = [Faktisk_Belop] - [Vedtatt_Budsjett]
+Budsjettavvik_Kr = [Vedtatt_Budsjett] - [Faktisk_Belop]
 
 Budsjettavvik_Pct = 
 DIVIDE([Budsjettavvik_Kr], [Vedtatt_Budsjett], 0)
+
+// RAG-formatering: Positivt avvik = Grønn (mindreforbruk), Negativt avvik = Rød (merforbruk)
+RAG_Status = 
+SWITCH(
+    TRUE(),
+    [Budsjettavvik_Pct] < -0.05, "#DC2626", // Rød alarm: Merforbruk > 5 %
+    [Budsjettavvik_Pct] < -0.02, "#F59E0B", // Gul advarsel: Merforbruk 2-5 %
+    "#16A34A"                             // Grønn: Innenfor ramme / mindreforbruk
+)
 ```
 
 #### B. Dynamisk Matrisenivå-Sjekk (`ISINSCOPE`)

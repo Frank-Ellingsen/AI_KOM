@@ -432,6 +432,48 @@ REGISTER = [
         "returfrist": "M+6 virkedag kl. 12:00"
     },
     {
+        "ansvar_id": "2020",
+        "navn": "Trond Jensen",
+        "tittel": "Rektor / Enhetsleder Kommunal Skole 2020",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder / Rektor",
+        "sektor_kode": "OPPVEKST",
+        "sektor_navn": "Oppvekst og utdanning",
+        "enhet_navn": "Kommunal Skole Enhet 2020",
+        "kostra_funksjon": "202 Grunnskole 1.–10. trinn",
+        "epost": "trond.jensen@kristiansand.kommune.no",
+        "telefon": "+47 38 00 82 20",
+        "kontorsted": "Lovisenlev Skolevei 4, 4633 Kristiansand",
+        "delegeringsfullmakt_nok": 2000000,
+        "controller_navn": "Frank Ellingsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "utsendte_rapporter": "Månedsavvik Skole, Avviksnotat & Tiltaksplan Vikarer (art 10200), NAV Refusjonspurring (art 16000)",
+        "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "returkanal": "okonomi.oppvekst@kristiansand.kommune.no",
+        "returfrist": "M+6 virkedag kl. 12:00"
+    },
+    {
+        "ansvar_id": "2540",
+        "navn": "Christian Holte",
+        "tittel": "Enhetsleder Kommunal Boenhet 2540",
+        "niva": "NIVA3",
+        "niva_tekst": "Nivå 3: Enhetsleder",
+        "sektor_kode": "HELSE",
+        "sektor_navn": "Helse og mestring",
+        "enhet_navn": "Kommunal Boenhet 2540",
+        "kostra_funksjon": "254 Heldøgns omsorgsbolig",
+        "epost": "christian.holte@kristiansand.kommune.no",
+        "telefon": "+47 38 00 84 40",
+        "kontorsted": "Skibåsen 12, 4636 Kristiansand",
+        "delegeringsfullmakt_nok": 2000000,
+        "controller_navn": "Frank Ellingsen / Marianne Tellefsen",
+        "controller_epost": "frank.ellingsen@kristiansand.kommune.no",
+        "utsendte_rapporter": "Månedsavvik Bo og Miljø, To-pleier bemanningsoppfølging, IA-sykefraværsplan",
+        "tilknyttet_mal": "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+        "returkanal": "okonomi.helse@kristiansand.kommune.no",
+        "returfrist": "M+6 virkedag kl. 12:00"
+    },
+    {
         "ansvar_id": "4100-ENH-202",
         "navn": "Trond Jensen",
         "tittel": "Rektor / Enhetsleder Lovisenlev Skole",
@@ -861,6 +903,128 @@ REGISTER = [
     }
 ]
 
+def build_security_rls_register(register):
+    """
+    Bygger Sikkerhets- og RLS-register tilpasset Power BI og Microsoft Teams.
+    Nivåhierarki:
+      NIVA0_CONTROLLER: Frank Ellingsen (Senior Controller), Camilla Dunsæd, Terje Fjellvang
+      NIVA1_KOMMUNALSJEF: Kristin Robstad (Oppvekst), Brede Skeie (Helse), Ragnar Evensen (Byutv), etc.
+      NIVA2_OMRADELEDER: Svein Tore Kvernes (Skole), Mette Syvertsen (Institusjon), Helge Møller (VAR), etc.
+      NIVA3_ENHETSLEDER: Trond Jensen (2020), Christian Holte (2540), Solveig Grimstad (401), etc.
+    """
+    sektor_map = {
+        "KONSERN": "Konsern",
+        "OPPVEKST": "Oppvekst",
+        "HELSE": "Helse og mestring",
+        "BYUTVIKLING": "By- og stedsutvikling",
+        "KULTUR": "Kultur og innbyggerdialog",
+        "ORG_TEK": "Organisasjon og teknologi",
+        "OKONOMI": "Økonomi og virksomhetsstyring"
+    }
+
+    teams_team_map = {
+        "KONSERN": "Teams - Konsernledelse & Bystyret",
+        "OPPVEKST": "Teams - Oppvekst og Utdanning",
+        "HELSE": "Teams - Helse og Mestring",
+        "BYUTVIKLING": "Teams - By- og Stedsutvikling",
+        "KULTUR": "Teams - Kultur og Dialog",
+        "ORG_TEK": "Teams - Organisasjon og Teknologi",
+        "OKONOMI": "Teams - Økonomistab & Finans"
+    }
+
+    rows = []
+    for r in register:
+        upn = r["epost"].strip()
+        aid = r["ansvar_id"].strip()
+        niva = r["niva"].strip()
+        sektor = r["sektor_kode"].strip()
+        kom_omrade = sektor_map.get(sektor, "Konsern")
+
+        # Frank Ellingsen og toppledelse har full tilgang (Showcase & Admin)
+        is_frank = (upn == "frank.ellingsen@kristiansand.kommune.no")
+        is_exec = upn in [
+            "camilla.dunsaed@kristiansand.kommune.no",
+            "terje.fjellvang@kristiansand.kommune.no"
+        ]
+        har_full_tilgang = 1 if (is_frank or is_exec) else 0
+
+        # RLS Rolle-mapping
+        if har_full_tilgang == 1:
+            rls_rolle = "Controller_Admin"
+        elif sektor == "OPPVEKST" and niva == "NIVA1":
+            rls_rolle = "Kommunalsjef_Oppvekst"
+        elif sektor == "HELSE" and niva == "NIVA1":
+            rls_rolle = "Kommunalsjef_Helse"
+        elif sektor == "BYUTVIKLING" and niva == "NIVA1":
+            rls_rolle = "Kommunalsjef_Byutvikling"
+        elif sektor == "KULTUR" and niva == "NIVA1":
+            rls_rolle = "Kommunalsjef_Kultur"
+        elif sektor == "ORG_TEK" and niva == "NIVA1":
+            rls_rolle = "Kommunalsjef_OrgTek"
+        elif aid in ["2020", "4100-ENH-202", "4101-ENH-203", "4102-ENH-204"]:
+            rls_rolle = "Enhetsleder_Skole"
+        elif aid in ["2540", "5200-ENH-401", "5210-ENH-402", "5220-ENH-403", "5230-ENH-404"]:
+            rls_rolle = "Enhetsleder_Boenhet"
+        else:
+            rls_rolle = "Dynamisk_Budsjettansvarlig_RLS"
+
+        # Teams teamnavn og kanalnavn
+        teams_team = teams_team_map.get(sektor, "Teams - Kristiansand Kommune")
+        if niva == "CONTROLLER":
+            teams_kanal = "Controller Hub & EPM Monitor"
+        elif niva == "NIVA1":
+            teams_kanal = "Ledergruppe & Sektorstyring"
+        elif niva == "NIVA2":
+            if sektor == "OPPVEKST":
+                teams_kanal = "Skole- og Barnehageledelse"
+            elif sektor == "HELSE":
+                teams_kanal = "Institusjons- og Omsorgsledelse"
+            elif sektor == "BYUTVIKLING":
+                teams_kanal = "VAR & Byplan Seksjon"
+            elif sektor == "ORG_TEK":
+                teams_kanal = "Digitalisering & Fellestjenester"
+            else:
+                teams_kanal = "Områdeledelse & Fagstyring"
+        elif niva == "NIVA3":
+            if sektor == "OPPVEKST":
+                teams_kanal = "Enhetsledere Skole"
+            elif sektor == "HELSE":
+                teams_kanal = "Virksomhetsledere Omsorg"
+            elif sektor == "BYUTVIKLING":
+                teams_kanal = "Enhetsledere Teknisk"
+            elif sektor == "KULTUR":
+                teams_kanal = "Enhetsledere Kultur & Bibliotek"
+            elif sektor == "ORG_TEK":
+                teams_kanal = "Drift & IKT-ledere"
+            else:
+                teams_kanal = "Enhetsledere & Driftsrapportering"
+        else:
+            teams_kanal = "Avdelingsrapportering"
+
+        teams_url = f"https://app.powerbi.com/groups/me/reports/pbi_reporting_project?filter=Dim_Ansvar/ansvar_kode%20eq%20'{aid}'"
+
+        rows.append({
+            "bruker_upn": upn,
+            "navn": r["navn"],
+            "tittel": r["tittel"],
+            "niva": niva,
+            "niva_tekst": r["niva_tekst"],
+            "sektor_kode": sektor,
+            "kommunalsjefomrade": kom_omrade,
+            "ansvar_kode": aid,
+            "enhet_navn": r["enhet_navn"],
+            "har_full_tilgang": har_full_tilgang,
+            "rls_rolle": rls_rolle,
+            "teams_team_navn": teams_team,
+            "teams_kanal": teams_kanal,
+            "teams_rapport_fane": "Power BI Månedsrapport",
+            "powerbi_teams_app_url": teams_url,
+            "delegeringsfullmakt_nok": float(r["delegeringsfullmakt_nok"]),
+            "controller_navn": r["controller_navn"],
+            "controller_epost": r["controller_epost"]
+        })
+    return rows
+
 def export_json(path: Path):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(REGISTER, f, indent=2, ensure_ascii=False)
@@ -876,10 +1040,21 @@ def export_csv(path: Path):
         writer.writerows(REGISTER)
     print(f"✓ Eksportert CSV ({len(REGISTER)} poster): {path}")
 
-def update_database(db_path: Path):
+def export_security_csv(path: Path, security_rows: list):
+    if not security_rows:
+        return
+    fieldnames = list(security_rows[0].keys())
+    with open(path, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=";")
+        writer.writeheader()
+        writer.writerows(security_rows)
+    print(f"✓ Eksportert Sikkerhet & RLS CSV ({len(security_rows)} poster): {path}")
+
+def update_database(db_path: Path, security_rows: list):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
+    # 1. Dim_Budsjettansvarlige
     cur.execute("DROP TABLE IF EXISTS Dim_Budsjettansvarlige")
     cur.execute("""
         CREATE TABLE Dim_Budsjettansvarlige (
@@ -916,19 +1091,73 @@ def update_database(db_path: Path):
             )
         """, r)
 
+    # 2. Dim_Sikkerhet_RLS
+    cur.execute("DROP TABLE IF EXISTS Dim_Sikkerhet_RLS")
+    cur.execute("""
+        CREATE TABLE Dim_Sikkerhet_RLS (
+            bruker_upn TEXT NOT NULL,
+            navn TEXT NOT NULL,
+            tittel TEXT NOT NULL,
+            niva TEXT NOT NULL,
+            niva_tekst TEXT NOT NULL,
+            sektor_kode TEXT NOT NULL,
+            kommunalsjefomrade TEXT NOT NULL,
+            ansvar_kode TEXT NOT NULL,
+            enhet_navn TEXT NOT NULL,
+            har_full_tilgang INTEGER NOT NULL,
+            rls_rolle TEXT NOT NULL,
+            teams_team_navn TEXT NOT NULL,
+            teams_kanal TEXT NOT NULL,
+            teams_rapport_fane TEXT NOT NULL,
+            powerbi_teams_app_url TEXT NOT NULL,
+            delegeringsfullmakt_nok REAL NOT NULL,
+            controller_navn TEXT NOT NULL,
+            controller_epost TEXT NOT NULL,
+            PRIMARY KEY (bruker_upn, ansvar_kode)
+        )
+    """)
+
+    for s in security_rows:
+        cur.execute("""
+            INSERT INTO Dim_Sikkerhet_RLS VALUES (
+                :bruker_upn, :navn, :tittel, :niva, :niva_tekst,
+                :sektor_kode, :kommunalsjefomrade, :ansvar_kode, :enhet_navn,
+                :har_full_tilgang, :rls_rolle, :teams_team_navn, :teams_kanal,
+                :teams_rapport_fane, :powerbi_teams_app_url, :delegeringsfullmakt_nok,
+                :controller_navn, :controller_epost
+            )
+        """, s)
+
+    # 3. Sikre at Dim_Ansvar inneholder alle enheter
+    existing_ansvar = set(r[0] for r in cur.execute("SELECT ansvar_kode FROM Dim_Ansvar").fetchall())
+    for r in REGISTER:
+        aid = r["ansvar_id"]
+        if aid not in existing_ansvar:
+            cur.execute("""
+                INSERT OR IGNORE INTO Dim_Ansvar (ansvar_kode, enhet_navn, sektor, leder_stilling)
+                VALUES (?, ?, ?, ?)
+            """, (aid, r["enhet_navn"], r["sektor_navn"], r["tittel"]))
+
     conn.commit()
-    count = cur.execute("SELECT COUNT(*) FROM Dim_Budsjettansvarlige").fetchone()[0]
+    count_b = cur.execute("SELECT COUNT(*) FROM Dim_Budsjettansvarlige").fetchone()[0]
+    count_s = cur.execute("SELECT COUNT(*) FROM Dim_Sikkerhet_RLS").fetchone()[0]
+    count_a = cur.execute("SELECT COUNT(*) FROM Dim_Ansvar").fetchone()[0]
     conn.close()
-    print(f"✓ Opprettet tabell Dim_Budsjettansvarlige i {db_path.name} med {count} rader.")
+    print(f"✓ Opprettet tabell Dim_Budsjettansvarlige ({count_b} rader) og Dim_Sikkerhet_RLS ({count_s} rader), Dim_Ansvar har {count_a} rader.")
 
 def main():
     json_path = ERP_DIR / "budsjettansvarlige_register.json"
     csv_path = ERP_DIR / "budsjettansvarlige_register.csv"
+    sec_csv_path = ERP_DIR / "Dim_Sikkerhet_RLS.csv"
+
+    security_rows = build_security_rls_register(REGISTER)
 
     export_json(json_path)
     export_csv(csv_path)
+    export_security_csv(sec_csv_path, security_rows)
+
     if DB_PATH.exists():
-        update_database(DB_PATH)
+        update_database(DB_PATH, security_rows)
 
 if __name__ == "__main__":
     main()

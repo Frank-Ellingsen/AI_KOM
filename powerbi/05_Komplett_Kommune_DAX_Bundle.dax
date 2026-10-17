@@ -19,7 +19,7 @@ SUM(Fact_Budsjett[Budsjett_Revidert])
 SUM(Fact_Budsjett[Budsjett_Opprinnelig])
 
 [Budsjettavvik Kr] = 
-[Regnskap YTD] - [Budsjett YTD]
+[Budsjett YTD] - [Regnskap YTD]
 
 [Budsjettavvik %] = 
 DIVIDE([Budsjettavvik Kr], [Budsjett YTD], 0)
@@ -27,9 +27,9 @@ DIVIDE([Budsjettavvik Kr], [Budsjett YTD], 0)
 [Avvik Status Fargekode] = 
 SWITCH(
     TRUE(),
-    [Budsjettavvik %] > 0.05, "#DC2626", // Rød alarm: Merforbruk > 5 %
-    [Budsjettavvik %] > 0.02, "#F59E0B", // Gul advarsel: Merforbruk 2-5 %
-    "#16A34A"                           // Grønn: Innenfor ramme / mindreforbruk
+    [Budsjettavvik %] < -0.05, "#DC2626", // Rød alarm: Merforbruk > 5 % (negativt avvik)
+    [Budsjettavvik %] < -0.02, "#F59E0B", // Gul advarsel: Merforbruk 2-5 % (negativt avvik)
+    "#16A34A"                            // Grønn: Innenfor ramme / mindreforbruk (positivt avvik)
 )
 
 
@@ -149,17 +149,62 @@ VAR AvvikKr = [Budsjettavvik Kr]
 VAR AvvikPct = [Budsjettavvik %]
 RETURN
     IF(
-        AvvikKr > 500000,
-        "Kritisk merforbruk på kr " & FORMAT(AvvikKr, "#,##0") & " (" & FORMAT(AvvikPct, "+0.0%") & ") — Tiltak iverksatt",
+        AvvikKr < -500000,
+        "Kritisk merforbruk på kr " & FORMAT(-AvvikKr, "#,##0") & " (" & FORMAT(AvvikPct, "+0.0%") & ") — Tiltak iverksatt",
         "Økonomisk drift i balanse innenfor tildelt budsjettramme (" & FORMAT(AvvikPct, "+0.0%") & ")"
     )
 
 
 // ------------------------------------------------------------------------------
-// 6. ROW-LEVEL SECURITY (RLS) FOR POWER BI SERVICE
+// 6. ROW-LEVEL SECURITY (RLS) FOR POWER BI SERVICE & MICROSOFT TEAMS
 // ------------------------------------------------------------------------------
 // Regel legges på tabellen Dim_Ansvar:
-// [Kommunalsjef_Omraade] = LOOKUPVALUE(
-//     Dim_Ansvar[Kommunalsjef_Omraade],
-//     Dim_Ansvar[Epost], USERPRINCIPALNAME()
-// )
+//
+// Rolle: Dynamisk_Budsjettansvarlig_RLS
+// Sikrer at Frank Ellingsen (Senior Controller) har universelt innsyn for showcase,
+// mens kommunalsjefer ser sin sektor og enhetsledere kun ser sitt eget ansvarssted.
+//
+// [DAX Filteruttrykk på Dim_Ansvar]:
+// VAR CurrentUser = USERPRINCIPALNAME()
+//
+// VAR IsControllerAdmin = 
+//     CurrentUser IN { 
+//         "frank.ellingsen@kristiansand.kommune.no", 
+//         "admin@kristiansand.kommune.no",
+//         "camilla.dunsaed@kristiansand.kommune.no",
+//         "terje.fjellvang@kristiansand.kommune.no"
+//     }
+//     ||
+//     CALCULATE(
+//         COUNTROWS(Dim_Sikkerhet_RLS),
+//         Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser && Dim_Sikkerhet_RLS[har_full_tilgang] == 1
+//     ) > 0
+//
+// VAR UserUnits = 
+//     CALCULATETABLE(
+//         VALUES(Dim_Sikkerhet_RLS[ansvar_kode]),
+//         Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser
+//     )
+//
+// VAR UserSectors = 
+//     CALCULATETABLE(
+//         VALUES(Dim_Sikkerhet_RLS[kommunalsjefomrade]),
+//         Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser,
+//         Dim_Sikkerhet_RLS[niva] IN { "NIVA1", "NIVA1_KOMMUNALSJEF" }
+//     )
+//
+// RETURN
+//     IF(
+//         IsControllerAdmin,
+//         TRUE(), -- Frank Ellingsen og toppledelse har 100 % bypass (Showcase / Controller)
+//         Dim_Ansvar[ansvar_kode] IN UserUnits
+//         ||
+//         Dim_Ansvar[kommunalsjefomrade] IN UserSectors
+//     )
+//
+// Statiske testroller i Power BI Desktop (Modeling -> View as):
+// - Controller_Admin: Dim_Ansvar = TRUE()
+// - Kommunalsjef_Oppvekst: Dim_Ansvar[kommunalsjefomrade] = "Oppvekst"
+// - Kommunalsjef_Helse: Dim_Ansvar[kommunalsjefomrade] = "Helse og mestring"
+// - Enhetsleder_Skole: Dim_Ansvar[ansvar_kode] = "2020"
+// - Enhetsleder_Boenhet: Dim_Ansvar[ansvar_kode] = "2540"

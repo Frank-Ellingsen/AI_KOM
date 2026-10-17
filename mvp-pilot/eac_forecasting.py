@@ -43,17 +43,18 @@ def compute_eac_forecasts(db_path: Path = DB_DUCKDB, season_weights: dict = None
 
     actual_ytd = summary["regnskap_ytd"]
     budget_rest = summary["budsjett_rest"]
-    ytd_variance = summary["merforbruk_ytd"]
+    ytd_variance = summary["budsjett_ytd"] - summary["regnskap_ytd"]
     annual_budget = summary["arsbudsjett"]
 
     # 2. Modell 1: Excel Sjablong (50% av YTD merforbruk)
     trend_share = 0.50
-    eac_sjablong = actual_ytd + budget_rest + (ytd_variance * trend_share)
-    var_sjablong = eac_sjablong - annual_budget
+    overrun_ytd = max(-ytd_variance, 0)
+    eac_sjablong = actual_ytd + budget_rest + (overrun_ytd * trend_share)
+    var_sjablong = annual_budget - eac_sjablong
 
     # 3. Modell 2: Lineær Run-rate (8 måneder skalert til 12 måneder)
     eac_run_rate = (actual_ytd / 8.0) * 12.0
-    var_run_rate = eac_run_rate - annual_budget
+    var_run_rate = annual_budget - eac_run_rate
 
     # 4. Modell 3: Driver-basert KOSTRA EAC (Analyse pr art)
     # Lønn, overtid, vikarer og refusjoner har ulik dynamikk i T3
@@ -108,7 +109,7 @@ def compute_eac_forecasts(db_path: Path = DB_DUCKDB, season_weights: dict = None
             })
 
     eac_driver_based = actual_ytd + etc_driver_based
-    var_driver_based = eac_driver_based - annual_budget
+    var_driver_based = annual_budget - eac_driver_based
 
     # Beregn konfidensintervall (P10, P50, P90)
     p10 = min(eac_sjablong, eac_run_rate, eac_driver_based) * 0.985
@@ -127,19 +128,19 @@ def compute_eac_forecasts(db_path: Path = DB_DUCKDB, season_weights: dict = None
                 "name": "Excel Sjablong (50 % trend)",
                 "eac": eac_sjablong,
                 "variance": var_sjablong,
-                "variance_pct": -(var_sjablong / annual_budget) * 100
+                "variance_pct": (var_sjablong / annual_budget) * 100
             },
             "run_rate": {
                 "name": "Lineær Run-rate (YTD x 12/8)",
                 "eac": eac_run_rate,
                 "variance": var_run_rate,
-                "variance_pct": -(var_run_rate / annual_budget) * 100
+                "variance_pct": (var_run_rate / annual_budget) * 100
             },
             "driver_based_ai": {
                 "name": "Driver-basert KOSTRA EAC (AI / Sesongjustert)",
                 "eac": eac_driver_based,
                 "variance": var_driver_based,
-                "variance_pct": -(var_driver_based / annual_budget) * 100
+                "variance_pct": (var_driver_based / annual_budget) * 100
             }
         },
         "confidence_interval": {

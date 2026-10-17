@@ -30,10 +30,11 @@ CALCULATE(
 
 // -----------------------------------------------------------------------------
 // 1.3 Avvik YTD i Kroner
-// Positivt tall = Merforbruk (Ugunstig for utgifter, gunstig for inntekter)
+// Positivt tall = Mindreforbruk / Besparelse (Gunstig / Grønn)
+// Negativt tall = Merforbruk / Overskridelse (Ugunstig / Rød)
 // -----------------------------------------------------------------------------
 Avvik YTD = 
-[Regnskap YTD] - [Budsjett YTD]
+[Budsjett YTD] - [Regnskap YTD]
 
 // -----------------------------------------------------------------------------
 // 1.4 Avvik YTD i Prosent
@@ -226,17 +227,17 @@ IF(
 // -----------------------------------------------------------------------------
 // 4.3 Visuelt Avviksflagg for Conditional Formatting (Fargekoding)
 // Returnerer fargekode for fyll eller ikon i Power BI-matrisen
+// Positivt avvik er grønt (mindreforbruk), negativt avvik er rødt (merforbruk)
 // -----------------------------------------------------------------------------
 Avvik Status Farge = 
 VAR AvvikPct = [Avvik YTD %]
-VAR VesentlighetsGrense = 0.05 -- 5 % terskel jf. Økonomireglementet
+VAR VesentlighetsGrense = -0.05 -- Merforbruk > 5 % jf. Økonomireglementet
 RETURN
     SWITCH(
         TRUE(),
-        AvvikPct > VesentlighetsGrense, "#D9534F", -- Rød (Alvorlig merforbruk)
-        AvvikPct > 0.02, "#F0AD4E",                 -- Gul (Moderat merforbruk)
-        AvvikPct < -VesentlighetsGrense, "#337AB7", -- Blå (Mindreforbruk)
-        "#5CB85C"                                   -- Grønn (I henhold til budsjett)
+        AvvikPct < VesentlighetsGrense, "#D9534F", -- Rød (Alvorlig merforbruk / sprekk)
+        AvvikPct < -0.02, "#F0AD4E",                 -- Gul (Moderat merforbruk)
+        "#5CB85C"                                   -- Grønn (Mindreforbruk / under budsjett)
     )
 ```
 

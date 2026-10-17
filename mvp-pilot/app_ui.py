@@ -64,7 +64,7 @@ forecast_data = compute_eac_forecasts()
 annual_budget = forecast_data["annual_budget"]
 actual_ytd = forecast_data["actual_ytd"]
 ytd_variance = forecast_data["ytd_variance"]
-budget_ytd = actual_ytd - ytd_variance
+budget_ytd = actual_ytd + ytd_variance
 eac_ai = forecast_data["models"]["driver_based_ai"]["eac"]
 
 # Hent godkjente tiltak fra audit tabell
@@ -81,7 +81,7 @@ con.close()
 approved_measures = {row[0]: row[1] for row in audit_history if row[2] == "Godkjent" and row[3] == "Ja"}
 total_approved_effect = sum(approved_measures.values())
 eac_revidert = eac_ai - total_approved_effect
-rest_avvik = eac_revidert - annual_budget
+rest_avvik = annual_budget - eac_revidert
 
 # KPI-linje
 col1, col2, col3, col4, col5 = st.columns(5)
@@ -90,11 +90,16 @@ with col1:
 with col2:
     st.markdown(f"""<div class="metric-card"><div class="metric-sub">Bokført Regnskap YTD</div><div class="metric-val">{actual_ytd:,.0f} kr</div></div>""", unsafe_allow_html=True)
 with col3:
-    st.markdown(f"""<div class="metric-card"><div class="metric-sub">Merforbruk YTD</div><div class="metric-val" style="color: #C53030;">+{ytd_variance:,.0f} kr <span class="badge-red">+{(ytd_variance/budget_ytd)*100:.1f} %</span></div></div>""", unsafe_allow_html=True)
+    col_color_3 = "#2F855A" if ytd_variance >= 0 else "#C53030"
+    badge_cls_3 = "badge-green" if ytd_variance >= 0 else "badge-red"
+    sign_3 = "+" if ytd_variance >= 0 else ""
+    st.markdown(f"""<div class="metric-card"><div class="metric-sub">Avvik YTD (Budsjett - Regnskap)</div><div class="metric-val" style="color: {col_color_3};">{sign_3}{ytd_variance:,.0f} kr <span class="{badge_cls_3}">{sign_3}{(ytd_variance/budget_ytd)*100:.1f} %</span></div></div>""", unsafe_allow_html=True)
 with col4:
-    st.markdown(f"""<div class="metric-card"><div class="metric-sub">Godkjent AI-Effekt (HITL)</div><div class="metric-val" style="color: #2F855A;">-{total_approved_effect:,.0f} kr <span class="badge-green">{len(approved_measures)} godkjent</span></div></div>""", unsafe_allow_html=True)
+    st.markdown(f"""<div class="metric-card"><div class="metric-sub">Godkjent AI-Effekt (HITL)</div><div class="metric-val" style="color: #2F855A;">+{total_approved_effect:,.0f} kr <span class="badge-green">{len(approved_measures)} godkjent</span></div></div>""", unsafe_allow_html=True)
 with col5:
-    st.markdown(f"""<div class="metric-card"><div class="metric-sub">Revidert Restavvik EOY</div><div class="metric-val" style="color: #C53030;">+{rest_avvik:,.0f} kr</div></div>""", unsafe_allow_html=True)
+    col_color_5 = "#2F855A" if rest_avvik >= 0 else "#C53030"
+    sign_5 = "+" if rest_avvik >= 0 else ""
+    st.markdown(f"""<div class="metric-card"><div class="metric-sub">Revidert Restavvik EOY</div><div class="metric-val" style="color: {col_color_5};">{sign_5}{rest_avvik:,.0f} kr</div></div>""", unsafe_allow_html=True)
 
 st.write("")
 

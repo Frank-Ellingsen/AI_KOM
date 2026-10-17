@@ -1,0 +1,111 @@
+table Dim_Sikkerhet_RLS
+
+	column bruker_upn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: bruker_upn
+
+	column navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: navn
+
+	column tittel
+		dataType: string
+		summarizeBy: none
+		sourceColumn: tittel
+
+	column niva
+		dataType: string
+		summarizeBy: none
+		sourceColumn: niva
+
+	column niva_tekst
+		dataType: string
+		summarizeBy: none
+		sourceColumn: niva_tekst
+
+	column sektor_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sektor_kode
+
+	column kommunalsjefomrade
+		dataType: string
+		summarizeBy: none
+		sourceColumn: kommunalsjefomrade
+
+	column ansvar_kode
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ansvar_kode
+
+	column enhet_navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: enhet_navn
+
+	column har_full_tilgang
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: har_full_tilgang
+
+	column rls_rolle
+		dataType: string
+		summarizeBy: none
+		sourceColumn: rls_rolle
+
+	column teams_team_navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: teams_team_navn
+
+	column teams_kanal
+		dataType: string
+		summarizeBy: none
+		sourceColumn: teams_kanal
+
+	column teams_rapport_fane
+		dataType: string
+		summarizeBy: none
+		sourceColumn: teams_rapport_fane
+
+	column powerbi_teams_app_url
+		dataType: string
+		summarizeBy: none
+		sourceColumn: powerbi_teams_app_url
+
+	column delegeringsfullmakt_nok
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: delegeringsfullmakt_nok
+
+	column controller_navn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: controller_navn
+
+	column controller_epost
+		dataType: string
+		summarizeBy: none
+		sourceColumn: controller_epost
+
+	partition Dim_Sikkerhet_RLS = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "Dim_Sikkerhet_RLS.csv"), [Delimiter=";", Columns=18, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Types = Table.TransformColumnTypes(Headers, {
+				        {"bruker_upn", type text}, {"navn", type text}, {"tittel", type text},
+				        {"niva", type text}, {"niva_tekst", type text}, {"sektor_kode", type text},
+				        {"kommunalsjefomrade", type text}, {"ansvar_kode", type text}, {"enhet_navn", type text},
+				        {"har_full_tilgang", Int64.Type}, {"rls_rolle", type text}, {"teams_team_navn", type text},
+				        {"teams_kanal", type text}, {"teams_rapport_fane", type text},
+				        {"powerbi_teams_app_url", type text}, {"delegeringsfullmakt_nok", type number},
+				        {"controller_navn", type text}, {"controller_epost", type text}
+				    }, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

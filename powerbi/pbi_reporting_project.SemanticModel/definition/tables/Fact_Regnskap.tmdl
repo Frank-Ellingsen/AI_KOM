@@ -113,7 +113,7 @@ table Fact_Regnskap
 				        {"Kontokode", type text}, {"Kontonavn", type text}, {"Hovedgruppe", type text},
 				        {"Undergruppe", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}
 				    }, "en-US"),
-				    AddMerforbrukSkole = Table.AddColumn(TypeSkole, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
+				    AddMerforbrukSkole = Table.AddColumn(TypeSkole, "Merforbruk", each if [Avvik] < 0 then -[Avvik] else 0, type number),
 				    AddRespCodeSkole = Table.AddColumn(AddMerforbrukSkole, "ansvar_kode", each "2020", type text),
 				    AddRespNameSkole = Table.AddColumn(AddRespCodeSkole, "ansvar_navn", each "Grunnskole Enhet 2020", type text),
 				    AddFunkSkole = Table.AddColumn(AddRespNameSkole, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),
@@ -133,8 +133,8 @@ table Fact_Regnskap
 				        {"Kontonavn", type text}, {"Hovedgruppe", type text}, {"Undergruppe", type text},
 				        {"Budsjett", type number}, {"Regnskap", type number}
 				    }, "en-US"),
-				    AddAvvikBo = Table.AddColumn(TypeBo, "Avvik", each [Regnskap] - [Budsjett], type number),
-				    AddMerforbrukBo = Table.AddColumn(AddAvvikBo, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
+				    AddAvvikBo = Table.AddColumn(TypeBo, "Avvik", each [Budsjett] - [Regnskap], type number),
+				    AddMerforbrukBo = Table.AddColumn(AddAvvikBo, "Merforbruk", each if [Avvik] < 0 then -[Avvik] else 0, type number),
 				    AddRespCodeBo = Table.AddColumn(AddMerforbrukBo, "ansvar_kode", each "2540", type text),
 				    AddRespNameBo = Table.AddColumn(AddRespCodeBo, "ansvar_navn", each "Kommunal Boenhet 2540", type text),
 				    AddFunkBo = Table.AddColumn(AddRespNameBo, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),

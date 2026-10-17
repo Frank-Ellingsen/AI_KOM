@@ -29,15 +29,22 @@ SELECT
     d.funksjon_navn,
     SUM(f.belop) AS faktisk_forbruk,
     SUM(b.budsjett_belop) AS vedtatt_budsjett,
-    (SUM(f.belop) - SUM(b.budsjett_belop)) AS avvik_kroner,
-    ROUND(((SUM(f.belop) - SUM(b.budsjett_belop)) / NULLIF(SUM(b.budsjett_belop), 0)) * 100, 2) AS avvik_prosent
+    (SUM(b.budsjett_belop) - SUM(f.belop)) AS avvik_kroner,
+    ROUND(((SUM(b.budsjett_belop) - SUM(f.belop)) / NULLIF(SUM(b.budsjett_belop), 0)) * 100, 2) AS avvik_prosent,
+    CASE 
+        WHEN (SUM(b.budsjett_belop) - SUM(f.belop)) < -250000 AND (((SUM(b.budsjett_belop) - SUM(f.belop)) / NULLIF(SUM(b.budsjett_belop), 0)) * 100) < -5.0 THEN '🔴 Rød (Kritisk merforbruk)'
+        WHEN (SUM(b.budsjett_belop) - SUM(f.belop)) < 0 THEN '🟡 Gul (Moderat merforbruk)'
+        ELSE '🟢 Grønn (I rute / Mindreforbruk)'
+    END AS rag_status
 FROM Fact_Regnskap f
 JOIN Fact_Budsjett b ON f.funksjon_key = b.funksjon_key AND f.art_key = b.art_key
 JOIN Dim_Funksjon d ON f.funksjon_key = d.funksjon_kode
 GROUP BY f.funksjon_key
 HAVING ABS(avvik_kroner) > 250000 AND ABS(avvik_prosent) > 5.0
-ORDER BY ABS(avvik_kroner) DESC;
+ORDER BY avvik_kroner ASC;
 ```
 
-### Automatisk Tiltaksanbefaling
-Dersom et avvik krever politisk omdisponering jf. **Kommuneloven § 14-5**, genererer skillen automatisk et tekstutkast for 1. eller 2. tertialrapport.
+### RAG-fargestandard & Automatisk Tiltaksanbefaling
+* **🟢 Grønn (Positivt avvik > 0):** Mindreforbruk / besparelse innenfor vedtatt ramme.
+* **🟡 Gul (Moderat negativt avvik):** Merforbruk under vesentlighetsterskel (oppfølging).
+* **🔴 Rød (Negativt avvik < -5 % eller < -250k kr):** Vesentlig merforbruk som krever politisk sak til Bystyret / Formannskapet jf. **Kommuneloven § 14-5**. Genererer automatisk formelt saksfremlegg.

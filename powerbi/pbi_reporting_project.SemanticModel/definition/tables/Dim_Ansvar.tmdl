@@ -19,9 +19,15 @@ table Dim_Ansvar
 		mode: import
 		source =
 				let
-				    Source = Fact_Regnskap,
-				    Selected = Table.SelectColumns(Source, {"ansvar_kode", "ansvar_navn", "kommunalsjefomrade"}),
-				    Unique = Table.Distinct(Selected)
+				    SourceFact = Fact_Regnskap,
+				    FactCols = Table.SelectColumns(SourceFact, {"ansvar_kode", "ansvar_navn", "kommunalsjefomrade"}),
+				    SourceSec = Csv.Document(File.Contents(DataRoot & "Dim_Sikkerhet_RLS.csv"), [Delimiter=";", Columns=18, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    SecHeaders = Table.PromoteHeaders(SourceSec, [PromoteAllScalars=true]),
+				    SecFiltered = Table.SelectRows(SecHeaders, each [ansvar_kode] <> "ALL"),
+				    SecCols = Table.SelectColumns(SecFiltered, {"ansvar_kode", "enhet_navn", "kommunalsjefomrade"}),
+				    SecRenamed = Table.RenameColumns(SecCols, {{"enhet_navn", "ansvar_navn"}}),
+				    Combined = Table.Combine({FactCols, SecRenamed}),
+				    Unique = Table.Distinct(Combined, {"ansvar_kode"})
 				in
 				    Unique
 

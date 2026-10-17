@@ -112,13 +112,13 @@ def calculate_operational_forecast(
     p10 = float(np.percentile(eoy_simulert, 10))
     p50 = float(np.percentile(eoy_simulert, 50))
     p90 = float(np.percentile(eoy_simulert, 90))
-    avvik_p50 = float(p50 - vedtatt_ramme_bac)
+    avvik_p50 = float(vedtatt_ramme_bac - p50)
 
     # Bestem status og handlingskrav jf. Kommuneloven § 14-5
-    if avvik_p50 > 1000000:
+    if avvik_p50 < -1000000:
         status = "KRITISK_MERFORBRUK"
         tiltak = "Obligatorisk sak til Formannskapet jf. Kommuneloven § 14-5. Krev ansettelsesstopp."
-    elif avvik_p50 > 250000:
+    elif avvik_p50 < -250000:
         status = "VESENTLIG_AVVIK"
         tiltak = "Administrativ innstramming og vikarstopp iverksatt av kommunalsjef."
     else:

@@ -1,0 +1,4 @@
+role Kommunalsjef_OrgTek
+	modelPermission: read
+
+	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Organisasjon og teknologi"

@@ -122,8 +122,8 @@ table Fact_Regnskap
 				    AddAccountCode = Table.AddColumn(AddArtKey, "KOSTRA_Art", each null, type text),
 				    AddBudget = Table.AddColumn(AddAccountCode, "Budsjett", each [#"Budsjett hiå."], type number),
 				    AddActual = Table.AddColumn(AddBudget, "Regnskap", each [#"Regnskap hiå."], type number),
-				    AddVariance = Table.AddColumn(AddActual, "Avvik", each [#"Regnskap hiå."] - [#"Budsjett hiå."], type number),
-				    AddOverrun = Table.AddColumn(AddVariance, "Merforbruk", each [Avvik], type number),
+				    AddVariance = Table.AddColumn(AddActual, "Avvik", each [#"Budsjett hiå."] - [#"Regnskap hiå."], type number),
+				    AddOverrun = Table.AddColumn(AddVariance, "Merforbruk", each if [Avvik] < 0 then -[Avvik] else 0, type number),
 				    AddSector = Table.AddColumn(AddOverrun, "kommunalsjefomrade", each "Oppvekst", type text),
 				    Rename = Table.RenameColumns(AddSector, {{"Post", "Kontonavn"}, {"Kontotype", "Kontokode"}, {"Årsbudsjett", "Aarsbudsjett"}}),
 				    Keep = Table.SelectColumns(Rename, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"})

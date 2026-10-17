@@ -37,15 +37,15 @@ CALCULATE(
     Dim_Kontoklasse[kontoklasse_kode] = "1"
 )
 
--- 3. YTD Avvik (Positivt = Merforbruk)
-Avvik YTD = [Regnskap YTD] - [Budsjett YTD]
+-- 3. YTD Avvik (Positivt = Mindreforbruk, Negativt = Merforbruk)
+Avvik YTD = [Budsjett YTD] - [Regnskap YTD]
 
 -- 4. End of Year (EOY) Rullerende Årsprognose
 EOY Årsprognose = 
 VAR PaloptRegnskap = [Regnskap YTD]
 VAR RestBudsjett = CALCULATE(SUM(Fact_Regnskap[budsjett_belop]), Dim_Dato[full_dato] > TODAY())
 VAR HistoriskAvvik = [Avvik YTD]
-VAR TrendJuster = IF(HistoriskAvvik > 0, HistoriskAvvik * 0.5, 0)
+VAR TrendJuster = IF(HistoriskAvvik < 0, ABS(HistoriskAvvik) * 0.5, 0)
 RETURN
     PaloptRegnskap + RestBudsjett + TrendJuster
 
@@ -57,6 +57,15 @@ SWITCH(
     ISINSCOPE(Dim_Funksjon[funksjon_kode]), [Avvik YTD],
     ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), [Avvik YTD],
     [Avvik YTD]
+)
+
+-- 6. RAG-formatering (Positivt = Grønn, Negativt = Rød)
+Avvik Status Farge = 
+SWITCH(
+    TRUE(),
+    [Avvik YTD %] < -0.05, "#DC2626", -- Rød (Merforbruk > 5%)
+    [Avvik YTD %] < -0.02, "#F59E0B", -- Gul (Moderat merforbruk)
+    "#16A34A"                         -- Grønn (Mindreforbruk / under ramme)
 )
 ```
 

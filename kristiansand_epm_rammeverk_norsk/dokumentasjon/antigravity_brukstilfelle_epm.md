@@ -119,8 +119,8 @@ Regnskap YTD = SUM(Fact_Regnskap[korrigert_belop])
 // Periodisert Budsjett YTD
 Budsjett YTD = SUM(Fact_Regnskap[budsjett_belop])
 
-// Avvik YTD (Positivt = Merforbruk)
-Avvik YTD = [Regnskap YTD] - [Budsjett YTD]
+// Avvik YTD (Positivt = Mindreforbruk/Grønn, Negativt = Merforbruk/Rød)
+Avvik YTD = [Budsjett YTD] - [Regnskap YTD]
 
 // Dynamisk Avvik med ISINSCOPE
 Matrise Avvik Visning = 
@@ -130,6 +130,15 @@ SWITCH(
     ISINSCOPE(Dim_Funksjon[funksjon_kode]), [Avvik YTD],
     ISINSCOPE(Dim_Ansvar[ansvar_kode]), [Avvik YTD],
     [Avvik YTD]
+)
+
+// RAG-formatering (Positivt = Grønn, Negativt = Rød)
+Avvik Status Farge = 
+SWITCH(
+    TRUE(),
+    [Avvik YTD %] < -0.05, "#DC2626", -- Rød (Merforbruk > 5%)
+    [Avvik YTD %] < -0.02, "#F59E0B", -- Gul (Moderat merforbruk)
+    "#16A34A"                         -- Grønn (Mindreforbruk / under ramme)
 )
 ```
 
@@ -156,12 +165,12 @@ EOY Prognose =
 VAR YTD_Regn = [Regnskap YTD]
 VAR RestBud = [Budsjett Gjenstående]
 VAR Avvik = [Avvik YTD]
-VAR TrendAvvik = IF(Avvik > 0, Avvik * 0.5, 0)
+VAR TrendAvvik = IF(Avvik < 0, ABS(Avvik) * 0.5, 0)
 RETURN
     YTD_Regn + RestBud + TrendAvvik
 
-// Forventet Årsavvik (Varsling for § 14-5)
-EOY Forventet Årsavvik = [EOY Prognose] - [Vedtatt Årsbudsjett]
+// Forventet Årsavvik (Varsling for § 14-5: Positivt = Mindreforbruk, Negativt = Merforbruk)
+EOY Forventet Årsavvik = [Vedtatt Årsbudsjett] - [EOY Prognose]
 ```
 
 ### 4.2 Anomali-deteksjon på Lønn & Vikarer

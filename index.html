@@ -3506,7 +3506,231 @@
             gap: 6px;
         }
 
-    </style>
+    
+        /* ==========================================================================
+           GLOBAL ROLLEBASERT HOVEDNAVIGASJON (PERSONA-FANER)
+           jf. AI_KOM_layout_og_navigasjon.md & Edward Tufte Data-Ink Ratio
+           ========================================================================== */
+        .hub-persona-nav {
+            margin-bottom: 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-bottom: 3px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 6px 8px 0 8px;
+        }
+
+        .nav-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        @media (max-width: 992px) {
+            .nav-tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 580px) {
+            .nav-tabs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tab-button {
+            font-family: var(--font-sans);
+            background: transparent;
+            border: 1px solid transparent;
+            border-bottom: 3px solid transparent;
+            padding: 10px 14px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 3px 3px 0 0;
+            transition: all 0.15s ease-in-out;
+            color: var(--text-secondary);
+        }
+
+        .tab-button:hover {
+            background: #f4f6f8;
+            color: var(--text-primary);
+        }
+
+        .tab-button.active {
+            background: #ffffff;
+            color: var(--navy-dark);
+            border-color: var(--border-light) var(--border-light) transparent var(--border-light);
+            border-bottom: 3px solid var(--navy-dark);
+            font-weight: 700;
+        }
+
+        .tab-icon {
+            font-size: 20px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .tab-text-wrap {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .tab-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+            color: inherit;
+        }
+
+        .tab-button.active .tab-title {
+            color: var(--navy-dark);
+        }
+
+        .tab-sub {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tab-button.active .tab-sub {
+            color: var(--text-secondary);
+        }
+
+        .hub-tab-pane {
+            display: none;
+            animation: fadeInTab 0.15s ease-in-out;
+        }
+
+        .hub-tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0.85; transform: translateY(2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           GLOBAL ROLLEBASERT HOVEDNAVIGASJON (PERSONA-FANER)
+           jf. AI_KOM_layout_og_navigasjon.md & Edward Tufte Data-Ink Ratio
+           ========================================================================== */
+        .hub-persona-nav {
+            margin-bottom: 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-bottom: 3px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 6px 8px 0 8px;
+        }
+
+        .nav-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        @media (max-width: 992px) {
+            .nav-tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 580px) {
+            .nav-tabs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tab-button {
+            font-family: var(--font-sans);
+            background: transparent;
+            border: 1px solid transparent;
+            border-bottom: 3px solid transparent;
+            padding: 10px 14px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 3px 3px 0 0;
+            transition: all 0.15s ease-in-out;
+            color: var(--text-secondary);
+        }
+
+        .tab-button:hover {
+            background: #f4f6f8;
+            color: var(--text-primary);
+        }
+
+        .tab-button.active {
+            background: #ffffff;
+            color: var(--navy-dark);
+            border-color: var(--border-light) var(--border-light) transparent var(--border-light);
+            border-bottom: 3px solid var(--navy-dark);
+            font-weight: 700;
+        }
+
+        .tab-icon {
+            font-size: 20px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .tab-text-wrap {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .tab-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+            color: inherit;
+        }
+
+        .tab-button.active .tab-title {
+            color: var(--navy-dark);
+        }
+
+        .tab-sub {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tab-button.active .tab-sub {
+            color: var(--text-secondary);
+        }
+
+        .hub-tab-pane {
+            display: none;
+            animation: fadeInTab 0.15s ease-in-out;
+        }
+
+        .hub-tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0.85; transform: translateY(2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+</style>
 </head>
 <body>
 <div class="hub-container">
@@ -3535,6 +3759,46 @@
 
         
         <div class="hub-sidebar-scroll">
+            <!-- 0. HOVEDROLLER / PERSONAS (jf. AI_KOM_layout_og_navigasjon.md) -->
+            <div class="sidebar-nav-group" style="margin-bottom: 12px;">
+                <div class="sidebar-nav-header">
+                    <span>Hovedrolle / Visning</span>
+                    <span style="font-size:9.5px; text-transform:none; color:var(--accent-blue); font-weight:700;">4 Faner</span>
+                </div>
+                <a class="sidebar-nav-item active" id="side-tab-min-enhet" onclick="openTab('min-enhet')">
+                    <span>🏫 Min Enhet &amp; Måned</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-tab-sektor-konsern" onclick="openTab('sektor-konsern')">
+                    <span>🏛️ Sektor &amp; Konsern</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-tab-controller-hub" onclick="openTab('controller-hub')">
+                    <span>📊 Controller Hub</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-tab-veiledere-maler" onclick="openTab('veiledere-maler')">
+                    <span>📚 Veiledere &amp; Maler</span>
+                </a>
+            </div>
+
+            <!-- 0. HOVEDROLLER / PERSONAS (jf. AI_KOM_layout_og_navigasjon.md) -->
+            <div class="sidebar-nav-group" style="margin-bottom: 12px;">
+                <div class="sidebar-nav-header">
+                    <span>Hovedrolle / Visning</span>
+                    <span style="font-size:9.5px; text-transform:none; color:var(--accent-blue); font-weight:700;">4 Faner</span>
+                </div>
+                <a class="sidebar-nav-item active" id="side-tab-min-enhet" onclick="openTab('min-enhet')">
+                    <span>🏫 Min Enhet &amp; Måned</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-tab-sektor-konsern" onclick="openTab('sektor-konsern')">
+                    <span>🏛️ Sektor &amp; Konsern</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-tab-controller-hub" onclick="openTab('controller-hub')">
+                    <span>📊 Controller Hub</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-tab-veiledere-maler" onclick="openTab('veiledere-maler')">
+                    <span>📚 Veiledere &amp; Maler</span>
+                </a>
+            </div>
+
             <!-- DYNAMISK OVERSIKT & TOTALER FOR VALGT VIRKSOMHETSOMRÅDE (TUFTE STANDARD) -->
             <div class="sidebar-overview-card" id="sidebar-sector-overview">
                 <div class="sidebar-overview-header">
@@ -3800,7 +4064,6 @@
 
 <main class="hub-main-content">
 
-    <!-- 1. MASTHEAD / TOPPEN -->
     <header class="hub-header">
         <div class="hub-title">
             <h1>🏛️ KRISTIANSAND KOMMUNE — CONTROL OFFICE HUB</h1>
@@ -3819,10 +4082,372 @@
     </header>
 
     <!-- =======================================================================
-         2. ANSVARSOMRÅDER & SEKTORSTYRING (KRISTIANSAND KOMMUNE)
-         Organisert etter økonomirådgivernes 6 operative tjenesteområder
+         GLOBAL ROLLEBASERT HOVEDNAVIGASJON (PERSONA-FANER)
+         jf. AI_KOM_layout_og_navigasjon.md
          ======================================================================= -->
-    <section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
+    <nav class="hub-persona-nav" id="hub-persona-nav" aria-label="Hovednavigasjon etter rolle">
+        <div class="nav-tabs" role="tablist">
+            <button type="button" class="tab-button active" id="tab-btn-min-enhet" onclick="openTab('min-enhet')" role="tab" aria-selected="true" aria-controls="tab-min-enhet">
+                <span class="tab-icon">🏫</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Min Enhet &amp; Min Måned</span>
+                    <span class="tab-sub">Enhetsledere, Rektorer &amp; Avdelingsledere</span>
+                </span>
+            </button>
+            <button type="button" class="tab-button" id="tab-btn-sektor-konsern" onclick="openTab('sektor-konsern')" role="tab" aria-selected="false" aria-controls="tab-sektor-konsern">
+                <span class="tab-icon">🏛️</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Sektor &amp; Konsernstyring</span>
+                    <span class="tab-sub">Kommunalsjefer, Direktører &amp; Bystyret</span>
+                </span>
+            </button>
+            <button type="button" class="tab-button" id="tab-btn-controller-hub" onclick="openTab('controller-hub')" role="tab" aria-selected="false" aria-controls="tab-controller-hub">
+                <span class="tab-icon">📊</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Controller Hub &amp; Analyse</span>
+                    <span class="tab-sub">Økonomirådgivere, DAX &amp; Power BI</span>
+                </span>
+            </button>
+            <button type="button" class="tab-button" id="tab-btn-veiledere-maler" onclick="openTab('veiledere-maler')" role="tab" aria-selected="false" aria-controls="tab-veiledere-maler">
+                <span class="tab-icon">📚</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Veiledere &amp; Maler</span>
+                    <span class="tab-sub">Malbank, Regelverk &amp; Årshjul</span>
+                </span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- FANE 1: MIN ENHET & MIN MÅNED -->
+    <div class="hub-tab-pane active" id="tab-min-enhet" role="tabpanel" aria-labelledby="tab-btn-min-enhet">
+<section class="workflow-section" id="nettbank-kontoutskrift-seksjon" style="margin-bottom: 24px;">
+        <div class="section-header">
+            <span>🏦 Kommunal Nettbank & Månedlig Kontoutskrift for Budsjettansvarlige</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Fast Månedsoppsett (M01–M12) | § 14-5 Klarspråk</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+            Spesialtilpasset virksomhetsledere, rektorer, avdelingsledere og styrere uten økonomibakgrunn. 
+            Rapporten fungerer som en <strong>nettbank</strong>: Kontonummer, tildelt årsramme (startkreditt), månedens faktiske uttak og innbetalinger, 
+            <strong>disponibel saldo for resten av året</strong>, samt konkrete leder-råd for å overholde budsjettbalansen jf. <strong>Kommuneloven § 14-5</strong>.
+        </p>
+
+        <div class="bank-wrapper">
+            <!-- Sektor Hurtigvelger & Visningsmodus for Budsjettansvarlige -->
+            <div class="bank-sector-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding: 10px 14px; background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px;">
+                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-right: 4px;">Sektor:</span>
+                    <button type="button" class="btn btn-sm bank-sector-pill active" onclick="filterBankSector('ALL')" id="bank-sec-btn-ALL" style="background: var(--navy-dark); color: #ffffff; font-weight: 700;">Alle sektorer (81 enheter)</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('HELSE')" id="bank-sec-btn-HELSE" style="background: #f1f5f9; color: var(--text-primary);">🏥 Helse &amp; Omsorg</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('OPPVEKST')" id="bank-sec-btn-OPPVEKST" style="background: #f1f5f9; color: var(--text-primary);">🎓 Oppvekst &amp; Skole</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('BYUTVIKLING')" id="bank-sec-btn-BYUTVIKLING" style="background: #f1f5f9; color: var(--text-primary);">🏗️ Byutvikling &amp; VAR</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KULTUR')" id="bank-sec-btn-KULTUR" style="background: #f1f5f9; color: var(--text-primary);">🎭 Kultur &amp; Idrett</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('ORG_TEK')" id="bank-sec-btn-ORG_TEK" style="background: #f1f5f9; color: var(--text-primary);">💻 Org &amp; IKT</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KONSERN')" id="bank-sec-btn-KONSERN" style="background: #f1f5f9; color: var(--text-primary);">🏛️ Konsern</button>
+                </div>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
+                    <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
+                    <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
+                </div>
+            </div>
+
+            <!-- Kontrollpanel: Enhetsvelger & Månedsvelger (M01–M12) -->
+            <div class="bank-controls-bar">
+                <div class="bank-controls-left">
+                    <span class="bank-select-label">Budsjettkonto:</span>
+                    <select class="bank-unit-select" id="bank-unit-dropdown" onchange="onBankUnitChange(this.value)">
+                        <optgroup label="🏥 Helse og mestring">
+                            <option value="5200-ENH-401" selected>Enhet 401: Strai Sykehjem (Solveig Grimstad)</option>
+                            <option value="5210-ENH-402">Enhet 402: Hjemmetjenesten Vågsbygd (Berit Olsen)</option>
+                            <option value="5220-ENH-403">Enhet 403: Sørlandsparken Bo & Miljø (Christian Holte)</option>
+                            <option value="5230-ENH-404">Enhet 404: Presteheia Omsorgssenter (Kari Vesterhus)</option>
+                            <option value="5100-OMR-SYKEHJEM">Område Døgnomsorg & Sykehjem (Mette Syvertsen)</option>
+                            <option value="5000-SJEF-HELSE">Kommunalsjef Helse og mestring (Brede Skeie)</option>
+                        </optgroup>
+                        <optgroup label="🎓 Oppvekst og utdanning">
+                            <option value="4100-ENH-202">Enhet 202: Lovisenlev Skole (Trond Jensen)</option>
+                            <option value="4101-ENH-203">Enhet 203: Vågsbygd Skole (Mona Lindstrøm)</option>
+                            <option value="4102-ENH-204">Enhet 204: Grim Ungdomsskole (Espen Birkeland)</option>
+                            <option value="4210-ENH-211">Enhet 211: Lund Kommunale Barnehage (Grete Hovden)</option>
+                            <option value="4100-OMR-SKOLE">Grunnskoleavdelingen (Svein Tore Kvernes)</option>
+                            <option value="4000-SJEF-OPPV">Kommunalsjef Oppvekst (Kristin Eidet Robstad)</option>
+                        </optgroup>
+                        <optgroup label="🏗️ By- og stedsutvikling">
+                            <option value="3300-ENH-301">Enhet 301: Byggesak og Tilsyn (Hans Petter Vik)</option>
+                            <option value="3100-DIR-VAR">Ingeniørvesenet VAR Selvkost (Helge Møller)</option>
+                            <option value="3000-SJEF-BYUTV">Kommunalsjef Byutvikling (Ragnar Evensen)</option>
+                        </optgroup>
+                        <optgroup label="🎭 Kultur og innbyggerdialog">
+                            <option value="2100-ENH-501">Enhet 501: Kultur & Bibliotek (Camilla Jarlsby)</option>
+                            <option value="2000-SJEF-KULTUR">Kommunalsjef Kultur (Camilla Jarlsby)</option>
+                        </optgroup>
+                        <optgroup label="💻 Organisasjon og teknologi">
+                            <option value="1100-DIR-IKT">Digitaliseringsavdelingen (Siri Bentsen)</option>
+                            <option value="1000-SJEF-ORGTEK">Kommunalsjef Org & Tek (Geir Askvik)</option>
+                        </optgroup>
+                        <optgroup label="🏛️ Konsern og toppledelse">
+                            <option value="0000-KOMMDIR">Kommunedirektørens stab (Camilla Dunsæd)</option>
+                            <option value="6000-DIR-OKONOMI">Sentral økonomistab (Terje Fjellvang)</option>
+                        </optgroup>
+                    </select>
+
+                    <div class="bank-month-pills" id="bank-month-pills-bar">
+                        <!-- M01 til M12 knapper genereres dynamisk -->
+                    </div>
+                </div>
+
+                <div class="bank-controls-right">
+                    <button class="btn btn-sm" onclick="openShareModal('email')" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe; font-weight:600;" title="Send månedlig status og kontoutskrift på e-post til leder og controller">
+                        📧 Send E-post
+                    </button>
+                    <button class="btn btn-sm" onclick="openShareModal('teams')" style="background:#f3e8ff; color:#6b21a8; border-color:#e9d5ff; font-weight:600;" title="Del månedlig status og kontoutskrift direkte i Microsoft Teams">
+                        💬 Del i Teams
+                    </button>
+                    <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
+                        🖨️ Skriv ut / PDF
+                    </button>
+                    <button class="btn btn-sm btn-secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned transaksjoner som Excel/CSV">
+                        📊 Last ned CSV
+                    </button>
+                    <a class="btn btn-sm btn-secondary" id="bank-direct-html-btn" href="reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html" target="_blank" title="Åpne ren A4 bankutskrift i fullskjerm">
+                        📄 Åpne A4
+                    </a>
+                    <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
+                        💬 Spør Controller
+                    </button>
+                </div>
+            </div>
+
+            <!-- Aktiv Kontoutskrift Hovedkort -->
+            <div class="bank-card" id="bank-statement-main-card">
+                <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                    Laster kontoutskrift og saldo...
+                </div>
+            </div>
+
+            <!-- Sektor-tilpasset Driftsdashboard (Rektorens Skole-Dashboard & Pleie/Omsorg Dashboard) -->
+            <div id="sektor-spesifikk-leder-modul" style="margin-top: 18px;">
+                <!-- Rendres dynamisk basert på valgt enhet (Skoleleder vs Sykehjemsleder) -->
+            </div>
+        </div>
+    </section>
+
+<div class="monthly-cycle-banner" id="workflow-cycle-banner">
+        <div class="monthly-cycle-header">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰ Meny</button>
+                <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy-dark);">
+                    📅 ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP
+                </span>
+                <span style="font-size:11px; color:var(--text-secondary);">
+                    Gjeldende fase: <strong id="current-phase-label" style="color:var(--navy-dark);">Fase 2: Avviksdeteksjon & Triage (Dag 6–10)</strong>
+                </span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button class="btn btn-sm" onclick="openCommandPalette()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Hurtigmeny for søk, enheter og maler (Ctrl+K)">
+                    ⚡ Søk (Ctrl+K)
+                </button>
+                <button class="btn btn-sm" onclick="togglePresentationMode()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Veksle møte-/presentasjonsmodus for storskjerm (Tast P)">
+                    🖥️ Møtemodus (P)
+                </button>
+                <button class="btn btn-sm" onclick="openUserGuide('MANED')" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;">
+                    📖 Månedsveileder
+                </button>
+                <span class="status-badge" id="cycle-month-tag">M9 September (T2)</span>
+            </div>
+        </div>
+
+        <div class="workflow-stepper">
+            <div class="cycle-step-card" id="cycle-card-1" onclick="selectWorkflowPhase(1)">
+                <div class="cycle-step-days">
+                    <span>Fase 1</span>
+                    <span>Dag 1–5</span>
+                </div>
+                <div class="cycle-step-title">1. Månedsstart & Import</div>
+                <div class="cycle-step-sub">Visma ERP data, bankavstemming, EHF-attestasjon og PII-vask til Golden Record.</div>
+            </div>
+
+            <div class="cycle-step-card active" id="cycle-card-2" onclick="selectWorkflowPhase(2)">
+                <div class="cycle-step-days">
+                    <span>Fase 2 ⭐</span>
+                    <span>Dag 6–10</span>
+                </div>
+                <div class="cycle-step-title">2. Avvik & Triage</div>
+                <div class="cycle-step-sub">Z-score screening, 16 enheter triage, artsavvik (vikarer/overtid) og NAV-etterslep.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-3" onclick="selectWorkflowPhase(3)">
+                <div class="cycle-step-days">
+                    <span>Fase 3</span>
+                    <span>Dag 11–18</span>
+                </div>
+                <div class="cycle-step-title">3. Lederdialog & Tiltak</div>
+                <div class="cycle-step-sub">Møter med enhetsledere (Skole/Bo), 4-punkts tiltaksplan og drøfting iht. HTA § 4.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-4" onclick="selectWorkflowPhase(4)">
+                <div class="cycle-step-days">
+                    <span>Fase 4</span>
+                    <span>Dag 19–24</span>
+                </div>
+                <div class="cycle-step-title">4. Prognose (EAC/ETC)</div>
+                <div class="cycle-step-sub">Oppdatere rullende EOY i Framsikt EPM, usikkerhet P10/P50/P90, pensjon & rente.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-5" onclick="selectWorkflowPhase(5)">
+                <div class="cycle-step-days">
+                    <span>Fase 5</span>
+                    <span>Dag 25–30</span>
+                </div>
+                <div class="cycle-step-title">5. Politisk Sak & Vedtak</div>
+                <div class="cycle-step-sub">Formannskapssak jf. § 14-5, Bystyrets bord, saksnotat, SHA-256 revisjonsstempel.</div>
+            </div>
+        </div>
+
+        <!-- Operativ Controller Sjekkliste for den valgte fasen -->
+        <div class="controller-checklist-panel" id="checklist-panel">
+            <div class="checklist-header">
+                <div>
+                    <strong id="checklist-title">🛡️ Fase 2 Controller Sjekkliste: Avviksdeteksjon & Triage</strong>
+                    <span style="font-size:11px; color:var(--text-secondary); margin-left:8px;" id="checklist-counter">4 av 5 oppgaver fullført</span>
+                </div>
+                <div style="display:flex; gap:6px;">
+                    <button class="btn btn-sm" onclick="resetCurrentChecklist()" style="font-size:10.5px; padding:2px 7px;">Tilbakestill</button>
+                    <button class="btn btn-sm btn-primary" onclick="markAllChecklistDone()" style="font-size:10.5px; padding:2px 7px;">✓ Merk alle fullført</button>
+                </div>
+            </div>
+            <div class="checklist-progress-bar">
+                <div class="checklist-progress-fill" id="checklist-progress" style="width: 80%;"></div>
+            </div>
+            <div id="checklist-items-container">
+                <!-- Dynamisk fylt via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+<section class="workflow-section" id="mote-rapportering-seksjon">
+        <div class="section-header">
+            <span>👥 Månedsmøter & Nivårapportering — Økonomirådgiverens Oppfølging</span>
+            <span class="status-badge" id="meeting-header-badge">Månedssyklus M10 (Oktober) | Port 9 HITL</span>
+        </div>
+        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+            Hver måned følger økonomirådgiveren opp hver budsjettansvarlig med skreddersydd status, kritiske avvik og handlingsplan for å sikre budsjettbalanse ved årets slutt (EOY per 31.12) jf. <strong>Kommuneloven § 14-5</strong>. Rapporteringen er organisert i 3 styringsnivåer tilpasset beslutningsmyndighet og lovpålagte rammer.
+        </p>
+
+        <!-- Nivåvelger Faner (Nivå 1, Nivå 2, Nivå 3) -->
+        <div class="level-pills-bar" id="level-pills-bar">
+            <button class="level-pill-btn active" id="btn-lvl-niva1" onclick="switchMeetingLevel('NIVA1')">
+                <span>👤 Nivå 1: Avdelings- / Seksjonsleder</span>
+                <span class="level-badge">Operativ Enhet</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva2" onclick="switchMeetingLevel('NIVA2')">
+                <span>👥 Nivå 2: Kommunalsjef</span>
+                <span class="level-badge">Taktisk Sektor</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva3" onclick="switchMeetingLevel('NIVA3')">
+                <span>🏛️ Nivå 3: Kommunaldirektør</span>
+                <span class="level-badge">Toppledelse</span>
+            </button>
+        </div>
+
+        <!-- Møtedetaljer Hovedkort (Innhold injiseres dynamisk) -->
+        <div class="meeting-card" id="meeting-main-card">
+            <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                Laster møtepakke for valgt nivå og sektor...
+            </div>
+        </div>
+    
+        <!-- =======================================================================
+             3B. REGISTER OVER BUDSJETTANSVARLIGE & DELEGERINGSHIERARKI (NIVÅ 1–4)
+             Sikrer korrekt utsendelse av rapporter, skjemaer og returflyt
+             ======================================================================= -->
+        <div class="panel" id="budsjettansvarlige-panel" style="margin-top: 24px; border: 1px solid var(--border-light); background: #ffffff; padding: 18px; border-radius: 4px;">
+            <div class="section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 15px; font-weight: 700; color: var(--navy-dark);">👥 Register over Budsjettansvarlige & Delegeringshierarki (Nivå 1–4)</span>
+                    <span class="status-badge" id="budget-holders-count-badge" style="background: #e0f2fe; color: #0369a1; font-size: 11px;">Viser: 39 ansvarlige</span>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="erp_data/budsjettansvarlige_register.csv" download class="btn btn-sm" title="Last ned som CSV til Excel / Power Query">
+                        📊 Last ned CSV
+                    </a>
+                    <a href="erp_data/budsjettansvarlige_register.json" download class="btn btn-sm" title="Last ned rådata i JSON format">
+                        📦 Last ned JSON
+                    </a>
+                    <a href="bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md" target="_blank" class="btn btn-sm btn-primary">
+                        📖 Full Veileder (.md)
+                    </a>
+                </div>
+            </div>
+
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
+                Oversikt over alle budsjett- og anvisningsmyndige ledere i Kristiansand kommune. Benyttes for automatisert utsendelse av månedlige avviksrapporter og maler fra Visma ERP, samt kvalitetssikret oppfølging og retur jf. <strong>Kommuneloven § 13-1 og § 14-5</strong>.
+            </p>
+
+            <!-- Filter og Søkebar -->
+            <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; background: #f8fafc; padding: 10px 14px; border-radius: 4px; border: 1px solid var(--border-subtle);">
+                <div style="flex: 1; min-width: 220px;">
+                    <input type="text" id="budget-holder-search" class="form-control" placeholder="🔍 Søk på navn, stilling, enhet, ansvar (f.eks. 202, Strai, Lovisenlev)..." 
+                           style="width: 100%; padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;"
+                           oninput="filterBudgetHoldersTable()">
+                </div>
+                <div>
+                    <select id="budget-holder-level-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
+                        <option value="ALL">Alle Styringsnivåer</option>
+                        <option value="NIVA1">🏛️ Nivå 1: Toppledelse (Kommunedirektør & Kommunalsjef)</option>
+                        <option value="NIVA2">👥 Nivå 2: Områdedirektør / Avdelingssjef</option>
+                        <option value="NIVA3">👤 Nivå 3: Enhetsleder / Rektor (KOSTRA-ansvar)</option>
+                        <option value="NIVA4">📋 Nivå 4: Avdelingsleder / Turnusleder</option>
+                        <option value="CONTROLLER">👔 Controllerteamet & Rådgivere</option>
+                    </select>
+                </div>
+                <div>
+                    <select id="budget-holder-sector-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
+                        <option value="ALL">🌐 Alle Virksomhetsområder</option>
+                        <option value="HELSE">🏥 1. Helse og mestring</option>
+                        <option value="OPPVEKST">🏫 2. Oppvekst og utdanning</option>
+                        <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
+                        <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
+                        <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
+                        <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm" onclick="resetBudgetHolderFilters()">Nullstill filter</button>
+                </div>
+            </div>
+
+            <!-- Tabell (Tufte Data-Ink Standard) -->
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto; border: 1px solid var(--border-subtle); border-radius: 3px;">
+                <table class="data-table" id="budget-holders-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                    <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 2; border-bottom: 1.5px solid var(--navy-dark);">
+                        <tr>
+                            <th style="padding: 8px 10px; text-align: left;">Ansvar / ID</th>
+                            <th style="padding: 8px 10px; text-align: left;">Budsjettansvarlig Leder</th>
+                            <th style="padding: 8px 10px; text-align: left;">Nivå & Sektor</th>
+                            <th style="padding: 8px 10px; text-align: left;">Kontaktinformasjon</th>
+                            <th style="padding: 8px 10px; text-align: right;">Fullmakt (NOK)</th>
+                            <th style="padding: 8px 10px; text-align: left;">Utsendte Maler / Skjema</th>
+                            <th style="padding: 8px 10px; text-align: left;">Returkanal & Frist</th>
+                            <th style="padding: 8px 10px; text-align: center;">Operativ Handling</th>
+                        </tr>
+                    </thead>
+                    <tbody id="budget-holders-tbody">
+                        <!-- Genereres fra JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="budget-holders-empty-msg" style="display: none; padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
+                Ingen budsjettansvarlige matcher valgt filter.
+            </div>
+        </div>
+
+    </section>
+    </div>
+
+    <!-- FANE 2: SEKTORE & KONSERNSTYRING -->
+    <div class="hub-tab-pane" id="tab-sektor-konsern" role="tabpanel" aria-labelledby="tab-btn-sektor-konsern" style="display: none;">
+<section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
         <div class="section-header">
             <span>🏛️ Ansvarsområder & Økonomirådgivere (6 Tjenesteområder)</span>
             <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Virksomhetsstyring 2026</span>
@@ -3870,8 +4495,7 @@
         </div>
     </section>
 
-    <!-- 3. TOTALTALL PER VIRKSOMHETSOMRÅDE (EVM / PROJECT CONTROLLING) -->
-    <div style="margin-bottom: 24px;" id="kpi-seksjon-container">
+<div style="margin-bottom: 24px;" id="kpi-seksjon-container">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:12px; font-weight:700; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
@@ -4042,551 +4666,7 @@
         </div>
     </div>
 
-
-    <!-- 4. KRITISKE KOSTNADSAVVIK PÅ KOSTRA ART (GOLDEN RECORD) -->
-    <div class="panel" id="avvik-seksjon" style="margin-bottom: 24px;">
-        <div class="section-header">
-            <span>🚨 Kritiske Kostnadsavvik på KOSTRA Art (Golden Record)</span>
-            <span id="active-entity-filter" style="font-size: 11px; font-weight: 700; color: var(--navy-dark); text-transform: uppercase;">Viser: Konsern (Alle Enheter)</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-            Avvik beregnes som <em>Budsjett - Regnskap</em>. Negativt tall indikerer merforbruk (rødt jf. Tufte data-ink standard).
-        </p>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
-            <div style="font-size:11.5px; color:var(--text-secondary);">
-                Viser KOSTRA-avvik for valgt ansvarsområde. Negativt avvik indikerer merforbruk.
-            </div>
-            <div class="rag-legend-bar">
-                <span style="font-weight:700;">RAG-format:</span>
-                <span class="rag-legend-item"><span class="rag-dot red"></span> Rød (Merforbruk &gt; 500k)</span>
-                <span class="rag-legend-item"><span class="rag-dot yellow"></span> Gul (Mindre avvik)</span>
-                <span class="rag-legend-item"><span class="rag-dot green"></span> Grønn (Mindreforbruk / balanse)</span>
-            </div>
-        </div>
-        <table class="tufte-table" id="variances-table">
-            <thead>
-                <tr>
-                    <th>KOSTRA Art / Post</th>
-                    <th>Enhet</th>
-                    <th class="num">Budsjett</th>
-                    <th class="num">Regnskap</th>
-                    <th class="num">Avvik (NOK)</th>
-                    <th class="num">Avvik %</th>
-                    <th>RAG Status</th>
-                </tr>
-            </thead>
-            <tbody id="variances-tbody">
-                <!-- Dynamisk fylt fra SECTOR_VARIANCES via renderVariancesTable(sectorKey) -->
-            </tbody>
-        </table>
-
-        <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
-            Data-Ink merknad: Vertikale rutenett fjernet. Tall høyrejustert og formatert i hele kroner. Kilde: Visma ERP & Framsikt EPM Golden Record.
-        </div>
-    </div>
-
-    <!-- =======================================================================
-         5. MÅNEDLIG MØTERAPPORTERING & NIVÅSTYRING (NIVÅ 1, 2, 3)
-         ======================================================================= -->
-    <section class="workflow-section" id="mote-rapportering-seksjon">
-        <div class="section-header">
-            <span>👥 Månedsmøter & Nivårapportering — Økonomirådgiverens Oppfølging</span>
-            <span class="status-badge" id="meeting-header-badge">Månedssyklus M10 (Oktober) | Port 9 HITL</span>
-        </div>
-        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
-            Hver måned følger økonomirådgiveren opp hver budsjettansvarlig med skreddersydd status, kritiske avvik og handlingsplan for å sikre budsjettbalanse ved årets slutt (EOY per 31.12) jf. <strong>Kommuneloven § 14-5</strong>. Rapporteringen er organisert i 3 styringsnivåer tilpasset beslutningsmyndighet og lovpålagte rammer.
-        </p>
-
-        <!-- Nivåvelger Faner (Nivå 1, Nivå 2, Nivå 3) -->
-        <div class="level-pills-bar" id="level-pills-bar">
-            <button class="level-pill-btn active" id="btn-lvl-niva1" onclick="switchMeetingLevel('NIVA1')">
-                <span>👤 Nivå 1: Avdelings- / Seksjonsleder</span>
-                <span class="level-badge">Operativ Enhet</span>
-            </button>
-            <button class="level-pill-btn" id="btn-lvl-niva2" onclick="switchMeetingLevel('NIVA2')">
-                <span>👥 Nivå 2: Kommunalsjef</span>
-                <span class="level-badge">Taktisk Sektor</span>
-            </button>
-            <button class="level-pill-btn" id="btn-lvl-niva3" onclick="switchMeetingLevel('NIVA3')">
-                <span>🏛️ Nivå 3: Kommunaldirektør</span>
-                <span class="level-badge">Toppledelse</span>
-            </button>
-        </div>
-
-        <!-- Møtedetaljer Hovedkort (Innhold injiseres dynamisk) -->
-        <div class="meeting-card" id="meeting-main-card">
-            <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
-                Laster møtepakke for valgt nivå og sektor...
-            </div>
-        </div>
-    
-        <!-- =======================================================================
-             3B. REGISTER OVER BUDSJETTANSVARLIGE & DELEGERINGSHIERARKI (NIVÅ 1–4)
-             Sikrer korrekt utsendelse av rapporter, skjemaer og returflyt
-             ======================================================================= -->
-        <div class="panel" id="budsjettansvarlige-panel" style="margin-top: 24px; border: 1px solid var(--border-light); background: #ffffff; padding: 18px; border-radius: 4px;">
-            <div class="section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 15px; font-weight: 700; color: var(--navy-dark);">👥 Register over Budsjettansvarlige & Delegeringshierarki (Nivå 1–4)</span>
-                    <span class="status-badge" id="budget-holders-count-badge" style="background: #e0f2fe; color: #0369a1; font-size: 11px;">Viser: 39 ansvarlige</span>
-                </div>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <a href="erp_data/budsjettansvarlige_register.csv" download class="btn btn-sm" title="Last ned som CSV til Excel / Power Query">
-                        📊 Last ned CSV
-                    </a>
-                    <a href="erp_data/budsjettansvarlige_register.json" download class="btn btn-sm" title="Last ned rådata i JSON format">
-                        📦 Last ned JSON
-                    </a>
-                    <a href="bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md" target="_blank" class="btn btn-sm btn-primary">
-                        📖 Full Veileder (.md)
-                    </a>
-                </div>
-            </div>
-
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
-                Oversikt over alle budsjett- og anvisningsmyndige ledere i Kristiansand kommune. Benyttes for automatisert utsendelse av månedlige avviksrapporter og maler fra Visma ERP, samt kvalitetssikret oppfølging og retur jf. <strong>Kommuneloven § 13-1 og § 14-5</strong>.
-            </p>
-
-            <!-- Filter og Søkebar -->
-            <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; background: #f8fafc; padding: 10px 14px; border-radius: 4px; border: 1px solid var(--border-subtle);">
-                <div style="flex: 1; min-width: 220px;">
-                    <input type="text" id="budget-holder-search" class="form-control" placeholder="🔍 Søk på navn, stilling, enhet, ansvar (f.eks. 202, Strai, Lovisenlev)..." 
-                           style="width: 100%; padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;"
-                           oninput="filterBudgetHoldersTable()">
-                </div>
-                <div>
-                    <select id="budget-holder-level-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
-                        <option value="ALL">Alle Styringsnivåer</option>
-                        <option value="NIVA1">🏛️ Nivå 1: Toppledelse (Kommunedirektør & Kommunalsjef)</option>
-                        <option value="NIVA2">👥 Nivå 2: Områdedirektør / Avdelingssjef</option>
-                        <option value="NIVA3">👤 Nivå 3: Enhetsleder / Rektor (KOSTRA-ansvar)</option>
-                        <option value="NIVA4">📋 Nivå 4: Avdelingsleder / Turnusleder</option>
-                        <option value="CONTROLLER">👔 Controllerteamet & Rådgivere</option>
-                    </select>
-                </div>
-                <div>
-                    <select id="budget-holder-sector-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
-                        <option value="ALL">🌐 Alle Virksomhetsområder</option>
-                        <option value="HELSE">🏥 1. Helse og mestring</option>
-                        <option value="OPPVEKST">🏫 2. Oppvekst og utdanning</option>
-                        <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
-                        <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
-                        <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
-                        <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
-                    </select>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm" onclick="resetBudgetHolderFilters()">Nullstill filter</button>
-                </div>
-            </div>
-
-            <!-- Tabell (Tufte Data-Ink Standard) -->
-            <div class="table-responsive" style="max-height: 480px; overflow-y: auto; border: 1px solid var(--border-subtle); border-radius: 3px;">
-                <table class="data-table" id="budget-holders-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                    <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 2; border-bottom: 1.5px solid var(--navy-dark);">
-                        <tr>
-                            <th style="padding: 8px 10px; text-align: left;">Ansvar / ID</th>
-                            <th style="padding: 8px 10px; text-align: left;">Budsjettansvarlig Leder</th>
-                            <th style="padding: 8px 10px; text-align: left;">Nivå & Sektor</th>
-                            <th style="padding: 8px 10px; text-align: left;">Kontaktinformasjon</th>
-                            <th style="padding: 8px 10px; text-align: right;">Fullmakt (NOK)</th>
-                            <th style="padding: 8px 10px; text-align: left;">Utsendte Maler / Skjema</th>
-                            <th style="padding: 8px 10px; text-align: left;">Returkanal & Frist</th>
-                            <th style="padding: 8px 10px; text-align: center;">Operativ Handling</th>
-                        </tr>
-                    </thead>
-                    <tbody id="budget-holders-tbody">
-                        <!-- Genereres fra JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            <div id="budget-holders-empty-msg" style="display: none; padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
-                Ingen budsjettansvarlige matcher valgt filter.
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- =======================================================================
-         3C. KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT FOR BUDSJETTANSVARLIGE
-         Oversiktlig bankoppsett med saldo, uttak og økonomiråd for ikke-økonomer
-         ======================================================================= -->
-    <section class="workflow-section" id="nettbank-kontoutskrift-seksjon" style="margin-bottom: 24px;">
-        <div class="section-header">
-            <span>🏦 Kommunal Nettbank & Månedlig Kontoutskrift for Budsjettansvarlige</span>
-            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Fast Månedsoppsett (M01–M12) | § 14-5 Klarspråk</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
-            Spesialtilpasset virksomhetsledere, rektorer, avdelingsledere og styrere uten økonomibakgrunn. 
-            Rapporten fungerer som en <strong>nettbank</strong>: Kontonummer, tildelt årsramme (startkreditt), månedens faktiske uttak og innbetalinger, 
-            <strong>disponibel saldo for resten av året</strong>, samt konkrete leder-råd for å overholde budsjettbalansen jf. <strong>Kommuneloven § 14-5</strong>.
-        </p>
-
-        <div class="bank-wrapper">
-            <!-- Sektor Hurtigvelger & Visningsmodus for Budsjettansvarlige -->
-            <div class="bank-sector-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding: 10px 14px; background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px;">
-                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-right: 4px;">Sektor:</span>
-                    <button type="button" class="btn btn-sm bank-sector-pill active" onclick="filterBankSector('ALL')" id="bank-sec-btn-ALL" style="background: var(--navy-dark); color: #ffffff; font-weight: 700;">Alle sektorer (81 enheter)</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('HELSE')" id="bank-sec-btn-HELSE" style="background: #f1f5f9; color: var(--text-primary);">🏥 Helse &amp; Omsorg</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('OPPVEKST')" id="bank-sec-btn-OPPVEKST" style="background: #f1f5f9; color: var(--text-primary);">🎓 Oppvekst &amp; Skole</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('BYUTVIKLING')" id="bank-sec-btn-BYUTVIKLING" style="background: #f1f5f9; color: var(--text-primary);">🏗️ Byutvikling &amp; VAR</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KULTUR')" id="bank-sec-btn-KULTUR" style="background: #f1f5f9; color: var(--text-primary);">🎭 Kultur &amp; Idrett</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('ORG_TEK')" id="bank-sec-btn-ORG_TEK" style="background: #f1f5f9; color: var(--text-primary);">💻 Org &amp; IKT</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KONSERN')" id="bank-sec-btn-KONSERN" style="background: #f1f5f9; color: var(--text-primary);">🏛️ Konsern</button>
-                </div>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
-                    <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
-                    <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
-                </div>
-            </div>
-
-            <!-- Kontrollpanel: Enhetsvelger & Månedsvelger (M01–M12) -->
-            <div class="bank-controls-bar">
-                <div class="bank-controls-left">
-                    <span class="bank-select-label">Budsjettkonto:</span>
-                    <select class="bank-unit-select" id="bank-unit-dropdown" onchange="onBankUnitChange(this.value)">
-                        <optgroup label="🏥 Helse og mestring">
-                            <option value="5200-ENH-401" selected>Enhet 401: Strai Sykehjem (Solveig Grimstad)</option>
-                            <option value="5210-ENH-402">Enhet 402: Hjemmetjenesten Vågsbygd (Berit Olsen)</option>
-                            <option value="5220-ENH-403">Enhet 403: Sørlandsparken Bo & Miljø (Christian Holte)</option>
-                            <option value="5230-ENH-404">Enhet 404: Presteheia Omsorgssenter (Kari Vesterhus)</option>
-                            <option value="5100-OMR-SYKEHJEM">Område Døgnomsorg & Sykehjem (Mette Syvertsen)</option>
-                            <option value="5000-SJEF-HELSE">Kommunalsjef Helse og mestring (Brede Skeie)</option>
-                        </optgroup>
-                        <optgroup label="🎓 Oppvekst og utdanning">
-                            <option value="4100-ENH-202">Enhet 202: Lovisenlev Skole (Trond Jensen)</option>
-                            <option value="4101-ENH-203">Enhet 203: Vågsbygd Skole (Mona Lindstrøm)</option>
-                            <option value="4102-ENH-204">Enhet 204: Grim Ungdomsskole (Espen Birkeland)</option>
-                            <option value="4210-ENH-211">Enhet 211: Lund Kommunale Barnehage (Grete Hovden)</option>
-                            <option value="4100-OMR-SKOLE">Grunnskoleavdelingen (Svein Tore Kvernes)</option>
-                            <option value="4000-SJEF-OPPV">Kommunalsjef Oppvekst (Kristin Eidet Robstad)</option>
-                        </optgroup>
-                        <optgroup label="🏗️ By- og stedsutvikling">
-                            <option value="3300-ENH-301">Enhet 301: Byggesak og Tilsyn (Hans Petter Vik)</option>
-                            <option value="3100-DIR-VAR">Ingeniørvesenet VAR Selvkost (Helge Møller)</option>
-                            <option value="3000-SJEF-BYUTV">Kommunalsjef Byutvikling (Ragnar Evensen)</option>
-                        </optgroup>
-                        <optgroup label="🎭 Kultur og innbyggerdialog">
-                            <option value="2100-ENH-501">Enhet 501: Kultur & Bibliotek (Camilla Jarlsby)</option>
-                            <option value="2000-SJEF-KULTUR">Kommunalsjef Kultur (Camilla Jarlsby)</option>
-                        </optgroup>
-                        <optgroup label="💻 Organisasjon og teknologi">
-                            <option value="1100-DIR-IKT">Digitaliseringsavdelingen (Siri Bentsen)</option>
-                            <option value="1000-SJEF-ORGTEK">Kommunalsjef Org & Tek (Geir Askvik)</option>
-                        </optgroup>
-                        <optgroup label="🏛️ Konsern og toppledelse">
-                            <option value="0000-KOMMDIR">Kommunedirektørens stab (Camilla Dunsæd)</option>
-                            <option value="6000-DIR-OKONOMI">Sentral økonomistab (Terje Fjellvang)</option>
-                        </optgroup>
-                    </select>
-
-                    <div class="bank-month-pills" id="bank-month-pills-bar">
-                        <!-- M01 til M12 knapper genereres dynamisk -->
-                    </div>
-                </div>
-
-                <div class="bank-controls-right">
-                    <button class="btn btn-sm" onclick="openShareModal('email')" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe; font-weight:600;" title="Send månedlig status og kontoutskrift på e-post til leder og controller">
-                        📧 Send E-post
-                    </button>
-                    <button class="btn btn-sm" onclick="openShareModal('teams')" style="background:#f3e8ff; color:#6b21a8; border-color:#e9d5ff; font-weight:600;" title="Del månedlig status og kontoutskrift direkte i Microsoft Teams">
-                        💬 Del i Teams
-                    </button>
-                    <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
-                        🖨️ Skriv ut / PDF
-                    </button>
-                    <button class="btn btn-sm btn-secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned transaksjoner som Excel/CSV">
-                        📊 Last ned CSV
-                    </button>
-                    <a class="btn btn-sm btn-secondary" id="bank-direct-html-btn" href="reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html" target="_blank" title="Åpne ren A4 bankutskrift i fullskjerm">
-                        📄 Åpne A4
-                    </a>
-                    <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
-                        💬 Spør Controller
-                    </button>
-                </div>
-            </div>
-
-            <!-- Aktiv Kontoutskrift Hovedkort -->
-            <div class="bank-card" id="bank-statement-main-card">
-                <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
-                    Laster kontoutskrift og saldo...
-                </div>
-            </div>
-
-            <!-- Sektor-tilpasset Driftsdashboard (Rektorens Skole-Dashboard & Pleie/Omsorg Dashboard) -->
-            <div id="sektor-spesifikk-leder-modul" style="margin-top: 18px;">
-                <!-- Rendres dynamisk basert på valgt enhet (Skoleleder vs Sykehjemsleder) -->
-            </div>
-        </div>
-    </section>
-
-
-
-
-
-
-    <!-- =======================================================================
-         5B. RAG REGELVERKSASSISTENT & JUSS (GLASS-BOX AI)
-         ======================================================================= -->
-    <div class="panel" id="rag-seksjon" style="margin-bottom: 24px;">
-            <div class="section-header">
-                <span>🤖 RAG Regelverksassistent & Juss</span>
-                <span class="status-badge">Glass-Box (§)</span>
-            </div>
-
-            <div class="quick-queries" id="rag-quick-queries">
-                <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?')">
-                    § 14-5 Budsjettendring
-                </span>
-                <span class="query-chip" onclick="setQuery('Hvordan skal vikarutgifter og sykepenger periodiseres i KOSTRA?')">
-                    KOSTRA Vikarer
-                </span>
-                <span class="query-chip" onclick="setQuery('Hvilke fullmakter har kommunedirektøren for omdisponering?')">
-                    Delegasjon fullmakt
-                </span>
-            </div>
-
-            <div class="rag-search-box">
-                <input type="text" id="rag-input" class="rag-input" placeholder="Still et spørsmål om lovverk eller økonomireglement..." 
-                       value="Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?"
-                       aria-label="Søk i lovverk og økonomireglement"
-                       onkeydown="if(event.key==='Enter') executeMockRAG()">
-                <button class="btn btn-primary" onclick="executeMockRAG()">🔍 Søk</button>
-            </div>
-
-            <div class="rag-response-card" id="rag-output">
-                <strong>Vurdering jf. Kommuneloven § 14-5:</strong><br/>
-                Dersom det i løpet av budsjettåret oppstår vesentlige avvik som truer budsjettmessig balanse eller realismekravet, plikter kommunedirektøren å fremme sak om endring av årsbudsjettet for Bystyret.<br/><br/>
-                For Oppvekst og utdanning må det avklares om merforbruket på vikarer (-645 000 kr) og overtid (-379 000 kr) kan dekkes ved omdisponering innenfor rammen, eller om det kreves inndekning via kommunens disposisjonsfond.
-                <div class="audit-meta-row">
-                    <span>Kilde: Kommuneloven § 14-5, Økonomireglementet § 3-1</span>
-                    <span id="audit-hash-display">SHA-256: 7f8a9b2c...3d4e</span>
-                </div>
-
-            <!-- HUMAN-IN-THE-LOOP SAKSBEHANDLING (PORT 9) -->
-            <div class="hitl-zone">
-                <div style="font-weight: 700; font-size: 12px; color: var(--navy-dark); margin-bottom: 6px;">
-                    🛡️ Stage-Gate Port 9: Menneskelig Overprøving (HITL Sign-Off)
-                </div>
-                <div class="radio-group">
-                    <label class="radio-label">
-                        <input type="radio" name="hitl_status" value="APPROVED" checked> 🟢 APPROVED (Godkjenn)
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="hitl_status" value="MODIFIED"> 🟡 MODIFIED (Endre)
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="hitl_status" value="REJECTED"> 🔴 REJECTED (Avvis)
-                    </label>
-                </div>
-                <textarea class="textarea-box" id="hitl-notes" placeholder="Saksbehandlers begrunnelse...">Reelt merforbruk bekreftet i Visma ERP. Foreslås dekket ved omdisponering i sak til Bystyret 28. september.</textarea>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="signAndSaveAudit()">
-                    🔒 Signer & Registrer med SHA-256 Stempel
-                </button>
-                <div id="sign-confirmation" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-weight: 600;">
-                    ✓ Signert og arkivert i Audit_AI_Actions!
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- 6. ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP (INTERAKTIVT STEPPER) -->
-    <div class="monthly-cycle-banner" id="workflow-cycle-banner">
-        <div class="monthly-cycle-header">
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰ Meny</button>
-                <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy-dark);">
-                    📅 ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP
-                </span>
-                <span style="font-size:11px; color:var(--text-secondary);">
-                    Gjeldende fase: <strong id="current-phase-label" style="color:var(--navy-dark);">Fase 2: Avviksdeteksjon & Triage (Dag 6–10)</strong>
-                </span>
-            </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-                <button class="btn btn-sm" onclick="openCommandPalette()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Hurtigmeny for søk, enheter og maler (Ctrl+K)">
-                    ⚡ Søk (Ctrl+K)
-                </button>
-                <button class="btn btn-sm" onclick="togglePresentationMode()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Veksle møte-/presentasjonsmodus for storskjerm (Tast P)">
-                    🖥️ Møtemodus (P)
-                </button>
-                <button class="btn btn-sm" onclick="openUserGuide('MANED')" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;">
-                    📖 Månedsveileder
-                </button>
-                <span class="status-badge" id="cycle-month-tag">M9 September (T2)</span>
-            </div>
-        </div>
-
-        <div class="workflow-stepper">
-            <div class="cycle-step-card" id="cycle-card-1" onclick="selectWorkflowPhase(1)">
-                <div class="cycle-step-days">
-                    <span>Fase 1</span>
-                    <span>Dag 1–5</span>
-                </div>
-                <div class="cycle-step-title">1. Månedsstart & Import</div>
-                <div class="cycle-step-sub">Visma ERP data, bankavstemming, EHF-attestasjon og PII-vask til Golden Record.</div>
-            </div>
-
-            <div class="cycle-step-card active" id="cycle-card-2" onclick="selectWorkflowPhase(2)">
-                <div class="cycle-step-days">
-                    <span>Fase 2 ⭐</span>
-                    <span>Dag 6–10</span>
-                </div>
-                <div class="cycle-step-title">2. Avvik & Triage</div>
-                <div class="cycle-step-sub">Z-score screening, 16 enheter triage, artsavvik (vikarer/overtid) og NAV-etterslep.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-3" onclick="selectWorkflowPhase(3)">
-                <div class="cycle-step-days">
-                    <span>Fase 3</span>
-                    <span>Dag 11–18</span>
-                </div>
-                <div class="cycle-step-title">3. Lederdialog & Tiltak</div>
-                <div class="cycle-step-sub">Møter med enhetsledere (Skole/Bo), 4-punkts tiltaksplan og drøfting iht. HTA § 4.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-4" onclick="selectWorkflowPhase(4)">
-                <div class="cycle-step-days">
-                    <span>Fase 4</span>
-                    <span>Dag 19–24</span>
-                </div>
-                <div class="cycle-step-title">4. Prognose (EAC/ETC)</div>
-                <div class="cycle-step-sub">Oppdatere rullende EOY i Framsikt EPM, usikkerhet P10/P50/P90, pensjon & rente.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-5" onclick="selectWorkflowPhase(5)">
-                <div class="cycle-step-days">
-                    <span>Fase 5</span>
-                    <span>Dag 25–30</span>
-                </div>
-                <div class="cycle-step-title">5. Politisk Sak & Vedtak</div>
-                <div class="cycle-step-sub">Formannskapssak jf. § 14-5, Bystyrets bord, saksnotat, SHA-256 revisjonsstempel.</div>
-            </div>
-        </div>
-
-        <!-- Operativ Controller Sjekkliste for den valgte fasen -->
-        <div class="controller-checklist-panel" id="checklist-panel">
-            <div class="checklist-header">
-                <div>
-                    <strong id="checklist-title">🛡️ Fase 2 Controller Sjekkliste: Avviksdeteksjon & Triage</strong>
-                    <span style="font-size:11px; color:var(--text-secondary); margin-left:8px;" id="checklist-counter">4 av 5 oppgaver fullført</span>
-                </div>
-                <div style="display:flex; gap:6px;">
-                    <button class="btn btn-sm" onclick="resetCurrentChecklist()" style="font-size:10.5px; padding:2px 7px;">Tilbakestill</button>
-                    <button class="btn btn-sm btn-primary" onclick="markAllChecklistDone()" style="font-size:10.5px; padding:2px 7px;">✓ Merk alle fullført</button>
-                </div>
-            </div>
-            <div class="checklist-progress-bar">
-                <div class="checklist-progress-fill" id="checklist-progress" style="width: 80%;"></div>
-            </div>
-            <div id="checklist-items-container">
-                <!-- Dynamisk fylt via JavaScript -->
-            </div>
-        </div>
-    </div>
-
-<!-- VEKTORDATABASE STATUS & PROGRESS PANEL (TUFTE DATA-INK) -->
-    <div id="vectordb-panel" class="vectordb-panel" style="display: none;">
-        <div class="vectordb-panel-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span id="vdb-status-icon">⚡</span>
-                <strong id="vdb-status-title">Oppdatering av Vektordatabase (sqlite-vec)</strong>
-                <span id="vdb-status-badge" class="status-badge">Klar</span>
-            </div>
-            <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary);" id="vdb-time-label">
-                Tid: 0.0s
-            </div>
-        </div>
-        <div class="vdb-progress-bar-container">
-            <div id="vdb-progress-bar" class="vdb-progress-bar" style="width: 0%;"></div>
-        </div>
-        <div class="vdb-status-details">
-            <div id="vdb-status-msg" style="color: var(--text-primary); font-weight: 500;">Klar til å starte indeksering av data/raw...</div>
-            <div id="vdb-stats-meta" style="color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px;">
-                data/raw: 37 filer | DB: 3 484 biter (37 indeksert)
-            </div>
-        </div>
-    </div>
-
-    <!-- 7. ÅRSHJUL & KRITISKE FRISTER -->
-    <section class="timeline-section">
-        <div class="section-header">
-            <span>📅 Kommunalt Styringsårshjul & Kritiske Frister (2026)</span>
-            <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Synkronisert med Plandisc & Teams</span>
-        </div>
-
-        <!-- 12-MÅNEDERS TIDSVEKSLER (ÅRS- OG MÅNEDSLØYFE) -->
-        <div class="month-timeline-bar" id="month-timeline-bar">
-            <button class="month-pill" onclick="selectMonth(1)">Jan</button>
-            <button class="month-pill" onclick="selectMonth(2)">Feb</button>
-            <button class="month-pill" onclick="selectMonth(3)">Mar (T1)</button>
-            <button class="month-pill" onclick="selectMonth(4)">Apr</button>
-            <button class="month-pill" onclick="selectMonth(5)">Mai</button>
-            <button class="month-pill" onclick="selectMonth(6)">Jun</button>
-            <button class="month-pill" onclick="selectMonth(7)">Jul</button>
-            <button class="month-pill" onclick="selectMonth(8)">Aug</button>
-            <button class="month-pill active highlight" onclick="selectMonth(9)">Sep (T2)</button>
-            <button class="month-pill" onclick="selectMonth(10)">Okt</button>
-            <button class="month-pill" onclick="selectMonth(11)">Nov</button>
-            <button class="month-pill" onclick="selectMonth(12)">Des (HØP)</button>
-        </div>
-
-        <div class="timeline-status-banner" id="timeline-status-banner">
-            <div>
-                <span id="timeline-active-mode" style="font-weight: 700;">🔴 MÅNEDSRAPPORTERING M9 (September)</span> | 
-                <span id="timeline-deadline">Frist Formannskapet: 28. september (4 dager igjen)</span>
-            </div>
-            <div style="font-family: var(--font-mono); font-size: 11px;">
-                Saksbehandler: Frank Ellingsen (Senior Controller)
-            </div>
-        </div>
-
-        <div class="quarters-grid">
-            <div class="quarter-box">
-                <h3>Q1: KOSTRA & Regnskap <span>Jan–Mar</span></h3>
-                <ul>
-                    <li>• 15. jan / 23. feb: KOSTRA-rapportering</li>
-                    <li>• 09. mars: Regnskapsavslutning</li>
-                    <li>• 31. mars: Årsregnskap fremlegges</li>
-                </ul>
-            </div>
-            <div class="quarter-box">
-                <h3>Q2: 1. Tertial (T1) <span>Apr–Jun</span></h3>
-                <ul>
-                    <li>• 15. apr: Revisjonsberetning</li>
-                    <li>• 25. mai: 1. tertial til Bystyret</li>
-                    <li>• 02. juni: RNB & KOSTRA-tall</li>
-                </ul>
-            </div>
-            <div class="quarter-box active">
-                <h3>Q3: 2. Tertial (T2) ⭐ AKTIV <span>Jul–Sep</span></h3>
-                <ul>
-                    <li>• 15. aug: Innspill ny HØP</li>
-                    <li>• 23. sep: Kommunedirektørens HØP</li>
-                    <li>• <strong>28. sep: 2. tertial i Formannskapet</strong></li>
-                </ul>
-            </div>
-            <div class="quarter-box">
-                <h3>Q4: HØP & Budsjettvedtak <span>Okt–Des</span></h3>
-                <ul>
-                    <li>• 07. okt: Statsbudsjettet</li>
-                    <li>• 25. nov: Formannskapets innstilling</li>
-                    <li>• 18. des: Bystyrets endelige vedtak</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- =======================================================================
-         5B. SMART ARBEIDSKØ, ZERO-CLICK TRIAGE & 4-PUNKTS AVVIKSRAPPORT (V2)
-         ======================================================================= -->
-    <div class="triage-grid" id="triage-seksjon">
+<div class="triage-grid" id="triage-seksjon">
         <!-- Smart Arbeidskø -->
         <div class="triage-card">
             <div class="section-header" style="margin-bottom: 8px;">
@@ -4757,12 +4837,7 @@
         </div>
     </div>
 
-
-
-    <!-- =======================================================================
-         6. OPERATIV SAKSBEHANDLINGSFLYT & STAGE-GATE SLØYFE
-         ======================================================================= -->
-    <section class="workflow-section" id="saksflyt">
+<section class="workflow-section" id="saksflyt">
         <div class="section-header">
             <span>🔄 Operativ Saksbehandlingsflyt & Stage-Gate Sløyfe (Trinn 1–6)</span>
             <span class="status-badge">Kommuneloven § 14-5 & EU AI Act Art. 14</span>
@@ -4848,13 +4923,638 @@
             <div class="generated-output" id="generated-note-text">Laster forvaltningsnotat...</div>
         </div>
     </section>
+    </div>
 
+    <!-- FANE 3: CONTROLLER HUB & ANALYSE -->
+    <div class="hub-tab-pane" id="tab-controller-hub" role="tabpanel" aria-labelledby="tab-btn-controller-hub" style="display: none;">
+<div class="panel" id="avvik-seksjon" style="margin-bottom: 24px;">
+        <div class="section-header">
+            <span>🚨 Kritiske Kostnadsavvik på KOSTRA Art (Golden Record)</span>
+            <span id="active-entity-filter" style="font-size: 11px; font-weight: 700; color: var(--navy-dark); text-transform: uppercase;">Viser: Konsern (Alle Enheter)</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+            Avvik beregnes som <em>Budsjett - Regnskap</em>. Negativt tall indikerer merforbruk (rødt jf. Tufte data-ink standard).
+        </p>
 
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+            <div style="font-size:11.5px; color:var(--text-secondary);">
+                Viser KOSTRA-avvik for valgt ansvarsområde. Negativt avvik indikerer merforbruk.
+            </div>
+            <div class="rag-legend-bar">
+                <span style="font-weight:700;">RAG-format:</span>
+                <span class="rag-legend-item"><span class="rag-dot red"></span> Rød (Merforbruk &gt; 500k)</span>
+                <span class="rag-legend-item"><span class="rag-dot yellow"></span> Gul (Mindre avvik)</span>
+                <span class="rag-legend-item"><span class="rag-dot green"></span> Grønn (Mindreforbruk / balanse)</span>
+            </div>
+        </div>
+        <table class="tufte-table" id="variances-table">
+            <thead>
+                <tr>
+                    <th>KOSTRA Art / Post</th>
+                    <th>Enhet</th>
+                    <th class="num">Budsjett</th>
+                    <th class="num">Regnskap</th>
+                    <th class="num">Avvik (NOK)</th>
+                    <th class="num">Avvik %</th>
+                    <th>RAG Status</th>
+                </tr>
+            </thead>
+            <tbody id="variances-tbody">
+                <!-- Dynamisk fylt fra SECTOR_VARIANCES via renderVariancesTable(sectorKey) -->
+            </tbody>
+        </table>
 
-    <!-- =======================================================================
-         7. POWER BI & DAX ENTERPRISE SHOWCASE
-         ======================================================================= -->
-    <section class="powerbi-section" id="powerbi-showcase">
+        <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
+            Data-Ink merknad: Vertikale rutenett fjernet. Tall høyrejustert og formatert i hele kroner. Kilde: Visma ERP & Framsikt EPM Golden Record.
+        </div>
+    </div>
+
+<section class="budsjett-modul-section" id="budsjett-modul-seksjon">
+        <div class="bm-header-container">
+            <div>
+                <div class="bm-header-title">
+                    <span>🏛️ Kommunal Budsjettmodul — Framsikt EPM & Handlings- og Økonomiplan (HØP)</span>
+                </div>
+                <div class="bm-header-sub">
+                    Integrert stillings- og lønnsmotor, selvkostberegninger for tekniske tjenester (VAR/Byggesak), 
+                    KOSTRA kontoplan (1000–1990) og utvidet internt årshjul for Kristiansand kommune.
+                </div>
+            </div>
+            <div class="bm-header-badges">
+                <span class="bm-badge bm-badge-primary">Framsikt v26.1 Live</span>
+                <span class="bm-badge bm-badge-navy">AGA Sone 1 (14,1 %)</span>
+                <span class="bm-badge bm-badge-success">Økonomireglement § 14</span>
+                <span class="status-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">Aktiv Fase: HØP Høring (Okt)</span>
+            </div>
+        </div>
+
+        <!-- Finansielle Måltall & Handlingsregler (Bystyrets vedtak 11.10.2023) -->
+        <div class="bm-kpi-bar">
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Samlet Brutto Driftsbudsjett</div>
+                <div class="bm-kpi-val">11,48 mrd</div>
+                <div class="bm-kpi-note">Over 81 resultatenheter & 6 virksomhetsområder</div>
+            </div>
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Netto Driftsresultat Mål</div>
+                <div class="bm-kpi-val" style="color:var(--success-green);">≥ 1,0 %</div>
+                <div class="bm-kpi-note">Minimum 114,8 mill. kr for finansiell handlefrihet</div>
+            </div>
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Sentralt Disposisjonsfond</div>
+                <div class="bm-kpi-val" style="color:#0284c7;">≥ 4,0 %</div>
+                <div class="bm-kpi-note">Minimum 459,2 mill. kr som robust buffer</div>
+            </div>
+            <div class="bm-kpi-card">
+                <div class="bm-kpi-label">Maksimal Netto Lånegjeld</div>
+                <div class="bm-kpi-val" style="color:var(--navy-dark);">&lt; 8,80 mrd</div>
+                <div class="bm-kpi-note">Lånetak for å forhindre uhåndterlige rentekostnader</div>
+            </div>
+        </div>
+
+        <!-- Hovednavigasjon for Budsjettmodul -->
+        <div class="bm-nav-tabs">
+            <button class="bm-tab-btn active" id="bm-btn-lonn" onclick="switchBudsjettModulTab('LONN')">
+                <span>👥 1. Stillings- & Lønnsbudsjett</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-selvkost" onclick="switchBudsjettModulTab('SELVKOST')">
+                <span>💧 2. Selvkost (VAR & Byggesak)</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-arshjul" onclick="switchBudsjettModulTab('ARSHJUL')">
+                <span>📅 3. Budsjett-Årshjul & Frister</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-kostra" onclick="switchBudsjettModulTab('KOSTRA')">
+                <span>📑 4. KOSTRA Driftsarter & Kontering</span>
+            </button>
+            <button class="bm-tab-btn" id="bm-btn-qa" onclick="switchBudsjettModulTab('QA')">
+                <span>📋 5. Framsikt Excel QA-Motor</span>
+            </button>
+        </div>
+
+        <!-- ===================================================================
+             FANE 1: STILLINGS- & LØNNSBUDSJETT (FRAMSIKT LØNNSMOTOR)
+             =================================================================== -->
+        <div class="bm-tab-pane active" id="bm-pane-lonn">
+            <div class="bm-formula-banner">
+                <strong>💡 Framsikts Lønnsarkitektur & Bruttoføringsprinsippet:</strong>
+                Lønn og sosiale kostnader utgjør <strong>70–80 % av kommunens driftskostnader</strong>.
+                Framsikt skiller strengt mellom <strong>Fast Lønn (Art 1010)</strong> via Stillingsoversikten og 
+                <strong>Variable Potter (Art 1020 vikarer, 1050/1090 tillegg)</strong>. 
+                Sosiale kostnader beregnes maskinelt: 
+                <em>Bruttolønn → Feriepenger (12,0 % / 14,3 %) → Pensjon (SPK/KLP) → Arbeidsgiveravgift (14,1 % Sone 1 på Lønn + Feriepenger + Pensjon)</em>.
+                Jf. <strong>Kommuneloven § 14-6</strong> er nettobudsjettering av vikarer mot refusjoner forbudt.
+            </div>
+
+            <div class="bm-grid-2col">
+                <!-- Interaktiv Lønnskalkulator -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>🧮 Framsikt Lønnskalkulator & Stillingsberegner</span>
+                        <span class="bm-badge bm-badge-primary">Live Modell</span>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Virksomhetsområde</label>
+                            <select id="bm-calc-sector" onchange="onBmSectorChange()">
+                                <option value="OPPVEKST">🏫 2. Oppvekst (Skole & Barnehage)</option>
+                                <option value="HELSE">🏥 1. Helse og mestring</option>
+                                <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
+                                <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
+                                <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
+                                <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
+                            </select>
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Stillingskategori / Tittel</label>
+                            <select id="bm-calc-title" onchange="onBmTitleChange()">
+                                <option value="LEKTOR">Lektor / Lærer (SPK-pensjon)</option>
+                                <option value="SYKEPLEIER">Spesialsykepleier (KLP-pensjon)</option>
+                                <option value="FAGARBEIDER">Helsefagarbeider / Barneveileder</option>
+                                <option value="INGENIOR">Overingeniør VAR (Selvkostfunksjon)</option>
+                                <option value="SAKSBEHANDLER">Saksbehandler Byggesak</option>
+                                <option value="KONSULENT">Rådgiver / Konsulent Administrasjon</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Grunnlønn ved 100 % (NOK / år)</label>
+                            <input type="number" id="bm-calc-salary" value="620000" step="5000" oninput="recalcSalaryBudsjett()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Stillingsbrøk (%)</label>
+                            <input type="number" id="bm-calc-fraction" value="100" min="10" max="100" step="5" oninput="recalcSalaryBudsjett()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Alder / Feriepengesats</label>
+                            <select id="bm-calc-age" onchange="recalcSalaryBudsjett()">
+                                <option value="UNDER60">Under 60 år (12,0 % feriepenger)</option>
+                                <option value="OVER60">60 år eller eldre (14,3 % ekstra ferieuke)</option>
+                            </select>
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Pensjonsordning</label>
+                            <select id="bm-calc-pension" onchange="recalcSalaryBudsjett()">
+                                <option value="SPK">SPK (Lærere/pedagoger, 13,8 % premie)</option>
+                                <option value="KLP" selected>KLP (Fagarbeidere, pleie & staber, 15,2 % premie)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Faste/variable turnustillegg (Art 1050/1090)</label>
+                            <input type="number" id="bm-calc-shifts" value="35000" step="1000" oninput="recalcSalaryBudsjett()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Vikarpott ved forventet sykefravær (Art 1020)</label>
+                            <input type="number" id="bm-calc-substitute" value="45000" step="1000" oninput="recalcSalaryBudsjett()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-group" style="margin-bottom: 12px;">
+                        <label>Forventet Sykelønnsrefusjon fra NAV (Art 1690 - Inntekt)</label>
+                        <input type="number" id="bm-calc-refund" value="30000" step="1000" oninput="recalcSalaryBudsjett()">
+                    </div>
+
+                    <div class="bm-alert-banner" id="bm-gross-warning" style="display:none;">
+                        ⚠️ <strong>Bruttoføringsadvarsel:</strong> Vikarmidler på Art 1020 kan ikke trekkes fra Art 1010 direkte. Begge må føres brutto for at KOSTRA-nøkkeltall og AGA-beregning skal stemme!
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+                        <button type="button" class="btn btn-sm" onclick="resetSalaryCalc()">↺ Nullstill Verdier</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="copySalaryAccounting()">📋 Kopier Konteringssplitt</button>
+                    </div>
+                </div>
+
+                <!-- Beregningsresultat & Totaler -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>📊 Beregnet Årskostnad & Sosiale Utgifter</span>
+                        <span class="bm-badge bm-badge-success">Sone 1 (14,1 %)</span>
+                    </div>
+
+                    <div class="bm-result-summary">
+                        <div class="bm-res-item">
+                            <span>Art 1010 Fast lønn (brøkjustert)</span>
+                            <span class="num-val" id="bm-res-fastlonn">620 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Art 1099 Feriepengeavsetning (<span id="bm-res-ferie-rate">12,0 %</span>)</span>
+                            <span class="num-val" id="bm-res-feriepenger">74 400 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Art 1200 Pensjonspremie (<span id="bm-res-pensjon-org">KLP 15,2 %</span>)</span>
+                            <span class="num-val" id="bm-res-pensjon">94 240 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Art 1210 Arbeidsgiveravgift (14,1 % av lønn, ferie & pensjon)</span>
+                            <span class="num-val" id="bm-res-aga-fast">111 202 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:var(--text-secondary);">
+                            <span>Variable tillegg (Art 1050/1090) inkl. AGA & feriepenger</span>
+                            <span class="num-val" id="bm-res-tillegg-tot">44 723 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:var(--text-secondary);">
+                            <span>Vikarpott (Art 1020) inkl. AGA & feriepenger</span>
+                            <span class="num-val" id="bm-res-vikar-tot">57 501 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:#0369a1;">
+                            <span>Art 1690 Sykelønnsrefusjon fra NAV (Inntekt)</span>
+                            <span class="num-val" id="bm-res-refusjon" style="color:#0369a1;">-30 000 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total">
+                            <span>Samlet Brutto Kostnad (Art 1000–1210)</span>
+                            <span class="num-val" id="bm-res-brutto-tot" style="font-size:16px;">1 002 066 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total" style="border-top:none; color:var(--accent-blue);">
+                            <span>Netto Kommunal Utgift (Brutto minus NAV-refusjon)</span>
+                            <span class="num-val" id="bm-res-netto-tot" style="font-size:16px; color:var(--accent-blue);">972 066 kr</span>
+                        </div>
+                    </div>
+
+                    <!-- Automatisk KOSTRA Konteringsmatrise -->
+                    <div style="margin-top:16px;">
+                        <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:6px; text-transform:uppercase;">
+                            📑 Generert KOSTRA Konteringsbilag i Framsikt:
+                        </div>
+                        <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
+                            <table class="tufte-table" id="bm-kostra-table">
+                                <thead>
+                                    <tr>
+                                        <th>Art</th>
+                                        <th>Kontonavn</th>
+                                        <th class="num">Debet (kr)</th>
+                                        <th class="num">Kredit (kr)</th>
+                                        <th>Modul</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bm-kostra-tbody">
+                                    <!-- Innhold genereres via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stillingsregister & Bemanningshjemler i Enheten -->
+            <div class="bm-box" style="margin-top:20px;">
+                <div class="bm-box-title">
+                    <span>👥 Eksempelregister: Bemanningsplan & Stillingshjemler i Framsikt</span>
+                    <span class="status-badge" style="background:#e0f2fe; color:#0369a1;">6 Utvalgte Hjemler</span>
+                </div>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">
+                    Stillingshjemler importeres fra Visma Enterprise / Unit4 til Framsikt. Justering av stillingsbrøk eller permisjon rekalkulerer automatisk feriepenger, pensjon og AGA per måned.
+                </p>
+                <div class="table-responsive">
+                    <table class="tufte-table">
+                        <thead>
+                            <tr>
+                                <th>Stilling ID</th>
+                                <th>Tittel / Stilling</th>
+                                <th>Ansatt / Status</th>
+                                <th>Virksomhetsområde</th>
+                                <th>Pensjon</th>
+                                <th class="num">Brøk (%)</th>
+                                <th class="num">Fastlønn (kr)</th>
+                                <th class="num">Sosiale Kostn. (kr)</th>
+                                <th class="num">Sum Ramme (kr)</th>
+                                <th style="text-align:center;">Handling</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bm-positions-tbody">
+                            <!-- Innhold genereres via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 2: SELVKOST (VAR & BYGGESAK)
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-selvkost">
+            <div class="bm-formula-banner">
+                <strong>💧 Selvkostberegninger for Tekniske Tjenester (Kommuneloven § 15-1 & Selvkostforskriften):</strong>
+                Kommunen har plikt til å kreve selvkost for vann, avløp, renovasjon og byggesak, uten å generere overskudd over tid.
+                Formel i Framsikt: 
+                <em>Gebyrgrunnlag = Direkte driftsutgifter (Art 1000–1270) + Indirekte henføring + Kapitalkostnader (Avskrivning Art 1590 + Kalkulatorisk rente) - Direkte inntekter</em>.
+                Eventuelle avvik overføres til/fra <strong>Bundet Selvkostfond (Art 1530 / 1930)</strong> og må avvikles innen <strong>5 år</strong>.
+            </div>
+
+            <div class="level-pills-bar" style="margin-bottom:16px;">
+                <button class="level-pill-btn active" id="btn-sk-vann" onclick="switchSelvkostService('VANN')">
+                    <span>💧 Funksjon 3400: Vannforsyning</span>
+                </button>
+                <button class="level-pill-btn" id="btn-sk-avloep" onclick="switchSelvkostService('AVLOEP')">
+                    <span>🚽 Funksjon 3450: Avløpshåndtering (2 mrd inv.)</span>
+                </button>
+                <button class="level-pill-btn" id="btn-sk-renovasjon" onclick="switchSelvkostService('RENOVASJON')">
+                    <span>♻️ Funksjon 3500: Renovasjon (Avfall Sør)</span>
+                </button>
+                <button class="level-pill-btn" id="btn-sk-byggesak" onclick="switchSelvkostService('BYGGESAK')">
+                    <span>📐 Funksjon 3600: Byggesak & Geodata</span>
+                </button>
+            </div>
+
+            <div class="bm-grid-2col">
+                <!-- Selvkost Parametere & Kalkyle -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span id="bm-sk-title">💧 Funksjon 3400: Vannforsyning — Kostnadselementer</span>
+                        <span class="bm-badge bm-badge-primary">Kalkulatorisk rente: 4,00 %</span>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Direkte driftsutgifter (Art 1000–1270)</label>
+                            <input type="number" id="bm-sk-direkte" value="142500000" step="500000" oninput="recalcSelvkost()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Indirekte henførte kostnader (HR/IT/Rådhus)</label>
+                            <input type="number" id="bm-sk-henforing" value="8200000" step="100000" oninput="recalcSelvkost()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Avskrivninger på anleggsmidler (Art 1590)</label>
+                            <input type="number" id="bm-sk-avskrivning" value="44800000" step="500000" oninput="recalcSelvkost()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Bokført restverdi anleggsmidler (kr)</label>
+                            <input type="number" id="bm-sk-restverdi" value="820000000" step="5000000" oninput="recalcSelvkost()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-row">
+                        <div class="bm-form-group">
+                            <label>Direkte inntekter utenom gebyrer</label>
+                            <input type="number" id="bm-sk-inntekter" value="4500000" step="100000" oninput="recalcSelvkost()">
+                        </div>
+                        <div class="bm-form-group">
+                            <label>Budsjetterte gebyrinntekter (Art 1620)</label>
+                            <input type="number" id="bm-sk-gebyr" value="223800000" step="500000" oninput="recalcSelvkost()">
+                        </div>
+                    </div>
+
+                    <div class="bm-form-group" style="margin-top:6px;">
+                        <label>Eksisterende Selvkostfond Saldo (primo året)</label>
+                        <input type="number" id="bm-sk-fond-saldo" value="12400000" step="200000" oninput="recalcSelvkost()">
+                    </div>
+
+                    <div style="margin-top:14px; display:flex; justify-content:space-between;">
+                        <button type="button" class="btn btn-sm" onclick="resetSelvkostValues()">↺ Tilbakestill til Grunndata</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="exportSelvkostNote()">📄 Eksporter Selvkostnotat</button>
+                    </div>
+                </div>
+
+                <!-- Selvkost Resultat & Fondsavstemming -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>⚖️ Selvkostresultat & Regulering av Selvkostfond</span>
+                        <span class="bm-badge" id="bm-sk-status-badge">I Balanse</span>
+                    </div>
+
+                    <div class="bm-result-summary">
+                        <div class="bm-res-item">
+                            <span>Direkte driftsutgifter (Art 1000–1270)</span>
+                            <span class="num-val" id="bm-res-sk-direkte">142 500 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Indirekte henføring (Felleskostnader)</span>
+                            <span class="num-val" id="bm-res-sk-henforing">8 200 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Avskrivninger anleggsmidler (Art 1590)</span>
+                            <span class="num-val" id="bm-res-sk-avskrivning">44 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Kalkulatorisk rente (4,00 % av restverdi)</span>
+                            <span class="num-val" id="bm-res-sk-rente">32 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item" style="color:var(--text-secondary);">
+                            <span>Fradrag: Direkte inntekter utenom gebyr</span>
+                            <span class="num-val" id="bm-res-sk-inntekt">-4 500 000 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total">
+                            <span>Beregnet Gebyrgrunnlag (Full Selvkost)</span>
+                            <span class="num-val" id="bm-res-sk-gebyrgrunnlag" style="font-size:16px;">223 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Budsjettert Gebyrinntekt (Art 1620)</span>
+                            <span class="num-val" id="bm-res-sk-gebyrinntekt" style="font-weight:700;">223 800 000 kr</span>
+                        </div>
+                        <div class="bm-res-item highlight-total" style="border-top:none;">
+                            <span>Selvkostresultat (Avvik Gebyr vs. Selvkost)</span>
+                            <span class="num-val" id="bm-res-sk-resultat">0 kr</span>
+                        </div>
+                        <div class="bm-res-item">
+                            <span>Dekningsgrad (%)</span>
+                            <span class="num-val" id="bm-res-sk-dekningsgrad" style="font-size:15px; font-weight:800; color:var(--success-green);">100,0 %</span>
+                        </div>
+                    </div>
+
+                    <!-- Fondsberegning & 5-årsregel -->
+                    <div style="margin-top:16px; padding:12px; background:#f8fafc; border:1px solid var(--border-light); border-radius:3px;">
+                        <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:4px;">
+                            🏛️ Selvkostfond Regulering & 5-årsregelen (Selvkostforskriften § 6):
+                        </div>
+                        <div style="font-size:12px; line-height:1.5; color:var(--text-secondary);" id="bm-sk-fond-forklaring">
+                            Gebyret dekker nøyaktig 100,0 % av selvkost. Ingen avsetning til Art 1530 eller bruk av Art 1930 nødvendig.
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px; font-family:var(--font-mono); color:var(--text-muted); border-top:1px solid var(--border-subtle); padding-top:6px;">
+                            <span>Fremføringsår: <strong id="bm-sk-fremforing-ar">År 2 av 5</strong></span>
+                            <span>Estimert fondssaldo ultimo: <strong id="bm-sk-fond-ultimo">12 400 000 kr</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 3: BUDSJETT-ÅRSHJUL & FRISTER
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-arshjul">
+            <div class="bm-formula-banner">
+                <strong>📅 Utvidet Internt Årshjul og Tidslinje for Kristiansand kommune:</strong>
+                Kommunens budsjettprosess løper strukturert fra mai til desember jf. Bystyrets økonomireglement. 
+                Nedenfor vises alle 8 faser fra rammeavklaringer til Bystyrets endelige vedtak og overføring til Unit4 regnskap.
+            </div>
+
+            <!-- Interaktiv Tidslinje-stepper -->
+            <div class="bm-year-stepper" id="bm-year-stepper-container">
+                <!-- Genereres via JS -->
+            </div>
+
+            <!-- Detaljkort for Valgt Årshjulfase -->
+            <div class="bm-box" id="bm-phase-detail-card" style="margin-top:16px;">
+                <!-- Injiseres dynamisk -->
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 4: KOSTRA DRIFTSARTER & KONTERING
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-kostra">
+            <div class="bm-formula-banner">
+                <strong>📑 KOSTRA Kontoplan & Konteringsregler i Framsikt (Driftsarter 1000–1990):</strong>
+                Alle poster i Kristiansand konteres på 3 dimensjoner: <em>Kontoklasse (1 Drift / 2 Inv) × Funksjon × Art</em>.
+                Tabellen under viser fullstendig konteringsveiledning for lønn, varekjøp, konserninterne overføringer, selvkostfond og refusjoner.
+            </div>
+
+            <!-- Filter og Søkebar for KOSTRA -->
+            <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; align-items:center; background:#fafbfc; padding:10px 14px; border:1px solid var(--border-light); border-radius:4px;">
+                <div style="flex:1; min-width:240px;">
+                    <input type="text" id="bm-kostra-search" class="form-control" placeholder="🔍 Søk i KOSTRA kontoplan (f.eks. 1010, strøm, vikar, 1240 lisens, selvkostfond)..." 
+                           style="width:100%; padding:6px 10px; font-size:12px; border:1px solid var(--border-light); border-radius:3px;"
+                           oninput="filterKostraDriftsarter()">
+                </div>
+                <div>
+                    <select id="bm-kostra-cat-filter" class="form-select" style="padding:6px 10px; font-size:12px; border:1px solid var(--border-light); border-radius:3px;" onchange="filterKostraDriftsarter()">
+                        <option value="ALL">Alle Kontoserier (1000–1990)</option>
+                        <option value="LONN">Lønn & Sosiale utgifter (1000–1220)</option>
+                        <option value="VARE">Kjøp av varer og tjenester (1100–1270)</option>
+                        <option value="OVERFORING">Overføringer & Tilskudd (1300–1480)</option>
+                        <option value="FINANS">Finans, avskrivning & fond (1500–1590)</option>
+                        <option value="INNTEKT">Gebyr-, salgs- og refusjonsinntekter (1600–1750)</option>
+                        <option value="STAT">Statstilskudd & Fondsbruk (1800–1930)</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm" onclick="resetKostraFilter()">Nullstill filter</button>
+                </div>
+            </div>
+
+            <!-- KOSTRA Tabell -->
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                <table class="tufte-table" id="bm-kostra-full-table">
+                    <thead>
+                        <tr>
+                            <th style="width:70px;">Art</th>
+                            <th style="width:190px;">Artsnavn</th>
+                            <th style="width:140px;">Framsikt-modul</th>
+                            <th>Retningslinjer for Kontering & Kostnadstype</th>
+                            <th>Typiske Kostnader i Kristiansand</th>
+                            <th>Spesiell Kontrollregel</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bm-kostra-full-tbody">
+                        <!-- Genereres fra JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             FANE 5: FRAMSIKT EXCEL QA & VALIDERINGSMOTOR
+             =================================================================== -->
+        <div class="bm-tab-pane" id="bm-pane-qa">
+            <div class="bm-formula-banner">
+                <strong>📋 Sjekkliste og Kvalitetskontroll for Excel Eksport/Import og Framsikt-låsing:</strong>
+                Før seksjonsledere og økonomirådgivere godkjenner detaljbudsjettet, må følgende 8 kontrollpunkter verifiseres.
+                Dette hindrer budsjetteringsfeil på AGA, feil pensjonskasse, ulovlig nettobudsjettering og brudd på selvkostforskriften.
+            </div>
+
+            <div class="bm-grid-2col">
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>☑️ Controllerens 8 Kritiske Kontrollpunkter</span>
+                        <span class="bm-badge bm-badge-primary" id="bm-qa-checked-count">8 av 8 Bekreftet</span>
+                    </div>
+
+                    <div class="bm-check-list">
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-1" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">1. Uforanderlige ID-er i Excel-maler</div>
+                                <div class="bm-check-sub">Stilling ID, Ansatt ID og Ansvar er beholdt uendret slik at Framsikt matcher stillingene ved import.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-2" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">2. Månedsoppdeling og oppstartsdatoer</div>
+                                <div class="bm-check-sub">Stillingsendringer og nyansettelser (f.eks. lærere per 01.08) er lagt på riktig måned, ikke fordelt over 12 mnd.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-3" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">3. Arbeidsgiveravgiftssone (14,1 % Sone 1)</div>
+                                <div class="bm-check-sub">Alle stillinger og potter ligger i Sone 1, og AGA er beregnet av både lønn, feriepenger og pensjon.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-4" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">4. Pensjonskassetilhørighet (SPK vs KLP)</div>
+                                <div class="bm-check-sub">Lærere og skoleledere er koblet mot SPK (13,8 %), mens øvrige er registrert på KLP (15,2 %).</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-5" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">5. Bruttoføring av Vikarer og NAV-refusjon</div>
+                                <div class="bm-check-sub">Vikarpotter (Art 1020) og forventet sykelønnsrefusjon (Art 1690) er ført brutto jf. Kommuneloven § 14-6.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-6" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">6. Selvkostavstemming & 5-årsregel (VAR/Byggesak)</div>
+                                <div class="bm-check-sub">Direkte, indirekte og kapitalkostnader er avstemt mot gebyrinntekter og bundet selvkostfond (1530/1930).</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-7" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">7. Konsernavstemming (KBR IKS & Avfall Sør)</div>
+                                <div class="bm-check-sub">Tilskudd til brannvesen (Art 1480) og renovasjonstjenester (Art 1380) stemmer med selskapenes budsjetter.</div>
+                            </div>
+                        </label>
+                        <label class="bm-check-item">
+                            <input type="checkbox" id="bm-qa-8" checked onchange="updateBmQaStatus()">
+                            <div class="bm-check-text">
+                                <div class="bm-check-title">8. Finansielle Måltall & Rammevedtak</div>
+                                <div class="bm-check-sub">Seksjonens samlede ramme er innenfor kommunedirektørens tildeling, og netto driftsresultat ≥ 1,0 %.</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div style="margin-top:14px; display:flex; justify-content:space-between;">
+                        <button type="button" class="btn btn-sm" onclick="toggleAllBmQa(true)">Merk Alle</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="runSimulatedFramsiktQA()">🔒 Kjør Formell QA-Validering</button>
+                    </div>
+                </div>
+
+                <!-- QA Valideringsrapport / Attest -->
+                <div class="bm-box">
+                    <div class="bm-box-title">
+                        <span>📜 Formell QA Valideringsattest (HITL Port 9)</span>
+                        <span class="bm-badge bm-badge-success" id="bm-qa-attest-badge">Verifisert</span>
+                    </div>
+
+                    <div id="bm-qa-attest-output" style="background:#fafbfc; border:1px solid var(--border-light); border-radius:3px; padding:14px; font-family:var(--font-mono); font-size:11.5px; line-height:1.6; max-height:380px; overflow-y:auto; white-space:pre-wrap;">
+Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest med SHA-256 kryptografisk forsegling.
+                    </div>
+
+                    <div style="margin-top:12px; display:flex; justify-content:flex-end; gap:8px;">
+                        <button type="button" class="btn btn-sm" onclick="copyBmQaAttest()">📋 Kopier Attest</button>
+                        <button type="button" class="btn btn-sm btn-accent" onclick="downloadBmQaReport()">📥 Last ned Valideringsrapport</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="powerbi-section" id="powerbi-showcase">
         <div class="section-header">
             <span>📊 Power BI & DAX Enterprise Showcase (Interaktiv Drifts- og Investeringskontroll)</span>
             <span class="status-badge">Tufte Data-Ink / ISINSCOPE</span>
@@ -5534,601 +6234,96 @@ RETURN
 
     </section>
 
-    
-    <!-- =======================================================================
-         5A. KOMMUNAL BUDSJETTMODUL — FRAMSIKT EPM & HØP 2027–2030
-         Stillings- og lønnsbudsjettering, selvkostkalkyler, KOSTRA kontoplan
-         og internt budsjett-årshjul jf. Kommuneloven kapittel 14 & Bystyrets reglement
-         ======================================================================= -->
-    <section class="budsjett-modul-section" id="budsjett-modul-seksjon">
-        <div class="bm-header-container">
-            <div>
-                <div class="bm-header-title">
-                    <span>🏛️ Kommunal Budsjettmodul — Framsikt EPM & Handlings- og Økonomiplan (HØP)</span>
-                </div>
-                <div class="bm-header-sub">
-                    Integrert stillings- og lønnsmotor, selvkostberegninger for tekniske tjenester (VAR/Byggesak), 
-                    KOSTRA kontoplan (1000–1990) og utvidet internt årshjul for Kristiansand kommune.
-                </div>
-            </div>
-            <div class="bm-header-badges">
-                <span class="bm-badge bm-badge-primary">Framsikt v26.1 Live</span>
-                <span class="bm-badge bm-badge-navy">AGA Sone 1 (14,1 %)</span>
-                <span class="bm-badge bm-badge-success">Økonomireglement § 14</span>
-                <span class="status-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">Aktiv Fase: HØP Høring (Okt)</span>
-            </div>
-        </div>
-
-        <!-- Finansielle Måltall & Handlingsregler (Bystyrets vedtak 11.10.2023) -->
-        <div class="bm-kpi-bar">
-            <div class="bm-kpi-card">
-                <div class="bm-kpi-label">Samlet Brutto Driftsbudsjett</div>
-                <div class="bm-kpi-val">11,48 mrd</div>
-                <div class="bm-kpi-note">Over 81 resultatenheter & 6 virksomhetsområder</div>
-            </div>
-            <div class="bm-kpi-card">
-                <div class="bm-kpi-label">Netto Driftsresultat Mål</div>
-                <div class="bm-kpi-val" style="color:var(--success-green);">≥ 1,0 %</div>
-                <div class="bm-kpi-note">Minimum 114,8 mill. kr for finansiell handlefrihet</div>
-            </div>
-            <div class="bm-kpi-card">
-                <div class="bm-kpi-label">Sentralt Disposisjonsfond</div>
-                <div class="bm-kpi-val" style="color:#0284c7;">≥ 4,0 %</div>
-                <div class="bm-kpi-note">Minimum 459,2 mill. kr som robust buffer</div>
-            </div>
-            <div class="bm-kpi-card">
-                <div class="bm-kpi-label">Maksimal Netto Lånegjeld</div>
-                <div class="bm-kpi-val" style="color:var(--navy-dark);">&lt; 8,80 mrd</div>
-                <div class="bm-kpi-note">Lånetak for å forhindre uhåndterlige rentekostnader</div>
-            </div>
-        </div>
-
-        <!-- Hovednavigasjon for Budsjettmodul -->
-        <div class="bm-nav-tabs">
-            <button class="bm-tab-btn active" id="bm-btn-lonn" onclick="switchBudsjettModulTab('LONN')">
-                <span>👥 1. Stillings- & Lønnsbudsjett</span>
-            </button>
-            <button class="bm-tab-btn" id="bm-btn-selvkost" onclick="switchBudsjettModulTab('SELVKOST')">
-                <span>💧 2. Selvkost (VAR & Byggesak)</span>
-            </button>
-            <button class="bm-tab-btn" id="bm-btn-arshjul" onclick="switchBudsjettModulTab('ARSHJUL')">
-                <span>📅 3. Budsjett-Årshjul & Frister</span>
-            </button>
-            <button class="bm-tab-btn" id="bm-btn-kostra" onclick="switchBudsjettModulTab('KOSTRA')">
-                <span>📑 4. KOSTRA Driftsarter & Kontering</span>
-            </button>
-            <button class="bm-tab-btn" id="bm-btn-qa" onclick="switchBudsjettModulTab('QA')">
-                <span>📋 5. Framsikt Excel QA-Motor</span>
-            </button>
-        </div>
-
-        <!-- ===================================================================
-             FANE 1: STILLINGS- & LØNNSBUDSJETT (FRAMSIKT LØNNSMOTOR)
-             =================================================================== -->
-        <div class="bm-tab-pane active" id="bm-pane-lonn">
-            <div class="bm-formula-banner">
-                <strong>💡 Framsikts Lønnsarkitektur & Bruttoføringsprinsippet:</strong>
-                Lønn og sosiale kostnader utgjør <strong>70–80 % av kommunens driftskostnader</strong>.
-                Framsikt skiller strengt mellom <strong>Fast Lønn (Art 1010)</strong> via Stillingsoversikten og 
-                <strong>Variable Potter (Art 1020 vikarer, 1050/1090 tillegg)</strong>. 
-                Sosiale kostnader beregnes maskinelt: 
-                <em>Bruttolønn → Feriepenger (12,0 % / 14,3 %) → Pensjon (SPK/KLP) → Arbeidsgiveravgift (14,1 % Sone 1 på Lønn + Feriepenger + Pensjon)</em>.
-                Jf. <strong>Kommuneloven § 14-6</strong> er nettobudsjettering av vikarer mot refusjoner forbudt.
+<div class="panel" id="rag-seksjon" style="margin-bottom: 24px;">
+            <div class="section-header">
+                <span>🤖 RAG Regelverksassistent & Juss</span>
+                <span class="status-badge">Glass-Box (§)</span>
             </div>
 
-            <div class="bm-grid-2col">
-                <!-- Interaktiv Lønnskalkulator -->
-                <div class="bm-box">
-                    <div class="bm-box-title">
-                        <span>🧮 Framsikt Lønnskalkulator & Stillingsberegner</span>
-                        <span class="bm-badge bm-badge-primary">Live Modell</span>
-                    </div>
+            <div class="quick-queries" id="rag-quick-queries">
+                <span class="query-chip" onclick="setQuery('Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?')">
+                    § 14-5 Budsjettendring
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvordan skal vikarutgifter og sykepenger periodiseres i KOSTRA?')">
+                    KOSTRA Vikarer
+                </span>
+                <span class="query-chip" onclick="setQuery('Hvilke fullmakter har kommunedirektøren for omdisponering?')">
+                    Delegasjon fullmakt
+                </span>
+            </div>
 
-                    <div class="bm-form-row">
-                        <div class="bm-form-group">
-                            <label>Virksomhetsområde</label>
-                            <select id="bm-calc-sector" onchange="onBmSectorChange()">
-                                <option value="OPPVEKST">🏫 2. Oppvekst (Skole & Barnehage)</option>
-                                <option value="HELSE">🏥 1. Helse og mestring</option>
-                                <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
-                                <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
-                                <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
-                                <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
-                            </select>
-                        </div>
-                        <div class="bm-form-group">
-                            <label>Stillingskategori / Tittel</label>
-                            <select id="bm-calc-title" onchange="onBmTitleChange()">
-                                <option value="LEKTOR">Lektor / Lærer (SPK-pensjon)</option>
-                                <option value="SYKEPLEIER">Spesialsykepleier (KLP-pensjon)</option>
-                                <option value="FAGARBEIDER">Helsefagarbeider / Barneveileder</option>
-                                <option value="INGENIOR">Overingeniør VAR (Selvkostfunksjon)</option>
-                                <option value="SAKSBEHANDLER">Saksbehandler Byggesak</option>
-                                <option value="KONSULENT">Rådgiver / Konsulent Administrasjon</option>
-                            </select>
-                        </div>
-                    </div>
+            <div class="rag-search-box">
+                <input type="text" id="rag-input" class="rag-input" placeholder="Still et spørsmål om lovverk eller økonomireglement..." 
+                       value="Hvilke regler gjelder for budsjettendring jf. Kommuneloven § 14-5?"
+                       aria-label="Søk i lovverk og økonomireglement"
+                       onkeydown="if(event.key==='Enter') executeMockRAG()">
+                <button class="btn btn-primary" onclick="executeMockRAG()">🔍 Søk</button>
+            </div>
 
-                    <div class="bm-form-row">
-                        <div class="bm-form-group">
-                            <label>Grunnlønn ved 100 % (NOK / år)</label>
-                            <input type="number" id="bm-calc-salary" value="620000" step="5000" oninput="recalcSalaryBudsjett()">
-                        </div>
-                        <div class="bm-form-group">
-                            <label>Stillingsbrøk (%)</label>
-                            <input type="number" id="bm-calc-fraction" value="100" min="10" max="100" step="5" oninput="recalcSalaryBudsjett()">
-                        </div>
-                    </div>
-
-                    <div class="bm-form-row">
-                        <div class="bm-form-group">
-                            <label>Alder / Feriepengesats</label>
-                            <select id="bm-calc-age" onchange="recalcSalaryBudsjett()">
-                                <option value="UNDER60">Under 60 år (12,0 % feriepenger)</option>
-                                <option value="OVER60">60 år eller eldre (14,3 % ekstra ferieuke)</option>
-                            </select>
-                        </div>
-                        <div class="bm-form-group">
-                            <label>Pensjonsordning</label>
-                            <select id="bm-calc-pension" onchange="recalcSalaryBudsjett()">
-                                <option value="SPK">SPK (Lærere/pedagoger, 13,8 % premie)</option>
-                                <option value="KLP" selected>KLP (Fagarbeidere, pleie & staber, 15,2 % premie)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="bm-form-row">
-                        <div class="bm-form-group">
-                            <label>Faste/variable turnustillegg (Art 1050/1090)</label>
-                            <input type="number" id="bm-calc-shifts" value="35000" step="1000" oninput="recalcSalaryBudsjett()">
-                        </div>
-                        <div class="bm-form-group">
-                            <label>Vikarpott ved forventet sykefravær (Art 1020)</label>
-                            <input type="number" id="bm-calc-substitute" value="45000" step="1000" oninput="recalcSalaryBudsjett()">
-                        </div>
-                    </div>
-
-                    <div class="bm-form-group" style="margin-bottom: 12px;">
-                        <label>Forventet Sykelønnsrefusjon fra NAV (Art 1690 - Inntekt)</label>
-                        <input type="number" id="bm-calc-refund" value="30000" step="1000" oninput="recalcSalaryBudsjett()">
-                    </div>
-
-                    <div class="bm-alert-banner" id="bm-gross-warning" style="display:none;">
-                        ⚠️ <strong>Bruttoføringsadvarsel:</strong> Vikarmidler på Art 1020 kan ikke trekkes fra Art 1010 direkte. Begge må føres brutto for at KOSTRA-nøkkeltall og AGA-beregning skal stemme!
-                    </div>
-
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
-                        <button type="button" class="btn btn-sm" onclick="resetSalaryCalc()">↺ Nullstill Verdier</button>
-                        <button type="button" class="btn btn-sm btn-primary" onclick="copySalaryAccounting()">📋 Kopier Konteringssplitt</button>
-                    </div>
+            <div class="rag-response-card" id="rag-output">
+                <strong>Vurdering jf. Kommuneloven § 14-5:</strong><br/>
+                Dersom det i løpet av budsjettåret oppstår vesentlige avvik som truer budsjettmessig balanse eller realismekravet, plikter kommunedirektøren å fremme sak om endring av årsbudsjettet for Bystyret.<br/><br/>
+                For Oppvekst og utdanning må det avklares om merforbruket på vikarer (-645 000 kr) og overtid (-379 000 kr) kan dekkes ved omdisponering innenfor rammen, eller om det kreves inndekning via kommunens disposisjonsfond.
+                <div class="audit-meta-row">
+                    <span>Kilde: Kommuneloven § 14-5, Økonomireglementet § 3-1</span>
+                    <span id="audit-hash-display">SHA-256: 7f8a9b2c...3d4e</span>
                 </div>
 
-                <!-- Beregningsresultat & Totaler -->
-                <div class="bm-box">
-                    <div class="bm-box-title">
-                        <span>📊 Beregnet Årskostnad & Sosiale Utgifter</span>
-                        <span class="bm-badge bm-badge-success">Sone 1 (14,1 %)</span>
-                    </div>
-
-                    <div class="bm-result-summary">
-                        <div class="bm-res-item">
-                            <span>Art 1010 Fast lønn (brøkjustert)</span>
-                            <span class="num-val" id="bm-res-fastlonn">620 000 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Art 1099 Feriepengeavsetning (<span id="bm-res-ferie-rate">12,0 %</span>)</span>
-                            <span class="num-val" id="bm-res-feriepenger">74 400 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Art 1200 Pensjonspremie (<span id="bm-res-pensjon-org">KLP 15,2 %</span>)</span>
-                            <span class="num-val" id="bm-res-pensjon">94 240 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Art 1210 Arbeidsgiveravgift (14,1 % av lønn, ferie & pensjon)</span>
-                            <span class="num-val" id="bm-res-aga-fast">111 202 kr</span>
-                        </div>
-                        <div class="bm-res-item" style="color:var(--text-secondary);">
-                            <span>Variable tillegg (Art 1050/1090) inkl. AGA & feriepenger</span>
-                            <span class="num-val" id="bm-res-tillegg-tot">44 723 kr</span>
-                        </div>
-                        <div class="bm-res-item" style="color:var(--text-secondary);">
-                            <span>Vikarpott (Art 1020) inkl. AGA & feriepenger</span>
-                            <span class="num-val" id="bm-res-vikar-tot">57 501 kr</span>
-                        </div>
-                        <div class="bm-res-item" style="color:#0369a1;">
-                            <span>Art 1690 Sykelønnsrefusjon fra NAV (Inntekt)</span>
-                            <span class="num-val" id="bm-res-refusjon" style="color:#0369a1;">-30 000 kr</span>
-                        </div>
-                        <div class="bm-res-item highlight-total">
-                            <span>Samlet Brutto Kostnad (Art 1000–1210)</span>
-                            <span class="num-val" id="bm-res-brutto-tot" style="font-size:16px;">1 002 066 kr</span>
-                        </div>
-                        <div class="bm-res-item highlight-total" style="border-top:none; color:var(--accent-blue);">
-                            <span>Netto Kommunal Utgift (Brutto minus NAV-refusjon)</span>
-                            <span class="num-val" id="bm-res-netto-tot" style="font-size:16px; color:var(--accent-blue);">972 066 kr</span>
-                        </div>
-                    </div>
-
-                    <!-- Automatisk KOSTRA Konteringsmatrise -->
-                    <div style="margin-top:16px;">
-                        <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:6px; text-transform:uppercase;">
-                            📑 Generert KOSTRA Konteringsbilag i Framsikt:
-                        </div>
-                        <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
-                            <table class="tufte-table" id="bm-kostra-table">
-                                <thead>
-                                    <tr>
-                                        <th>Art</th>
-                                        <th>Kontonavn</th>
-                                        <th class="num">Debet (kr)</th>
-                                        <th class="num">Kredit (kr)</th>
-                                        <th>Modul</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bm-kostra-tbody">
-                                    <!-- Innhold genereres via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <!-- HUMAN-IN-THE-LOOP SAKSBEHANDLING (PORT 9) -->
+            <div class="hitl-zone">
+                <div style="font-weight: 700; font-size: 12px; color: var(--navy-dark); margin-bottom: 6px;">
+                    🛡️ Stage-Gate Port 9: Menneskelig Overprøving (HITL Sign-Off)
                 </div>
-            </div>
-
-            <!-- Stillingsregister & Bemanningshjemler i Enheten -->
-            <div class="bm-box" style="margin-top:20px;">
-                <div class="bm-box-title">
-                    <span>👥 Eksempelregister: Bemanningsplan & Stillingshjemler i Framsikt</span>
-                    <span class="status-badge" style="background:#e0f2fe; color:#0369a1;">6 Utvalgte Hjemler</span>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="APPROVED" checked> 🟢 APPROVED (Godkjenn)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="MODIFIED"> 🟡 MODIFIED (Endre)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="hitl_status" value="REJECTED"> 🔴 REJECTED (Avvis)
+                    </label>
                 </div>
-                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">
-                    Stillingshjemler importeres fra Visma Enterprise / Unit4 til Framsikt. Justering av stillingsbrøk eller permisjon rekalkulerer automatisk feriepenger, pensjon og AGA per måned.
-                </p>
-                <div class="table-responsive">
-                    <table class="tufte-table">
-                        <thead>
-                            <tr>
-                                <th>Stilling ID</th>
-                                <th>Tittel / Stilling</th>
-                                <th>Ansatt / Status</th>
-                                <th>Virksomhetsområde</th>
-                                <th>Pensjon</th>
-                                <th class="num">Brøk (%)</th>
-                                <th class="num">Fastlønn (kr)</th>
-                                <th class="num">Sosiale Kostn. (kr)</th>
-                                <th class="num">Sum Ramme (kr)</th>
-                                <th style="text-align:center;">Handling</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bm-positions-tbody">
-                            <!-- Innhold genereres via JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================================================================
-             FANE 2: SELVKOST (VAR & BYGGESAK)
-             =================================================================== -->
-        <div class="bm-tab-pane" id="bm-pane-selvkost">
-            <div class="bm-formula-banner">
-                <strong>💧 Selvkostberegninger for Tekniske Tjenester (Kommuneloven § 15-1 & Selvkostforskriften):</strong>
-                Kommunen har plikt til å kreve selvkost for vann, avløp, renovasjon og byggesak, uten å generere overskudd over tid.
-                Formel i Framsikt: 
-                <em>Gebyrgrunnlag = Direkte driftsutgifter (Art 1000–1270) + Indirekte henføring + Kapitalkostnader (Avskrivning Art 1590 + Kalkulatorisk rente) - Direkte inntekter</em>.
-                Eventuelle avvik overføres til/fra <strong>Bundet Selvkostfond (Art 1530 / 1930)</strong> og må avvikles innen <strong>5 år</strong>.
-            </div>
-
-            <div class="level-pills-bar" style="margin-bottom:16px;">
-                <button class="level-pill-btn active" id="btn-sk-vann" onclick="switchSelvkostService('VANN')">
-                    <span>💧 Funksjon 3400: Vannforsyning</span>
+                <textarea class="textarea-box" id="hitl-notes" placeholder="Saksbehandlers begrunnelse...">Reelt merforbruk bekreftet i Visma ERP. Foreslås dekket ved omdisponering i sak til Bystyret 28. september.</textarea>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="signAndSaveAudit()">
+                    🔒 Signer & Registrer med SHA-256 Stempel
                 </button>
-                <button class="level-pill-btn" id="btn-sk-avloep" onclick="switchSelvkostService('AVLOEP')">
-                    <span>🚽 Funksjon 3450: Avløpshåndtering (2 mrd inv.)</span>
-                </button>
-                <button class="level-pill-btn" id="btn-sk-renovasjon" onclick="switchSelvkostService('RENOVASJON')">
-                    <span>♻️ Funksjon 3500: Renovasjon (Avfall Sør)</span>
-                </button>
-                <button class="level-pill-btn" id="btn-sk-byggesak" onclick="switchSelvkostService('BYGGESAK')">
-                    <span>📐 Funksjon 3600: Byggesak & Geodata</span>
-                </button>
-            </div>
-
-            <div class="bm-grid-2col">
-                <!-- Selvkost Parametere & Kalkyle -->
-                <div class="bm-box">
-                    <div class="bm-box-title">
-                        <span id="bm-sk-title">💧 Funksjon 3400: Vannforsyning — Kostnadselementer</span>
-                        <span class="bm-badge bm-badge-primary">Kalkulatorisk rente: 4,00 %</span>
-                    </div>
-
-                    <div class="bm-form-row">
-                        <div class="bm-form-group">
-                            <label>Direkte driftsutgifter (Art 1000–1270)</label>
-                            <input type="number" id="bm-sk-direkte" value="142500000" step="500000" oninput="recalcSelvkost()">
-                        </div>
-                        <div class="bm-form-group">
-                            <label>Indirekte henførte kostnader (HR/IT/Rådhus)</label>
-                            <input type="number" id="bm-sk-henforing" value="8200000" step="100000" oninput="recalcSelvkost()">
-                        </div>
-                    </div>
-
-                    <div class="bm-form-row">
-                        <div class="bm-form-group">
-                            <label>Avskrivninger på anleggsmidler (Art 1590)</label>
-                            <input type="number" id="bm-sk-avskrivning" value="44800000" step="500000" oninput="recalcSelvkost()">
-                        </div>
-                        <div class="bm-form-group">
-                            <label>Bokført restverdi anleggsmidler (kr)</label>
-                            <input type="number" id="bm-sk-restverdi" value="820000000" step="5000000" oninput="recalcSelvkost()">
-                        </div>
-                    </div>
-
-                    <div class="bm-form-row">
-                        <div class="bm-form-group">
-                            <label>Direkte inntekter utenom gebyrer</label>
-                            <input type="number" id="bm-sk-inntekter" value="4500000" step="100000" oninput="recalcSelvkost()">
-                        </div>
-                        <div class="bm-form-group">
-                            <label>Budsjetterte gebyrinntekter (Art 1620)</label>
-                            <input type="number" id="bm-sk-gebyr" value="223800000" step="500000" oninput="recalcSelvkost()">
-                        </div>
-                    </div>
-
-                    <div class="bm-form-group" style="margin-top:6px;">
-                        <label>Eksisterende Selvkostfond Saldo (primo året)</label>
-                        <input type="number" id="bm-sk-fond-saldo" value="12400000" step="200000" oninput="recalcSelvkost()">
-                    </div>
-
-                    <div style="margin-top:14px; display:flex; justify-content:space-between;">
-                        <button type="button" class="btn btn-sm" onclick="resetSelvkostValues()">↺ Tilbakestill til Grunndata</button>
-                        <button type="button" class="btn btn-sm btn-primary" onclick="exportSelvkostNote()">📄 Eksporter Selvkostnotat</button>
-                    </div>
-                </div>
-
-                <!-- Selvkost Resultat & Fondsavstemming -->
-                <div class="bm-box">
-                    <div class="bm-box-title">
-                        <span>⚖️ Selvkostresultat & Regulering av Selvkostfond</span>
-                        <span class="bm-badge" id="bm-sk-status-badge">I Balanse</span>
-                    </div>
-
-                    <div class="bm-result-summary">
-                        <div class="bm-res-item">
-                            <span>Direkte driftsutgifter (Art 1000–1270)</span>
-                            <span class="num-val" id="bm-res-sk-direkte">142 500 000 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Indirekte henføring (Felleskostnader)</span>
-                            <span class="num-val" id="bm-res-sk-henforing">8 200 000 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Avskrivninger anleggsmidler (Art 1590)</span>
-                            <span class="num-val" id="bm-res-sk-avskrivning">44 800 000 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Kalkulatorisk rente (4,00 % av restverdi)</span>
-                            <span class="num-val" id="bm-res-sk-rente">32 800 000 kr</span>
-                        </div>
-                        <div class="bm-res-item" style="color:var(--text-secondary);">
-                            <span>Fradrag: Direkte inntekter utenom gebyr</span>
-                            <span class="num-val" id="bm-res-sk-inntekt">-4 500 000 kr</span>
-                        </div>
-                        <div class="bm-res-item highlight-total">
-                            <span>Beregnet Gebyrgrunnlag (Full Selvkost)</span>
-                            <span class="num-val" id="bm-res-sk-gebyrgrunnlag" style="font-size:16px;">223 800 000 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Budsjettert Gebyrinntekt (Art 1620)</span>
-                            <span class="num-val" id="bm-res-sk-gebyrinntekt" style="font-weight:700;">223 800 000 kr</span>
-                        </div>
-                        <div class="bm-res-item highlight-total" style="border-top:none;">
-                            <span>Selvkostresultat (Avvik Gebyr vs. Selvkost)</span>
-                            <span class="num-val" id="bm-res-sk-resultat">0 kr</span>
-                        </div>
-                        <div class="bm-res-item">
-                            <span>Dekningsgrad (%)</span>
-                            <span class="num-val" id="bm-res-sk-dekningsgrad" style="font-size:15px; font-weight:800; color:var(--success-green);">100,0 %</span>
-                        </div>
-                    </div>
-
-                    <!-- Fondsberegning & 5-årsregel -->
-                    <div style="margin-top:16px; padding:12px; background:#f8fafc; border:1px solid var(--border-light); border-radius:3px;">
-                        <div style="font-size:11.5px; font-weight:700; color:var(--navy-dark); margin-bottom:4px;">
-                            🏛️ Selvkostfond Regulering & 5-årsregelen (Selvkostforskriften § 6):
-                        </div>
-                        <div style="font-size:12px; line-height:1.5; color:var(--text-secondary);" id="bm-sk-fond-forklaring">
-                            Gebyret dekker nøyaktig 100,0 % av selvkost. Ingen avsetning til Art 1530 eller bruk av Art 1930 nødvendig.
-                        </div>
-                        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px; font-family:var(--font-mono); color:var(--text-muted); border-top:1px solid var(--border-subtle); padding-top:6px;">
-                            <span>Fremføringsår: <strong id="bm-sk-fremforing-ar">År 2 av 5</strong></span>
-                            <span>Estimert fondssaldo ultimo: <strong id="bm-sk-fond-ultimo">12 400 000 kr</strong></span>
-                        </div>
-                    </div>
+                <div id="sign-confirmation" style="display: none; margin-top: 8px; font-size: 11px; color: var(--success-green); font-weight: 600;">
+                    ✓ Signert og arkivert i Audit_AI_Actions!
                 </div>
             </div>
+
         </div>
 
-        <!-- ===================================================================
-             FANE 3: BUDSJETT-ÅRSHJUL & FRISTER
-             =================================================================== -->
-        <div class="bm-tab-pane" id="bm-pane-arshjul">
-            <div class="bm-formula-banner">
-                <strong>📅 Utvidet Internt Årshjul og Tidslinje for Kristiansand kommune:</strong>
-                Kommunens budsjettprosess løper strukturert fra mai til desember jf. Bystyrets økonomireglement. 
-                Nedenfor vises alle 8 faser fra rammeavklaringer til Bystyrets endelige vedtak og overføring til Unit4 regnskap.
-            </div>
+    </div>
 
-            <!-- Interaktiv Tidslinje-stepper -->
-            <div class="bm-year-stepper" id="bm-year-stepper-container">
-                <!-- Genereres via JS -->
+<div id="vectordb-panel" class="vectordb-panel" style="display: none;">
+        <div class="vectordb-panel-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="vdb-status-icon">⚡</span>
+                <strong id="vdb-status-title">Oppdatering av Vektordatabase (sqlite-vec)</strong>
+                <span id="vdb-status-badge" class="status-badge">Klar</span>
             </div>
-
-            <!-- Detaljkort for Valgt Årshjulfase -->
-            <div class="bm-box" id="bm-phase-detail-card" style="margin-top:16px;">
-                <!-- Injiseres dynamisk -->
+            <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary);" id="vdb-time-label">
+                Tid: 0.0s
             </div>
         </div>
-
-        <!-- ===================================================================
-             FANE 4: KOSTRA DRIFTSARTER & KONTERING
-             =================================================================== -->
-        <div class="bm-tab-pane" id="bm-pane-kostra">
-            <div class="bm-formula-banner">
-                <strong>📑 KOSTRA Kontoplan & Konteringsregler i Framsikt (Driftsarter 1000–1990):</strong>
-                Alle poster i Kristiansand konteres på 3 dimensjoner: <em>Kontoklasse (1 Drift / 2 Inv) × Funksjon × Art</em>.
-                Tabellen under viser fullstendig konteringsveiledning for lønn, varekjøp, konserninterne overføringer, selvkostfond og refusjoner.
-            </div>
-
-            <!-- Filter og Søkebar for KOSTRA -->
-            <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; align-items:center; background:#fafbfc; padding:10px 14px; border:1px solid var(--border-light); border-radius:4px;">
-                <div style="flex:1; min-width:240px;">
-                    <input type="text" id="bm-kostra-search" class="form-control" placeholder="🔍 Søk i KOSTRA kontoplan (f.eks. 1010, strøm, vikar, 1240 lisens, selvkostfond)..." 
-                           style="width:100%; padding:6px 10px; font-size:12px; border:1px solid var(--border-light); border-radius:3px;"
-                           oninput="filterKostraDriftsarter()">
-                </div>
-                <div>
-                    <select id="bm-kostra-cat-filter" class="form-select" style="padding:6px 10px; font-size:12px; border:1px solid var(--border-light); border-radius:3px;" onchange="filterKostraDriftsarter()">
-                        <option value="ALL">Alle Kontoserier (1000–1990)</option>
-                        <option value="LONN">Lønn & Sosiale utgifter (1000–1220)</option>
-                        <option value="VARE">Kjøp av varer og tjenester (1100–1270)</option>
-                        <option value="OVERFORING">Overføringer & Tilskudd (1300–1480)</option>
-                        <option value="FINANS">Finans, avskrivning & fond (1500–1590)</option>
-                        <option value="INNTEKT">Gebyr-, salgs- og refusjonsinntekter (1600–1750)</option>
-                        <option value="STAT">Statstilskudd & Fondsbruk (1800–1930)</option>
-                    </select>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm" onclick="resetKostraFilter()">Nullstill filter</button>
-                </div>
-            </div>
-
-            <!-- KOSTRA Tabell -->
-            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
-                <table class="tufte-table" id="bm-kostra-full-table">
-                    <thead>
-                        <tr>
-                            <th style="width:70px;">Art</th>
-                            <th style="width:190px;">Artsnavn</th>
-                            <th style="width:140px;">Framsikt-modul</th>
-                            <th>Retningslinjer for Kontering & Kostnadstype</th>
-                            <th>Typiske Kostnader i Kristiansand</th>
-                            <th>Spesiell Kontrollregel</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bm-kostra-full-tbody">
-                        <!-- Genereres fra JS -->
-                    </tbody>
-                </table>
+        <div class="vdb-progress-bar-container">
+            <div id="vdb-progress-bar" class="vdb-progress-bar" style="width: 0%;"></div>
+        </div>
+        <div class="vdb-status-details">
+            <div id="vdb-status-msg" style="color: var(--text-primary); font-weight: 500;">Klar til å starte indeksering av data/raw...</div>
+            <div id="vdb-stats-meta" style="color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px;">
+                data/raw: 37 filer | DB: 3 484 biter (37 indeksert)
             </div>
         </div>
+    </div>
+    </div>
 
-        <!-- ===================================================================
-             FANE 5: FRAMSIKT EXCEL QA & VALIDERINGSMOTOR
-             =================================================================== -->
-        <div class="bm-tab-pane" id="bm-pane-qa">
-            <div class="bm-formula-banner">
-                <strong>📋 Sjekkliste og Kvalitetskontroll for Excel Eksport/Import og Framsikt-låsing:</strong>
-                Før seksjonsledere og økonomirådgivere godkjenner detaljbudsjettet, må følgende 8 kontrollpunkter verifiseres.
-                Dette hindrer budsjetteringsfeil på AGA, feil pensjonskasse, ulovlig nettobudsjettering og brudd på selvkostforskriften.
-            </div>
-
-            <div class="bm-grid-2col">
-                <div class="bm-box">
-                    <div class="bm-box-title">
-                        <span>☑️ Controllerens 8 Kritiske Kontrollpunkter</span>
-                        <span class="bm-badge bm-badge-primary" id="bm-qa-checked-count">8 av 8 Bekreftet</span>
-                    </div>
-
-                    <div class="bm-check-list">
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-1" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">1. Uforanderlige ID-er i Excel-maler</div>
-                                <div class="bm-check-sub">Stilling ID, Ansatt ID og Ansvar er beholdt uendret slik at Framsikt matcher stillingene ved import.</div>
-                            </div>
-                        </label>
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-2" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">2. Månedsoppdeling og oppstartsdatoer</div>
-                                <div class="bm-check-sub">Stillingsendringer og nyansettelser (f.eks. lærere per 01.08) er lagt på riktig måned, ikke fordelt over 12 mnd.</div>
-                            </div>
-                        </label>
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-3" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">3. Arbeidsgiveravgiftssone (14,1 % Sone 1)</div>
-                                <div class="bm-check-sub">Alle stillinger og potter ligger i Sone 1, og AGA er beregnet av både lønn, feriepenger og pensjon.</div>
-                            </div>
-                        </label>
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-4" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">4. Pensjonskassetilhørighet (SPK vs KLP)</div>
-                                <div class="bm-check-sub">Lærere og skoleledere er koblet mot SPK (13,8 %), mens øvrige er registrert på KLP (15,2 %).</div>
-                            </div>
-                        </label>
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-5" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">5. Bruttoføring av Vikarer og NAV-refusjon</div>
-                                <div class="bm-check-sub">Vikarpotter (Art 1020) og forventet sykelønnsrefusjon (Art 1690) er ført brutto jf. Kommuneloven § 14-6.</div>
-                            </div>
-                        </label>
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-6" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">6. Selvkostavstemming & 5-årsregel (VAR/Byggesak)</div>
-                                <div class="bm-check-sub">Direkte, indirekte og kapitalkostnader er avstemt mot gebyrinntekter og bundet selvkostfond (1530/1930).</div>
-                            </div>
-                        </label>
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-7" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">7. Konsernavstemming (KBR IKS & Avfall Sør)</div>
-                                <div class="bm-check-sub">Tilskudd til brannvesen (Art 1480) og renovasjonstjenester (Art 1380) stemmer med selskapenes budsjetter.</div>
-                            </div>
-                        </label>
-                        <label class="bm-check-item">
-                            <input type="checkbox" id="bm-qa-8" checked onchange="updateBmQaStatus()">
-                            <div class="bm-check-text">
-                                <div class="bm-check-title">8. Finansielle Måltall & Rammevedtak</div>
-                                <div class="bm-check-sub">Seksjonens samlede ramme er innenfor kommunedirektørens tildeling, og netto driftsresultat ≥ 1,0 %.</div>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div style="margin-top:14px; display:flex; justify-content:space-between;">
-                        <button type="button" class="btn btn-sm" onclick="toggleAllBmQa(true)">Merk Alle</button>
-                        <button type="button" class="btn btn-sm btn-primary" onclick="runSimulatedFramsiktQA()">🔒 Kjør Formell QA-Validering</button>
-                    </div>
-                </div>
-
-                <!-- QA Valideringsrapport / Attest -->
-                <div class="bm-box">
-                    <div class="bm-box-title">
-                        <span>📜 Formell QA Valideringsattest (HITL Port 9)</span>
-                        <span class="bm-badge bm-badge-success" id="bm-qa-attest-badge">Verifisert</span>
-                    </div>
-
-                    <div id="bm-qa-attest-output" style="background:#fafbfc; border:1px solid var(--border-light); border-radius:3px; padding:14px; font-family:var(--font-mono); font-size:11.5px; line-height:1.6; max-height:380px; overflow-y:auto; white-space:pre-wrap;">
-Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest med SHA-256 kryptografisk forsegling.
-                    </div>
-
-                    <div style="margin-top:12px; display:flex; justify-content:flex-end; gap:8px;">
-                        <button type="button" class="btn btn-sm" onclick="copyBmQaAttest()">📋 Kopier Attest</button>
-                        <button type="button" class="btn btn-sm btn-accent" onclick="downloadBmQaReport()">📥 Last ned Valideringsrapport</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- =======================================================================
-         8. DOKUMENT- OG MALBANK (TEMPLATES, EXCEL, POWER BI & JUS)
-         ======================================================================= -->
-    <section class="docbank-section" id="dokumentbank">
+    <!-- FANE 4: VEILEDERE, MALER & REGELVERK -->
+    <div class="hub-tab-pane" id="tab-veiledere-maler" role="tabpanel" aria-labelledby="tab-btn-veiledere-maler" style="display: none;">
+<section class="docbank-section" id="dokumentbank">
         <div class="section-header">
             <span>📂 Offisiell Dokument- og Malbank (Templates, Skjemaer & Modeller)</span>
             <span class="status-badge">Klar for nedlasting & forhåndsvisning</span>
@@ -7458,7 +7653,76 @@ Trykk på "Kjør Formell QA-Validering" for å generere revisjonsgodkjent attest
         </div>
     </section>
 
-    </main>
+<section class="timeline-section">
+        <div class="section-header">
+            <span>📅 Kommunalt Styringsårshjul & Kritiske Frister (2026)</span>
+            <span style="font-size: 11px; font-weight: normal; color: var(--text-secondary);">Synkronisert med Plandisc & Teams</span>
+        </div>
+
+        <!-- 12-MÅNEDERS TIDSVEKSLER (ÅRS- OG MÅNEDSLØYFE) -->
+        <div class="month-timeline-bar" id="month-timeline-bar">
+            <button class="month-pill" onclick="selectMonth(1)">Jan</button>
+            <button class="month-pill" onclick="selectMonth(2)">Feb</button>
+            <button class="month-pill" onclick="selectMonth(3)">Mar (T1)</button>
+            <button class="month-pill" onclick="selectMonth(4)">Apr</button>
+            <button class="month-pill" onclick="selectMonth(5)">Mai</button>
+            <button class="month-pill" onclick="selectMonth(6)">Jun</button>
+            <button class="month-pill" onclick="selectMonth(7)">Jul</button>
+            <button class="month-pill" onclick="selectMonth(8)">Aug</button>
+            <button class="month-pill active highlight" onclick="selectMonth(9)">Sep (T2)</button>
+            <button class="month-pill" onclick="selectMonth(10)">Okt</button>
+            <button class="month-pill" onclick="selectMonth(11)">Nov</button>
+            <button class="month-pill" onclick="selectMonth(12)">Des (HØP)</button>
+        </div>
+
+        <div class="timeline-status-banner" id="timeline-status-banner">
+            <div>
+                <span id="timeline-active-mode" style="font-weight: 700;">🔴 MÅNEDSRAPPORTERING M9 (September)</span> | 
+                <span id="timeline-deadline">Frist Formannskapet: 28. september (4 dager igjen)</span>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px;">
+                Saksbehandler: Frank Ellingsen (Senior Controller)
+            </div>
+        </div>
+
+        <div class="quarters-grid">
+            <div class="quarter-box">
+                <h3>Q1: KOSTRA & Regnskap <span>Jan–Mar</span></h3>
+                <ul>
+                    <li>• 15. jan / 23. feb: KOSTRA-rapportering</li>
+                    <li>• 09. mars: Regnskapsavslutning</li>
+                    <li>• 31. mars: Årsregnskap fremlegges</li>
+                </ul>
+            </div>
+            <div class="quarter-box">
+                <h3>Q2: 1. Tertial (T1) <span>Apr–Jun</span></h3>
+                <ul>
+                    <li>• 15. apr: Revisjonsberetning</li>
+                    <li>• 25. mai: 1. tertial til Bystyret</li>
+                    <li>• 02. juni: RNB & KOSTRA-tall</li>
+                </ul>
+            </div>
+            <div class="quarter-box active">
+                <h3>Q3: 2. Tertial (T2) ⭐ AKTIV <span>Jul–Sep</span></h3>
+                <ul>
+                    <li>• 15. aug: Innspill ny HØP</li>
+                    <li>• 23. sep: Kommunedirektørens HØP</li>
+                    <li>• <strong>28. sep: 2. tertial i Formannskapet</strong></li>
+                </ul>
+            </div>
+            <div class="quarter-box">
+                <h3>Q4: HØP & Budsjettvedtak <span>Okt–Des</span></h3>
+                <ul>
+                    <li>• 07. okt: Statsbudsjettet</li>
+                    <li>• 25. nov: Formannskapets innstilling</li>
+                    <li>• 18. des: Bystyrets endelige vedtak</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    </div>
+
+</main>
 </div>
 
     <!-- EXIT PRESENTATION MODE FLOATING BANNER -->
@@ -20188,6 +20452,230 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
         }
         }
 
+
+// ==============================================================================
+// ROLLEBASERT HOVEDNAVIGASJON (4 PERSONA-FANER)
+// jf. AI_KOM_layout_og_navigasjon.md
+// ==============================================================================
+const HUB_PERSONA_TABS = ['min-enhet', 'sektor-konsern', 'controller-hub', 'veiledere-maler'];
+
+const SECTION_TO_TAB_MAP = {
+    'nettbank-kontoutskrift-seksjon': 'min-enhet',
+    'workflow-cycle-banner': 'min-enhet',
+    'mote-rapportering-seksjon': 'min-enhet',
+    'sektor-seksjon': 'sektor-konsern',
+    'kpi-seksjon-container': 'sektor-konsern',
+    'kpi-seksjon': 'sektor-konsern',
+    'triage-seksjon': 'sektor-konsern',
+    'saksflyt': 'sektor-konsern',
+    'avvik-seksjon': 'controller-hub',
+    'budsjett-modul-seksjon': 'controller-hub',
+    'powerbi-showcase': 'controller-hub',
+    'rag-seksjon': 'controller-hub',
+    'vectordb-panel': 'controller-hub',
+    'dokumentbank': 'veiledere-maler',
+    'timeline-section': 'veiledere-maler'
+};
+
+function openTab(tabKey, updateHash) {
+    if (updateHash === undefined) updateHash = true;
+    if (!HUB_PERSONA_TABS.includes(tabKey)) {
+        tabKey = 'min-enhet';
+    }
+
+    HUB_PERSONA_TABS.forEach(key => {
+        const btn = document.getElementById('tab-btn-' + key);
+        const sideBtn = document.getElementById('side-tab-' + key);
+        const pane = document.getElementById('tab-' + key);
+        if (btn) {
+            if (key === tabKey) {
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+            } else {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            }
+        }
+        if (sideBtn) {
+            if (key === tabKey) {
+                sideBtn.classList.add('active');
+            } else {
+                sideBtn.classList.remove('active');
+            }
+        }
+        if (pane) {
+            if (key === tabKey) {
+                pane.classList.add('active');
+                pane.style.display = 'block';
+            } else {
+                pane.classList.remove('active');
+                pane.style.display = 'none';
+            }
+        }
+    });
+
+    try {
+        localStorage.setItem('aikom_active_tab', tabKey);
+    } catch (e) {}
+
+    if (updateHash && window.location.hash !== '#' + tabKey) {
+        history.replaceState(null, '', '#' + tabKey);
+    }
+
+    setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+    }, 50);
+}
+
+// Intercept navigateToSection for cross-tab switching
+window.navigateToSection = function(sectionId, toastMsg) {
+    const targetTab = SECTION_TO_TAB_MAP[sectionId];
+    if (targetTab) {
+        openTab(targetTab, false);
+    }
+    setTimeout(() => {
+        const sec = document.getElementById(sectionId);
+        if (sec) {
+            sec.scrollIntoView({ behavior: 'smooth' });
+            sec.classList.remove("element-highlight-pulse");
+            void sec.offsetWidth;
+            sec.classList.add("element-highlight-pulse");
+        }
+        if (toastMsg && typeof showToast === 'function') showToast(toastMsg);
+    }, 60);
+};
+
+// Initialize active tab on page load
+document.addEventListener('DOMContentLoaded', () => {
+    let initialTab = 'min-enhet';
+    const hash = window.location.hash.replace('#', '');
+    if (HUB_PERSONA_TABS.includes(hash)) {
+        initialTab = hash;
+    } else if (SECTION_TO_TAB_MAP[hash]) {
+        initialTab = SECTION_TO_TAB_MAP[hash];
+    } else {
+        try {
+            const saved = localStorage.getItem('aikom_active_tab');
+            if (HUB_PERSONA_TABS.includes(saved)) initialTab = saved;
+        } catch (e) {}
+    }
+    openTab(initialTab, false);
+    if (hash && SECTION_TO_TAB_MAP[hash]) {
+        setTimeout(() => window.navigateToSection(hash), 120);
+    }
+});
+
+// ==============================================================================
+// ROLLEBASERT HOVEDNAVIGASJON (4 PERSONA-FANER)
+// jf. AI_KOM_layout_og_navigasjon.md
+// ==============================================================================
+const HUB_PERSONA_TABS = ['min-enhet', 'sektor-konsern', 'controller-hub', 'veiledere-maler'];
+
+const SECTION_TO_TAB_MAP = {
+    'nettbank-kontoutskrift-seksjon': 'min-enhet',
+    'workflow-cycle-banner': 'min-enhet',
+    'mote-rapportering-seksjon': 'min-enhet',
+    'sektor-seksjon': 'sektor-konsern',
+    'kpi-seksjon-container': 'sektor-konsern',
+    'kpi-seksjon': 'sektor-konsern',
+    'triage-seksjon': 'sektor-konsern',
+    'saksflyt': 'sektor-konsern',
+    'avvik-seksjon': 'controller-hub',
+    'budsjett-modul-seksjon': 'controller-hub',
+    'powerbi-showcase': 'controller-hub',
+    'rag-seksjon': 'controller-hub',
+    'vectordb-panel': 'controller-hub',
+    'dokumentbank': 'veiledere-maler',
+    'timeline-section': 'veiledere-maler'
+};
+
+function openTab(tabKey, updateHash) {
+    if (updateHash === undefined) updateHash = true;
+    if (!HUB_PERSONA_TABS.includes(tabKey)) {
+        tabKey = 'min-enhet';
+    }
+
+    HUB_PERSONA_TABS.forEach(key => {
+        const btn = document.getElementById('tab-btn-' + key);
+        const sideBtn = document.getElementById('side-tab-' + key);
+        const pane = document.getElementById('tab-' + key);
+        if (btn) {
+            if (key === tabKey) {
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+            } else {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            }
+        }
+        if (sideBtn) {
+            if (key === tabKey) {
+                sideBtn.classList.add('active');
+            } else {
+                sideBtn.classList.remove('active');
+            }
+        }
+        if (pane) {
+            if (key === tabKey) {
+                pane.classList.add('active');
+                pane.style.display = 'block';
+            } else {
+                pane.classList.remove('active');
+                pane.style.display = 'none';
+            }
+        }
+    });
+
+    try {
+        localStorage.setItem('aikom_active_tab', tabKey);
+    } catch (e) {}
+
+    if (updateHash && window.location.hash !== '#' + tabKey) {
+        history.replaceState(null, '', '#' + tabKey);
+    }
+
+    setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+    }, 50);
+}
+
+// Intercept navigateToSection for cross-tab switching
+window.navigateToSection = function(sectionId, toastMsg) {
+    const targetTab = SECTION_TO_TAB_MAP[sectionId];
+    if (targetTab) {
+        openTab(targetTab, false);
+    }
+    setTimeout(() => {
+        const sec = document.getElementById(sectionId);
+        if (sec) {
+            sec.scrollIntoView({ behavior: 'smooth' });
+            sec.classList.remove("element-highlight-pulse");
+            void sec.offsetWidth;
+            sec.classList.add("element-highlight-pulse");
+        }
+        if (toastMsg && typeof showToast === 'function') showToast(toastMsg);
+    }, 60);
+};
+
+// Initialize active tab on page load
+document.addEventListener('DOMContentLoaded', () => {
+    let initialTab = 'min-enhet';
+    const hash = window.location.hash.replace('#', '');
+    if (HUB_PERSONA_TABS.includes(hash)) {
+        initialTab = hash;
+    } else if (SECTION_TO_TAB_MAP[hash]) {
+        initialTab = SECTION_TO_TAB_MAP[hash];
+    } else {
+        try {
+            const saved = localStorage.getItem('aikom_active_tab');
+            if (HUB_PERSONA_TABS.includes(saved)) initialTab = saved;
+        } catch (e) {}
+    }
+    openTab(initialTab, false);
+    if (hash && SECTION_TO_TAB_MAP[hash]) {
+        setTimeout(() => window.navigateToSection(hash), 120);
+    }
+});
 </script>
 </body>
 </html>

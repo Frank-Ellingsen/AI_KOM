@@ -17,12 +17,12 @@ Hva bør undersøkes eller følges opp?
 
 > **Viktig fortegnskonvensjon i denne pakken:**
 >
-> `Avvik = Regnskap - Budsjett`
+> `Avvik = Budsjett - Regnskap`
 >
 > For kostnader betyr dette:
 >
-> - Negativt avvik = lavere kostnad enn budsjett = **grønt/gunstig**
-> - Positivt avvik = høyere kostnad enn budsjett = **rødt/ugunstig**
+> - Positivt avvik = lavere kostnad enn budsjett = **grønt/gunstig (mindreforbruk)**
+> - Negativt avvik = høyere kostnad enn budsjett = **rødt/ugunstig (merforbruk)**
 > - Avvik nær null = **gult/nøytralt innenfor toleranse**
 
 ---
@@ -205,11 +205,11 @@ SUM(FactFinance[AmountBudget])
 
 ## Avvik
 
-Fortegnskonvensjonen er Actual minus Budget.
+Fortegnskonvensjonen er Budsjett minus Regnskap (Budsjett - Actuals).
 
 ```DAX
 Avvik =
-[Regnskap] - [Budsjett]
+[Budsjett] - [Regnskap]
 ```
 
 ## Avvik prosent
@@ -252,7 +252,7 @@ TOTALYTD(
 
 ```DAX
 Avvik YTD =
-[Regnskap YTD] - [Budsjett YTD]
+[Budsjett YTD] - [Regnskap YTD]
 ```
 
 ## Avvik YTD prosent
@@ -287,7 +287,7 @@ Budsjett Måned =
 
 ```DAX
 Avvik Måned =
-[Regnskap Måned] - [Budsjett Måned]
+[Budsjett Måned] - [Regnskap Måned]
 ```
 
 ## Avvik måned prosent
@@ -322,9 +322,9 @@ CALCULATE(
 Denne pakken bruker et eksempel på toleranse rundt null:
 
 ```text
-Grønn: Avvik < -2 %
-Gul:   Avvik mellom -2 % og +2 %
-Rød:   Avvik > +2 %
+Grønn: Avvik > +2 % (Mindreforbruk / under budsjett)
+Gul:   Avvik mellom -2 % og +2 % (Toleranse)
+Rød:   Avvik < -2 % (Merforbruk / overskridelse)
 ```
 
 Hvis virksomheten ønsker helt streng fortegnslogikk, kan nullgrensene settes til 0 %.
@@ -334,14 +334,14 @@ Hvis virksomheten ønsker helt streng fortegnslogikk, kan nullgrensene settes ti
 ```DAX
 RAG Status YTD =
 VAR Pct = [Avvik YTD %]
-VAR GreenLimit = -0.02
-VAR RedLimit = 0.02
+VAR GreenLimit = 0.02
+VAR RedLimit = -0.02
 RETURN
 SWITCH(
     TRUE(),
     ISBLANK(Pct), "N/A",
-    Pct < GreenLimit, "Green",
-    Pct > RedLimit, "Red",
+    Pct > GreenLimit, "Green",
+    Pct < RedLimit, "Red",
     "Amber"
 )
 ```
@@ -389,7 +389,7 @@ SWITCH(
 
 # 9. Streng variant uten toleranse
 
-Bruk denne bare dersom enhver negativ verdi skal være grønn og enhver positiv verdi rød.
+Bruk denne bare dersom enhver positiv verdi (under budsjett) skal være grønn og enhver negativ verdi (over budsjett) rød.
 
 ```DAX
 RAG Status Streng =
@@ -398,8 +398,8 @@ RETURN
 SWITCH(
     TRUE(),
     ISBLANK(Value), "N/A",
-    Value < 0, "Green",
-    Value > 0, "Red",
+    Value > 0, "Green",
+    Value < 0, "Red",
     "Amber"
 )
 ```
@@ -426,15 +426,15 @@ RAG Status Materialitet =
 VAR VarianceValue = [Avvik YTD]
 VAR VariancePct = [Avvik YTD %]
 VAR Materiality = 100000
-VAR GreenPct = -0.02
-VAR RedPct = 0.02
+VAR GreenPct = 0.02
+VAR RedPct = -0.02
 RETURN
 SWITCH(
     TRUE(),
     ISBLANK(VarianceValue), "N/A",
     ABS(VarianceValue) < Materiality, "Amber",
-    VariancePct < GreenPct, "Green",
-    VariancePct > RedPct, "Red",
+    VariancePct > GreenPct, "Green",
+    VariancePct < RedPct, "Red",
     "Amber"
 )
 ```
@@ -508,7 +508,7 @@ Bruk:
 High value
 ```
 
-for å finne dimensjonsverdien med størst positivt avvik, altså størst ugunstig kostnadsoverskridelse etter denne pakkens fortegnskonvensjon.
+for å finne dimensjonsverdien med størst positivt avvik, altså størst gunstig mindreforbruk.
 
 Bruk:
 
@@ -516,7 +516,7 @@ Bruk:
 Low value
 ```
 
-for å finne størst negativt avvik, altså størst gunstig mindreforbruk.
+for å finne størst negativt avvik, altså størst ugunstig merforbruk / overskridelse.
 
 ## Designregel
 
@@ -554,8 +554,8 @@ RETURN
 SWITCH(
     TRUE(),
     ISBLANK(Pct), "N/A",
-    Pct < -0.02, "Green",
-    Pct > 0.02, "Red",
+    Pct > 0.02, "Green",
+    Pct < -0.02, "Red",
     "Amber"
 )
 ```
@@ -578,8 +578,8 @@ Legg til en konstantlinje på `0`.
 Tolkning:
 
 ```text
-Over null  = positivt kostnadsavvik = rødt/ugunstig
-Under null = negativt kostnadsavvik = grønt/gunstig
+Over null  = positivt kostnadsavvik = grønt/gunstig (mindreforbruk)
+Under null = negativt kostnadsavvik = rødt/ugunstig (merforbruk)
 ```
 
 ## Trendmål
@@ -604,13 +604,13 @@ RETURN
 SWITCH(
     TRUE(),
     ISBLANK(ChangeValue), "Ingen sammenligning",
-    ChangeValue < 0, "Forbedring",
-    ChangeValue > 0, "Forverring",
+    ChangeValue > 0, "Forbedring",
+    ChangeValue < 0, "Forverring",
     "Uendret"
 )
 ```
 
-Her betyr synkende avvik en forbedring fordi avviket beveger seg i negativ/grønn retning.
+Her betyr økende avvik en forbedring fordi avviket beveger seg i positiv/grønn retning (mindreforbruk).
 
 ## Forecast og forventningsbånd
 
@@ -695,9 +695,9 @@ VAR StatusLabel = [RAG Label YTD]
 VAR Area = [Valgt Virksomhetsområde]
 VAR Direction =
     IF(
-        VarianceValue < 0,
+        VarianceValue > 0,
         "lavere enn budsjett",
-        IF(VarianceValue > 0, "høyere enn budsjett", "lik budsjett")
+        IF(VarianceValue < 0, "høyere enn budsjett", "lik budsjett")
     )
 RETURN
 Area & ": Regnskap er " &
@@ -737,7 +737,7 @@ Ikke fargelegg hele raden.
 
 ## Sortering
 
-Standard sortering bør fremheve største positive avvik først, fordi positive kostnadsavvik er røde og ugunstige i denne modellen.
+Standard sortering bør fremheve største negative avvik først, fordi negative kostnadsavvik er røde og ugunstige i denne modellen (merforbruk).
 
 ---
 
@@ -879,9 +879,9 @@ Eksempel:
 
 ```text
 Hvordan tolkes avvik?
-Avvik = Regnskap - Budsjett.
-Negativt avvik betyr lavere kostnad enn budsjett og vises grønt.
-Positivt avvik betyr høyere kostnad enn budsjett og vises rødt.
+Avvik = Budsjett - Regnskap.
+Positivt avvik betyr lavere kostnad enn budsjett (mindreforbruk) og vises grønt.
+Negativt avvik betyr høyere kostnad enn budsjett (merforbruk) og vises rødt.
 ```
 
 ---
@@ -914,7 +914,7 @@ RANKX(
     ALLSELECTED(DimAccount[Kontonavn]),
     [Avvik YTD],
     ,
-    DESC,
+    ASC,
     DENSE
 )
 ```
@@ -928,7 +928,7 @@ IF([Rang Avvik Ugunstig] <= 10, 1, 0)
 
 Legg `[Vis Top 10 Avvik] = 1` som visualfilter.
 
-Siden positive avvik er ugunstige i denne modellen, sorteres de høyeste positive avvikene først.
+Siden negative avvik er ugunstige i denne modellen (merforbruk), sorteres de laveste/mest negative avvikene først.
 
 ---
 
@@ -1039,9 +1039,9 @@ Neutral                   #D8DDE3
 På avvikstrenden:
 
 ```text
-Positivt område / ugunstig   svak rød bakgrunn eller rød markør
+Positivt område / gunstig    svak grønn bakgrunn eller grønn markør
 Nullinje                     mørk grå
-Negativt område / gunstig    svak grønn bakgrunn eller grønn markør
+Negativt område / ugunstig   svak rød bakgrunn eller rød markør
 Forecast                     grå stiplet linje / grått intervall
 ```
 
@@ -1051,9 +1051,9 @@ Forecast                     grå stiplet linje / grått intervall
 
 ## Fase 1: Modell og DAX
 
-1. Kontroller fortegnskonvensjonen.
+1. Kontroller fortegnskonvensjonen (`Avvik = Budsjett - Regnskap`).
 2. Opprett basis-, YTD- og trendmeasures.
-3. Opprett RAG med negativt = grønt og positivt = rødt.
+3. Opprett RAG med positivt = grønt og negativt = rødt.
 4. Opprett dynamiske titler og Executive Summary.
 5. Opprett sorteringskolonner for måned og budsjettnivå.
 
@@ -1095,9 +1095,9 @@ Forecast                     grå stiplet linje / grått intervall
 
 ## DAX og fortegn
 
-- [ ] Er `Avvik = Regnskap - Budsjett` brukt konsekvent?
-- [ ] Blir negativt kostnadsavvik grønt?
-- [ ] Blir positivt kostnadsavvik rødt?
+- [ ] Er `Avvik = Budsjett - Regnskap` brukt konsekvent?
+- [ ] Blir positivt kostnadsavvik grønt (mindreforbruk)?
+- [ ] Blir negativt kostnadsavvik rødt (merforbruk)?
 - [ ] Er avvik nær null håndtert med toleranse eller gul status?
 - [ ] Er prosentmålet basert på absolutt budsjett i nevneren?
 
@@ -1121,8 +1121,8 @@ Forecast                     grå stiplet linje / grått intervall
 
 - [ ] Bruker Analyze `[Avvik YTD]`?
 - [ ] Inneholder Explain by relevante organisasjons- og kontodimensjoner?
-- [ ] Er High value forklart som ugunstig positivt kostnadsavvik?
-- [ ] Er Low value forklart som gunstig negativt kostnadsavvik?
+- [ ] Er High value forklart som gunstig positivt kostnadsavvik (mindreforbruk)?
+- [ ] Er Low value forklart som ugunstig negativt kostnadsavvik (merforbruk)?
 - [ ] Er visualet stort nok eller tilgjengelig i focus mode?
 
 ## AI

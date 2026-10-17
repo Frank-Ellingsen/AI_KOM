@@ -314,8 +314,8 @@ def generate_fast_excel_model(output_path: Optional[str] = None) -> str:
         ws3[f"E{r}"].number_format = FMT_KOMMUNE_VARIANCE
         ws3[f"E{r}"].font = Font(name="Arial", size=9, color=COLOR_BLUE_INPUT)
 
-        # Avvik YTD = Faktisk - Budsjett
-        ws3[f"F{r}"] = f"=E{r}-D{r}"
+        # Avvik YTD = Budsjett - Faktisk
+        ws3[f"F{r}"] = f"=D{r}-E{r}"
         ws3[f"F{r}"].number_format = FMT_KOMMUNE_VARIANCE
         ws3[f"F{r}"].font = Font(name="Arial", size=9, bold=True, color=COLOR_BLACK_FORMULA)
 
@@ -340,8 +340,8 @@ def generate_fast_excel_model(output_path: Optional[str] = None) -> str:
         ws3[f"J{r}"].number_format = FMT_KOMMUNE_VARIANCE
         ws3[f"J{r}"].font = Font(name="Arial", size=9, bold=True, color=COLOR_BLACK_FORMULA)
 
-        # EOY Avvik = Prognose EOY - (Budsjett H1 * 2)
-        ws3[f"K{r}"] = f"=J{r}-(D{r}*2)"
+        # EOY Avvik = (Budsjett H1 * 2) - Prognose EOY
+        ws3[f"K{r}"] = f"=(D{r}*2)-J{r}"
         ws3[f"K{r}"].number_format = FMT_KOMMUNE_VARIANCE
         ws3[f"K{r}"].font = Font(name="Arial", size=9, bold=True, color=COLOR_BLACK_FORMULA)
 

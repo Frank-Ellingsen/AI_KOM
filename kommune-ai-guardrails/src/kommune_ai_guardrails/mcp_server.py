@@ -105,8 +105,8 @@ def get_unit_financials(unit_id: str = "202", period: str = "Q2", account_group:
                 bud = 12500000.0
                 act = 13350000.0
 
-        # Avvik: Merforbruk regnes som positivt utgiftsoverskridelse (eller faktisk - budsjett)
-        var_nok = act - bud
+        # Avvik: Avvik = Budsjett - Faktisk (Positivt = Mindreforbruk/Gunstig, Negativt = Merforbruk/Ugunstig)
+        var_nok = bud - act
         var_pct = (var_nok / bud * 100) if bud else 0.0
 
         result["budget_ytd"] = bud

@@ -12,9 +12,15 @@ ref table Framsikt_Deflator
 ref table Fravaer_Reduksjon
 ref table Audit_AI_Actions
 ref table _Measures
+ref table Dim_Sikkerhet_RLS
 
-ref role Enhetsleder_Skole
-ref role Enhetsleder_Boenhet
+ref role Controller_Admin
+ref role Konsern_Okonomi
 ref role Kommunalsjef_Oppvekst
 ref role Kommunalsjef_Helse
-ref role Konsern_Okonomi
+ref role Kommunalsjef_Byutvikling
+ref role Kommunalsjef_Kultur
+ref role Kommunalsjef_OrgTek
+ref role Enhetsleder_Skole
+ref role Enhetsleder_Boenhet
+ref role Dynamisk_Budsjettansvarlig_RLS

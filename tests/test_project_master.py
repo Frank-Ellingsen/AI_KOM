@@ -152,7 +152,7 @@ def test_mcp_server_law_search_and_financials():
     fin = get_unit_financials(unit_id="202", period="Q2")
     assert fin["unit_id"] == "202"
     assert fin["actual_ytd"] > 0
-    assert fin["variance_nok"] > 0
+    assert fin["variance_nok"] < 0  # Avvik = Budsjett - Faktisk (negativt ved merforbruk)
 
 
 def test_hub_api_server_endpoints():

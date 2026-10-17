@@ -176,7 +176,7 @@ erDiagram
         float budsjett "Periodisert budsjett"
         float regnskap "Faktisk bokført"
         float avvik "Budsjett - Regnskap"
-        float merforbruk "Regnskap - Budsjett"
+        float merforbruk "Maks(Regnskap - Budsjett, 0) / Overskridelse"
     }
 
     Audit_AI_Actions {

@@ -27,22 +27,22 @@ CALCULATE(
 
 
 [Avvik YTD] = 
-[Regnskap YTD] - [Budsjett YTD]
-/* Beskrivelse: Avvik i kroner. Positiv verdi = Merforbruk (sprekk). Negativ verdi = Mindreforbruk. */
+[Budsjett YTD] - [Regnskap YTD]
+/* Beskrivelse: Avvik i kroner. Positiv verdi = Mindreforbruk (under ramme, gunstig / grønn). Negativ verdi = Merforbruk (ugunstig / rød). */
 
 
 [Avvik YTD %] = 
-DIVIDE([Avvik YTD], [Budsjett YTD], 0)
+DIVIDE([Avvik YTD], ABS([Budsjett YTD]), 0)
 /* Format: Prosent (0.0 %) */
 
 
 [Merforbruk YTD] = 
-IF([Avvik YTD] > 0, [Avvik YTD], 0)
+IF([Avvik YTD] < 0, ABS([Avvik YTD]), 0)
 /* Format: Valuta (#,##0 kr) */
 
 
 [Mindreforbruk YTD] = 
-IF([Avvik YTD] < 0, ABS([Avvik YTD]), 0)
+IF([Avvik YTD] > 0, [Avvik YTD], 0)
 /* Format: Valuta (#,##0 kr) */
 
 
@@ -69,7 +69,7 @@ CALCULATE(
 [Trendjustert Merforbruk] = 
 VAR Avvik = [Avvik YTD]
 RETURN
-    IF(Avvik > 0, Avvik * 0.50, 0)
+    IF(Avvik < 0, ABS(Avvik) * 0.50, 0)
 /* Beskrivelse: Konservativ tapsavsetning (50 % av YTD merforbruk antas å vedvare ut året uten tiltak). */
 
 
@@ -79,7 +79,7 @@ RETURN
 
 
 [EOY Forventet Årsavvik] = 
-[EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
+[Vedtatt Årsbudsjett] - [EOY Rullende Prognose]
 /* Beskrivelse: Forventet årsavvik mot vedtatt ramme (Varslingsgrunnlag for Bystyret jf. § 14-5). */
 
 
@@ -150,9 +150,9 @@ VAR Pct = [Avvik YTD %]
 RETURN
     SWITCH(
         TRUE(),
-        Avvik > 100000 && Pct > 0.05, "Kritisk Merforbruk",
-        Avvik > 0, "Merforbruk",
-        Avvik < 0, "Mindreforbruk",
+        Avvik < -100000 && Pct < -0.05, "Kritisk Merforbruk",
+        Avvik < 0, "Merforbruk",
+        Avvik > 0, "Mindreforbruk",
         "I Balanse"
     )
 
@@ -218,11 +218,11 @@ CALCULATE(
 /* Fremskriving av regnskap til 31.12 basert på faktisk månedlig gjennomsnitt Jan-Aug. */
 
 [EOY RunRate Avvik] = 
-[EOY Baseline RunRate] - [Vedtatt Årsbudsjett]
+[Vedtatt Årsbudsjett] - [EOY Baseline RunRate]
 /* Estimerte uavbøtte overforbruk ved årsslutt dersom ingen tiltak iverksettes. */
 
 [Nødvendig Tiltakseffekt T3] = 
-IF([EOY RunRate Avvik] > 0, [EOY RunRate Avvik], 0)
+IF([EOY RunRate Avvik] < 0, ABS([EOY RunRate Avvik]), 0)
 /* Beløpet som MÅ spares inn i Sept-Des for å oppnå 0 i avvik ved årsslutt. */
 
 [Planlagt Tiltakseffekt T3] = 
@@ -238,7 +238,7 @@ SWITCH(
 /* Sluttprognose med iverksatte tiltak. Skal være eksakt lik [Vedtatt Årsbudsjett]. */
 
 [EOY Net Zero Sluttavvik] = 
-[EOY Balansert Regnskap Net Zero] - [Vedtatt Årsbudsjett]
+[Vedtatt Årsbudsjett] - [EOY Balansert Regnskap Net Zero]
 /* Målresultat: 0 kr. */
 
 
@@ -252,15 +252,15 @@ VAR Pct = [Avvik YTD %]
 RETURN
     SWITCH(
         TRUE(),
-        Avvik > 50000 && Pct > 0.03, "#DC2626", // Klar rød for vesentlig overforbruk
-        Avvik > 0, "#D97706",                   // Amber ved mildt overforbruk
-        "#2563EB"                               // Dempet blå/nøytral ved balanse
+        Avvik < -50000 && Pct < -0.03, "#DC2626", // Klar rød for vesentlig overforbruk
+        Avvik < 0, "#D97706",                   // Amber ved mildt overforbruk
+        "#16A34A"                               // Grønn ved balanse / mindreforbruk
     )
 
 [Tufte_KPI_Flagg] = 
 VAR Avvik = [Avvik YTD]
 RETURN
-    IF(Avvik > 50000, "🚩 Overforbruk", "✓ Under ramme")
+    IF(Avvik < 0, "🚩 Merforbruk", "✓ Under ramme")
 
 
 // ------------------------------------------------------------------------------
@@ -385,10 +385,10 @@ VAR VesentlighetsGrense = 0.05 -- 5 % terskel jf. Økonomireglementet
 RETURN
     SWITCH(
         TRUE(),
-        AvvikPct > VesentlighetsGrense, "#D9534F", -- Rød (Alvorlig merforbruk)
-        AvvikPct > 0.02, "#F0AD4E",                 -- Gul (Moderat merforbruk)
-        AvvikPct < -VesentlighetsGrense, "#337AB7", -- Blå (Mindreforbruk)
-        "#5CB85C"                                   -- Grønn (I henhold til budsjett)
+        AvvikPct < -VesentlighetsGrense, "#D9534F", -- Rød (Alvorlig merforbruk)
+        AvvikPct < -0.02, "#F0AD4E",                 -- Gul (Moderat merforbruk)
+        AvvikPct > VesentlighetsGrense, "#337AB7",  -- Blå (Mindreforbruk)
+        "#5CB85C"                                   -- Grønn (I henhold til budsjett / gunstig)
     )
 
 

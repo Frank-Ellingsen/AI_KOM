@@ -109,7 +109,7 @@ def ensure_erp_csv_data():
                     bud_raw = 0.0
                 reg = reg_raw * 1000.0
                 bud = bud_raw * 1000.0
-                avv = reg - bud
+                avv = bud - reg
                 w.writerow({
                     'dato': '2026-08-01',
                     'Måned_Nr': '8',
@@ -159,12 +159,18 @@ ref table Framsikt_Deflator
 ref table Fravaer_Reduksjon
 ref table Audit_AI_Actions
 ref table _Measures
+ref table Dim_Sikkerhet_RLS
 
-ref role Enhetsleder_Skole
-ref role Enhetsleder_Boenhet
+ref role Controller_Admin
+ref role Konsern_Okonomi
 ref role Kommunalsjef_Oppvekst
 ref role Kommunalsjef_Helse
-ref role Konsern_Okonomi
+ref role Kommunalsjef_Byutvikling
+ref role Kommunalsjef_Kultur
+ref role Kommunalsjef_OrgTek
+ref role Enhetsleder_Skole
+ref role Enhetsleder_Boenhet
+ref role Dynamisk_Budsjettansvarlig_RLS
 """
     (MODEL_DIR / "definition" / "model.tmdl").write_text(model_content, encoding="utf-8")
 
@@ -209,12 +215,12 @@ relationship AuditResponsibility
     # roles/
     roles_dir = MODEL_DIR / "definition" / "roles"
     roles_dir.mkdir(parents=True, exist_ok=True)
-    (roles_dir / "Enhetsleder_Skole.tmdl").write_text(
-        "role Enhetsleder_Skole\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [ansvar_kode] = \"2020\"\n",
+    (roles_dir / "Controller_Admin.tmdl").write_text(
+        "role Controller_Admin\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = TRUE()\n",
         encoding="utf-8"
     )
-    (roles_dir / "Enhetsleder_Boenhet.tmdl").write_text(
-        "role Enhetsleder_Boenhet\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [ansvar_kode] = \"2540\"\n",
+    (roles_dir / "Konsern_Okonomi.tmdl").write_text(
+        "role Konsern_Okonomi\n\tmodelPermission: read\n",
         encoding="utf-8"
     )
     (roles_dir / "Kommunalsjef_Oppvekst.tmdl").write_text(
@@ -225,8 +231,64 @@ relationship AuditResponsibility
         "role Kommunalsjef_Helse\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [kommunalsjefomrade] = \"Helse og mestring\"\n",
         encoding="utf-8"
     )
-    (roles_dir / "Konsern_Okonomi.tmdl").write_text(
-        "role Konsern_Okonomi\n\tmodelPermission: read\n",
+    (roles_dir / "Kommunalsjef_Byutvikling.tmdl").write_text(
+        "role Kommunalsjef_Byutvikling\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [kommunalsjefomrade] = \"By- og stedsutvikling\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Kommunalsjef_Kultur.tmdl").write_text(
+        "role Kommunalsjef_Kultur\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [kommunalsjefomrade] = \"Kultur og innbyggerdialog\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Kommunalsjef_OrgTek.tmdl").write_text(
+        "role Kommunalsjef_OrgTek\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [kommunalsjefomrade] = \"Organisasjon og teknologi\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Enhetsleder_Skole.tmdl").write_text(
+        "role Enhetsleder_Skole\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [ansvar_kode] = \"2020\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Enhetsleder_Boenhet.tmdl").write_text(
+        "role Enhetsleder_Boenhet\n\tmodelPermission: read\n\n\ttablePermission Dim_Ansvar = [ansvar_kode] = \"2540\"\n",
+        encoding="utf-8"
+    )
+    (roles_dir / "Dynamisk_Budsjettansvarlig_RLS.tmdl").write_text(
+        '''role Dynamisk_Budsjettansvarlig_RLS
+\tmodelPermission: read
+
+\ttablePermission Dim_Ansvar =
+\t\t\tVAR CurrentUser = USERPRINCIPALNAME()
+\t\t\tVAR IsControllerAdmin =
+\t\t\t    CurrentUser IN {
+\t\t\t        "frank.ellingsen@kristiansand.kommune.no",
+\t\t\t        "admin@kristiansand.kommune.no",
+\t\t\t        "camilla.dunsaed@kristiansand.kommune.no",
+\t\t\t        "terje.fjellvang@kristiansand.kommune.no"
+\t\t\t    }
+\t\t\t    ||
+\t\t\t    CALCULATE(
+\t\t\t        COUNTROWS(Dim_Sikkerhet_RLS),
+\t\t\t        Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser && Dim_Sikkerhet_RLS[har_full_tilgang] == 1
+\t\t\t    ) > 0
+\t\t\tVAR UserUnits =
+\t\t\t    CALCULATETABLE(
+\t\t\t        VALUES(Dim_Sikkerhet_RLS[ansvar_kode]),
+\t\t\t        Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser
+\t\t\t    )
+\t\t\tVAR UserSectors =
+\t\t\t    CALCULATETABLE(
+\t\t\t        VALUES(Dim_Sikkerhet_RLS[kommunalsjefomrade]),
+\t\t\t        Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser,
+\t\t\t        Dim_Sikkerhet_RLS[niva] IN { "NIVA1", "NIVA1_KOMMUNALSJEF" }
+\t\t\t    )
+\t\t\tRETURN
+\t\t\t    IF(
+\t\t\t        IsControllerAdmin,
+\t\t\t        TRUE(),
+\t\t\t        Dim_Ansvar[ansvar_kode] IN UserUnits
+\t\t\t        ||
+\t\t\t        Dim_Ansvar[kommunalsjefomrade] IN UserSectors
+\t\t\t    )
+''',
         encoding="utf-8"
     )
     old_roles = MODEL_DIR / "definition" / "roles.tmdl"
@@ -357,7 +419,7 @@ relationship AuditResponsibility
 \t\t\t\t        {"Kontokode", type text}, {"Kontonavn", type text}, {"Hovedgruppe", type text},
 \t\t\t\t        {"Undergruppe", type text}, {"Budsjett", type number}, {"Regnskap", type number}, {"Avvik", type number}
 \t\t\t\t    }, "en-US"),
-\t\t\t\t    AddMerforbrukSkole = Table.AddColumn(TypeSkole, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
+\t\t\t\t    AddMerforbrukSkole = Table.AddColumn(TypeSkole, "Merforbruk", each if [Avvik] < 0 then -[Avvik] else 0, type number),
 \t\t\t\t    AddRespCodeSkole = Table.AddColumn(AddMerforbrukSkole, "ansvar_kode", each "2020", type text),
 \t\t\t\t    AddRespNameSkole = Table.AddColumn(AddRespCodeSkole, "ansvar_navn", each "Grunnskole Enhet 2020", type text),
 \t\t\t\t    AddFunkSkole = Table.AddColumn(AddRespNameSkole, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),
@@ -377,8 +439,8 @@ relationship AuditResponsibility
 \t\t\t\t        {"Kontonavn", type text}, {"Hovedgruppe", type text}, {"Undergruppe", type text},
 \t\t\t\t        {"Budsjett", type number}, {"Regnskap", type number}
 \t\t\t\t    }, "en-US"),
-\t\t\t\t    AddAvvikBo = Table.AddColumn(TypeBo, "Avvik", each [Regnskap] - [Budsjett], type number),
-\t\t\t\t    AddMerforbrukBo = Table.AddColumn(AddAvvikBo, "Merforbruk", each if [Avvik] > 0 then [Avvik] else 0, type number),
+\t\t\t\t    AddAvvikBo = Table.AddColumn(TypeBo, "Avvik", each [Budsjett] - [Regnskap], type number),
+\t\t\t\t    AddMerforbrukBo = Table.AddColumn(AddAvvikBo, "Merforbruk", each if [Avvik] < 0 then -[Avvik] else 0, type number),
 \t\t\t\t    AddRespCodeBo = Table.AddColumn(AddMerforbrukBo, "ansvar_kode", each "2540", type text),
 \t\t\t\t    AddRespNameBo = Table.AddColumn(AddRespCodeBo, "ansvar_navn", each "Kommunal Boenhet 2540", type text),
 \t\t\t\t    AddFunkBo = Table.AddColumn(AddRespNameBo, "funksjon_kode", each Text.From([KOSTRA_Funksjon]), type text),
@@ -465,15 +527,136 @@ relationship AuditResponsibility
 \t\tmode: import
 \t\tsource =
 \t\t\t\tlet
-\t\t\t\t    Source = Fact_Regnskap,
-\t\t\t\t    Selected = Table.SelectColumns(Source, {"ansvar_kode", "ansvar_navn", "kommunalsjefomrade"}),
-\t\t\t\t    Unique = Table.Distinct(Selected)
+\t\t\t\t    SourceFact = Fact_Regnskap,
+\t\t\t\t    FactCols = Table.SelectColumns(SourceFact, {"ansvar_kode", "ansvar_navn", "kommunalsjefomrade"}),
+\t\t\t\t    SourceSec = Csv.Document(File.Contents(DataRoot & "Dim_Sikkerhet_RLS.csv"), [Delimiter=";", Columns=18, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+\t\t\t\t    SecHeaders = Table.PromoteHeaders(SourceSec, [PromoteAllScalars=true]),
+\t\t\t\t    SecFiltered = Table.SelectRows(SecHeaders, each [ansvar_kode] <> "ALL"),
+\t\t\t\t    SecCols = Table.SelectColumns(SecFiltered, {"ansvar_kode", "enhet_navn", "kommunalsjefomrade"}),
+\t\t\t\t    SecRenamed = Table.RenameColumns(SecCols, {{"enhet_navn", "ansvar_navn"}}),
+\t\t\t\t    Combined = Table.Combine({FactCols, SecRenamed}),
+\t\t\t\t    Unique = Table.Distinct(Combined, {"ansvar_kode"})
 \t\t\t\tin
 \t\t\t\t    Unique
 
 \tannotation PBI_ResultType = Table
 """
     (tables_dir / "Dim_Ansvar.tmdl").write_text(dim_ansvar_tmdl, encoding="utf-8")
+
+    # 3b. Dim_Sikkerhet_RLS.tmdl
+    dim_sikkerhet_tmdl = """table Dim_Sikkerhet_RLS
+
+\tcolumn bruker_upn
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: bruker_upn
+
+\tcolumn navn
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: navn
+
+\tcolumn tittel
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: tittel
+
+\tcolumn niva
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: niva
+
+\tcolumn niva_tekst
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: niva_tekst
+
+\tcolumn sektor_kode
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: sektor_kode
+
+\tcolumn kommunalsjefomrade
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: kommunalsjefomrade
+
+\tcolumn ansvar_kode
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: ansvar_kode
+
+\tcolumn enhet_navn
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: enhet_navn
+
+\tcolumn har_full_tilgang
+\t\tdataType: int64
+\t\tsummarizeBy: none
+\t\tsourceColumn: har_full_tilgang
+
+\tcolumn rls_rolle
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: rls_rolle
+
+\tcolumn teams_team_navn
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: teams_team_navn
+
+\tcolumn teams_kanal
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: teams_kanal
+
+\tcolumn teams_rapport_fane
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: teams_rapport_fane
+
+\tcolumn powerbi_teams_app_url
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: powerbi_teams_app_url
+
+\tcolumn delegeringsfullmakt_nok
+\t\tdataType: double
+\t\tsummarizeBy: sum
+\t\tsourceColumn: delegeringsfullmakt_nok
+
+\tcolumn controller_navn
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: controller_navn
+
+\tcolumn controller_epost
+\t\tdataType: string
+\t\tsummarizeBy: none
+\t\tsourceColumn: controller_epost
+
+\tpartition Dim_Sikkerhet_RLS = m
+\t\tmode: import
+\t\tsource =
+\t\t\t\tlet
+\t\t\t\t    Source = Csv.Document(File.Contents(DataRoot & "Dim_Sikkerhet_RLS.csv"), [Delimiter=";", Columns=18, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+\t\t\t\t    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+\t\t\t\t    Types = Table.TransformColumnTypes(Headers, {
+\t\t\t\t        {"bruker_upn", type text}, {"navn", type text}, {"tittel", type text},
+\t\t\t\t        {"niva", type text}, {"niva_tekst", type text}, {"sektor_kode", type text},
+\t\t\t\t        {"kommunalsjefomrade", type text}, {"ansvar_kode", type text}, {"enhet_navn", type text},
+\t\t\t\t        {"har_full_tilgang", Int64.Type}, {"rls_rolle", type text}, {"teams_team_navn", type text},
+\t\t\t\t        {"teams_kanal", type text}, {"teams_rapport_fane", type text},
+\t\t\t\t        {"powerbi_teams_app_url", type text}, {"delegeringsfullmakt_nok", type number},
+\t\t\t\t        {"controller_navn", type text}, {"controller_epost", type text}
+\t\t\t\t    }, "en-US")
+\t\t\t\tin
+\t\t\t\t    Types
+
+\tannotation PBI_ResultType = Table
+"""
+    (tables_dir / "Dim_Sikkerhet_RLS.tmdl").write_text(dim_sikkerhet_tmdl, encoding="utf-8")
 
     # 4. Dim_Art.tmdl
     dim_art_tmdl = """table Dim_Art
@@ -693,36 +876,36 @@ relationship AuditResponsibility
 \tmeasure 'Budsjett YTD' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
 \t\tformatString: #,##0 "kr"
 
-\tmeasure 'Avvik YTD' = [Regnskap YTD] - [Budsjett YTD]
+\tmeasure 'Avvik YTD' = [Budsjett YTD] - [Regnskap YTD]
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Avvik YTD %' = DIVIDE([Avvik YTD], ABS([Budsjett YTD]), 0)
 \t\tformatString: 0.0%
 
-\tmeasure 'Merforbruk YTD' = MAX([Avvik YTD], 0)
+\tmeasure 'Merforbruk YTD' = MAX(-[Avvik YTD], 0)
 \t\tformatString: #,##0 "kr"
 
-\tmeasure 'Mindreforbruk YTD' = MAX(-[Avvik YTD], 0)
+\tmeasure 'Mindreforbruk YTD' = MAX([Avvik YTD], 0)
 \t\tformatString: #,##0 "kr"
 
 \tmeasure 'Vedtatt Årsbudsjett' = CALCULATE(SUM(Fact_Regnskap[Aarsbudsjett]), REMOVEFILTERS(Dim_Dato))
 \t\tformatString: #,##0 "kr"
 
-\tmeasure 'EOY Rullende Prognose' = VAR AnnualBudget = [Vedtatt Årsbudsjett] VAR RemainingBudget = MAX(AnnualBudget - [Budsjett YTD], 0) RETURN [Regnskap YTD] + RemainingBudget + MAX([Avvik YTD], 0) * 0.5
+\tmeasure 'EOY Rullende Prognose' = VAR AnnualBudget = [Vedtatt Årsbudsjett] VAR RemainingBudget = MAX(AnnualBudget - [Budsjett YTD], 0) RETURN [Regnskap YTD] + RemainingBudget + MAX(-[Avvik YTD], 0) * 0.5
 \t\tformatString: #,##0 "kr"
 
-\tmeasure 'EOY Forventet Årsavvik' = [EOY Rullende Prognose] - [Vedtatt Årsbudsjett]
+\tmeasure 'EOY Forventet Årsavvik' = [Vedtatt Årsbudsjett] - [EOY Rullende Prognose]
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Planlagt Tiltakseffekt T3' = SWITCH(SELECTEDVALUE(Dim_Ansvar[ansvar_kode]), "2540", 1928421, "2020", 863000, 2791421)
 \t\tformatString: #,##0 "kr"
 
-\tmeasure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] - [Planlagt Tiltakseffekt T3]
+\tmeasure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] + [Planlagt Tiltakseffekt T3]
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
-\tmeasure 'Tufte_Avvik_Farge_HEX' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "#A0A0A0", avv > 0 && (pct > 0.03 || avv > 250000), "#D64545", avv > 0, "#E6A23C", "#3A8F5C")
+\tmeasure 'Tufte_Avvik_Farge_HEX' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "#A0A0A0", avv < 0 && (pct < -0.03 || avv < -250000), "#D64545", avv < 0, "#E6A23C", "#3A8F5C")
 
-\tmeasure 'Tufte_EOY_Avvik_Farge_HEX' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "#A0A0A0", eoyAvv > 0 && (eoyPct > 0.03 || eoyAvv > 500000), "#D64545", eoyAvv > 0, "#E6A23C", "#3A8F5C")
+\tmeasure 'Tufte_EOY_Avvik_Farge_HEX' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "#A0A0A0", eoyAvv < 0 && (eoyPct < -0.03 || eoyAvv < -500000), "#D64545", eoyAvv < 0, "#E6A23C", "#3A8F5C")
 
 \tmeasure 'Vikarutgifter Art 1020' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020")
 \t\tformatString: #,##0 "kr"
@@ -754,7 +937,7 @@ relationship AuditResponsibility
 \tmeasure 'Simulert EOY Netto Driftsresultat' = VAR DeflatorAddition = [Vedtatt Årsbudsjett] * [Framsikt Deflator Value] VAR VikarSavings = [Vikarutgifter Art 1020] * [Fraværstiltak Effektreduksjon Value] RETURN [EOY Rullende Prognose] + DeflatorAddition - VikarSavings
 \t\tformatString: #,##0 "kr"
 
-\tmeasure 'Simulert EOY Forventet Avvik' = [Simulert EOY Netto Driftsresultat] - [Vedtatt Årsbudsjett]
+\tmeasure 'Simulert EOY Forventet Avvik' = [Vedtatt Årsbudsjett] - [Simulert EOY Netto Driftsresultat]
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Planlagt Verdi (PV)' = [Budsjett YTD]
@@ -774,7 +957,7 @@ relationship AuditResponsibility
 
 \tmeasure 'Dynamisk_Tittel_Nivaa' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Detaljnivå: " & SELECTEDVALUE(Dim_Ansvar[ansvar_navn]), "Samlet Kommunenivå — Kristiansand")
 
-\tmeasure 'FT_Aksjonstittel_Avvik' = IF([Avvik YTD] > 500000, "Kritisk merforbruk på kr " & FORMAT([Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")
+\tmeasure 'FT_Aksjonstittel_Avvik' = IF([Avvik YTD] < -500000, "Kritisk merforbruk på kr " & FORMAT(-[Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")
 
 \tmeasure 'EOY Forecast' = [EOY Rullende Prognose]
 \t\tformatString: #,##0 "kr"
@@ -785,7 +968,7 @@ relationship AuditResponsibility
 \tmeasure 'EOY Avvik %' = DIVIDE([EOY Forventet Årsavvik], ABS([Vedtatt Årsbudsjett]), 0)
 \t\tformatString: 0.0%
 
-\tmeasure 'RAG Status' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv > 0 && (pct > 0.03 || avv > 250000), "Red", avv > 0, "Amber", "Green")
+\tmeasure 'RAG Status' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv < 0 && (pct < -0.03 || avv < -250000), "Red", avv < 0, "Amber", "Green")
 
 \tmeasure 'RAG Color' = SWITCH([RAG Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
 
@@ -795,7 +978,7 @@ relationship AuditResponsibility
 
 \tmeasure 'RAG YTD' = [RAG Symbol]
 
-\tmeasure 'RAG EOY' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "⚪", eoyAvv > 0 && (eoyPct > 0.03 || eoyAvv > 500000), "🔴", eoyAvv > 0, "🟠", "🟢")
+\tmeasure 'RAG EOY' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "⚪", eoyAvv < 0 && (eoyPct < -0.03 || eoyAvv < -500000), "🔴", eoyAvv < 0, "🟠", "🟢")
 
 \tmeasure 'KPI Avvik YTD Med RAG' = [RAG YTD] & "  " & FORMAT([Avvik YTD], "#,##0 kr") & " (" & FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & ")"
 
@@ -821,7 +1004,7 @@ relationship AuditResponsibility
 
 \tmeasure 'Executive Summary Lonn' = VAR vikarPct = [Vikarandel Lonn %] VAR txt = SWITCH(TRUE(), vikarPct > 0.08, "🔴 Vikarandel overskrider måltall (7 %). Vikarstopp ved korttidsfravær (< 3 dager) anbefalt.", vikarPct > 0.05, "🟠 Vikarforbruk er moderat forhøyet. Behov for å optimalisere intern vikarpool.", "🟢 Lønns- og vikarforbruk er innenfor budsjetterte rammer.") RETURN txt & " | Total lønn: " & FORMAT([Total Lonn], "#,##0 kr") & " | Vikar: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " | NAV-refusjon: " & FORMAT([NAV Refusjoner Art 1600], "#,##0 kr")
 
-\tmeasure 'Executive Summary Prognose' = VAR sluttAvvik = [Simulert EOY Forventet Avvik] VAR rag = SWITCH(TRUE(), sluttAvvik > 1000000, "Red", sluttAvvik > 250000, "Amber", "Green") VAR txt = SWITCH(rag, "Red", "🔴 Prognosen indikerer kritisk merforbruk ved årsslutt uten ytterligere innsparingstiltak. Kommuneloven § 14-5 utløses.", "Amber", "🟠 Helårsbalansen er sårbar for lønnsvekst og fraværsendringer. T3-tiltak må følges opp månedlig.", "🟢 Simulert helårsresultat er i balanse eller mindreforbruk mot vedtatt årsbudsjett.") RETURN txt & " | Årsbudsjett: " & FORMAT([Vedtatt Årsbudsjett], "#,##0 kr") & " | Rullende EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr") & " | Tiltakseffekt: " & FORMAT([Planlagt Tiltakseffekt T3], "#,##0 kr") & " | Simulert avvik: " & FORMAT(sluttAvvik, "#,##0 kr")
+\tmeasure 'Executive Summary Prognose' = VAR sluttAvvik = [Simulert EOY Forventet Avvik] VAR rag = SWITCH(TRUE(), sluttAvvik < -1000000, "Red", sluttAvvik < -250000, "Amber", "Green") VAR txt = SWITCH(rag, "Red", "🔴 Prognosen indikerer kritisk merforbruk ved årsslutt uten ytterligere innsparingstiltak. Kommuneloven § 14-5 utløses.", "Amber", "🟠 Helårsbalansen er sårbar for lønnsvekst og fraværsendringer. T3-tiltak må følges opp månedlig.", "🟢 Simulert helårsresultat er i balanse eller mindreforbruk mot vedtatt årsbudsjett.") RETURN txt & " | Årsbudsjett: " & FORMAT([Vedtatt Årsbudsjett], "#,##0 kr") & " | Rullende EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr") & " | Tiltakseffekt: " & FORMAT([Planlagt Tiltakseffekt T3], "#,##0 kr") & " | Simulert avvik: " & FORMAT(sluttAvvik, "#,##0 kr")
 
 \tmeasure 'Executive Summary EVM' = VAR cpi = [Kostnadsindeks (CPI)] VAR cv = [Kostnadsavvik (CV)] VAR txt = SWITCH([RAG CPI Status], "Red", "🔴 Investeringsprosjekter underpresterer kostnadsmessig (CPI < 0.95). Risiko for overskridelse av prosjektrammer.", "Amber", "🟠 Prosjektporteføljen har moderat kostnadspress (CPI 0.95-1.00). Krever tett oppfølging av entreprenørfakturaer.", "🟢 God prosjektgjennomføring med kostnadsindeks i balanse (CPI >= 1.00).") RETURN txt & " | PV: " & FORMAT([Planlagt Verdi (PV)], "#,##0 kr") & " | AC: " & FORMAT([Påløpt Kostnad (AC)], "#,##0 kr") & " | CV: " & FORMAT(cv, "#,##0 kr") & " | CPI: " & FORMAT(cpi, "0.000") & " | EAC: " & FORMAT([Sluttprognose (EAC)], "#,##0 kr")
 
@@ -833,7 +1016,7 @@ relationship AuditResponsibility
 \tmeasure 'Budsjett Måned' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
 \t\tformatString: #,##0 "kr"
 
-\tmeasure 'Avvik Måned' = [Regnskap Måned] - [Budsjett Måned]
+\tmeasure 'Avvik Måned' = [Budsjett Måned] - [Regnskap Måned]
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
 \tmeasure 'Avvik Måned %' = DIVIDE([Avvik Måned], ABS([Budsjett Måned]), 0)
@@ -842,7 +1025,7 @@ relationship AuditResponsibility
 \tmeasure 'Avvik Kumulativt' = VAR maxDato = MAX(Dim_Dato[dato]) RETURN CALCULATE([Avvik YTD], REMOVEFILTERS(Dim_Dato), Dim_Dato[dato] <= maxDato)
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
-\tmeasure 'RAG Status Måned' = VAR pct = [Avvik Måned %] VAR avv = [Avvik Måned] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv > 0 && (pct > 0.02 || avv > 100000), "Red", avv > 0, "Amber", "Green")
+\tmeasure 'RAG Status Måned' = VAR pct = [Avvik Måned %] VAR avv = [Avvik Måned] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv < 0 && (pct < -0.02 || avv < -100000), "Red", avv < 0, "Amber", "Green")
 
 \tmeasure 'RAG Label Måned' = SWITCH([RAG Status Måned], "Red", "Ugunstig", "Amber", "Innenfor toleranse", "Green", "Gunstig", "Ikke vurdert")
 
@@ -852,7 +1035,7 @@ relationship AuditResponsibility
 \tmeasure 'Avvik Endring Måned' = [Avvik Måned] - [Avvik Forrige Måned]
 \t\tformatString: #,##0 "kr";(#,##0 "kr");"-"
 
-\tmeasure 'Avvik Trend Retning' = VAR ChangeValue = [Avvik Endring Måned] RETURN SWITCH(TRUE(), ISBLANK(ChangeValue), "Ingen sammenligning", ChangeValue < 0, "Forbedring", ChangeValue > 0, "Forverring", "Uendret")
+\tmeasure 'Avvik Trend Retning' = VAR ChangeValue = [Avvik Endring Måned] RETURN SWITCH(TRUE(), ISBLANK(ChangeValue), "Ingen sammenligning", ChangeValue > 0, "Forbedring", ChangeValue < 0, "Forverring", "Uendret")
 
 \tmeasure 'RAG Label YTD' = SWITCH([RAG Status], "Red", "Ugunstig (merforbruk)", "Amber", "Innenfor toleranse", "Green", "Gunstig (mindreforbruk)", "Ikke vurdert")
 
@@ -868,11 +1051,11 @@ relationship AuditResponsibility
 
 \tmeasure 'Tittel Decomposition Tree' = "02  HVA FORKLARER AVVIKET? (Decomposition Tree) | " & [Valgt Virksomhetsområde]
 
-\tmeasure 'Executive Summary Avvik' = VAR VarianceValue = [Avvik YTD] VAR VariancePct = [Avvik YTD %] VAR StatusLabel = [RAG Label YTD] VAR Area = [Valgt Virksomhetsområde] VAR Direction = IF(VarianceValue < 0, "lavere enn budsjett (mindreforbruk)", IF(VarianceValue > 0, "høyere enn budsjett (merforbruk)", "lik budsjett")) VAR Trend = [Avvik Trend Retning] RETURN "🤖 AI ROOT CAUSE SUMMARY | " & Area & ": Regnskap er " & FORMAT(ABS(VarianceValue), "#,##0 kr") & " " & Direction & " (" & FORMAT(VariancePct, "+0.0%;-0.0%;0.0%") & "). Status: " & [RAG Symbol] & " " & StatusLabel & ". Trendretning siste periode: " & Trend & ". Klikk i Decomposition Tree eller velg enhet for dypere rotårsaksforklaring."
+\tmeasure 'Executive Summary Avvik' = VAR VarianceValue = [Avvik YTD] VAR VariancePct = [Avvik YTD %] VAR StatusLabel = [RAG Label YTD] VAR Area = [Valgt Virksomhetsområde] VAR Direction = IF(VarianceValue > 0, "lavere enn budsjett (mindreforbruk)", IF(VarianceValue < 0, "høyere enn budsjett (merforbruk)", "lik budsjett")) VAR Trend = [Avvik Trend Retning] RETURN "🤖 AI ROOT CAUSE SUMMARY | " & Area & ": Regnskap er " & FORMAT(ABS(VarianceValue), "#,##0 kr") & " " & Direction & " (" & FORMAT(VariancePct, "+0.0%;-0.0%;0.0%") & "). Status: " & [RAG Symbol] & " " & StatusLabel & ". Trendretning siste periode: " & Trend & ". Klikk i Decomposition Tree eller velg enhet for dypere rotårsaksforklaring."
 
 \tmeasure 'Copilot Q&A Veileder' = "💡 AI COPILOT & NATURLIG SPRÅK | Foreslåtte spørsmål: «Vis avvik YTD per virksomhetsområde» • «Hvilke enheter har størst merforbruk?» • «Hva driver vikarutgiftene i art 1020?» • «Vis avvik måned for måned for Oppvekst» • «Hvilke enheter krever tiltak jf. § 14-5?»"
 
-\tmeasure 'Rang Avvik Ugunstig' = RANKX(ALLSELECTED(Dim_Art[Kontonavn]), [Avvik YTD], , DESC, DENSE)
+\tmeasure 'Rang Avvik Ugunstig' = RANKX(ALLSELECTED(Dim_Art[Kontonavn]), [Avvik YTD], , ASC, DENSE)
 
 \tmeasure 'Vis Top 10 Avvik' = IF([Rang Avvik Ugunstig] <= 10, 1, 0)
 
@@ -882,6 +1065,12 @@ relationship AuditResponsibility
 \tmeasure 'Siste Faktiske Dato' = CALCULATE(MAX(Dim_Dato[dato]), FILTER(ALL(Dim_Dato[dato]), NOT ISBLANK(CALCULATE([Regnskap YTD]))))
 
 \tmeasure 'Siste Faktiske Periode' = FORMAT([Siste Faktiske Dato], "MMMM yyyy")
+
+\tmeasure 'Gjeldende Bruker UPN' = USERPRINCIPALNAME()
+
+\tmeasure 'RLS Aktiv Sikkerhetskontekst' = VAR CurrentUser = USERPRINCIPALNAME() VAR MatchUser = FILTER(Dim_Sikkerhet_RLS, Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser) VAR UserNavn = SELECTCOLUMNS(MatchUser, "Navn", Dim_Sikkerhet_RLS[navn]) VAR UserTittel = SELECTCOLUMNS(MatchUser, "Tittel", Dim_Sikkerhet_RLS[tittel]) RETURN IF(CurrentUser IN { "frank.ellingsen@kristiansand.kommune.no", "admin@kristiansand.kommune.no" } || CONTAINS(MatchUser, [har_full_tilgang], 1), "Frank Ellingsen (Senior Controller) — Full Konserntilgang (Showcase)", IF(COUNTROWS(MatchUser) > 0, CONCATENATEX(UserNavn, [Navn], ", ") & " (" & CONCATENATEX(UserTittel, [Tittel], ", ") & ")", CurrentUser & " (Standard kommunalt innsyn)"))
+
+\tmeasure 'Teams Distribusjonskanal Visning' = VAR CurrentUser = USERPRINCIPALNAME() VAR MatchUser = FILTER(Dim_Sikkerhet_RLS, Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser) VAR TeamNavn = SELECTCOLUMNS(MatchUser, "Team", Dim_Sikkerhet_RLS[teams_team_navn]) VAR KanalNavn = SELECTCOLUMNS(MatchUser, "Kanal", Dim_Sikkerhet_RLS[teams_kanal]) RETURN IF(COUNTROWS(MatchUser) > 0, CONCATENATEX(TeamNavn, [Team], ", ") & " ➜ Kanal: " & CONCATENATEX(KanalNavn, [Kanal], ", "), "Teams - Kristiansand Kommune ➜ Kanal: Generell Økonomi")
 """
     (tables_dir / "_Measures.tmdl").write_text(measures_tmdl, encoding="utf-8")
     print("✓ Semantic Model (TMDL) ferdigstilt.")
@@ -1147,8 +1336,8 @@ def make_visual_waterfall_chart(name, x, y, w, h, cat_table, cat_col, measure_na
             "objects": {
                 "sentimentColors": [{
                     "properties": {
-                        "increaseColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#D64545'"}}}}},
-                        "decreaseColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#3A8F5C'"}}}}},
+                        "increaseColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#3A8F5C'"}}}}},
+                        "decreaseColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#D64545'"}}}}},
                         "totalColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#1B365D'"}}}}}
                     }
                 }]

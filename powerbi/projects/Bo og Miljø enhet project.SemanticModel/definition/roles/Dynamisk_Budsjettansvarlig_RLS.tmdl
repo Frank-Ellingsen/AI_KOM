@@ -1,0 +1,36 @@
+role Dynamisk_Budsjettansvarlig_RLS
+	modelPermission: read
+
+	tablePermission Dim_Ansvar =
+			VAR CurrentUser = USERPRINCIPALNAME()
+			VAR IsControllerAdmin =
+			    CurrentUser IN {
+			        "frank.ellingsen@kristiansand.kommune.no",
+			        "admin@kristiansand.kommune.no",
+			        "camilla.dunsaed@kristiansand.kommune.no",
+			        "terje.fjellvang@kristiansand.kommune.no"
+			    }
+			    ||
+			    CALCULATE(
+			        COUNTROWS(Dim_Sikkerhet_RLS),
+			        Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser && Dim_Sikkerhet_RLS[har_full_tilgang] == 1
+			    ) > 0
+			VAR UserUnits =
+			    CALCULATETABLE(
+			        VALUES(Dim_Sikkerhet_RLS[ansvar_kode]),
+			        Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser
+			    )
+			VAR UserSectors =
+			    CALCULATETABLE(
+			        VALUES(Dim_Sikkerhet_RLS[kommunalsjefomrade]),
+			        Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser,
+			        Dim_Sikkerhet_RLS[niva] IN { "NIVA1", "NIVA1_KOMMUNALSJEF" }
+			    )
+			RETURN
+			    IF(
+			        IsControllerAdmin,
+			        TRUE(),
+			        Dim_Ansvar[ansvar_kode] IN UserUnits
+			        ||
+			        Dim_Ansvar[kommunalsjefomrade] IN UserSectors
+			    )

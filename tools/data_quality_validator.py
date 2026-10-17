@@ -319,14 +319,14 @@ class DataQualityValidator:
             avvik = p["estimert_avvik_p50"]
             status = p["status"]
             mod = p["modell_type"]
-            # I driftsmodeller (Monte Carlo) er estimert_avvik_p50 = P50 - BAC (positiv = merforbruk)
+            # I driftsmodeller (Monte Carlo) er estimert_avvik_p50 = BAC - P50 (negativ = merforbruk)
             if "MONTE_CARLO" in mod:
-                if avvik > 1000000 and status != "KRITISK_MERFORBRUK":
+                if avvik < -1000000 and status != "KRITISK_MERFORBRUK":
                     passed = False
                     findings.append({
                         "regel": "Kommuneloven § 14-5",
                         "prognose_id": p["prognose_id"],
-                        "feil": f"Driftsmerforbruk på {avvik:,.0f} kr, men status er '{status}' i stedet for 'KRITISK_MERFORBRUK'."
+                        "feil": f"Driftsmerforbruk på {-avvik:,.0f} kr, men status er '{status}' i stedet for 'KRITISK_MERFORBRUK'."
                     })
             elif "EVM" in mod:
                 # I EVM prosjektmodell er avviket VAC = BAC - EAC_P50. Negativt tall = overskridelse

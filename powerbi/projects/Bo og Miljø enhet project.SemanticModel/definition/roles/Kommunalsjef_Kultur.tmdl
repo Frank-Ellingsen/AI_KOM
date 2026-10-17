@@ -1,0 +1,4 @@
+role Kommunalsjef_Kultur
+	modelPermission: read
+
+	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Kultur og innbyggerdialog"
