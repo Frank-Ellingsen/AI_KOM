@@ -313,6 +313,35 @@ For virksomheter som ønsker en **leverandøruavhengig, flyttbar standard**, ink
 
 ---
 
+## 📦 M10 Oktober Month-End Staging & Ingestion Pack (`antigravity_m10_monthend_pack/`)
+
+[`antigravity_m10_monthend_pack/`](./antigravity_m10_monthend_pack/) etablerer arkitekturen for automatisk ankomstovervåking (webhook og file-watcher), staging-kø og saksbehandlerstyrt "Push Button" datafangst:
+* **[`ANTIGRAVITY_M10_MonthEnd_Monitoring_and_Staging.md`](./antigravity_m10_monthend_pack/ANTIGRAVITY_M10_MonthEnd_Monitoring_and_Staging.md)**: Teknisk spesifikasjon for ankomst-webhook (`POST /api/v1/events/month-end`), staging-kø (`STAGED_AWAITING_HUMAN_APPROVAL`), og manuell igangsetting (`POST /api/v1/ingestion/m10/execute`).
+* **[`M10_Oktober_2026_Regnskap_Fiktiv.csv`](./antigravity_m10_monthend_pack/M10_Oktober_2026_Regnskap_Fiktiv.csv)**: Realistisk fiktivt M10-regnskap datasett fordelt på Oppvekst (vikaravvik), Helse (overtid), Byutvikling (brøyting/VAR) og IKT.
+* **Portal Staging Banner:** Integrert interaktiv bannerkomponent i [`index.html`](./index.html) for direkte manuell utløsing og SHA-256 stempling.
+
+---
+
+## 🧾 MVA Balansekonto 2130 & CI/CD Actions (`antigravity_mva_ci_actions_pakke/` & `antigravity_mva_test_pakke/`)
+
+Integrert kvalitetssikring for Momskompensasjonsloven og automatisk avstemming mot Balansekonto 2130:
+* **GitHub Actions Workflow:** [`.github/workflows/mva_validering_ci.yml`](./.github/workflows/mva_validering_ci.yml) kjører automatisk validering ved push eller manuell workflow_dispatch.
+* **Pipeline Veileder:** [`docs/ANTIGRAVITY_MVA_CI_CD_Pipeline_Guide.md`](./docs/ANTIGRAVITY_MVA_CI_CD_Pipeline_Guide.md) forklarer arkitekturen, revisjonssporet og 90-dagers audit retention.
+* **Valideringsmotor:** [`tools/mva_balanse_validator.py`](./tools/mva_balanse_validator.py) og [`tests/test_mva_balanse_2130.py`](./tests/test_mva_balanse_2130.py) sikrer $\text{Differanse}(\text{MVA-Komp} - \text{Konto 2130}) = 0{,}00\text{ kr}$.
+* **Testrapport:** [`reports/test_mva_balanse_2130_rapport.md`](./reports/test_mva_balanse_2130_rapport.md).
+
+---
+
+## 🚦 Fast-Path Triage Router & App Engine (`app/`)
+
+[`app/core/triage_router.py`](./app/core/triage_router.py) fungerer som sentral forespørselshåndterer for AI_KOM:
+* **Sub-2ms klassifisering:** Rask regex-analyse ruter innkommende henvendelser til `DIRECT_MCP`, `RAG_LOOKUP`, `SKILL_WORKFLOW` eller `MEMORY_CONTEXT`.
+* **Pydantic v2 Datakontrakter:** [`app/schemas/triage.py`](./app/schemas/triage.py) definerer `TriageRequest`, `TriageDecision` og `ExecutionPriority`.
+* **Kryptografisk Integritet:** Hver ruteringsbeslutning stemples med et unikt SHA-256 auditstempel for full sporbarhet.
+* **CLI-Kommando:** `python tools/run_tool.py triage "Hva sier § 14-5?"` for direkte interaktiv testing.
+
+---
+
 ## 📄 Lisens & Eierskap
 
 Utviklet for og av **Kristiansand kommune**. Tilgjengelig under **MIT-lisensen** for fri gjenbruk og tilpasning i norske kommuner, fylkeskommuner og offentlige virksomheter.

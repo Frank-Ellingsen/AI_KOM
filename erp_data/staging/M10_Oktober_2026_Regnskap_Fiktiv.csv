@@ -1,0 +1,11 @@
+﻿Periode,Virksomhetsområde,EnhetsID,Enhetsnavn,KOSTRA_Funksjon,KOSTRA_Art,Kontonavn,Budsjett_YTD_NOK,Regnskap_YTD_NOK,Avvik_YTD_NOK,Status_Triage,Merknad
+2026-M10,Område 2 Oppvekst,20201,Vågsbygd Skole,2020,1010,Fast lønn,42500000,42100000,-400000,GRØNN,I henhold til ramme
+2026-M10,Område 2 Oppvekst,20201,Vågsbygd Skole,2020,1020,Lønn vikarer,3200000,4850000,1650000,RØD,Høyt sykefravær og vikarbruk
+2026-M10,Område 2 Oppvekst,20201,Vågsbygd Skole,2020,1690,Sykelønnsrefusjon NAV,-1200000,-850000,350000,GUL,Etterslep på NAV-refusjonskrav
+2026-M10,Område 3 Helse/Mestring,30102,Oddernes Omsorgssenter,2530,1010,Fast lønn,68000000,67800000,-200000,GRØNN,God stillingskontroll
+2026-M10,Område 3 Helse/Mestring,30102,Oddernes Omsorgssenter,2530,1090,Overtid/ubekvem,4100000,6200000,2100000,RØD,Press på turnus og vakanser
+2026-M10,Område 3 Helse/Mestring,30102,Oddernes Omsorgssenter,2530,1690,Sykelønnsrefusjon NAV,-2100000,-1950000,150000,GRØNN,God oppfølging av refusjoner
+2026-M10,Område 5 By/Stedsutvikling,50010,Kommunalteknikk og Vei,3320,1180,Strøm og energi,12500000,11800000,-700000,GRØNN,Lavere strømpriser enn budsjettert
+2026-M10,Område 5 By/Stedsutvikling,50010,Kommunalteknikk og Vei,3320,1270,Kjøp av snøbrøyting/vakt,8900000,10400000,1500000,GUL,Tidlig snøfall og beredskap
+2026-M10,Område 5 By/Stedsutvikling,50040,Vann og Avløp (VAR),3400,1620,Vanngebyrer (Selvkost),-35000000,-35200000,-200000,GRØNN,Selvkost i balanse
+2026-M10,Område 11 Org/Teknologi,11005,IT og Digitalisering,1200,1240,Programvarelisenser/SaaS,18500000,18200000,-300000,GRØNN,Framsikt/Visma lisenser iht. plan

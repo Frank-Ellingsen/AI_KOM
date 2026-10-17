@@ -88,26 +88,30 @@ This repository is fully configured for Antigravity native progressive disclosur
 | **`AI_KOM_MLOps_og_Navigasjon_pakke/`** | Layout, Navigasjon & MLOps Governance | 4-faset navigasjonsstruktur (Min Enhet, Sektor, Controller, Veiledere), Data Lineage (SHA-256) |
 | **`ai-implementeringspakke-okonomi/`** | Municipal AI Implementation Guide | 9-part handbook (modul 00–08) for governance, ROI & roadmap |
 | **`antigravity_backend_module_pakke/`** | Antigravity Core Backend Engine (v2.4) | FastAPI router, Polars/DuckDB data engine, Celery task queue, Qdrant/RAG, Stage-Gate Port 9 audit |
+| **`antigravity_m10_monthend_pack/`** | M10 Month-End Monitoring & Ingestion Pack | Staging queue, webhook/file-watcher, push-button trigger, fiktivt M10 regnskap |
+| **`antigravity_mva_ci_actions_pakke/`** | MVA CI/CD GitHub Actions Pack | Automatisk GitHub Actions CI/CD workflow (`mva_validering_ci.yml`) og pipeline guide |
+| **`antigravity_mva_test_pakke/`** | MVA & Balansekonto 2130 Test Pack | Momskompensasjonsloven validering, balansekontroll konto 2130, testrapport generator |
 | **`antigravity-ms-pilot/`** | M365 Copilot & Antigravity Subproject | Subproject Python motor (`src/`), `run_pilot.py`, PII-vask, evaluatorer og tester |
-| **`app/`** | Web Applications & APIs | FastAPI server, Streamlit pilots, UI components |
+| **`app/`** | Web Applications & Core Backend | Fast-Path Triage Router (`app/core/`), Pydantic modeller (`app/schemas/`), Hub backend |
 | **`archive/`** | Historical Backups & Scratch | `backups/`, legacy exports |
 | **`bruker-guides/`** | Operational Handbooks & Calendars | Budsjettansvarlige katalog, månedshjul, styringskalender 2026 |
 | **`budsjett-framsikt/`** | Framsikt EPM & KOSTRA Master Package | `budsjettering-kristiansand-kommune.md`, `lonnsbudsjettering-kristiansand-framsikt.md`, driftsarter, selvkost |
+| **`data/`** | Reposting & Staging Artifacts | `data/repostings/` (Ompostering korreksjonsfiler, MVA-avstemminger) |
 | **`docs/`** | Unified Documentation | Architecture, user guides, specifications, and PDF publications |
-| **`erp_data/`** | Municipal Data Lake | `kommune_golden_record.db`, Visma ERP CSVs, Framsikt extracts |
+| **`erp_data/`** | Municipal Data Lake | `kommune_golden_record.db`, staging queue, Visma ERP CSVs, Framsikt extracts |
 | **`excel/`** | Financial Modeling | FAST models, `Kommune_Project_Controller_Reporting_2026.xlsx` |
 | **`generic-ai-pilot-pakke/`** | Vendor-Neutral Enterprise AI Pilot | Generisk malverk (`enterprise-ai-pilot/`), DAX, prompts, evals, målarkitektur |
 | **`mlops-implementeringspakke/`** | MLOps & LLMOps Procurement Package | 6-part specification for municipal AI operations, observability & tenders |
 | **`mvp-pilot/`** | Bo og Miljø Operational Pilot | Streamlit interactive app, DuckDB analytics, EAC engine |
 | **`powerbi/`** | Power BI Enterprise Assets | `pbi_reporting_project.pbip`, DAX library, Teams RLS, semantic models |
 | **`powerpoint/`** | Presentation Decks | 16:9 executive decks for Bystyret, Kommunedirektøren, Oppvekst |
-| **`reports/`** | Published Reports & Nettbank | Kontoutskrifter (81 units), executive briefings, waterfall charts |
+| **`reports/`** | Published Reports & Nettbank | Kontoutskrifter (81 units), executive briefings, waterfall charts, MVA-rapporter |
 | **`revisjon-og-kontroll/`** | Audit & Control Standards | Checklists for Kommunerevisjonen, tertialnotater, § 14-5 |
 | **`scratch/`** | Scratch Scripts & Migration Utilities | One-off helper scripts, debug scripts, integration tools |
-| **`spesifikasjoner/`** | Technical Specifications | Office Hub V2, Gemini MCP Chat, Predictive Engine specs |
+| **`spesifikasjoner/`** | Technical Specifications | Triage Router, Office Hub V2, Gemini MCP Chat, Predictive Engine specs |
 | **`templates/`** | Municipal Templates (18 pairs) | Dual format: .docx/.xlsx for production, .md for hub preview |
-| **`tests/`** | Master Test Suite | Pytest test files (32 unit/integration tests) |
-| **`tools/`** | Operational CLI Tools | Python engines (`predictive_forecasting_engine.py`, `run_tool.py`, etc.) |
+| **`tests/`** | Master Test Suite | Pytest test files (41 unit/integration tests på tvers av master og piloter) |
+| **`tools/`** | Operational CLI Tools | Python engines (`run_tool.py`, `triage_cli.py`, `mva_balanse_validator.py`, etc.) |
 | **`word/`** | Formal Municipal Notes | Generated Word documents (.docx) for administrative levels 1–3 |
 
 ---
@@ -117,5 +121,8 @@ This repository is fully configured for Antigravity native progressive disclosur
 * **Run Full Hub**: Launch `index.html` in browser or run `python tools/hub_api_server.py`.
 * **Run Predictive Forecast**: `python tools/predictive_forecasting_engine.py --mode both`.
 * **Run Audit Validator**: `python tools/audit_revisjon_validator.py`.
+* **Run M10 Month-End Ingestion**: `python tools/run_tool.py m10-ingest --status` eller `--execute`.
+* **Run MVA Balansekontroll**: `python tools/run_tool.py mva`.
+* **Run Fast-Path Triage Router**: `python tools/run_tool.py triage "Hva sier § 14-5?"`.
 * **Unified Tool Runner**: `python tools/run_tool.py --help`.
-* **Run Test Suite**: `pytest -v` (kjører samtlige 32 tester på tvers av master og subprosjekter).
+* **Run Master Test Suite**: `pytest -v` (kjører samtlige 41 tester på tvers av master og subprosjekter).

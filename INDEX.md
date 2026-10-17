@@ -23,6 +23,9 @@
 * [13. Antigravity & MS Copilot Pilot Subprosjekt (`antigravity-ms-pilot/`)](#13-antigravity--ms-copilot-pilot-subprosjekt-antigravity-ms-pilot)
 * [14. Antigravity Backend Engine Module (`antigravity_backend_module_pakke/`)](#14-antigravity-backend-engine-module-antigravity_backend_module_pakke)
 * [15. AI_KOM Layout, Navigasjon & MLOps Governance (`AI_KOM_MLOps_og_Navigasjon_pakke/`)](#15-ai_kom-layout-navigasjon--mlops-governance-ai_kom_mlops_og_navigasjon_pakke)
+* [16. M10 Oktober Month-End Staging & Ingestion Pack (`antigravity_m10_monthend_pack/`)](#16-m10-oktober-month-end-staging--ingestion-pack-antigravity_m10_monthend_pack)
+* [17. MVA & Balansekonto 2130 Test- og CI/CD-Pakker](#17-mva--balansekonto-2130-test--og-cicd-pakker)
+* [18. Fast-Path Triage Router & App Engine (`app/`)](#18-fast-path-triage-router--app-engine-app)
 
 ---
 
@@ -283,6 +286,47 @@ Samtlige 18 maler foreligger i to formater: **Produksjonsformat** (.docx / .xlsx
 | **Portallayout & Navigasjon (v2)** | 4-faset struktur: Min Enhet, Sektor & Konsern, Controller Hub, Veiledere & Maler | [`AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_layout_og_navigasjon-v2.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_layout_og_navigasjon-v2.md) |
 | **MLOps, Data Lineage & Governance** | End-to-End sporbarhet: Visma -> Framsikt -> DAX -> RAG -> Sak med SHA-256 | [`AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_MLOps_og_Data_Lineage.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_MLOps_og_Data_Lineage.md) |
 | **Pakkeoversikt (README)** | Dokumentpakke for layout, navigasjon og MLOps mot GitHub Pages | [`AI_KOM_MLOps_og_Navigasjon_pakke/README.md`](./AI_KOM_MLOps_og_Navigasjon_pakke/README.md) |
+
+---
+
+## 16. M10 Oktober Month-End Staging & Ingestion Pack (`antigravity_m10_monthend_pack/`)
+
+> **Overvåking av månedslutt (M10), staging-kø og saksbehandlerstyrt "Push Button" datafangst.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **Month-End Monitoring & Staging Spec** | Dual-deteksjon (webhook/file-watcher), staging-kø og HITL trigger API | [`antigravity_m10_monthend_pack/ANTIGRAVITY_M10_MonthEnd_Monitoring_and_Staging.md`](./antigravity_m10_monthend_pack/ANTIGRAVITY_M10_MonthEnd_Monitoring_and_Staging.md) |
+| **Fiktivt M10 Regnskap Datasett** | Realistisk testdatasett for oktober (Oppvekst, Helse, Byutvikling og IKT) | [`antigravity_m10_monthend_pack/M10_Oktober_2026_Regnskap_Fiktiv.csv`](./antigravity_m10_monthend_pack/M10_Oktober_2026_Regnskap_Fiktiv.csv) |
+
+---
+
+## 17. MVA & Balansekonto 2130 Test- og CI/CD-Pakker
+
+> **Momskompensasjonsloven validering, balansekontroll konto 2130 og GitHub Actions automasjon.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **MVA CI/CD Workflow** | GitHub Actions pipeline for automatisk validering av omposteringer og MVA-komp | [`.github/workflows/mva_validering_ci.yml`](./.github/workflows/mva_validering_ci.yml) |
+| **MVA CI/CD Pipeline Guide** | Veileder for automatisk trigger, Python 3.12 runner og 90-dagers revisjonsartifact | [`docs/ANTIGRAVITY_MVA_CI_CD_Pipeline_Guide.md`](./docs/ANTIGRAVITY_MVA_CI_CD_Pipeline_Guide.md) |
+| **MVA Balansekontroll Motor** | Python valideringsmotor med Tufte-rapportering og SHA-256 stempel | [`tools/mva_balanse_validator.py`](./tools/mva_balanse_validator.py) |
+| **MVA Testrapport (Konto 2130)** | Siste godkjente valideringsrapport for korreksjonsfil med 0.00 differanse | [`reports/test_mva_balanse_2130_rapport.md`](./reports/test_mva_balanse_2130_rapport.md) |
+| **MVA Pytest Integrasjon** | Enhetstest i repositoriets master-testsuite | [`tests/test_mva_balanse_2130.py`](./tests/test_mva_balanse_2130.py) |
+
+---
+
+## 18. Fast-Path Triage Router & App Engine (`app/`)
+
+> **Sentral forespørselshåndterer som ruter mellom Direct MCP, RAG Lookup, Skill Workflow og Memory Context på < 2ms.**
+
+| Modul / Fil | Beskrivelse & Formål | Filsti |
+| :--- | :--- | :--- |
+| **Triage Router Spesifikasjon** | Arkitektur, regex-mønstre, ruteringsregler og audit hashing | [`spesifikasjoner/ANTIGRAVITY_Triage_Router_Spec.md`](./spesifikasjoner/ANTIGRAVITY_Triage_Router_Spec.md) |
+| **Triage Pydantic Modeller** | `TriageRequest`, `TriageDecision`, `TriageCategory`, `ExecutionPriority` | [`app/schemas/triage.py`](./app/schemas/triage.py) |
+| **Triage Router Kjerne** | Fast-path regelbasert klassifiseringsmotor med SHA-256 audit stempel | [`app/core/triage_router.py`](./app/core/triage_router.py) |
+| **Triage CLI Verktøy** | CLI-kommando for direkte rutingstest via `run_tool.py triage` | [`tools/triage_cli.py`](./tools/triage_cli.py) |
+| **Triage Testsuite** | Pytest-tester for hybrid, RAG, MCP og forecasting workflows | [`tests/test_triage_router.py`](./tests/test_triage_router.py) |
+
+
 
 
 

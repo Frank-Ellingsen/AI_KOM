@@ -265,3 +265,122 @@ def test_antigravity_backend_and_mlops_packages_integration():
     assert 'id="mlops-lineage-section"' in index_html
 
 
+def test_m10_monthend_staging_and_ingestion():
+    """Validerer integrasjonen av M10 Month-End pakken, staging queue og push-button innlesing."""
+    # 1. Sjekk at antigravity_m10_monthend_pack og staging-filer eksisterer
+    pack_dir = ROOT_DIR / "antigravity_m10_monthend_pack"
+    assert pack_dir.exists(), "antigravity_m10_monthend_pack mangler"
+    assert (pack_dir / "ANTIGRAVITY_M10_MonthEnd_Monitoring_and_Staging.md").exists()
+    assert (pack_dir / "M10_Oktober_2026_Regnskap_Fiktiv.csv").exists()
+
+    staging_csv = ROOT_DIR / "erp_data" / "staging" / "M10_Oktober_2026_Regnskap_Fiktiv.csv"
+    assert staging_csv.exists(), "erp_data/staging CSV mangler"
+    lines = staging_csv.read_text(encoding="utf-8-sig").strip().splitlines()
+    assert len(lines) == 11, f"Ventet 11 linjer (header + 10 rader), fant {len(lines)}"
+
+    # 2. Test staging status og webhook fra hub_api_server
+    from hub_api_server import (
+        get_m10_staging_status,
+        handle_m10_month_end_webhook,
+        execute_m10_ingestion
+    )
+
+    status = get_m10_staging_status()
+    assert status["ok"] is True
+    assert status["file_exists"] is True
+    assert status["records_count"] == 10
+    assert len(status["file_sha256"]) == 64
+
+    webhook_res = handle_m10_month_end_webhook({"periode": "2026-M10", "event": "month_close.completed"})
+    assert webhook_res["ok"] is True
+    assert webhook_res["status"] == "ACCEPTED"
+
+    # 3. Test saksbehandler push-button trigger & SHA-256 forsegling
+    exec_res = execute_m10_ingestion({
+        "periode": "2026-M10",
+        "approved_by": "frank.ellingsen@kristiansand.kommune.no",
+        "role": "Senior_Controller"
+    })
+    assert exec_res["ok"] is True
+    assert exec_res["status"] == "COMPLETED"
+    assert exec_res["records_ingested"] == 10
+    assert len(exec_res["sha256_audit_seal"]) == 64
+
+    # 4. Test at m10_ingestion_runner fungerer
+    from m10_ingestion_runner import check_status, execute_ingestion
+    runner_status = check_status()
+    assert runner_status["file_exists"] is True
+    assert runner_status["records_count"] == 10
+
+    runner_exec = execute_ingestion()
+    assert runner_exec["ok"] is True
+    assert runner_exec["status"] == "COMPLETED"
+    assert len(runner_exec["sha256_audit_seal"]) == 64
+
+    # 5. Sjekk at index.html har M10 staging banner og triggerfunksjon
+    index_html = (ROOT_DIR / "index.html").read_text(encoding="utf-8")
+    assert 'id="m10-staging-banner"' in index_html
+    assert 'id="btn-m10-trigger"' in index_html
+    assert "triggerM10Ingestion" in index_html
+
+
+def test_triage_router_and_fast_path_classification():
+    """Validerer at app/core/triage_router.py og app/schemas/triage.py er fullt operative."""
+    from app.schemas.triage import TriageRequest, TriageCategory, ExecutionPriority
+    from app.core.triage_router import TriageRouter
+
+    router = TriageRouter()
+    
+    # 1. RAG lookup test
+    req_rag = TriageRequest(
+        prompt="Hva sier Kommuneloven § 14-5 om overskridelse av årsbudsjett?",
+        session_id="master-test-rag",
+        user_persona="CONTROLLER"
+    )
+    dec_rag = router.classify_and_route_sync(req_rag)
+    assert dec_rag.primary_category == TriageCategory.RAG_LOOKUP
+    assert len(dec_rag.sha256_audit_hash) == 64
+
+    # 2. Direct MCP test
+    req_mcp = TriageRequest(
+        prompt="Hent regnskap og visma saldo for Enhet 202.",
+        session_id="master-test-mcp",
+        user_persona="ENHETSLEDER"
+    )
+    dec_mcp = router.classify_and_route_sync(req_mcp)
+    assert dec_mcp.primary_category == TriageCategory.DIRECT_MCP
+    assert "visma_erp" in dec_mcp.required_mcp_connectors
+
+    # 3. Hybrid skill test
+    req_skill = TriageRequest(
+        prompt="Kjør ompostering for IT-lisenser og sjekk MVA-balansen i Visma.",
+        session_id="master-test-hybrid",
+        user_persona="CONTROLLER"
+    )
+    dec_skill = router.classify_and_route_sync(req_skill)
+    assert dec_skill.primary_category in [TriageCategory.HYBRID_COMPOSITE, TriageCategory.SKILL_WORKFLOW]
+    assert len(dec_skill.sha256_audit_hash) == 64
+
+
+def test_mva_validering_ci_and_konto_2130_balance():
+    """Validerer Momskompensasjonsloven og automatisk avstemming mot Balansekonto 2130."""
+    from tools.mva_balanse_validator import verify_mva_balanse_2130
+
+    excel_file = ROOT_DIR / "data" / "repostings" / "Ompostering_Korreksjonsfil_ERP_Eksport_v2.xlsx"
+    assert excel_file.exists(), "Korreksjonsfil mangler i data/repostings/"
+
+    res = verify_mva_balanse_2130(str(excel_file))
+    assert res["Status"] == "PASSED"
+    assert res["Differanse_NOK"] == 0.00
+    assert res["Total_Beregnet_MVA_Kompensasjon_NOK"] == 20400.00
+    assert res["Ført_Balansekonto_2130_NOK"] == 20400.00
+    assert len(res["SHA256_Checksum"]) == 64
+
+    # Sjekk GitHub Actions workflow fil
+    workflow_file = ROOT_DIR / ".github" / "workflows" / "mva_validering_ci.yml"
+    assert workflow_file.exists()
+    assert "tools/mva_balanse_validator.py" in workflow_file.read_text(encoding="utf-8")
+
+
+
+

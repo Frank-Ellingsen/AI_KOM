@@ -77,6 +77,27 @@ Eksempler på bruk:
     p_arkiv = subparsers.add_parser("arkiv", help="Bygg individuelle rapportarkiver for alle 41 budsjettansvarlige")
     p_arkiv.add_argument("--unit", type=str, default=None, help="Filtrer på spesifikk ansvar_id")
 
+    # 9. M10 Month-End Ingestion
+    p_m10 = subparsers.add_parser("m10-ingest", help="M10 Oktober staging og manuell push-button innlesing")
+    p_m10.add_argument("--status", action="store_true", help="Vis staging-kø status")
+    p_m10.add_argument("--execute", action="store_true", help="Utfør manuell innlesing med SHA-256 stempel")
+    p_m10.add_argument("--approved-by", default="frank.ellingsen@kristiansand.kommune.no", help="Godkjennende saksbehandler")
+    p_m10.add_argument("--role", default="Senior_Controller", help="Rolle for godkjenner")
+    p_m10.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 10. MVA Balansekonto 2130 Validering
+    p_mva = subparsers.add_parser("mva", help="Kvalitetskontroll og avstemming mot Balansekonto 2130 (MVA)")
+    p_mva.add_argument("--file", default="data/repostings/Ompostering_Korreksjonsfil_ERP_Eksport_v2.xlsx", help="Sti til korreksjonsfil (.xlsx)")
+    p_mva.add_argument("--report", default="reports/test_mva_balanse_2130_rapport.md", help="Sti til utgående rapport (.md)")
+    p_mva.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 11. Fast-Path Triage Router
+    p_triage = subparsers.add_parser("triage", help="Fast-Path Triage Router for forespørselsklassifisering")
+    p_triage.add_argument("prompt", nargs="?", default="Hva sier Kommuneloven § 14-5 om overskridelse av årsbudsjett?", help="Brukerhenvendelse")
+    p_triage.add_argument("--persona", default="CONTROLLER", help="Aktiv persona (CONTROLLER, ENHETSLEDER)")
+    p_triage.add_argument("--unit", default="2020", help="Aktiv enhets-ID")
+    p_triage.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
     args, unknown = parser.parse_known_args()
 
     if not args.command:
@@ -107,6 +128,29 @@ Eksempler på bruk:
         if args.unit:
             cmd_args += ["--unit", args.unit]
         run_command("build_budsjettansvarlige_arkiver.py", cmd_args + unknown)
+    elif args.command == "m10-ingest":
+        cmd_args = []
+        if args.execute:
+            cmd_args.append("--execute")
+        if args.status:
+            cmd_args.append("--status")
+        if args.approved_by:
+            cmd_args += ["--approved-by", args.approved_by]
+        if args.role:
+            cmd_args += ["--role", args.role]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("m10_ingestion_runner.py", cmd_args + unknown)
+    elif args.command == "mva":
+        cmd_args = ["--export-file", args.file, "--report-out", args.report]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("mva_balanse_validator.py", cmd_args + unknown)
+    elif args.command == "triage":
+        cmd_args = [args.prompt, "--persona", args.persona, "--unit", args.unit]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("triage_cli.py", cmd_args + unknown)
 
 if __name__ == "__main__":
     main()
