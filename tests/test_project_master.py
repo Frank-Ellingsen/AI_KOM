@@ -37,8 +37,14 @@ def test_office_hub_v2_and_templates_verification():
     )
     import re
 
-    # 1. Rot-mappen skal være ryddet for ad-hoc dokumenter (kun godkjente rot-md-filer tillatt)
-    ALLOWED_ROOT_MDS = {"README.md", "AGENTS.md", "INDEX.md"}
+    # 1. Rot-mappen skal inneholde kun godkjente rot- og aktive spesifikasjonsdokumenter
+    ALLOWED_ROOT_MDS = {
+        "README.md", "AGENTS.md", "INDEX.md",
+        "dax-visuals-rag-standards.md", "ai-kom-optimization-plan-v2.md",
+        "ai-kom-optimization-plan.md", "user-testing-simulation-plan.md",
+        "evaluator-optimizer-gemini.md", "evaluator-optimizer-ollama.md",
+        "code-reviewer-skill.md"
+    }
     root_mds = [f.name for f in ROOT_DIR.glob("*.md")]
     unexpected_root_mds = set(root_mds) - ALLOWED_ROOT_MDS
     assert not unexpected_root_mds, f"Uventede md-filer i rot: {unexpected_root_mds}"
