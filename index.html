@@ -325,6 +325,35 @@
             font-weight: 600;
         }
 
+        /* Top 3 KPI Filter Pill Buttons */
+        .top3-pill-btn {
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+            background: #ffffff;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .top3-pill-btn:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .top3-pill-btn.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
         /* Two-Column Workspace Layout */
         .workspace-grid {
             display: grid;
@@ -4438,11 +4467,11 @@
     <div class="section-header" style="background:var(--bg-surface); padding:16px 20px; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
         <div>
             <div style="font-size:15px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
-                <span>🏛️ Kristiansand Kommune Konsern: Topp 3 Finansielle Nøkkeltall &amp; Styringsavvik</span>
-                <span class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Konsern / TBU Normert</span>
-                <span class="status-badge" style="background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe; font-size:10px;">M10 2026</span>
+                <span id="top3-header-title">🏛️ Kristiansand Kommune Konsern: Topp 3 Finansielle Nøkkeltall &amp; Styringsavvik</span>
+                <span id="top3-header-badge-norm" class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Konsern / TBU Normert</span>
+                <span id="top3-header-badge-status" class="status-badge" style="background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe; font-size:10px;">M10 2026</span>
             </div>
-            <div style="font-size:11.5px; color:#64748b; margin-top:3px;">
+            <div id="top3-header-subtitle" style="font-size:11.5px; color:#64748b; margin-top:3px;">
                 Overordnet konsernstatus jf. Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-retningslinjer (Teknisk beregningsutvalg for kommunal og fylkeskommunal økonomi)
             </div>
         </div>
@@ -4459,9 +4488,32 @@
         </div>
     </div>
 
+    <!-- INTERAKTIV VIRKSOMHETSOMRÅDE-VELGER & FILTER -->
+    <div style="background:#f8fafc; border-bottom:1px solid var(--border-light); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; font-weight:700; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
+                🎯 Velg Visningsnivå:
+            </span>
+            <div id="top3-sector-pills" style="display:inline-flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="top3-pill-btn active" data-sector="ALL" onclick="selectTop3Sector('ALL')">🌐 Konsern (Alle)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-02" onclick="selectTop3Sector('OMR-02')">🏫 Oppvekst (OMR-02)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-03" onclick="selectTop3Sector('OMR-03')">🏥 Helse (OMR-03)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-05" onclick="selectTop3Sector('OMR-05')">🏗️ Byutvikling (OMR-05)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-04" onclick="selectTop3Sector('OMR-04')">🎭 Kultur (OMR-04)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-11" onclick="selectTop3Sector('OMR-11')">💻 Org & Tek (OMR-11)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-12" onclick="selectTop3Sector('OMR-12')">📊 Økonomi (OMR-12)</button>
+            </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:11.5px; color:#64748b;">
+            <span>Aktivt visningsnivå:</span>
+            <strong id="top3-active-filter-label" style="color:var(--navy-dark); background:#ffffff; padding:2px 8px; border:1px solid #cbd5e1; border-radius:3px;">Konsern</strong>
+            <button type="button" onclick="selectTop3Sector('ALL')" id="top3-reset-btn" style="display:none; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:2px 8px; font-size:11px; cursor:pointer; color:#0f172a; font-weight:600;" title="Nullstill til konsernvisning">↺ Nullstill til Konsern</button>
+        </div>
+    </div>
+
     <div style="padding:20px;">
         <!-- 1. TOPP 3 TAKOMETER GAUGE CARDS (HORISONTAL LINJE) -->
-        <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; margin-bottom:24px;">
+        <div id="top3-gauge-cards-container" style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; margin-bottom:24px;">
             <!-- KPI 1: Netto Driftsresultat -->
             <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
                 <div>
@@ -17587,8 +17639,22 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
             tbody.innerHTML = html;
         }
 
-        function selectSector(sectorKey) {
+        function selectSector(sectorKey, fromTop3Sync) {
             const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
+
+            // Synkroniser Topp 3 KPI-seksjonen hvis ikke kalt derfra
+            if (!fromTop3Sync && typeof selectTop3Sector === 'function') {
+                const sMap = {
+                    "ALL": "ALL",
+                    "HELSE": "OMR-03",
+                    "OPPVEKST": "OMR-02",
+                    "BYUTVIKLING": "OMR-05",
+                    "KULTUR": "OMR-04",
+                    "ORG_TEK": "OMR-11",
+                    "OKONOMI": "OMR-12"
+                };
+                selectTop3Sector(sMap[sectorKey] || "ALL", true);
+            }
 
             // 0. Oppdater dynamisk KOSTRA artsavvik tabell for valgt virksomhetsområde
             if (typeof renderVariancesTable === 'function') {
@@ -26890,6 +26956,623 @@ const TOP3_KPI_LOCAL_DATA = {
     ]
 };
 
+const SEKTOR_MAP_TO_TOP3 = {
+    "ALL": "ALL",
+    "HELSE": "OMR-03",
+    "OPPVEKST": "OMR-02",
+    "BYUTVIKLING": "OMR-05",
+    "KULTUR": "OMR-04",
+    "ORG_TEK": "OMR-11",
+    "OKONOMI": "OMR-12"
+};
+
+const SEKTOR_MAP_FROM_TOP3 = {
+    "ALL": "ALL",
+    "KONSERN": "ALL",
+    "OMR-02": "OPPVEKST",
+    "OMR-03": "HELSE",
+    "OMR-05": "BYUTVIKLING",
+    "OMR-04": "KULTUR",
+    "OMR-11": "ORG_TEK",
+    "OMR-12": "OKONOMI"
+};
+
+const TOP3_SECTOR_KPIS = {
+    "ALL": {
+        title: "🏛️ Kristiansand Kommune Konsern: Topp 3 Finansielle Nøkkeltall & Styringsavvik",
+        badge_norm: "Konsern / TBU Normert",
+        badge_status: "M10 2026",
+        badge_status_style: "background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe;",
+        subtitle: "Overordnet konsernstatus jf. Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-retningslinjer (Teknisk beregningsutvalg for kommunal og fylkeskommunal økonomi)",
+        cards: [
+            {
+                kategori: "1. Driftsbalanse",
+                navn: "Netto Driftsresultat",
+                status_text: "🟢 I BALANSE",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "1,25 %",
+                subtall: "(115 mill. kr)",
+                benchmarks: [
+                    { label: "Kommunalt Mål:", val: "≥ 1,00 %" },
+                    { label: "TBU Anbefaling:", val: "≥ 1,75 %" }
+                ],
+                forklaring: "Mål oppnådd. Kommunens netto driftsresultat tilfredsstiller kommunestyrets handlingsregel for forsvarlig drift og egenfinansiering av investeringer.",
+                gauge: {
+                    verdi: 1.25,
+                    enhet: "%",
+                    min: 0,
+                    max: 5.0,
+                    zones: [
+                        { from: 0, to: 0.5, color: "#ef4444" },
+                        { from: 0.5, to: 1.0, color: "#f59e0b" },
+                        { from: 1.0, to: 2.5, color: "#10b981" },
+                        { from: 2.5, to: 5.0, color: "#059669" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Likviditetsbuffer",
+                navn: "Disposisjonsfond",
+                status_text: "🟢 FORSVARLIG",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "4,35 %",
+                subtall: "(460 mill. kr)",
+                benchmarks: [
+                    { label: "Kommunalt Mål:", val: "≥ 4,00 %" },
+                    { label: "TBU Anbefaling:", val: "≥ 5,00 %" }
+                ],
+                forklaring: "Urørt reserve overstiger kommunestyrets minstekrav (4,00 %). TBU-norm på 5,00 % nås ved videre konsolidering over økonomiplanperioden.",
+                gauge: {
+                    verdi: 4.35,
+                    enhet: "%",
+                    min: 0,
+                    max: 12.0,
+                    zones: [
+                        { from: 0, to: 2.0, color: "#ef4444" },
+                        { from: 2.0, to: 4.0, color: "#f59e0b" },
+                        { from: 4.0, to: 8.0, color: "#10b981" },
+                        { from: 8.0, to: 12.0, color: "#059669" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Gjeldsgrad",
+                navn: "Netto Lånegjeld",
+                status_text: "🟢 UNDER TAK",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "76,8 %",
+                subtall: "(8,4 mrd. kr)",
+                benchmarks: [
+                    { label: "Kommunalt Lånetak:", val: "≤ 78,0 %" },
+                    { label: "TBU Smertegrense:", val: "≤ 80,0 %" }
+                ],
+                forklaring: "Lånegjelden er 1,2 prosentpoeng under vedtatt lånetak jf. Kommuneloven § 14-13. 65 % av gjeldsporteføljen har fast rentebinding.",
+                gauge: {
+                    verdi: 76.8,
+                    enhet: "%",
+                    min: 0,
+                    max: 120.0,
+                    zones: [
+                        { from: 0, to: 60.0, color: "#059669" },
+                        { from: 60.0, to: 80.0, color: "#10b981" },
+                        { from: 80.0, to: 90.0, color: "#f59e0b" },
+                        { from: 90.0, to: 120.0, color: "#ef4444" }
+                    ]
+                }
+            }
+        ]
+    },
+    "OMR-02": {
+        title: "🏫 Oppvekst og Utdanning (OMR-02): Topp 3 Nøkkeltall & Avviksdrivere",
+        badge_norm: "Kommunalsjef Oppvekst",
+        badge_status: "🔴 RØD (Avvik: -35,0 Mkr)",
+        badge_status_style: "background:#fef2f2; color:#b91c1c; border:1px solid #f87171;",
+        subtitle: "Driftsanalyse YTD M9: Høyt sykefravær og vikarlønninger (art 1020) utfordrer budsjettbalansen jf. Kommuneloven § 14-5.",
+        cards: [
+            {
+                kategori: "1. Kostnadsavvik YTD (CV)",
+                navn: "Budsjettavvik YTD",
+                status_text: "🔴 MERFORBRUK",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "-35,0 mill. kr",
+                subtall: "(-1,86 % av ramme)",
+                benchmarks: [
+                    { label: "Periodisert Ramme:", val: "1 880,0 mill." },
+                    { label: "Faktisk Forbruk:", val: "1 915,0 mill." }
+                ],
+                forklaring: "Merforbruk på 35,0 mill. kr. Hoveddriver er vikarlønninger (art 1020) på 18,5 mill. over budsjett og 1:1 spes.ped-ressurser i barnehager (funk 222).",
+                gauge: {
+                    verdi: -1.86,
+                    enhet: "%",
+                    min: -4.0,
+                    max: 2.0,
+                    zones: [
+                        { from: -4.0, to: -1.5, color: "#ef4444" },
+                        { from: -1.5, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 1.0, color: "#10b981" },
+                        { from: 1.0, to: 2.0, color: "#059669" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: "🔴 UNDER MÅL",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "0,982",
+                subtall: "(EAC: 2 553,3 mill.)",
+                benchmarks: [
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Varselgrense:", val: "< 0,980" }
+                ],
+                forklaring: "CPI 0,982 indikerer at hver produserte krone koster 1,018 kr. Helårsprognose (EAC) estimerer et inndekningsbehov på ca. 46 mill. kr.",
+                gauge: {
+                    verdi: 0.982,
+                    enhet: "",
+                    min: 0.92,
+                    max: 1.06,
+                    zones: [
+                        { from: 0.92, to: 0.97, color: "#ef4444" },
+                        { from: 0.97, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.06, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Primær Kostnadsdriver",
+                navn: "Legemeldt Sykefravær",
+                status_text: "🔴 HØYT FRAVÆR",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "9,2 %",
+                subtall: "(Mål: ≤ 6,5 %)",
+                benchmarks: [
+                    { label: "Kommunalt Mål:", val: "≤ 6,5 %" },
+                    { label: "NAV-etterslep (refusjon):", val: "3,5 mill. kr" }
+                ],
+                forklaring: "9,2 % sykefravær blant pedagogisk personell driver vikarinnleie. Samtidig foreligger 3,5 mill. kr i uavklarte refusjoner fra NAV (art 1600).",
+                gauge: {
+                    verdi: 9.2,
+                    enhet: "%",
+                    min: 0,
+                    max: 15.0,
+                    zones: [
+                        { from: 0, to: 6.5, color: "#10b981" },
+                        { from: 6.5, to: 8.0, color: "#f59e0b" },
+                        { from: 8.0, to: 15.0, color: "#ef4444" }
+                    ]
+                }
+            }
+        ]
+    },
+    "OMR-03": {
+        title: "🏥 Helse og Mestring (OMR-03): Topp 3 Nøkkeltall & Avviksdrivere",
+        badge_norm: "Kommunalsjef Helse",
+        badge_status: "🔴 RØD (Avvik: -42,0 Mkr)",
+        badge_status_style: "background:#fef2f2; color:#b91c1c; border:1px solid #f87171;",
+        subtitle: "Driftsanalyse YTD M9: Turnusvakanser, overtid (art 1090) og bemanningsbyråer (art 1250) skaper betydelig økonomisk press.",
+        cards: [
+            {
+                kategori: "1. Kostnadsavvik YTD (CV)",
+                navn: "Budsjettavvik YTD",
+                status_text: "🔴 MERFORBRUK",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "-42,0 mill. kr",
+                subtall: "(-2,00 % av ramme)",
+                benchmarks: [
+                    { label: "Periodisert Ramme:", val: "2 100,0 mill." },
+                    { label: "Faktisk Forbruk:", val: "2 142,0 mill." }
+                ],
+                forklaring: "Merforbruk på 42,0 mill. kr. Overtid og ubekvemstillegg utgjør 19,0 mill. kr, mens innleie av vikarbyråer utgjør 12,0 mill. kr.",
+                gauge: {
+                    verdi: -2.00,
+                    enhet: "%",
+                    min: -4.0,
+                    max: 2.0,
+                    zones: [
+                        { from: -4.0, to: -1.5, color: "#ef4444" },
+                        { from: -1.5, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 1.0, color: "#10b981" },
+                        { from: 1.0, to: 2.0, color: "#059669" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: "🔴 UNDER MÅL",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "0,980",
+                subtall: "(EAC: 2 856,0 mill.)",
+                benchmarks: [
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Varselgrense:", val: "< 0,980" }
+                ],
+                forklaring: "CPI 0,980 er på kritisk grense. Helårsprognose (EAC) estimerer et merforbruk på ca. 56 mill. kr mot opprinnelig budsjett.",
+                gauge: {
+                    verdi: 0.980,
+                    enhet: "",
+                    min: 0.92,
+                    max: 1.06,
+                    zones: [
+                        { from: 0.92, to: 0.97, color: "#ef4444" },
+                        { from: 0.97, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.06, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Primær Kostnadsdriver",
+                navn: "Legemeldt Sykefravær & Turnus",
+                status_text: "🔴 HØYT FRAVÆR",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "11,4 %",
+                subtall: "(Mål: ≤ 7,0 %)",
+                benchmarks: [
+                    { label: "Kommunalt Mål:", val: "≤ 7,0 %" },
+                    { label: "Ressurskrevende (2:1):", val: "11,0 mill. kr mer" }
+                ],
+                forklaring: "11,4 % fravær i døgnomsorgen utløser kostbare doble vakter og byråinnleie. Ressurskrevende brukere krever økt døgnkontinuerlig bemanning.",
+                gauge: {
+                    verdi: 11.4,
+                    enhet: "%",
+                    min: 0,
+                    max: 18.0,
+                    zones: [
+                        { from: 0, to: 7.0, color: "#10b981" },
+                        { from: 7.0, to: 9.0, color: "#f59e0b" },
+                        { from: 9.0, to: 18.0, color: "#ef4444" }
+                    ]
+                }
+            }
+        ]
+    },
+    "OMR-05": {
+        title: "🏗️ By- og Stedsutvikling (OMR-05): Topp 3 Nøkkeltall & Avviksdrivere",
+        badge_norm: "Kommunalsjef Teknisk",
+        badge_status: "🟡 GUL (Avvik: -1,5 Mkr)",
+        badge_status_style: "background:#fffbeb; color:#b45309; border:1px solid #fcd34d;",
+        subtitle: "Driftsanalyse YTD M9: Snøbrøyting Q1 og gebyrsvikt på byggesak motvirkes av stram budsjettdisiplin. VAR er i full selvkostbalanse.",
+        cards: [
+            {
+                kategori: "1. Kostnadsavvik YTD (CV)",
+                navn: "Budsjettavvik YTD",
+                status_text: "🟡 SÅRBAR MARGIN",
+                status_badge_style: "background:#fffbeb; color:#b45309; border:1px solid #f59e0b;",
+                border_top: "3px solid #f59e0b",
+                hovedtall: "-1,5 mill. kr",
+                subtall: "(-0,18 % av ramme)",
+                benchmarks: [
+                    { label: "Periodisert Ramme:", val: "850,0 mill." },
+                    { label: "Faktisk Forbruk:", val: "851,5 mill." }
+                ],
+                forklaring: "Mindre merforbruk på 1,5 mill. kr som følge av krevende vinterdrift i Q1 (-1,5M) og inntektssvikt på byggesaksgebyrer (-3,3M).",
+                gauge: {
+                    verdi: -0.18,
+                    enhet: "%",
+                    min: -2.0,
+                    max: 2.0,
+                    zones: [
+                        { from: -2.0, to: -1.0, color: "#ef4444" },
+                        { from: -1.0, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 2.0, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: "🟡 NÆR MÅL",
+                status_badge_style: "background:#fffbeb; color:#b45309; border:1px solid #f59e0b;",
+                border_top: "3px solid #f59e0b",
+                hovedtall: "0,998",
+                subtall: "(EAC: 1 135,3 mill.)",
+                benchmarks: [
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Tilsynsgrense:", val: "< 0,980" }
+                ],
+                forklaring: "CPI 0,998 viser nær perfekt budsjettbalanse. Driftsreguleringer og innsparinger på konsulenter holder sektoren i balanse.",
+                gauge: {
+                    verdi: 0.998,
+                    enhet: "",
+                    min: 0.95,
+                    max: 1.05,
+                    zones: [
+                        { from: 0.95, to: 0.98, color: "#ef4444" },
+                        { from: 0.98, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.05, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Lovpålagt Nøkkeldriver",
+                navn: "VAR Selvkostdekningsgrad",
+                status_text: "🟢 100 % BALANSE",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "100,0 %",
+                subtall: "(Fondsnøytralt)",
+                benchmarks: [
+                    { label: "Lovkrav (Selvkost):", val: "100,0 %" },
+                    { label: "Byggesak gebyrsvikt:", val: "-3,3 mill. kr" }
+                ],
+                forklaring: "Vann, avløp og renovasjon er i 100 % balanse mot bundne selvkostfond. Gebyrsvikt i byggesak krever kontinuerlig bemanningsjustering.",
+                gauge: {
+                    verdi: 100.0,
+                    enhet: "%",
+                    min: 80.0,
+                    max: 120.0,
+                    zones: [
+                        { from: 80.0, to: 95.0, color: "#f59e0b" },
+                        { from: 95.0, to: 105.0, color: "#10b981" },
+                        { from: 105.0, to: 120.0, color: "#f59e0b" }
+                    ]
+                }
+            }
+        ]
+    },
+    "OMR-04": {
+        title: "🎭 Kultur og Innbyggerdialog (OMR-04): Topp 3 Nøkkeltall & Avviksdrivere",
+        badge_norm: "Kommunalsjef Kultur",
+        badge_status: "🟢 GRØNN (Mindreforbruk: +1,4 Mkr)",
+        badge_status_style: "background:#ecfdf5; color:#047857; border:1px solid #6ee7b7;",
+        subtitle: "Driftsanalyse YTD M9: God publikumsoppslutning, ENØK i idrettsbygg og stram arrangementsstyring gir et positivt driftsresultat.",
+        cards: [
+            {
+                kategori: "1. Kostnadsavvik YTD (CV)",
+                navn: "Budsjettavvik YTD",
+                status_text: "🟢 MINDREFORBRUK",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "+1,4 mill. kr",
+                subtall: "(+0,49 % under ramme)",
+                benchmarks: [
+                    { label: "Periodisert Ramme:", val: "285,0 mill." },
+                    { label: "Faktisk Forbruk:", val: "283,6 mill." }
+                ],
+                forklaring: "Mindreforbruk på 1,4 mill. kr. God kostnadskontroll ved folkebiblioteket (+0,8M) og Kilden/idrett (+0,6M).",
+                gauge: {
+                    verdi: 0.49,
+                    enhet: "%",
+                    min: -2.0,
+                    max: 2.0,
+                    zones: [
+                        { from: -2.0, to: -0.5, color: "#ef4444" },
+                        { from: -0.5, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 2.0, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: "🟢 MÅL NÅDD",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "1,005",
+                subtall: "(EAC: 378,1 mill.)",
+                benchmarks: [
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Varselgrense:", val: "< 0,980" }
+                ],
+                forklaring: "CPI 1,005 bekrefter god økonomistyring og produksjonsleveranse innenfor rammebetingelsene.",
+                gauge: {
+                    verdi: 1.005,
+                    enhet: "",
+                    min: 0.95,
+                    max: 1.05,
+                    zones: [
+                        { from: 0.95, to: 0.98, color: "#ef4444" },
+                        { from: 0.98, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.05, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Bærekraft & Effektivitet",
+                navn: "Strømsparing Idrettsanlegg",
+                status_text: "🟢 ENØK-GEVINST",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "12,4 %",
+                subtall: "(Mål: ≥ 10,0 %)",
+                benchmarks: [
+                    { label: "Målreduksjon:", val: "≥ 10,0 %" },
+                    { label: "Driftsbuffer strøm:", val: "+420 000 kr" }
+                ],
+                forklaring: "ENØK-investeringer og styringssystemer på Aquarama og idrettshaller gir lavere energikostnader enn budsjettert.",
+                gauge: {
+                    verdi: 12.4,
+                    enhet: "%",
+                    min: 0,
+                    max: 20.0,
+                    zones: [
+                        { from: 0, to: 6.0, color: "#ef4444" },
+                        { from: 6.0, to: 10.0, color: "#f59e0b" },
+                        { from: 10.0, to: 20.0, color: "#10b981" }
+                    ]
+                }
+            }
+        ]
+    },
+    "OMR-11": {
+        title: "💻 Organisasjon og Teknologi (OMR-11): Topp 3 Nøkkeltall & Avviksdrivere",
+        badge_norm: "Kommunalsjef Org & Tek",
+        badge_status: "🟢 GRØNN (Mindreforbruk: +0,6 Mkr)",
+        badge_status_style: "background:#ecfdf5; color:#047857; border:1px solid #6ee7b7;",
+        subtitle: "Driftsanalyse YTD M9: FinOps skyoptimalisering motvirker prispress på SaaS- og M365-lisenser (art 1240). Høy oppetid og leveransekvalitet.",
+        cards: [
+            {
+                kategori: "1. Kostnadsavvik YTD (CV)",
+                navn: "Budsjettavvik YTD",
+                status_text: "🟢 MINDREFORBRUK",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "+0,6 mill. kr",
+                subtall: "(+0,17 % under ramme)",
+                benchmarks: [
+                    { label: "Periodisert Ramme:", val: "345,0 mill." },
+                    { label: "Faktisk Forbruk:", val: "344,4 mill." }
+                ],
+                forklaring: "Mindreforbruk på 0,6 mill. kr. Aktiv lisensoptimalisering og internkompetanse reduserer ekstern konsulentbruk med 14,5 %.",
+                gauge: {
+                    verdi: 0.17,
+                    enhet: "%",
+                    min: -2.0,
+                    max: 2.0,
+                    zones: [
+                        { from: -2.0, to: -0.5, color: "#ef4444" },
+                        { from: -0.5, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 2.0, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: "🟢 MÅL NÅDD",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "1,002",
+                subtall: "(EAC: 459,2 mill.)",
+                benchmarks: [
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Varselgrense:", val: "< 0,980" }
+                ],
+                forklaring: "CPI 1,002 bekrefter stabil kostnadsstyring. Lisensjusteringer i skyen (FinOps) har spart 800 000 kr YTD.",
+                gauge: {
+                    verdi: 1.002,
+                    enhet: "",
+                    min: 0.95,
+                    max: 1.05,
+                    zones: [
+                        { from: 0.95, to: 0.98, color: "#ef4444" },
+                        { from: 0.98, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.05, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Tjenestekvalitet & SLA",
+                navn: "IKT Driftssikkerhet & Oppetid",
+                status_text: "🟢 HØY OPPTID",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "99,94 %",
+                subtall: "(SLA-krav: ≥ 99,80 %)",
+                benchmarks: [
+                    { label: "SLA Minstekrav:", val: "≥ 99,80 %" },
+                    { label: "FinOps gevinst:", val: "800 000 kr" }
+                ],
+                forklaring: "Høy teknisk oppetid sikrer stabil saksbehandling og fagsystemtilgang for samtlige 81 resultatenheter.",
+                gauge: {
+                    verdi: 99.94,
+                    enhet: "%",
+                    min: 98.0,
+                    max: 100.0,
+                    zones: [
+                        { from: 98.0, to: 99.5, color: "#f59e0b" },
+                        { from: 99.5, to: 100.0, color: "#10b981" }
+                    ]
+                }
+            }
+        ]
+    },
+    "OMR-12": {
+        title: "📊 Økonomi og Virksomhetsstyring (OMR-12): Topp 3 Nøkkeltall & Avviksdrivere",
+        badge_norm: "Økonomidirektør",
+        badge_status: "🟢 GRØNN (Mindreforbruk: +7,5 Mkr)",
+        badge_status_style: "background:#ecfdf5; color:#047857; border:1px solid #6ee7b7;",
+        subtitle: "Driftsanalyse YTD M9: Merinntekt fra pengemarkedsrente (art 1800) og konservativ likviditetsdisponering demper konsernets samlede merforbruk.",
+        cards: [
+            {
+                kategori: "1. Finansgevinst YTD (CV)",
+                navn: "Budsjettavvik YTD",
+                status_text: "🟢 POSITIVT AVVIK",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "+7,5 mill. kr",
+                subtall: "(+0,88 % under ramme)",
+                benchmarks: [
+                    { label: "Periodisert Ramme:", val: "855,0 mill." },
+                    { label: "Faktisk Forbruk:", val: "847,5 mill." }
+                ],
+                forklaring: "Positivt avvik på 7,5 mill. kr. Renteinntekter på overskuddslikviditet i pengemarkedet (art 1800) motvirker rentekostnader.",
+                gauge: {
+                    verdi: 0.88,
+                    enhet: "%",
+                    min: -1.0,
+                    max: 2.0,
+                    zones: [
+                        { from: -1.0, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 2.0, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: "🟢 OVER MÅL",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "1,009",
+                subtall: "(EAC: 1 130,0 mill.)",
+                benchmarks: [
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Varselgrense:", val: "< 0,980" }
+                ],
+                forklaring: "CPI 1,009 viser at finans- og stabsenhetene driftes med overskudd mot periodiserte rammer.",
+                gauge: {
+                    verdi: 1.009,
+                    enhet: "",
+                    min: 0.95,
+                    max: 1.05,
+                    zones: [
+                        { from: 0.95, to: 0.98, color: "#ef4444" },
+                        { from: 0.98, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.05, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Finansiell Sikring",
+                navn: "Fastrenteandel Gjeldsportefølje",
+                status_text: "🟢 TRYGG SIKRING",
+                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+                border_top: "3px solid #10b981",
+                hovedtall: "65,0 %",
+                subtall: "(Mål: 60,0–70,0 %)",
+                benchmarks: [
+                    { label: "Finansreglement:", val: "60,0–70,0 %" },
+                    { label: "Rentegevinst likviditet:", val: "+7,5 mill. kr" }
+                ],
+                forklaring: "65 % av kommunens lånegjeld (8,4 mrd. kr) har fast rentebinding, noe som skjermer driftsbudsjettet mot uventede NIBOR-hopp.",
+                gauge: {
+                    verdi: 65.0,
+                    enhet: "%",
+                    min: 0,
+                    max: 100.0,
+                    zones: [
+                        { from: 0, to: 50.0, color: "#f59e0b" },
+                        { from: 50.0, to: 75.0, color: "#10b981" },
+                        { from: 75.0, to: 100.0, color: "#f59e0b" }
+                    ]
+                }
+            }
+        ]
+    }
+};
+
+let currentTop3SectorId = "ALL";
+
 function toggleSectorDrilldown(sektorId) {
     const el = document.getElementById("drilldown-" + sektorId);
     if (!el) return;
@@ -26901,9 +27584,8 @@ function toggleSectorDrilldown(sektorId) {
     }
 }
 
-function renderGaugeSvg(kpiKey) {
-    const kpi = TOP3_KPI_LOCAL_DATA.kpis[kpiKey];
-    if (!kpi) return "";
+function renderGaugeObjectSvg(gaugeData) {
+    if (!gaugeData) return "";
 
     const w = 240;
     const h = 135;
@@ -26913,7 +27595,9 @@ function renderGaugeSvg(kpiKey) {
     const strokeWidth = 14;
 
     function valueToAngle(val) {
-        const norm = Math.max(0, Math.min(1, (val - kpi.min) / (kpi.max - kpi.min)));
+        const span = gaugeData.max - gaugeData.min;
+        if (span <= 0) return Math.PI;
+        const norm = Math.max(0, Math.min(1, (val - gaugeData.min) / span));
         return Math.PI + (norm * Math.PI);
     }
 
@@ -26933,26 +27617,138 @@ function renderGaugeSvg(kpiKey) {
     }
 
     let arcsSvg = "";
-    kpi.zones.forEach(function(z) {
+    gaugeData.zones.forEach(function(z) {
         const d = describeArc(z.from, z.to);
         arcsSvg += '<path d="' + d + '" fill="none" stroke="' + z.color + '" stroke-width="' + strokeWidth + '" stroke-linecap="round" />';
     });
 
-    const needleAngle = valueToAngle(kpi.verdi);
+    const needleAngle = valueToAngle(gaugeData.verdi);
     const needleEnd = polarToCartesian(cx, cy, r - 12, needleAngle);
     const needleBaseL = polarToCartesian(cx, cy, 6, needleAngle - Math.PI / 2);
     const needleBaseR = polarToCartesian(cx, cy, 6, needleAngle + Math.PI / 2);
 
     const needleD = "M " + needleBaseL.x.toFixed(1) + " " + needleBaseL.y.toFixed(1) + " L " + needleEnd.x.toFixed(1) + " " + needleEnd.y.toFixed(1) + " L " + needleBaseR.x.toFixed(1) + " " + needleBaseR.y.toFixed(1) + " Z";
 
+    const unitStr = (gaugeData.enhet && gaugeData.enhet.indexOf('%') !== -1) ? '%' : '';
+
     return '<svg viewBox="0 0 ' + w + ' ' + h + '" style="width:100%; max-width:240px; height:auto; overflow:visible; font-family:var(--font-sans, sans-serif);">' +
         arcsSvg +
         '<path d="' + needleD + '" fill="#0f172a" />' +
         '<circle cx="' + cx + '" cy="' + cy + '" r="6" fill="#0f172a" />' +
         '<circle cx="' + cx + '" cy="' + cy + '" r="2.5" fill="#ffffff" />' +
-        '<text x="' + (cx - r - 6) + '" y="' + (cy + 16) + '" font-size="9" fill="#64748b" font-weight="600" text-anchor="middle">' + kpi.min + (kpi.enhet.indexOf('%') !== -1 ? '%' : '') + '</text>' +
-        '<text x="' + (cx + r + 6) + '" y="' + (cy + 16) + '" font-size="9" fill="#64748b" font-weight="600" text-anchor="middle">' + kpi.max + (kpi.enhet.indexOf('%') !== -1 ? '%' : '') + '</text>' +
+        '<text x="' + (cx - r - 6) + '" y="' + (cy + 16) + '" font-size="9" fill="#64748b" font-weight="600" text-anchor="middle">' + gaugeData.min + unitStr + '</text>' +
+        '<text x="' + (cx + r + 6) + '" y="' + (cy + 16) + '" font-size="9" fill="#64748b" font-weight="600" text-anchor="middle">' + gaugeData.max + unitStr + '</text>' +
     '</svg>';
+}
+
+function renderGaugeSvg(kpiKey) {
+    const kpi = TOP3_KPI_LOCAL_DATA.kpis[kpiKey];
+    if (!kpi) return "";
+    return renderGaugeObjectSvg(kpi);
+}
+
+function renderTop3Cards(sectorId) {
+    currentTop3SectorId = sectorId || "ALL";
+    const secData = TOP3_SECTOR_KPIS[currentTop3SectorId] || TOP3_SECTOR_KPIS["ALL"];
+
+    // 1. Header oppdatering
+    const headerTitle = document.getElementById("top3-header-title");
+    if (headerTitle) headerTitle.textContent = secData.title;
+
+    const headerBadgeNorm = document.getElementById("top3-header-badge-norm");
+    if (headerBadgeNorm) headerBadgeNorm.textContent = secData.badge_norm;
+
+    const headerBadgeStatus = document.getElementById("top3-header-badge-status");
+    if (headerBadgeStatus) {
+        headerBadgeStatus.textContent = secData.badge_status;
+        if (secData.badge_status_style) {
+            headerBadgeStatus.style.cssText = secData.badge_status_style + " font-size:10px;";
+        }
+    }
+
+    const headerSubtitle = document.getElementById("top3-header-subtitle");
+    if (headerSubtitle) headerSubtitle.textContent = secData.subtitle;
+
+    // 2. Filter-piller og aktiv label
+    const activeLabel = document.getElementById("top3-active-filter-label");
+    if (activeLabel) {
+        activeLabel.textContent = currentTop3SectorId === "ALL" ? "Konsern (Alle)" : (secData.badge_norm || currentTop3SectorId);
+    }
+    const resetBtn = document.getElementById("top3-reset-btn");
+    if (resetBtn) {
+        resetBtn.style.display = currentTop3SectorId === "ALL" ? "none" : "inline-block";
+    }
+
+    const pills = document.querySelectorAll("#top3-sector-pills .top3-pill-btn");
+    pills.forEach(p => {
+        if (p.getAttribute("data-sector") === currentTop3SectorId) {
+            p.classList.add("active");
+        } else {
+            p.classList.remove("active");
+        }
+    });
+
+    // 3. Render de 3 kortene
+    const container = document.getElementById("top3-gauge-cards-container");
+    if (!container) return;
+
+    let html = "";
+    secData.cards.forEach(function(c, i) {
+        const gaugeSvg = renderGaugeObjectSvg(c.gauge);
+
+        let bmHtml = "";
+        c.benchmarks.forEach(function(bm) {
+            bmHtml += '<div>' +
+                '<div style="color:#64748b; font-size:10px;">' + bm.label + '</div>' +
+                '<div style="font-weight:700; color:#0f172a;">' + bm.val + '</div>' +
+            '</div>';
+        });
+
+        const gaugeContainerId = (currentTop3SectorId === "ALL") ?
+            (i === 0 ? "top3-gauge-netto-drift" : (i === 1 ? "top3-gauge-disposisjonsfond" : "top3-gauge-netto-gjeld")) :
+            ("top3-gauge-slot-" + (i + 1));
+
+        html += '<div style="background:#ffffff; border:1px solid var(--border-light); border-top:' + c.border_top + '; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0; box-shadow:0 1px 3px rgba(0,0,0,0.02);">' +
+            '<div>' +
+                '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">' +
+                    '<div>' +
+                        '<span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">' + c.kategori + '</span>' +
+                        '<div style="font-size:15px; font-weight:800; color:#0f172a;">' + c.navn + '</div>' +
+                    '</div>' +
+                    '<span class="status-badge" style="' + c.status_badge_style + ' font-size:10px; font-weight:700;">' + c.status_text + '</span>' +
+                '</div>' +
+                '<div id="' + gaugeContainerId + '" style="display:flex; justify-content:center; margin:10px 0;">' + gaugeSvg + '</div>' +
+                '<div style="text-align:center; margin-bottom:12px;">' +
+                    '<span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">' + c.hovedtall + '</span>' +
+                    '<span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">' + c.subtall + '</span>' +
+                '</div>' +
+                '<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">' +
+                    bmHtml +
+                '</div>' +
+            '</div>' +
+            '<div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">' +
+                c.forklaring +
+            '</div>' +
+        '</div>';
+    });
+
+    container.innerHTML = html;
+
+    // 4. Oppdater tabellmarkering
+    renderHierarchyTable();
+}
+
+function selectTop3Sector(sektorId, fromSync) {
+    if (!sektorId) sektorId = "ALL";
+    currentTop3SectorId = sektorId;
+    renderTop3Cards(currentTop3SectorId);
+
+    if (!fromSync) {
+        const sectorKey = SEKTOR_MAP_FROM_TOP3[sektorId] || "ALL";
+        if (typeof selectSector === 'function') {
+            selectSector(sectorKey, true);
+        }
+    }
 }
 
 function renderHierarchyTable() {
@@ -26964,6 +27760,10 @@ function renderHierarchyTable() {
         const badgeCol = sec.status === "GRØNN" ? "#10b981" : (sec.status === "GUL" ? "#f59e0b" : "#ef4444");
         const badgeBg = sec.status === "GRØNN" ? "#ecfdf5" : (sec.status === "GUL" ? "#fffbeb" : "#fef2f2");
 
+        const isSelected = (sec.sektor_id === currentTop3SectorId);
+        const rowBg = isSelected ? '#eff6ff' : (idx % 2 === 0 ? '#ffffff' : '#fafafa');
+        const rowBorderLeft = isSelected ? 'border-left: 4px solid #0284c7;' : 'border-left: 4px solid transparent;';
+
         let kpiBadges = "";
         sec.kpis.forEach(function(kp) {
             kpiBadges += '<span style="background:#f1f5f9; color:#0f172a; padding:2px 6px; border-radius:3px; margin-right:4px; font-size:10px;">' + kp.navn + ': <strong>' + kp.verdi + '</strong></span>';
@@ -26971,13 +27771,16 @@ function renderHierarchyTable() {
 
         const hasUnits = sec.enheter && sec.enheter.length > 0;
         const toggleBtn = hasUnits ? 
-            '<button id="toggle-btn-' + sec.sektor_id + '" onclick="toggleSectorDrilldown(\'' + sec.sektor_id + '\')" style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:2px 7px; font-size:10px; cursor:pointer; color:#0284c7; font-weight:700; margin-left:8px;" title="Klikk for å se enheter og kostnadsdrivere">▶ Vis enheter (' + sec.enheter.length + ')</button>' : '';
+            '<button id="toggle-btn-' + sec.sektor_id + '" onclick="toggleSectorDrilldown(\'' + sec.sektor_id + '\'); event.stopPropagation();" style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:2px 7px; font-size:10px; cursor:pointer; color:#0284c7; font-weight:700; margin-left:8px;" title="Klikk for å se enheter og kostnadsdriverer">▶ Vis enheter (' + sec.enheter.length + ')</button>' : '';
 
-        html += '<tr style="border-bottom:1px solid #f1f5f9; background:' + (idx % 2 === 0 ? '#ffffff' : '#fafafa') + ';">' +
+        const selectBtn = '<button onclick="selectTop3Sector(\'' + sec.sektor_id + '\'); event.stopPropagation();" style="background:' + (isSelected ? '#0284c7' : '#f8fafc') + '; color:' + (isSelected ? '#ffffff' : '#0f172a') + '; border:1px solid ' + (isSelected ? '#0284c7' : '#cbd5e1') + '; border-radius:3px; padding:2px 8px; font-size:10px; cursor:pointer; font-weight:700; margin-left:6px;" title="Vis Top 3 KPIs for ' + sec.sektor_navn + '">' + (isSelected ? '✓ Aktiv Top 3' : '📊 Vis Top 3') + '</button>';
+
+        html += '<tr onclick="selectTop3Sector(\'' + sec.sektor_id + '\')" style="border-bottom:1px solid #f1f5f9; background:' + rowBg + '; ' + rowBorderLeft + ' cursor:pointer; transition:background 0.15s ease;" title="Klikk for å vise Top 3 KPIs for ' + sec.sektor_navn + '">' +
             '<td style="padding:10px 8px; font-weight:700; color:var(--navy-dark);">' + sec.sektor_id + '</td>' +
             '<td style="padding:10px 8px;">' +
                 '<div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">' +
                     '<span style="font-weight:700; color:#0f172a;">' + sec.sektor_navn + '</span>' +
+                    selectBtn +
                     toggleBtn +
                 '</div>' +
                 '<div style="font-size:10px; color:#64748b;">' + sec.direktor + '</div>' +
@@ -27046,22 +27849,20 @@ function downloadBystyretPptx() {
 }
 
 function copyTop3KpiSummary() {
-    const text = "KRISTIANSAND KOMMUNE — TOP 3 FINANSIELLE NØKKELTALL (M10 OKTOBER 2026)\n" +
-"--------------------------------------------------------------------------------\n" +
-"1. Netto Driftsresultat: 1,25 %  (Mål Kommune: ≥ 1,00 % | TBU Norm: ≥ 1,75 %)  -> 🟢 GRØNN\n" +
-"2. Disposisjonsfond:     4,35 %  (Mål Kommune: ≥ 4,00 % | TBU Norm: ≥ 5,00 %)  -> 🟢 GRØNN (460 mill. kr)\n" +
-"3. Netto Lånegjeld:      76,8 %  (Lånetak:     ≤ 78,0 % | TBU Norm: ≤ 80,0 %)  -> 🟢 GRØNN (8,4 mrd. kr)\n" +
-"--------------------------------------------------------------------------------\n" +
-"Sektorstatus:\n" +
-"- Oppvekst: Avvik -35,0 mill. kr (-1,89 %) [RØD: Vikarbruk art 1020]\n" +
-"- Helse:    Avvik -42,0 mill. kr (-2,00 %) [RØD: Overtid art 1090]\n" +
-"- By/VAR:   Avvik -1,5 mill. kr (-0,18 %)  [GUL: Snøbrøyting / Selvkost i balanse]\n" +
-"--------------------------------------------------------------------------------\n" +
+    const secData = TOP3_SECTOR_KPIS[currentTop3SectorId] || TOP3_SECTOR_KPIS["ALL"];
+    let text = "KRISTIANSAND KOMMUNE — " + secData.title.toUpperCase() + "\n" +
+"--------------------------------------------------------------------------------\n";
+
+    secData.cards.forEach(function(c, i) {
+        text += (i + 1) + ". " + c.navn + ": " + c.hovedtall + " " + c.subtall + " -> " + c.status_text + "\n";
+    });
+
+    text += "--------------------------------------------------------------------------------\n" +
 "Sertifisert av: Frank Ellingsen, Senior Financial Controller / BI Specialist";
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(function() {
-            alert("Top 3 KPI-sammendrag kopiert til utklippstavlen!");
+            alert("Top 3 KPI-sammendrag for " + (secData.badge_norm || "Konsern") + " kopiert til utklippstavlen!");
         });
     } else {
         alert("Top 3 KPI-sammendrag:\n\n" + text);
@@ -27072,11 +27873,17 @@ function sealTop3KpiReport() {
     const box = document.getElementById("top3-kpi-seal-box");
     if (!box) return;
 
+    const secData = TOP3_SECTOR_KPIS[currentTop3SectorId] || TOP3_SECTOR_KPIS["ALL"];
     const now = new Date().toISOString().replace("T", " ").substring(0, 19);
     const seal = "SHA256:b8c9f0412e8b61a7c3d25e89a4190d7c5f3b142894567201bcde88f3419ac003";
 
+    let kpiLines = "";
+    secData.cards.forEach(function(c, i) {
+        kpiLines += '<div><strong>' + (i + 1) + '. ' + c.navn + ':</strong> ' + c.hovedtall + ' ' + c.subtall + ' (' + c.status_text + ')</div>';
+    });
+
     box.innerHTML = '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
-        '<span style="font-weight:700; color:var(--navy-dark); font-size:12px;">🔒 KRISTIANSAND KOMMUNE — OFFISIELL HITL REVISJONSATTESTASJON (STAGE-GATE PORT 9)</span>' +
+        '<span style="font-weight:700; color:var(--navy-dark); font-size:12px;">🔒 KRISTIANSAND KOMMUNE — OFFISIELL HITL REVISJONSATTESTASJON (' + (secData.badge_norm || "KONSERN") + ')</span>' +
         '<span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px;">VERIFISERT (P9 HITL)</span>' +
     '</div>' +
     '<div style="font-size:11px; line-height:1.7; color:#1e293b;">' +
@@ -27084,24 +27891,13 @@ function sealTop3KpiReport() {
         '<div><strong>Ansvarlig Controller:</strong> Frank Ellingsen, Senior Financial Controller / BI Specialist</div>' +
         '<div><strong>Rapporteringsorgan:</strong> Bystyret, Formannskapet og Kontrollutvalget</div>' +
         '<div><strong>Regelverk:</strong> Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-normer</div>' +
-        '<div><strong>Netto Driftsresultat M10:</strong> 1,25 % (115 mill. kr — GRØNN)</div>' +
-        '<div><strong>Disposisjonsfond M10:</strong> 4,35 % (460 mill. kr — GRØNN)</div>' +
-        '<div><strong>Netto Lånegjeld M10:</strong> 76,8 % (8,4 mrd. kr — GRØNN)</div>' +
+        kpiLines +
         '<div style="word-break:break-all; color:#0369a1; margin-top:8px;"><strong>SHA-256 Audit Seal:</strong> ' + seal + '</div>' +
     '</div>';
 }
 
 function initTop3KpiDashboard() {
-    const g1 = document.getElementById("top3-gauge-netto-drift");
-    if (g1) g1.innerHTML = renderGaugeSvg("netto_driftsresultat");
-
-    const g2 = document.getElementById("top3-gauge-disposisjonsfond");
-    if (g2) g2.innerHTML = renderGaugeSvg("disposisjonsfond");
-
-    const g3 = document.getElementById("top3-gauge-netto-gjeld");
-    if (g3) g3.innerHTML = renderGaugeSvg("netto_lanegjeld");
-
-    renderHierarchyTable();
+    renderTop3Cards("ALL");
 }
 
 if (document.readyState === "loading") {
