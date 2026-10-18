@@ -4480,7 +4480,7 @@
                     <span>💰 Likviditet & Kreditt</span>
                     <span class="badge-phase" style="background:#059669; color:#fff;">K-lov § 14-13</span>
                 </a>
-                <a href="#top3-kpi-seksjon" class="sidebar-nav-item" id="side-top3-kpi">
+                <a href="#top3-kpi-seksjon" class="sidebar-nav-item" id="side-top3-kpi" onclick="if(typeof navigateToSection==='function'){navigateToSection('top3-kpi-seksjon');return false;}">
                     <span>🏛️ Top 3 KPIs & Bystyret</span>
                     <span class="badge-phase" style="background:#0f172a; color:#fff;">TBU PPTX</span>
                 </a>
@@ -4666,207 +4666,6 @@
         </div>
     </div>
 
-    <!-- ============================================================================== -->
-    <!-- 🏛️ KRISTIANSAND KOMMUNE KONSERN: TOPP 3 KPIS & AVVIKSHIERARKI                  -->
-    <!-- jf. Kommuneloven §§ 13-1, 14-1, 14-13, 14-14 og TBU-anbefalinger             -->
-    <!-- ============================================================================== -->
-<section class="workflow-section" id="top3-kpi-seksjon" style="margin-bottom: 24px;">
-    <div class="section-header" style="background:var(--bg-surface); padding:16px 20px; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-        <div>
-            <div style="font-size:15px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
-                <span id="top3-header-title">🏛️ Kristiansand Kommune Konsern: Topp 3 Finansielle Nøkkeltall &amp; Styringsavvik</span>
-                <span id="top3-header-badge-norm" class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Konsern / TBU Normert</span>
-                <span id="top3-header-badge-status" class="status-badge" style="background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe; font-size:10px;">M10 2026</span>
-            </div>
-            <div id="top3-header-subtitle" style="font-size:11.5px; color:#64748b; margin-top:3px;">
-                Overordnet konsernstatus jf. Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-retningslinjer (Teknisk beregningsutvalg for kommunal og fylkeskommunal økonomi)
-            </div>
-        </div>
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-            <button type="button" class="btn" onclick="downloadBystyretPptx()" style="background:#0f172a; color:#fff; font-size:11px; padding:6px 12px; border-radius:3px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Last ned offisiell 16:9 PowerPoint-rapport for Bystyret">
-                <span>📥 Last ned Bystyret PPTX</span>
-            </button>
-            <button type="button" class="btn" onclick="copyTop3KpiSummary()" style="background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; font-size:11px; padding:6px 12px; border-radius:3px; cursor:pointer;">
-                <span>📋 Kopier Sammendrag</span>
-            </button>
-            <button type="button" class="btn" onclick="sealTop3KpiReport()" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:11px; padding:6px 12px; border-radius:3px; cursor:pointer;">
-                <span>🔒 Forsegl (SHA-256)</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- INTERAKTIV VIRKSOMHETSOMRÅDE-VELGER & FILTER -->
-    <div style="background:#f8fafc; border-bottom:1px solid var(--border-light); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span style="font-size:11px; font-weight:700; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
-                🎯 Velg Visningsnivå:
-            </span>
-            <div id="top3-sector-pills" style="display:inline-flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="top3-pill-btn active" data-sector="ALL" onclick="selectTop3Sector('ALL')">🌐 Konsern (Alle)</button>
-                <button type="button" class="top3-pill-btn" data-sector="OMR-02" onclick="selectTop3Sector('OMR-02')">🏫 Oppvekst (OMR-02)</button>
-                <button type="button" class="top3-pill-btn" data-sector="OMR-03" onclick="selectTop3Sector('OMR-03')">🏥 Helse (OMR-03)</button>
-                <button type="button" class="top3-pill-btn" data-sector="OMR-05" onclick="selectTop3Sector('OMR-05')">🏗️ Byutvikling (OMR-05)</button>
-                <button type="button" class="top3-pill-btn" data-sector="OMR-04" onclick="selectTop3Sector('OMR-04')">🎭 Kultur (OMR-04)</button>
-                <button type="button" class="top3-pill-btn" data-sector="OMR-11" onclick="selectTop3Sector('OMR-11')">💻 Org & Tek (OMR-11)</button>
-                <button type="button" class="top3-pill-btn" data-sector="OMR-12" onclick="selectTop3Sector('OMR-12')">📊 Økonomi (OMR-12)</button>
-            </div>
-        </div>
-        <div style="display:flex; align-items:center; gap:8px; font-size:11.5px; color:#64748b;">
-            <span>Aktivt visningsnivå:</span>
-            <strong id="top3-active-filter-label" style="color:var(--navy-dark); background:#ffffff; padding:2px 8px; border:1px solid #cbd5e1; border-radius:3px;">Konsern</strong>
-            <button type="button" onclick="selectTop3Sector('ALL')" id="top3-reset-btn" style="display:none; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:2px 8px; font-size:11px; cursor:pointer; color:#0f172a; font-weight:600;" title="Nullstill til konsernvisning">↺ Nullstill til Konsern</button>
-        </div>
-    </div>
-
-    <div style="padding:20px;">
-        <!-- 1. TOPP 3 TAKOMETER GAUGE CARDS (HORISONTAL LINJE) -->
-        <div id="top3-gauge-cards-container" style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; margin-bottom:24px;">
-            <!-- KPI 1: Netto Driftsresultat -->
-            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
-                <div>
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
-                        <div>
-                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">1. Driftsbalanse</span>
-                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Netto Driftsresultat</div>
-                        </div>
-                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 I BALANSE</span>
-                    </div>
-                    
-                    <div id="top3-gauge-netto-drift" style="display:flex; justify-content:center; margin:10px 0;"></div>
-
-                    <div style="text-align:center; margin-bottom:12px;">
-                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">1,25 %</span>
-                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(115 mill. kr)</span>
-                    </div>
-
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
-                        <div>
-                            <div style="color:#64748b; font-size:10px;">Kommunalt Mål:</div>
-                            <div style="font-weight:700; color:#0f172a;">≥ 1,00 %</div>
-                        </div>
-                        <div>
-                            <div style="color:#64748b; font-size:10px;">TBU Anbefaling:</div>
-                            <div style="font-weight:700; color:#0f172a;">≥ 1,75 %</div>
-                        </div>
-                    </div>
-                </div>
-                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
-                    Mål oppnådd. Kommunens netto driftsresultat tilfredsstiller kommunestyrets handlingsregel for forsvarlig drift og egenfinansiering av investeringer.
-                </div>
-            </div>
-
-            <!-- KPI 2: Disposisjonsfond -->
-            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
-                <div>
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
-                        <div>
-                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">2. Likviditetsbuffer</span>
-                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Disposisjonsfond</div>
-                        </div>
-                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 FORSVARLIG</span>
-                    </div>
-                    
-                    <div id="top3-gauge-disposisjonsfond" style="display:flex; justify-content:center; margin:10px 0;"></div>
-
-                    <div style="text-align:center; margin-bottom:12px;">
-                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">4,35 %</span>
-                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(460 mill. kr)</span>
-                    </div>
-
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
-                        <div>
-                            <div style="color:#64748b; font-size:10px;">Kommunalt Mål:</div>
-                            <div style="font-weight:700; color:#0f172a;">≥ 4,00 %</div>
-                        </div>
-                        <div>
-                            <div style="color:#64748b; font-size:10px;">TBU Anbefaling:</div>
-                            <div style="font-weight:700; color:#0f172a;">≥ 5,00 %</div>
-                        </div>
-                    </div>
-                </div>
-                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
-                    Urørt reserve overstiger kommunestyrets minstekrav (4,00 %). TBU-norm på 5,00 % nås ved videre konsolidering over økonomiplanperioden.
-                </div>
-            </div>
-
-            <!-- KPI 3: Netto Lånegjeld -->
-            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
-                <div>
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
-                        <div>
-                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">3. Gjeldsgrad</span>
-                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Netto Lånegjeld</div>
-                        </div>
-                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 UNDER TAK</span>
-                    </div>
-                    
-                    <div id="top3-gauge-netto-gjeld" style="display:flex; justify-content:center; margin:10px 0;"></div>
-
-                    <div style="text-align:center; margin-bottom:12px;">
-                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">76,8 %</span>
-                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(8,4 mrd. kr)</span>
-                    </div>
-
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
-                        <div>
-                            <div style="color:#64748b; font-size:10px;">Kommunalt Lånetak:</div>
-                            <div style="font-weight:700; color:#0f172a;">≤ 78,0 %</div>
-                        </div>
-                        <div>
-                            <div style="color:#64748b; font-size:10px;">TBU Smertegrense:</div>
-                            <div style="font-weight:700; color:#0f172a;">≤ 80,0 %</div>
-                        </div>
-                    </div>
-                </div>
-                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
-                    Lånegjelden er 1,2 prosentpoeng under vedtatt lånetak jf. Kommuneloven § 14-13. 65 % av gjeldsporteføljen har fast rentebinding.
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. KASKADERENDE SEKTOR- OG ENHETSHIERARKI -->
-        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
-                <div>
-                    <h3 style="font-size:13px; font-weight:800; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px; margin:0;">
-                        Kaskaderende Sektorhierarki & Avviksanalyse (M9 September YTD — Alle 6 Virksomhetsområder)
-                    </h3>
-                    <div style="font-size:11px; color:#64748b; margin-top:2px;">
-                        Driftsrammer, faktisk forbruk og KOSTRA-nøkkeltall kaskadert fra Bystyrets rammevedtak til enhetsnivå (SSOT: DuckDB / SQLite Golden Record)
-                    </div>
-                </div>
-                <div style="font-size:11px; color:#64748b;">
-                    Total ramme (6 områder): <strong>6,32 mrd. kr</strong> | Forbruk: <strong>6,38 mrd. kr</strong> | Netto avvik: <strong style="color:#b91c1c;">-69,0 mill. kr (-1,09 %)</strong>
-                </div>
-            </div>
-
-            <div style="overflow-x:auto;">
-                <table style="width:100%; border-collapse:collapse; font-size:11.5px; font-family:var(--font-sans, sans-serif);">
-                    <thead>
-                        <tr style="border-bottom:2px solid var(--navy-dark); background:#f8fafc; text-align:left;">
-                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); width:80px;">Kode</th>
-                            <th style="padding:8px; font-weight:700; color:var(--navy-dark);">Virksomhetsområde & Nøkkeltall</th>
-                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:110px;">Ramme YTD</th>
-                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:110px;">Forbruk YTD</th>
-                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:150px;">Avvik YTD</th>
-                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:center; width:80px;">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="top3-hierarchy-tbody">
-                        <!-- Genereres dynamisk av JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- 3. ATTESTASJON OG SHA-256 REVISJONSSTEMPEL -->
-        <div id="top3-kpi-seal-box" style="background:#f8fafc; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:0 4px 4px 0; padding:14px; font-size:11.5px; line-height:1.6; color:#334155;">
-            <div>
-                Trykk på <strong>"Forsegl (SHA-256)"</strong> for å generere et offisielt kryptografisk revisjonsstempel for Bystyret, Kontrollutvalget og Formannskapet jf. Stage-Gate Port 9 HITL.
-            </div>
-        </div>
-    </div>
-</section>
 
 
     <!-- =======================================================================
@@ -5123,6 +4922,209 @@
 
     <!-- FANE 2: SEKTORE & KONSERNSTYRING -->
     <div class="hub-tab-pane" id="tab-sektor-konsern" role="tabpanel" aria-labelledby="tab-btn-sektor-konsern" style="display: none;">
+
+    <!-- ============================================================================== -->
+    <!-- 🏛️ KRISTIANSAND KOMMUNE KONSERN: TOPP 3 KPIS & AVVIKSHIERARKI                  -->
+    <!-- jf. Kommuneloven §§ 13-1, 14-1, 14-13, 14-14 og TBU-anbefalinger             -->
+    <!-- ============================================================================== -->
+<section class="workflow-section" id="top3-kpi-seksjon" style="margin-bottom: 24px;">
+    <div class="section-header" style="background:var(--bg-surface); padding:16px 20px; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+            <div style="font-size:15px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
+                <span id="top3-header-title">🏛️ Kristiansand Kommune Konsern: Topp 3 Finansielle Nøkkeltall &amp; Styringsavvik</span>
+                <span id="top3-header-badge-norm" class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Konsern / TBU Normert</span>
+                <span id="top3-header-badge-status" class="status-badge" style="background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe; font-size:10px;">M10 2026</span>
+            </div>
+            <div id="top3-header-subtitle" style="font-size:11.5px; color:#64748b; margin-top:3px;">
+                Overordnet konsernstatus jf. Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-retningslinjer (Teknisk beregningsutvalg for kommunal og fylkeskommunal økonomi)
+            </div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <button type="button" class="btn" onclick="downloadBystyretPptx()" style="background:#0f172a; color:#fff; font-size:11px; padding:6px 12px; border-radius:3px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Last ned offisiell 16:9 PowerPoint-rapport for Bystyret">
+                <span>📥 Last ned Bystyret PPTX</span>
+            </button>
+            <button type="button" class="btn" onclick="copyTop3KpiSummary()" style="background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; font-size:11px; padding:6px 12px; border-radius:3px; cursor:pointer;">
+                <span>📋 Kopier Sammendrag</span>
+            </button>
+            <button type="button" class="btn" onclick="sealTop3KpiReport()" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:11px; padding:6px 12px; border-radius:3px; cursor:pointer;">
+                <span>🔒 Forsegl (SHA-256)</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- INTERAKTIV VIRKSOMHETSOMRÅDE-VELGER & FILTER -->
+    <div style="background:#f8fafc; border-bottom:1px solid var(--border-light); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; font-weight:700; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
+                🎯 Velg Visningsnivå:
+            </span>
+            <div id="top3-sector-pills" style="display:inline-flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="top3-pill-btn active" data-sector="ALL" onclick="selectTop3Sector('ALL')">🌐 Konsern (Alle)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-02" onclick="selectTop3Sector('OMR-02')">🏫 Oppvekst (OMR-02)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-03" onclick="selectTop3Sector('OMR-03')">🏥 Helse (OMR-03)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-05" onclick="selectTop3Sector('OMR-05')">🏗️ Byutvikling (OMR-05)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-04" onclick="selectTop3Sector('OMR-04')">🎭 Kultur (OMR-04)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-11" onclick="selectTop3Sector('OMR-11')">💻 Org & Tek (OMR-11)</button>
+                <button type="button" class="top3-pill-btn" data-sector="OMR-12" onclick="selectTop3Sector('OMR-12')">📊 Økonomi (OMR-12)</button>
+            </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:11.5px; color:#64748b;">
+            <span>Aktivt visningsnivå:</span>
+            <strong id="top3-active-filter-label" style="color:var(--navy-dark); background:#ffffff; padding:2px 8px; border:1px solid #cbd5e1; border-radius:3px;">Konsern</strong>
+            <button type="button" onclick="selectTop3Sector('ALL')" id="top3-reset-btn" style="display:none; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:2px 8px; font-size:11px; cursor:pointer; color:#0f172a; font-weight:600;" title="Nullstill til konsernvisning">↺ Nullstill til Konsern</button>
+        </div>
+    </div>
+
+    <div style="padding:20px;">
+        <!-- 1. TOPP 3 TAKOMETER GAUGE CARDS (HORISONTAL LINJE) -->
+        <div id="top3-gauge-cards-container" style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; margin-bottom:24px;">
+            <!-- KPI 1: Netto Driftsresultat -->
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                        <div>
+                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">1. Driftsbalanse</span>
+                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Netto Driftsresultat</div>
+                        </div>
+                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 I BALANSE</span>
+                    </div>
+                    
+                    <div id="top3-gauge-netto-drift" style="display:flex; justify-content:center; margin:10px 0;"></div>
+
+                    <div style="text-align:center; margin-bottom:12px;">
+                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">1,25 %</span>
+                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(115 mill. kr)</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">Kommunalt Mål:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 1,00 %</div>
+                        </div>
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">TBU Anbefaling:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 1,75 %</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
+                    Mål oppnådd. Kommunens netto driftsresultat tilfredsstiller kommunestyrets handlingsregel for forsvarlig drift og egenfinansiering av investeringer.
+                </div>
+            </div>
+
+            <!-- KPI 2: Disposisjonsfond -->
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                        <div>
+                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">2. Likviditetsbuffer</span>
+                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Disposisjonsfond</div>
+                        </div>
+                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 FORSVARLIG</span>
+                    </div>
+                    
+                    <div id="top3-gauge-disposisjonsfond" style="display:flex; justify-content:center; margin:10px 0;"></div>
+
+                    <div style="text-align:center; margin-bottom:12px;">
+                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">4,35 %</span>
+                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(460 mill. kr)</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">Kommunalt Mål:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 4,00 %</div>
+                        </div>
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">TBU Anbefaling:</div>
+                            <div style="font-weight:700; color:#0f172a;">≥ 5,00 %</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
+                    Urørt reserve overstiger kommunestyrets minstekrav (4,00 %). TBU-norm på 5,00 % nås ved videre konsolidering over økonomiplanperioden.
+                </div>
+            </div>
+
+            <!-- KPI 3: Netto Lånegjeld -->
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid #10b981; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                        <div>
+                            <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">3. Gjeldsgrad</span>
+                            <div style="font-size:15px; font-weight:800; color:#0f172a;">Netto Lånegjeld</div>
+                        </div>
+                        <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:10px; font-weight:700;">🟢 UNDER TAK</span>
+                    </div>
+                    
+                    <div id="top3-gauge-netto-gjeld" style="display:flex; justify-content:center; margin:10px 0;"></div>
+
+                    <div style="text-align:center; margin-bottom:12px;">
+                        <span style="font-size:26px; font-weight:900; color:#0f172a; letter-spacing:-0.5px;">76,8 %</span>
+                        <span style="font-size:12px; color:#64748b; font-weight:600; margin-left:4px;">(8,4 mrd. kr)</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; border:1px solid #f1f5f9; padding:8px 12px; border-radius:3px; font-size:11px; margin-bottom:10px;">
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">Kommunalt Lånetak:</div>
+                            <div style="font-weight:700; color:#0f172a;">≤ 78,0 %</div>
+                        </div>
+                        <div>
+                            <div style="color:#64748b; font-size:10px;">TBU Smertegrense:</div>
+                            <div style="font-weight:700; color:#0f172a;">≤ 80,0 %</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#475569; line-height:1.5; border-top:1px solid #f1f5f9; padding-top:8px;">
+                    Lånegjelden er 1,2 prosentpoeng under vedtatt lånetak jf. Kommuneloven § 14-13. 65 % av gjeldsporteføljen har fast rentebinding.
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. KASKADERENDE SEKTOR- OG ENHETSHIERARKI -->
+        <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <h3 style="font-size:13px; font-weight:800; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px; margin:0;">
+                        Kaskaderende Sektorhierarki & Avviksanalyse (M9 September YTD — Alle 6 Virksomhetsområder)
+                    </h3>
+                    <div style="font-size:11px; color:#64748b; margin-top:2px;">
+                        Driftsrammer, faktisk forbruk og KOSTRA-nøkkeltall kaskadert fra Bystyrets rammevedtak til enhetsnivå (SSOT: DuckDB / SQLite Golden Record)
+                    </div>
+                </div>
+                <div style="font-size:11px; color:#64748b;">
+                    Total ramme (6 områder): <strong>6,32 mrd. kr</strong> | Forbruk: <strong>6,38 mrd. kr</strong> | Netto avvik: <strong style="color:#b91c1c;">-69,0 mill. kr (-1,09 %)</strong>
+                </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:11.5px; font-family:var(--font-sans, sans-serif);">
+                    <thead>
+                        <tr style="border-bottom:2px solid var(--navy-dark); background:#f8fafc; text-align:left;">
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); width:80px;">Kode</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark);">Virksomhetsområde & Nøkkeltall</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:110px;">Ramme YTD</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:110px;">Forbruk YTD</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:right; width:150px;">Avvik YTD</th>
+                            <th style="padding:8px; font-weight:700; color:var(--navy-dark); text-align:center; width:80px;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top3-hierarchy-tbody">
+                        <!-- Genereres dynamisk av JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. ATTESTASJON OG SHA-256 REVISJONSSTEMPEL -->
+        <div id="top3-kpi-seal-box" style="background:#f8fafc; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:0 4px 4px 0; padding:14px; font-size:11.5px; line-height:1.6; color:#334155;">
+            <div>
+                Trykk på <strong>"Forsegl (SHA-256)"</strong> for å generere et offisielt kryptografisk revisjonsstempel for Bystyret, Kontrollutvalget og Formannskapet jf. Stage-Gate Port 9 HITL.
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="workflow-section" id="sektor-seksjon" style="margin-bottom: 20px;">
         <div class="section-header">
             <span>🏛️ Ansvarsområder & Økonomirådgivere (6 Tjenesteområder)</span>
@@ -17920,6 +17922,13 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
         }
 
         function selectSector(sectorKey, fromTop3Sync) {
+            // Sikre at Sektor & Konsernstyring fanen er aktiv
+            if (typeof openTab === "function") {
+                const activeTab = localStorage.getItem("aikom_active_tab") || "min-enhet";
+                if (activeTab !== "sektor-konsern") {
+                    openTab("sektor-konsern", false);
+                }
+            }
             const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
 
             // Synkroniser Topp 3 KPI-seksjonen hvis ikke kalt derfra
@@ -24975,6 +24984,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
 const HUB_PERSONA_TABS = ['min-enhet', 'sektor-konsern', 'controller-hub', 'veiledere-maler'];
 
 const SECTION_TO_TAB_MAP = {
+    'top3-kpi-seksjon': 'sektor-konsern',
     'nettbank-kontoutskrift-seksjon': 'min-enhet',
     'workflow-cycle-banner': 'min-enhet',
     'mote-rapportering-seksjon': 'min-enhet',
@@ -28347,6 +28357,13 @@ function togglePersonaGuidanceCollapse() {
 }
 
 function scrollToHubSection(sectionId, subTab) {
+    if (subTab && typeof switchAdvisorCalc === "function") {
+        switchAdvisorCalc(subTab);
+    }
+    if (typeof navigateToSection === "function") {
+        navigateToSection(sectionId);
+        return;
+    }
     if (subTab && typeof switchAdvisorCalc === 'function') {
         switchAdvisorCalc(subTab);
     }
