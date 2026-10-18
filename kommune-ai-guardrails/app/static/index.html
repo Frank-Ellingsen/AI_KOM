@@ -692,6 +692,13 @@
             }
         ];
 
+        function sanitizePIIClient(text) {
+            return text
+                .replace(/\b(?:0[1-9]|[12][0-9]|3[01]|4[1-9]|[56][0-9]|7[01])(?:0[1-9]|1[012])\d{7}\b/g, "[SKJERMET FNR]")
+                .replace(/\b(?:\+47|0047)?\s*(?:[2-9]\d)\s*\d{2}\s*\d{2}\s*\d{2}\b/g, "[SKJERMET TLF]")
+                .replace(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g, "[SKJERMET E-POST]");
+        }
+
         function setQuery(text) {
             document.getElementById("rag-input").value = text;
             executeMockRAG();
@@ -705,22 +712,50 @@
         }
 
         async function executeMockRAG() {
-            const query = document.getElementById("rag-input").value;
+            const rawQuery = document.getElementById("rag-input").value;
+            const cleanQuery = sanitizePIIClient(rawQuery);
+            const piiMasked = cleanQuery !== rawQuery;
             const outputCard = document.getElementById("rag-output");
-            const hashDisplay = document.getElementById("audit-hash-display");
+            const qLow = cleanQuery.toLowerCase();
 
             outputCard.style.opacity = "0.5";
-            
+
+            let title = "Vurdering jf. Kommuneloven § 14-5:";
+            let body = "Dersom det i løpet av budsjettåret oppstår vesentlige avvik som truer budsjettmessig balanse eller realismekravet, plikter kommunedirektøren å fremme sak om endring av årsbudsjettet for Bystyret.<br/><br/>For Oppvekst og utdanning må det avklares om merforbruket på vikarer (-645 000 kr) og overtid (-379 000 kr) kan dekkes ved omdisponering innenfor rammen, eller om det kreves inndekning via kommunens disposisjonsfond.";
+            let source = "Kilde: Kommuneloven § 14-5, Økonomireglementet § 3-1";
+
+            if (qLow.includes("kostra") || qLow.includes("vikar") || qLow.includes("14-6") || qLow.includes("sykepeng")) {
+                title = "Vurdering jf. Kommuneloven § 14-6 (Bruttoprinsippet) & KOSTRA:";
+                body = "Etter <strong>Kommuneloven § 14-6 fjerde ledd</strong> skal alle utgifter og inntekter budsjetteres og regnskapsføres brutto. Vikarutgifter føres brutto på KOSTRA art 1020, mens refusjoner av sykepenger fra NAV føres som inntekt på art 1600. Det er ikke tillatt å nettoføre vikarkostnader mot forventede NAV-refusjoner.";
+                source = "Kilde: Kommuneloven § 14-6, KOSTRA-veileder 2026";
+            } else if (qLow.includes("fullmakt") || qLow.includes("deleg") || qLow.includes("omdisponer")) {
+                title = "Vurdering jf. Kristiansand Delegeringsreglement Kap. 2 & 3:";
+                body = "Enhetsledere har anvisningsfullmakt inntil 500 000 kr innenfor vedtatt netto driftsramme. Omdisponering mellom kommunalsjefområder eller bruk av disposisjonsfond krever formelt vedtak i Bystyret jf. <strong>Kommuneloven § 14-5</strong>. Ved bemanningsendringer eller vikarstopp kreves drøfting med tillitsvalgte etter <strong>HTA § 4</strong>.";
+                source = "Kilde: Delegeringsreglementet § 2-3, HTA § 4";
+            }
+
             setTimeout(async () => {
+                const hash = await computeSHA256(cleanQuery + "|" + new Date().toISOString());
+                const piiBanner = piiMasked
+                    ? `<div style="margin-bottom:8px;padding:4px 8px;background:#fdf2f2;color:#c0392b;font-size:11px;font-weight:600;border-radius:2px;">🛡️ Stage-Gate Port 4: Personopplysninger ble automatisk maskert før søk (${cleanQuery}).</div>`
+                    : "";
+                outputCard.innerHTML = `
+                    ${piiBanner}
+                    <strong>${title}</strong><br/>
+                    ${body}
+                    <div class="audit-meta-row">
+                        <span>${source}</span>
+                        <span id="audit-hash-display">SHA-256: ${hash.substring(0, 16)}...</span>
+                    </div>
+                `;
                 outputCard.style.opacity = "1";
-                const hash = await computeSHA256(query + "|" + new Date().toISOString());
-                hashDisplay.innerText = "SHA-256: " + hash.substring(0, 16) + "...";
-            }, 300);
+            }, 200);
         }
 
         async function signAndSaveAudit() {
-            const query = document.getElementById("rag-input").value;
-            const notes = document.getElementById("hitl-notes").value;
+            const rawQuery = document.getElementById("rag-input").value;
+            const query = sanitizePIIClient(rawQuery);
+            const notes = sanitizePIIClient(document.getElementById("hitl-notes").value);
             const status = document.querySelector('input[name="hitl_status"]:checked').value;
             const now = new Date().toISOString();
             
@@ -765,9 +800,14 @@
             document.getElementById("engine-btn").innerText = `🔄 Bytt Motor (Aktiv: ${currentEngine.split(' ')[0]})`;
         }
 
+        function formatNok(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+
         function filterEntity(entity) {
             const label = document.getElementById("active-entity-filter");
             const rows = document.querySelectorAll("#variances-tbody tr");
+            const summaryRow = rows[rows.length - 1];
 
             if (entity === 'SKOLE') {
                 label.innerText = "Viser: Kommunal Skole (Oppvekst)";
@@ -776,7 +816,12 @@
                 rows[2].style.display = "";
                 rows[3].style.display = "none";
                 rows[4].style.display = "";
-                rows[5].style.display = "";
+                summaryRow.cells[0].innerText = "TOTALT TOPP 4 AVVIK (SKOLE)";
+                summaryRow.cells[1].innerText = "Kommunal Skole";
+                summaryRow.cells[2].innerText = formatNok(19773000);
+                summaryRow.cells[3].innerText = formatNok(23696000);
+                summaryRow.cells[4].innerText = formatNok(-3923000);
+                summaryRow.cells[5].innerText = "-19.8 %";
             } else if (entity === 'BO') {
                 label.innerText = "Viser: Kommunal Boenhet (Helse & Mestring)";
                 rows[0].style.display = "none";
@@ -784,10 +829,21 @@
                 rows[2].style.display = "none";
                 rows[3].style.display = "";
                 rows[4].style.display = "none";
-                rows[5].style.display = "";
+                summaryRow.cells[0].innerText = "TOTALT KRITISKE AVVIK (BOENHET)";
+                summaryRow.cells[1].innerText = "Kommunal Boenhet";
+                summaryRow.cells[2].innerText = formatNok(0);
+                summaryRow.cells[3].innerText = formatNok(382656);
+                summaryRow.cells[4].innerText = formatNok(-382656);
+                summaryRow.cells[5].innerText = "Ubudsjettert";
             } else {
                 label.innerText = "Viser: Alle Enheter";
                 rows.forEach(r => r.style.display = "");
+                summaryRow.cells[0].innerText = "TOTALT TOPP 5 KRITISKE AVVIK";
+                summaryRow.cells[1].innerText = "Flere";
+                summaryRow.cells[2].innerText = formatNok(19773000);
+                summaryRow.cells[3].innerText = formatNok(24078656);
+                summaryRow.cells[4].innerText = formatNok(-4305656);
+                summaryRow.cells[5].innerText = "-21.8 %";
             }
         }
     </script>

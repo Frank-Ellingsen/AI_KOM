@@ -24,8 +24,8 @@ def sanitize_pii(text: str) -> str:
     fnr_pattern = r"\b(?:0[1-9]|[12][0-9]|3[01]|4[1-9]|[56][0-9]|7[01])(?:0[1-9]|1[012])\d{7}\b"
     text = re.sub(fnr_pattern, "[SKJERMET FNR]", text)
 
-    # Telefonnummer (8 siffer, evt med +47/0047)
-    tlf_pattern = r"\b(\+47|0047)?\s*([2-9]\d{1})\s*(\d{2})\s*(\d{2})\s*(\d{2})\b"
+    # Telefonnummer (8 siffer i 2-2-2-2, 3-2-3 eller sammenhengende format, evt med +47/0047)
+    tlf_pattern = r"(?:(?:\+47|0047)\s*)?\b(?:[2-9]\d{1}\s*\d{2}\s*\d{2}\s*\d{2}|[2-9]\d{2}\s*\d{2}\s*\d{3})\b"
     text = re.sub(tlf_pattern, "[SKJERMET TLF]", text)
 
     # E-postadresser

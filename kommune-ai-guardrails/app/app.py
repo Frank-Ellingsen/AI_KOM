@@ -382,7 +382,7 @@ DOCUMENTS_MENU = {
         ("Presentasjon Oppvekst: Bemanningskontroll (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Oppvekst_Bemanningskontroll_2026.pptx", "Nivå 3: 7-slides sektorstyring med skolematrise, lærernorm og felles vikarring"),
         ("Presentasjon Prosjektkontroll: Capex EVM (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Prosjektkontroll_Capex_EVM_2026.pptx", "Nivå 4: 7-slides ISO 21508 EVM investeringstilsyn, S-kurver og P85-usikkerhetsreserve"),
         ("Presentasjon Enhet 202: Operativ Avviksrapport (PPTX)", WORKSPACE_ROOT / "powerpoint" / "Presentasjon_Enhet202_Operativ_Avviksrapport_2026.pptx", "Nivå 5: 7-slides 4-punkts operativ avviksrapport (MAL-AVVIK-EFFEKT-001) for rektor"),
-        ("Bystyret & Formannskapet Decks Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_BYSTYRET_OG_FORM ANNSKAPET_DECKS.md", "Slidelayout, fargekoder og 7 standard lysbilder"),
+        ("Bystyret & Formannskapet Decks Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_BYSTYRET_OG_FORMANNSKAPET_DECKS.md", "Slidelayout, fargekoder og 7 standard lysbilder"),
         ("Visual Storytelling FT Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_VISUAL_STORYTELLING_FT.md", "Aksjonstitler, bullet charts og avviksbroer"),
         ("PowerPoint Automatisering Spec (Markdown)", WORKSPACE_ROOT / "powerpoint" / "powerpoint_kommune_spec_bundle_v1" / "POWERPOINT_PRESENTASJONSSKAPING_AUTOMATION.md", "python-pptx arkitektur og generator")
     ],
@@ -407,8 +407,8 @@ DOCUMENTS_MENU = {
         ("Tertialrapport & HØP Standarder (Markdown)", WORKSPACE_ROOT / "word" / "word_kommune_spec_bundle_v1" / "WORD_TERTIALRAPPORT_OG_HOP_STANDARDER.md", "WCAG 2.1 AA og kapittelstruktur for HØP")
     ],
     "⚡ Gemini Flash MCP & Power BI Specs": [
-        ("Power BI Reporting Project (.PBIP)", WORKSPACE_ROOT / "powerbi" / "pbi_reporting_project.pbip", "Offisielt Power BI prosjekt (.pbip) med 7 ferdige PBIR rapportsider og TMDL Semantisk Modell"),
-        ("Gemini Flash MCP Chat Spec (Markdown)", WORKSPACE_ROOT / "GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md", "Komplett spesifikasjon for Gemini Flash MCP Chat i Office Hub V2"),
+        ("Power BI Reporting Project (.PBIP)", WORKSPACE_ROOT / "powerbi" / "pbi_reporting_project.pbip", "Offisielt Power BI prosjekt (.pbip) med 12 ferdige PBIR rapportsider og TMDL Semantisk Modell"),
+        ("Gemini Flash MCP Chat Spec (Markdown)", WORKSPACE_ROOT / "spesifikasjoner" / "GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md", "Komplett spesifikasjon for Gemini Flash MCP Chat i Office Hub V2"),
         ("Komplett Master DAX Bundle (DAX)", WORKSPACE_ROOT / "powerbi" / "05_Komplett_Kommune_DAX_Bundle.dax", "Fullstendig DAX-måltallspakke for alle 7 CFO/Controller layouts"),
         ("Star Schema Power Query M-Code (Code)", WORKSPACE_ROOT / "powerbi" / "06_Star_Schema_DDL_and_PowerQuery.m", "Komplett M-kode med Fact_Regnskap, Fact_Budsjett og dimensjoner"),
         ("7 CFO/Controller Dashboards Guide (Markdown)", WORKSPACE_ROOT / "powerbi" / "07_PowerBI_7_Layouts_Spec_Guide.md", "Visuell implementasjonsveileder for 7 Power BI layouts")
@@ -430,7 +430,7 @@ DOCUMENTS_MENU = {
         ("03 Observability, Drift & FinOps", WORKSPACE_ROOT / "mlops-implementeringspakke" / "03_MLOps_Observability_og_Drift.md", "Overvåking av datadrift, concept drift, prompt drift, token caching og FinOps"),
         ("04 Governance, AI Act & Sikkerhet", WORKSPACE_ROOT / "mlops-implementeringspakke" / "04_MLOps_Governance_og_Sikkerhet.md", "EU AI Act deployer-krav, operativ rollestruktur, audit logging og kill-switch"),
         ("05 Testing, Ground Truth & Kvalitet", WORKSPACE_ROOT / "mlops-implementeringspakke" / "05_MLOps_Test_og_Kvalitetssikring.md", "Test-pyramide, Ground Truth fasitsett og Gate G3 akseptkriterier"),
-        ("06 Kravspesifikasjon & Anbudsmal", WORKSPACE_ROOT / "mlops-implementeringspakke" / "06_MLOps_Anbud_og_Innkjøpsmal.md", "A- og B-kravmatrise (K-01 til K-10), datasuverenitet og anbudskontrakt")
+        ("06 Kravspesifikasjon & Anbudsmal", WORKSPACE_ROOT / "mlops-implementeringspakke" / "06_MLOps_Anbud_og_Innkjoepsmal.md", "A- og B-kravmatrise (K-01 til K-10), datasuverenitet og anbudskontrakt")
     ],
     "📊 Ledelsesrapporter & Diagrammer (reports/)": [
         ("Net Zero Waterfall Avviksanalyse (PNG)", WORKSPACE_ROOT / "reports" / "chart_netzero_waterfall.png", "Visuell avviksanalyse fra budsjett til net zero sluttavvik"),
@@ -541,9 +541,19 @@ DOCUMENTS_MENU = {
     ]
 }
 
+
+@st.cache_data(show_spinner=False)
+def read_cached_text(file_path_str: str) -> str:
+    return Path(file_path_str).read_text(encoding="utf-8", errors="replace")
+
+
+@st.cache_data(show_spinner=False)
+def read_cached_bytes(file_path_str: str) -> bytes:
+    return Path(file_path_str).read_bytes()
+
+
 st.sidebar.markdown("---")
 st.sidebar.header("📁 Dokumentarkiv & Ressurser")
-st.sidebar.caption("Hurtigtilgang til styringsdokumenter, veiledninger og regnskapsmodeller.")
 
 # Flate opp dokumenter for nedtrekksmeny / hurtigviser
 all_docs_flat = {}
@@ -551,6 +561,8 @@ for cat, doc_list in DOCUMENTS_MENU.items():
     prefix = cat.split()[0]
     for label, path, desc in doc_list:
         all_docs_flat[f"{prefix} {label}"] = (path, desc)
+
+st.sidebar.caption(f"Hurtigtilgang til {len(all_docs_flat)} verifiserte styringsdokumenter, veiledninger og modeller.")
 
 selected_quick_doc = st.sidebar.selectbox(
     "🔍 Åpne / forhåndsvis dokument:",
@@ -565,7 +577,7 @@ if selected_quick_doc != "-- Velg et dokument for visning --":
         ext = doc_path.suffix.lower()
         if ext == ".md":
             with st.sidebar.expander("📖 Forhåndsvisning i sidebar", expanded=True):
-                content = doc_path.read_text(encoding="utf-8", errors="replace")
+                content = read_cached_text(str(doc_path))
                 st.markdown(content[:1500] + ("\n\n*(Fortsetter... se hele i fane 'Dokumentarkiv')*" if len(content) > 1500 else ""))
                 st.download_button(
                     label=f"⬇️ Last ned {doc_path.name}",
@@ -580,14 +592,19 @@ if selected_quick_doc != "-- Velg et dokument for visning --":
         elif ext in [".png", ".jpg", ".jpeg"]:
             with st.sidebar.expander("🖼️ Forhåndsvis bilde", expanded=True):
                 st.image(str(doc_path), caption=doc_path.name, use_container_width=True)
-                with open(doc_path, "rb") as fb:
-                    st.download_button(f"⬇️ Last ned bilde", data=fb.read(), file_name=doc_path.name, mime=f"image/{ext.strip('.')}", key=f"dl_sb_img_{doc_path.stem}")
+                st.download_button(
+                    "⬇️ Last ned bilde",
+                    data=read_cached_bytes(str(doc_path)),
+                    file_name=doc_path.name,
+                    mime=f"image/{ext.strip('.')}",
+                    key=f"dl_sb_img_{doc_path.stem}"
+                )
                 if st.button("👁️ Vis i full bredde", key=f"sb_view_img_{doc_path.stem}"):
                     st.session_state["active_doc_path"] = str(doc_path)
                     st.session_state["active_doc_title"] = selected_quick_doc
         elif ext in [".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
             with st.sidebar.expander("💻 Kildekodevisning", expanded=True):
-                code_content = doc_path.read_text(encoding="utf-8", errors="replace")
+                code_content = read_cached_text(str(doc_path))
                 code_lang = "dax" if ext in [".dax", ".tmdl"] else ("powerquery" if ext in [".pq", ".m"] else ("python" if ext == ".py" else ("sql" if ext == ".sql" else "text")))
                 st.code(code_content[:1200] + ("\n\n# ... se resten i fane 'Dokumentarkiv'" if len(code_content) > 1200 else ""), language=code_lang)
                 st.download_button(f"⬇️ Last ned {doc_path.name}", data=code_content, file_name=doc_path.name, mime="text/plain", key=f"dl_sb_code_{doc_path.stem}")
@@ -599,42 +616,19 @@ if selected_quick_doc != "-- Velg et dokument for visning --":
                 size_kb = doc_path.stat().st_size / 1024
                 size_str = f"{size_kb / 1024:.2f} MB" if size_kb > 1024 else f"{size_kb:.1f} KB"
                 st.markdown(f"**Fil:** `{doc_path.name}`  \n**Størrelse:** `{size_str}`")
-                with open(doc_path, "rb") as f:
-                    mime = "application/pdf" if ext == ".pdf" else "application/octet-stream"
-                    st.download_button(
-                        label=f"⬇️ Last ned {doc_path.name}",
-                        data=f.read(),
-                        file_name=doc_path.name,
-                        mime=mime,
-                        key=f"dl_sb_{doc_path.stem}"
-                    )
+                mime = "application/pdf" if ext == ".pdf" else "application/octet-stream"
+                st.download_button(
+                    label=f"⬇️ Last ned {doc_path.name}",
+                    data=read_cached_bytes(str(doc_path)),
+                    file_name=doc_path.name,
+                    mime=mime,
+                    key=f"dl_sb_{doc_path.stem}"
+                )
                 if st.button("👁️ Åpne infokort i hovedvindu", key=f"sb_view_bin_{doc_path.stem}"):
                     st.session_state["active_doc_path"] = str(doc_path)
                     st.session_state["active_doc_title"] = selected_quick_doc
     else:
         st.sidebar.warning(f"Fil ikke funnet: {doc_path.name}")
-
-# Kategoriserte expandere i sidebaren
-for cat_title, items in DOCUMENTS_MENU.items():
-    with st.sidebar.expander(cat_title, expanded=False):
-        for label, path, desc in items:
-            exists_indicator = "✅" if path.exists() else "⚠️"
-            st.markdown(f"**{exists_indicator} {label}**  \n*{desc}*")
-            if path.exists():
-                col_btn1, col_btn2 = st.columns([1, 1])
-                with col_btn1:
-                    if st.button("Åpne 📄", key=f"open_sb_{path.stem}_{cat_title[:4]}"):
-                        st.session_state["active_doc_path"] = str(path)
-                        st.session_state["active_doc_title"] = label
-                with col_btn2:
-                    ext = path.suffix.lower()
-                    if ext in [".md", ".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
-                        st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8", errors="replace"), file_name=path.name, mime="text/plain", key=f"dl_exp_{path.stem}_{cat_title[:4]}")
-                    else:
-                        with open(path, "rb") as fb:
-                            mime = "application/pdf" if ext == ".pdf" else "application/octet-stream"
-                            st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime=mime, key=f"dl_exp_bin_{path.stem}_{cat_title[:4]}")
-            st.markdown("---")
 
 # ==========================================
 # 5. HOVEDFLATE: MULTI-TAB CONTROL OFFICE HUB
@@ -803,7 +797,7 @@ with tab_mcp:
 # -------------------------------------------------------------
 with tab_pbi:
     st.markdown("### 📈 Power BI Rapporteringsprosjekt (PBIP Developer Mode)")
-    st.caption("Offisielt Power BI Desktop / Fabric prosjekt: `powerbi/pbi_reporting_project.pbip` med 7 standardiserte PBIR rapportsider og TMDL Semantisk Modell.")
+    st.caption("Offisielt Power BI Desktop / Fabric prosjekt: `powerbi/pbi_reporting_project.pbip` med 12 standardiserte PBIR rapportsider (8 primærsider + 4 drillthrough/tooltips) og TMDL Semantisk Modell.")
 
     pbip_file = WORKSPACE_ROOT / "powerbi" / "pbi_reporting_project.pbip"
     pbip_guide = WORKSPACE_ROOT / "powerbi" / "07_PowerBI_7_Layouts_Spec_Guide.md"
@@ -814,9 +808,9 @@ with tab_pbi:
     with kpi_col1:
         st.metric(label="Modellformat", value="PBIP + TMDL", delta="Git-vennlig")
     with kpi_col2:
-        st.metric(label="Rapportsider", value="7 sider", delta="PBIR format")
+        st.metric(label="Rapportsider", value="12 sider", delta="8 primær + 4 tooltips")
     with kpi_col3:
-        st.metric(label="Visual Containers", value="50 stk", delta="Tufte Data-Ink")
+        st.metric(label="Visual Containers", value="50+ stk", delta="Tufte Data-Ink")
     with kpi_col4:
         st.metric(label="TMDL Tabeller", value="9 tabeller", delta="Star Schema")
 
@@ -826,7 +820,7 @@ with tab_pbi:
         if pbip_file.exists():
             st.download_button(
                 "⬇️ Last ned prosjektfil (.pbip)",
-                data=pbip_file.read_text(encoding="utf-8", errors="replace"),
+                data=read_cached_text(str(pbip_file)),
                 file_name="pbi_reporting_project.pbip",
                 mime="application/json",
                 use_container_width=True
@@ -1179,12 +1173,16 @@ with tab_controller:
     if df_evm.empty:
         st.warning("⚠️ Fant ikke 'kommune_golden_record.db'. Vennligst kjør 'build_golden_record.py' i erp_data.")
     else:
+        sektor_options = ["Alle Sektorer"] + sorted(df_evm["Sektor"].dropna().unique().tolist())
+        sektor_valg = st.selectbox("Filtrer portefølje på sektor:", options=sektor_options, index=0, key="evm_sektor_filter")
+        df_evm_filtered = df_evm if sektor_valg == "Alle Sektorer" else df_evm[df_evm["Sektor"] == sektor_valg]
+
         # Porteføljesammendrag
-        tot_pv = df_evm["Planlagt (PV)"].sum()
-        tot_ac = df_evm["Påløpt (AC)"].sum()
+        tot_pv = df_evm_filtered["Planlagt (PV)"].sum()
+        tot_ac = df_evm_filtered["Påløpt (AC)"].sum()
         tot_cv = tot_pv - tot_ac
         tot_cpi = tot_pv / tot_ac if tot_ac > 0 else 1.0
-        tot_bac = df_evm["Årsbudsjett (BAC)"].sum()
+        tot_bac = df_evm_filtered["Årsbudsjett (BAC)"].sum()
         tot_eac = tot_bac / tot_cpi if tot_cpi > 0 else tot_bac
         tot_merforbruk = tot_eac - tot_bac
 
@@ -1194,14 +1192,14 @@ with tab_controller:
         m3.metric(
             "Kostnadsavvik (CV = PV - AC)", 
             f"{tot_cv:,.0f} kr".replace(",", " "), 
-            delta=f"{tot_cv:,.0f} kr".replace(",", " "),
+            delta=f"{tot_cv:+,.0f} kr".replace(",", " "),
             delta_color="normal"
         )
         m4.metric("Kostnadsindeks (CPI)", f"{tot_cpi:.3f}", help="Under 1.0 betyr merforbruk i forhold til planlagt budsjett-takt")
         m5.metric(
             "Sluttprognose (EAC)", 
             f"{tot_eac:,.0f} kr".replace(",", " "),
-            delta=f"-{tot_merforbruk:,.0f} kr est. overskridelse".replace(",", " "),
+            delta=f"{tot_merforbruk:+,.0f} kr est. sluttavvik".replace(",", " "),
             delta_color="inverse"
         )
 
@@ -1209,7 +1207,7 @@ with tab_controller:
         st.subheader("🏛️ Enhetsoversikt (EVM / Sluttprognose)")
 
         # Formatert visning for Tufte tabell
-        df_display = df_evm.copy()
+        df_display = df_evm_filtered.copy()
         for col in ["Planlagt (PV)", "Påløpt (AC)", "Avvik (CV)", "Årsbudsjett (BAC)", "Sluttprognose (EAC)", "Est. Merforbruk"]:
             df_display[col] = df_display[col].apply(lambda x: f"{x:,.0f} kr".replace(",", " "))
         df_display["CPI"] = df_display["CPI"].apply(lambda x: f"{x:.3f}")
@@ -1219,9 +1217,10 @@ with tab_controller:
         st.markdown("---")
         st.subheader("🚨 Kritiske Kostnadsavvik på KOSTRA Art (Topp 10)")
         
+        unit_options = ["Alle Enheter"] + sorted(df_evm_filtered["Enhet"].dropna().unique().tolist())
         enhet_valg = st.selectbox(
             "Filtrer på enhet:",
-            options=["Alle Enheter", "Kommunal Skole", "Kommunal Boenhet"],
+            options=unit_options,
             index=0
         )
         
@@ -1271,14 +1270,13 @@ with tab_controller:
         if c_path.exists():
             st.info(f"ℹ️ **Controller-analyse:** {c_desc}")
             st.image(str(c_path), caption=sel_chart_name, use_container_width=True)
-            with open(c_path, "rb") as cf:
-                st.download_button(
-                    label=f"⬇️ Last ned {c_path.name} til presentasjon / saksutredning",
-                    data=cf.read(),
-                    file_name=c_path.name,
-                    mime="image/png",
-                    key=f"dl_chart_t3_{c_path.stem}"
-                )
+            st.download_button(
+                label=f"⬇️ Last ned {c_path.name} til presentasjon / saksutredning",
+                data=read_cached_bytes(str(c_path)),
+                file_name=c_path.name,
+                mime="image/png",
+                key=f"dl_chart_t3_{c_path.stem}"
+            )
         else:
             st.warning(f"Fant ikke diagramfilen: {c_path.name}")
 
@@ -1363,6 +1361,37 @@ with tab_saksfremlegg:
         except Exception as e:
             st.error(f"Feil ved lagring av audit-hendelse: {e}")
 
+    st.markdown("---")
+    with st.expander("🔍 Stage-Gate Port 10: Uforanderlig Revisjonslogg (`Audit_AI_Actions`)", expanded=False):
+        st.caption("Viser de siste 25 kryptografisk signerte AI- og HITL-hendelsene for Kommunerevisjonen.")
+        try:
+            conn = get_db_connection()
+            df_audit = pd.read_sql_query(
+                """
+                SELECT audit_id AS ID, timestamp AS Tidspunkt, action_type AS Handlingstype,
+                       substr(user_query, 1, 80) AS Forespørsel, substr(sha256_hash, 1, 16) || '...' AS SHA256_Prefix,
+                       sha256_hash AS Full_SHA256
+                FROM Audit_AI_Actions
+                ORDER BY audit_id DESC
+                LIMIT 25
+                """,
+                conn
+            )
+            conn.close()
+            if not df_audit.empty:
+                st.dataframe(df_audit.drop(columns=["Full_SHA256"]), use_container_width=True, hide_index=True)
+                st.download_button(
+                    label="⬇️ Eksporter Revisjonslogg (JSON) for Kommunerevisjonen",
+                    data=df_audit.to_json(orient="records", indent=2, force_ascii=False),
+                    file_name="audit_ai_actions_export.json",
+                    mime="application/json",
+                    key="dl_audit_json_btn"
+                )
+            else:
+                st.info("Ingen revisjonshendelser er registrert ennå.")
+        except Exception as e:
+            st.warning(f"Kunne ikke lese Audit_AI_Actions: {e}")
+
 
 # -------------------------------------------------------------
 # FANE 5: DOKUMENTARKIV & RESSURSER
@@ -1386,7 +1415,7 @@ with tab_docs:
             st.caption(f"📁 Plassering: `{rel_path}` | Format: `{ext.upper()}`")
         with c_act2:
             if ext in [".md", ".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
-                doc_text = p.read_text(encoding="utf-8", errors="replace")
+                doc_text = read_cached_text(str(p))
                 st.download_button(
                     label=f"⬇️ Last ned {p.name}",
                     data=doc_text,
@@ -1395,22 +1424,21 @@ with tab_docs:
                     key="dl_tab_doc_btn"
                 )
             else:
-                with open(p, "rb") as fb:
-                    mime_map = {
-                        ".pdf": "application/pdf",
-                        ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                        ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                        ".png": "image/png",
-                        ".jpg": "image/jpeg"
-                    }
-                    st.download_button(
-                        label=f"⬇️ Last ned {p.name}",
-                        data=fb.read(),
-                        file_name=p.name,
-                        mime=mime_map.get(ext, "application/octet-stream"),
-                        key="dl_tab_bin_btn"
-                    )
+                mime_map = {
+                    ".pdf": "application/pdf",
+                    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                    ".png": "image/png",
+                    ".jpg": "image/jpeg"
+                }
+                st.download_button(
+                    label=f"⬇️ Last ned {p.name}",
+                    data=read_cached_bytes(str(p)),
+                    file_name=p.name,
+                    mime=mime_map.get(ext, "application/octet-stream"),
+                    key="dl_tab_bin_btn"
+                )
             if st.button("❌ Lukk forhåndsvisning"):
                 del st.session_state["active_doc_path"]
                 if "active_doc_title" in st.session_state:
@@ -1419,12 +1447,12 @@ with tab_docs:
 
         st.markdown("---")
         if ext == ".md":
-            st.markdown(p.read_text(encoding="utf-8", errors="replace"))
+            st.markdown(read_cached_text(str(p)))
         elif ext in [".png", ".jpg", ".jpeg"]:
             st.image(str(p), caption=st.session_state.get('active_doc_title', p.name), use_container_width=True)
         elif ext in [".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
             code_lang = "dax" if ext in [".dax", ".tmdl"] else ("powerquery" if ext in [".pq", ".m"] else ("python" if ext == ".py" else ("sql" if ext == ".sql" else "text")))
-            st.code(p.read_text(encoding="utf-8", errors="replace"), language=code_lang)
+            st.code(read_cached_text(str(p)), language=code_lang)
         else:
             size_kb = p.stat().st_size / 1024
             size_str = f"{size_kb / 1024:.2f} MB" if size_kb > 1024 else f"{size_kb:.1f} KB"
@@ -1438,34 +1466,38 @@ with tab_docs:
         st.markdown("---")
 
     # Søk og filter på tvers av biblioteket
-    st.markdown("#### 🔍 Utforsk Dokumentkatalogen")
-    search_query = st.text_input("Søk etter tittel, emneord eller kategori:", value="")
+    st.markdown("#### 🔍 Utforsk Dokumentkatalogen (133 ressurser)")
+    f_col1, f_col2 = st.columns([2, 1])
+    with f_col1:
+        search_query = st.text_input("Søk etter tittel, emneord eller filnavn:", value="")
+    with f_col2:
+        cat_filter = st.selectbox("Filtrer på kategori:", options=["Alle kategorier"] + list(DOCUMENTS_MENU.keys()), index=0)
 
-    for cat_title, items in DOCUMENTS_MENU.items():
+    for idx_cat, (cat_title, items) in enumerate(DOCUMENTS_MENU.items()):
+        if cat_filter != "Alle kategorier" and cat_title != cat_filter:
+            continue
         filtered_items = [
             (label, path, desc) for label, path, desc in items
-            if not search_query or search_query.lower() in label.lower() or search_query.lower() in desc.lower() or search_query.lower() in cat_title.lower()
+            if not search_query or search_query.lower() in label.lower() or search_query.lower() in desc.lower() or search_query.lower() in cat_title.lower() or search_query.lower() in path.name.lower()
         ]
         if filtered_items:
-            st.markdown(f"##### {cat_title}")
-            for label, path, desc in filtered_items:
-                col_d1, col_d2, col_d3 = st.columns([3, 1, 1])
-                with col_d1:
-                    status_icon = "🟢" if path.exists() else "🔴"
-                    st.markdown(f"{status_icon} **{label}**  \n`{path.name}` — *{desc}*")
-                with col_d2:
-                    if path.exists():
-                        if st.button("Åpne her 👁️", key=f"open_tab_{path.stem}_{cat_title[:4]}"):
-                            st.session_state["active_doc_path"] = str(path)
-                            st.session_state["active_doc_title"] = label
-                            st.rerun()
-                with col_d3:
-                    if path.exists():
-                        ext = path.suffix.lower()
-                        if ext in [".md", ".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
-                            st.download_button("Last ned ⬇️", data=path.read_text(encoding="utf-8", errors="replace"), file_name=path.name, mime="text/plain", key=f"dl_tab_{path.stem}_{cat_title[:4]}")
-                        else:
-                            with open(path, "rb") as fb:
+            with st.expander(f"{cat_title} ({len(filtered_items)} dokumenter)", expanded=bool(search_query or cat_filter != "Alle kategorier" or idx_cat < 2)):
+                for idx_item, (label, path, desc) in enumerate(filtered_items):
+                    col_d1, col_d2, col_d3 = st.columns([3.2, 0.9, 0.9])
+                    with col_d1:
+                        status_icon = "🟢" if path.exists() else "🔴"
+                        st.markdown(f"{status_icon} **{label}**  \n`{path.name}` — *{desc}*")
+                    with col_d2:
+                        if path.exists():
+                            if st.button("Åpne her 👁️", key=f"open_tab_{idx_cat}_{idx_item}_{path.stem}"):
+                                st.session_state["active_doc_path"] = str(path)
+                                st.session_state["active_doc_title"] = label
+                                st.rerun()
+                    with col_d3:
+                        if path.exists():
+                            ext = path.suffix.lower()
+                            if ext in [".md", ".tmdl", ".m", ".py", ".sql", ".dax", ".pq", ".csv", ".json"]:
+                                st.download_button("Last ned ⬇️", data=read_cached_text(str(path)), file_name=path.name, mime="text/plain", key=f"dl_tab_{idx_cat}_{idx_item}_{path.stem}")
+                            else:
                                 mime = "application/pdf" if ext == ".pdf" else ("image/png" if ext == ".png" else "application/octet-stream")
-                                st.download_button("Last ned ⬇️", data=fb.read(), file_name=path.name, mime=mime, key=f"dl_tab_bin_{path.stem}_{cat_title[:4]}")
-            st.markdown("---")
+                                st.download_button("Last ned ⬇️", data=read_cached_bytes(str(path)), file_name=path.name, mime=mime, key=f"dl_tab_bin_{idx_cat}_{idx_item}_{path.stem}")

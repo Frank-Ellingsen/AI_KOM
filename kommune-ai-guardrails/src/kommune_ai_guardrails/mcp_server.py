@@ -707,6 +707,7 @@ Hei Frank! {res_info['title']} finner du direkte i **Power BI & DAX Enterprise S
         bud_fmt = f"{fin_data['budget_ytd']:,.0f}".replace(",", " ")
         act_fmt = f"{fin_data['actual_ytd']:,.0f}".replace(",", " ")
         var_fmt = f"{fin_data['variance_nok']:,.0f}".replace(",", " ")
+        var_pct_str = f"{fin_data['variance_pct']} %"
         
         top_accs_text = ""
         for i, acc in enumerate(fin_data["top_variance_accounts"], 1):
@@ -720,7 +721,7 @@ Hei Frank! {res_info['title']} finner du direkte i **Power BI & DAX Enterprise S
 • **Enhet:** {fin_data['unit_name']} ({fin_data['period']})
 • **Periodisert budsjett:** {bud_fmt} kr
 • **Faktisk regnskap (Visma ERP):** {act_fmt} kr
-• **YTD Avvik:** **+{var_fmt} kr (+{fin_data['variance_pct']} % merforbruk)** — *Rødt flagg utløst i triage-køen.*
+• **YTD Avvik:** **{var_fmt} kr ({var_pct_str} merforbruk)** — *Rødt flagg utløst i triage-køen.*
 
 ---
 
@@ -736,8 +737,8 @@ Glass-Box RAG-analysen av kontoplanen viser at hovedtyngden av avviket skyldes:
 ---
 
 ### 📈 4. Kvantifisert Effekt på Prognosebane og EOY Balanse
-• **Uten tiltak (P90 / Worst Case):** Forventet helårsavvik per 31.12 blir **+{p90_fmt} kr**.
-• **Med tiltak (P10 / Forventet bane):** EOY-avviket reduseres til **+{p10_fmt} kr**, som kan dekkes inn via sektorens omstillingsfond.
+• **Uten tiltak (P90 / Worst Case):** Forventet helårsavvik per 31.12 blir **-{p90_fmt} kr**.
+• **Med tiltak (P10 / Forventet bane):** EOY-avviket reduseres til **-{p10_fmt} kr**, som kan dekkes inn via sektorens omstillingsfond.
 • **Lovhjemmel (§):** {impact_data['law_compliance']}
 """
 
@@ -745,20 +746,21 @@ Glass-Box RAG-analysen av kontoplanen viser at hovedtyngden av avviket skyldes:
     audit_payload = f"{now}|Frank Ellingsen|{clean_prompt}|{response_text}"
     audit_hash = hashlib.sha256(audit_payload.encode("utf-8")).hexdigest()
 
-    # Logg i Audit_AI_Actions
-    try:
-        conn = get_golden_connection()
-        conn.execute(
-            """
-            INSERT INTO Audit_AI_Actions (user_query, retrieved_chunk_ids, llm_response, action_type, sha256_hash)
-            VALUES (?, ?, ?, 'GEMINI_FLASH_MCP_CHAT', ?)
-            """,
-            (clean_prompt, json.dumps(tools_called), response_text, audit_hash)
-        )
-        conn.commit()
-        conn.close()
-    except Exception:
-        pass
+    # Logg i Audit_AI_Actions (både Golden Record og lokal RAG-database)
+    for conn_fn in (get_golden_connection, get_db_connection):
+        try:
+            conn = conn_fn()
+            conn.execute(
+                """
+                INSERT INTO Audit_AI_Actions (user_query, retrieved_chunk_ids, llm_response, action_type, sha256_hash)
+                VALUES (?, ?, ?, 'GEMINI_FLASH_MCP_CHAT', ?)
+                """,
+                (clean_prompt, json.dumps(tools_called), response_text, audit_hash)
+            )
+            conn.commit()
+            conn.close()
+        except Exception:
+            pass
 
     return {
         "text": response_text,
