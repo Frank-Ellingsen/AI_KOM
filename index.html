@@ -354,6 +354,71 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
+        /* Persona Guidance Filter Buttons & Action Links */
+        .persona-pill-btn {
+            font-family: var(--font-sans);
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+            background: #f8fafc;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .persona-pill-btn:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+            color: var(--navy-dark);
+        }
+
+        .persona-pill-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-weight: 700;
+        }
+
+        .persona-action-btn {
+            font-family: var(--font-sans);
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 3px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #0f172a;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+
+        .persona-action-btn:hover {
+            background: #f1f5f9;
+            border-color: #0284c7;
+            color: #0284c7;
+        }
+
+        .persona-action-btn.primary {
+            background: #0284c7;
+            border-color: #0284c7;
+            color: #ffffff;
+        }
+
+        .persona-action-btn.primary:hover {
+            background: #0369a1;
+            border-color: #0369a1;
+        }
+
         /* Two-Column Workspace Layout */
         .workspace-grid {
             display: grid;
@@ -1927,6 +1992,103 @@
         .tufte-tip:hover::before {
             opacity: 1;
             visibility: visible;
+        }
+
+        .tufte-tip[data-tip-pos="bottom"]::after {
+            bottom: auto;
+            top: 125%;
+        }
+
+        .tufte-tip[data-tip-pos="bottom"]::before {
+            bottom: auto;
+            top: 115%;
+            border-color: transparent transparent #1e293b transparent;
+        }
+
+        .info-hint-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #334155;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 5px;
+            cursor: help;
+            border: none;
+            line-height: 1;
+            vertical-align: middle;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .info-hint-icon:hover {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        /* Persona Guidance Bar Styling */
+        .persona-pill-btn {
+            font-family: var(--font-sans);
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+            background: #ffffff;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .persona-pill-btn:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .persona-pill-btn.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .persona-action-btn {
+            font-family: var(--font-sans);
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 3px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: var(--navy-dark);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .persona-action-btn:hover {
+            background: #f8fafc;
+            border-color: var(--navy-dark);
+            transform: translateY(-1px);
+        }
+
+        .persona-action-btn.primary {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+
+        .persona-action-btn.primary:hover {
+            background: #1e293b;
         }
 
         .tip-badge {
@@ -4221,8 +4383,9 @@
                             <button type="button" class="sb-chart-tab" id="sb-tab-month" onclick="setSidebarChartMode('MONTH')">Mnd</button>
                         </div>
                     </div>
-                    <div class="sidebar-chart-svg-wrap" id="sb-chart-container">
+                    <div class="sidebar-chart-svg-wrap" id="sb-chart-container" style="position: relative;">
                         <!-- Dynamisk SVG tegnet av renderSidebarLineChart() -->
+                        <div id="sb-chart-tooltip" style="position: absolute; display: none; background: #0f172a; color: #ffffff; padding: 4px 8px; border-radius: 3px; font-size: 10px; font-family: var(--font-mono); pointer-events: none; z-index: 1000; box-shadow: 0 2px 6px rgba(0,0,0,0.3); border: 1px solid #334155; white-space: nowrap;"></div>
                     </div>
                 </div>
             </div>
@@ -4458,6 +4621,50 @@
             </div>
         </div>
     </header>
+
+    <!-- ============================================================================== -->
+    <!-- 👤 ROLLEBASERT HURTIGVEILEDER & INTUITIV BRUKERGUIDE                           -->
+    <!-- Tilpasset styringsnivå 1–4, toppledelse, enhetsledere, rådgivere og revisjon     -->
+    <!-- ============================================================================== -->
+    <div id="hub-persona-guidance-container" style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid var(--navy-dark); border-radius:4px; margin-bottom:20px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+        <div style="padding:10px 18px; background:#f8fafc; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; font-weight:800; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
+                    👤 Hvem er du? Velg din rolle for tilpasset hurtigveiledning:
+                </span>
+                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px; font-weight:700;">Zero-Manual Intuitiv Modus</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" class="btn btn-sm" onclick="togglePersonaGuidanceCollapse()" id="btn-toggle-persona-guide" style="font-size:11px; padding:3px 10px; background:#ffffff; border:1px solid #cbd5e1; color:#334155; cursor:pointer;" title="Vis eller skjul veiledningsteksten">
+                    <span id="persona-guide-toggle-icon">▲</span> <span id="persona-guide-toggle-text">Skjul Veileder</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 5 Rolle-pills -->
+        <div style="padding:10px 18px; border-bottom:1px solid #f1f5f9; display:flex; gap:8px; flex-wrap:wrap; background:#ffffff;">
+            <button type="button" class="persona-pill-btn active" data-role="TOPPLEDELSE" onclick="selectHubPersona('TOPPLEDELSE')">
+                <span>🏛️ Bystyret &amp; Toppledelse</span>
+            </button>
+            <button type="button" class="persona-pill-btn" data-role="KOMMUNALSJEF" onclick="selectHubPersona('KOMMUNALSJEF')">
+                <span>👥 Kommunalsjef / Sektorleder</span>
+            </button>
+            <button type="button" class="persona-pill-btn" data-role="ENHETSLEDER" onclick="selectHubPersona('ENHETSLEDER')">
+                <span>🏫 Enhetsleder / Rektor / Styrer</span>
+            </button>
+            <button type="button" class="persona-pill-btn" data-role="CONTROLLER" onclick="selectHubPersona('CONTROLLER')">
+                <span>📊 Senior Controller &amp; Økonom</span>
+            </button>
+            <button type="button" class="persona-pill-btn" data-role="REVISJON" onclick="selectHubPersona('REVISJON')">
+                <span>🛡️ Kommunerevisjonen &amp; Kontroll</span>
+            </button>
+        </div>
+
+        <!-- Dynamisk innhold for valgt rolle -->
+        <div id="persona-guidance-content" style="padding:14px 18px; transition: all 0.2s ease;">
+            <!-- Dynamisk fylt av renderPersonaGuidance() -->
+        </div>
+    </div>
 
     <!-- ============================================================================== -->
     <!-- 🏛️ KRISTIANSAND KOMMUNE KONSERN: TOPP 3 KPIS & AVVIKSHIERARKI                  -->
@@ -7935,27 +8142,42 @@ RETURN
             <div id="pane-calc-nav" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Enhets-ID / Ansvar</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Enhets-ID / Ansvar
+                            <span class="info-hint-icon tufte-tip" data-tip="Kostnadssted/ansvarsnummer i Visma Enterprise ERP (f.eks. 2020 Vågsbygd skole eller 401 Strai sykehjem)." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="text" id="calc-nav-enhet" value="2020 - Vågsbygd Skole" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Bokførte vikarutgifter (Art 1020)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Bokførte vikarutgifter (Art 1020)
+                            <span class="info-hint-icon tufte-tip" data-tip="Sum påløpt på art 1020 i regnskapet. Inkluderer timelønnede vikarer og korttidsengasjementer. Eksterne vikarbyråer føres på art 1270." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-nav-vikar" value="800000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Sykedager totalt (fraværsdager)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Sykedager totalt (fraværsdager)
+                            <span class="info-hint-icon tufte-tip" data-tip="Totalt antall fraværsdager registrert i Visma HRM for enheten i perioden." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-nav-dager" value="120" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Egenmeldte dager (&le; 16 dager)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Egenmeldte dager (&le; 16 dager)
+                            <span class="info-hint-icon tufte-tip" data-tip="Fraværsdager innenfor arbeidsgiverperioden (16 dager) som kommunen dekker fullt ut uten refusjon." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-nav-egen" value="20" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Forventet saksbehandlingstid (uker)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Forventet saksbehandlingstid (uker)
+                            <span class="info-hint-icon tufte-tip" data-tip="Gjennomsnittlig behandlingstid for refusjonskrav hos NAV Agder er normalt 6–8 uker." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-nav-etterslep" value="8" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                 </div>
-                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeNavGapCalc()">⚡ Beregn NAV-refusjonsgap & Formuler Notat</button>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeNavGapCalc()">⚡ Beregn NAV-refusjonsgap &amp; Formuler Notat</button>
 
                 <div id="res-calc-nav" style="margin-top: 16px; display: none;"></div>
             </div>
@@ -7964,23 +8186,35 @@ RETURN
             <div id="pane-calc-krs4" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px; display: none;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Prosjekt / Tiltak</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Prosjekt / Tiltak
+                            <span class="info-hint-icon tufte-tip" data-tip="Navn på det planlagte tiltaket på formålsbygg, skole, sykehjem eller infrastruktur." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="text" id="calc-krs4-navn" value="Taktekking og etterisolering gymsal" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Kostnad ekskl. mva (NOK)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Kostnad ekskl. mva (NOK)
+                            <span class="info-hint-icon tufte-tip" data-tip="Total anslått kontraktssum. For aktivering i investering kreves minst 100 000 kr ekskl. mva (KRS 1)." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-krs4-kostnad" value="450000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Forventet levetid (år)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Forventet levetid (år)
+                            <span class="info-hint-icon tufte-tip" data-tip="Hvor mange år tiltaket skal vare. Minimum 3 år for aktivering jf. KRS 1. Bygningsmessige komponenter har normalt 20–40 år." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-krs4-levetid" value="25" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-top: 20px;">
                         <input type="checkbox" id="calc-krs4-standard" checked style="width: 16px; height: 16px;">
-                        <label for="calc-krs4-standard" style="font-size: 12px; font-weight: 600; color: var(--text-primary); cursor: pointer;">Standardheving / kapasitetsøkning</label>
+                        <label for="calc-krs4-standard" style="font-size: 12px; font-weight: 600; color: var(--text-primary); cursor: pointer; display: flex; align-items: center;">
+                            Standardheving / kapasitetsøkning
+                            <span class="info-hint-icon tufte-tip" data-tip="Kryss av hvis tiltaket hever standarden utover opprinnelig stand. Hvis det kun gjenoppretter slitasje, er det vedlikehold (drift art 1230 jf. KRS 4)." data-tip-pos="bottom">ℹ</span>
+                        </label>
                     </div>
                 </div>
-                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeKrs4Calc()">⚡ Vurder KRS 4 Klassifisering & Låneadgang</button>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeKrs4Calc()">⚡ Vurder KRS 4 Klassifisering &amp; Låneadgang</button>
 
                 <div id="res-calc-krs4" style="margin-top: 16px; display: none;"></div>
             </div>
@@ -7989,7 +8223,10 @@ RETURN
             <div id="pane-calc-selvkost" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px; display: none;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Sektor / Funksjon</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Sektor / Funksjon
+                            <span class="info-hint-icon tufte-tip" data-tip="Kommunalt selvkostområde jf. Selvkostforskriften: Vann (funk 340), Avløp (funk 345) eller Renovasjon (funk 355)." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <select id="calc-var-sektor" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
                             <option value="Vann">Vann (Funksjon 340)</option>
                             <option value="Avløp" selected>Avløp (Funksjon 345)</option>
@@ -7997,23 +8234,35 @@ RETURN
                         </select>
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Inngående Fondssaldo 2560 (NOK)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Inngående Fondssaldo 2560 (NOK)
+                            <span class="info-hint-icon tufte-tip" data-tip="Balansekonto 2560 Bundet selvkostfond per 1. januar. Viser akkumulert over-/underdekning fra tidligere år." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-var-fond" value="22000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Årsbudsjett driftskostnader (NOK)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Årsbudsjett driftskostnader (NOK)
+                            <span class="info-hint-icon tufte-tip" data-tip="Brutto driftsutgifter for selvkostområdet i Framsikt EPM (lønn, drift, vedlikehold, administrasjon og kapitalkostnader)." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-var-drift" value="90000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Årets gebyrinntekter (NOK)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Årets gebyrinntekter (NOK)
+                            <span class="info-hint-icon tufte-tip" data-tip="Fakturerte og forventede kommunale avgifter på art 1620–1640 fra abonnentene." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-var-gebyr" value="94000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">5-årig Swaprente (%)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            5-årig Swaprente (%)
+                            <span class="info-hint-icon tufte-tip" data-tip="Gjennomsnittlig 5-årig swaprente i pengemarkedet. Etter Selvkostforskriften § 5 legges 0,50 prosentpoeng til denne for kalkylerente." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-var-swap" step="0.01" value="3.85" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                 </div>
-                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeSelvkostCalc()">⚡ Beregn Kalkylerente & 5-års Trajektorie</button>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeSelvkostCalc()">⚡ Beregn Kalkylerente &amp; 5-års Trajektorie</button>
 
                 <div id="res-calc-selvkost" style="margin-top: 16px; display: none;"></div>
             </div>
@@ -8022,27 +8271,42 @@ RETURN
             <div id="pane-calc-mva" class="calc-panel" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; margin-top: 10px; display: none;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Formålsbygg / Eiendom</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Formålsbygg / Eiendom
+                            <span class="info-hint-icon tufte-tip" data-tip="Navn og gnr/bnr på det kommunale bygget som har mottatt momskompensasjon." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="text" id="calc-mva-navn" value="Aquarama - Idretts- og badeanlegg" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px;">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Byggekostnad ekskl. mva (NOK)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Byggekostnad ekskl. mva (NOK)
+                            <span class="info-hint-icon tufte-tip" data-tip="Samlet kostnad for oppføring eller ombygging av bygget hvor det ble krevd 25 % momskompensasjon." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-mva-kostnad" value="40000000" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Fullføringsår (tatt i bruk)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Fullføringsår (tatt i bruk)
+                            <span class="info-hint-icon tufte-tip" data-tip="Året bygget ble ferdigstilt og tatt i bruk (startår for den 10-årige justeringsperioden jf. Mval kap. 9)." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-mva-ferdig" value="2021" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Endringsår (utleiestart)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Endringsår (utleiestart)
+                            <span class="info-hint-icon tufte-tip" data-tip="Året bruken av bygget endres (f.eks. ved utleie til avgiftspliktig næringsdrivende eller privat aktør)." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-mva-endring" value="2026" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                     <div>
-                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: block; margin-bottom: 4px;">Andel avgiftspliktig utleie (%)</label>
+                        <label style="font-size: 11px; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; margin-bottom: 4px;">
+                            Andel avgiftspliktig utleie (%)
+                            <span class="info-hint-icon tufte-tip" data-tip="Prosentandel av bygningsmassen (areal eller tid) som tas ut av kompensasjonsberettiget kommunal kjernevirksomhet." data-tip-pos="bottom">ℹ</span>
+                        </label>
                         <input type="number" id="calc-mva-andel" value="30" style="width: 100%; padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-light); border-radius: 3px; font-family: var(--font-mono);">
                     </div>
                 </div>
-                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeMvaCalc()">⚡ Beregn 10-års Justeringsforpliktelse & Tilbakebetaling</button>
+                <button type="button" class="btn" style="background: var(--navy-dark); color: #ffffff; font-size: 12px; padding: 7px 16px; border-radius: 3px; cursor: pointer;" onclick="executeMvaCalc()">⚡ Beregn 10-års Justeringsforpliktelse &amp; Tilbakebetaling</button>
 
                 <div id="res-calc-mva" style="margin-top: 16px; display: none;"></div>
             </div>
@@ -10794,6 +11058,22 @@ RETURN
         /* ==========================================================================
            ØKONOMIRÅDGIVERENS INTERAKTIVE BESLUTNINGS- & BEREGNINGSMOTORER (JS)
            ========================================================================== */
+        function copyAdvisorTextFromElement(elementId, btn) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const text = el.innerText || el.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                if (btn) {
+                    const original = btn.innerText;
+                    btn.innerText = "✓ Kopiert til utklippstavle!";
+                    setTimeout(() => { btn.innerText = original; }, 2000);
+                }
+                if (typeof showToast === 'function') showToast("📋 Veiledningstekst kopiert til utklippstavlen!");
+            }).catch(() => {
+                if (typeof showToast === 'function') showToast("Klarte ikke å kopiere.");
+            });
+        }
+
         function switchAdvisorCalc(mode) {
             const panes = ["nav", "krs4", "selvkost", "mva"];
             panes.forEach(p => {
@@ -10866,12 +11146,12 @@ RETURN
                         <div><span style="color:var(--text-muted);">Forventet NAV-refusjon (1700):</span><br><strong style="font-size:14px; color:var(--success-green);">kr ${data.forventet_nav_refusjon_nok.toLocaleString("no-NO")}</strong></div>
                         <div><span style="color:var(--text-muted);">Reelt Nettoavvik:</span><br><strong style="font-size:14px; color:var(--navy-dark);">kr ${data.reelt_netto_avvik_nok.toLocaleString("no-NO")}</strong></div>
                     </div>
-                    <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; color: #0f5132; margin-bottom: 10px;">
+                    <div id="res-nav-text" style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; color: #0f5132; margin-bottom: 10px;">
                         <strong>💡 Ferdig Veiledningstekst til Leder (${escapeHtml(data.lovhjemmel)}):</strong><br>
                         ${escapeHtml(data.forklaring_til_enhetsleder)}
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('${escapeHtml(data.forklaring_til_enhetsleder)}'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier veiledningstekst', 2000);" style="font-size: 11px;">
+                        <button type="button" class="btn btn-sm" onclick="copyAdvisorTextFromElement('res-nav-text', this)" style="font-size: 11px;">
                             📋 Kopier veiledningstekst
                         </button>
                         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
@@ -10941,14 +11221,14 @@ RETURN
                         <div><span style="color:var(--text-muted);">Konteringsart:</span><br><strong style="font-size:13px; color:var(--navy-dark);">${escapeHtml(data.anbefalt_art)}</strong></div>
                         <div><span style="color:var(--text-muted);">Lånefinansiering (§ 14-15):</span><br><strong style="font-size:13px; color:${isInv ? '#15803d' : '#c0392b'};">${data.lovlig_laaneopptak ? '✓ LOVLIG LÅNEFINANSIERING' : '❌ STRENGT FORBUDT MED LÅN'}</strong></div>
                     </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
-                        <strong>Vurderingskriterier:</strong>
+                    <div id="res-krs4-text" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
+                        <strong>Vurderingskriterier for ${escapeHtml(data.prosjekt_navn)}:</strong>
                         <ul style="margin: 4px 0 0 16px; padding: 0;">
                             ${data.begrunnelse_og_kriterier.map(k => `<li>${escapeHtml(k)}</li>`).join("")}
                         </ul>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('KRS 4 Vurdering for ${escapeHtml(data.prosjekt_navn)}:\\nKlassifisering: ${data.klassifisering}\\nKontering: ${escapeHtml(data.anbefalt_art)}\\nLånefinansiering: ${data.lovlig_laaneopptak ? 'Lovlig' : 'Ulovlig jf. § 14-15'}\\n\\nKriterier:\\n- ${data.begrunnelse_og_kriterier.join('\\n- ')}'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier vurdering', 2000);" style="font-size: 11px;">
+                        <button type="button" class="btn btn-sm" onclick="copyAdvisorTextFromElement('res-krs4-text', this)" style="font-size: 11px;">
                             📋 Kopier vurdering
                         </button>
                         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
@@ -11014,12 +11294,12 @@ RETURN
                         <div><span style="color:var(--text-muted);">Årets Selvkostresultat:</span><br><strong style="font-size:14px; color:${data.aarets_selvkostresultat_nok >= 0 ? 'var(--success-green)' : 'var(--alert-amber)'};">kr ${data.aarets_selvkostresultat_nok.toLocaleString("no-NO")}</strong></div>
                         <div><span style="color:var(--text-muted);">Utgående Fondssaldo 2560:</span><br><strong style="font-size:14px; color:var(--navy-dark);">kr ${data.utgaaende_fondssaldo_nok.toLocaleString("no-NO")}</strong></div>
                     </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
-                        <strong>5-års Fremføringsstatus:</strong> ${escapeHtml(data.fremfoering_status)}<br>
+                    <div id="res-selvkost-text" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
+                        <strong>5-års Fremføringsstatus (${escapeHtml(data.sektor_navn)}):</strong> ${escapeHtml(data.fremfoering_status)}<br>
                         <strong>Anbefalt gebyrregulering:</strong> ${data.anbefalt_gebyrendring_pct > 0 ? '+' : ''}${data.anbefalt_gebyrendring_pct.toFixed(1)} % i gebyrregulativet for 2027.
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('Selvkost VAR Trajektorie (${data.sektor_navn}):\\nKalkylerente: ${data.effektiv_kalkylerente_pct.toFixed(3)}%\\nUtgående Fondssaldo: kr ${data.utgaaende_fondssaldo_nok.toLocaleString("no-NO")}\\nStatus: ${data.fremfoering_status}\\nAnbefalt Gebyrendring: ${data.anbefalt_gebyrendring_pct}%'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier selvkostnotat', 2000);" style="font-size: 11px;">
+                        <button type="button" class="btn btn-sm" onclick="copyAdvisorTextFromElement('res-selvkost-text', this)" style="font-size: 11px;">
                             📋 Kopier selvkostnotat
                         </button>
                         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
@@ -11083,12 +11363,12 @@ RETURN
                         <div><span style="color:var(--text-muted);">Årlig justeringsramme (1/10):</span><br><strong style="font-size:14px;">kr ${data.aarlig_justeringsramme_nok.toLocaleString("no-NO")}</strong></div>
                         <div><span style="color:var(--text-muted);">Samlet Tilbakebetalingskrav:</span><br><strong style="font-size:14px; color:var(--alert-red);">kr ${data.samlet_tilbakebetalingskrav_nok.toLocaleString("no-NO")}</strong></div>
                     </div>
-                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
+                    <div id="res-mva-text" style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 3px; padding: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
                         <strong>Konteringsinstruks for regnskapet:</strong> ${escapeHtml(data.kontering_balansekonto)}<br>
                         <em>Avregnes mot Skatteetaten i mva-terminen hvor bruksendringen trer i kraft for å unngå strafferente og bokettersynsmerknad.</em>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <button type="button" class="btn btn-sm" onclick="navigator.clipboard.writeText('MVA 10-års Justeringsforpliktelse for ${escapeHtml(data.eiendom_navn)}:\\nGjenstående justeringsperiode: ${data.gjenstaaende_justeringsaar} år\\nSamlet tilbakebetalingskrav til Skatteetaten: kr ${data.samlet_tilbakebetalingskrav_nok.toLocaleString("no-NO")}\\nKontering: ${data.kontering_balansekonto}'); this.innerText='✓ Kopiert til utklippstavle!'; setTimeout(()=>this.innerText='📋 Kopier justeringsnotat', 2000);" style="font-size: 11px;">
+                        <button type="button" class="btn btn-sm" onclick="copyAdvisorTextFromElement('res-mva-text', this)" style="font-size: 11px;">
                             📋 Kopier justeringsnotat
                         </button>
                         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SHA-256: ${data.sha256_audit_seal.substring(0, 16)}...</span>
@@ -12497,7 +12777,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             if (rep4Input) rep4Input.value = textToInsert.substring(0, 500);
             if (rep4P3) rep4P3.innerHTML = `<strong>AI Anbefaling:</strong> ${textToInsert.substring(0, 350)}...`;
 
-            const targetSection = document.getElementById("rapportering-seksjon") || document.getElementById("sektor-seksjon");
+            const targetSection = document.getElementById("mote-rapportering-seksjon") || document.getElementById("sektor-seksjon");
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
@@ -12595,7 +12875,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 
         function navigateToTriage(unitKey) {
             loadTriageUnit(unitKey);
-            const repSec = document.getElementById("rapportering-seksjon") || document.getElementById("sektor-seksjon");
+            const repSec = document.getElementById("mote-rapportering-seksjon") || document.getElementById("sektor-seksjon");
             if (repSec) {
                 repSec.scrollIntoView({ behavior: 'smooth' });
                 repSec.classList.remove("element-highlight-pulse");
@@ -27692,6 +27972,21 @@ function renderTop3Cards(sectorId) {
     const container = document.getElementById("top3-gauge-cards-container");
     if (!container) return;
 
+    const metricTooltips = {
+        "Netto Driftsresultat": "TBU-styringsmål: Måler kommunens overskudd etter ordinære driftsutgifter, renter og avdrag. Anbefalt minst 1,75 % for å sikre nødvendig egenfinansiering av investeringer.",
+        "Disposisjonsfond": "Kommunens frie reservefond jf. § 14-14. Bystyrets handlingsregel krever minst 8 % av driftsinntektene som buffer mot uventet inntektssvikt.",
+        "Netto Lånegjeld": "Kommunens samlede gjeld fratrukket formidlingslån og pensjonsforpliktelser jf. § 14-13. Bystyrets måltall er maksimalt 75 %.",
+        "Budsjettavvik YTD": "Differanse mellom periodisert budsjett og faktisk regnskapsført forbruk. Rødt tall varsler om merforbruk jf. Kommuneloven § 14-5.",
+        "Cost Performance Index (CPI)": "EVM Kostnadsindeks: Forholdet mellom levert verdi og kostnad. CPI = 1,000 er i balanse. Under 0,980 varsler om alvorlig underbalanse.",
+        "Legemeldt Sykefravær": "Andel fravær meldt av lege. Fravær over 6,5 % driver kostbar vikarinnleie (art 1020) og overtid (art 1040).",
+        "Legemeldt Sykefravær & Turnus": "Fravær i døgntjenester som utløser overtid og byråvikarer. Krever drøfting etter HTA § 4 ved endringer.",
+        "VAR Selvkostdekningsgrad": "Gebyrinntekter mot faktiske selvkostutgifter (vann, avløp, renovasjon). Skal gå i null over en 5-årsperiode jf. Selvkostforskriften § 7.",
+        "Strømsparing Idrettsanlegg": "ENØK-måling: Prosentvis energireduksjon på kommunale idrettsbygg sammenlignet med referanseår.",
+        "IKT Oppetid Fagsystemer": "SLA-mål for kommunale kjernesystemer (Visma, Framsikt, Websak). Krever minst 99,80 % oppetid.",
+        "Netto Finansresultat (CV)": "Avkastning på likviditetsplasseringer i pengemarkedet jf. finansreglementet, motregnet rentekostnader.",
+        "Fastrenteandel Gjeldsportefølje": "Andel av kommunens langsiktige gjeld med fast rentebinding. Skal ligge mellom 60-70 % for å stabilisere rentekostnadene."
+    };
+
     let html = "";
     secData.cards.forEach(function(c, i) {
         const gaugeSvg = renderGaugeObjectSvg(c.gauge);
@@ -27708,12 +28003,15 @@ function renderTop3Cards(sectorId) {
             (i === 0 ? "top3-gauge-netto-drift" : (i === 1 ? "top3-gauge-disposisjonsfond" : "top3-gauge-netto-gjeld")) :
             ("top3-gauge-slot-" + (i + 1));
 
+        const tip = metricTooltips[c.navn] || "";
+        const tipHtml = tip ? ' <span class="info-hint-icon tufte-tip" data-tip="' + tip + '" data-tip-pos="bottom">ℹ</span>' : '';
+
         html += '<div style="background:#ffffff; border:1px solid var(--border-light); border-top:' + c.border_top + '; border-radius:4px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-width:0; box-shadow:0 1px 3px rgba(0,0,0,0.02);">' +
             '<div>' +
                 '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">' +
                     '<div>' +
                         '<span style="font-size:11px; text-transform:uppercase; font-weight:700; color:#64748b; letter-spacing:0.5px;">' + c.kategori + '</span>' +
-                        '<div style="font-size:15px; font-weight:800; color:#0f172a;">' + c.navn + '</div>' +
+                        '<div style="font-size:15px; font-weight:800; color:#0f172a; display:inline-flex; align-items:center;">' + c.navn + tipHtml + '</div>' +
                     '</div>' +
                     '<span class="status-badge" style="' + c.status_badge_style + ' font-size:10px; font-weight:700;">' + c.status_text + '</span>' +
                 '</div>' +
@@ -27896,8 +28194,204 @@ function sealTop3KpiReport() {
     '</div>';
 }
 
+// ==============================================================================
+// 👤 PERSONA GUIDANCE ENGINE & USER GUIDANCE SYSTEM
+// Zero-manual intuitive navigation tailored for all 5 municipal user roles
+// ==============================================================================
+const HUB_PERSONAS = {
+    "TOPPLEDELSE": {
+        roleKey: "TOPPLEDELSE",
+        badge: "🏛️ Nivå 1: Toppledelse & Bystyret",
+        title: "Bystyret, Formannskapet & Kommunedirektør",
+        lead: "Camilla Dunsæd / Terje Fjellvang",
+        description: "Overordnet styring av kommunens 7,24 mrd. kr ramme. Du trenger rask oversikt over lovpålagte styringsmål, varsel om brudd på § 14-5 (budsjettbalanse) og 1-klikks eksport til politisk behandling.",
+        fullmakt: "Ubegrenset (Bystyret) / Inntil 20–100 mill. kr (Kommunedirektør)",
+        actions: [
+            { label: "📊 Se Konsern Topp 3 Nøkkeltall", fn: "scrollToHubSection('top3-kpi-seksjon')", isPrimary: true },
+            { label: "📥 Last ned Bystyret PPTX", fn: "downloadBystyretPptx()", isPrimary: false },
+            { label: "⚖️ Sjekk § 14-5 Budsjettbalanse", fn: "scrollToHubSection('saksflyt')", isPrimary: false }
+        ],
+        tip: "💡 Rød varsellampe på CPI (< 0,980) utløser lovpålagt handleplikt jf. Kommuneloven § 14-5 for kommunedirektøren til å fremme sak om ompostering til bystyret."
+    },
+    "KOMMUNALSJEF": {
+        roleKey: "KOMMUNALSJEF",
+        badge: "👥 Nivå 1–2: Sektorledelse",
+        title: "Kommunalsjef & Områdedirektør",
+        lead: "Brede Skeie (Helse) / Kristin Robstad (Oppvekst) / Ragnar Evensen (Byutv)",
+        description: "Styring av sektorens tildelte ramme og portefølje av enheter. Du kan filtrere direkte på din sektor i Topp 3-takometrene, se hvilke enheter som driver avviket i 81-enheters hierarkiet, og forberede månedsmøtet med Kommunedirektøren.",
+        fullmakt: "Inntil 15 000 000 – 25 000 000 NOK per disposisjon",
+        actions: [
+            { label: "🏫 Velg Oppvekst (OMR-02) Top 3", fn: "selectTop3Sector('OMR-02')", isPrimary: true },
+            { label: "🏥 Velg Helse (OMR-03) Top 3", fn: "selectTop3Sector('OMR-03')", isPrimary: false },
+            { label: "🚨 Avvikshierarki (81 Enheter)", fn: "scrollToHubSection('top3-hierarchy-table-container')", isPrimary: false },
+            { label: "👥 Månedsmøte-Agenda (Nivå 1–3)", fn: "scrollToHubSection('mote-rapportering-seksjon')", isPrimary: false }
+        ],
+        tip: "💡 Husk HTA § 4: Før du iverksetter bemanningsgrep, ansettelsesstopp eller endrer turnuser for å hente inn overforbruk, inntrer lovfestet drøftingsplikt med tillitsvalgte."
+    },
+    "ENHETSLEDER": {
+        roleKey: "ENHETSLEDER",
+        badge: "🏫 Nivå 3: Enhetsleder & Rektor",
+        title: "Rektor, Styrer & Virksomhetsleder",
+        lead: "Trond Jensen (Skole) / Solveig Grimstad (Sykehjem) / Grete Hovden (Bhg)",
+        description: "Velkommen! Du trenger ikke å kunne kompliserte finansielle forkortelser som CPI eller EAC. Slå opp din enhets kontoutskrift for å se faktisk forbruk mot budsjett, sjekke vikarutgifter, og laste ned ferdig avviksnotat.",
+        fullmakt: "Inntil 1 000 000 – 3 000 000 NOK (Fakturaattestasjon innen eget budsjett)",
+        actions: [
+            { label: "🏦 Åpne Min Kommunale Kontoutskrift", fn: "scrollToHubSection('nettbank-kontoutskrift-seksjon')", isPrimary: true },
+            { label: "🏥 Beregn NAV-sykepengerefusjon (Art 1020)", fn: "scrollToHubSection('advisor-calculators-seksjon', 'nav')", isPrimary: false },
+            { label: "📑 Last ned Avviksnotat Mal (.docx)", fn: "downloadEnhetslederTemplate()", isPrimary: false }
+        ],
+        tip: "💡 Innsendingsfrist: Avviksnotat og tiltaksplan skal leveres til økonomirådgiver innen M+6 virkedag kl 12:00 dersom enheten styrer mot merforbruk over 5 % eller 250 000 kr."
+    },
+    "CONTROLLER": {
+        roleKey: "CONTROLLER",
+        badge: "📊 Senior Controller & Finansanalytiker",
+        title: "Prosjektcontroller & BI Spesialist",
+        lead: "Frank Ellingsen / Bente Gundersen",
+        description: "Full tilgang til in-memory DuckDB analyse, EVM S-kurver, driverbaserte Monte Carlo-prognoser (P10/P50/P90), automatisk MVA 2130 avstemming og produksjonsklare FAST Excel-modeller.",
+        fullmakt: "Faglig controllerattestasjon, analyse og Stage-Gate Port 9 forberedelse",
+        actions: [
+            { label: "📈 Full EVM Analyse & S-kurver", fn: "scrollToHubSection('kpi-seksjon')", isPrimary: true },
+            { label: "🧮 4 Beslutningskalkulatorer", fn: "scrollToHubSection('advisor-calculators-seksjon')", isPrimary: false },
+            { label: "📊 Last ned Excel Master FAST Modell", fn: "downloadMasterFastExcel()", isPrimary: false },
+            { label: "🔒 Klargjør SHA-256 Revisjonsstempel", fn: "sealTop3KpiReport()", isPrimary: false }
+        ],
+        tip: "💡 Bruttoprinsippet jf. Kommuneloven § 14-6: Refusjoner på art 1700/1710 skal aldri nettføres mot utgifter på art 1020/1040, selv om nettoeffekten for enheten er null."
+    },
+    "REVISJON": {
+        roleKey: "REVISJON",
+        badge: "🛡️ Kontroll & Revisjon",
+        title: "Kommunerevisjonen & Kontrollutvalget",
+        lead: "Uavhengig Kommunal Revisjon",
+        description: "Kontrollsone for verifisering av algoritmisk transparens, Stage-Gate Port 4 (GDPR / PII-skjerming) og Port 9 (menneskelig overprøving / HITL). Verifiser uforanderlige SHA-256 forseglinger for alle beregninger.",
+        fullmakt: "Uavhengig innsyns- og revisjonsmyndighet jf. Kommuneloven kapittel 24",
+        actions: [
+            { label: "📜 Verifiser Data Lineage & SHA-256 Kjede", fn: "scrollToHubSection('mlops-lineage-section')", isPrimary: true },
+            { label: "🛡️ Kontroller Stage-Gate Port 4 & 9 (PII & HITL)", fn: "scrollToHubSection('saksflyt')", isPrimary: false },
+            { label: "📥 Eksporter SHA-256 Audit Trail Logg", fn: "exportAuditTrail()", isPrimary: false }
+        ],
+        tip: "💡 Eurocities Algorithmic Register Standard: AI-systemet fatter 0 autonome vedtak. Samtlige tiltak krever eksplisitt, kryptografisk signert godkjenning av navngitt saksbehandler."
+    }
+};
+
+let currentHubPersona = "TOPPLEDELSE";
+let personaGuidanceCollapsed = false;
+
+function selectHubPersona(roleKey) {
+    if (!HUB_PERSONAS[roleKey]) roleKey = "TOPPLEDELSE";
+    currentHubPersona = roleKey;
+    try {
+        localStorage.setItem("kk_hub_active_persona", roleKey);
+    } catch(e) {}
+
+    const pills = document.querySelectorAll("#hub-persona-guidance-container .persona-pill-btn");
+    pills.forEach(p => {
+        if (p.getAttribute("data-role") === roleKey) {
+            p.classList.add("active");
+        } else {
+            p.classList.remove("active");
+        }
+    });
+
+    renderPersonaGuidance();
+}
+
+function renderPersonaGuidance() {
+    const p = HUB_PERSONAS[currentHubPersona] || HUB_PERSONAS["TOPPLEDELSE"];
+    const container = document.getElementById("persona-guidance-content");
+    if (!container) return;
+
+    if (personaGuidanceCollapsed) {
+        container.style.display = "none";
+        return;
+    }
+    container.style.display = "block";
+
+    let actionsHtml = "";
+    p.actions.forEach(a => {
+        const cls = a.isPrimary ? "persona-action-btn primary" : "persona-action-btn";
+        actionsHtml += '<button type="button" class="' + cls + '" onclick="' + a.fn + '">' + a.label + '</button>';
+    });
+
+    container.innerHTML = 
+        '<div style="display:grid; grid-template-columns: 1.6fr 1fr; gap:16px; align-items:start;">' +
+            '<div>' +
+                '<div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">' +
+                    '<span class="status-badge" style="background:#0f172a; color:#fff; font-size:10.5px; font-weight:700;">' + p.badge + '</span>' +
+                    '<strong style="color:var(--navy-dark); font-size:14px;">' + p.title + '</strong>' +
+                    '<span style="font-size:11px; color:#64748b;">(F.eks. ' + p.lead + ')</span>' +
+                '</div>' +
+                '<p style="font-size:12px; color:#334155; line-height:1.55; margin-bottom:12px;">' +
+                    p.description +
+                '</p>' +
+                '<div style="display:flex; gap:8px; flex-wrap:wrap;">' +
+                    actionsHtml +
+                '</div>' +
+            '</div>' +
+            '<div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:4px; padding:12px; font-size:11.5px; line-height:1.5;">' +
+                '<div style="font-weight:700; color:var(--navy-dark); margin-bottom:4px;">Delegeringsfullmakt:</div>' +
+                '<div style="color:#0369a1; font-weight:600; margin-bottom:8px;">' + p.fullmakt + '</div>' +
+                '<div style="border-top:1px dashed #cbd5e1; padding-top:8px; color:#475569;">' +
+                    p.tip +
+                '</div>' +
+            '</div>' +
+        '</div>';
+}
+
+function togglePersonaGuidanceCollapse() {
+    personaGuidanceCollapsed = !personaGuidanceCollapsed;
+    const txt = document.getElementById("persona-guide-toggle-text");
+    const ico = document.getElementById("persona-guide-toggle-icon");
+    if (txt) txt.textContent = personaGuidanceCollapsed ? "Vis Veileder" : "Skjul Veileder";
+    if (ico) ico.textContent = personaGuidanceCollapsed ? "▼" : "▲";
+    renderPersonaGuidance();
+}
+
+function scrollToHubSection(sectionId, subTab) {
+    if (subTab && typeof switchAdvisorCalc === 'function') {
+        switchAdvisorCalc(subTab);
+    }
+    const el = document.getElementById(sectionId);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.classList.remove("element-highlight-pulse");
+        void el.offsetWidth;
+        el.classList.add("element-highlight-pulse");
+    }
+}
+
+function downloadEnhetslederTemplate() {
+    const link = document.createElement("a");
+    link.href = "reports/budsjettansvarlige_arkiv/5210-ENH-402/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.md";
+    link.download = "MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.md";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    if (typeof showToast === 'function') showToast("📑 Lastet ned mal for avviksnotat (Enhetsleder)");
+}
+
+function downloadMasterFastExcel() {
+    const link = document.createElement("a");
+    link.href = "reports/Kommune_Project_Controller_Reporting_2026.xlsx";
+    link.download = "Kommune_Project_Controller_Reporting_2026.xlsx";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    if (typeof showToast === 'function') showToast("📊 Lastet ned Master FAST Finansiell Modell");
+}
+
+function initPersonaGuidance() {
+    try {
+        const saved = localStorage.getItem("kk_hub_active_persona");
+        if (saved && HUB_PERSONAS[saved]) {
+            currentHubPersona = saved;
+        }
+    } catch(e) {}
+    selectHubPersona(currentHubPersona);
+}
+
 function initTop3KpiDashboard() {
     renderTop3Cards("ALL");
+    initPersonaGuidance();
 }
 
 if (document.readyState === "loading") {
