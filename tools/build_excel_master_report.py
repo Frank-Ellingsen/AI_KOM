@@ -1146,15 +1146,21 @@ def build_excel_master_report() -> Path:
 
     # Lagre arbeidsboken
     EXCEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(str(EXCEL_PATH))
+    target_path = EXCEL_PATH
+    try:
+        wb.save(str(target_path))
+    except PermissionError:
+        target_path = EXCEL_PATH.parent / "Excel_Master_Report_Latest.xlsx"
+        print(f"\n⚠️  Advarsel: {EXCEL_PATH.name} er åpen i Excel. Lagrer i stedet til: {target_path.name}")
+        wb.save(str(target_path))
 
-    file_size_kb = EXCEL_PATH.stat().st_size / 1024
+    file_size_kb = target_path.stat().st_size / 1024
     print(f"\n🎉 Excel Master Report vellykket generert og lagret!")
-    print(f"Filbane: {EXCEL_PATH.resolve()}")
+    print(f"Filbane: {target_path.resolve()}")
     print(f"Størrelse: {file_size_kb:.1f} KB | Totalt faner: {len(wb.sheetnames)}")
     print(f"Faneliste: {', '.join(wb.sheetnames)}")
     print("=" * 85 + "\n")
-    return EXCEL_PATH
+    return target_path
 
 
 if __name__ == "__main__":

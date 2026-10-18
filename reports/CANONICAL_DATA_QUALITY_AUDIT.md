@@ -1,5 +1,5 @@
 # 🏛️ Kristiansand Kommune — Master Data Quality & Canonical Model Audit
-> **Kjørt dato:** 2026-10-18T13:06:25.471476 | **Ansvarlig:** Frank Ellingsen (Senior Financial & Project Controller)
+> **Kjørt dato:** 2026-10-18T17:05:19.985382 | **Ansvarlig:** Frank Ellingsen (Senior Financial & Project Controller)
 > **Revisjonsstatus:** 🟢 100 % BESTÅTT (6/6 test-suiter godkjent)
 > **Kilde-database (SSOT):** `kommune_golden_record.db`
 
@@ -31,7 +31,7 @@
 | `stg_erp_transactions` | Staging / Audit |    1 250 |    1 250 |       0 |       100.0% |
 | `Fact_Regnskap` | Faktatabell |    1 555 |    1 555 |       0 |       100.0% |
 | `Fact_Budsjett` | Faktatabell |    1 622 |    1 622 |       0 |       100.0% |
-| `Audit_AI_Actions` | Staging / Audit |       99 |       99 |       0 |       100.0% |
+| `Audit_AI_Actions` | Staging / Audit |      111 |      111 |       0 |       100.0% |
 | `Fact_Prognose_Logg` | Faktatabell |        5 |        5 |       0 |       100.0% |
 
 ---

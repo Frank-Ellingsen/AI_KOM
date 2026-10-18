@@ -6,73 +6,99 @@ An architectural and technical optimization plan for the Kristiansand Kommune Co
 
 ## 1. Executive Summary & Core Objectives
 
-The **AI_KOM** project integrates municipal financial controlling (*Kommuneloven § 14-5*, *KOSTRA*, *EVM*), Glass-Box RAG (`sqlite-vec`), DuckDB financial analytics, and Stage-Gate Port 9 AI governance.
+The **AI_KOM** platform is the central operational hub for financial controlling across Kristiansand Kommune's **6 virksomhetsområder** (Oppvekst, Helse og mestring, By- og stedsutvikling, Kultur og innbyggerdialog, Organisasjon og teknologi, samt Økonomi og konsernstyring), **81 organisatoriske enheter**, og et årsbudsjett på **7,24 milliarder NOK**.
 
-To scale the platform to production across 6 municipal sectors and 81 organizational units, this document outlines five key optimization domains:
-1. RAG & Retrieval Performance
-2. Data Engineering & OLAP Analytics
-3. Security & EU AI Act Governance
-4. UI/UX & Session Latency
-5. Standardization via Agent Skills
+The platform unifies municipal regulatory compliance (*Kommuneloven § 14-5/§ 14-6*, *KOSTRA*, *EVM*), Glass-Box RAG (`sqlite-vec`), DuckDB in-memory OLAP analytics, og Stage-Gate Port 9 AI governance.
+
+To scale the platform to full enterprise production, this blueprint details 6 core optimization pillars:
+1. Legal-Aware RAG & Hybrid Retrieval
+2. Data Engineering & DuckDB/SQLite Golden Record
+3. Security, PII Guardrails, OWASP ASI06 & EU AI Act Art. 14
+4. UI/UX Architecture & Client-Side Rendering ([index.html](file:///C:/Users/frank/Desktop/AI_KOM/index.html) + Streamlit)
+5. Model Gateway & Hybrid Routing (Gemini 3.8 Flash + Ollama)
+6. Modular Agent Skills Standard
 
 ---
 
-## 2. RAG Architecture & Retrieval Optimization
+## 2. RAG Architecture & Legal Retrieval Optimization
 
-### Hierarchical & Parent-Child Chunking
-* **Challenge**: Municipal legislation (*Kommuneloven*, *Hovedtariffavtalen*) contains long nested sections where small vector chunks lose overarching legal context.
-* **Solution**: Implement **Parent-Child Chunking**:
-  * Index small **child chunks** (128–256 tokens) for fine-grained vector similarity search in `sqlite-vec`.
-  * Retrieve and inject the overarching **parent section** (1,024–2,048 tokens) into the Gemini context window.
+### 2.1 Paragraph-Aware Chunking (`§`-Boundary Chunking)
+* **Challenge**: Fixed-token chunking (e.g. 128 or 256 tokens) splits legal statutes midway through sentences, breaking the connection between legal conditions (*Kommuneloven § 14-5 første ledd*) and the statutory duty to act (*annet ledd*).
+* **Optimization**: Implement **Paragraf- og ledd-basert chunking** via [document-parser](file:///C:/Users/frank/Desktop/AI_KOM/.agents/skills/document-parser/SKILL.md):
+  * **Child Chunks**: Formal legal sections (`§ 14-5 ledd 1-3`, `HTA § 4 pkt 4.2`, `Momskompensasjonsloven § 4`).
+  * **Parent Context**: Overarching law/chapter and municipal administrative guidelines (1 024–2 048 tokens) injected into model context window.
+  * **Metadata Anchoring**: Every chunk tags `lov_hjemmel`, `paragraf_nummer`, `kapittel`, og `gyldighetsaar`.
 
-### Two-Stage Retrieval with Reranking
+### 2.2 Two-Stage Hybrid Retrieval with Cross-Encoder Reranking
 ```
-User Query
-    │
-    ▼
-[sqlite-vec / BM25 Hybrid Search] ──► Retrieves Top 30 Candidate Chunks
-                                               │
-                                               ▼
-                                  [Cross-Encoder Reranker]
-                                               │
-                                               ▼
-                                   Top 5 High-Precision Chunks ──► LLM Context
+Bruker- eller Controller-spørring
+              │
+              ▼
+    [Query Normalizer & PII Scrub]
+              │
+              ▼
+   ┌──────────────────────┬──────────────────────┐
+   │ BM25 Fritekstsøk     │ sqlite-vec KNN       │
+   │ (Juridiske termer)   │ (384-dim all-MiniLM) │
+   └──────────┬───────────┴──────────┬───────────┘
+              │                      │
+              └──────────┬───────────┘
+                         ▼
+              [RRF / Rank Fusion] ──► Topp 30 Kandidat-chunks
+                         │
+                         ▼
+             [Cross-Encoder Reranker]
+                         │
+                         ▼
+              Topp 5 Høypresisjons-chunks ──► LLM Kontekst (Gemini 3.8 / Ollama)
 ```
 
 ---
 
-## 3. Data Engineering & OLAP Analytics (DuckDB + Parquet)
+## 3. Data Engineering & OLAP Analytics (DuckDB + SQLite)
 
-### Columnar In-Memory Analytics
-* **Storage Format**: Convert static accounting journals (*Fact_Regnskap*) and budget dimensions (`Dim_Ansvar`, `Dim_Funksjon`, `Dim_Art`) into compressed **Apache Parquet** files.
-* **Engine**: Execute DuckDB in-memory analytical queries over Parquet files for sub-millisecond aggregation across 7.24 BNOK budget totals.
+### 3.1 Zero-Copy In-Memory Analytics
+* **Master Transactional Store**: SQLite Star Schema Golden Record (`erp_data/kommune_golden_record.db`).
+* **DuckDB OLAP Engine**: DuckDB kobles direkte til SQLite via native SQLite-scanner uten duplisering:
+  ```sql
+  ATTACH 'erp_data/kommune_golden_record.db' AS golden (TYPE SQLITE);
+  ```
+* **Cold Storage i Parquet**: Avsluttede regnskapsår (2020–2025) partisjoneres i Apache Parquet-filer (`data/parquet/regnskap_aar=2025/`). DuckDB kjører analytiske spørringer på tvers av 7,24 milliarder NOK på under 15 ms.
 
-### Change Data Capture (CDC) Delta Ingestion
-* Replace nightly full table reloads with delta sync endpoints connecting to **Visma Enterprise** and **Framsikt GraphQL APIs**, updating only modified accounting vouchers.
+### 3.2 Change Data Capture (CDC) Delta Ingestion
+* Erstatt tunge nattlige totalopplastinger med differensiell CDC-synkronisering mot **Visma Enterprise ERP** og **Framsikt EPM**.
+* Ingestion-køen (`erp_data/staging_queue/`) behandler kun modifiserte bilag og periodiseringsendringer med SHA-256 verifisering.
 
 ---
 
-## 4. Security, OWASP ASI06 & EU AI Act Compliance
+## 4. Security, PII Guardrails, OWASP ASI06 & EU AI Act Governance
 
-### Indirect Prompt Injection Defense (OWASP ASI06)
-* Apply **Spotlighting Delimiters** around all retrieved municipal documents and external text:
+### 4.1 PII Scrubbing Gate (Stage-Gate Port 4)
+* **GDPR Art. 9 & Personopplysningsloven**: Ingen rå fødselsnumre (FNR), ansattnumre, kontonumre eller personnavn skal overføres til offentlige eksterne sky-API-er.
+* Alle forespørsler kjøres gjennom [pii-guardrails](file:///C:/Users/frank/Desktop/AI_KOM/.agents/skills/pii-guardrails/SKILL.md) før eventuell dispatch til `Gemini 3.8 Flash`.
+* Dersom saksbehandlingen krever uanonymiserte helse- eller personalopplysninger, rutes forespørselen automatisk til **lokal frakoblet Ollama** (`qwen2.5-coder` / `llama3.2`).
+
+### 4.2 Indirect Prompt Injection Defense (OWASP ASI06)
+* Dokumenter fra uverifiserte kilder (inngående fakturavedlegg, e-poster, eksterne PDF-er) innkapsles med kryptografiske avgrensninger:
   ```xml
-  <UNTRUSTED_MUNICIPAL_DOC_a9f81>
-  [Retrieved text from PDF or invoice note]
+  <UNTRUSTED_MUNICIPAL_DOC_a9f81 sha256="4e8a...">
+  [Uverifisert tekst fra fakturavedlegg eller henvendelse]
   </UNTRUSTED_MUNICIPAL_DOC_a9f81>
   ```
-* Enforce **Tool Result Parsing** to extract rigid JSON data types, filtering out natural language injection attempts.
+* Systeminstruksen pålegger modellen å ignorere instruksjoner inne i `<UNTRUSTED_...>`-blokken.
 
-### Audit Ledger (EU AI Act Article 14)
-Every AI-assisted financial decision logs a SHA-256 sealed audit record:
+### 4.3 Stage-Gate Port 9 Audit Ledger (EU AI Act Article 14)
+Enhver AI-assistert budsjettanbefaling eller avviksvurdering forsegles med SHA-256 hash og krever eksplisitt menneskelig godkjenning (HITL - Human-In-The-Loop):
 
 ```json
 {
-  "timestamp": "2026-10-18T07:30:00Z",
-  "user_upn": "controller@kristiansand.kommune.no",
+  "timestamp": "2026-10-18T14:30:00Z",
+  "controller_upn": "frank.ellingsen@kristiansand.kommune.no",
+  "sector_id": "OMR-01",
+  "unit_id": "ENH-002",
   "query_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "retrieved_chunk_ids": ["doc_43_chunk_12", "doc_08_chunk_04"],
-  "ai_recommendation": "APPROVED_VARIANCES_WITHIN_KOMMUNELOVEN_PAR_14_5",
+  "retrieved_chunk_ids": ["lov_14_5_chunk_02", "hta_4_chunk_11"],
+  "ai_recommendation": "SUPPLEMENTARY_BUDGET_REQUIRED_PAR_14_5",
   "human_decision": "APPROVED",
   "sha256_seal": "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
 }
@@ -80,18 +106,24 @@ Every AI-assisted financial decision logs a SHA-256 sealed audit record:
 
 ---
 
-## 5. UI/UX Optimization (Streamlit + Power BI)
+## 5. UI/UX Architecture & Client-Side Rendering
 
-* **Lazy Loading**: Wrap heavy tabs (30-day liquidity curves, Power BI DAX showcases) in `@st.cache_data` and render them only on active tab selection.
-* **Row-Level Security (RLS) Pre-Filtering**: When a unit leader (*Enhetsleder*) logs in, apply DuckDB query-level filtering on `Dim_Ansvar = 202` before rendering DOM components.
+* **Primær Hub ([index.html](file:///C:/Users/frank/Desktop/AI_KOM/index.html))**:
+  * 4-faset personanavigasjon: *Min Enhet*, *Sektor & Konsernstyring*, *Controller Hub*, og *Veiledere & Maler*.
+  * Matematisk streng SVG-rendering for takometre (Gauges) som eliminerer tunge JavaScript-biblioteker og rendrer på under 2 ms.
+  * Tufte Data-Ink disiplin: Ingen vertikale skillelinjer, dempede bakgrunner, og fargebruk reservert for faktiske avvik (`#c0392b`, `#d35400`, `#27ae60`).
+* **Row-Level Security (RLS) Pre-Filtering**:
+  * Ved pålogging for enhetsleder filtreres datagrunnlaget i DuckDB/SQLite på `Dim_Ansvar = X` før DOM-elementer bygges.
+* **Streamlit Pilot (`mvp-pilot/`)**:
+  * Caching via `@st.cache_data` for What-If scenarioberegninger og Monte Carlo-simuleringer.
 
 ---
 
 ## 6. Standardizing Workflows via Agent Skills
 
-Package core municipal workflows into `SKILL.md` Agent Skills:
-* `MAL-AVVIK-EFFEKT-001` (4-step variance analysis protocol)
-* `NAV-REFUND-GAP` (NAV sick leave refund reconciliation)
-* `SELVKOST-5YR` (5-year self-cost calculation model)
-
-Each skill loads procedural knowledge into model context only when triggered, preventing system prompt bloat.
+Ferdigheter organiseres etter prinsippet om **Progressive Disclosure** i `.agents/skills/`:
+* [epm-variance-detect](file:///C:/Users/frank/Desktop/AI_KOM/.agents/skills/epm-variance-detect/SKILL.md): Z-score avviksdeteksjon og terskelvarsling jf. § 14-5.
+* [predictive-forecasting](file:///C:/Users/frank/Desktop/AI_KOM/.agents/skills/predictive-forecasting/SKILL.md): Monte Carlo P10/P50/P90 og rullende Earned Value (EAC/ETC).
+* [kostra-analyzer](file:///C:/Users/frank/Desktop/AI_KOM/.agents/skills/kostra-analyzer/SKILL.md): Kontoplan, drifts- vs. investeringsskille og selvkost 5-år.
+* [saksfremlegg-generator](file:///C:/Users/frank/Desktop/AI_KOM/.agents/skills/saksfremlegg-generator/SKILL.md): Formelle politiske saksnotater til Formannskapet og Bystyret.
+* [audit-governance](file:///C:/Users/frank/Desktop/AI_KOM/.agents/skills/audit-governance/SKILL.md): SHA-256 forsegling og revisjonseksporter for Kommunerevisjonen.

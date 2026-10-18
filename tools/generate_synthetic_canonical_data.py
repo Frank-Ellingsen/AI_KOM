@@ -77,20 +77,21 @@ def ensure_dim_dato_2026(conn: sqlite3.Connection) -> int:
     return inserted
 
 
-# Månedlig sesongvekting for de 9 månedene (Jan-Sep)
+# Månedlig sesongvekting for de 10 månedene (Jan-Okt)
 # Gjenspeiler kommunale svingninger (ferieavvikling i juli, høyt vikarforbruk vinter/vår, etc.)
 MONTHLY_WEIGHTS = {
-    1: 0.110,
-    2: 0.112,
-    3: 0.115,
-    4: 0.112,
-    5: 0.114,
-    6: 0.116,
-    7: 0.088,  # Sommerferie og redusert drift
-    8: 0.115,  # Skolestart
-    9: 0.118,  # Full høstdrift
+    1: 0.100,
+    2: 0.102,
+    3: 0.105,
+    4: 0.102,
+    5: 0.104,
+    6: 0.106,
+    7: 0.080,  # Sommerferie og redusert drift
+    8: 0.105,  # Skolestart
+    9: 0.108,  # Full høstdrift september
+    10: 0.108, # M10 Oktober avslutning
 }
-# Normaliser summen til nøyaktig 1.0 for de 9 månedene
+# Normaliser summen til nøyaktig 1.0 for de 10 månedene
 _weight_sum = sum(MONTHLY_WEIGHTS.values())
 MONTHLY_WEIGHTS = {m: w / _weight_sum for m, w in MONTHLY_WEIGHTS.items()}
 
@@ -661,8 +662,8 @@ def generate_and_insert_data(conn: sqlite3.Connection) -> Tuple[int, int]:
             base_forbruk_tot = base_ramme_tot
             driver_forbruk_tot = max(0.0, driver_ramme_tot + avvik)
 
-            # Fordel over de 9 månedene (Jan-Sep 2026)
-            for m in range(1, 10):
+            # Fordel over de 10 månedene (Jan-Okt 2026)
+            for m in range(1, 11):
                 dato_key = f"2026-{m:02d}"
                 w = MONTHLY_WEIGHTS[m]
 
@@ -855,7 +856,7 @@ def update_dashboard_json_payload(conn: sqlite3.Connection) -> None:
     payload = {
         "kommunenivå": {
             "kommune": "Kristiansand kommune",
-            "periode": "2026-M09 (September YTD)",
+            "periode": "2026-M10 (Oktober YTD)",
             "top3_kpis": {
                 "netto_driftsresultat": {
                     "navn": "Netto Driftsresultat",

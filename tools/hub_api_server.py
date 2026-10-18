@@ -1023,6 +1023,16 @@ class HubApiHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
             return
 
+        elif path in ("/api/v1/monthend/status", "/api/monthend/status"):
+            try:
+                from tools.monthend_pipeline_orchestrator import get_current_manifest
+                manifest = get_current_manifest()
+            except Exception as exc:
+                manifest = {"status": "ERROR", "error": str(exc)}
+            self._set_headers(200, "application/json; charset=utf-8")
+            self.wfile.write(json.dumps(manifest, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
         elif path in ("/api/v1/cash/position", "/api/cash/position"):
             res = get_v1_cash_position()
             self._set_headers(200 if res.get("ok") else 500, "application/json; charset=utf-8")
@@ -1276,6 +1286,27 @@ class HubApiHandler(BaseHTTPRequestHandler):
             res = execute_m10_ingestion(payload)
             self._set_headers(200, "application/json; charset=utf-8")
             self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            return
+
+        elif path in ("/api/v1/monthend/execute", "/api/monthend/execute"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_length) if content_length > 0 else b"{}"
+            try:
+                payload = json.loads(post_body.decode("utf-8"))
+            except Exception:
+                payload = {}
+            from tools.monthend_pipeline_orchestrator import MonthEndOrchestrator
+            m = int(payload.get("month", 10))
+            y = int(payload.get("year", 2026))
+            appr = payload.get("approved_by", "frank.ellingsen@kristiansand.kommune.no")
+            try:
+                orch = MonthEndOrchestrator(month=m, year=y, approved_by=appr)
+                res = orch.execute_all()
+                self._set_headers(200 if res.get("status") == "COMPLETED" else 500, "application/json; charset=utf-8")
+                self.wfile.write(json.dumps(res, ensure_ascii=False, indent=2).encode("utf-8"))
+            except Exception as exc:
+                self._set_headers(500, "application/json; charset=utf-8")
+                self.wfile.write(json.dumps({"ok": False, "status": "ERROR", "error": str(exc)}, ensure_ascii=False).encode("utf-8"))
             return
 
         elif path in ("/api/v1/cash/simulate", "/api/cash/simulate"):

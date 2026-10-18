@@ -166,6 +166,16 @@ Eksempler på bruk:
     p_duck.add_argument("--month", type=int, default=9, help="Måned YTD (standard: 9)")
     p_duck.add_argument("--json", action="store_true", help="Formatér respons som JSON")
 
+    # 22. Month-End Automated Report Orchestration
+    p_me = subparsers.add_parser("monthend", help="Automatisert månedsslutt rapportgenerering (Power BI, Excel, PPTX, PDF, Hub)")
+    p_me.add_argument("--execute", action="store_true", help="Kjør full månedsslutt rapportgenerering nå")
+    p_me.add_argument("--watch", action="store_true", help="Start automatisk file-watcher daemon")
+    p_me.add_argument("--status", action="store_true", help="Vis status for siste månedssluttkjøring")
+    p_me.add_argument("--month", type=int, default=10, help="Månedsnummer (standard: 10)")
+    p_me.add_argument("--year", type=int, default=2026, help="Årstall (standard: 2026)")
+    p_me.add_argument("--approved-by", default="frank.ellingsen@kristiansand.kommune.no", help="Godkjennende saksbehandler")
+    p_me.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
     args, unknown = parser.parse_known_args()
 
     if not args.command:
@@ -318,6 +328,23 @@ Eksempler på bruk:
         if args.json:
             cmd_args.append("--json")
         run_command("duckdb_runner.py", cmd_args + unknown)
+    elif args.command == "monthend":
+        cmd_args = []
+        if args.execute:
+            cmd_args.append("--execute")
+        if args.watch:
+            cmd_args.append("--watch")
+        if args.status:
+            cmd_args.append("--status")
+        if args.month:
+            cmd_args += ["--month", str(args.month)]
+        if args.year:
+            cmd_args += ["--year", str(args.year)]
+        if args.approved_by:
+            cmd_args += ["--approved-by", args.approved_by]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("monthend_pipeline_orchestrator.py", cmd_args + unknown)
 
 if __name__ == "__main__":
     main()

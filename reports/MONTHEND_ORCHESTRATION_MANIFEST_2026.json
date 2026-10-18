@@ -1,0 +1,90 @@
+{
+  "orchestrator": "Kristiansand Kommune Month-End Automated Engine",
+  "periode": "2026-M10",
+  "initiated_at": "2026-10-18T17:08:49.781825",
+  "approved_by": "frank.ellingsen@kristiansand.kommune.no",
+  "status": "COMPLETED",
+  "channels": {
+    "1_Golden_Record_SSOT": {
+      "status": "COMPLETED",
+      "golden_db": "kommune_golden_record.db",
+      "periode": "2026-M10",
+      "source_file_sha256": "7bbad34c1a21f350594c76083e0a9e0046cfc2dda1a78a30d90731dc45782eef",
+      "ytd_actuals_nok": 6383999999.96,
+      "ytd_budget_nok": 6314999999.9,
+      "ytd_variance_nok": -69000000.06
+    },
+    "2_Data_Quality_Gates": {
+      "status": "PASS",
+      "passed_suites": 6,
+      "failed_suites": 0,
+      "zero_orphaned_keys": true,
+      "audit_file": "C:\\Users\\frank\\Desktop\\AI_KOM\\reports\\CANONICAL_DATA_QUALITY_AUDIT.md"
+    },
+    "3_Excel_Reports": {
+      "Excel_Master_Report": {
+        "path": "C:\\Users\\frank\\Desktop\\AI_KOM\\excel\\Excel_Master_Report_Latest.xlsx",
+        "name": "Excel_Master_Report_Latest.xlsx",
+        "size_kb": 29.9,
+        "sha256": "0100b5d76abc2de71e9369c0ec2e8083ad8a5806c6d77c8b2382d03f5de35695"
+      },
+      "Controller_Reporting": {
+        "path": "C:\\Users\\frank\\Desktop\\AI_KOM\\reports\\Kommune_Project_Controller_Reporting_2026.xlsx",
+        "name": "Kommune_Project_Controller_Reporting_2026.xlsx",
+        "size_kb": 23.7,
+        "sha256": "26d6084cd8da403d87e8fac21ca39fb207db0a5357699c9d17e4efe06066be02"
+      },
+      "Kommune_FAST_Finansiell_Modell_2026.xlsx": {
+        "path": "C:\\Users\\frank\\Desktop\\AI_KOM\\excel\\Kommune_FAST_Finansiell_Modell_2026.xlsx",
+        "name": "Kommune_FAST_Finansiell_Modell_2026.xlsx",
+        "size_kb": 13.8,
+        "sha256": "fc35381f56557067d45ae3dc1b34833370e64aaf19d00977de8fbc6ae2459581"
+      },
+      "Kommune_Project_Controller_EVM_2026.xlsx": {
+        "path": "C:\\Users\\frank\\Desktop\\AI_KOM\\excel\\Kommune_Project_Controller_EVM_2026.xlsx",
+        "name": "Kommune_Project_Controller_EVM_2026.xlsx",
+        "size_kb": 13.1,
+        "sha256": "176b5e5a3495eb10579a072845a35cbf5ad3d586a40b9b1d4058565351f4e30d"
+      },
+      "Kommune_CFO_Executive_Konsern_2026.xlsx": {
+        "path": "C:\\Users\\frank\\Desktop\\AI_KOM\\excel\\Kommune_CFO_Executive_Konsern_2026.xlsx",
+        "name": "Kommune_CFO_Executive_Konsern_2026.xlsx",
+        "size_kb": 12.3,
+        "sha256": "c0d52026a24b5e846c29bd3a1a316c3a5522acdb91a9055ce4322e77eba30d9e"
+      },
+      "Kommune_HR_Lonn_Vikar_Monitor_2026.xlsx": {
+        "path": "C:\\Users\\frank\\Desktop\\AI_KOM\\excel\\Kommune_HR_Lonn_Vikar_Monitor_2026.xlsx",
+        "name": "Kommune_HR_Lonn_Vikar_Monitor_2026.xlsx",
+        "size_kb": 11.8,
+        "sha256": "1f9921a8e111a42ffb95b1b86a54b80dda713ad3b7da61f3ba8dbbb536275887"
+      }
+    },
+    "4_PowerPoint_Presentation": {
+      "status": "COMPLETED",
+      "file_name": "Bystyret_M10_Okonomi_Rapport.pptx",
+      "path": "C:\\Users\\frank\\Desktop\\AI_KOM\\reports\\Bystyret_M10_Okonomi_Rapport.pptx",
+      "size_kb": 32.7,
+      "slides_count": 4,
+      "sha256": "06b3a22a57b291904334d066ac94185d583964886d41f30a343a3e9ae23f8b3a"
+    },
+    "5_PDF_and_Framsikt_Suite": {
+      "status": "COMPLETED",
+      "reports_count": 20,
+      "framsikt_batch_csv": "FRAMSIKT_BATCH_OMDISPONERING_M10_2026.csv",
+      "register_json": "MAANEDSRAPPORT_REGISTER_M10_2026.json",
+      "portal_index_html": "index.html",
+      "sha256_register": "1f6a5099b859b2a416374aa46f3d41afc9f5809a2c3a3409071d18cdeffb6613"
+    },
+    "6_PowerBI_and_OfficeHub": {
+      "status": "COMPLETED",
+      "pbip_path": "C:\\Users\\frank\\Desktop\\AI_KOM\\powerbi\\pbi_reporting_project.pbip",
+      "pbip_sha256": "7bdfa44c88b49ccd0c73774f654baa3b07a7964e219ab46a0bf89e020252cdf3",
+      "top3_kpi_json_sha256": "a589d1b917cfa62159e912196b0139eb6835365e0612d6568f6145326feeec7c"
+    }
+  },
+  "audit_trail": {},
+  "completed_at": "2026-10-18T17:08:58.613117",
+  "duration_seconds": 8.83,
+  "job_id": "job_monthend_orchestration_2026M10_1792336138",
+  "sha256_audit_seal": "781e4672a7b65220941c18a8eeaf23a8cf729f55b54baf699e65a7776f630900"
+}
