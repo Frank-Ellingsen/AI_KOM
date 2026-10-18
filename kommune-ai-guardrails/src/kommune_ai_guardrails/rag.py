@@ -19,9 +19,9 @@ except (ImportError, ValueError):
 
 
 def sanitize_pii(text: str) -> str:
-    """Fjerner norske fødselsnumre (11 siffer), telefonnumre og e-postadresser (Stage-Gate Port 4)."""
-    # Norsk fødselsnummer (11 siffer)
-    fnr_pattern = r"\b(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{7}\b"
+    """Fjerner norske fødselsnumre og D-numre (11 siffer), telefonnumre og e-postadresser (Stage-Gate Port 4)."""
+    # Norsk fødselsnummer (01-31) og D-nummer (41-71, dvs. første siffer + 4)
+    fnr_pattern = r"\b(?:0[1-9]|[12][0-9]|3[01]|4[1-9]|[56][0-9]|7[01])(?:0[1-9]|1[012])\d{7}\b"
     text = re.sub(fnr_pattern, "[SKJERMET FNR]", text)
 
     # Telefonnummer (8 siffer, evt med +47/0047)
@@ -42,8 +42,10 @@ def validate_output_citation(answer: str, required_keyword: str = "§") -> bool:
 
 try:
     from google import genai  # type: ignore
+    from google.genai import types  # type: ignore
 except ModuleNotFoundError:  # pragma: no cover - optional dependency
     genai = None
+    types = None
 
 try:
     import sqlite_vec  # type: ignore
@@ -71,11 +73,21 @@ def query_gemini(system_prompt: str, user_prompt: str, model_name: str = "gemini
 
     try:
         client = genai.Client(api_key=api_key)
-        full_content = f"SYSTEMINSTRUKSJON:\n{system_prompt}\n\n{user_prompt}"
-        response = client.models.generate_content(
-            model=model_name,
-            contents=full_content,
-        )
+        if types is not None and hasattr(types, "GenerateContentConfig"):
+            response = client.models.generate_content(
+                model=model_name,
+                contents=user_prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_prompt,
+                    temperature=0.1,
+                ),
+            )
+        else:
+            full_content = f"SYSTEMINSTRUKSJON:\n{system_prompt}\n\n{user_prompt}"
+            response = client.models.generate_content(
+                model=model_name,
+                contents=full_content,
+            )
         return response.text or "⚠️ Tom respons mottatt fra Gemini."
     except Exception as exc:
         return f"⚠️ Feil ved tilkobling til Gemini API: {exc}"

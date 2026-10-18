@@ -175,9 +175,12 @@ def ask_kommune_ai_ollama(
     model_name: str = OLLAMA_MODEL,
 ) -> tuple[str, list[Any], str]:
     """Utfører hybrid RAG-søk og sender kontekstuelt prompt til lokal Ollama-modell."""
+    from kommune_ai_guardrails.rag import sanitize_pii
+
+    clean_query = sanitize_pii(query)
     conn = get_db_connection()
     try:
-        chunks = hybrid_search(conn, query, embedding_model, top_k=4)
+        chunks = hybrid_search(conn, clean_query, embedding_model, top_k=4)
 
         if not chunks:
             return (
@@ -212,7 +215,7 @@ STRENGE REGLER:
 """
 
         user_prompt = f"""BRUKERENS SPØRSMÅL:
-{query}
+{clean_query}
 
 TILGJENGELIG REGELVERKSKONTEKST:
 {context_text}
@@ -253,7 +256,7 @@ TILGJENGELIG REGELVERKSKONTEKST:
             answer = f"⚠️ Feil ved tilkobling til Ollama. Sjekk at Ollama kjører. Feilmelding: {e}"
 
         # Lagre uforanderlig audit trail (Port 9)
-        hash_val = log_audit_trail(conn, query, chunk_ids, answer)
+        hash_val = log_audit_trail(conn, clean_query, chunk_ids, answer)
         return answer, chunk_ids, hash_val
     finally:
         conn.close()

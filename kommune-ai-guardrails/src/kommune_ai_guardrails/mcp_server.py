@@ -683,10 +683,20 @@ Hei Frank! {res_info['title']} finner du direkte i **Power BI & DAX Enterprise S
                 f"LOVHJEMLER: {json.dumps(law_data, ensure_ascii=False)}\n"
                 f"PROGNOSEVIRKNING: {json.dumps(impact_data, ensure_ascii=False)}\n"
             )
-            resp = client.models.generate_content(
-                model=model_name,
-                contents=f"SYSTEM:\n{system_instruction}\n\nBRUKER:\n{clean_prompt}",
-            )
+            if types is not None and hasattr(types, "GenerateContentConfig"):
+                resp = client.models.generate_content(
+                    model=model_name,
+                    contents=clean_prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=system_instruction,
+                        temperature=0.1,
+                    ),
+                )
+            else:
+                resp = client.models.generate_content(
+                    model=model_name,
+                    contents=f"SYSTEM:\n{system_instruction}\n\nBRUKER:\n{clean_prompt}",
+                )
             response_text = resp.text or ""
         except Exception as exc:
             # Fallback til simulert strukturert svar

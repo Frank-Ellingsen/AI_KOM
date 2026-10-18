@@ -18,6 +18,12 @@ dependencies = [
   "uvicorn>=0.22.0",
   "python-dotenv>=1.0.0",
   "ollama>=0.1.0",
+  "streamlit>=1.30.0",
+  "pandas>=2.0.0",
+  "google-genai>=1.0.0",
+  "openpyxl>=3.1.0",
+  "python-docx>=1.1.0",
+  "python-pptx>=0.6.23",
 ]
 
 [tool.setuptools]
@@ -25,3 +31,8 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+

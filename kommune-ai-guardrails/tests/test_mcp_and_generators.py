@@ -167,7 +167,7 @@ def test_word_generators(tmp_path):
 def test_powerbi_pbip_generator():
     res = build_pbip_project()
     assert res["status"] == "SUCCESS"
-    assert res["pages_count"] == 7
+    assert res["pages_count"] == 12
     assert res["visuals_count"] >= 40
     assert res["tables_count"] >= 8
     assert Path(res["pbip_file"]).exists()

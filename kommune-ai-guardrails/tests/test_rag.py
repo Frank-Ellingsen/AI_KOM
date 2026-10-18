@@ -59,11 +59,15 @@ def test_rag_ollama_init_audit_and_tables(tmp_path):
 def test_sanitize_pii_masks_sensitive_data():
     from kommune_ai_guardrails.rag import sanitize_pii
 
-    raw_text = "Bruker Ola Nordmann med fnr 01029012345, tlf 98765432 og epost ola@kommune.no søker dispensasjon."
+    raw_text = (
+        "Bruker Ola Nordmann med fnr 01029012345, dnr 41029012345, "
+        "tlf 98765432 og epost ola@kommune.no søker dispensasjon."
+    )
     cleaned = sanitize_pii(raw_text)
 
     assert "01029012345" not in cleaned
-    assert "[SKJERMET FNR]" in cleaned
+    assert "41029012345" not in cleaned
+    assert cleaned.count("[SKJERMET FNR]") == 2
     assert "98765432" not in cleaned
     assert "[SKJERMET TLF]" in cleaned
     assert "ola@kommune.no" not in cleaned

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime
 import hashlib
+import html
 import json
 import os
 from pathlib import Path
@@ -214,15 +215,25 @@ def load_golden_record_evm() -> pd.DataFrame:
     try:
         conn = sqlite3.connect(GOLDEN_RECORD_DB_PATH)
         sql = """
-        WITH evm_agg AS (
+        WITH bud_agg AS (
+            SELECT funksjon_key, art_key, ansvar_key, dato_key, SUM(budsjett_belop) AS budsjett_belop
+            FROM Fact_Budsjett
+            GROUP BY funksjon_key, art_key, ansvar_key, dato_key
+        ),
+        reg_agg AS (
+            SELECT funksjon_key, art_key, ansvar_key, dato_key, SUM(belop) AS belop
+            FROM Fact_Regnskap
+            GROUP BY funksjon_key, art_key, ansvar_key, dato_key
+        ),
+        evm_agg AS (
             SELECT 
                 ans.enhet_navn,
                 ans.sektor,
                 SUM(b.budsjett_belop) AS BAC,
                 SUM(CASE WHEN r.belop IS NOT NULL AND r.belop > 0 THEN b.budsjett_belop ELSE 0 END) AS PV,
                 SUM(COALESCE(r.belop, 0)) AS AC
-            FROM Fact_Budsjett b
-            LEFT JOIN Fact_Regnskap r 
+            FROM bud_agg b
+            LEFT JOIN reg_agg r 
                 ON b.funksjon_key = r.funksjon_key 
                AND b.art_key = r.art_key 
                AND b.ansvar_key = r.ansvar_key 
@@ -929,16 +940,16 @@ with tab_pbi:
     elif selected_pbi_page == "6. Investering & Capex (EVM)":
         st.info("📰 **FT Aksjonstittel:** *Project Controlling: Investeringsportefølje, Earned Value & Sluttkostnad (EAC)*")
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Planlagt Verdi (PV)", "kr 328 000 000")
-        c2.metric("Påløpt Kostnad (AC)", "kr 292 900 000")
-        c3.metric("Kostnadsavvik (CV)", "-kr 35 100 000", "Underbudsjettert", delta_color="inverse")
+        c1.metric("Opptjent / Planlagt Verdi (EV/PV)", "kr 292 900 000")
+        c2.metric("Påløpt Kostnad (AC)", "kr 328 000 000")
+        c3.metric("Kostnadsavvik (CV)", "-kr 35 100 000", "Merforbruk", delta_color="inverse")
         c4.metric("Kostnadsindeks (CPI)", "0,893", "Terskel: 1,000", delta_color="inverse")
 
         st.markdown("##### 🏗️ EVM Porteføljematrise for Project Controller")
         df_p6 = pd.DataFrame([
-            {"Prosjekt": "Vågsbygd Skole Utvidelse", "Kode": "PROJ-101", "BAC": 185000000, "PV": 115000000, "AC": 104500000, "CPI": 0.909, "Sluttprognose (EAC)": 208251070},
-            {"Prosjekt": "Randesund Døgnbemannet Boenhet", "Kode": "PROJ-201", "BAC": 240000000, "PV": 165000000, "AC": 139100000, "CPI": 0.843, "Sluttprognose (EAC)": 299529558},
-            {"Prosjekt": "VA-Hovedledning Selvkost", "Kode": "PROJ-301", "BAC": 92000000, "PV": 48000000, "AC": 49300000, "CPI": 1.027, "Sluttprognose (EAC)": 89668168}
+            {"Prosjekt": "Vågsbygd Skole Utvidelse", "Kode": "PROJ-101", "BAC": 185000000, "EV/PV": 104500000, "AC": 115000000, "CPI": 0.909, "Sluttprognose (EAC)": 203520352},
+            {"Prosjekt": "Randesund Døgnbemannet Boenhet", "Kode": "PROJ-201", "BAC": 240000000, "EV/PV": 139100000, "AC": 165000000, "CPI": 0.843, "Sluttprognose (EAC)": 284697509},
+            {"Prosjekt": "VA-Hovedledning Selvkost", "Kode": "PROJ-301", "BAC": 92000000, "EV/PV": 49300000, "AC": 48000000, "CPI": 1.027, "Sluttprognose (EAC)": 89581305}
         ])
         st.dataframe(df_p6, use_container_width=True, hide_index=True)
 
@@ -1041,12 +1052,16 @@ with tab_rag:
         with st.expander(f"📚 Vis siterte regelverkskilder ({len(chunks)} kilder)"):
             if chunks:
                 for c in chunks:
-                    ref_str = f" ({c['section_ref']})" if c.get("section_ref") else ""
+                    ref_str = f" ({html.escape(str(c['section_ref']))})" if c.get("section_ref") else ""
+                    safe_source = html.escape(str(c.get("source_file", "")))
+                    safe_cat = html.escape(str(c.get("category", "")))
+                    safe_title = html.escape(str(c.get("title", "")))
+                    safe_content = html.escape(str(c.get("content", "")))
                     st.markdown(
                         f"""
                         <div class="source-chunk-card">
-                            <strong>Kilde:</strong> {c.get('source_file')} | <strong>Kategori:</strong> {c.get('category')}{ref_str} — <em>{c.get('title')}</em><br/>
-                            <div style="margin-top: 0.5rem; font-size: 0.95rem; white-space: pre-wrap;">{c.get('content')}</div>
+                            <strong>Kilde:</strong> {safe_source} | <strong>Kategori:</strong> {safe_cat}{ref_str} — <em>{safe_title}</em><br/>
+                            <div style="margin-top: 0.5rem; font-size: 0.95rem; white-space: pre-wrap;">{safe_content}</div>
                         </div>
                         """,
                         unsafe_allow_html=True
@@ -1337,10 +1352,10 @@ with tab_saksfremlegg:
             conn = get_db_connection()
             conn.execute(
                 """
-                INSERT INTO Audit_AI_Actions (user_query, retrieved_chunk_ids, llm_response, user_action, sha256_hash, timestamp)
+                INSERT INTO Audit_AI_Actions (user_query, retrieved_chunk_ids, llm_response, action_type, sha256_hash, timestamp)
                 VALUES (?, ?, ?, ?, ?, ?)
                 """,
-                (sakstype, "[]", hitl_notes, hitl_status.split()[0], audit_hash, timestamp)
+                (sakstype, "[]", hitl_notes, f"HITL_{hitl_status.split()[0]}", audit_hash, timestamp)
             )
             conn.commit()
             conn.close()
