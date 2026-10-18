@@ -1,5 +1,5 @@
 # 🏛️ Kristiansand Kommune — Master Data Quality & Canonical Model Audit
-> **Kjørt dato:** 2026-10-17T12:58:23.118317 | **Ansvarlig:** Frank Ellingsen (Senior Financial & Project Controller)
+> **Kjørt dato:** 2026-10-18T13:06:25.471476 | **Ansvarlig:** Frank Ellingsen (Senior Financial & Project Controller)
 > **Revisjonsstatus:** 🟢 100 % BESTÅTT (6/6 test-suiter godkjent)
 > **Kilde-database (SSOT):** `kommune_golden_record.db`
 
@@ -26,12 +26,12 @@
 | `Dim_Funksjon` | Dimensjon |      122 |      122 |       0 |       100.0% |
 | `Dim_Art` | Dimensjon |      145 |      145 |       0 |       100.0% |
 | `Dim_Ansvar` | Dimensjon |       44 |       44 |       0 |       100.0% |
-| `Dim_Dato` | Dimensjon |       24 |       24 |       0 |       100.0% |
-| `Dim_Budsjettansvarlige` | Dimensjon |       39 |       39 |       0 |       100.0% |
+| `Dim_Dato` | Dimensjon |       36 |       36 |       0 |       100.0% |
+| `Dim_Budsjettansvarlige` | Dimensjon |       41 |       41 |       0 |       100.0% |
 | `stg_erp_transactions` | Staging / Audit |    1 250 |    1 250 |       0 |       100.0% |
-| `Fact_Regnskap` | Faktatabell |      817 |      817 |       0 |       100.0% |
-| `Fact_Budsjett` | Faktatabell |      884 |      884 |       0 |       100.0% |
-| `Audit_AI_Actions` | Staging / Audit |        5 |        5 |       0 |       100.0% |
+| `Fact_Regnskap` | Faktatabell |    1 555 |    1 555 |       0 |       100.0% |
+| `Fact_Budsjett` | Faktatabell |    1 622 |    1 622 |       0 |       100.0% |
+| `Audit_AI_Actions` | Staging / Audit |       99 |       99 |       0 |       100.0% |
 | `Fact_Prognose_Logg` | Faktatabell |        5 |        5 |       0 |       100.0% |
 
 ---
@@ -56,10 +56,10 @@
 
 | Måling | SQLite Golden Record | DuckDB Parquet Eksport | Avvik (NOK) | Status |
 | :--- | ---: | ---: | ---: | :--- |
-| **Regnskap Sum** |   31 524 851.42 kr |   31 524 851.42 kr |       0.00 kr | ✅ 100% Avstemt |
-| **Budsjett Sum** |   35 168 691.00 kr |   35 168 691.00 kr |       0.00 kr | ✅ 100% Avstemt |
-| **Regnskap Rader** |             817 |             817 |          0 | ✅ Eksakt |
-| **Budsjett Rader** |             884 |             884 |          0 | ✅ Eksakt |
+| **Regnskap Sum** | 6 415 524 851.42 kr | 6 415 524 851.42 kr |       0.00 kr | ✅ 100% Avstemt |
+| **Budsjett Sum** | 6 350 168 691.00 kr | 6 350 168 691.00 kr |       0.00 kr | ✅ 100% Avstemt |
+| **Regnskap Rader** |           1 555 |           1 555 |          0 | ✅ Eksakt |
+| **Budsjett Rader** |           1 622 |           1 622 |          0 | ✅ Eksakt |
 
 ---
 

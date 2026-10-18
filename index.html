@@ -4570,14 +4570,14 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
                 <div>
                     <h3 style="font-size:13px; font-weight:800; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px; margin:0;">
-                        Kaskaderende Sektorhierarki & Avviksanalyse (M10 Status)
+                        Kaskaderende Sektorhierarki & Avviksanalyse (M9 September YTD — Alle 6 Virksomhetsområder)
                     </h3>
                     <div style="font-size:11px; color:#64748b; margin-top:2px;">
-                        Driftsrammer, faktisk forbruk og KOSTRA-nøkkeltall kaskadert fra Bystyrets rammevedtak til enhetsnivå
+                        Driftsrammer, faktisk forbruk og KOSTRA-nøkkeltall kaskadert fra Bystyrets rammevedtak til enhetsnivå (SSOT: DuckDB / SQLite Golden Record)
                     </div>
                 </div>
                 <div style="font-size:11px; color:#64748b;">
-                    Total ramme: <strong>4,80 mrd. kr</strong> | Netto avvik: <strong style="color:#b91c1c;">-78,5 mill. kr (-1,64 %)</strong>
+                    Total ramme (6 områder): <strong>6,32 mrd. kr</strong> | Forbruk: <strong>6,38 mrd. kr</strong> | Netto avvik: <strong style="color:#b91c1c;">-69,0 mill. kr (-1,09 %)</strong>
                 </div>
             </div>
 
@@ -26754,19 +26754,25 @@ const TOP3_KPI_LOCAL_DATA = {
             sektor_id: "OMR-02",
             sektor_navn: "Område Oppvekst & Utdanning",
             direktor: "Kommunalsjef Oppvekst",
-            ramme_ytd: 1850000000,
-            forbruk_ytd: 1885000000,
+            ramme_ytd: 1880000000,
+            forbruk_ytd: 1915000000,
             avvik_ytd: -35000000,
-            avvik_pct: -1.89,
+            avvik_pct: -1.86,
             status: "RØD",
             kpis: [
                 { navn: "Kostnad per elev (KOSTRA)", verdi: "128 500 kr" },
                 { navn: "Pedagogdekning", verdi: "98,2 %" },
                 { navn: "Vikar- og overtid (Art 1020)", verdi: "8,4 %" },
-                { navn: "Legemeldt sykefravær", verdi: "9,2 %" }
+                { navn: "Legemeldt sykefravær", verdi: "9,2 %" },
+                { navn: "NAV-refusjon etterslep", verdi: "3,5 mill. kr" }
             ],
             enheter: [
-                { enhet_id: "2020-101", navn: "Vågsbygd Skole", avvik: "-1 650 000 kr", status: "RØD" }
+                { enhet_id: "4101-ENH-203", navn: "Vågsbygd Skole", ramme: "42,0 mill.", forbruk: "43,7 mill.", avvik: "-1 650 000 kr", driver: "Art 1020 Vikarer lærere", status: "RØD" },
+                { enhet_id: "4100-ENH-202", navn: "Lovisenlev Skole", ramme: "38,0 mill.", forbruk: "39,5 mill.", avvik: "-1 450 000 kr", driver: "Funk 222 Spes.ped", status: "RØD" },
+                { enhet_id: "4102-ENH-204", navn: "Grim Ungdomsskole", ramme: "45,0 mill.", forbruk: "46,2 mill.", avvik: "-1 200 000 kr", driver: "Art 1020 Vikarer", status: "RØD" },
+                { enhet_id: "4210-ENH-211", navn: "Lund Kommunale Barnehage", ramme: "28,0 mill.", forbruk: "29,2 mill.", avvik: "-1 150 000 kr", driver: "Pedagognorm vikardekning", status: "RØD" },
+                { enhet_id: "4100-OMR-SKOLE", navn: "Grunnskoleavdelingen (28 skoler)", ramme: "920,0 mill.", forbruk: "936,8 mill.", avvik: "-16 800 000 kr", driver: "Felles vikarpool & skyss", status: "RØD" },
+                { enhet_id: "4200-OMR-BHG", navn: "Barnehageavdelingen (54 barnehager)", ramme: "720,0 mill.", forbruk: "731,0 mill.", avvik: "-11 000 000 kr", driver: "Vikarer private/komm bhg", status: "RØD" }
             ]
         },
         {
@@ -26782,15 +26788,22 @@ const TOP3_KPI_LOCAL_DATA = {
                 { navn: "Utgift per døgnplass sykehjem", verdi: "1 050 000 kr" },
                 { navn: "Dekningsgrad 80+ år", verdi: "18,5 %" },
                 { navn: "Overtid og ubekvem (Art 1090)", verdi: "6,2 mill. kr" },
-                { navn: "Legemeldt sykefravær", verdi: "11,4 %" }
+                { navn: "Legemeldt sykefravær", verdi: "11,4 %" },
+                { navn: "Turnusdekning", verdi: "91,2 %" }
             ],
             enheter: [
-                { enhet_id: "3010-202", navn: "Oddernes Omsorgssenter", avvik: "-2 100 000 kr", status: "RØD" }
+                { enhet_id: "5230-ENH-404", navn: "Presteheia Omsorgssenter", ramme: "68,0 mill.", forbruk: "70,1 mill.", avvik: "-2 100 000 kr", driver: "Art 1090 Overtid", status: "RØD" },
+                { enhet_id: "5200-ENH-401", navn: "Strai Sykehjem & Omsorgsboliger", ramme: "62,0 mill.", forbruk: "64,4 mill.", avvik: "-2 350 000 kr", driver: "Art 1090 Turnustillegg", status: "RØD" },
+                { enhet_id: "5210-ENH-402", navn: "Hjemmetjenesten Vågsbygd", ramme: "55,0 mill.", forbruk: "56,8 mill.", avvik: "-1 800 000 kr", driver: "Art 1020 Sykepleievikarer", status: "RØD" },
+                { enhet_id: "5220-ENH-403", navn: "Sørlandsparken Bo- og Miljø", ramme: "48,0 mill.", forbruk: "50,4 mill.", avvik: "-2 400 000 kr", driver: "Art 1250 Ressurskrevende 2:1", status: "RØD" },
+                { enhet_id: "2540", navn: "Kommunal Boenhet (Bo & Miljø)", ramme: "14,5 mill.", forbruk: "15,7 mill.", avvik: "-1 150 000 kr", driver: "Art 1090 Døgntilsyn", status: "RØD" },
+                { enhet_id: "5100-OMR-SYKEHJEM", navn: "Døgnomsorg & Sykehjem felles", ramme: "960,0 mill.", forbruk: "978,3 mill.", avvik: "-18 250 000 kr", driver: "Art 1250 Bemanningsbyrå", status: "RØD" },
+                { enhet_id: "5200-OMR-HJEMME", navn: "Hjemmetjenester & rehabilitering", ramme: "820,0 mill.", forbruk: "831,2 mill.", avvik: "-11 200 000 kr", driver: "Art 1090 Kveld/natt turnus", status: "RØD" }
             ]
         },
         {
             sektor_id: "OMR-05",
-            sektor_navn: "Område By- og Stedsutvikling (VAR)",
+            sektor_navn: "Område By- og Stedsutvikling",
             direktor: "Kommunalsjef Teknisk",
             ramme_ytd: 850000000,
             forbruk_ytd: 851500000,
@@ -26803,10 +26816,90 @@ const TOP3_KPI_LOCAL_DATA = {
                 { navn: "Saksbehandlingstid byggesak", verdi: "24 dager" },
                 { navn: "Vedlikeholdsetterslep", verdi: "1 450 kr/m²" }
             ],
-            enheter: []
+            enheter: [
+                { enhet_id: "3300-ENH-301", navn: "Byggesak og Tilsyn", ramme: "42,0 mill.", forbruk: "45,3 mill.", avvik: "-3 300 000 kr", driver: "Art 1600 Gebyrsvikt marked", status: "RØD" },
+                { enhet_id: "3000-SJEF-BYUTV", navn: "Samferdsel & Veidrift", ramme: "180,0 mill.", forbruk: "181,5 mill.", avvik: "-1 500 000 kr", driver: "Art 1270 Vinterdrift/snø Q1", status: "GUL" },
+                { enhet_id: "3200-DIR-PLAN", navn: "Plan- og bygningsetaten", ramme: "68,0 mill.", forbruk: "66,7 mill.", avvik: "+1 300 000 kr", driver: "Art 1250 Utsatte konsulenter", status: "GRØNN" },
+                { enhet_id: "3100-ENH-302", navn: "Vann, Avløp og Renovasjon (VAR)", ramme: "320,0 mill.", forbruk: "320,0 mill.", avvik: "0 kr", driver: "100 % Selvkostfond balanse", status: "GRØNN" },
+                { enhet_id: "3101-SEK-AVLOP", navn: "VAR Renseanlegg Lund", ramme: "140,0 mill.", forbruk: "138,0 mill.", avvik: "+2 000 000 kr", driver: "Art 1180 Energieffektivisering", status: "GRØNN" }
+            ]
+        },
+        {
+            sektor_id: "OMR-04",
+            sektor_navn: "Område Kultur & Innbyggerdialog",
+            direktor: "Kommunalsjef Kultur",
+            ramme_ytd: 285000000,
+            forbruk_ytd: 283600000,
+            avvik_ytd: 1400000,
+            avvik_pct: 0.49,
+            status: "GRØNN",
+            kpis: [
+                { navn: "Utlån per innbygger (Bibliotek)", verdi: "6,8 bøker" },
+                { navn: "Deltakere fritidsklubber", verdi: "14 200" },
+                { navn: "Strømsparing idrettsanlegg", verdi: "12,4 %" },
+                { navn: "Budsjettdisiplin", verdi: "100,5 %" }
+            ],
+            enheter: [
+                { enhet_id: "2200-ENH-101", navn: "Kristiansand Folkebibliotek", ramme: "35,0 mill.", forbruk: "34,2 mill.", avvik: "+800 000 kr", driver: "Digitale lisenser & medier", status: "GRØNN" },
+                { enhet_id: "2000-SJEF-KULTUR", navn: "Kultur, idrett og Kilden", ramme: "240,0 mill.", forbruk: "239,4 mill.", avvik: "+600 000 kr", driver: "Idrettshaller & tilskudd", status: "GRØNN" }
+            ]
+        },
+        {
+            sektor_id: "OMR-11",
+            sektor_navn: "Område Organisasjon & Teknologi",
+            direktor: "Kommunalsjef Org & Tek",
+            ramme_ytd: 345000000,
+            forbruk_ytd: 344400000,
+            avvik_ytd: 600000,
+            avvik_pct: 0.17,
+            status: "GRØNN",
+            kpis: [
+                { navn: "FinOps skybesparelse", verdi: "800 000 kr" },
+                { navn: "IKT Oppetid", verdi: "99,94 %" },
+                { navn: "Fullførte e-læringskurs", verdi: "8 420" },
+                { navn: "Konsulentreduksjon", verdi: "14,5 %" }
+            ],
+            enheter: [
+                { enhet_id: "1110-ENH-501", navn: "IKT Drift & Brukerstøtte", ramme: "180,0 mill.", forbruk: "180,2 mill.", avvik: "-200 000 kr", driver: "Art 1240 M365 SaaS lisenser", status: "GUL" },
+                { enhet_id: "1111-SEK-FINOPS", navn: "IKT Drift — Cloud & FinOps", ramme: "45,0 mill.", forbruk: "44,2 mill.", avvik: "+800 000 kr", driver: "Skyoptimalisering", status: "GRØNN" },
+                { enhet_id: "1100-DIR-IKT", navn: "Digitaliseringsavdelingen", ramme: "60,0 mill.", forbruk: "60,0 mill.", avvik: "0 kr", driver: "Interne prosjekter", status: "GRØNN" }
+            ]
+        },
+        {
+            sektor_id: "OMR-12",
+            sektor_navn: "Område Økonomi & Virksomhetsstyring",
+            direktor: "Økonomidirektør",
+            ramme_ytd: 855000000,
+            forbruk_ytd: 847500000,
+            avvik_ytd: 7500000,
+            avvik_pct: 0.88,
+            status: "GRØNN",
+            kpis: [
+                { navn: "Rentegevinst likviditetsplassering", verdi: "7,5 mill. kr" },
+                { navn: "Fastrenteandel gjeld", verdi: "65,0 %" },
+                { navn: "Driftskreditt snittutnyttelse", verdi: "18,2 %" },
+                { navn: "Premieavvik pensjon", verdi: "100 % dekket" }
+            ],
+            enheter: [
+                { enhet_id: "6200-ENH-601", navn: "Finans- og Likviditetsforvaltning", ramme: "420,0 mill.", forbruk: "412,5 mill.", avvik: "+7 500 000 kr", driver: "Art 1800 Renteinntekter NIBOR", status: "GRØNN" },
+                { enhet_id: "6100-DIR-REGNSKAP", navn: "Konsernregnskap & Lønnssentral", ramme: "65,0 mill.", forbruk: "65,0 mill.", avvik: "0 kr", driver: "Bilagsautomatisering", status: "GRØNN" },
+                { enhet_id: "SENTRAL", navn: "Sentraladministrasjonen & Felles", ramme: "240,0 mill.", forbruk: "240,0 mill.", avvik: "0 kr", driver: "Konsernavsetninger", status: "GRØNN" },
+                { enhet_id: "0000-KOMMDIR", navn: "Kommunedirektørens stab", ramme: "80,0 mill.", forbruk: "80,0 mill.", avvik: "0 kr", driver: "Kommuneadvokat & ledelse", status: "GRØNN" }
+            ]
         }
     ]
 };
+
+function toggleSectorDrilldown(sektorId) {
+    const el = document.getElementById("drilldown-" + sektorId);
+    if (!el) return;
+    const isHidden = el.style.display === "none";
+    el.style.display = isHidden ? "table-row" : "none";
+    const btn = document.getElementById("toggle-btn-" + sektorId);
+    if (btn) {
+        btn.textContent = isHidden ? "▼ Skjul enheter" : "▶ Vis enheter (" + (el.getAttribute("data-count") || "") + ")";
+    }
+}
 
 function renderGaugeSvg(kpiKey) {
     const kpi = TOP3_KPI_LOCAL_DATA.kpis[kpiKey];
@@ -26867,7 +26960,7 @@ function renderHierarchyTable() {
     if (!tbody) return;
 
     let html = "";
-    TOP3_KPI_LOCAL_DATA.hierarki.forEach(function(sec) {
+    TOP3_KPI_LOCAL_DATA.hierarki.forEach(function(sec, idx) {
         const badgeCol = sec.status === "GRØNN" ? "#10b981" : (sec.status === "GUL" ? "#f59e0b" : "#ef4444");
         const badgeBg = sec.status === "GRØNN" ? "#ecfdf5" : (sec.status === "GUL" ? "#fffbeb" : "#fef2f2");
 
@@ -26876,17 +26969,24 @@ function renderHierarchyTable() {
             kpiBadges += '<span style="background:#f1f5f9; color:#0f172a; padding:2px 6px; border-radius:3px; margin-right:4px; font-size:10px;">' + kp.navn + ': <strong>' + kp.verdi + '</strong></span>';
         });
 
-        html += '<tr style="border-bottom:1px solid #f1f5f9;">' +
+        const hasUnits = sec.enheter && sec.enheter.length > 0;
+        const toggleBtn = hasUnits ? 
+            '<button id="toggle-btn-' + sec.sektor_id + '" onclick="toggleSectorDrilldown(\'' + sec.sektor_id + '\')" style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:2px 7px; font-size:10px; cursor:pointer; color:#0284c7; font-weight:700; margin-left:8px;" title="Klikk for å se enheter og kostnadsdrivere">▶ Vis enheter (' + sec.enheter.length + ')</button>' : '';
+
+        html += '<tr style="border-bottom:1px solid #f1f5f9; background:' + (idx % 2 === 0 ? '#ffffff' : '#fafafa') + ';">' +
             '<td style="padding:10px 8px; font-weight:700; color:var(--navy-dark);">' + sec.sektor_id + '</td>' +
             '<td style="padding:10px 8px;">' +
-                '<div style="font-weight:700; color:#0f172a;">' + sec.sektor_navn + '</div>' +
+                '<div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">' +
+                    '<span style="font-weight:700; color:#0f172a;">' + sec.sektor_navn + '</span>' +
+                    toggleBtn +
+                '</div>' +
                 '<div style="font-size:10px; color:#64748b;">' + sec.direktor + '</div>' +
                 '<div style="margin-top:4px;">' + kpiBadges + '</div>' +
             '</td>' +
             '<td style="padding:10px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#0f172a;">' + (sec.ramme_ytd / 1000000).toFixed(1) + ' mill.</td>' +
             '<td style="padding:10px 8px; text-align:right; font-variant-numeric:tabular-nums; color:#0f172a;">' + (sec.forbruk_ytd / 1000000).toFixed(1) + ' mill.</td>' +
             '<td style="padding:10px 8px; text-align:right; font-variant-numeric:tabular-nums; font-weight:700; color:' + (sec.avvik_ytd < 0 ? '#b91c1c' : '#15803d') + ';">' +
-                (sec.avvik_ytd / 1000000).toFixed(1) + ' mill. (' + sec.avvik_pct.toFixed(2) + ' %)' +
+                (sec.avvik_ytd / 1000000).toFixed(1) + ' mill. (' + (sec.avvik_pct >= 0 ? '+' : '') + sec.avvik_pct.toFixed(2) + ' %)' +
             '</td>' +
             '<td style="padding:10px 8px; text-align:center;">' +
                 '<span class="status-badge" style="background:' + badgeBg + '; color:' + badgeCol + '; border:1px solid ' + badgeCol + '; font-size:9.5px; padding:2px 6px;">' +
@@ -26894,6 +26994,43 @@ function renderHierarchyTable() {
                 '</span>' +
             '</td>' +
         '</tr>';
+
+        if (hasUnits) {
+            let unitRows = "";
+            sec.enheter.forEach(function(u) {
+                const uCol = u.status === "GRØNN" ? "#10b981" : (u.status === "GUL" ? "#f59e0b" : "#ef4444");
+                const uBg = u.status === "GRØNN" ? "#ecfdf5" : (u.status === "GUL" ? "#fffbeb" : "#fef2f2");
+                unitRows += '<tr style="border-bottom:1px solid #f1f5f9; font-size:11px;">' +
+                    '<td style="padding:5px 8px; color:#64748b; font-family:var(--font-mono);">' + u.enhet_id + '</td>' +
+                    '<td style="padding:5px 8px; font-weight:600; color:#1e293b;">' + u.navn + '</td>' +
+                    '<td style="padding:5px 8px; color:#475569;">' + u.driver + '</td>' +
+                    '<td style="padding:5px 8px; text-align:right; font-variant-numeric:tabular-nums;">' + u.ramme + '</td>' +
+                    '<td style="padding:5px 8px; text-align:right; font-variant-numeric:tabular-nums;">' + u.forbruk + '</td>' +
+                    '<td style="padding:5px 8px; text-align:right; font-weight:700; color:' + (u.avvik.startsWith('-') ? '#b91c1c' : '#15803d') + ';">' + u.avvik + '</td>' +
+                    '<td style="padding:5px 8px; text-align:center;"><span style="background:' + uBg + '; color:' + uCol + '; padding:1px 5px; border-radius:3px; font-size:9px; font-weight:700;">' + u.status + '</span></td>' +
+                '</tr>';
+            });
+
+            html += '<tr id="drilldown-' + sec.sektor_id + '" data-count="' + sec.enheter.length + '" style="display:none; background:#f8fafc;">' +
+                '<td colspan="6" style="padding:8px 16px 12px 24px; border-left:3px solid ' + badgeCol + ';">' +
+                    '<div style="font-size:10px; font-weight:700; text-transform:uppercase; color:#64748b; margin-bottom:6px;">Underliggende resultatenheter & rotårsaker (' + sec.sektor_navn + ')</div>' +
+                    '<table style="width:100%; border-collapse:collapse; background:#ffffff; border:1px solid #e2e8f0; border-radius:3px;">' +
+                        '<thead>' +
+                            '<tr style="background:#f1f5f9; text-align:left; font-size:10px; color:#475569; border-bottom:1px solid #e2e8f0;">' +
+                                '<th style="padding:4px 8px;">Enhet-ID</th>' +
+                                '<th style="padding:4px 8px;">Enhetsnavn</th>' +
+                                '<th style="padding:4px 8px;">Hoveddriver (KOSTRA Art)</th>' +
+                                '<th style="padding:4px 8px; text-align:right;">Ramme</th>' +
+                                '<th style="padding:4px 8px; text-align:right;">Forbruk</th>' +
+                                '<th style="padding:4px 8px; text-align:right;">Avvik YTD</th>' +
+                                '<th style="padding:4px 8px; text-align:center;">Status</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>' + unitRows + '</tbody>' +
+                    '</table>' +
+                '</td>' +
+            '</tr>';
+        }
     });
 
     tbody.innerHTML = html;

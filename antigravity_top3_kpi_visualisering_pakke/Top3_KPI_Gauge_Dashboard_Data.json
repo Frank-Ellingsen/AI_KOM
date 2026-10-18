@@ -1,7 +1,7 @@
 {
   "kommunenivå": {
     "kommune": "Kristiansand kommune",
-    "periode": "2026-M10 (Oktober)",
+    "periode": "2026-M09 (September YTD)",
     "top3_kpis": {
       "netto_driftsresultat": {
         "navn": "Netto Driftsresultat",
@@ -86,87 +86,728 @@
   "budsjetthierarki": [
     {
       "sektor_id": "OMR-02",
-      "sektor_navn": "Område Oppvekst",
+      "sektor_navn": "Område Oppvekst og utdanning",
       "direktør": "Kommunalsjef Oppvekst",
-      "ramme_ytd_nok": 1850000000,
-      "forbruk_ytd_nok": 1885000000,
-      "avvik_ytd_nok": 35000000,
-      "avvik_prosent": 1.89,
+      "ramme_ytd_nok": 1880000000.0,
+      "forbruk_ytd_nok": 1915000000.0,
+      "avvik_ytd_nok": 35000000.0,
+      "avvik_prosent": 1.86,
       "triage_status": "RØD",
       "sektor_spesifikke_kpis": {
-        "korrigert_brutto_driftsutgift_per_elev_nok": 128500,
+        "kostnad_per_elev_kostra": "128 500 kr",
         "pedagogdekning_prosent": 98.2,
-        "vikar_og_overtid_andel_prosent": 8.4,
-        "sykefravær_prosent": 9.2
+        "vikar_og_overtid_art_1020_prosent": 8.4,
+        "legemeldt_sykefraver_prosent": 9.2,
+        "nav_refusjon_etterslep_nok": 3500000
       },
       "enheter": [
         {
-          "enhet_id": "2020-101",
+          "enhet_id": "4101-ENH-203",
           "enhet_navn": "Vågsbygd Skole",
-          "leder": "Rektor",
-          "ramme_ytd_nok": 42000000,
-          "forbruk_ytd_nok": 43650000,
-          "avvik_ytd_nok": 1650000,
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 42000000.0,
+          "forbruk_ytd_nok": 43650000.0,
+          "avvik_ytd_nok": 1650000.0,
           "avvik_prosent": 3.93,
           "triage_status": "RØD",
           "enhets_kpis": {
-            "elevtall": 540,
-            "kr_per_elev": 80833,
-            "vikar_art_1020_avvik_nok": 1650000,
-            "nav_refusjon_etterslep_nok": 350000
+            "driver_art": "1020",
+            "driver_navn": "Vikarutgifter lærere",
+            "driver_avvik_nok": 1650000.0
+          }
+        },
+        {
+          "enhet_id": "4100-ENH-202",
+          "enhet_navn": "Lovisenlev Skole",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 38000000.0,
+          "forbruk_ytd_nok": 39450000.0,
+          "avvik_ytd_nok": 1450000.0,
+          "avvik_prosent": 3.82,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1020",
+            "driver_navn": "Spesialpedagogisk oppfølging",
+            "driver_avvik_nok": 1450000.0
+          }
+        },
+        {
+          "enhet_id": "4102-ENH-204",
+          "enhet_navn": "Grim Ungdomsskole",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 45000000.0,
+          "forbruk_ytd_nok": 46200000.0,
+          "avvik_ytd_nok": 1200000.0,
+          "avvik_prosent": 2.67,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1020",
+            "driver_navn": "Vikar- og tilkallingshjelp",
+            "driver_avvik_nok": 1200000.0
+          }
+        },
+        {
+          "enhet_id": "4210-ENH-211",
+          "enhet_navn": "Lund Kommunale Barnehage",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 28000000.0,
+          "forbruk_ytd_nok": 29150000.0,
+          "avvik_ytd_nok": 1150000.0,
+          "avvik_prosent": 4.11,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1020",
+            "driver_navn": "Pedagognorm & vikardekning",
+            "driver_avvik_nok": 1150000.0
+          }
+        },
+        {
+          "enhet_id": "4103-SEK-SFO",
+          "enhet_navn": "Lovisenlev Skole — SFO",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 6000000.0,
+          "forbruk_ytd_nok": 6350000.0,
+          "avvik_ytd_nok": 350000.0,
+          "avvik_prosent": 5.83,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1090",
+            "driver_navn": "Overtid bemanning SFO",
+            "driver_avvik_nok": 350000.0
+          }
+        },
+        {
+          "enhet_id": "4104-SEK-INSP",
+          "enhet_navn": "Lovisenlev Skole — Småtrinnet",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 14000000.0,
+          "forbruk_ytd_nok": 14400000.0,
+          "avvik_ytd_nok": 400000.0,
+          "avvik_prosent": 2.86,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1115",
+            "driver_navn": "Digitale læremidler & materiell",
+            "driver_avvik_nok": 400000.0
+          }
+        },
+        {
+          "enhet_id": "4100-OMR-SKOLE",
+          "enhet_navn": "Grunnskoleavdelingen (28 skoler)",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 920000000.0,
+          "forbruk_ytd_nok": 936800000.0,
+          "avvik_ytd_nok": 16800000.0,
+          "avvik_prosent": 1.83,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1020",
+            "driver_navn": "Felles vikarpool & skoleskyss",
+            "driver_avvik_nok": 16800000.0
+          }
+        },
+        {
+          "enhet_id": "4200-OMR-BHG",
+          "enhet_navn": "Barnehageavdelingen (54 barnehager)",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 720000000.0,
+          "forbruk_ytd_nok": 731000000.0,
+          "avvik_ytd_nok": 11000000.0,
+          "avvik_prosent": 1.53,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1020",
+            "driver_navn": "Vikarutgifter private/komm barnehager",
+            "driver_avvik_nok": 11000000.0
+          }
+        },
+        {
+          "enhet_id": "4000-SJEF-OPPV",
+          "enhet_navn": "Kommunalsjefens fagstab Oppvekst",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 22000000.0,
+          "forbruk_ytd_nok": 22500000.0,
+          "avvik_ytd_nok": 500000.0,
+          "avvik_prosent": 2.27,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1150",
+            "driver_navn": "Kompetanseutvikling lærere",
+            "driver_avvik_nok": 500000.0
+          }
+        },
+        {
+          "enhet_id": "6003-CTRL-ERIK",
+          "enhet_navn": "Økonomitjenesten Oppvekst",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 15000000.0,
+          "forbruk_ytd_nok": 15500000.0,
+          "avvik_ytd_nok": 500000.0,
+          "avvik_prosent": 3.33,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Sektorcontroller analyse",
+            "driver_avvik_nok": 500000.0
           }
         }
       ]
     },
     {
       "sektor_id": "OMR-03",
-      "sektor_navn": "Område Helse og Mestring",
+      "sektor_navn": "Område Helse og mestring",
       "direktør": "Kommunalsjef Helse",
-      "ramme_ytd_nok": 2100000000,
-      "forbruk_ytd_nok": 2142000000,
-      "avvik_ytd_nok": 42000000,
+      "ramme_ytd_nok": 2100000000.0,
+      "forbruk_ytd_nok": 2142000000.0,
+      "avvik_ytd_nok": 42000000.0,
       "avvik_prosent": 2.0,
       "triage_status": "RØD",
       "sektor_spesifikke_kpis": {
-        "utgift_per_plass_sykehjem_nok": 1050000,
+        "utgift_per_dognplass_sykehjem": "1 050 000 kr",
         "dekningsgrad_80plus_prosent": 18.5,
         "overtid_ubekvem_art_1090_nok": 6200000,
-        "sykefravær_prosent": 11.4
+        "legemeldt_sykefraver_prosent": 11.4,
+        "turnusdekning_prosent": 91.2
       },
       "enheter": [
         {
-          "enhet_id": "3010-202",
-          "enhet_navn": "Oddernes Omsorgssenter",
+          "enhet_id": "5230-ENH-404",
+          "enhet_navn": "Presteheia Omsorgssenter",
           "leder": "Enhetsleder",
-          "ramme_ytd_nok": 68000000,
-          "forbruk_ytd_nok": 70100000,
-          "avvik_ytd_nok": 2100000,
+          "ramme_ytd_nok": 68000000.0,
+          "forbruk_ytd_nok": 70100000.0,
+          "avvik_ytd_nok": 2100000.0,
           "avvik_prosent": 3.09,
           "triage_status": "RØD",
           "enhets_kpis": {
-            "beboere": 64,
-            "turnusdekning_prosent": 91.2,
-            "overtid_art_1090_nok": 2100000
+            "driver_art": "1090",
+            "driver_navn": "Overtid og ubekvemstillegg",
+            "driver_avvik_nok": 2100000.0
+          }
+        },
+        {
+          "enhet_id": "5200-ENH-401",
+          "enhet_navn": "Strai Sykehjem & Omsorgsboliger",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 62000000.0,
+          "forbruk_ytd_nok": 64350000.0,
+          "avvik_ytd_nok": 2350000.0,
+          "avvik_prosent": 3.79,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1090",
+            "driver_navn": "Ekstrahelger & turnuskompensasjon",
+            "driver_avvik_nok": 2350000.0
+          }
+        },
+        {
+          "enhet_id": "5201-SEK-DEMENS",
+          "enhet_navn": "Strai Sykehjem — Avd. Demens",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 18000000.0,
+          "forbruk_ytd_nok": 18800000.0,
+          "avvik_ytd_nok": 800000.0,
+          "avvik_prosent": 4.44,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1090",
+            "driver_navn": "Skjermet avdeling bemanningspress",
+            "driver_avvik_nok": 800000.0
+          }
+        },
+        {
+          "enhet_id": "5202-SEK-KORTTID",
+          "enhet_navn": "Strai Sykehjem — Somatisk Korttidsavd.",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 16000000.0,
+          "forbruk_ytd_nok": 16650000.0,
+          "avvik_ytd_nok": 650000.0,
+          "avvik_prosent": 4.06,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1200",
+            "driver_navn": "Medisinsk forbruksmateriell",
+            "driver_avvik_nok": 650000.0
+          }
+        },
+        {
+          "enhet_id": "5210-ENH-402",
+          "enhet_navn": "Hjemmetjenesten Vågsbygd",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 55000000.0,
+          "forbruk_ytd_nok": 56800000.0,
+          "avvik_ytd_nok": 1800000.0,
+          "avvik_prosent": 3.27,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1020",
+            "driver_navn": "Sykepleievikarer i felt",
+            "driver_avvik_nok": 1800000.0
+          }
+        },
+        {
+          "enhet_id": "5220-ENH-403",
+          "enhet_navn": "Sørlandsparken Bo- og Miljøtjeneste",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 48000000.0,
+          "forbruk_ytd_nok": 50400000.0,
+          "avvik_ytd_nok": 2400000.0,
+          "avvik_prosent": 5.0,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Ressurskrevende brukere 2:1",
+            "driver_avvik_nok": 2400000.0
+          }
+        },
+        {
+          "enhet_id": "2540",
+          "enhet_navn": "Kommunal Boenhet (Enhet 2540)",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 14500000.0,
+          "forbruk_ytd_nok": 15650000.0,
+          "avvik_ytd_nok": 1150000.0,
+          "avvik_prosent": 7.93,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1090",
+            "driver_navn": "Døgnkontinuerlig tilsyn",
+            "driver_avvik_nok": 1150000.0
+          }
+        },
+        {
+          "enhet_id": "5100-OMR-SYKEHJEM",
+          "enhet_navn": "Døgnomsorg og Sykehjem (Felles)",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 960000000.0,
+          "forbruk_ytd_nok": 978250000.0,
+          "avvik_ytd_nok": 18250000.0,
+          "avvik_prosent": 1.9,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Bemanningsbyråer spesialsykepleiere",
+            "driver_avvik_nok": 18250000.0
+          }
+        },
+        {
+          "enhet_id": "5200-OMR-HJEMME",
+          "enhet_navn": "Hjemmetjenester og rehabilitering",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 820000000.0,
+          "forbruk_ytd_nok": 831200000.0,
+          "avvik_ytd_nok": 11200000.0,
+          "avvik_prosent": 1.37,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1090",
+            "driver_navn": "Kveld/natt turnustillegg",
+            "driver_avvik_nok": 11200000.0
+          }
+        },
+        {
+          "enhet_id": "5000-SJEF-HELSE",
+          "enhet_navn": "Kommunalsjefens fagstab Helse",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 24500000.0,
+          "forbruk_ytd_nok": 25300000.0,
+          "avvik_ytd_nok": 800000.0,
+          "avvik_prosent": 3.27,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1150",
+            "driver_navn": "Spesialisering sykepleie",
+            "driver_avvik_nok": 800000.0
+          }
+        },
+        {
+          "enhet_id": "6002-CTRL-MARIANNE",
+          "enhet_navn": "Økonomitjenesten Helse",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 14000000.0,
+          "forbruk_ytd_nok": 14500000.0,
+          "avvik_ytd_nok": 500000.0,
+          "avvik_prosent": 3.57,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Turnusplanlegging analyse",
+            "driver_avvik_nok": 500000.0
           }
         }
       ]
     },
     {
       "sektor_id": "OMR-05",
-      "sektor_navn": "Område By- og Stedsutvikling",
+      "sektor_navn": "Område By- og stedsutvikling",
       "direktør": "Kommunalsjef Teknisk",
-      "ramme_ytd_nok": 850000000,
-      "forbruk_ytd_nok": 851500000,
-      "avvik_ytd_nok": 1500000,
+      "ramme_ytd_nok": 850000000.0,
+      "forbruk_ytd_nok": 851500000.0,
+      "avvik_ytd_nok": 1500000.0,
       "avvik_prosent": 0.18,
       "triage_status": "GUL",
       "sektor_spesifikke_kpis": {
         "var_selvkostgrad_prosent": 100.0,
-        "snøbrøyting_art_1270_avvik_nok": 1500000,
+        "snobroyting_art_1270_avvik_nok": 1500000,
         "byggesak_behandlingstid_dager": 24,
         "vedlikeholdsetterslep_m2_nok": 1450
       },
-      "enheter": []
+      "enheter": [
+        {
+          "enhet_id": "3300-ENH-301",
+          "enhet_navn": "Enhet 301: Byggesak og Tilsyn",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 42000000.0,
+          "forbruk_ytd_nok": 45300000.0,
+          "avvik_ytd_nok": 3300000.0,
+          "avvik_prosent": 7.86,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1600",
+            "driver_navn": "Svikt i byggesaksgebyrer",
+            "driver_avvik_nok": 3300000.0
+          }
+        },
+        {
+          "enhet_id": "3000-SJEF-BYUTV",
+          "enhet_navn": "Kommunalsjefens stab Byutvikling",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 180000000.0,
+          "forbruk_ytd_nok": 181500000.0,
+          "avvik_ytd_nok": 1500000.0,
+          "avvik_prosent": 0.83,
+          "triage_status": "RØD",
+          "enhets_kpis": {
+            "driver_art": "1270",
+            "driver_navn": "Vinterdrift & snøbrøyting Q1",
+            "driver_avvik_nok": 1500000.0
+          }
+        },
+        {
+          "enhet_id": "3200-DIR-PLAN",
+          "enhet_navn": "Plan- og bygningsetaten",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 68000000.0,
+          "forbruk_ytd_nok": 66700000.0,
+          "avvik_ytd_nok": -1300000.0,
+          "avvik_prosent": -1.91,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Utsatte eksterne reguleringer",
+            "driver_avvik_nok": -1300000.0
+          }
+        },
+        {
+          "enhet_id": "3100-ENH-302",
+          "enhet_navn": "Enhet 302: Vann, Avløp og Renovasjon",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 320000000.0,
+          "forbruk_ytd_nok": 320000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1200",
+            "driver_navn": "VAR Selvkostfond i 100% balanse",
+            "driver_avvik_nok": 0.0
+          }
+        },
+        {
+          "enhet_id": "3101-SEK-AVLOP",
+          "enhet_navn": "VAR Ingeniørvesenet — Renseanlegg Lund",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 140000000.0,
+          "forbruk_ytd_nok": 138000000.0,
+          "avvik_ytd_nok": -2000000.0,
+          "avvik_prosent": -1.43,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1180",
+            "driver_navn": "Energieffektivisering pumper",
+            "driver_avvik_nok": -2000000.0
+          }
+        },
+        {
+          "enhet_id": "3100-DIR-VAR",
+          "enhet_navn": "Ingeniørvesenet (Vann, Avløp & Ren.)",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 85000000.0,
+          "forbruk_ytd_nok": 85000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1270",
+            "driver_navn": "Renovasjonstransport Avfall Sør",
+            "driver_avvik_nok": 0.0
+          }
+        },
+        {
+          "enhet_id": "6004-CTRL-KNUT",
+          "enhet_navn": "Økonomitjenesten Byutvikling",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 15000000.0,
+          "forbruk_ytd_nok": 15000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Selvkostmodellering",
+            "driver_avvik_nok": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "sektor_id": "OMR-04",
+      "sektor_navn": "Område Kultur og innbyggerdialog",
+      "direktør": "Kommunalsjef Kultur",
+      "ramme_ytd_nok": 285000000.0,
+      "forbruk_ytd_nok": 283600000.0,
+      "avvik_ytd_nok": -1400000.0,
+      "avvik_prosent": -0.49,
+      "triage_status": "GRØNN",
+      "sektor_spesifikke_kpis": {
+        "utlan_per_innbygger_bibliotek": 6.8,
+        "deltakere_fritidsklubber_antall": 14200,
+        "stromsparing_idrettsanlegg_prosent": 12.4,
+        "budsjettdisiplin_grad": 100.5
+      },
+      "enheter": [
+        {
+          "enhet_id": "2200-ENH-101",
+          "enhet_navn": "Enhet 101: Kristiansand Folkebibliotek",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 35000000.0,
+          "forbruk_ytd_nok": 34200000.0,
+          "avvik_ytd_nok": -800000.0,
+          "avvik_prosent": -2.29,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1115",
+            "driver_navn": "Digitale lisenser & mediekjøp",
+            "driver_avvik_nok": -800000.0
+          }
+        },
+        {
+          "enhet_id": "2000-SJEF-KULTUR",
+          "enhet_navn": "Kommunalsjefens stab Kultur",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 240000000.0,
+          "forbruk_ytd_nok": 239400000.0,
+          "avvik_ytd_nok": -600000.0,
+          "avvik_prosent": -0.25,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1180",
+            "driver_navn": "Idrettshaller & Kilden tilskudd",
+            "driver_avvik_nok": -600000.0
+          }
+        },
+        {
+          "enhet_id": "6005-CTRL-SILJE",
+          "enhet_navn": "Økonomitjenesten Kultur & Felles",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 10000000.0,
+          "forbruk_ytd_nok": 10000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Tilskuddsforvaltning",
+            "driver_avvik_nok": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "sektor_id": "OMR-11",
+      "sektor_navn": "Område Organisasjon og teknologi",
+      "direktør": "Kommunalsjef Org & Tek",
+      "ramme_ytd_nok": 345000000.0,
+      "forbruk_ytd_nok": 344400000.0,
+      "avvik_ytd_nok": -600000.0,
+      "avvik_prosent": -0.17,
+      "triage_status": "GRØNN",
+      "sektor_spesifikke_kpis": {
+        "finops_skybesparelse_nok": 800000,
+        "it_oppetid_prosent": 99.94,
+        "fullforte_e_laeringskurs_antall": 8420,
+        "konsulentreduksjon_prosent": 14.5
+      },
+      "enheter": [
+        {
+          "enhet_id": "1110-ENH-501",
+          "enhet_navn": "Enhet 501: IKT Drift & Brukerstøtte",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 180000000.0,
+          "forbruk_ytd_nok": 180200000.0,
+          "avvik_ytd_nok": 200000.0,
+          "avvik_prosent": 0.11,
+          "triage_status": "GUL",
+          "enhets_kpis": {
+            "driver_art": "1240",
+            "driver_navn": "M365 & programvarelisenser",
+            "driver_avvik_nok": 200000.0
+          }
+        },
+        {
+          "enhet_id": "1111-SEK-FINOPS",
+          "enhet_navn": "IKT Drift — Cloud & FinOps",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 45000000.0,
+          "forbruk_ytd_nok": 44200000.0,
+          "avvik_ytd_nok": -800000.0,
+          "avvik_prosent": -1.78,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1240",
+            "driver_navn": "Skyoptimalisering og reserved instances",
+            "driver_avvik_nok": -800000.0
+          }
+        },
+        {
+          "enhet_id": "1100-DIR-IKT",
+          "enhet_navn": "Digitaliseringsavdelingen",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 60000000.0,
+          "forbruk_ytd_nok": 60000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Interne utviklingsprosjekter",
+            "driver_avvik_nok": 0.0
+          }
+        },
+        {
+          "enhet_id": "1000-SJEF-ORGTEK",
+          "enhet_navn": "Kommunalsjefens stab Org & Tek",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 60000000.0,
+          "forbruk_ytd_nok": 60000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1150",
+            "driver_navn": "Lederutvikling og HR felles",
+            "driver_avvik_nok": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "sektor_id": "OMR-12",
+      "sektor_navn": "Område Økonomi og virksomhetsstyring",
+      "direktør": "Økonomidirektør",
+      "ramme_ytd_nok": 855000000.0,
+      "forbruk_ytd_nok": 847500000.0,
+      "avvik_ytd_nok": -7500000.0,
+      "avvik_prosent": -0.88,
+      "triage_status": "GRØNN",
+      "sektor_spesifikke_kpis": {
+        "rentegevinst_likviditetsplassering_nok": 7500000,
+        "fastrenteandel_gjeld_prosent": 65.0,
+        "kassakreditt_snittutnyttelse_prosent": 18.2,
+        "premieavvik_pensjon_balanse": 100.0
+      },
+      "enheter": [
+        {
+          "enhet_id": "6200-ENH-601",
+          "enhet_navn": "Enhet 601: Finans- og Likviditetsforv.",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 420000000.0,
+          "forbruk_ytd_nok": 412500000.0,
+          "avvik_ytd_nok": -7500000.0,
+          "avvik_prosent": -1.79,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1800",
+            "driver_navn": "Renteinntekter på overskuddslikviditet",
+            "driver_avvik_nok": -7500000.0
+          }
+        },
+        {
+          "enhet_id": "6100-DIR-REGNSKAP",
+          "enhet_navn": "Konsernregnskap og Lønnssentral",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 65000000.0,
+          "forbruk_ytd_nok": 65000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1200",
+            "driver_navn": "Lønnskjøringer og bilagsbehandling",
+            "driver_avvik_nok": 0.0
+          }
+        },
+        {
+          "enhet_id": "6000-DIR-OKONOMI",
+          "enhet_navn": "Sentral Økonomistab",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 50000000.0,
+          "forbruk_ytd_nok": 50000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Finansiell planlegging og HØP",
+            "driver_avvik_nok": 0.0
+          }
+        },
+        {
+          "enhet_id": "0000-KOMMDIR",
+          "enhet_navn": "Kommunedirektørens stab",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 80000000.0,
+          "forbruk_ytd_nok": 80000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Kommuneadvokat og toppledelse",
+            "driver_avvik_nok": 0.0
+          }
+        },
+        {
+          "enhet_id": "SENTRAL",
+          "enhet_navn": "Sentraladministrasjonen",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 240000000.0,
+          "forbruk_ytd_nok": 240000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1200",
+            "driver_navn": "Konsernavsetninger & fellestjenester",
+            "driver_avvik_nok": 0.0
+          }
+        },
+        {
+          "enhet_id": "6001-CTRL-FRANK",
+          "enhet_navn": "Sentrale Økonomitjenester / Hub Koord.",
+          "leder": "Enhetsleder",
+          "ramme_ytd_nok": 30000000.0,
+          "forbruk_ytd_nok": 30000000.0,
+          "avvik_ytd_nok": 0.0,
+          "avvik_prosent": 0.0,
+          "triage_status": "GRØNN",
+          "enhets_kpis": {
+            "driver_art": "1250",
+            "driver_navn": "Controller Hub & BI drift",
+            "driver_avvik_nok": 0.0
+          }
+        }
+      ]
     }
   ]
 }

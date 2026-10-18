@@ -155,6 +155,17 @@ Eksempler på bruk:
     # 20. Municipal Advisor Full-Year Stress Test
     p_stress = subparsers.add_parser("advisor-stress", help="Full-Year Stresstest & Flaskehalsdiagnose for Kommunale Rådgivere (M1-M12, 6 Sektorer)")
 
+    # 21. DuckDB OLAP Engine
+    p_duck = subparsers.add_parser("duckdb", help="Kjør in-memory DuckDB OLAP-aggregasjon, EVM-prognose og kostnadsdrivere")
+    p_duck.add_argument("--summary", action="store_true", help="Vis samlet EVM-oppsummering for alle 6 virksomhetsområder")
+    p_duck.add_argument("--sector", type=str, default=None, help="Filtrer på spesifikt virksomhetsområde")
+    p_duck.add_argument("--unit", type=str, default=None, help="Vis enhetsdrilldown")
+    p_duck.add_argument("--drivers", action="store_true", help="Vis topp 10 kostnadsdrivere (Art)")
+    p_duck.add_argument("--query", type=str, default=None, help="Kjør vilkårlig DuckDB SQL-spørring")
+    p_duck.add_argument("--year", type=int, default=2026, help="Regnskapsår (standard: 2026)")
+    p_duck.add_argument("--month", type=int, default=9, help="Måned YTD (standard: 9)")
+    p_duck.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
     args, unknown = parser.parse_known_args()
 
     if not args.command:
@@ -288,6 +299,25 @@ Eksempler på bruk:
         run_command("advisor_calculator_runner.py", ["--type", args.type] + unknown)
     elif args.command == "advisor-stress":
         run_command("advisor_stresstest_engine.py", unknown)
+    elif args.command == "duckdb":
+        cmd_args = []
+        if args.summary:
+            cmd_args.append("--summary")
+        if args.sector:
+            cmd_args += ["--sector", args.sector]
+        if args.unit:
+            cmd_args += ["--unit", args.unit]
+        if args.drivers:
+            cmd_args.append("--drivers")
+        if args.query:
+            cmd_args += ["--query", args.query]
+        if args.year != 2026:
+            cmd_args += ["--year", str(args.year)]
+        if args.month != 9:
+            cmd_args += ["--month", str(args.month)]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("duckdb_runner.py", cmd_args + unknown)
 
 if __name__ == "__main__":
     main()
