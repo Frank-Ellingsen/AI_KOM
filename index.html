@@ -4469,176 +4469,6 @@
 
     <!-- FANE 1: MIN ENHET & MIN MÅNED -->
     <div class="hub-tab-pane active" id="tab-min-enhet" role="tabpanel" aria-labelledby="tab-btn-min-enhet">
-<section class="workflow-section" id="nettbank-kontoutskrift-seksjon" style="margin-bottom: 24px;">
-        <div class="section-header">
-            <span>🏦 Kommunal Nettbank & Månedlig Kontoutskrift for Budsjettansvarlige</span>
-            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Fast Månedsoppsett (M01–M12) | § 14-5 Klarspråk</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
-            Spesialtilpasset virksomhetsledere, rektorer, avdelingsledere og styrere uten økonomibakgrunn. 
-            Rapporten fungerer som en <strong>nettbank</strong>: Kontonummer, tildelt årsramme (startkreditt), månedens faktiske uttak og innbetalinger, 
-            <strong>disponibel saldo for resten av året</strong>, samt konkrete leder-råd for å overholde budsjettbalansen jf. <strong>Kommuneloven § 14-5</strong>.
-        </p>
-
-        <div class="bank-wrapper">
-            <!-- Sektor Hurtigvelger & Visningsmodus for Budsjettansvarlige -->
-            <div class="bank-sector-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding: 10px 14px; background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px;">
-                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-right: 4px;">Sektor:</span>
-                    <button type="button" class="btn btn-sm bank-sector-pill active" onclick="filterBankSector('ALL')" id="bank-sec-btn-ALL" style="background: var(--navy-dark); color: #ffffff; font-weight: 700;">Alle sektorer (81 enheter)</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('HELSE')" id="bank-sec-btn-HELSE" style="background: #f1f5f9; color: var(--text-primary);">🏥 Helse &amp; Omsorg</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('OPPVEKST')" id="bank-sec-btn-OPPVEKST" style="background: #f1f5f9; color: var(--text-primary);">🎓 Oppvekst &amp; Skole</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('BYUTVIKLING')" id="bank-sec-btn-BYUTVIKLING" style="background: #f1f5f9; color: var(--text-primary);">🏗️ Byutvikling &amp; VAR</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KULTUR')" id="bank-sec-btn-KULTUR" style="background: #f1f5f9; color: var(--text-primary);">🎭 Kultur &amp; Idrett</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('ORG_TEK')" id="bank-sec-btn-ORG_TEK" style="background: #f1f5f9; color: var(--text-primary);">💻 Org &amp; IKT</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KONSERN')" id="bank-sec-btn-KONSERN" style="background: #f1f5f9; color: var(--text-primary);">🏛️ Konsern</button>
-                </div>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
-                    <button type="button" class="btn btn-sm" onclick="openCashManagementSection()" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; font-weight:700; margin-right:6px;" title="Cash Management, rullende likviditetsprognose og kassakredittramme jf. § 14-14">💳 Cash Management &amp; Likviditet</button>
-                    <button type="button" class="btn btn-sm" onclick="openProsjektregnskapSection()" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-weight:700; margin-right:6px;" title="Søk statlige støtteordninger (ENOVA, Udir, IMDi, Helsedir) og prosjektregnskap">🏛️ Støtteordninger &amp; Prosjektregnskap</button>
-                    <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
-                    <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
-                    <a class="btn btn-sm" id="btn-apne-pdf-rapport" href="reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf" target="_blank" style="background: #1e293b; color: #ffffff; text-decoration: none; font-weight: 700;" title="Åpne formell 2-siders PDF månedsrapport med prognoser og tiltak">📄 Månedsrapport (PDF)</a>
-                </div>
-            </div>
-
-            <!-- Kontrollpanel: Enhetsvelger & Månedsvelger (M01–M12) -->
-            <div class="bank-controls-bar">
-                <div class="bank-controls-left">
-                    <span class="bank-select-label">Budsjettkonto:</span>
-                    <select class="bank-unit-select" id="bank-unit-dropdown" onchange="onBankUnitChange(this.value)">
-                        <optgroup label="🏥 Helse og mestring">
-                            <option value="5200-ENH-401" selected>Enhet 401: Strai Sykehjem (Solveig Grimstad)</option>
-                            <option value="5210-ENH-402">Enhet 402: Hjemmetjenesten Vågsbygd (Berit Olsen)</option>
-                            <option value="5220-ENH-403">Enhet 403: Sørlandsparken Bo & Miljø (Christian Holte)</option>
-                            <option value="5230-ENH-404">Enhet 404: Presteheia Omsorgssenter (Kari Vesterhus)</option>
-                            <option value="5100-OMR-SYKEHJEM">Område Døgnomsorg & Sykehjem (Mette Syvertsen)</option>
-                            <option value="5000-SJEF-HELSE">Kommunalsjef Helse og mestring (Brede Skeie)</option>
-                        </optgroup>
-                        <optgroup label="🎓 Oppvekst og utdanning">
-                            <option value="4100-ENH-202">Enhet 202: Lovisenlev Skole (Trond Jensen)</option>
-                            <option value="4101-ENH-203">Enhet 203: Vågsbygd Skole (Mona Lindstrøm)</option>
-                            <option value="4102-ENH-204">Enhet 204: Grim Ungdomsskole (Espen Birkeland)</option>
-                            <option value="4210-ENH-211">Enhet 211: Lund Kommunale Barnehage (Grete Hovden)</option>
-                            <option value="4100-OMR-SKOLE">Grunnskoleavdelingen (Svein Tore Kvernes)</option>
-                            <option value="4000-SJEF-OPPV">Kommunalsjef Oppvekst (Kristin Eidet Robstad)</option>
-                        </optgroup>
-                        <optgroup label="🏗️ By- og stedsutvikling">
-                            <option value="3300-ENH-301">Enhet 301: Byggesak og Tilsyn (Hans Petter Vik)</option>
-                            <option value="3100-DIR-VAR">Ingeniørvesenet VAR Selvkost (Helge Møller)</option>
-                            <option value="3000-SJEF-BYUTV">Kommunalsjef Byutvikling (Ragnar Evensen)</option>
-                        </optgroup>
-                        <optgroup label="🎭 Kultur og innbyggerdialog">
-                            <option value="2100-ENH-501">Enhet 501: Kultur & Bibliotek (Camilla Jarlsby)</option>
-                            <option value="2000-SJEF-KULTUR">Kommunalsjef Kultur (Camilla Jarlsby)</option>
-                        </optgroup>
-                        <optgroup label="💻 Organisasjon og teknologi">
-                            <option value="1100-DIR-IKT">Digitaliseringsavdelingen (Siri Bentsen)</option>
-                            <option value="1000-SJEF-ORGTEK">Kommunalsjef Org & Tek (Geir Askvik)</option>
-                        </optgroup>
-                        <optgroup label="🏛️ Konsern og toppledelse">
-                            <option value="0000-KOMMDIR">Kommunedirektørens stab (Camilla Dunsæd)</option>
-                            <option value="6000-DIR-OKONOMI">Sentral økonomistab (Terje Fjellvang)</option>
-                            <option value="6001-CTRL-FRANK">Senior Controller Stab (Frank Ellingsen)</option>
-                        </optgroup>
-                    </select>
-
-                    <div class="bank-month-pills" id="bank-month-pills-bar">
-                        <!-- M01 til M12 knapper genereres dynamisk -->
-                    </div>
-                </div>
-
-                <div class="bank-controls-right">
-                    <button class="btn btn-sm" onclick="openShareModal('email')" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe; font-weight:600;" title="Send månedlig status og kontoutskrift på e-post til leder og controller">
-                        📧 Send E-post
-                    </button>
-                    <button class="btn btn-sm" onclick="openShareModal('teams')" style="background:#f3e8ff; color:#6b21a8; border-color:#e9d5ff; font-weight:600;" title="Del månedlig status og kontoutskrift direkte i Microsoft Teams">
-                        💬 Del i Teams
-                    </button>
-                    <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
-                        🖨️ Skriv ut / PDF
-                    </button>
-                    <button class="btn btn-sm btn-secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned transaksjoner som Excel/CSV">
-                        📊 Last ned CSV
-                    </button>
-                    <a class="btn btn-sm btn-secondary" id="bank-direct-html-btn" href="reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html" target="_blank" title="Åpne ren A4 bankutskrift i fullskjerm">
-                        📄 Åpne A4
-                    </a>
-                    <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
-                        💬 Spør Controller
-                    </button>
-                </div>
-            </div>
-
-            <!-- RLS Kontekst & Budsjettansvarlig Identitetspanel -->
-            <div class="bank-rls-strip" id="bank-rls-identity-panel">
-                <div class="bank-rls-info-group">
-                    <div class="bank-rls-item">
-                        <span style="font-size:14px;">👤</span>
-                        <span><strong>Solveig Grimstad</strong> (Enhetsleder Strai Sykehjem)</span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">🔒</span>
-                        <span>RLS-Rolle:</span>
-                        <span class="bank-rls-badge">Enhetsleder_Boenhet</span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">📧</span>
-                        <span style="font-family:'Segoe UI',monospace; font-size:11px; color:#475569;">solveig.grimstad@kristiansand.kommune.no</span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">💳</span>
-                        <span>Fullmakt: <strong>kr 2 000 000 NOK</strong></span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">🛡️</span>
-                        <span>Filter: <code style="background:#e2e8f0; padding:1px 5px; border-radius:3px; font-size:10.5px;">Dim_Ansvar[ansvar_kode] == "5200-ENH-401"</code></span>
-                    </div>
-                </div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <span style="font-size:11px; color:#64748b;">Fast Controller: <strong>Frank Ellingsen / Marianne Tellefsen</strong></span>
-                    <button class="btn btn-sm" onclick="askChatbotAboutCurrentKonto()" style="font-size:10.5px; padding:3px 8px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; font-weight:600;">
-                        💬 Spør om 5200-ENH-401
-                    </button>
-                </div>
-            </div>
-
-            <!-- Månedsrapportpakke for Budsjettansvarlig (5 Formater: PBI, Excel, PowerPoint, Word, PDF) -->
-            <div class="bank-reports-suite" id="bank-monthly-reports-suite">
-                <div class="bank-reports-suite-header">
-                    <div>
-                        <div class="bank-reports-suite-title">
-                            <span>📁 MÅNEDSRAPPORTER FOR VALGT BUDSJETTANSVARLIG (M01–M12)</span>
-                            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">5 KORRESPONDERENDE FORMATER &bull; RLS AKTIV</span>
-                        </div>
-                        <div class="bank-reports-suite-sub" id="bank-reports-suite-unit-label">
-                            Tilpasset Row-Level Security for Enhet 401: Strai Sykehjem (Solveig Grimstad)
-                        </div>
-                    </div>
-                    <div style="font-size:11px; color:#64748b;" id="bank-reports-period-label">
-                        Gjeldende regnskapsperiode: <strong>Oktober 2026 (M10)</strong>
-                    </div>
-                </div>
-                <div class="bank-reports-grid" id="bank-reports-grid-cards">
-                    <!-- Rendres dynamisk for valgt budsjettansvarlig -->
-                </div>
-            </div>
-
-            <!-- Aktiv Kontoutskrift Hovedkort -->
-            <div class="bank-card" id="bank-statement-main-card">
-                <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
-                    Laster kontoutskrift og saldo...
-                </div>
-            </div>
-
-            <!-- Sektor-tilpasset Driftsdashboard (Rektorens Skole-Dashboard & Pleie/Omsorg Dashboard) -->
-            <div id="sektor-spesifikk-leder-modul" style="margin-top: 18px;">
-                <!-- Rendres dynamisk basert på valgt enhet (Skoleleder vs Sykehjemsleder) -->
-            </div>
-        </div>
-    </section>
-
 <div class="monthly-cycle-banner" id="workflow-cycle-banner">
         <div class="monthly-cycle-header">
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -7668,6 +7498,179 @@ RETURN
     </div>
 
     
+    <!-- ============================================================================== -->
+    <!-- KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT (EDWARD TUFTE STYLE)                -->
+    <!-- ============================================================================== -->
+<section class="workflow-section" id="nettbank-kontoutskrift-seksjon" style="margin-bottom: 24px;">
+        <div class="section-header">
+            <span>🏦 Kommunal Nettbank & Månedlig Kontoutskrift for Budsjettansvarlige</span>
+            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Fast Månedsoppsett (M01–M12) | § 14-5 Klarspråk</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+            Spesialtilpasset virksomhetsledere, rektorer, avdelingsledere og styrere uten økonomibakgrunn. 
+            Rapporten fungerer som en <strong>nettbank</strong>: Kontonummer, tildelt årsramme (startkreditt), månedens faktiske uttak og innbetalinger, 
+            <strong>disponibel saldo for resten av året</strong>, samt konkrete leder-råd for å overholde budsjettbalansen jf. <strong>Kommuneloven § 14-5</strong>.
+        </p>
+
+        <div class="bank-wrapper">
+            <!-- Sektor Hurtigvelger & Visningsmodus for Budsjettansvarlige -->
+            <div class="bank-sector-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding: 10px 14px; background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px;">
+                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-right: 4px;">Sektor:</span>
+                    <button type="button" class="btn btn-sm bank-sector-pill active" onclick="filterBankSector('ALL')" id="bank-sec-btn-ALL" style="background: var(--navy-dark); color: #ffffff; font-weight: 700;">Alle sektorer (81 enheter)</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('HELSE')" id="bank-sec-btn-HELSE" style="background: #f1f5f9; color: var(--text-primary);">🏥 Helse &amp; Omsorg</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('OPPVEKST')" id="bank-sec-btn-OPPVEKST" style="background: #f1f5f9; color: var(--text-primary);">🎓 Oppvekst &amp; Skole</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('BYUTVIKLING')" id="bank-sec-btn-BYUTVIKLING" style="background: #f1f5f9; color: var(--text-primary);">🏗️ Byutvikling &amp; VAR</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KULTUR')" id="bank-sec-btn-KULTUR" style="background: #f1f5f9; color: var(--text-primary);">🎭 Kultur &amp; Idrett</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('ORG_TEK')" id="bank-sec-btn-ORG_TEK" style="background: #f1f5f9; color: var(--text-primary);">💻 Org &amp; IKT</button>
+                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KONSERN')" id="bank-sec-btn-KONSERN" style="background: #f1f5f9; color: var(--text-primary);">🏛️ Konsern</button>
+                </div>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
+                    <button type="button" class="btn btn-sm" onclick="openCashManagementSection()" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; font-weight:700; margin-right:6px;" title="Cash Management, rullende likviditetsprognose og kassakredittramme jf. § 14-14">💳 Cash Management &amp; Likviditet</button>
+                    <button type="button" class="btn btn-sm" onclick="openProsjektregnskapSection()" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-weight:700; margin-right:6px;" title="Søk statlige støtteordninger (ENOVA, Udir, IMDi, Helsedir) og prosjektregnskap">🏛️ Støtteordninger &amp; Prosjektregnskap</button>
+                    <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
+                    <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
+                    <a class="btn btn-sm" id="btn-apne-pdf-rapport" href="reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf" target="_blank" style="background: #1e293b; color: #ffffff; text-decoration: none; font-weight: 700;" title="Åpne formell 2-siders PDF månedsrapport med prognoser og tiltak">📄 Månedsrapport (PDF)</a>
+                </div>
+            </div>
+
+            <!-- Kontrollpanel: Enhetsvelger & Månedsvelger (M01–M12) -->
+            <div class="bank-controls-bar">
+                <div class="bank-controls-left">
+                    <span class="bank-select-label">Budsjettkonto:</span>
+                    <select class="bank-unit-select" id="bank-unit-dropdown" onchange="onBankUnitChange(this.value)">
+                        <optgroup label="🏥 Helse og mestring">
+                            <option value="5200-ENH-401" selected>Enhet 401: Strai Sykehjem (Solveig Grimstad)</option>
+                            <option value="5210-ENH-402">Enhet 402: Hjemmetjenesten Vågsbygd (Berit Olsen)</option>
+                            <option value="5220-ENH-403">Enhet 403: Sørlandsparken Bo & Miljø (Christian Holte)</option>
+                            <option value="5230-ENH-404">Enhet 404: Presteheia Omsorgssenter (Kari Vesterhus)</option>
+                            <option value="5100-OMR-SYKEHJEM">Område Døgnomsorg & Sykehjem (Mette Syvertsen)</option>
+                            <option value="5000-SJEF-HELSE">Kommunalsjef Helse og mestring (Brede Skeie)</option>
+                        </optgroup>
+                        <optgroup label="🎓 Oppvekst og utdanning">
+                            <option value="4100-ENH-202">Enhet 202: Lovisenlev Skole (Trond Jensen)</option>
+                            <option value="4101-ENH-203">Enhet 203: Vågsbygd Skole (Mona Lindstrøm)</option>
+                            <option value="4102-ENH-204">Enhet 204: Grim Ungdomsskole (Espen Birkeland)</option>
+                            <option value="4210-ENH-211">Enhet 211: Lund Kommunale Barnehage (Grete Hovden)</option>
+                            <option value="4100-OMR-SKOLE">Grunnskoleavdelingen (Svein Tore Kvernes)</option>
+                            <option value="4000-SJEF-OPPV">Kommunalsjef Oppvekst (Kristin Eidet Robstad)</option>
+                        </optgroup>
+                        <optgroup label="🏗️ By- og stedsutvikling">
+                            <option value="3300-ENH-301">Enhet 301: Byggesak og Tilsyn (Hans Petter Vik)</option>
+                            <option value="3100-DIR-VAR">Ingeniørvesenet VAR Selvkost (Helge Møller)</option>
+                            <option value="3000-SJEF-BYUTV">Kommunalsjef Byutvikling (Ragnar Evensen)</option>
+                        </optgroup>
+                        <optgroup label="🎭 Kultur og innbyggerdialog">
+                            <option value="2100-ENH-501">Enhet 501: Kultur & Bibliotek (Camilla Jarlsby)</option>
+                            <option value="2000-SJEF-KULTUR">Kommunalsjef Kultur (Camilla Jarlsby)</option>
+                        </optgroup>
+                        <optgroup label="💻 Organisasjon og teknologi">
+                            <option value="1100-DIR-IKT">Digitaliseringsavdelingen (Siri Bentsen)</option>
+                            <option value="1000-SJEF-ORGTEK">Kommunalsjef Org & Tek (Geir Askvik)</option>
+                        </optgroup>
+                        <optgroup label="🏛️ Konsern og toppledelse">
+                            <option value="0000-KOMMDIR">Kommunedirektørens stab (Camilla Dunsæd)</option>
+                            <option value="6000-DIR-OKONOMI">Sentral økonomistab (Terje Fjellvang)</option>
+                            <option value="6001-CTRL-FRANK">Senior Controller Stab (Frank Ellingsen)</option>
+                        </optgroup>
+                    </select>
+
+                    <div class="bank-month-pills" id="bank-month-pills-bar">
+                        <!-- M01 til M12 knapper genereres dynamisk -->
+                    </div>
+                </div>
+
+                <div class="bank-controls-right">
+                    <button class="btn btn-sm" onclick="openShareModal('email')" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe; font-weight:600;" title="Send månedlig status og kontoutskrift på e-post til leder og controller">
+                        📧 Send E-post
+                    </button>
+                    <button class="btn btn-sm" onclick="openShareModal('teams')" style="background:#f3e8ff; color:#6b21a8; border-color:#e9d5ff; font-weight:600;" title="Del månedlig status og kontoutskrift direkte i Microsoft Teams">
+                        💬 Del i Teams
+                    </button>
+                    <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
+                        🖨️ Skriv ut / PDF
+                    </button>
+                    <button class="btn btn-sm btn-secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned transaksjoner som Excel/CSV">
+                        📊 Last ned CSV
+                    </button>
+                    <a class="btn btn-sm btn-secondary" id="bank-direct-html-btn" href="reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html" target="_blank" title="Åpne ren A4 bankutskrift i fullskjerm">
+                        📄 Åpne A4
+                    </a>
+                    <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
+                        💬 Spør Controller
+                    </button>
+                </div>
+            </div>
+
+            <!-- RLS Kontekst & Budsjettansvarlig Identitetspanel -->
+            <div class="bank-rls-strip" id="bank-rls-identity-panel">
+                <div class="bank-rls-info-group">
+                    <div class="bank-rls-item">
+                        <span style="font-size:14px;">👤</span>
+                        <span><strong>Solveig Grimstad</strong> (Enhetsleder Strai Sykehjem)</span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">🔒</span>
+                        <span>RLS-Rolle:</span>
+                        <span class="bank-rls-badge">Enhetsleder_Boenhet</span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">📧</span>
+                        <span style="font-family:'Segoe UI',monospace; font-size:11px; color:#475569;">solveig.grimstad@kristiansand.kommune.no</span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">💳</span>
+                        <span>Fullmakt: <strong>kr 2 000 000 NOK</strong></span>
+                    </div>
+                    <div class="bank-rls-item">
+                        <span style="font-size:13px;">🛡️</span>
+                        <span>Filter: <code style="background:#e2e8f0; padding:1px 5px; border-radius:3px; font-size:10.5px;">Dim_Ansvar[ansvar_kode] == "5200-ENH-401"</code></span>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:11px; color:#64748b;">Fast Controller: <strong>Frank Ellingsen / Marianne Tellefsen</strong></span>
+                    <button class="btn btn-sm" onclick="askChatbotAboutCurrentKonto()" style="font-size:10.5px; padding:3px 8px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; font-weight:600;">
+                        💬 Spør om 5200-ENH-401
+                    </button>
+                </div>
+            </div>
+
+            <!-- Månedsrapportpakke for Budsjettansvarlig (5 Formater: PBI, Excel, PowerPoint, Word, PDF) -->
+            <div class="bank-reports-suite" id="bank-monthly-reports-suite">
+                <div class="bank-reports-suite-header">
+                    <div>
+                        <div class="bank-reports-suite-title">
+                            <span>📁 MÅNEDSRAPPORTER FOR VALGT BUDSJETTANSVARLIG (M01–M12)</span>
+                            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">5 KORRESPONDERENDE FORMATER &bull; RLS AKTIV</span>
+                        </div>
+                        <div class="bank-reports-suite-sub" id="bank-reports-suite-unit-label">
+                            Tilpasset Row-Level Security for Enhet 401: Strai Sykehjem (Solveig Grimstad)
+                        </div>
+                    </div>
+                    <div style="font-size:11px; color:#64748b;" id="bank-reports-period-label">
+                        Gjeldende regnskapsperiode: <strong>Oktober 2026 (M10)</strong>
+                    </div>
+                </div>
+                <div class="bank-reports-grid" id="bank-reports-grid-cards">
+                    <!-- Rendres dynamisk for valgt budsjettansvarlig -->
+                </div>
+            </div>
+
+            <!-- Aktiv Kontoutskrift Hovedkort -->
+            <div class="bank-card" id="bank-statement-main-card">
+                <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                    Laster kontoutskrift og saldo...
+                </div>
+            </div>
+
+            <!-- Sektor-tilpasset Driftsdashboard (Rektorens Skole-Dashboard & Pleie/Omsorg Dashboard) -->
+            <div id="sektor-spesifikk-leder-modul" style="margin-top: 18px;">
+                <!-- Rendres dynamisk basert på valgt enhet (Skoleleder vs Sykehjemsleder) -->
+            </div>
+        </div>
+    </section>
+
     <!-- ============================================================================== -->
     <!-- 3.4 MLOPS, DATA LINEAGE & ANTIGRAVITY BACKEND ENGINE (AI_KOM ARCHITECTURE)    -->
     <!-- ============================================================================== -->
