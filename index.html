@@ -3975,6 +3975,111 @@
             font-size: 10.5px;
             border: 1px solid #bae6fd;
         }
+        /* ========================================================================== */
+        /* 3C.0 AVVIKSDEKOMPONERING & TRENDLINJE MED EOY PROGNOSE (POWER BI VISUALS)  */
+        /* Edward Tufte Data-Ink & Decomposition Tree Standard jf. § 14-5             */
+        /* ========================================================================== */
+        .bank-decomp-suite {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .bank-decomp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .bank-decomp-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .bank-decomp-grid {
+            display: grid;
+            grid-template-columns: 1.18fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 1050px) {
+            .bank-decomp-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        .decomp-column-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            border-bottom: 2.5px solid #d9531e;
+        }
+        .decomp-svg-canvas {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            display: block;
+        }
+        .decomp-clickable-node {
+            cursor: pointer;
+            transition: opacity 0.15s ease, filter 0.15s ease;
+        }
+        .decomp-clickable-node:hover {
+            opacity: 0.85;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+        }
+        .trend-chart-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 4px;
+            padding: 10px 12px;
+            position: relative;
+        }
+        .trend-chart-title {
+            color: #d9531e;
+            font-size: 13.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .trend-point {
+            cursor: pointer;
+            transition: r 0.15s ease;
+        }
+        .trend-point:hover {
+            r: 7;
+        }
+        .decomp-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: #ffffff;
+            padding: 7px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            line-height: 1.4;
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+        }
         .bank-reports-suite {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -5377,6 +5482,14 @@
             <!-- RLS Kontekst & Budsjettansvarlig Identitetspanel -->
             <div class="bank-rls-strip" id="bank-rls-identity-panel">
                 <!-- Dynamisk fylt fra updateBankRlsIdentityPanel -->
+            </div>
+
+            <!-- ============================================================================== -->
+            <!-- 🌳 3C.0 AVVIKSDEKOMPONERING & TRENDLINJE MED PROGNOSE AVVIK EOY UTEN TILTAK     -->
+            <!-- Power BI Decomposition Tree & Edward Tufte Fan Chart jf. Kommuneloven § 14-5   -->
+            <!-- ============================================================================== -->
+            <div class="bank-decomp-suite" id="bank-decomp-suite-container">
+                <!-- Innhold fylles dynamisk fra renderDecompositionTreeAndTrend(unitId, monthNum) -->
             </div>
 
             <!-- Månedsrapportpakke for Budsjettansvarlig (5 Formater: PBI, Excel, PowerPoint, Word, PDF) -->
@@ -15379,6 +15492,404 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             `;
         }
 
+        // ==========================================================================
+        // 3C.0 AVVIKSDEKOMPONERING & TRENDLINJE MED PROGNOSE AVVIK EOY UTEN TILTAK
+        // Power BI Decomposition Tree & Edward Tufte Fan Chart jf. Kommuneloven § 14-5
+        // ==========================================================================
+        let currentDecompActiveGroup = 'LONN';
+
+        function setDecompActiveGroup(grp) {
+            currentDecompActiveGroup = grp;
+            if (typeof renderDecompositionTreeAndTrend === 'function') {
+                renderDecompositionTreeAndTrend(currentKontoUnit, currentKontoMonth);
+            }
+        }
+
+        function resetDecompTree() {
+            currentDecompActiveGroup = 'LONN';
+            if (typeof renderDecompositionTreeAndTrend === 'function') {
+                renderDecompositionTreeAndTrend(currentKontoUnit, currentKontoMonth);
+            }
+        }
+
+        function showDecompTooltip(evt, text) {
+            const tip = document.getElementById("decomp-global-tooltip");
+            if (!tip) return;
+            tip.innerHTML = text;
+            tip.style.display = "block";
+            tip.style.left = (evt.pageX + 12) + "px";
+            tip.style.top = (evt.pageY - 28) + "px";
+        }
+
+        function hideDecompTooltip() {
+            const tip = document.getElementById("decomp-global-tooltip");
+            if (tip) tip.style.display = "none";
+        }
+
+        function renderDecompositionTreeAndTrend(unitId, monthNum) {
+            const container = document.getElementById("bank-decomp-suite-container");
+            if (!container) return;
+
+            const uData = calculateBankStatementClient(unitId, monthNum || currentKontoMonth || 10);
+            const u = uData.unit;
+            const m = Math.max(1, Math.min(12, monthNum || currentKontoMonth || 10));
+            const annualBudget = uData.annualBudget || 29400000;
+            const varFactor = u.variance_factor || (u.cpi ? 1.0 / u.cpi : 1.05);
+
+            // Sesongprofil for kommunal drift
+            const seasonDeltas = [0.015, -0.045, 0.012, 0.028, -0.008, -0.018, -0.012, 0.018, -0.026, -0.018, -0.022, -0.015];
+            const monthlySeries = [];
+            let cumYtd = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const w = KONTO_NORM_WEIGHTS[i - 1];
+                const mBud = annualBudget * w * 0.918;
+                const drift = 1.0 + (varFactor - 1.0) * (0.45 + 0.55 * (i / 12.0));
+                const mAct = annualBudget * w * (drift + seasonDeltas[i - 1]) * 0.918;
+                const mVar = mBud - mAct;
+                if (i <= m) {
+                    cumYtd += mVar;
+                }
+                monthlySeries.push({
+                    month: i,
+                    monthName: KONTO_MONTH_NAMES[i - 1],
+                    monthShort: KONTO_MONTH_SHORT[i - 1],
+                    budget: mBud,
+                    actual: mAct,
+                    variance: mVar,
+                    cumYtd: i <= m ? cumYtd : null
+                });
+            }
+
+            // For Enhet 404 Presteheia kalibrerer vi til de eksakte tallene i eksempelet
+            let totVar = Math.round(cumYtd);
+            let lonnVar = Math.round(totVar * 0.888603);
+            let utgVar = totVar - lonnVar;
+
+            if (unitId === '5230-ENH-404') {
+                totVar = -1293787;
+                lonnVar = -1149674;
+                utgVar = -144113;
+            }
+
+            // Kontospesifikasjon
+            let childAccounts = [];
+            if (currentDecompActiveGroup === 'LONN') {
+                if (unitId === '5230-ENH-404') {
+                    childAccounts = [
+                        { code: "1020", name: "Vikarer (sykefravær)", val: -712800, share: 0.62 },
+                        { code: "1040", name: "Overtid & mertid", val: -287400, share: 0.25 },
+                        { code: "1050", name: "Helge-/kveldstillegg", val: -114900, share: 0.10 },
+                        { code: "1010", name: "Fastlønn grunnbemanning", val: -34574, share: 0.03 }
+                    ];
+                } else {
+                    childAccounts = [
+                        { code: "1020", name: "Vikarer (sykefravær)", val: Math.round(lonnVar * 0.62), share: 0.62 },
+                        { code: "1040", name: "Overtid & mertid", val: Math.round(lonnVar * 0.25), share: 0.25 },
+                        { code: "1050", name: "Helge-/kveldstillegg", val: Math.round(lonnVar * 0.10), share: 0.10 },
+                        { code: "1010", name: "Fastlønn grunnbemanning", val: lonnVar - Math.round(lonnVar * 0.97), share: 0.03 }
+                    ];
+                }
+            } else {
+                if (unitId === '5230-ENH-404') {
+                    childAccounts = [
+                        { code: "1150", name: "Driftsmateriell & medisiner", val: -84200, share: 0.584 },
+                        { code: "1200", name: "Kjøp av tjenester & lisenser", val: -38500, share: 0.267 },
+                        { code: "1120", name: "Velferd, kurs & reiser", val: -14200, share: 0.099 },
+                        { code: "1240", name: "Ekstern konsulentbistand", val: -7213, share: 0.050 }
+                    ];
+                } else {
+                    childAccounts = [
+                        { code: "1150", name: "Driftsmateriell & medisiner", val: Math.round(utgVar * 0.584), share: 0.584 },
+                        { code: "1200", name: "Kjøp av tjenester & lisenser", val: Math.round(utgVar * 0.267), share: 0.267 },
+                        { code: "1120", name: "Velferd, kurs & reiser", val: Math.round(utgVar * 0.099), share: 0.099 },
+                        { code: "1240", name: "Ekstern konsulentbistand", val: utgVar - Math.round(utgVar * 0.95), share: 0.050 }
+                    ];
+                }
+            }
+
+            function fmtKr(n) {
+                if (n === null || n === undefined) return "0";
+                return (n < 0 ? "-" : "") + Math.abs(Math.round(n)).toLocaleString("nb-NO");
+            }
+
+            // Prosentberegninger for stolpediagram i tre
+            const utgPct = Math.min(1.0, Math.max(0.05, Math.abs(utgVar) / Math.max(1, Math.abs(totVar))));
+            const lonnPct = Math.min(1.0, Math.max(0.05, Math.abs(lonnVar) / Math.max(1, Math.abs(totVar))));
+
+            // =========================================================================
+            // 1. GENERER SVG FOR DECOMPOSITION TREE (NEDBRYTNINGSTRE)
+            // =========================================================================
+            const isUtgActive = currentDecompActiveGroup === 'UTGIFTER';
+            const isLonnActive = currentDecompActiveGroup === 'LONN';
+            const activeY = isUtgActive ? 68 : 158;
+
+            let childSvgNodes = "";
+            const childPositions = [40, 88, 136, 184];
+            childAccounts.forEach((acc, idx) => {
+                const cy = childPositions[idx];
+                const barW = Math.max(8, Math.round(acc.share * 105));
+                childSvgNodes += `
+                    <!-- Koblingslinje -->
+                    <path d="M 285 ${activeY} C 312 ${activeY}, 312 ${cy + 18}, 338 ${cy + 18}" fill="none" stroke="#cbd5e1" stroke-width="1.5" />
+                    <!-- Kontokort -->
+                    <g transform="translate(338, ${cy})">
+                        <rect x="0" y="0" width="185" height="36" rx="3.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+                        <text x="8" y="14" font-size="10.5" font-weight="700" fill="#334155" font-family="'Segoe UI', sans-serif">${acc.code} ${acc.name}</text>
+                        <text x="177" y="14" font-size="10.5" font-weight="700" fill="#d9531e" text-anchor="end" font-family="'Segoe UI', sans-serif">${fmtKr(acc.val)}</text>
+                        <!-- Fremdriftslinje -->
+                        <rect x="8" y="21" width="169" height="7" rx="1.5" fill="#f1f5f9" />
+                        <rect x="8" y="21" width="${barW}" height="7" rx="1.5" fill="#0f3460" />
+                    </g>
+                `;
+            });
+
+            const decompTreeSvg = `
+                <svg viewBox="0 0 535 235" class="decomp-svg-canvas" preserveAspectRatio="xMidYMid meet">
+                    <!-- Kolonnetitler med rød/oransje strek og kryss -->
+                    <g>
+                        <text x="155" y="16" font-size="11.5" font-weight="700" fill="#334155" font-family="'Segoe UI', sans-serif">Kontogruppe</text>
+                        <text x="272" y="16" font-size="12" fill="#94a3b8" cursor="pointer" onclick="resetDecompTree()" font-family="'Segoe UI', sans-serif" title="Tilbakestill">✕</text>
+                        <line x1="155" y1="22" x2="285" y2="22" stroke="#d9531e" stroke-width="2" />
+
+                        <text x="338" y="16" font-size="11.5" font-weight="700" fill="#334155" font-family="'Segoe UI', sans-serif">💡 Konto</text>
+                        <text x="515" y="16" font-size="12" fill="#94a3b8" cursor="pointer" onclick="resetDecompTree()" font-family="'Segoe UI', sans-serif" title="Tilbakestill">✕</text>
+                        <line x1="338" y1="22" x2="523" y2="22" stroke="#d9531e" stroke-width="2" />
+                    </g>
+
+                    <!-- Root Node: Avvik -->
+                    <g transform="translate(10, 95)">
+                        <text x="0" y="0" font-size="11" font-weight="700" fill="#d9531e" font-family="'Segoe UI', sans-serif">Avvik</text>
+                        <text x="0" y="16" font-size="12" font-weight="800" fill="#d9531e" font-family="'Segoe UI', sans-serif">${fmtKr(totVar)}</text>
+                        <rect x="0" y="24" width="98" height="11" rx="2" fill="#0f3460" />
+                        <!-- Koblingspunkt -->
+                        <circle cx="98" cy="29" r="3.5" fill="#cbd5e1" stroke="#0f3460" stroke-width="1.5" />
+                    </g>
+
+                    <!-- Koblingslinjer Root -> Kontogruppe -->
+                    <path d="M 108 124 C 132 124, 132 68, 155 68" fill="none" stroke="${isUtgActive ? '#0284c7' : '#cbd5e1'}" stroke-width="${isUtgActive ? '2' : '1.5'}" />
+                    <path d="M 108 124 C 132 124, 132 158, 155 158" fill="none" stroke="${isLonnActive ? '#0284c7' : '#cbd5e1'}" stroke-width="${isLonnActive ? '2' : '1.5'}" />
+
+                    <!-- Node 1: 2 Utgifter -->
+                    <g transform="translate(155, 48)" class="decomp-clickable-node" onclick="setDecompActiveGroup('UTGIFTER')">
+                        <rect x="0" y="0" width="130" height="40" rx="4" fill="${isUtgActive ? '#f0f9ff' : '#ffffff'}" stroke="${isUtgActive ? '#0284c7' : '#e2e8f0'}" stroke-width="${isUtgActive ? '1.8' : '1'}" />
+                        <text x="8" y="15" font-size="11" font-weight="${isUtgActive ? '700' : '600'}" fill="#d9531e" font-family="'Segoe UI', sans-serif">2 Utgifter</text>
+                        <text x="122" y="15" font-size="11" font-weight="700" fill="#d9531e" text-anchor="end" font-family="'Segoe UI', sans-serif">${fmtKr(utgVar)}</text>
+                        <rect x="8" y="23" width="114" height="8" rx="1.5" fill="#f1f5f9" />
+                        <rect x="8" y="23" width="${Math.round(utgPct * 114)}" height="8" rx="1.5" fill="#0f3460" />
+                        ${isUtgActive ? '<circle cx="130" cy="20" r="3.5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />' : ''}
+                    </g>
+
+                    <!-- Node 2: 1 Lønn -->
+                    <g transform="translate(155, 138)" class="decomp-clickable-node" onclick="setDecompActiveGroup('LONN')">
+                        <rect x="0" y="0" width="130" height="40" rx="4" fill="${isLonnActive ? '#f0f9ff' : '#ffffff'}" stroke="${isLonnActive ? '#0284c7' : '#e2e8f0'}" stroke-width="${isLonnActive ? '1.8' : '1'}" />
+                        <text x="8" y="15" font-size="11" font-weight="${isLonnActive ? '700' : '600'}" fill="#d9531e" font-family="'Segoe UI', sans-serif">1 Lønn</text>
+                        <text x="122" y="15" font-size="11" font-weight="700" fill="#d9531e" text-anchor="end" font-family="'Segoe UI', sans-serif">${fmtKr(lonnVar)}</text>
+                        <rect x="8" y="23" width="114" height="8" rx="1.5" fill="#f1f5f9" />
+                        <rect x="8" y="23" width="${Math.round(lonnPct * 114)}" height="8" rx="1.5" fill="#0f3460" />
+                        ${isLonnActive ? '<circle cx="130" cy="20" r="3.5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />' : ''}
+                    </g>
+
+                    <!-- Child Account Nodes -->
+                    ${childSvgNodes}
+                </svg>
+            `;
+
+            // =========================================================================
+            // 2. GENERER SVG FOR AVVIK - TREND MED EOY PROGNOSE & USIKKERHETSVIFTE
+            // =========================================================================
+            const svgW = 460;
+            const svgH = 235;
+            const padL = 72;
+            const padR = 25;
+            const padT = 28;
+            const padB = 32;
+            const plotW = svgW - padL - padR;
+            const plotH = svgH - padT - padB;
+
+            // Skaleringsverdier for Y-akse: e.g. -1 500 000 til +1 000 000
+            let minY = -1500000;
+            let maxY = 1000000;
+            if (Math.abs(totVar) > 2000000) {
+                minY = Math.round(totVar * 1.5);
+                maxY = Math.round(Math.abs(minY) * 0.7);
+            } else if (Math.abs(totVar) < 400000) {
+                minY = -600000;
+                maxY = 400000;
+            }
+
+            function scaleX(mIdx) { // 1..12
+                return padL + ((mIdx - 1) / 11) * plotW;
+            }
+            function scaleY(val) {
+                const norm = (val - minY) / (maxY - minY);
+                return padT + (1.0 - Math.min(1.0, Math.max(0.0, norm))) * plotH;
+            }
+
+            const zeroY = scaleY(0);
+            const topY = scaleY(maxY);
+            const botY = scaleY(minY);
+
+            // Månedspunkter M01..M10
+            const pts = [];
+            for (let i = 1; i <= Math.min(10, m); i++) {
+                const item = monthlySeries[i - 1];
+                pts.push({
+                    x: scaleX(i),
+                    y: scaleY(item.variance),
+                    month: item.monthName,
+                    val: item.variance
+                });
+            }
+
+            // Bygg glatt spline gjennom punktene
+            let splineD = "";
+            if (pts.length > 0) {
+                splineD = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+                for (let i = 0; i < pts.length - 1; i++) {
+                    const p0 = pts[Math.max(0, i - 1)];
+                    const p1 = pts[i];
+                    const p2 = pts[i + 1];
+                    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+                    const cp1x = p1.x + (p2.x - p0.x) / 6;
+                    const cp1y = p1.y + (p2.y - p0.y) / 6;
+                    const cp2x = p2.x - (p3.x - p1.x) / 6;
+                    const cp2y = p2.y - (p3.y - p1.y) / 6;
+                    splineD += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+                }
+            }
+
+            // Sirkler og fargevalg per måned (jf. referansebilde)
+            const dotColors = ["#38bdf8", "#ef4444", "#f97316", "#f97316", "#f97316", "#f472b6", "#f97316", "#f97316", "#f472b6", "#d9531e"];
+            let dotsSvg = "";
+            pts.forEach((p, idx) => {
+                const col = dotColors[idx] || "#d9531e";
+                const isAct = idx === pts.length - 1;
+                dotsSvg += `
+                    <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${isAct ? 5.5 : 4.5}" fill="${col}" stroke="#ffffff" stroke-width="1.5" class="trend-point" onmouseover="showDecompTooltip(event, '${p.month}: ${fmtKr(p.val)} kr')" onmouseout="hideDecompTooltip()" />
+                `;
+            });
+
+            // Trendlinje (stiplet regresjon over historikk)
+            const trendStartX = scaleX(1);
+            const trendStartY = scaleY(pts.length > 0 ? pts[0].val * 0.4 : 0);
+            const lastHist = pts[pts.length - 1] || { x: scaleX(10), y: scaleY(-120000) };
+            const trendEndX = lastHist.x;
+            const trendEndY = lastHist.y;
+
+            // EOY Prognose uten tiltak (M10 -> M12)
+            const eoyVarianceNoTiltak = (totVar / m) * 12; // lineær årsekstrapolasjon uten tiltak
+            const eoyY = scaleY(eoyVarianceNoTiltak);
+            const m11X = scaleX(11);
+            const m12X = scaleX(12);
+            const m11MidY = scaleY((totVar / m) * 11);
+
+            // Usikkerhetsvifte P10–P90
+            const spread11 = Math.abs(totVar) * 0.18;
+            const spread12 = Math.abs(totVar) * 0.32;
+            const p90_11_Y = scaleY(((totVar / m) * 11) + spread11);
+            const p10_11_Y = scaleY(((totVar / m) * 11) - spread11);
+            const p90_12_Y = scaleY(eoyVarianceNoTiltak + spread12);
+            const p10_12_Y = scaleY(eoyVarianceNoTiltak - spread12);
+
+            const fanPath = `
+                M ${lastHist.x.toFixed(1)} ${lastHist.y.toFixed(1)}
+                L ${m11X.toFixed(1)} ${p90_11_Y.toFixed(1)}
+                L ${m12X.toFixed(1)} ${p90_12_Y.toFixed(1)}
+                L ${m12X.toFixed(1)} ${p10_12_Y.toFixed(1)}
+                L ${m11X.toFixed(1)} ${p10_11_Y.toFixed(1)}
+                Z
+            `;
+
+            const trendChartSvg = `
+                <svg viewBox="0 0 460 235" class="decomp-svg-canvas" preserveAspectRatio="xMidYMid meet">
+                    <!-- Bakgrunnsrutenett & Y-akse labels -->
+                    <g font-family="'Segoe UI', sans-serif" font-size="10" fill="#64748b" text-anchor="end">
+                        <!-- Topp 1,000,000 -->
+                        <line x1="${padL}" y1="${topY.toFixed(1)}" x2="${(svgW - padR)}" y2="${topY.toFixed(1)}" stroke="#f1f5f9" stroke-width="1" />
+                        <text x="${padL - 8}" y="${(topY + 3.5).toFixed(1)}">${fmtKr(maxY)}</text>
+
+                        <!-- Null-linje (stiplet baseline) -->
+                        <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(svgW - padR)}" y2="${zeroY.toFixed(1)}" stroke="#94a3b8" stroke-dasharray="3,3" stroke-width="1.2" />
+                        <text x="${padL - 8}" y="${(zeroY + 3.5).toFixed(1)}" font-weight="700" fill="#475569">0</text>
+
+                        <!-- Bunn -1,000,000 -->
+                        <line x1="${padL}" y1="${scaleY(-1000000).toFixed(1)}" x2="${(svgW - padR)}" y2="${scaleY(-1000000).toFixed(1)}" stroke="#f1f5f9" stroke-width="1" />
+                        <text x="${padL - 8}" y="${(scaleY(-1000000) + 3.5).toFixed(1)}">${fmtKr(-1000000)}</text>
+                    </g>
+
+                    <!-- X-akse månedsmerker -->
+                    <g font-family="'Segoe UI', sans-serif" font-size="10" fill="#64748b" text-anchor="middle">
+                        <text x="${scaleX(1).toFixed(1)}" y="${(svgH - 8)}">Jan 2026</text>
+                        <text x="${scaleX(7).toFixed(1)}" y="${(svgH - 8)}">Jul 2026</text>
+                        <text x="${scaleX(10).toFixed(1)}" y="${(svgH - 8)}" font-weight="700" fill="#0f172a">Okt (YTD)</text>
+                        <text x="${scaleX(12).toFixed(1)}" y="${(svgH - 8)}" font-weight="700" fill="#0f172a">Des (EOY)</text>
+                    </g>
+
+                    <!-- Usikkerhetsvifte P10-P90 (grå sone M10 til M12) -->
+                    <path d="${fanPath}" fill="rgba(203, 213, 225, 0.55)" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1" />
+
+                    <!-- Stiplet lineær trendlinje M01..M10 -->
+                    <line x1="${trendStartX.toFixed(1)}" y1="${trendStartY.toFixed(1)}" x2="${trendEndX.toFixed(1)}" y2="${trendEndY.toFixed(1)}" stroke="#c2410c" stroke-dasharray="3,3" stroke-width="1.5" />
+
+                    <!-- Spline kurve M01..M10 -->
+                    <path d="${splineD}" fill="none" stroke="#e06a3b" stroke-width="2.5" />
+
+                    <!-- Datapunkter for hver måned -->
+                    ${dotsSvg}
+
+                    <!-- EOY Prognoselinje uten tiltak (sort linje M10 til M12) -->
+                    <line x1="${lastHist.x.toFixed(1)}" y1="${lastHist.y.toFixed(1)}" x2="${m12X.toFixed(1)}" y2="${eoyY.toFixed(1)}" stroke="#0f172a" stroke-width="2.5" />
+                    <circle cx="${m12X.toFixed(1)}" cy="${eoyY.toFixed(1)}" r="4.5" fill="#0f172a" />
+
+                    <!-- Direkte EOY påskrift (Tufte-prinsipp) -->
+                    <g transform="translate(${(m12X - 4).toFixed(1)}, ${(eoyY - 8).toFixed(1)})">
+                        <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="800" fill="#0f172a" text-anchor="end">EOY: ${(eoyVarianceNoTiltak / 1000000).toFixed(2).replace('.', ',')} MNOK</text>
+                        <text x="0" y="11" font-family="'Segoe UI', sans-serif" font-size="9" fill="#64748b" text-anchor="end">uten tiltak</text>
+                    </g>
+                </svg>
+            `;
+
+            // =========================================================================
+            // 3. MONTERE KOMPONENTEN MED TUFTE DESIGN & HEADER
+            // =========================================================================
+            container.innerHTML = `
+                <div class="bank-decomp-header">
+                    <div>
+                        <div class="bank-decomp-title">
+                            <span>🌳 AVVIKSDEKOMPONERING & TRENDLINJE MED PROGNOSE AVVIK EOY UTEN TILTAK</span>
+                            <span class="status-badge" style="background:#fef2f2; color:#b91c1c; font-size:10px; border:1px solid #fecaca;">§ 14-5 DRIFTSKONTROLL</span>
+                        </div>
+                        <div style="font-size:11.5px; color:#475569; margin-top:3px;">
+                            ${u.enhet_navn || unitId} &bull; Månedsavvik dekomponert via Power BI nedbrytningstre &bull; Rullerende usikkerhetsvifte P10–P90
+                        </div>
+                    </div>
+                    <div style="font-size:11px; color:#64748b; text-align:right;">
+                        Valgt visning: <strong>${currentDecompActiveGroup === 'LONN' ? '1 Lønn' : '2 Utgifter'}</strong> &bull; Klikk i treet for å endre
+                    </div>
+                </div>
+
+                <div class="bank-decomp-grid">
+                    <!-- Venstre: Power BI Nedbrytningstre -->
+                    <div style="background:#ffffff; border:1px solid #f1f5f9; border-radius:4px; padding:10px 12px;">
+                        ${decompTreeSvg}
+                    </div>
+
+                    <!-- Høyre: Avvik - trend -->
+                    <div class="trend-chart-card">
+                        <div class="trend-chart-title">
+                            <span>Avvik - trend</span>
+                            <span style="font-size:10.5px; color:#64748b; font-weight:normal;">M01–M12</span>
+                        </div>
+                        ${trendChartSvg}
+                    </div>
+                </div>
+
+                <!-- Global hover tooltip -->
+                <div id="decomp-global-tooltip" class="decomp-tooltip"></div>
+            `;
+        }
+
         function renderBankMonthlyReportSuite(unitId, monthNum) {
             const container = document.getElementById("bank-reports-grid-cards");
             const unitLabel = document.getElementById("bank-reports-suite-unit-label");
@@ -16019,6 +16530,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             if (bannerDesc) bannerDesc.innerHTML = ref.scopeNotice;
 
             if (typeof updateBankRlsIdentityPanel === "function") updateBankRlsIdentityPanel(currentKontoUnit);
+            if (typeof renderDecompositionTreeAndTrend === "function") renderDecompositionTreeAndTrend(currentKontoUnit, currentKontoMonth);
             if (typeof renderBankMonthlyReportSuite === "function") renderBankMonthlyReportSuite(currentKontoUnit, currentKontoMonth);
 
             const dropdown = document.getElementById("bank-unit-dropdown");
@@ -26206,6 +26718,331 @@ Tlf: +47 38 00 76 50 | frank.ellingsen@kristiansand.kommune.no`;
             }
         };
 
+        const HELSE_METRICS_REGISTRY = {
+            "5230-ENH-404": {
+                unitId: "5230-ENH-404",
+                enhetNavn: "Enhet 404: Presteheia Omsorgssenter",
+                dashboardType: "Pleie- og Omsorgsdashboard (Sykehjem & Korttidsavdeling)",
+                lederNavn: "Kari Vesterhus",
+                lederTittel: "Enhetsleder Presteheia Omsorgssenter",
+                lederEpost: "kari.vesterhus@kristiansand.kommune.no",
+                avdelingslederNavn: "Tone S. Gundersen (Fagsykepleier & Turnusansvarlig)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Korttidsrehabilitering &bull; GAT Turnus &bull; AML § 10-6/12",
+                focusText: "Døgnbemanning, korttidsbelegg, overtidskontroll og rask utskriving til hjemmet",
+                kpi1Label: "🛏️ Pasientbelegg / Kapasitet",
+                kpi1Val: "97.8 % belegg",
+                kpi1Sub: "32 korttids- og rehabiliteringsplasser",
+                kpi2Label: "💉 Pleiefaktor per pasient",
+                kpi2Val: "0.88 pleier/pasient",
+                kpi2Sub: "Fagdekning: 82 % autoriserte",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 285 000 YTD",
+                kpi3Sub: "Turnusjustert jf. AML § 10-6",
+                kpi4Label: "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: "kr 168 000 innsendt",
+                kpi4Sub: "🟢 100 % oppfølgingsgrad",
+                kalkulatorTittel: "Kari Vesterhus' GAT Turnus- og Overtidskalkulator (Presteheia Omsorgssenter)"
+            },
+            "5200-ENH-401": {
+                unitId: "5200-ENH-401",
+                enhetNavn: "Enhet 401: Strai Sykehjem & Omsorgsboliger",
+                dashboardType: "Pleie- og Omsorgsdashboard (Sykehjem & Langtidsdrift)",
+                lederNavn: "Solveig Grimstad",
+                lederTittel: "Enhetsleder Strai Sykehjem",
+                lederEpost: "solveig.grimstad@kristiansand.kommune.no",
+                avdelingslederNavn: "Ingrid Bakke (Avdelingsleder pleie)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Heldøgnsomsorg &bull; GAT Turnus &bull; AML § 10-6/12",
+                focusText: "Døgnbemanning, pasientbelegg, overtidskontroll og fagdekning",
+                kpi1Label: "🛏️ Pasientbelegg / Kapasitet",
+                kpi1Val: "98.6 % belegg",
+                kpi1Sub: "54 heldøgnsplasser (Langtidsdrift)",
+                kpi2Label: "💉 Pleiefaktor per pasient",
+                kpi2Val: "0.84 pleier/pasient",
+                kpi2Sub: "Fagdekning: 76 % autoriserte",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 385 000 YTD",
+                kpi3Sub: "Restriktiv overtid godkjent",
+                kpi4Label: "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: "kr 214 000 innsendt",
+                kpi4Sub: "🟢 100 % oppfølgingsgrad",
+                kalkulatorTittel: "Solveig Grimstads GAT Turnus- og Overtidskalkulator (Strai Sykehjem)"
+            },
+            "5210-ENH-402": {
+                unitId: "5210-ENH-402",
+                enhetNavn: "Enhet 402: Hjemmetjenesten Vågsbygd",
+                dashboardType: "Hjemmetjenestedashboard (Pleie og omsorg i hjemmet)",
+                lederNavn: "Berit Olsen",
+                lederTittel: "Enhetsleder Hjemmetjeneste Vågsbygd",
+                lederEpost: "berit.olsen@kristiansand.kommune.no",
+                avdelingslederNavn: "Kirsten Aas (Avdelingsleder sone)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Hjemmetjeneste &bull; Ruteoptimalisering &bull; Bilpark",
+                focusText: "Ruteeffektivitet, vedtakstimer, bilparkleasing og helgevakter",
+                kpi1Label: "👥 Aktive Brukere / Vedtak",
+                kpi1Val: "340 aktive brukere",
+                kpi1Sub: "8 450 vedtakstimer per måned",
+                kpi2Label: "🚗 Bilpark & Leasing (Art 11900)",
+                kpi2Val: "24 leasingbiler",
+                kpi2Sub: "Ruteoptimalisering og elbilpark",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 310 000 YTD",
+                kpi3Sub: "Soneoppfølging og helgeturnus",
+                kpi4Label: "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: "kr 192 000 innsendt",
+                kpi4Sub: "🟢 98 % oppfølgingsgrad",
+                kalkulatorTittel: "Berit Olsens GAT Turnus- og Overtidskalkulator (Hjemmetjenesten Vågsbygd)"
+            },
+            "5220-ENH-403": {
+                unitId: "5220-ENH-403",
+                enhetNavn: "Enhet 403: Sørlandsparken Bo- og Miljø",
+                dashboardType: "Botilbud & Døgnomsorg Dashboard (Heldøgns omsorgsbolig)",
+                lederNavn: "Christian Holte",
+                lederTittel: "Enhetsleder Bo- og Miljøtjenester",
+                lederEpost: "christian.holte@kristiansand.kommune.no",
+                avdelingslederNavn: "Tor Martin Hansen (Fagleder)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Miljøterapi &bull; 1:1 Vedtak &bull; Ressurskrevende",
+                focusText: "Døgnbemanning, ressurskrevende tjenester (toppfinansiering) og turnus",
+                kpi1Label: "🏠 Beboere / Plasser",
+                kpi1Val: "18 beboere",
+                kpi1Sub: "Heldøgns omsorgsbolig (100 % utnyttelse)",
+                kpi2Label: "💉 Pleiefaktor 1:1 vedtak",
+                kpi2Val: "1.42 pleier/beboer",
+                kpi2Sub: "Miljøterapeuter & autorisert personell",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 420 000 YTD",
+                kpi3Sub: "Sykefraværsdekning med faste vikarer",
+                kpi4Label: "🏛️ Ressurskrevende (Art 16500)",
+                kpi4Val: "kr 2 400 000 krav",
+                kpi4Sub: "3 brukere over 1.65 MNOK innslagspunkt",
+                kalkulatorTittel: "Christian Holtes GAT Turnus- og Overtidskalkulator (Sørlandsparken Bo- og Miljø)"
+            },
+            "5240-ENH-405": {
+                unitId: "5240-ENH-405",
+                enhetNavn: "Enhet 405: Valhalla Omsorgssenter",
+                dashboardType: "Pleie- og Omsorgsdashboard (Sykehjem & Skjermet avdeling)",
+                lederNavn: "Torill Håland",
+                lederTittel: "Enhetsleder Valhalla Omsorgssenter",
+                lederEpost: "torill.haland@kristiansand.kommune.no",
+                avdelingslederNavn: "Merete Lund (Avdelingsleder pleie)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Skjermet enhet &bull; Demensfag &bull; GAT Turnus",
+                focusText: "Døgnbemanning, skjermet avdeling, fagdekning og vikarreduksjon",
+                kpi1Label: "🛏️ Pasientbelegg / Kapasitet",
+                kpi1Val: "99.1 % belegg",
+                kpi1Sub: "40 heldøgnsplasser (Skjermet enhet)",
+                kpi2Label: "💉 Pleiefaktor per pasient",
+                kpi2Val: "0.85 pleier/pasient",
+                kpi2Sub: "Demensfaglig kompetanseteam",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 295 000 YTD",
+                kpi3Sub: "Turnus i balanse",
+                kpi4Label: "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: "kr 175 000 innsendt",
+                kpi4Sub: "🟢 100 % oppfølgingsgrad",
+                kalkulatorTittel: "Torill Hålands GAT Turnus- og Overtidskalkulator (Valhalla Omsorgssenter)"
+            },
+            "5250-ENH-406": {
+                unitId: "5250-ENH-406",
+                enhetNavn: "Enhet 406: Kløvertun Omsorgsboliger & Dagsenter",
+                dashboardType: "Pleie- og Omsorgsdashboard (Omsorgsboliger & Dagsenter)",
+                lederNavn: "Anne Grete Nilsen",
+                lederTittel: "Enhetsleder Kløvertun",
+                lederEpost: "anne.grete.nilsen@kristiansand.kommune.no",
+                avdelingslederNavn: "Lise Berntsen (Fagsykepleier)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Omsorgsboliger &bull; Dagsenter &bull; Forebygging",
+                focusText: "Dagsenterdrift, botilbud, ernæring og aktivisering",
+                kpi1Label: "🏠 Beboere / Dagsenterplasser",
+                kpi1Val: "28 boliger / 16 dagplasser",
+                kpi1Sub: "Full utnyttelse på dagsentertilbud",
+                kpi2Label: "💉 Pleiefaktor per beboer",
+                kpi2Val: "0.78 pleier/beboer",
+                kpi2Sub: "Tilpasset omsorgsnivå",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 210 000 YTD",
+                kpi3Sub: "Lavt overtidstrykk",
+                kpi4Label: "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: "kr 130 000 innsendt",
+                kpi4Sub: "🟢 100 % oppfølgingsgrad",
+                kalkulatorTittel: "Anne Grete Nilsens GAT Turnus- og Overtidskalkulator (Kløvertun)"
+            },
+            "5260-ENH-407": {
+                unitId: "5260-ENH-407",
+                enhetNavn: "Enhet 407: Ternevig Omsorgssenter",
+                dashboardType: "Pleie- og Omsorgsdashboard (Sykehjem)",
+                lederNavn: "Helge Tveit",
+                lederTittel: "Enhetsleder Ternevig Omsorgssenter",
+                lederEpost: "helge.tveit@kristiansand.kommune.no",
+                avdelingslederNavn: "Bodil Vike (Avd.leder)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Sykehjem &bull; Somatisk pleie &bull; GAT Turnus",
+                focusText: "Døgnbemanning, pasientbelegg, overtidskontroll og kompetanse",
+                kpi1Label: "🛏️ Pasientbelegg / Kapasitet",
+                kpi1Val: "98.2 % belegg",
+                kpi1Sub: "46 somatiske heldøgnsplasser",
+                kpi2Label: "💉 Pleiefaktor per pasient",
+                kpi2Val: "0.83 pleier/pasient",
+                kpi2Sub: "Fagdekning: 78 % autoriserte",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 340 000 YTD",
+                kpi3Sub: "Turnusoptimalisering pågående",
+                kpi4Label: "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: "kr 185 000 innsendt",
+                kpi4Sub: "🟢 100 % oppfølgingsgrad",
+                kalkulatorTittel: "Helge Tveits GAT Turnus- og Overtidskalkulator (Ternevig Omsorgssenter)"
+            },
+            "5270-ENH-408": {
+                unitId: "5270-ENH-408",
+                enhetNavn: "Enhet 408: Songdalstunet Omsorgssenter",
+                dashboardType: "Pleie- og Omsorgsdashboard (Sykehjem & Omsorgsboliger)",
+                lederNavn: "Gunnar Eikeland",
+                lederTittel: "Enhetsleder Songdalstunet",
+                lederEpost: "gunnar.eikeland@kristiansand.kommune.no",
+                avdelingslederNavn: "Ragnhild Moe (Fagleder)",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "Distriktsomsorg &bull; Sykehjem &bull; Kjøkkendrift",
+                focusText: "Helhetlig drift, kjøkkenproduksjon, heldøgnsplasser og turnus",
+                kpi1Label: "🛏️ Pasientbelegg / Kapasitet",
+                kpi1Val: "97.5 % belegg",
+                kpi1Sub: "38 plasser og tilknyttede boliger",
+                kpi2Label: "💉 Pleiefaktor per pasient",
+                kpi2Val: "0.82 pleier/pasient",
+                kpi2Sub: "Stabil grunnbemanning",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: "kr 260 000 YTD",
+                kpi3Sub: "I tråd med budsjettramme",
+                kpi4Label: "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: "kr 145 000 innsendt",
+                kpi4Sub: "🟢 100 % oppfølgingsgrad",
+                kalkulatorTittel: "Gunnar Eikelands GAT Turnus- og Overtidskalkulator (Songdalstunet)"
+            },
+            "5100-OMR-SYKEHJEM": {
+                unitId: "5100-OMR-SYKEHJEM",
+                enhetNavn: "Område Døgnomsorg & Sykehjem",
+                dashboardType: "Overordnet Døgnomsorgsdashboard (Samtlige Sykehjem)",
+                lederNavn: "Mette Syvertsen",
+                lederTittel: "Områdeleder Døgnomsorg & Sykehjem",
+                lederEpost: "mette.syvertsen@kristiansand.kommune.no",
+                avdelingslederNavn: "Stab & Turnuskoordinatorer",
+                controllerNavn: "Marianne Tellefsen",
+                badge: "12 Kommunale Institusjoner &bull; 450 MNOK Ramme",
+                focusText: "Kapasitetsfordeling, ventelister, sykehjemsplasser og felles vikarressurser",
+                kpi1Label: "🛏️ Samlet Pasientbelegg",
+                kpi1Val: "98.5 % belegg",
+                kpi1Sub: "482 disponible heldøgnsplasser",
+                kpi2Label: "💉 Snitt Pleiefaktor",
+                kpi2Val: "0.84 pleier/pasient",
+                kpi2Sub: "Overordnet bemanningsmål nådd",
+                kpi3Label: "📋 Samlet GAT Overtid YTD",
+                kpi3Val: "kr 4 250 000 YTD",
+                kpi3Sub: "Sentral godkjenning påkrevd",
+                kpi4Label: "💰 Samlede NAV Refusjoner",
+                kpi4Val: "kr 2 850 000 innsendt",
+                kpi4Sub: "🟢 99.2 % oppfølgingsgrad",
+                kalkulatorTittel: "Mette Syvertsens GAT Turnus- og Overtidssimulator (Døgnomsorg Konsern)"
+            }
+        };
+
+        function getHelseMetrics(unitId) {
+            if (HELSE_METRICS_REGISTRY[unitId]) {
+                return HELSE_METRICS_REGISTRY[unitId];
+            }
+            const uData = calculateBankStatementClient(unitId, currentKontoMonth || 10);
+            const u = uData.unit;
+            const ref = getRlsFormattedReference(unitId);
+            const cleanName = u.enhet_navn || ("Enhet " + ref.shortNum);
+            const isHome = cleanName.toLowerCase().includes("hjemme") || (u.kostra_funksjon && u.kostra_funksjon.includes("hjemme"));
+            const isBo = cleanName.toLowerCase().includes("bo-") || cleanName.toLowerCase().includes("bolig") || (u.kostra_funksjon && u.kostra_funksjon.includes("Heldøgns"));
+
+            return {
+                unitId: unitId,
+                enhetNavn: cleanName,
+                dashboardType: isHome ? "Hjemmetjenestedashboard (Pleie i hjemmet)" : (isBo ? "Botilbud & Døgnomsorg Dashboard" : "Pleie- og Omsorgsdashboard (Sykehjem)"),
+                lederNavn: u.navn,
+                lederTittel: u.tittel,
+                lederEpost: `${(u.navn || "leder").toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no`,
+                avdelingslederNavn: "Avdelingsleder pleie & turnus",
+                controllerNavn: u.controller_navn || "Marianne Tellefsen",
+                controllerEpost: u.controller_epost || "marianne.tellefsen@kristiansand.kommune.no",
+                badge: isHome ? "Hjemmetjeneste &bull; Ruteoptimalisering &bull; GAT" : (isBo ? "Heldøgnsomsorg &bull; Miljøterapi &bull; GAT" : "Sykehjemsdrift &bull; GAT Turnus &bull; AML § 10-6/12"),
+                focusText: isHome ? "Ruteoptimalisering, vedtakstimer, bilparkleasing og helgevakter" : "Døgnbemanning, pasientbelegg, overtidskontroll og statlig toppfinansiering",
+                kpi1Label: isHome ? "👥 Aktive Brukere / Vedtak" : (isBo ? "🏠 Beboere / Plasser" : "🛏️ Pasientbelegg / Kapasitet"),
+                kpi1Val: isHome ? `${Math.round(u.annual_budget / 125000)} brukere` : (isBo ? `${Math.round(u.annual_budget / 2100000)} beboere` : "98.4 % belegg"),
+                kpi1Sub: isHome ? "Vedtakstimer i henhold til ramme" : (isBo ? "100 % kapasitetsutnyttelse" : "Full drift på døgnplasser"),
+                kpi2Label: isHome ? "🚗 Bilpark & Kjøring (Art 11900)" : "💉 Pleiefaktor per pasient",
+                kpi2Val: isHome ? "18 leasingbiler" : "0.85 pleier/pasient",
+                kpi2Sub: isHome ? "Ruteoptimalisering aktiv" : "I tråd med bemanningsnorm",
+                kpi3Label: "📋 GAT Overtid & Helgetillegg",
+                kpi3Val: `kr ${Math.round(u.annual_budget * 0.009).toLocaleString('nb-NO')} YTD`,
+                kpi3Sub: "Turnusjustert jf. AML § 10-6",
+                kpi4Label: isBo ? "🏛️ Ressurskrevende (Art 16500)" : "💰 NAV Refusjoner (Art 16900)",
+                kpi4Val: `kr ${Math.round(u.annual_budget * 0.006).toLocaleString('nb-NO')} innsendt`,
+                kpi4Sub: "🟢 Løpende oppfølging",
+                kalkulatorTittel: `${u.navn}s GAT Turnus- og Overtidskalkulator (${cleanName})`
+            };
+        }
+
+        function getSkoleMetrics(unitId) {
+            if (SKOLE_METRICS_REGISTRY[unitId]) {
+                return SKOLE_METRICS_REGISTRY[unitId];
+            }
+            const uData = calculateBankStatementClient(unitId, currentKontoMonth || 10);
+            const u = uData.unit;
+            const ref = getRlsFormattedReference(unitId);
+            const cleanName = u.enhet_navn || ("Enhet " + ref.shortNum);
+            const isKindergarten = cleanName.toLowerCase().includes("barnehage") || (u.kostra_funksjon && u.kostra_funksjon.includes("barnehage"));
+            const estElevtall = isKindergarten ? Math.max(50, Math.round(u.annual_budget / 175000)) : Math.max(150, Math.round(u.annual_budget / 120000));
+            const estAarsverk = Math.max(10, Math.round((u.annual_budget / 800000) * 10) / 10);
+
+            return {
+                unitId: unitId,
+                skoleNavn: cleanName,
+                skoleType: isKindergarten ? `Kommunal Barnehage (${estElevtall} barn)` : `Grunnskole (${estElevtall} elever)`,
+                rektorNavn: u.navn,
+                rektorEpost: `${(u.navn || "leder").toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no`,
+                inspektorNavn: isKindergarten ? "Assisterende styrer" : "Inspektør",
+                sfoLederNavn: isKindergarten ? "—" : "SFO-leder",
+                skolesjefNavn: isKindergarten ? "Anne Lise Tønnessen (Barnehagesjef)" : "Svein Tore Kvernes (Skolesjef)",
+                skolesjefEpost: isKindergarten ? "anne.lise.tonnessen@kristiansand.kommune.no" : "svein.tore.kvernes@kristiansand.kommune.no",
+                controllerNavn: u.controller_navn || "Frank Ellingsen",
+                elevtall: estElevtall,
+                ansatteAarsverk: estAarsverk,
+                sfoBarn: isKindergarten ? 0 : Math.round(estElevtall * 0.35),
+                rammePerElev: Math.round(u.annual_budget / estElevtall),
+                skoleAarTermin: "Høstsemester 2026 | Regnskapsmåned M10",
+                laerernorm14: { ratio: isKindergarten ? "1:6.5" : "1:14.0", krav: isKindergarten ? "1:7" : "< 15.0", status: "OVERHOLDT", farge: "#15803d" },
+                laerernorm57: { ratio: isKindergarten ? "1:3.0" : "1:18.0", krav: isKindergarten ? "1:3" : "< 20.0", status: "OVERHOLDT", farge: "#15803d" },
+                laererAarsverk: Math.round(estAarsverk * 0.65 * 10) / 10,
+                laererPlanlagt: Math.round(estAarsverk * 0.65 * 10) / 10,
+                spesPed: {
+                    eleverMedVedtak: Math.max(3, Math.round(estElevtall * 0.035)),
+                    timerAar: Math.round(estElevtall * 25),
+                    dekningFellespottPct: 90,
+                    statusText: "Spesialpedagogiske vedtak i henhold til sakkyndig vurdering."
+                },
+                sfo: {
+                    inntekt: isKindergarten ? 0 : Math.round(u.annual_budget * 0.08),
+                    kostnad: isKindergarten ? 0 : Math.round(u.annual_budget * 0.078),
+                    balanse: isKindergarten ? 0 : Math.round(u.annual_budget * 0.002),
+                    status: isKindergarten ? "IKKE SFO" : "I BALANSE",
+                    statusColor: "#15803d",
+                    merknad: isKindergarten ? "Barnehagedrift" : "SFO-drift i balanse."
+                },
+                vikar: {
+                    ramme: Math.round(u.annual_budget * 0.06),
+                    brukt: Math.round(u.annual_budget * 0.05),
+                    rest: Math.round(u.annual_budget * 0.01),
+                    pct: 83.3,
+                    sykefravaerPct: 8.5,
+                    utestaaendeNavRefusjon: Math.round(u.annual_budget * 0.003),
+                    statusAlert: "🟢 Drift i balanse: Vikarforbruk innenfor periodisert budsjett."
+                }
+            };
+        }
+
         let simVikarStilling = "LAERER";
         let simVikarUker = 3;
 
@@ -26494,7 +27331,7 @@ Tlf: +47 38 00 76 50 | frank.ellingsen@kristiansand.kommune.no`;
         // SEKTOR-SPESIFIKKE RAPPORT-SENDERE
         // ==========================================
         function sendRektorReportToSkolesjef() {
-            const unit = SKOLE_METRICS_REGISTRY[currentKontoUnit] || SKOLE_METRICS_REGISTRY["4100-ENH-202"];
+            const unit = getSkoleMetrics(currentKontoUnit);
             currentShareMode = "email";
             const toInput = document.getElementById("share-email-to");
             const ccInput = document.getElementById("share-email-cc");
@@ -26502,15 +27339,15 @@ Tlf: +47 38 00 76 50 | frank.ellingsen@kristiansand.kommune.no`;
             const bodyArea = document.getElementById("share-message-body");
 
             toInput.value = `${unit.skolesjefNavn} <${unit.skolesjefEpost}>`;
-            ccInput.value = "frank.ellingsen@kristiansand.kommune.no, erik.halvorsen@kristiansand.kommune.no";
+            ccInput.value = `${unit.controllerNavn ? unit.controllerNavn.toLowerCase().replace(/ /g, '.') + '@kristiansand.kommune.no' : 'frank.ellingsen@kristiansand.kommune.no'}, erik.halvorsen@kristiansand.kommune.no`;
             subjInput.value = `Månedsbekreftelse ${unit.skoleNavn} (M10-2026): Lærernorm overholdt & Vikarstrakstiltak jf. § 14-5`;
 
-            bodyArea.value = `Til Skolesjef ${unit.skolesjefNavn},
+            bodyArea.value = `Til ${unit.skolesjefNavn},
 
-Her er månedlig statusrapport og bekreftelse fra skoleledelsen ved ${unit.skoleNavn} per oktober 2026:
+Her er månedlig statusrapport og bekreftelse fra ledelsen ved ${unit.skoleNavn} per oktober 2026:
 
 1. ELEVTALL & LÆRERNORM (Opplæringslova § 8-2):
-   • Elevtall: ${unit.elevtall} elever (Tildelt årsbudsjett: kr ${unit.rammePerElev.toLocaleString("no-NO")}/elev).
+   • Kapasitet/Elevtall: ${unit.elevtall} elever (Tildelt årsbudsjett: kr ${unit.rammePerElev.toLocaleString("no-NO")}/elev).
    • 1.–4. trinn: Forholdstall ${unit.laerernorm14.ratio} (Lovkrav: ${unit.laerernorm14.krav}) — STATUS: ${unit.laerernorm14.status}
    • 5.–7. trinn: Forholdstall ${unit.laerernorm57.ratio} (Lovkrav: ${unit.laerernorm57.krav}) — STATUS: ${unit.laerernorm57.status}
    • Lærerårsverk i drift: ${unit.laererAarsverk} av ${unit.laererPlanlagt} planlagte.
@@ -26520,7 +27357,7 @@ Her er månedlig statusrapport og bekreftelse fra skoleledelsen ved ${unit.skole
    • ${unit.spesPed.statusText}
 
 3. SFO (SKOLEFRITIDSORDNING):
-   • ${unit.sfoBarn} barn innmeldt. SFO driftes i balanse (+${unit.sfo.balanse.toLocaleString("no-NO")} kr). Foreldrebetaling og statlig 12t-ordning dekker lønnskostnadene.
+   • ${unit.sfoBarn} barn innmeldt. SFO driftes i balanse (+${unit.sfo.balanse.toLocaleString("no-NO")} kr). Foreldrebetaling og statlig 12t-ordning dekker drift.
 
 4. VIKARFORBRUK & SYKEFRAVÆR (Årsak til regnskapsavvik):
    • Sykefraværet er ${unit.vikar.sykefravaerPct} %, noe som har krevd kr ${unit.vikar.brukt.toLocaleString("no-NO")} i vikarutgifter.
@@ -26528,20 +27365,21 @@ Her er månedlig statusrapport og bekreftelse fra skoleledelsen ved ${unit.skole
    • Utestående refusjonskrav over 16 dager til NAV: kr ${unit.vikar.utestaaendeNavRefusjon.toLocaleString("no-NO")}.
 
 5. IVERKSATTE STRAKSTILTAK (Jf. Kommuneloven § 14-5):
-   a) Vikarstopp på korttidsfravær < 3 dager. Klasser sambruker faglærere i praktisk-estetiske fag.
+   a) Vikarstopp på korttidsfravær < 3 dager. Fellesressurser og faglærere sambrukes.
    b) 100 % oppfølging og purring av NAV-refusjoner (art 16900).
-   c) Søknad om delvis dekning fra skolesjefens fellesreserve for 2 nyinnflyttede vedtakselever.
+   c) Løpende dialog med fellesadministrasjonen ved behov for tilpasning.
 
 Med vennlig hilsen,
 ${unit.rektorNavn}
-Rektor ved ${unit.skoleNavn}
-Tlf: +47 38 00 82 02 | ${unit.rektorEpost}`;
+Leder ved ${unit.skoleNavn}
+E-post: ${unit.rektorEpost}`;
 
             setShareMode("email");
             document.getElementById("teams-email-modal").style.display = "flex";
         }
 
         function sendHelseReportToKommunalsjef() {
+            const h = getHelseMetrics(currentKontoUnit);
             currentShareMode = "email";
             const toInput = document.getElementById("share-email-to");
             const ccInput = document.getElementById("share-email-cc");
@@ -26549,30 +27387,34 @@ Tlf: +47 38 00 82 02 | ${unit.rektorEpost}`;
             const bodyArea = document.getElementById("share-message-body");
 
             toInput.value = "Brede Skeie <brede.skeie@kristiansand.kommune.no>";
-            ccInput.value = "frank.ellingsen@kristiansand.kommune.no, marianne.tellefsen@kristiansand.kommune.no";
-            subjInput.value = `Månedsrapport Helse og Omsorg (M10-2026): Pasientbelegg, GAT Turnus & AML § 10-6`;
+            ccInput.value = `${h.controllerNavn ? h.controllerNavn.toLowerCase().replace(/ /g, '.') + '@kristiansand.kommune.no' : 'marianne.tellefsen@kristiansand.kommune.no'}, frank.ellingsen@kristiansand.kommune.no`;
+            subjInput.value = `Månedsrapport ${h.enhetNavn} (M10-2026): ${h.kpi1Label} & GAT Turnus jf. AML § 10-6`;
 
             bodyArea.value = `Til Kommunalsjef Brede Skeie,
 
-Her er månedlig rapport fra helse- og omsorgsledelsen per oktober 2026:
+Her er månedlig statusrapport fra enhetsledelsen ved ${h.enhetNavn} per oktober 2026:
 
-1. PASIENTBELEGG OG DØGNPLASSER:
-   • Pasientbelegg: 98.4 % på sykehjemmene (Full kapasitetsutnyttelse).
-   • Pleiefaktor: 0.84 pleier per pasient i tråd med bemanningsnorm.
+1. DRIFTS- OG KAPASITETSSTATUS:
+   • ${h.kpi1Label}: ${h.kpi1Val} (${h.kpi1Sub}).
+   • ${h.kpi2Label}: ${h.kpi2Val} (${h.kpi2Sub}).
 
-2. GAT TURNUS, LANGVAKTER & ARBEIDSMILJØLOVEN:
-   • Overtid og helgetillegg: Restriktiv godkjenning av 100% overtid.
-   • Langvakter (12.5 timer) ved botilbud følges opp med drøftingsprotokoller jf. HTA § 4 og AML § 10-12.
+2. GAT TURNUS, HELGEVAKTER & ARBEIDSMILJØLOVEN:
+   • Overtid og helgetillegg: ${h.kpi3Val} (${h.kpi3Sub}).
+   • Restriktiv godkjenning av 100% overtid. Turnus følges opp med drøftingsprotokoller jf. HTA § 4 og AML § 10-12.
 
 3. STATLIG TOPPFINANSIERING & NAV-REFUSJONER:
-   • Refusjonskrav for ressurskrevende tjenester (art 16500) over innslagspunktet 1.65 MNOK er sendt Helsedirektoratet.
-   • Utestående sykepengerefusjoner fra NAV (art 16900): kr 214 000 følges opp ukentlig.
+   • ${h.kpi4Label}: ${h.kpi4Val} (${h.kpi4Sub}).
+   • Krav over innslagspunktet sendt Helsedirektoratet; sykepengerefusjoner fra NAV (art 16900) følges opp ukentlig.
 
-4. TILTAKSPLAN:
-   • Helgebemanning optimaliseres ved å benytte faste helgevikarer fremfor kostbar overtid.
+4. TILTAKSPLAN (Jf. Kommuneloven § 14-5):
+   • Helgebemanning optimaliseres ved å benytte faste helgevakter fremfor overtid.
+   • Løpende dialog med fagsykepleier og tillitsvalgte om turnusjustering.
 
 Med vennlig hilsen,
-Enhetslederne i Helse og mestring`;
+${h.lederNavn}
+${h.lederTittel}
+${h.enhetNavn}
+E-post: ${h.lederEpost}`;
 
             setShareMode("email");
             document.getElementById("teams-email-modal").style.display = "flex";
@@ -26709,12 +27551,17 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
             const container = document.getElementById("sektor-spesifikk-leder-modul");
             if (!container) return;
 
-            const isSchool = unitId in SKOLE_METRICS_REGISTRY || unitId.startsWith("4100") || unitId.startsWith("4101") || unitId.startsWith("4102") || unitId.startsWith("4210") || unitId.includes("OPPV");
-            const isHealth = unitId.startsWith("5200") || unitId.startsWith("5210") || unitId.startsWith("5220") || unitId.startsWith("5230") || unitId.includes("SYKEHJEM") || unitId.includes("HELSE");
-            const isByutvikling = unitId.startsWith("3300") || unitId.startsWith("3100") || unitId.startsWith("3000") || unitId.includes("VAR") || unitId.includes("BYUTV");
-            const isKultur = unitId.startsWith("2100") || unitId.startsWith("2000") || unitId.includes("KULTUR");
-            const isOrgTek = unitId.startsWith("1100") || unitId.startsWith("1000") || unitId.includes("IKT") || unitId.includes("ORG");
-            const isKonsern = unitId.startsWith("0000") || unitId.startsWith("6000") || unitId.startsWith("6001") || unitId.includes("KOMMDIR") || unitId.includes("OKONOMI");
+            const uData = calculateBankStatementClient(unitId, monthNum || currentKontoMonth || 10);
+            const u = uData.unit;
+            const ref = getRlsFormattedReference(unitId);
+            const sKey = (u.sektor_kode || "").toUpperCase();
+
+            const isSchool = sKey === "OMR-02" || sKey.includes("OPPV") || unitId in SKOLE_METRICS_REGISTRY || unitId.startsWith("4100") || unitId.startsWith("4101") || unitId.startsWith("4102") || unitId.startsWith("4210");
+            const isHealth = sKey === "OMR-01" || sKey.includes("HELSE") || unitId in HELSE_METRICS_REGISTRY || unitId.startsWith("5200") || unitId.startsWith("5210") || unitId.startsWith("5220") || unitId.startsWith("5230") || unitId.startsWith("5240") || unitId.startsWith("5250") || unitId.startsWith("5260") || unitId.startsWith("5270") || unitId.includes("SYKEHJEM");
+            const isByutvikling = sKey === "OMR-03" || sKey.includes("BYUTV") || unitId.startsWith("3300") || unitId.startsWith("3100") || unitId.startsWith("3000") || unitId.includes("VAR");
+            const isKultur = sKey === "OMR-04" || sKey.includes("KULTUR") || unitId.startsWith("2100") || unitId.startsWith("2000");
+            const isOrgTek = sKey === "OMR-05" || sKey.includes("ORG") || unitId.startsWith("1100") || unitId.startsWith("1000") || unitId.includes("IKT");
+            const isKonsern = sKey === "OMR-06" || sKey.includes("KOMMDIR") || sKey.includes("KONSERN") || unitId.startsWith("0000") || unitId.startsWith("6000") || unitId.startsWith("6001");
 
             container.style.display = "block";
 
@@ -26722,7 +27569,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                 // ==============================================================
                 // 1. OPPVEKST & UTDANNING (Skoleleder & Barnehagestyrer)
                 // ==============================================================
-                const s = SKOLE_METRICS_REGISTRY[unitId] || SKOLE_METRICS_REGISTRY["4100-ENH-202"];
+                const s = getSkoleMetrics(unitId);
                 container.innerHTML = `
                 <div class="bank-card" style="border: 2px solid #0284c7; background: #ffffff; padding: 20px; border-radius: 4px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; border-bottom: 1.5px solid #e0f2fe; padding-bottom: 14px; margin-bottom: 16px;">
@@ -26733,7 +27580,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                                 <span class="badge" style="background: #e0f2fe; color: #0369a1; font-weight: 700;">Lærernorm § 8-2 &bull; Spes.ped &bull; SFO Selvkost</span>
                             </div>
                             <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-                                <strong>Leder:</strong> ${s.rektorNavn} &bull; <strong>Inspektør:</strong> ${s.inspektorNavn} &bull; <strong>SFO-leder:</strong> ${s.sfoLederNavn}
+                                <strong>Leder:</strong> ${s.rektorNavn} (${s.skoleType}) &bull; <strong>Sektorcontroller:</strong> ${s.controllerNavn} &bull; <strong>Skolesjef:</strong> ${s.skolesjefNavn}
                             </div>
                             <div style="font-size: 11.5px; color: #0284c7; margin-top: 2px; font-family: var(--font-mono);">
                                 📍 ${s.skoleAarTermin}
@@ -26864,8 +27711,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                 // ==============================================================
                 // 2. HELSE OG MESTRING (Sykehjem, Hjemmetjeneste & Botilbud)
                 // ==============================================================
-                const isHomeCare = unitId === "5210-ENH-402";
-                const isLivingCommunity = unitId === "5220-ENH-403";
+                const h = getHelseMetrics(unitId);
 
                 container.innerHTML = `
                 <div class="bank-card" style="border: 2px solid #059669; background: #ffffff; padding: 20px; border-radius: 4px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.08);">
@@ -26874,19 +27720,22 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="font-size: 20px;">🏥</span>
                                 <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">
-                                    ${isHomeCare ? 'Hjemmetjenesten Vågsbygd — Sektordashboard' : (isLivingCommunity ? 'Sørlandsparken Bo- og Miljø — Botilbud Dashboard' : 'Pleie- og Omsorgsdashboard (Sykehjem)')}
+                                    ${h.enhetNavn} — ${h.dashboardType}
                                 </span>
-                                <span class="badge" style="background: #d1fae5; color: #065f46; font-weight: 700;">GAT Turnus &bull; AML § 10-6/12 &bull; HTA § 4</span>
+                                <span class="badge" style="background: #d1fae5; color: #065f46; font-weight: 700;">${h.badge}</span>
                             </div>
                             <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-                                <strong>Styringsfokus:</strong> Døgnbemanning, pasientbelegg, overtidskontroll og statlig toppfinansiering
+                                <strong>Leder:</strong> ${h.lederNavn} (${h.lederTittel}) &bull; <strong>Fagleder/Turnus:</strong> ${h.avdelingslederNavn} &bull; <strong>Sektorcontroller:</strong> ${h.controllerNavn}
+                            </div>
+                            <div style="font-size: 11.5px; color: #059669; margin-top: 2px;">
+                                <strong>Styringsfokus:</strong> ${h.focusText}
                             </div>
                         </div>
                         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                             <a href="templates/MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL.docx" download class="btn btn-sm" style="background:#ecfdf5; color:#065f46; border-color:#a7f3d0; font-weight:600;" title="Last ned HTA § 4 drøftingsprotokoll i Word">
                                 📋 HTA § 4 Protokoll
                             </a>
-                            <button class="btn btn-sm" onclick="sendHelseReportToKommunalsjef()" style="background: #059669; color: #fff; border-color: #059669;" title="Send månedsrapport til kommunalsjef Brede Skeie">
+                            <button class="btn btn-sm" onclick="sendHelseReportToKommunalsjef()" style="background: #059669; color: #fff; border-color: #059669;" title="Send månedsrapport for ${h.enhetNavn} til kommunalsjef Brede Skeie">
                                 📤 Send Rapport til Kommunalsjefen
                             </button>
                         </div>
@@ -26895,49 +27744,37 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                     <!-- Helse Kjerne-KPIer -->
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 16px;">
                         <div class="kpi-card" style="border-left: 3px solid #059669; padding: 10px 14px; background: #f0fdf4;">
-                            <div style="font-size: 11px; color: #065f46; text-transform: uppercase;">🛏️ Pasientbelegg / Kapasitet</div>
-                            <div style="font-size: 18px; font-weight: 700; color: #059669;">98.4 % belegg</div>
-                            <div style="font-size: 11px; color: #065f46; margin-top: 2px;">Full drift på døgnplasser</div>
+                            <div style="font-size: 11px; color: #065f46; text-transform: uppercase;">${h.kpi1Label}</div>
+                            <div style="font-size: 18px; font-weight: 700; color: #059669;">${h.kpi1Val}</div>
+                            <div style="font-size: 11px; color: #065f46; margin-top: 2px;">${h.kpi1Sub}</div>
                         </div>
 
                         <div class="kpi-card" style="border-left: 3px solid var(--navy-dark); padding: 10px 14px; background: #f8fafc;">
-                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">
-                                ${isHomeCare ? '🚗 Bilpark & Leasing (Art 11900)' : '💉 Pleiefaktor per pasient'}
-                            </div>
-                            <div style="font-size: 18px; font-weight: 700; color: var(--navy-dark);">
-                                ${isHomeCare ? '24 leasingbiler' : '0.84 pleier/pasient'}
-                            </div>
-                            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">
-                                ${isHomeCare ? 'Ruteoptimalisering iverksatt' : 'I tråd med bemanningsnorm'}
-                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">${h.kpi2Label}</div>
+                            <div style="font-size: 18px; font-weight: 700; color: var(--navy-dark);">${h.kpi2Val}</div>
+                            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">${h.kpi2Sub}</div>
                         </div>
 
                         <div class="kpi-card" style="border-left: 3px solid #d97706; padding: 10px 14px; background: #fffbeb;">
-                            <div style="font-size: 11px; color: #92400e; text-transform: uppercase;">📋 GAT Overtid &amp; Helgetillegg</div>
-                            <div style="font-size: 18px; font-weight: 700; color: #d97706;">kr 385 000 YTD</div>
-                            <div style="font-size: 11px; color: #92400e; margin-top: 2px;">Restriktiv overtid godkjent</div>
+                            <div style="font-size: 11px; color: #92400e; text-transform: uppercase;">${h.kpi3Label}</div>
+                            <div style="font-size: 18px; font-weight: 700; color: #d97706;">${h.kpi3Val}</div>
+                            <div style="font-size: 11px; color: #92400e; margin-top: 2px;">${h.kpi3Sub}</div>
                         </div>
 
                         <div class="kpi-card" style="border-left: 3px solid #0284c7; padding: 10px 14px; background: #f0f9ff;">
-                            <div style="font-size: 11px; color: #0369a1; text-transform: uppercase;">
-                                ${isLivingCommunity ? '🏛️ Ressurskrevende (Art 16500)' : '💰 NAV Refusjoner (Art 16900)'}
-                            </div>
-                            <div style="font-size: 18px; font-weight: 700; color: #0284c7;">
-                                ${isLivingCommunity ? 'kr 2 400 000 krav' : 'kr 214 000 innsendt'}
-                            </div>
-                            <div style="font-size: 11px; color: #0369a1; margin-top: 2px;">
-                                ${isLivingCommunity ? '3 brukere over 1.65 MNOK' : '🟢 100 % oppfølgingsgrad'}
-                            </div>
+                            <div style="font-size: 11px; color: #0369a1; text-transform: uppercase;">${h.kpi4Label}</div>
+                            <div style="font-size: 18px; font-weight: 700; color: #0284c7;">${h.kpi4Val}</div>
+                            <div style="font-size: 11px; color: #0369a1; margin-top: 2px;">${h.kpi4Sub}</div>
                         </div>
                     </div>
 
                     <!-- Interaktiv GAT Turnus- og Overtidskalkulator -->
                     <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: 4px; padding: 14px;">
                         <div style="font-size: 13px; font-weight: 700; color: var(--navy-dark); margin-bottom: 4px;">
-                            💡 Avdelingsleders GAT Overtids- og Helgevaktkalkulator
+                            💡 ${h.kalkulatorTittel}
                         </div>
                         <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                            Akutt fravær i helgen: Hva koster det å beordre fast sykepleier på overtid (100% helg jf. HTA § 6) vs. ringe inn helgevaktstudent?
+                            Akutt fravær i turnus ved ${h.enhetNavn}: Hva koster det å beordre fast ansatt på overtid (100% helg jf. HTA § 6) vs. ringe inn helgevaktstudent?
                         </p>
                         <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; background: #ffffff; padding: 8px 12px; border-radius: 4px; border: 1px solid var(--border-light);">
                             <div style="display: flex; align-items: center; gap: 6px;">
@@ -26949,7 +27786,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; background: #ffffff; padding: 12px; border-radius: 4px; border: 1px solid var(--border-light);">
                             <div>
-                                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Fast sykepleier overtid (780 kr/t)</div>
+                                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Fast ansatt overtid (780 kr/t)</div>
                                 <div style="font-size: 16px; font-weight: 700; color: #c0392b;" id="gat-res-kostnad">11 700 kr</div>
                             </div>
                             <div>
@@ -26976,10 +27813,13 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                         <div>
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="font-size: 20px;">🏗️</span>
-                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">By- og stedsutvikling &bull; Selvkost &amp; VAR</span>
+                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">${u.enhet_navn || 'By- og stedsutvikling'} — Selvkost &amp; VAR</span>
                                 <span class="badge" style="background: #e0f2fe; color: #0369a1; font-weight: 700;">100 % Selvkost jf. § 14-9 &bull; Pbl § 21-7</span>
                             </div>
                             <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+                                <strong>Leder:</strong> ${u.navn || 'Enhetsleder'} (${u.tittel || 'Leder'}) &bull; <strong>Sektorcontroller:</strong> ${u.controller_navn || 'Økonomi'} &bull; <strong>Kommunalsjef:</strong> Ragnar Evensen
+                            </div>
+                            <div style="font-size: 11.5px; color: #0284c7; margin-top: 2px;">
                                 <strong>Styringsfokus:</strong> Saksbehandlingsfrister, gebyrinntekter og selvkostfond for Vann, Avløp og Renovasjon
                             </div>
                         </div>
@@ -27060,10 +27900,13 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                         <div>
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="font-size: 20px;">🎭</span>
-                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">Kultur, Idrett &amp; Frivillighet</span>
+                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">${u.enhet_navn || 'Kultur, Idrett &amp; Frivillighet'} — Sektordashboard</span>
                                 <span class="badge" style="background: #fef3c7; color: #92400e; font-weight: 700;">Tilskuddsforvaltning &bull; Kilden &bull; Bibliotek</span>
                             </div>
                             <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+                                <strong>Leder:</strong> ${u.navn || 'Enhetsleder'} (${u.tittel || 'Leder'}) &bull; <strong>Sektorcontroller:</strong> ${u.controller_navn || 'Økonomi'} &bull; <strong>Kultursjef:</strong> Camilla Jarlsby
+                            </div>
+                            <div style="font-size: 11.5px; color: #d97706; margin-top: 2px;">
                                 <strong>Styringsfokus:</strong> Tilskuddsmidler til frivillige lag (post 14700) og egeninntekter fra kulturskole og utleie
                             </div>
                         </div>
@@ -27132,10 +27975,13 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                         <div>
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="font-size: 20px;">💻</span>
-                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">Organisasjon, IKT &amp; Digitalisering</span>
+                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">${u.enhet_navn || 'Organisasjon, IKT &amp; Digitalisering'} — Sektordashboard</span>
                                 <span class="badge" style="background: #e0e7ff; color: #3730a3; font-weight: 700;">FinOps Lisenser &bull; M365 &bull; Konsulentreduksjon</span>
                             </div>
                             <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+                                <strong>Leder:</strong> ${u.navn || 'Enhetsleder'} (${u.tittel || 'Leder'}) &bull; <strong>Sektorcontroller:</strong> ${u.controller_navn || 'Økonomi'} &bull; <strong>Kommunalsjef:</strong> Geir Askvik
+                            </div>
+                            <div style="font-size: 11.5px; color: #4f46e5; margin-top: 2px;">
                                 <strong>Styringsfokus:</strong> M365 Copilot lisensoptimalisering, skykostnader og reduksjon av konsulentinnleie
                             </div>
                         </div>
@@ -27204,11 +28050,11 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                         <div>
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="font-size: 20px;">🏛️</span>
-                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">Konsernledelse &bull; Kristiansand Bystyre &amp; Formannskap</span>
+                                <span style="font-size: 16px; font-weight: 700; color: var(--navy-dark);">${u.enhet_navn ? u.enhet_navn + ' — ' : ''}Konsernledelse &bull; Kristiansand Bystyre &amp; Formannskap</span>
                                 <span class="badge" style="background: #f1f5f9; color: var(--navy-dark); font-weight: 700;">7.24 mrd NOK Totalbudsjett &bull; Kommuneloven § 14-5</span>
                             </div>
                             <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-                                <strong>Toppledelse:</strong> Kommunedirektør Camilla Dunsæd &bull; Økonomidirektør Terje Fjellvang &bull; Senior Controller Frank Ellingsen
+                                <strong>Leder/Ansvarlig:</strong> ${u.navn || 'Camilla Dunsæd'} (${u.tittel || 'Kommunedirektør'}) &bull; <strong>Sektorcontroller:</strong> ${u.controller_navn || 'Frank Ellingsen'} &bull; <strong>Økonomidirektør:</strong> Terje Fjellvang
                             </div>
                         </div>
                         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -27351,12 +28197,14 @@ function openTab(tabKey, updateHash) {
     if (tabKey === 'min-enhet') {
         if (personaBox) personaBox.style.display = 'none';
         if (sectorBar) sectorBar.style.display = 'none';
+        const urlUnit = new URLSearchParams(window.location.search).get('unit');
+        if (urlUnit) currentKontoUnit = urlUnit;
         if (typeof populateBankUnitDropdown === 'function') {
-            const savedUnit = localStorage.getItem('aikom_selected_unit') || currentKontoUnit || '5200-ENH-401';
+            const savedUnit = urlUnit || currentKontoUnit || localStorage.getItem('aikom_selected_unit') || '5200-ENH-401';
             populateBankUnitDropdown(savedUnit);
         }
         if (typeof renderBankStatement === 'function') {
-            const activeUnit = currentKontoUnit || localStorage.getItem('aikom_selected_unit') || '5200-ENH-401';
+            const activeUnit = urlUnit || currentKontoUnit || localStorage.getItem('aikom_selected_unit') || '5200-ENH-401';
             renderBankStatement(activeUnit, currentKontoMonth || 10);
         }
     } else {
@@ -27409,8 +28257,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (HUB_PERSONA_TABS.includes(saved)) initialTab = saved;
         } catch (e) {}
     }
+    const urlUnit = new URLSearchParams(window.location.search).get('unit');
+    if (urlUnit) {
+        currentKontoUnit = urlUnit;
+        try { localStorage.setItem('aikom_selected_unit', urlUnit); } catch(e) {}
+    }
     if (typeof populateBankUnitDropdown === 'function') {
-        const initialUnit = localStorage.getItem('aikom_selected_unit') || '5200-ENH-401';
+        const initialUnit = urlUnit || currentKontoUnit || localStorage.getItem('aikom_selected_unit') || '5200-ENH-401';
         populateBankUnitDropdown(initialUnit);
     }
     openTab(initialTab, false);
