@@ -32,8 +32,9 @@ Welcome to the **Kristiansand Kommune AI Project Controller Hub** codebase. This
 ### C. Legal & Governance Compliance
 * **Kommuneloven § 14-5**: Realistic budget balance requirement. If $VAC < 0$ at year-end, Kommunedirektøren must submit a formal supplementary budget case to Bystyret.
 * **Kommuneloven § 14-6**: Gross budgeting principle (bruttoprinsippet). Revenues (art 1600/1690) and expenses (art 1010/1020) must be recorded gross.
-* **HTA § 4 & AML § 10-12**: Staffing reorganizations, long shifts (12.5h), and overtime require formal consultation protocols with employee unions.
-* **Stage-Gate Port 9 (HITL)**: All AI recommendations require named human sign-off (APPROVED, MODIFIED, REJECTED) with cryptographic SHA-256 sealing.
+* **Kommuneloven § 13-1 & Forvaltningsloven § 17**: Utredningsplikt. Kommunedirektøren har personlig, lovpålagt ansvar for at saker som fremmes for folkevalgte organer er forsvarlig utredet; AI bistår kun med saksforberedelse under navngitt leders ansvar.
+* **HTA § 4 & AML § 10-12**: Staffing reorganizations, long shifts (12.5h), and overtime require formal consultation protocols with employee unions (`MAL_HTA_PARAGRAF_4_DROFTINGSPROTOKOLL`).
+* **Stage-Gate Port 9 (HITL)**: All AI recommendations require named human sign-off (APPROVED, MODIFIED, REJECTED) with cryptographic SHA-256 sealing jf. EU AI Act Art. 14 (se [maal_og_hensikt_human_in_the_loop.md](file:///C:/Users/frank/Desktop/AI_KOM/maal_og_hensikt_human_in_the_loop.md)).
 
 ### D. Token Economics & Execution: CLI vs. MCP
 * **CLI-First for Agents**: Autonomous agents MUST prioritize unified CLI commands (`python tools/run_tool.py <command>`) over fine-grained MCP calls.
@@ -41,6 +42,14 @@ Welcome to the **Kristiansand Kommune AI Project Controller Hub** codebase. This
   * **Progressive Disclosure**: Detailed arguments and usage are resolved just-in-time via `--help` or lean skill playbooks.
   * **Tufte Payload Filtering**: CLI tools output concise, formatted summaries instead of dumping multi-megabyte raw JSON payloads into the conversation transcript.
 * **MCP for External Clients**: Model Context Protocol servers (`kommune_ai_guardrails.mcp_server`) are strictly reserved for external zero-trust interactive UI clients (e.g. Streamlit sidebar chat, Excel add-ins), not for autonomous agent loop operations.
+
+### E. The 5 Levels of AI Engineering Framework
+Kristiansand Kommune AI Hub follows the canonical 5-layer AI Engineering hierarchy (see [ai_engineering_5_nivaaer_kristiansand.md](file:///C:/Users/frank/Desktop/AI_KOM/ai_engineering_5_nivaaer_kristiansand.md)):
+1. **Level 1 (Prompt Engineering)**: Senior Controller persona, structured JSON schemas, and Chain-of-Thought reasoning.
+2. **Level 2 (Context Engineering)**: Progressive disclosure (L1 metadata, L2 SOPs, L3 execution scripts), Hybrid RAG, and GDPR Port 4 PII masking.
+3. **Level 3 (Harness Engineering)**: Isolated execution sandboxes, CLI-first execution, and OWASP LLM01/LLM02 prompt injection barriers.
+4. **Level 4 (Loop Engineering)**: Self-correcting Evaluator-Optimizer cycles with 4 mandatory Quality Gates (§ 14-5, § 14-6, GDPR, Vedtak) and SHA-256 audit seals (see [loop_engineering_kristiansand.md](file:///C:/Users/frank/Desktop/AI_KOM/loop_engineering_kristiansand.md)).
+5. **Level 5 (Graph Engineering)**: Statecharts and multi-agent DAG workflows (Triage Router $\rightarrow$ Controller $\rightarrow$ Juridisk $\rightarrow$ Revisjon $\rightarrow$ Stage-Gate Port 9 HITL).
 
 
 ---
@@ -112,9 +121,12 @@ This repository is fully configured for Antigravity native progressive disclosur
 | **`revisjon-og-kontroll/`** | Audit & Control Standards | Checklists for Kommunerevisjonen, tertialnotater, § 14-5 |
 | **`scratch/`** | Scratch Scripts & Migration Utilities | One-off helper scripts, debug scripts, integration tools |
 | **`spesifikasjoner/`** | Technical Specifications | Triage Router, Office Hub V2, Gemini MCP Chat, Predictive Engine specs |
+| **`loop_engineering_kristiansand.md`** | Loop Engineering Spec (Lag 4) | Evaluator-Optimizer dualitet, 4 kvalitetsporter (§ 14-5, § 14-6, GDPR, Vedtak), SHA-256 |
+| **`ai_engineering_5_nivaaer_kristiansand.md`** | AI Engineering Framework (5 Nivåer) | Komplett hierarki: Prompt, Context, Harness, Loop og Graph Engineering |
+| **`maal_og_hensikt_human_in_the_loop.md`** | Mål, Hensikt & HITL Governance | EU AI Act Art. 14, § 13-1, § 14-5/6, HTA § 4 og Stage-Gate Port 9 sign-off |
 | **`templates/`** | Municipal Templates (18 pairs) | Dual format: .docx/.xlsx for production, .md for hub preview |
-| **`tests/`** | Master Test Suite | Pytest test files (60+ tester på tvers av master og piloter) |
-| **`tools/`** | Operational CLI Tools | Python engines (`run_tool.py`, `evaluation_runner.py`, `database_runner.py`, `ai_engineering_runner.py`, etc.) |
+| **`tests/`** | Master Test Suite | Pytest test files (70+ tester på tvers av master og piloter) |
+| **`tools/`** | Operational CLI Tools | Python engines (`run_tool.py`, `loop_engine.py`, `evaluation_runner.py`, `database_runner.py`, `ai_engineering_runner.py`, etc.) |
 | **`word/`** | Formal Municipal Notes | Generated Word documents (.docx) for administrative levels 1–3 |
 
 ---
@@ -122,6 +134,7 @@ This repository is fully configured for Antigravity native progressive disclosur
 ## 5. Quick Commands & Operations
 
 * **Run Full Hub**: Launch `index.html` in browser or run `python tools/hub_api_server.py`.
+* **Run Loop Engineering (Lag 4)**: `python tools/run_tool.py loop --sector "Helse og mestring" --deficit 8.85` (Evaluator-Optimizer løkke med 4 kvalitetsporter og SHA-256 forsegling).
 * **Run Evaluation & QA (Agent 13)**: `python tools/run_tool.py eval --gate` (90 % CI/CD port).
 * **Run Database & Schema (Agent 14)**: `python tools/run_tool.py db --inspect-schema` eller `--query "..."`.
 * **Run AI Engineering (Agent 15)**: `python tools/run_tool.py ai-eng --status` eller `--benchmark`.
@@ -137,4 +150,4 @@ This repository is fully configured for Antigravity native progressive disclosur
 * **Run Advisor Decision Calculators**: `python tools/run_tool.py advisor-calc --calc nav-gap` / `--calc krs4` / `--calc selvkost` / `--calc mva-10y`.
 * **Run Advisor Full-Year Stress Test**: `python tools/run_tool.py advisor-stress` (helårssimulering av 52 rådgiverhendelser på tvers av 6 sektorer og 12 måneder).
 * **Unified Tool Runner**: `python tools/run_tool.py --help`.
-* **Run Master Test Suite**: `pytest -v` (kjører samtlige 70+ tester på tvers av master og piloter).
+* **Run Master Test Suite**: `pytest -v` (kjører samtlige 75+ tester på tvers av master og piloter).

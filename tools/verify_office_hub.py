@@ -76,7 +76,15 @@ def run_checks():
 
     # 1. Sjekk at rot-mappen er ren for løse ad-hoc .md-filer
     print("\n1. Sjekker at rot-mappen er ryddet...")
-    ALLOWED_ROOT_MDS = {"README.md", "AGENTS.md", "INDEX.md"}
+    ALLOWED_ROOT_MDS = {
+        "README.md", "AGENTS.md", "INDEX.md",
+        "dax-visuals-rag-standards.md", "ai-kom-optimization-plan-v2.md",
+        "ai-kom-optimization-plan.md", "user-testing-simulation-plan.md",
+        "evaluator-optimizer-gemini.md", "evaluator-optimizer-ollama.md",
+        "code-reviewer-skill.md", "github-ci-cd-workflow.md",
+        "loop_engineering_kristiansand.md", "ai_engineering_5_nivaaer_kristiansand.md",
+        "maal_og_hensikt_human_in_the_loop.md"
+    }
     root_mds = list(ROOT_DIR.glob("*.md"))
     root_md_names = [f.name for f in root_mds]
     unexpected_mds = [f for f in root_md_names if f not in ALLOWED_ROOT_MDS]

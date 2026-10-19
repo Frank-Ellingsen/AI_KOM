@@ -39,6 +39,7 @@ def main():
 Eksempler på bruk:
   python tools/run_tool.py forecast --mode both
   python tools/run_tool.py audit
+  python tools/run_tool.py loop --sector "Helse og mestring" --deficit 8.85
   python tools/run_tool.py excel
   python tools/run_tool.py verify
   python tools/run_tool.py server --port 8000
@@ -175,6 +176,14 @@ Eksempler på bruk:
     p_me.add_argument("--year", type=int, default=2026, help="Årstall (standard: 2026)")
     p_me.add_argument("--approved-by", default="frank.ellingsen@kristiansand.kommune.no", help="Godkjennende saksbehandler")
     p_me.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 23. Loop Engineering: Evaluator-Optimizer Engine (Lag 4 i AI Engineering)
+    p_loop = subparsers.add_parser("loop", help="Loop Engineering: Evaluator-Optimizer Engine (4 kvalitetsporter: § 14-5, § 14-6, GDPR, Vedtak)")
+    p_loop.add_argument("--sector", default="Helse og mestring", help="Virksomhetsområde (standard: Helse og mestring)")
+    p_loop.add_argument("--deficit", type=float, default=8.85, help="Projisert merforbruk i MNOK (standard: 8.85)")
+    p_loop.add_argument("--unit", default="5200 - Sykehjem & Helsehus", help="Spesifikk organisatorisk enhet")
+    p_loop.add_argument("--max-attempts", type=int, default=3, help="Maksimalt antall forbedringssykluser (standard: 3)")
+    p_loop.add_argument("--json", action="store_true", help="Formatér respons som JSON")
 
     args, unknown = parser.parse_known_args()
 
@@ -345,6 +354,15 @@ Eksempler på bruk:
         if args.json:
             cmd_args.append("--json")
         run_command("monthend_pipeline_orchestrator.py", cmd_args + unknown)
+    elif args.command == "loop":
+        cmd_args = ["--sector", args.sector, "--deficit", str(args.deficit)]
+        if args.unit:
+            cmd_args += ["--unit", args.unit]
+        if args.max_attempts:
+            cmd_args += ["--max-attempts", str(args.max_attempts)]
+        if args.json:
+            cmd_args.append("--json")
+        run_command("loop_engine.py", cmd_args + unknown)
 
 if __name__ == "__main__":
     main()
