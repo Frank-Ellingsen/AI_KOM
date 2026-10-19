@@ -5073,7 +5073,7 @@
                     <span>Systemarkitektur</span>
                     <span style="font-size:9.5px; text-transform:none; color:#059669; font-weight:700;">Backend</span>
                 </div>
-                <a class="sidebar-nav-item" id="side-nav-mlops-backend" onclick="navigateToSection('mlops-lineage-section', '⚙️ Åpner 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)')" style="cursor:pointer;" title="Gå til 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
+                <a class="sidebar-nav-item" id="side-nav-mlops-backend" onclick="openMlopsModal()" style="cursor:pointer;" title="Åpne 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
                     <span style="font-weight:600; color:var(--navy-dark);">⚙️ 3.4 MLOps &amp; Backend Engine (v2.4)</span>
                     <span class="badge-phase" style="background:#059669; color:#fff;">v2.4</span>
                 </a>
@@ -5082,7 +5082,7 @@
 
         <!-- Sidebar footer -->
         <div class="sidebar-footer">
-            <a class="sidebar-nav-item" id="side-footer-mlops-link" onclick="navigateToSection('mlops-lineage-section', '⚙️ Åpner 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)')" style="cursor:pointer; padding:7px 10px; margin-bottom:10px; background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #059669; border-radius:4px; font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;" title="Gå til 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
+            <a class="sidebar-nav-item" id="side-footer-mlops-link" onclick="openMlopsModal()" style="cursor:pointer; padding:7px 10px; margin-bottom:10px; background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #059669; border-radius:4px; font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;" title="Åpne 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
                 <span>⚙️ 3.4 MLOps &amp; Backend Engine (v2.4)</span>
                 <span class="badge-phase" style="background:#059669; color:#fff; font-size:9px; font-weight:700;">v2.4</span>
             </a>
@@ -5330,6 +5330,20 @@
                     <div class="bank-month-pills" id="bank-month-pills-bar">
                         <!-- M01 til M12 knapper genereres dynamisk -->
                     </div>
+                </div>
+            </div>
+
+            <!-- RLS Scope Banner for valgt enhet -->
+            <div id="bank-unit-rls-alert-banner" style="margin-top:10px; margin-bottom:12px; padding:10px 14px; background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #16a34a; border-radius:4px; font-size:12px; color:#14532d; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div>
+                    🔒 <strong id="bank-unit-rls-title">Tilpasset Row-Level Security (RLS) for Enhet 401: Strai Sykehjem &amp; Omsorgsboliger (Solveig Grimstad &bull; Enhetsleder Strai Sykehjem)</strong>
+                    <div id="bank-unit-rls-desc" style="font-size:11px; color:#15803d; margin-top:2px;">
+                        Viser utelukkende poster og styringsdata som den enkelte budsjettansvarlig kan påvirke direkte (lønn, vikarer, overtid, lokal drift og refusjoner). Konsernfordelte felleskostnader, pensjonsreguleringer og kapitalkostnader er filtrert bort.
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="badge" style="background:#dcfce7; color:#166534; font-weight:700; font-size:10.5px;">Kun Påvirkbare Poster</span>
+                    <span class="badge" style="background:#ffffff; border:1px solid #86efac; color:#15803d; font-size:10px; font-weight:600;">0 % Konsernfelles</span>
                 </div>
             </div>
 
@@ -8655,143 +8669,6 @@ RETURN
     </div>
     </div>
 
-    
-    <!-- ============================================================================== -->
-    <!-- KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT (EDWARD TUFTE STYLE)                -->
-    
-
-    <!-- ============================================================================== -->
-    <!-- 3.4 MLOPS, DATA LINEAGE & ANTIGRAVITY BACKEND ENGINE (AI_KOM ARCHITECTURE)    -->
-    <!-- ============================================================================== -->
-    <section class="hub-section" id="mlops-lineage-section" style="margin-top: 2rem; border-top: 2px solid var(--navy-dark); padding-top: 1.5rem;">
-        <div class="section-header-compact" style="margin-bottom: 1rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                    <h3 style="margin: 0; color: var(--navy-dark); font-size: 1.25rem; font-weight: 700;">
-                        ⚙️ 3.4 MLOps, Data Lineage & Antigravity Backend Engine (v2.4)
-                    </h3>
-                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.25rem;">
-                        End-to-End sporbarhet jf. Stage-Gate Governance, Eurocities Algorithmic Transparency og Kommuneloven § 14-5
-                    </div>
-                </div>
-                <div>
-                    <span class="badge" style="background: #059669; color: #fff; font-weight: 600; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">
-                        ● PIPELINE AKTIV &amp; VERIFISERT
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!-- LINEAGE FLOW VISUALIZER (EDWARD TUFTE DATA-INK RATIO) -->
-        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1.25rem; margin-bottom: 1.5rem;">
-            <div style="font-weight: 600; color: var(--navy-dark); margin-bottom: 0.75rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">
-                🔄 End-to-End Data Lineage Arkitektur
-            </div>
-            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--font-mono); font-size: 0.82rem;">
-                <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
-                    <div style="font-weight: 700; color: #0f172a;">1. KILDESYSTEMER</div>
-                    <div style="color: #64748b; font-size: 0.75rem;">Visma ERP / Framsikt API</div>
-                </div>
-                <div style="color: #94a3b8; font-weight: bold;">➔</div>
-                <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
-                    <div style="font-weight: 700; color: #0f172a;">2. PII-VASK &amp; ETL</div>
-                    <div style="color: #64748b; font-size: 0.75rem;">Polars / DuckDB (Port 4)</div>
-                </div>
-                <div style="color: #94a3b8; font-weight: bold;">➔</div>
-                <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
-                    <div style="font-weight: 700; color: #0f172a;">3. GOLDEN RECORD</div>
-                    <div style="color: #64748b; font-size: 0.75rem;">SQLite Star Schema DB</div>
-                </div>
-                <div style="color: #94a3b8; font-weight: bold;">➔</div>
-                <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
-                    <div style="font-weight: 700; color: #0f172a;">4. DAX &amp; ANALYSE</div>
-                    <div style="color: #64748b; font-size: 0.75rem;">Power BI Fabric / FAST</div>
-                </div>
-                <div style="color: #94a3b8; font-weight: bold;">➔</div>
-                <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
-                    <div style="font-weight: 700; color: #0f172a;">5. GROUNDED RAG</div>
-                    <div style="color: #64748b; font-size: 0.75rem;">sqlite-vec (384D) / Qdrant</div>
-                </div>
-                <div style="color: #94a3b8; font-weight: bold;">➔</div>
-                <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
-                    <div style="font-weight: 700; color: #065f46;">6. SAK &amp; REVISJON</div>
-                    <div style="color: #047857; font-size: 0.75rem;">Port 9 SHA-256 Forseglet</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4-KOLONNER METRIKKER & SPESIFIKASJONER -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-            <!-- KORT 1: DATA INGESTION & CONNECTORS -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
-                <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
-                    🔌 ERP- &amp; API-Konnektorer
-                </div>
-                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
-                    <li><strong>Visma Enterprise:</strong> Nattlig batch kl. 02:00 + ad-hoc regnskapskjøring</li>
-                    <li><strong>Framsikt EPM:</strong> GraphQL / REST stillings- og rammeekstrakt</li>
-                    <li><strong>SSB KOSTRA:</strong> Autentisert oppslag mot 2026/2027 kontoplan</li>
-                </ul>
-                <div style="margin-top: 0.75rem;">
-                    <a href="antigravity_backend_module_pakke/ANTIGRAVITY_data_pipeline_and_connectors.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
-                        📄 Konnektorspesifikasjon
-                    </a>
-                </div>
-            </div>
-
-            <!-- KORT 2: PII MASKERING & PRIVACY -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
-                <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
-                    🛡️ PII-Maskering &amp; GDPR (Port 4)
-                </div>
-                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
-                    <li><strong>Fødselsnumre (FNR/DNR):</strong> HMAC-SHA256 saltet maskering</li>
-                    <li><strong>Navn &amp; Personalia:</strong> Erstattet med Stilling + KOSTRA Funksjon</li>
-                    <li><strong>Bruttoføring:</strong> Skjerming bevarer regnskapsmessig bruttoprinsipp jf. § 14-6</li>
-                </ul>
-                <div style="margin-top: 0.75rem;">
-                    <a href="AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_MLOps_og_Data_Lineage.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
-                        📄 MLOps &amp; Lineage Spec
-                    </a>
-                </div>
-            </div>
-
-            <!-- KORT 3: REST API & DOCKER ENGINE -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
-                <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
-                    ⚡ Antigravity REST API (v2.4)
-                </div>
-                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
-                    <li><strong>OpenAPI 3.1:</strong> <code>/api/v1/finance</code>, <code>/api/v1/ai</code>, <code>/api/v1/governance</code></li>
-                    <li><strong>Kjøremotor:</strong> FastAPI + Polars/DuckDB in-memory OLAP</li>
-                    <li><strong>Deployment:</strong> Produksjonsklar Dockerfile &amp; Kubernetes manifest</li>
-                </ul>
-                <div style="margin-top: 0.75rem;">
-                    <a href="antigravity_backend_module_pakke/ANTIGRAVITY_api_spec_and_deployment.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
-                        📄 API- &amp; DevOps Spec
-                    </a>
-                </div>
-            </div>
-
-            <!-- KORT 4: PORT 9 REVISJON & VURDERING -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
-                <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
-                    ✍️ Stage-Gate Port 9 Sign-Off
-                </div>
-                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
-                    <li><strong>HITL Kontroll:</strong> 100 % menneskelig godkjenning (APPROVED/MODIFIED)</li>
-                    <li><strong>Kryptografisk Forsegling:</strong> SHA-256 forankret i <code>Fact_Prognose_Logg</code></li>
-                    <li><strong>Kommunerevisjonen:</strong> Full sporbarhet klar for kontrollutvalget</li>
-                </ul>
-                <div style="margin-top: 0.75rem;">
-                    <a href="antigravity_backend_module_pakke/ANTIGRAVITY_ai_rag_services.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
-                        📄 RAG &amp; Governance Spec
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FANE 4: VEILEDERE, MALER & REGELVERK -->
     <div class="hub-tab-pane" id="tab-veiledere-maler" role="tabpanel" aria-labelledby="tab-btn-veiledere-maler" style="display: none;">
 
@@ -10928,6 +10805,144 @@ RETURN
                     Tips: Du kan trykke Escape eller holde musepekeren over ethvert nøkkeltall eller lovparagraf for verktøytips.
                 </span>
                 <button class="btn btn-primary" onclick="closeUserGuide()">Lukk Veileder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================================
+         3.4 MLOPS, DATA LINEAGE & ANTIGRAVITY BACKEND ENGINE (MODAL DIALOG)
+         ======================================================================= -->
+    <div class="modal-overlay" id="mlops-modal" role="dialog" aria-modal="true" aria-labelledby="mlops-modal-title" style="display: none;" onclick="closeMlopsModalOnBackdrop(event)">
+        <div class="modal-box" style="max-width: 1040px; width: 95%; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:20px;">⚙️</span>
+                    <div>
+                        <div class="modal-title" id="mlops-modal-title">3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)</div>
+                        <div style="font-size:11px; color:var(--text-secondary); font-weight:normal;">
+                            End-to-End sporbarhet jf. Stage-Gate Governance, Eurocities Algorithmic Transparency og Kommuneloven § 14-5
+                        </div>
+                    </div>
+                </div>
+                <button class="modal-close-btn" aria-label="Lukk MLOps" onclick="closeMlopsModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 1rem 0;">
+                <section class="hub-section" id="mlops-lineage-section" style="margin: 0; padding: 0; border: none;">
+                    <!-- LINEAGE FLOW VISUALIZER (EDWARD TUFTE DATA-INK RATIO) -->
+                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                        <div style="font-weight: 600; color: var(--navy-dark); margin-bottom: 0.75rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                            🔄 End-to-End Data Lineage Arkitektur
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--font-mono); font-size: 0.82rem;">
+                            <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
+                                <div style="font-weight: 700; color: #0f172a;">1. KILDESYSTEMER</div>
+                                <div style="color: #64748b; font-size: 0.75rem;">Visma ERP / Framsikt API</div>
+                            </div>
+                            <div style="color: #94a3b8; font-weight: bold;">➔</div>
+                            <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
+                                <div style="font-weight: 700; color: #0f172a;">2. PII-VASK &amp; ETL</div>
+                                <div style="color: #64748b; font-size: 0.75rem;">Polars / DuckDB (Port 4)</div>
+                            </div>
+                            <div style="color: #94a3b8; font-weight: bold;">➔</div>
+                            <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
+                                <div style="font-weight: 700; color: #0f172a;">3. GOLDEN RECORD</div>
+                                <div style="color: #64748b; font-size: 0.75rem;">SQLite Star Schema DB</div>
+                            </div>
+                            <div style="color: #94a3b8; font-weight: bold;">➔</div>
+                            <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
+                                <div style="font-weight: 700; color: #0f172a;">4. DAX &amp; ANALYSE</div>
+                                <div style="color: #64748b; font-size: 0.75rem;">Power BI Fabric / FAST</div>
+                            </div>
+                            <div style="color: #94a3b8; font-weight: bold;">➔</div>
+                            <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
+                                <div style="font-weight: 700; color: #0f172a;">5. GROUNDED RAG</div>
+                                <div style="color: #64748b; font-size: 0.75rem;">sqlite-vec (384D) / Qdrant</div>
+                            </div>
+                            <div style="color: #94a3b8; font-weight: bold;">➔</div>
+                            <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 4px; padding: 8px 12px; text-align: center; flex: 1; min-width: 140px;">
+                                <div style="font-weight: 700; color: #065f46;">6. SAK &amp; REVISJON</div>
+                                <div style="color: #047857; font-size: 0.75rem;">Port 9 SHA-256 Forseglet</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4-KOLONNER METRIKKER & SPESIFIKASJONER -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                        <!-- KORT 1: DATA INGESTION & CONNECTORS -->
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
+                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
+                                🔌 ERP- &amp; API-Konnektorer
+                            </div>
+                            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                <li><strong>Visma Enterprise:</strong> Nattlig batch kl. 02:00 + ad-hoc regnskapskjøring</li>
+                                <li><strong>Framsikt EPM:</strong> GraphQL / REST stillings- og rammeekstrakt</li>
+                                <li><strong>SSB KOSTRA:</strong> Autentisert oppslag mot 2026/2027 kontoplan</li>
+                            </ul>
+                            <div style="margin-top: 0.75rem;">
+                                <a href="antigravity_backend_module_pakke/ANTIGRAVITY_data_pipeline_and_connectors.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
+                                    📄 Konnektorspesifikasjon
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- KORT 2: PII MASKERING & PRIVACY -->
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
+                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
+                                🛡️ PII-Maskering &amp; GDPR (Port 4)
+                            </div>
+                            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                <li><strong>Fødselsnumre (FNR/DNR):</strong> HMAC-SHA256 saltet maskering</li>
+                                <li><strong>Navn &amp; Personalia:</strong> Erstattet med Stilling + KOSTRA Funksjon</li>
+                                <li><strong>Bruttoføring:</strong> Skjerming bevarer regnskapsmessig bruttoprinsipp jf. § 14-6</li>
+                            </ul>
+                            <div style="margin-top: 0.75rem;">
+                                <a href="AI_KOM_MLOps_og_Navigasjon_pakke/AI_KOM_MLOps_og_Data_Lineage.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
+                                    📄 MLOps &amp; Lineage Spec
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- KORT 3: REST API & DOCKER ENGINE -->
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
+                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
+                                ⚡ Antigravity REST API (v2.4)
+                            </div>
+                            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                <li><strong>OpenAPI 3.1:</strong> <code>/api/v1/finance</code>, <code>/api/v1/ai</code>, <code>/api/v1/governance</code></li>
+                                <li><strong>Kjøremotor:</strong> FastAPI + Polars/DuckDB in-memory OLAP</li>
+                                <li><strong>Deployment:</strong> Produksjonsklar Dockerfile &amp; Kubernetes manifest</li>
+                            </ul>
+                            <div style="margin-top: 0.75rem;">
+                                <a href="antigravity_backend_module_pakke/ANTIGRAVITY_api_spec_and_deployment.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
+                                    📄 API- &amp; DevOps Spec
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- KORT 4: PORT 9 REVISJON & VURDERING -->
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem;">
+                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">
+                                ✍️ Stage-Gate Port 9 Sign-Off
+                            </div>
+                            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                <li><strong>HITL Kontroll:</strong> 100 % menneskelig godkjenning (APPROVED/MODIFIED)</li>
+                                <li><strong>Kryptografisk Forsegling:</strong> SHA-256 forankret i <code>Fact_Prognose_Logg</code></li>
+                                <li><strong>Kommunerevisjonen:</strong> Full sporbarhet klar for kontrollutvalget</li>
+                            </ul>
+                            <div style="margin-top: 0.75rem;">
+                                <a href="antigravity_backend_module_pakke/ANTIGRAVITY_ai_rag_services.md" target="_blank" class="btn btn-sm" style="font-size: 0.75rem;">
+                                    📄 RAG &amp; Governance Spec
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11px; color:var(--text-muted);">
+                    Kvalitetssikret jf. Stage-Gate Port 4 (PII-vask) og Port 9 (SHA-256 forsegling).
+                </span>
+                <button type="button" class="btn btn-primary" onclick="closeMlopsModal()">Lukk MLOps</button>
             </div>
         </div>
     </div>
@@ -15242,25 +15257,23 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         let currentPreviewUnitId = "5200-ENH-401";
         let currentPptxSlide = 1;
 
-        function updateBankRlsIdentityPanel(unitId) {
-            const panel = document.getElementById("bank-rls-identity-panel");
-            if (!panel) return;
+        function getRlsFormattedReference(unitId) {
             let rls = KONTO_RLS_REGISTRY[unitId];
             if (!rls && typeof ALL_81_UNITS_DATA !== 'undefined') {
                 const raw = ALL_81_UNITS_DATA.find(x => x.id === unitId || x.ansvar === unitId);
                 if (raw) {
                     rls = {
-                        upn: raw.epost || `${raw.leder.toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no`,
-                        navn: raw.leder,
-                        tittel: raw.tittel || raw.name,
+                        upn: raw.epost || `${(raw.leder || "leder").toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no`,
+                        navn: raw.leder || "Budsjettansvarlig Leder",
+                        tittel: raw.tittel || ("Enhetsleder " + raw.name),
                         niva: raw.niva === 1 ? "NIVA1" : (raw.niva === 2 ? "NIVA2" : "NIVA3"),
                         niva_tekst: raw.nivaTekst || "Nivå 3: Enhetsleder",
-                        sektor_kode: raw.sectorKey,
-                        kommunalsjefomrade: raw.sectorKey,
+                        sektor_kode: raw.sectorKey || "HELSE",
+                        kommunalsjefomrade: raw.sectorKey || "Helse og mestring",
                         ansvar_kode: raw.id,
                         enhet_navn: raw.name,
                         har_full_tilgang: false,
-                        rls_rolle: `Enhetsleder_${raw.sectorKey}`,
+                        rls_rolle: `Enhetsleder_${raw.sectorKey || 'Enhet'}`,
                         fullmakt_nok: raw.fullmakt || 2000000,
                         controller_navn: raw.controller || "Frank Ellingsen",
                         controller_epost: "frank.ellingsen@kristiansand.kommune.no",
@@ -15273,8 +15286,61 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                     };
                 }
             }
-            if (!rls) rls = KONTO_RLS_REGISTRY["5200-ENH-401"];
-            const formattedFullmakt = "kr " + Math.round(rls.fullmakt_nok || 2000000).toLocaleString('nb-NO') + " NOK";
+            if (!rls) {
+                rls = KONTO_RLS_REGISTRY["5200-ENH-401"] || {
+                    upn: "solveig.grimstad@kristiansand.kommune.no",
+                    navn: "Solveig Grimstad",
+                    tittel: "Enhetsleder Strai Sykehjem",
+                    niva: "NIVA3",
+                    niva_tekst: "Nivå 3: Enhetsleder",
+                    sektor_kode: "HELSE",
+                    kommunalsjefomrade: "Helse og mestring",
+                    ansvar_kode: "5200-ENH-401",
+                    enhet_navn: "Strai Sykehjem & Omsorgsboliger",
+                    har_full_tilgang: false,
+                    rls_rolle: "Enhetsleder_Boenhet",
+                    fullmakt_nok: 2000000,
+                    controller_navn: "Frank Ellingsen",
+                    controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                    pdf_path: "reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf",
+                    docx_path: "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+                    xlsx_path: "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+                    csv_path: "reports/budsjettansvarlige_arkiv/5200-ENH-401/04_Framsikt_Omdisponering/framsikt_kontering_5200-ENH-401.csv",
+                    pptx_path: "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+                    pbip_project: "powerbi/pbi_reporting_project.pbip"
+                };
+            }
+
+            let shortNum = rls.ansvar_kode;
+            if (shortNum.includes("ENH-")) {
+                shortNum = shortNum.split("ENH-")[1];
+            } else if (shortNum.startsWith("ENHET_")) {
+                shortNum = shortNum.replace("ENHET_", "");
+            }
+
+            const fullText = `Tilpasset Row-Level Security (RLS) for Enhet ${shortNum}: ${rls.enhet_navn} (${rls.navn} \u2022 ${rls.tittel})`;
+            const scopeNotice = `Viser utelukkende poster og nøkkeltall som den enkelte budsjettansvarlig kan påvirke direkte (lønn, vikarer, overtid, lokal drift og refusjoner). Konsernfordelte felleskostnader, pensjonsreguleringer og kapitalkostnader er filtrert bort.`;
+
+            return {
+                rls: rls,
+                unitId: rls.ansvar_kode,
+                shortNum: shortNum,
+                enhetNavn: rls.enhet_navn,
+                lederNavn: rls.navn,
+                lederTittel: rls.tittel,
+                fullmaktNok: rls.fullmakt_nok || 2000000,
+                fullmaktStr: "kr " + Math.round(rls.fullmakt_nok || 2000000).toLocaleString('nb-NO') + " NOK",
+                fullText: fullText,
+                scopeNotice: scopeNotice
+            };
+        }
+
+        function updateBankRlsIdentityPanel(unitId) {
+            const panel = document.getElementById("bank-rls-identity-panel");
+            if (!panel) return;
+            const ref = getRlsFormattedReference(unitId);
+            const rls = ref.rls;
+            const formattedFullmakt = ref.fullmaktStr;
 
             panel.innerHTML = `
                 <div class="bank-rls-info-group">
@@ -15306,6 +15372,10 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         💬 Spør om ${rls.ansvar_kode}
                     </button>
                 </div>
+                <div style="width:100%; margin-top:8px; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:11px; color:#1e40af; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <span>🔒 <strong>${ref.fullText}</strong> &mdash; <em>${ref.scopeNotice}</em></span>
+                    <span class="badge" style="background:#dbeafe; color:#1e40af; font-weight:700; font-size:10px;">RLS Sikret &bull; Kun Lokalt Påvirkbart</span>
+                </div>
             `;
         }
 
@@ -15315,41 +15385,14 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             const periodLabel = document.getElementById("bank-reports-period-label");
             if (!container) return;
 
-            let rls = KONTO_RLS_REGISTRY[unitId];
-            if (!rls && typeof ALL_81_UNITS_DATA !== 'undefined') {
-                const raw = ALL_81_UNITS_DATA.find(x => x.id === unitId || x.ansvar === unitId);
-                if (raw) {
-                    rls = {
-                        upn: raw.epost || `${raw.leder.toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no`,
-                        navn: raw.leder,
-                        tittel: raw.tittel || raw.name,
-                        niva: raw.niva === 1 ? "NIVA1" : (raw.niva === 2 ? "NIVA2" : "NIVA3"),
-                        niva_tekst: raw.nivaTekst || "Nivå 3: Enhetsleder",
-                        sektor_kode: raw.sectorKey,
-                        kommunalsjefomrade: raw.sectorKey,
-                        ansvar_kode: raw.id,
-                        enhet_navn: raw.name,
-                        har_full_tilgang: false,
-                        rls_rolle: `Enhetsleder_${raw.sectorKey}`,
-                        fullmakt_nok: raw.fullmakt || 2000000,
-                        controller_navn: raw.controller || "Frank Ellingsen",
-                        controller_epost: "frank.ellingsen@kristiansand.kommune.no",
-                        pdf_path: `reports/monthly_pdf_packets/${raw.id}_Maanedsrapport_M9_2026.pdf`,
-                        docx_path: "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
-                        xlsx_path: "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
-                        csv_path: `reports/budsjettansvarlige_arkiv/${raw.id}/04_Framsikt_Omdisponering/framsikt_kontering_${raw.id}.csv`,
-                        pptx_path: "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
-                        pbip_project: "powerbi/pbi_reporting_project.pbip"
-                    };
-                }
-            }
-            if (!rls) rls = KONTO_RLS_REGISTRY["5200-ENH-401"];
+            const ref = getRlsFormattedReference(unitId);
+            const rls = ref.rls;
             const m = Math.max(1, Math.min(12, monthNum || currentKontoMonth || 10));
             const mStr = String(m).padStart(2, '0');
             const mName = KONTO_MONTH_NAMES[m - 1];
 
             if (unitLabel) {
-                unitLabel.innerHTML = `Tilpasset Row-Level Security (RLS) for <strong>${rls.enhet_navn}</strong> (${rls.navn} &bull; ${rls.tittel})`;
+                unitLabel.innerHTML = `🔒 <strong>${ref.fullText}</strong> &bull; <span style="color:#059669; font-weight:600;">Kun poster og filer innenfor lederens påvirkningssfære</span>`;
             }
             if (periodLabel) {
                 periodLabel.innerHTML = `Gjeldende regnskapsperiode: <strong>${mName} 2026 (M${mStr})</strong>`;
@@ -15375,6 +15418,9 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         </div>
                         <div class="bank-report-desc">
                             Dynamisk ledelsesrapport med KPI-kort, S-kurve, KOSTRA-drilldown og sanntids avviksstatus for ${rls.ansvar_kode}.
+                        </div>
+                        <div style="font-size:10px; color:#0369a1; background:#e0f2fe; padding:2px 6px; border-radius:3px; margin-top:6px; font-weight:600;">
+                            🔒 RLS-Filter: Dim_Ansvar[ansvar_kode] == "${ref.unitId}" (Kun lokale poster)
                         </div>
                     </div>
                     <div class="bank-report-actions">
@@ -15404,6 +15450,9 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         <div class="bank-report-desc">
                             Månedlig kontoutskrift og transaksjonsjournal med periodisert årsramme, lønnsavstemming og vikarkalkyle.
                         </div>
+                        <div style="font-size:10px; color:#047857; background:#dcfce7; padding:2px 6px; border-radius:3px; margin-top:6px; font-weight:600;">
+                            🔒 FAST-modell: Kun påvirkbare driftsposter (art 10100–12000, 16900)
+                        </div>
                     </div>
                     <div class="bank-report-actions">
                         <a class="bank-report-btn primary" href="${xlsxFile}" download title="Last ned fullverdig Excel FAST månedsmodell">
@@ -15431,6 +15480,9 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         </div>
                         <div class="bank-report-desc">
                             Månedsrapport-lysbilder for ledergruppe og styringsmøter med Tufte-grafer, årsaksanalyse og tiltak jf. § 14-5.
+                        </div>
+                        <div style="font-size:10px; color:#c2410c; background:#ffedd5; padding:2px 6px; border-radius:3px; margin-top:6px; font-weight:600;">
+                            🔒 Møtedeck: Tilpasset ${ref.enhetNavn} og lederens tiltak
                         </div>
                     </div>
                     <div class="bank-report-actions">
@@ -15460,6 +15512,9 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         <div class="bank-report-desc">
                             Formelt avviksnotat, handlingsplan og drøftingsprotokoll med tillitsvalgte, ferdig utfylt med enhetens tall.
                         </div>
+                        <div style="font-size:10px; color:#1d4ed8; background:#dbeafe; padding:2px 6px; border-radius:3px; margin-top:6px; font-weight:600;">
+                            🔒 Kun tiltak ${ref.lederNavn} rår over jf. § 14-5 &amp; HTA § 4
+                        </div>
                     </div>
                     <div class="bank-report-actions">
                         <a class="bank-report-btn primary" href="${docxFile}" download title="Last ned offisielt Word-saksnotat (.docx)">
@@ -15487,6 +15542,9 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         </div>
                         <div class="bank-report-desc">
                             Formell 2-siders godkjent månedsrapportpakke med sesongjustert prognose, tiltaksstatus og signaturfelt.
+                        </div>
+                        <div style="font-size:10px; color:#b91c1c; background:#fee2e2; padding:2px 6px; border-radius:3px; margin-top:6px; font-weight:600;">
+                            🔒 Signert månedsrapport med påvirkbare nøkkeltall for ${ref.enhetNavn}
                         </div>
                     </div>
                     <div class="bank-report-actions">
@@ -15949,10 +16007,19 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 
 
         function renderBankStatement(unitId, monthNum) {
-            if (typeof updateBankRlsIdentityPanel === "function") updateBankRlsIdentityPanel(unitId || currentKontoUnit);
-            if (typeof renderBankMonthlyReportSuite === "function") renderBankMonthlyReportSuite(unitId || currentKontoUnit, monthNum || currentKontoMonth);
             currentKontoUnit = unitId || currentKontoUnit || "5200-ENH-401";
             currentKontoMonth = monthNum || currentKontoMonth || 10;
+
+            const ref = getRlsFormattedReference(currentKontoUnit);
+
+            // Oppdater overordnet RLS-scope banner i velgeren
+            const bannerTitle = document.getElementById("bank-unit-rls-title");
+            if (bannerTitle) bannerTitle.innerHTML = ref.fullText;
+            const bannerDesc = document.getElementById("bank-unit-rls-desc");
+            if (bannerDesc) bannerDesc.innerHTML = ref.scopeNotice;
+
+            if (typeof updateBankRlsIdentityPanel === "function") updateBankRlsIdentityPanel(currentKontoUnit);
+            if (typeof renderBankMonthlyReportSuite === "function") renderBankMonthlyReportSuite(currentKontoUnit, currentKontoMonth);
 
             const dropdown = document.getElementById("bank-unit-dropdown");
             if (dropdown && dropdown.value !== currentKontoUnit) {
@@ -16038,24 +16105,35 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                             <strong>E-post:</strong> ${data.unit.controller_epost}
                         </div>
                     </div>
+
+                    <!-- RLS Referanse & Påvirkningsbanner på Kontoutskriften -->
+                    <div style="grid-column:1 / -1; margin-top:10px; background:#eff6ff; border:1px solid #bfdbfe; border-left:4px solid #1d4ed8; padding:9px 13px; border-radius:4px; font-size:11.5px; color:#1e3a8a; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div>
+                            🔒 <strong>${ref.fullText}</strong>
+                            <div style="font-size:11px; color:#2563eb; margin-top:2px;">
+                                ${ref.scopeNotice}
+                            </div>
+                        </div>
+                        <span class="badge" style="background:#dbeafe; color:#1e40af; font-weight:700; font-size:10px;">Påvirkbart Budsjett</span>
+                    </div>
                 </div>
 
                 <!-- 3 Store Saldobokser (Edward Tufte stil) -->
                 <div class="bank-kpi-grid">
                     <div class="bank-kpi-box">
-                        <div class="bank-kpi-label">Tildelt Årsramme (Startkreditt)</div>
+                        <div class="bank-kpi-label">Tildelt Lokal Årsramme (Startkreditt)</div>
                         <div class="bank-kpi-num">${formatNok(data.annualBudget)}</div>
-                        <div class="bank-kpi-sub">Bystyrets vedtatte ramme for 2026</div>
+                        <div class="bank-kpi-sub">Bystyrets vedtatte ramme for ${ref.enhetNavn} (kun påvirkbare driftsmidler)</div>
                     </div>
                     <div class="bank-kpi-box">
                         <div class="bank-kpi-label">Hittil Brukt YTD (Netto uttak)</div>
                         <div class="bank-kpi-num" style="color:#c0392b;">${formatNok(data.netYtdSpent)}</div>
-                        <div class="bank-kpi-sub">Samlet forbruk t.o.m. ${data.monthName}</div>
+                        <div class="bank-kpi-sub">Lederens lokale forbruk t.o.m. ${data.monthName} (ekskl. konsernfelles)</div>
                     </div>
                     <div class="bank-kpi-box">
                         <div class="bank-kpi-label">Månedlig Rådighetsbeløp ut året</div>
                         <div class="bank-kpi-num" style="color:#0369a1;">${formatNok(data.monthlyAllowance)} / mnd</div>
-                        <div class="bank-kpi-sub">Maks tillatt snitt i ${data.remainingMonths} gjenværende mnd</div>
+                        <div class="bank-kpi-sub">Maks tillatt månedssnitt for ${ref.enhetNavn}</div>
                     </div>
                 </div>
 
@@ -16092,8 +16170,11 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                 </div>
 
                 <!-- Transaksjonstabell -->
-                <div style="font-size:12px; font-weight:700; color:#1b365d; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
-                    📋 Kontoutskrift for ${data.monthName} 2026 (Største uttak og innbetalinger)
+                <div style="font-size:12px; font-weight:700; color:#1b365d; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">
+                    📋 Kontoutskrift for ${data.monthName} 2026 (Største uttak og innbetalinger innenfor lederens fullmakt)
+                </div>
+                <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-style:italic;">
+                    🔒 <strong>${ref.fullText}:</strong> Tabellen viser utelukkende lokale poster kontert på ansvar ${ref.unitId} (lønn, vikarer, overtid, forbruksvarer og refusjoner). Sentraladministrasjon, IT-felleslisenser og pensjonspremieavvik er filtrert bort.
                 </div>
                 <table class="bank-trans-table">
                     <thead>
@@ -16114,7 +16195,10 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                 <!-- Pedagogisk Rådgivningsboks (Klarspråk for ledere) -->
                 <div class="bank-advice-box">
                     <div class="bank-advice-title">
-                        <span>💡 Økonomiråd for din enhet (Veiledning for ledere uten økonomibakgrunn)</span>
+                        <span>💡 Økonomiråd for din enhet &mdash; ${ref.fullText}</span>
+                    </div>
+                    <div style="font-size:11px; color:#475569; margin-bottom:8px; font-style:italic;">
+                        Rådene og handlingene under omfatter kun faktorer som ${ref.lederNavn} har myndighet til å beslutte innenfor sin fullmakt (${ref.fullmaktStr}).
                     </div>
                     <div style="font-size:12px; line-height:1.55; color:#334155; margin-bottom:10px;">
                         <strong>Hva betyr dette for din avdeling?</strong><br>
@@ -16252,7 +16336,10 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 
         // Initialiser Nettbank-kontoutskrift
         if (typeof renderBankStatement === 'function') {
-            setTimeout(() => renderBankStatement('5200-ENH-401', 10), 100);
+            setTimeout(() => {
+                const initU = localStorage.getItem('aikom_selected_unit') || currentKontoUnit || '5200-ENH-401';
+                renderBankStatement(initU, currentKontoMonth || 10);
+            }, 100);
         }
     
 
@@ -20906,6 +20993,8 @@ SHA-256 Revisjonskvittering genereres ved elektronisk sign-off i Office Hub.
                 togglePresentationMode();
             } else if (cmd === 'CHAT_AI') {
                 toggleChatDrawer();
+            } else if (cmd === 'MLOPS' || cmd === 'MLOPS_LINEAGE') {
+                openMlopsModal();
             }
         }
 
@@ -21407,14 +21496,16 @@ Enhet 401 Helse & Mestring\t14750000,00\t13900000,00\t850000,00\t6,1 %\tADVARSEL
             selectSector("ALL");
             if (typeof renderVariancesTable === 'function') renderVariancesTable("ALL");
             if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
-            if (typeof renderBankStatement === 'function') renderBankStatement('5200-ENH-401', 10);
+            const savedUnit = localStorage.getItem('aikom_selected_unit') || currentKontoUnit || '5200-ENH-401';
+            if (typeof renderBankStatement === 'function') renderBankStatement(savedUnit, currentKontoMonth || 10);
         });
         setTimeout(() => {
             selectWorkflowPhase(2, false);
             selectSector("ALL");
             if (typeof renderVariancesTable === 'function') renderVariancesTable("ALL");
             if (typeof renderMeetingPack === 'function') renderMeetingPack("ALL", "NIVA1");
-            if (typeof renderBankStatement === 'function') renderBankStatement('5200-ENH-401', 10);
+            const savedUnit = localStorage.getItem('aikom_selected_unit') || currentKontoUnit || '5200-ENH-401';
+            if (typeof renderBankStatement === 'function') renderBankStatement(savedUnit, currentKontoMonth || 10);
         }, 150);
 
     
