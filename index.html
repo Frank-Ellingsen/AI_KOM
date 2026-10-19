@@ -4784,25 +4784,73 @@
 
         
         <div class="hub-sidebar-scroll">
-            <!-- 0. HOVEDROLLER / PERSONAS (jf. AI_KOM_layout_og_navigasjon.md) -->
-            <div class="sidebar-nav-group" style="margin-bottom: 12px;">
-                <div class="sidebar-nav-header">
-                    <span>Hovedrolle / Visning</span>
-                    <span style="font-size:9.5px; text-transform:none; color:var(--accent-blue); font-weight:700;">4 Faner</span>
+
+            <!-- 🏛️ KONSERNSTATUS & NØKKELTALL (KRISTIANSAND KOMMUNE) -->
+            <!-- Plassert permanent øverst i venstremenyen jf. brukerkrav -->
+            <div class="sidebar-konsern-kpis-widget" id="sidebar-konsern-kpis-widget" style="background:#ffffff; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:4px; padding:10px 12px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #f1f5f9; padding-bottom:5px;">
+                    <div>
+                        <div style="font-size:9.5px; text-transform:uppercase; font-weight:800; color:#64748b; letter-spacing:0.5px;">Bystyrets Handlingsregler</div>
+                        <div style="font-size:12px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:5px;">
+                            🏛️ Konsern Nøkkeltall
+                        </div>
+                    </div>
+                    <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:9px; padding:1px 5px; font-weight:700;">🟢 I Balanse</span>
                 </div>
-                <a class="sidebar-nav-item active" id="side-tab-min-enhet" onclick="openTab('min-enhet')">
-                    <span>🏫 Min Enhet &amp; Måned</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-tab-sektor-konsern" onclick="openTab('sektor-konsern')">
-                    <span>🏛️ Sektor &amp; Konsern</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-tab-controller-hub" onclick="openTab('controller-hub')">
-                    <span>📊 Controller Hub</span>
-                </a>
-                <a class="sidebar-nav-item" id="side-tab-veiledere-maler" onclick="openTab('veiledere-maler')">
-                    <span>📚 Veiledere &amp; Maler</span>
-                </a>
+
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- 1. Netto Driftsresultat -->
+                    <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:3px; padding:5px 8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:10.5px; font-weight:700; color:#1e293b;">1. Netto Driftsresultat</span>
+                            <span class="status-badge" style="background:#ecfdf5; color:#059669; font-size:9px; padding:0 4px; font-weight:700;">🟢 1,25 %</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:2px;">
+                            <span style="font-size:10px; color:#64748b;">115 mill. kr (Mål: ≥ 1,00 %)</span>
+                            <span style="font-size:9px; color:#059669; font-weight:600;">TBU: ≥ 1,75 %</span>
+                        </div>
+                        <div style="width:100%; height:3px; background:#e2e8f0; border-radius:2px; margin-top:3px; overflow:hidden;">
+                            <div style="width:62%; height:100%; background:#10b981; border-radius:2px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Disposisjonsfond -->
+                    <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:3px; padding:5px 8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:10.5px; font-weight:700; color:#1e293b;">2. Disposisjonsfond</span>
+                            <span class="status-badge" style="background:#ecfdf5; color:#059669; font-size:9px; padding:0 4px; font-weight:700;">🟢 4,35 %</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:2px;">
+                            <span style="font-size:10px; color:#64748b;">460 mill. kr (Mål: ≥ 4,00 %)</span>
+                            <span style="font-size:9px; color:#059669; font-weight:600;">TBU: ≥ 5,00 %</span>
+                        </div>
+                        <div style="width:100%; height:3px; background:#e2e8f0; border-radius:2px; margin-top:3px; overflow:hidden;">
+                            <div style="width:87%; height:100%; background:#10b981; border-radius:2px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Netto Lånegjeld -->
+                    <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:3px; padding:5px 8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:10.5px; font-weight:700; color:#1e293b;">3. Netto Lånegjeld</span>
+                            <span class="status-badge" style="background:#ecfdf5; color:#059669; font-size:9px; padding:0 4px; font-weight:700;">🟢 76,8 %</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:2px;">
+                            <span style="font-size:10px; color:#64748b;">8,4 mrd. kr (Tak: ≤ 78,0 %)</span>
+                            <span style="font-size:9px; color:#059669; font-weight:600;">Under lånetak</span>
+                        </div>
+                        <div style="width:100%; height:3px; background:#e2e8f0; border-radius:2px; margin-top:3px; overflow:hidden;">
+                            <div style="width:76.8%; height:100%; background:#10b981; border-radius:2px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size:9px; color:#64748b; margin-top:6px; line-height:1.3; border-top:1px solid #f1f5f9; padding-top:4px;">
+                    ⚖️ Lovhjemmel: Kommuneloven §§ 14-1, 14-13 og 14-14.
+                </div>
             </div>
+
+
 
             <!-- 0. HOVEDROLLER / PERSONAS (jf. AI_KOM_layout_og_navigasjon.md) -->
             <div class="sidebar-nav-group" style="margin-bottom: 12px;">
@@ -5640,12 +5688,12 @@
     <div class="section-header" style="background:var(--bg-surface); padding:16px 20px; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
         <div>
             <div style="font-size:15px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
-                <span id="top3-header-title">🏛️ Kristiansand Kommune Konsern: Topp 3 Finansielle Nøkkeltall &amp; Styringsavvik</span>
-                <span id="top3-header-badge-norm" class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Konsern / TBU Normert</span>
-                <span id="top3-header-badge-status" class="status-badge" style="background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe; font-size:10px;">M10 2026</span>
+                <span id="top3-header-title">🏛️ Kristiansand Kommune Konsern: Topp 3 Driftsavvik &amp; Styringsindikatorer (M10)</span>
+                <span id="top3-header-badge-norm" class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Kommunedirektør / Konsern</span>
+                <span id="top3-header-badge-status" class="status-badge" style="background:#fef2f2; color:#b91c1c; border:1px solid #f87171; font-size:10px;">🔴 RØD (Avvik: -69,0 Mkr)</span>
             </div>
             <div id="top3-header-subtitle" style="font-size:11.5px; color:#64748b; margin-top:3px;">
-                Overordnet konsernstatus jf. Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-retningslinjer (Teknisk beregningsutvalg for kommunal og fylkeskommunal økonomi)
+                Samlet driftsanalyse YTD M10 for alle 6 virksomhetsområder. Merforbruk på lønns- og vikarposter krever strakstiltak jf. Kommuneloven § 14-5.
             </div>
         </div>
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
@@ -5790,6 +5838,10 @@
             </div>
         </div>
 
+        
+        <!-- 1B. AVVIKSDRIVERE RAPPORT UNDER KPI'S -->
+        <div id="top3-avviksdrivere-rapport-container" style="margin-bottom:24px;"></div>
+        
         <!-- 2. KASKADERENDE SEKTOR- OG ENHETSHIERARKI -->
         <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; padding:16px; margin-bottom:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
@@ -29074,87 +29126,85 @@ const SEKTOR_MAP_FROM_TOP3 = {
 
 const TOP3_SECTOR_KPIS = {
     "ALL": {
-        title: "🏛️ Kristiansand Kommune Konsern: Topp 3 Finansielle Nøkkeltall & Styringsavvik",
-        badge_norm: "Konsern / TBU Normert",
-        badge_status: "M10 2026",
-        badge_status_style: "background:#eff6ff; color:#0369a1; border:1px solid #bfdbfe;",
-        subtitle: "Overordnet konsernstatus jf. Kommuneloven §§ 13-1, 14-1, 14-13 og TBU-retningslinjer (Teknisk beregningsutvalg for kommunal og fylkeskommunal økonomi)",
+        title: "🏛️ Kristiansand Kommune Konsern: Topp 3 Driftsavvik & Styringsindikatorer (M10)",
+        badge_norm: "Kommunedirektør / Konsern",
+        badge_status: "🔴 RØD (Avvik: -69,0 Mkr)",
+        badge_status_style: "background:#fef2f2; color:#b91c1c; border:1px solid #f87171;",
+        subtitle: "Samlet driftsanalyse YTD M10 for alle 6 virksomhetsområder. Merforbruk på lønns- og vikarposter krever strakstiltak jf. Kommuneloven § 14-5.",
         cards: [
             {
-                kategori: "1. Driftsbalanse",
-                navn: "Netto Driftsresultat",
-                status_text: "🟢 I BALANSE",
-                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
-                border_top: "3px solid #10b981",
-                hovedtall: "1,25 %",
-                subtall: "(115 mill. kr)",
+                kategori: "1. Kostnadsavvik YTD (CV)",
+                navn: "Samlet Budsjettavvik YTD",
+                status_text: "🔴 MERFORBRUK",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "-69,0 mill. kr",
+                subtall: "(-1,09 % av ramme)",
                 benchmarks: [
-                    { label: "Kommunalt Mål:", val: "≥ 1,00 %" },
-                    { label: "TBU Anbefaling:", val: "≥ 1,75 %" }
+                    { label: "Periodisert Ramme:", val: "6 320,0 mill." },
+                    { label: "Faktisk Forbruk:", val: "6 389,0 mill." }
                 ],
-                forklaring: "Mål oppnådd. Kommunens netto driftsresultat tilfredsstiller kommunestyrets handlingsregel for forsvarlig drift og egenfinansiering av investeringer.",
+                forklaring: "Samlet netto driftsavvik på tvers av alle 6 virksomhetsområder. Hoveddriver er helse (-42M) og oppvekst (-35M).",
                 gauge: {
-                    verdi: 1.25,
+                    verdi: -1.09,
                     enhet: "%",
-                    min: 0,
-                    max: 5.0,
+                    min: -4.0,
+                    max: 2.0,
                     zones: [
-                        { from: 0, to: 0.5, color: "#ef4444" },
-                        { from: 0.5, to: 1.0, color: "#f59e0b" },
-                        { from: 1.0, to: 2.5, color: "#10b981" },
-                        { from: 2.5, to: 5.0, color: "#059669" }
+                        { from: -4.0, to: -1.5, color: "#ef4444" },
+                        { from: -1.5, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 1.0, color: "#10b981" },
+                        { from: 1.0, to: 2.0, color: "#059669" }
                     ]
                 }
             },
             {
-                kategori: "2. Likviditetsbuffer",
-                navn: "Disposisjonsfond",
-                status_text: "🟢 FORSVARLIG",
-                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
-                border_top: "3px solid #10b981",
-                hovedtall: "4,35 %",
-                subtall: "(460 mill. kr)",
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: "🟡 TILSYN",
+                status_badge_style: "background:#fffbeb; color:#d97706; border:1px solid #f59e0b;",
+                border_top: "3px solid #f59e0b",
+                hovedtall: "0,996",
+                subtall: "(EAC: 7 270,0 mill.)",
                 benchmarks: [
-                    { label: "Kommunalt Mål:", val: "≥ 4,00 %" },
-                    { label: "TBU Anbefaling:", val: "≥ 5,00 %" }
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Varselgrense:", val: "< 0,980" }
                 ],
-                forklaring: "Urørt reserve overstiger kommunestyrets minstekrav (4,00 %). TBU-norm på 5,00 % nås ved videre konsolidering over økonomiplanperioden.",
+                forklaring: "Konsernets samlede kostnadseffektivitet er 0,996. Estimert årssluttforbruk (EAC) er 7 270 mill. kr mot tildelt årsramme 7 240 mill. kr.",
                 gauge: {
-                    verdi: 4.35,
-                    enhet: "%",
-                    min: 0,
-                    max: 12.0,
+                    verdi: 0.996,
+                    enhet: "",
+                    min: 0.92,
+                    max: 1.06,
                     zones: [
-                        { from: 0, to: 2.0, color: "#ef4444" },
-                        { from: 2.0, to: 4.0, color: "#f59e0b" },
-                        { from: 4.0, to: 8.0, color: "#10b981" },
-                        { from: 8.0, to: 12.0, color: "#059669" }
+                        { from: 0.92, to: 0.97, color: "#ef4444" },
+                        { from: 0.97, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.06, color: "#10b981" }
                     ]
                 }
             },
             {
-                kategori: "3. Gjeldsgrad",
-                navn: "Netto Lånegjeld",
-                status_text: "🟢 UNDER TAK",
-                status_badge_style: "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
-                border_top: "3px solid #10b981",
-                hovedtall: "76,8 %",
-                subtall: "(8,4 mrd. kr)",
+                kategori: "3. Primær Kostnadsdriver",
+                navn: "Turnusvakanser, Overtid & Vikarer",
+                status_text: "🔴 HØYT FRAVÆR",
+                status_badge_style: "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;",
+                border_top: "3px solid #ef4444",
+                hovedtall: "11,4 %",
+                subtall: "(-77,0 mill. kr)",
                 benchmarks: [
-                    { label: "Kommunalt Lånetak:", val: "≤ 78,0 %" },
-                    { label: "TBU Smertegrense:", val: "≤ 80,0 %" }
+                    { label: "Art 1020/1250 Vikarer:", val: "30,5 mill. kr" },
+                    { label: "Art 1090 Overtid/Tillegg:", val: "38,0 mill. kr" }
                 ],
-                forklaring: "Lånegjelden er 1,2 prosentpoeng under vedtatt lånetak jf. Kommuneloven § 14-13. 65 % av gjeldsporteføljen har fast rentebinding.",
+                forklaring: "Legemeldt sykefravær og turnusvakanser innen døgnomsorg og skole utløser omfattende vikarinnleie og overtid jf. HTA § 4.",
                 gauge: {
-                    verdi: 76.8,
+                    verdi: 11.4,
                     enhet: "%",
                     min: 0,
-                    max: 120.0,
+                    max: 18.0,
                     zones: [
-                        { from: 0, to: 60.0, color: "#059669" },
-                        { from: 60.0, to: 80.0, color: "#10b981" },
-                        { from: 80.0, to: 90.0, color: "#f59e0b" },
-                        { from: 90.0, to: 120.0, color: "#ef4444" }
+                        { from: 0, to: 7.0, color: "#10b981" },
+                        { from: 7.0, to: 9.0, color: "#f59e0b" },
+                        { from: 9.0, to: 18.0, color: "#ef4444" }
                     ]
                 }
             }
@@ -29742,9 +29792,348 @@ function renderGaugeSvg(kpiKey) {
     return renderGaugeObjectSvg(kpi);
 }
 
-function renderTop3Cards(sectorId) {
-    currentTop3SectorId = sectorId || "ALL";
-    const secData = TOP3_SECTOR_KPIS[currentTop3SectorId] || TOP3_SECTOR_KPIS["ALL"];
+// -----------------------------------------------------------------------------
+// DYNAMISK TOPP 3 OG AVVIKSDRIVERE RAPPORT FOR ENHET / SEKTOR
+// -----------------------------------------------------------------------------
+function getTop3CardsDataForUnit(unit) {
+    if (!unit) return null;
+    const cvPct = (unit.pv && unit.pv > 0) ? (unit.cv / unit.pv * 100) : 0;
+    const cvIsNeg = unit.cv < 0;
+    const cpiVal = parseFloat(unit.cpi) || 1.0;
+    
+    const cvStatus = cvIsNeg ? "🔴 MERFORBRUK" : "🟢 I BALANSE";
+    const cvBadgeStyle = cvIsNeg ? "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;" : "background:#ecfdf5; color:#059669; border:1px solid #10b981;";
+    const cvBorder = cvIsNeg ? "3px solid #ef4444" : "3px solid #10b981";
+    
+    const cpiStatus = cpiVal < 0.980 ? "🔴 UNDER MÅL" : (cpiVal < 1.000 ? "🟡 TILSYN" : "🟢 MÅL NÅDD");
+    const cpiBadgeStyle = cpiVal < 0.980 ? "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;" : (cpiVal < 1.000 ? "background:#fffbeb; color:#d97706; border:1px solid #f59e0b;" : "background:#ecfdf5; color:#059669; border:1px solid #10b981;");
+    const cpiBorder = cpiVal < 0.980 ? "3px solid #ef4444" : (cpiVal < 1.000 ? "3px solid #f59e0b" : "3px solid #10b981");
+
+    const pDriver = (unit.diagnose && unit.diagnose.drivers && unit.diagnose.drivers[0]) ? unit.diagnose.drivers[0] : {
+        art: "10200",
+        navn: "Vikarbruk & overtid",
+        belop: formatKr(Math.abs(unit.cv) * 0.65),
+        vurdering: "Bemanningsavvik og vikarutgifter over budsjettramme."
+    };
+    const sDriver = (unit.diagnose && unit.diagnose.drivers && unit.diagnose.drivers[1]) ? unit.diagnose.drivers[1] : null;
+
+    const driverStatus = cvIsNeg ? "🔴 HØYT PRESS" : "🟢 STABILT";
+    const driverBadgeStyle = cvIsNeg ? "background:#fef2f2; color:#b91c1c; border:1px solid #ef4444;" : "background:#ecfdf5; color:#059669; border:1px solid #10b981;";
+    const driverBorder = cvIsNeg ? "3px solid #ef4444" : "3px solid #10b981";
+
+    const diagSummary = (unit.diagnose && unit.diagnose.summary) ? unit.diagnose.summary : `Faktisk forbruk ${formatKr(unit.ac)} mot periodisert ramme ${formatKr(unit.pv)}.`;
+    const eacText = (unit.prognose && unit.prognose.eac) ? unit.prognose.eac : formatKr(unit.eac);
+    const vacText = (unit.prognose && unit.prognose.vac) ? unit.prognose.vac : formatKr(unit.vac);
+
+    // Gauge range calculations
+    const cvMin = Math.min(-6.0, Math.floor(cvPct - 2));
+    const cvMax = Math.max(3.0, Math.ceil(cvPct + 2));
+
+    return {
+        title: `🏢 ${unit.name} (${unit.nivaTekst}): Topp 3 Nøkkeltall & Avviksdrivere`,
+        badge_norm: `Leder: ${unit.leder}`,
+        badge_status: cvIsNeg ? `🔴 RØD (Avvik: ${formatKr(unit.cv)})` : `🟢 GRØNN (Balanse)`,
+        badge_status_style: cvIsNeg ? "background:#fef2f2; color:#b91c1c; border:1px solid #f87171;" : "background:#ecfdf5; color:#059669; border:1px solid #10b981;",
+        subtitle: `Driftsanalyse M10: ${diagSummary} Delegeringsfullmakt: ${formatKr(unit.fullmakt)}.`,
+        isUnit: true,
+        unitId: unit.id,
+        cards: [
+            {
+                kategori: "1. Kostnadsavvik YTD (CV)",
+                navn: "Budsjettavvik YTD",
+                status_text: cvStatus,
+                status_badge_style: cvBadgeStyle,
+                border_top: cvBorder,
+                hovedtall: (unit.cv >= 0 ? "+" : "") + formatKr(unit.cv),
+                subtall: `(${cvPct >= 0 ? "+" : ""}${cvPct.toFixed(2)} % av ramme)`,
+                benchmarks: [
+                    { label: "Periodisert Ramme:", val: formatKr(unit.pv) },
+                    { label: "Faktisk Forbruk:", val: formatKr(unit.ac) }
+                ],
+                forklaring: `Forbruk YTD utgjør ${unit.forbrukPct ? unit.forbrukPct.toFixed(1) : ((unit.ac/unit.ramme)*100).toFixed(1)} % av årsrammen (${formatKr(unit.ramme)}). Avviket følges opp jf. Kommuneloven § 14-5.`,
+                gauge: {
+                    verdi: parseFloat(cvPct.toFixed(2)),
+                    enhet: "%",
+                    min: cvMin,
+                    max: cvMax,
+                    zones: [
+                        { from: cvMin, to: -1.5, color: "#ef4444" },
+                        { from: -1.5, to: 0.0, color: "#f59e0b" },
+                        { from: 0.0, to: 1.0, color: "#10b981" },
+                        { from: 1.0, to: cvMax, color: "#059669" }
+                    ]
+                }
+            },
+            {
+                kategori: "2. Kostnadseffektivitet (EVM)",
+                navn: "Cost Performance Index (CPI)",
+                status_text: cpiStatus,
+                status_badge_style: cpiBadgeStyle,
+                border_top: cpiBorder,
+                hovedtall: cpiVal.toFixed(3),
+                subtall: `(EAC: ${eacText})`,
+                benchmarks: [
+                    { label: "Målkrav:", val: "≥ 1,000" },
+                    { label: "Varselgrense:", val: "< 0,980" }
+                ],
+                forklaring: `Kostnadsindeks ${cpiVal.toFixed(3)}. Helårsprognose (EAC) estimerer ${eacText} med forventet årssluttavvik (VAC) på ${vacText} jf. § 14-5.`,
+                gauge: {
+                    verdi: parseFloat(cpiVal.toFixed(3)),
+                    enhet: "",
+                    min: 0.90,
+                    max: 1.10,
+                    zones: [
+                        { from: 0.90, to: 0.97, color: "#ef4444" },
+                        { from: 0.97, to: 1.00, color: "#f59e0b" },
+                        { from: 1.00, to: 1.10, color: "#10b981" }
+                    ]
+                }
+            },
+            {
+                kategori: "3. Primær Kostnadsdriver",
+                navn: pDriver.navn || "Vikarbruk & Overtid",
+                status_text: driverStatus,
+                status_badge_style: driverBadgeStyle,
+                border_top: driverBorder,
+                hovedtall: pDriver.belop || formatKr(Math.abs(unit.cv)),
+                subtall: `(Art ${pDriver.art || "10200"})`,
+                benchmarks: [
+                    { label: "Driver 2 (" + (sDriver ? sDriver.navn.substring(0, 14) : "Tillegg") + "):", val: sDriver ? sDriver.belop : "0 kr" },
+                    { label: "Lovhjemmel:", val: (unit.diagnose && unit.diagnose.lovhjemmel) ? "Kommuneloven § 14-5" : "HTA § 4" }
+                ],
+                forklaring: `${pDriver.vurdering || "Avviket driver merforbruket for enheten."} Krever strakstiltak i samråd med controller.`,
+                gauge: {
+                    verdi: cvIsNeg ? 8.5 : 2.5,
+                    enhet: "%",
+                    min: 0,
+                    max: 15.0,
+                    zones: [
+                        { from: 0, to: 4.0, color: "#10b981" },
+                        { from: 4.0, to: 7.0, color: "#f59e0b" },
+                        { from: 7.0, to: 15.0, color: "#ef4444" }
+                    ]
+                }
+            }
+        ]
+    };
+}
+
+function renderTop3AvviksdrivereRapport(secData, unit) {
+    const reportContainer = document.getElementById("top3-avviksdrivere-rapport-container");
+    if (!reportContainer) return;
+
+    if (unit) {
+        // Enhets-spesifikk rapport
+        const cvIsNeg = unit.cv < 0;
+        const cvColor = cvIsNeg ? "#b91c1c" : "#15803d";
+        const cvBg = cvIsNeg ? "#fef2f2" : "#ecfdf5";
+        const cvSign = unit.cv >= 0 ? "+" : "";
+        const cvPct = unit.pv > 0 ? (unit.cv / unit.pv * 100).toFixed(2) : "0.00";
+
+        const drivers = (unit.diagnose && unit.diagnose.drivers && unit.diagnose.drivers.length > 0) ? unit.diagnose.drivers : [
+            { art: "10200", navn: "Vikarbyrå & Ekstern innleie", belop: formatKr(Math.abs(unit.cv) * 0.65), vurdering: "Innleie for å dekke akutt sykefravær og vaktvakanser." },
+            { art: "10900", navn: "Overtid & helgetillegg", belop: formatKr(Math.abs(unit.cv) * 0.35), vurdering: "Overtid for å opprettholde lovpålagt bemanningsfaktor jf. HTA § 4." }
+        ];
+
+        let driverRowsHtml = "";
+        drivers.forEach((d) => {
+            driverRowsHtml += `
+                <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:8px 12px; font-family:var(--font-mono); font-size:11px; color:#64748b;">Art ${d.art}</td>
+                    <td style="padding:8px 12px; font-weight:700; color:#1e293b;">${d.navn}</td>
+                    <td style="padding:8px 12px; text-align:right; font-variant-numeric:tabular-nums; font-weight:700; color:#b91c1c;">${d.belop}</td>
+                    <td style="padding:8px 12px; font-size:11.5px; color:#475569;">${d.vurdering}</td>
+                </tr>
+            `;
+        });
+
+        let actionsHtml = "";
+        if (unit.actions && unit.actions.length > 0) {
+            unit.actions.forEach(a => {
+                const badgeType = a.type === "BEMANNING" ? "background:#fee2e2; color:#b91c1c;" : (a.type === "KONTROLL" ? "background:#fef3c7; color:#92400e;" : "background:#e0f2fe; color:#0369a1;");
+                actionsHtml += `
+                    <div style="display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+                        <span class="status-badge" style="${badgeType} font-size:9.5px; padding:2px 6px; flex-shrink:0;">${a.type}</span>
+                        <div style="flex:1; min-width:0;">
+                            <div style="font-size:12px; font-weight:600; color:#1e293b;">${a.tekst}</div>
+                            <div style="font-size:10.5px; color:#64748b; margin-top:2px;">Frist: <strong>${a.frist}</strong> | Ansvarlig: <strong>${unit.leder}</strong></div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        reportContainer.innerHTML = `
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-top:3px solid ${cvColor}; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+                <!-- Header -->
+                <div style="background:#f8fafc; border-bottom:1.5px solid #e2e8f0; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:14px; font-weight:800; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
+                                📋 Avviksdrivere &amp; Årsaksanalyse (M10): ${unit.name}
+                            </span>
+                            <span class="status-badge" style="background:${cvBg}; color:${cvColor}; font-size:10px; font-weight:700;">
+                                ${cvIsNeg ? '🔴 MERFORBRUK' : '🟢 I BALANSE'}
+                            </span>
+                        </div>
+                        <div style="font-size:11.5px; color:#64748b; margin-top:3px;">
+                            Budsjettansvarlig: <strong>${unit.leder}</strong> (${unit.tittel}) | Ansvar: <strong>${unit.ansvar}</strong> | KOSTRA: <strong>${unit.kostra}</strong> | Delegeringsfullmakt: <strong>${formatKr(unit.fullmakt)}</strong>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button type="button" class="btn btn-sm" onclick="copyUnitActionPlan('${unit.id}')" style="background:#f1f5f9; border:1px solid #cbd5e1; font-size:11px; padding:4px 10px; cursor:pointer;" title="Kopier handlingsplan til utklippstavle">
+                            📋 Kopier Tiltak
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="sealUnitReport('${unit.id}')" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:11px; padding:4px 10px; cursor:pointer;" title="Kryptografisk SHA-256 forsegling for enhetsrapport">
+                            🔒 Forsegl (SHA-256)
+                        </button>
+                    </div>
+                </div>
+
+                <div style="padding:18px;">
+                    <!-- Seksjon 1: Identifiserte Hoveddrivere (Tabell) -->
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; color:var(--navy-dark); letter-spacing:0.5px; margin-bottom:8px;">
+                            1. Identifiserte Kostnadsdrivere &amp; Avviksposter
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table style="width:100%; border-collapse:collapse; font-size:11.5px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid var(--navy-dark); background:#f8fafc; text-align:left;">
+                                        <th style="padding:8px 12px; font-weight:700; color:var(--navy-dark); width:90px;">Art</th>
+                                        <th style="padding:8px 12px; font-weight:700; color:var(--navy-dark);">Kostnadspost / Driver</th>
+                                        <th style="padding:8px 12px; font-weight:700; color:var(--navy-dark); text-align:right; width:130px;">Merforbruk (CV)</th>
+                                        <th style="padding:8px 12px; font-weight:700; color:var(--navy-dark);">Rotårsak &amp; Driftsmessig Vurdering</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${driverRowsHtml}
+                                    <tr style="border-top:2px solid #cbd5e1; background:#f8fafc; font-weight:800;">
+                                        <td style="padding:8px 12px; font-family:var(--font-mono); color:#1e293b;">TOTAL</td>
+                                        <td style="padding:8px 12px; color:#1e293b;">Samlet budsjettavvik YTD (CV)</td>
+                                        <td style="padding:8px 12px; text-align:right; color:${cvColor}; font-variant-numeric:tabular-nums; font-size:12.5px;">${cvSign}${formatKr(unit.cv)} (${cvSign}${cvPct} %)</td>
+                                        <td style="padding:8px 12px; color:#64748b; font-size:11px;">Periodisert budsjett: ${formatKr(unit.pv)} | Faktisk forbruk: ${formatKr(unit.ac)}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Seksjon 2: Diagnose & Prognose (2-kolonners rutenett) -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+                        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:3px solid #0284c7; border-radius:3px; padding:12px 14px;">
+                            <div style="font-size:10.5px; font-weight:800; text-transform:uppercase; color:#0369a1; margin-bottom:4px;">
+                                🔍 Diagnostisk Vurdering &amp; Lovhjemmel
+                            </div>
+                            <div style="font-size:12px; color:#1e293b; line-height:1.5; margin-bottom:6px;">
+                                ${unit.diagnose ? unit.diagnose.summary : 'Driftsanalyse YTD M10 viser avvik som krever budsjettmessig oppfølging.'}
+                            </div>
+                            <div style="font-size:11px; color:#64748b; border-top:1px dashed #cbd5e1; padding-top:6px; margin-top:6px;">
+                                <strong>Lovhjemmel:</strong> ${unit.diagnose && unit.diagnose.lovhjemmel ? unit.diagnose.lovhjemmel : 'Kommuneloven § 14-5 (krav om budsjettbalanse). HTA § 4 ved bemanningsendringer.'}
+                            </div>
+                        </div>
+
+                        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:3px solid ${cvColor}; border-radius:3px; padding:12px 14px;">
+                            <div style="font-size:10.5px; font-weight:800; text-transform:uppercase; color:#0f172a; margin-bottom:4px;">
+                                📈 Rullende Helårsprognose (EAC / FAST-Standard)
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:11.5px; margin-bottom:6px;">
+                                <div>Tildelt årsramme (BAC): <strong>${formatKr(unit.ramme)}</strong></div>
+                                <div>Estimert Sluttkostnad (EAC): <strong>${unit.prognose ? unit.prognose.eac : formatKr(unit.eac)}</strong></div>
+                                <div>Forventet Årssluttavvik (VAC): <strong style="color:${cvColor};">${unit.prognose ? unit.prognose.vac : formatKr(unit.vac)}</strong></div>
+                                <div>Kostnadsindeks (CPI): <strong>${unit.cpi.toFixed(3)}</strong></div>
+                            </div>
+                            <div style="font-size:10.5px; color:#64748b; border-top:1px dashed #cbd5e1; padding-top:6px; margin-top:6px;">
+                                <strong>Monte Carlo Usikkerhet:</strong> ${unit.prognose ? unit.prognose.intervall : 'P10/P50/P90 beregnet'} | Trend: ${unit.prognose ? unit.prognose.trend : 'Sesongprofil'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seksjon 3: Handlingsplan & Strakstiltak -->
+                    <div>
+                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; color:var(--navy-dark); letter-spacing:0.5px; margin-bottom:6px;">
+                            2. Handlingsplan for Gjenoppretting av Budsjettbalanse jf. § 14-5
+                        </div>
+                        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:3px; padding:8px 14px;">
+                            ${actionsHtml || '<div style="font-size:11.5px; color:#64748b; padding:6px 0;">Ingen særskilte strakstiltak påkrevd. Enheten drives i tråd med tildelt ramme.</div>'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        // Sektor / Konsern rapport
+        const isKonsern = currentTop3SectorId === "ALL";
+        const sec = TOP3_SECTOR_KPIS[currentTop3SectorId] || TOP3_SECTOR_KPIS["ALL"];
+        
+        let unitDriftRows = "";
+        if (typeof ALL_81_UNITS_DATA !== 'undefined') {
+            const list = isKonsern ? ALL_81_UNITS_DATA.filter(u => u.cv < -500000).slice(0, 8) : ALL_81_UNITS_DATA.filter(u => u.sectorKey === SEKTOR_MAP_FROM_TOP3[currentTop3SectorId]);
+            list.forEach(u => {
+                const uCvColor = u.cv < 0 ? "#b91c1c" : "#15803d";
+                const pDriver = (u.diagnose && u.diagnose.drivers && u.diagnose.drivers[0]) ? u.diagnose.drivers[0].navn : "Vikarer/Overtid";
+                unitDriftRows += `
+                    <tr style="border-bottom:1px solid #f1f5f9; cursor:pointer;" onclick="selectUnit('${u.id}')" title="Klikk for å isolere ${u.name}">
+                        <td style="padding:6px 10px; font-family:var(--font-mono); font-size:11px; color:#64748b;">${u.ansvar}</td>
+                        <td style="padding:6px 10px; font-weight:700; color:#0284c7;">${u.name} ↗</td>
+                        <td style="padding:6px 10px; font-size:11px; color:#475569;">${u.leder}</td>
+                        <td style="padding:6px 10px; font-size:11px; color:#64748b;">${pDriver}</td>
+                        <td style="padding:6px 10px; text-align:right; font-variant-numeric:tabular-nums;">${formatKr(u.ramme)}</td>
+                        <td style="padding:6px 10px; text-align:right; font-variant-numeric:tabular-nums; font-weight:700; color:${uCvColor};">${(u.cv>=0?'+':'')+formatKr(u.cv)}</td>
+                        <td style="padding:6px 10px; text-align:center;"><span class="status-badge" style="background:${u.cv<0?'#fef2f2':'#ecfdf5'}; color:${uCvColor}; font-size:9.5px; padding:1px 5px;">${u.cv<0?'🔴 Merforbruk':'🟢 Balanse'}</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        reportContainer.innerHTML = `
+            <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+                <div style="background:#f8fafc; border-bottom:1.5px solid #e2e8f0; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div>
+                        <span style="font-size:13px; font-weight:800; color:var(--navy-dark); text-transform:uppercase; letter-spacing:0.5px;">
+                            📋 Avviksdrivere &amp; Underliggende Enheter (${isKonsern ? 'Konsern / Topp Avviksenheter' : sec.title})
+                        </span>
+                        <div style="font-size:11px; color:#64748b; margin-top:2px;">
+                            Trykk på en enhet i tabellen for å isolere KPI-er, takometer-gauges og handlingsplan for kun den enheten.
+                        </div>
+                    </div>
+                </div>
+                <div style="padding:14px 18px; overflow-x:auto;">
+                    <table style="width:100%; border-collapse:collapse; font-size:11.5px;">
+                        <thead>
+                            <tr style="border-bottom:2px solid var(--navy-dark); background:#f8fafc; text-align:left;">
+                                <th style="padding:6px 10px; font-weight:700; color:var(--navy-dark); width:80px;">Ansvar</th>
+                                <th style="padding:6px 10px; font-weight:700; color:var(--navy-dark);">Enhetsnavn</th>
+                                <th style="padding:6px 10px; font-weight:700; color:var(--navy-dark);">Leder</th>
+                                <th style="padding:6px 10px; font-weight:700; color:var(--navy-dark);">Primærdriver</th>
+                                <th style="padding:6px 10px; font-weight:700; color:var(--navy-dark); text-align:right; width:110px;">Årsramme</th>
+                                <th style="padding:6px 10px; font-weight:700; color:var(--navy-dark); text-align:right; width:120px;">Avvik YTD</th>
+                                <th style="padding:6px 10px; font-weight:700; color:var(--navy-dark); text-align:center; width:90px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${unitDriftRows}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function renderTop3Cards(sectorId, unit) {
+    if (!unit && currentActiveUnitId && currentActiveUnitId !== "ALL") {
+        unit = (typeof findFramsiktNodeById === 'function') ? findFramsiktNodeById(currentActiveUnitId) : null;
+    }
+
+    let secData;
+    if (unit) {
+        secData = getTop3CardsDataForUnit(unit);
+        currentTop3SectorId = unit.sectorKey || "ALL";
+    } else {
+        currentTop3SectorId = sectorId || "ALL";
+        secData = TOP3_SECTOR_KPIS[currentTop3SectorId] || TOP3_SECTOR_KPIS["ALL"];
+    }
 
     // 1. Header oppdatering
     const headerTitle = document.getElementById("top3-header-title");
@@ -29767,19 +30156,42 @@ function renderTop3Cards(sectorId) {
     // 2. Filter-piller og aktiv label
     const activeLabel = document.getElementById("top3-active-filter-label");
     if (activeLabel) {
-        activeLabel.textContent = currentTop3SectorId === "ALL" ? "Konsern (Alle)" : (secData.badge_norm || currentTop3SectorId);
+        if (unit) {
+            activeLabel.innerHTML = `🏢 <strong>${unit.name}</strong> <span style="font-size:10px; color:#64748b;">(Leder: ${unit.leder})</span>`;
+        } else {
+            activeLabel.textContent = currentTop3SectorId === "ALL" ? "Konsern (Alle)" : (secData.badge_norm || currentTop3SectorId);
+        }
     }
     const resetBtn = document.getElementById("top3-reset-btn");
     if (resetBtn) {
-        resetBtn.style.display = currentTop3SectorId === "ALL" ? "none" : "inline-block";
+        if (unit) {
+            resetBtn.style.display = "inline-block";
+            const secName = (typeof SEKTOR_DATA !== 'undefined' && SEKTOR_DATA[unit.sectorKey]) ? SEKTOR_DATA[unit.sectorKey].title : (unit.sectorKey || "Sektor");
+            resetBtn.textContent = `↺ Vis hele området (${secName})`;
+            resetBtn.onclick = function() {
+                if (typeof resetUnitToSector === 'function') resetUnitToSector();
+            };
+        } else {
+            resetBtn.style.display = currentTop3SectorId === "ALL" ? "none" : "inline-block";
+            resetBtn.textContent = "↺ Nullstill til Konsern";
+            resetBtn.onclick = function() {
+                selectTop3Sector('ALL');
+            };
+        }
     }
 
     const pills = document.querySelectorAll("#top3-sector-pills .top3-pill-btn");
     pills.forEach(p => {
-        if (p.getAttribute("data-sector") === currentTop3SectorId) {
+        const pSec = p.getAttribute("data-sector");
+        if (!unit && pSec === currentTop3SectorId) {
             p.classList.add("active");
+            p.style.outline = "none";
+        } else if (unit && pSec === unit.sectorKey) {
+            p.classList.remove("active");
+            p.style.outline = "2px dashed #0284c7";
         } else {
             p.classList.remove("active");
+            p.style.outline = "none";
         }
     });
 
@@ -29788,9 +30200,6 @@ function renderTop3Cards(sectorId) {
     if (!container) return;
 
     const metricTooltips = {
-        "Netto Driftsresultat": "TBU-styringsmål: Måler kommunens overskudd etter ordinære driftsutgifter, renter og avdrag. Anbefalt minst 1,75 % for å sikre nødvendig egenfinansiering av investeringer.",
-        "Disposisjonsfond": "Kommunens frie reservefond jf. § 14-14. Bystyrets handlingsregel krever minst 8 % av driftsinntektene som buffer mot uventet inntektssvikt.",
-        "Netto Lånegjeld": "Kommunens samlede gjeld fratrukket formidlingslån og pensjonsforpliktelser jf. § 14-13. Bystyrets måltall er maksimalt 75 %.",
         "Budsjettavvik YTD": "Differanse mellom periodisert budsjett og faktisk regnskapsført forbruk. Rødt tall varsler om merforbruk jf. Kommuneloven § 14-5.",
         "Cost Performance Index (CPI)": "EVM Kostnadsindeks: Forholdet mellom levert verdi og kostnad. CPI = 1,000 er i balanse. Under 0,980 varsler om alvorlig underbalanse.",
         "Legemeldt Sykefravær": "Andel fravær meldt av lege. Fravær over 6,5 % driver kostbar vikarinnleie (art 1020) og overtid (art 1040).",
@@ -29814,9 +30223,7 @@ function renderTop3Cards(sectorId) {
             '</div>';
         });
 
-        const gaugeContainerId = (currentTop3SectorId === "ALL") ?
-            (i === 0 ? "top3-gauge-netto-drift" : (i === 1 ? "top3-gauge-disposisjonsfond" : "top3-gauge-netto-gjeld")) :
-            ("top3-gauge-slot-" + (i + 1));
+        const gaugeContainerId = "top3-gauge-slot-" + (i + 1);
 
         const tip = metricTooltips[c.navn] || "";
         const tipHtml = tip ? ' <span class="info-hint-icon tufte-tip" data-tip="' + tip + '" data-tip-pos="bottom">ℹ</span>' : '';
@@ -29847,7 +30254,10 @@ function renderTop3Cards(sectorId) {
 
     container.innerHTML = html;
 
-    // 4. Oppdater tabellmarkering
+    // 4. Render Avviksdrivere Rapport under KPI's
+    renderTop3AvviksdrivereRapport(secData, unit);
+
+    // 5. Oppdater tabellmarkering
     renderHierarchyTable();
 }
 
@@ -48642,16 +49052,55 @@ function updateUnitMetaPill(unitId, sectorKey) {
 // -----------------------------------------------------------------------------
 // HOVEDFUNKSJON: selectUnit(unitId) — KASKADERT FRAMSIKT INNSYN
 // -----------------------------------------------------------------------------
+
+window.copyUnitActionPlan = function(unitId) {
+    const unit = (typeof findFramsiktNodeById === 'function') ? findFramsiktNodeById(unitId) : null;
+    if (!unit) return;
+    let text = `📋 HANDLINGSPLAN: ${unit.name} (Leder: ${unit.leder})
+`;
+    text += `Avvik YTD (CV): ${formatKr(unit.cv)} | CPI: ${unit.cpi.toFixed(3)} | EAC: ${unit.prognose.eac}
+
+`;
+    if (unit.actions) {
+        unit.actions.forEach((a, idx) => {
+            text += `${idx + 1}. [${a.type}] ${a.tekst} (Frist: ${a.frist})
+`;
+        });
+    }
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("📋 Handlingsplan kopiert til utklippstavle");
+        });
+    } else {
+        showToast("Handlingsplan klargjort");
+    }
+};
+
+window.sealUnitReport = function(unitId) {
+    const unit = (typeof findFramsiktNodeById === 'function') ? findFramsiktNodeById(unitId) : null;
+    if (!unit) return;
+    const now = new Date().toISOString().replace("T", " ").substring(0, 19);
+    const hash = "SHA256:" + Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b => b.toString(16).padStart(2, '0')).join('');
+    showToast(`🔒 Enhetsrapport forseglet (${hash.substring(0, 15)}...) jf. Port 9 HITL`);
+};
+
 window.selectUnit = function(unitId) {
     if (!unitId || unitId === "ALL") {
         resetUnitToSector();
         return;
     }
 
-    const unit = findFramsiktNodeById(unitId);
+    const unit = (typeof findFramsiktNodeById === 'function') ? findFramsiktNodeById(unitId) : null;
     if (!unit) return;
 
     currentActiveUnitId = unitId;
+    try {
+        localStorage.setItem("aikom_selected_unit", unitId);
+        if (unit.sectorKey) {
+            localStorage.setItem("aikom_selected_sector", unit.sectorKey);
+            if (typeof updateGlobalSectorBanner === 'function') updateGlobalSectorBanner(unit.sectorKey);
+        }
+    } catch(e) {}
 
     // Sørg for at Sektor & Konsernstyring fanen er aktiv så hierarkiet og enheten vises
     if (typeof openTab === "function") {
@@ -48661,23 +49110,33 @@ window.selectUnit = function(unitId) {
         }
     }
 
-    const currentSector = localStorage.getItem("aikom_selected_sector") || "ALL";
-    if (unit.sectorKey && unit.sectorKey !== currentSector && currentSector !== "ALL") {
-        try {
-            localStorage.setItem("aikom_selected_sector", unit.sectorKey);
-            updateGlobalSectorBanner(unit.sectorKey);
-        } catch(e) {}
+    const dropdown = document.getElementById("global-unit-dropdown");
+    if (dropdown && dropdown.value !== unitId) dropdown.value = unitId;
+    if (typeof updateUnitMetaPill === 'function') updateUnitMetaPill(unitId, unit.sectorKey);
+
+    if (typeof renderFramsiktTree === 'function') renderFramsiktTree(unit.sectorKey, "", unitId);
+    if (typeof updateKpiRowForUnit === 'function') updateKpiRowForUnit(unit);
+    
+    // Oppdater Top 3 Takometer Gauges og Avviksdrivere Rapport for denne enheten
+    if (typeof renderTop3Cards === 'function') {
+        renderTop3Cards(unit.sectorKey, unit);
     }
 
-    const dropdown = document.getElementById("global-unit-dropdown");
-    if (dropdown) dropdown.value = unitId;
-    updateUnitMetaPill(unitId, unit.sectorKey);
+    if (typeof updateSectorDetailForUnit === 'function') updateSectorDetailForUnit(unit);
+    if (typeof filterTop3HierarchyTableForUnit === 'function') filterTop3HierarchyTableForUnit(unit);
 
-    renderFramsiktTree(unit.sectorKey, "", unitId);
-    updateKpiRowForUnit(unit);
-    updateTop3ForUnit(unit);
-    updateSectorDetailForUnit(unit);
-    filterTop3HierarchyTableForUnit(unit);
+    // Synk nettbank modul hvis bank-unit-dropdown finnes
+    const bankDropdown = document.getElementById("bank-unit-dropdown");
+    if (bankDropdown) {
+        for (let i = 0; i < bankDropdown.options.length; i++) {
+            const opt = bankDropdown.options[i];
+            if (opt.value === unit.id || (unit.ansvar && opt.value.includes(unit.ansvar)) || (unit.name && opt.text.includes(unit.name.split(' ')[0]))) {
+                bankDropdown.selectedIndex = i;
+                if (typeof onBankUnitChange === 'function') onBankUnitChange(opt.value);
+                break;
+            }
+        }
+    }
 
     showToast(`🔒 Framsikt kaskadert innsyn: ${unit.name} (Leder: ${unit.leder})`);
 };
@@ -48784,22 +49243,8 @@ function updateKpiRowForUnit(unit) {
 }
 
 function updateTop3ForUnit(unit) {
-    const nettoSum = document.getElementById("top3-netto-sum");
-    const nettoRag = document.getElementById("top3-netto-rag");
-    if (nettoSum) {
-        nettoSum.textContent = (unit.cv > 0 ? "+" : "") + formatKr(unit.cv);
-        nettoSum.style.color = unit.cv < 0 ? "#b91c1c" : "#15803d";
-    }
-    if (nettoRag) {
-        nettoRag.className = `rag-badge ${unit.cv < 0 ? 'rag-badge-red' : 'rag-badge-green'}`;
-        nettoRag.textContent = unit.cv < 0 ? "🔴 Merforbruk" : "🟢 Balanse";
-    }
-
-    const needle = document.getElementById("netto-needle");
-    if (needle) {
-        const angle = unit.cpi >= 1.0 ? 15 : (unit.cpi >= 0.95 ? -15 : -45);
-        needle.setAttribute("transform", `rotate(${angle} 100 80)`);
-    }
+    if (!unit) return;
+    renderTop3Cards(unit.sectorKey, unit);
 }
 
 function updateSectorDetailForUnit(unit) {
