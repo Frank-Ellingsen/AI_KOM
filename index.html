@@ -2252,11 +2252,19 @@
             background: #f8fafc;
             border-bottom: 1px solid var(--border-light);
             overflow-x: auto;
+            scrollbar-width: thin;
+        }
+        .guide-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+        .guide-tabs::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
         }
 
         .guide-tab-btn {
-            padding: 11px 18px;
-            font-size: 12px;
+            padding: 10px 13px;
+            font-size: 11.5px;
             font-weight: 600;
             color: var(--text-secondary);
             background: transparent;
@@ -2265,6 +2273,7 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.15s;
+            flex-shrink: 0;
         }
 
         .guide-tab-btn:hover {
@@ -2320,6 +2329,74 @@
             background: #fafbfc;
             border-radius: 3px;
             font-size: 12px;
+        }
+
+        /* Ordliste & Systemmanual Styling */
+        .ordliste-search-box {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-light);
+            z-index: 10;
+        }
+        .ordliste-search-input {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 12.5px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            outline: none;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .ordliste-search-input:focus {
+            border-color: var(--navy-dark);
+            box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+        }
+        .ordliste-item-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--navy-dark);
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            transition: all 0.15s;
+        }
+        .ordliste-item-card:hover {
+            border-left-color: #0369a1;
+            background: #f8fafc;
+        }
+        .ordliste-term {
+            font-weight: 700;
+            font-size: 13.5px;
+            color: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .ordliste-category-badge {
+            font-size: 9.5px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .ordliste-def {
+            font-size: 12.5px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        .ordliste-law-ref {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         /* ==========================================================================
@@ -4785,73 +4862,6 @@
         
         <div class="hub-sidebar-scroll">
 
-            <!-- 🏛️ KONSERNSTATUS & NØKKELTALL (KRISTIANSAND KOMMUNE) -->
-            <!-- Plassert permanent øverst i venstremenyen jf. brukerkrav -->
-            <div class="sidebar-konsern-kpis-widget" id="sidebar-konsern-kpis-widget" style="background:#ffffff; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:4px; padding:10px 12px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid #f1f5f9; padding-bottom:5px;">
-                    <div>
-                        <div style="font-size:9.5px; text-transform:uppercase; font-weight:800; color:#64748b; letter-spacing:0.5px;">Bystyrets Handlingsregler</div>
-                        <div style="font-size:12px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:5px;">
-                            🏛️ Konsern Nøkkeltall
-                        </div>
-                    </div>
-                    <span class="status-badge" style="background:#ecfdf5; color:#059669; border:1px solid #10b981; font-size:9px; padding:1px 5px; font-weight:700;">🟢 I Balanse</span>
-                </div>
-
-                <div style="display:flex; flex-direction:column; gap:6px;">
-                    <!-- 1. Netto Driftsresultat -->
-                    <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:3px; padding:5px 8px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:10.5px; font-weight:700; color:#1e293b;">1. Netto Driftsresultat</span>
-                            <span class="status-badge" style="background:#ecfdf5; color:#059669; font-size:9px; padding:0 4px; font-weight:700;">🟢 1,25 %</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:2px;">
-                            <span style="font-size:10px; color:#64748b;">115 mill. kr (Mål: ≥ 1,00 %)</span>
-                            <span style="font-size:9px; color:#059669; font-weight:600;">TBU: ≥ 1,75 %</span>
-                        </div>
-                        <div style="width:100%; height:3px; background:#e2e8f0; border-radius:2px; margin-top:3px; overflow:hidden;">
-                            <div style="width:62%; height:100%; background:#10b981; border-radius:2px;"></div>
-                        </div>
-                    </div>
-
-                    <!-- 2. Disposisjonsfond -->
-                    <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:3px; padding:5px 8px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:10.5px; font-weight:700; color:#1e293b;">2. Disposisjonsfond</span>
-                            <span class="status-badge" style="background:#ecfdf5; color:#059669; font-size:9px; padding:0 4px; font-weight:700;">🟢 4,35 %</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:2px;">
-                            <span style="font-size:10px; color:#64748b;">460 mill. kr (Mål: ≥ 4,00 %)</span>
-                            <span style="font-size:9px; color:#059669; font-weight:600;">TBU: ≥ 5,00 %</span>
-                        </div>
-                        <div style="width:100%; height:3px; background:#e2e8f0; border-radius:2px; margin-top:3px; overflow:hidden;">
-                            <div style="width:87%; height:100%; background:#10b981; border-radius:2px;"></div>
-                        </div>
-                    </div>
-
-                    <!-- 3. Netto Lånegjeld -->
-                    <div style="background:#f8fafc; border:1px solid #f1f5f9; border-radius:3px; padding:5px 8px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:10.5px; font-weight:700; color:#1e293b;">3. Netto Lånegjeld</span>
-                            <span class="status-badge" style="background:#ecfdf5; color:#059669; font-size:9px; padding:0 4px; font-weight:700;">🟢 76,8 %</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:2px;">
-                            <span style="font-size:10px; color:#64748b;">8,4 mrd. kr (Tak: ≤ 78,0 %)</span>
-                            <span style="font-size:9px; color:#059669; font-weight:600;">Under lånetak</span>
-                        </div>
-                        <div style="width:100%; height:3px; background:#e2e8f0; border-radius:2px; margin-top:3px; overflow:hidden;">
-                            <div style="width:76.8%; height:100%; background:#10b981; border-radius:2px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="font-size:9px; color:#64748b; margin-top:6px; line-height:1.3; border-top:1px solid #f1f5f9; padding-top:4px;">
-                    ⚖️ Lovhjemmel: Kommuneloven §§ 14-1, 14-13 og 14-14.
-                </div>
-            </div>
-
-
-
             <!-- 0. HOVEDROLLER / PERSONAS (jf. AI_KOM_layout_og_navigasjon.md) -->
             <div class="sidebar-nav-group" style="margin-bottom: 12px;">
                 <div class="sidebar-nav-header">
@@ -4872,67 +4882,7 @@
                 </a>
             </div>
 
-            <!-- DYNAMISK OVERSIKT & TOTALER FOR VALGT VIRKSOMHETSOMRÅDE (TUFTE STANDARD) -->
-            <div class="sidebar-overview-card" id="sidebar-sector-overview">
-                <div class="sidebar-overview-header">
-                    <div class="sidebar-overview-title-wrap">
-                        <span class="sidebar-overview-icon" id="sb-ov-icon">🌐</span>
-                        <div style="min-width:0;">
-                            <div class="sidebar-overview-label">Virksomhetsområde</div>
-                            <div class="sidebar-overview-title" id="sb-ov-title">Konsern (Alle)</div>
-                        </div>
-                    </div>
-                    <span class="status-badge" id="sb-ov-status" style="font-size:9.5px; padding:2px 5px; flex-shrink:0;">🟢 Konsernstyring</span>
-                </div>
-
-                <!-- Nøkkeltall / Totaler for valgt område -->
-                <div class="sidebar-totals-grid">
-                    <div class="sidebar-total-item">
-                        <span class="sb-tot-label">Ramme (BAC)</span>
-                        <span class="sb-tot-val" id="sb-tot-bac">7,24 Mrd</span>
-                    </div>
-                    <div class="sidebar-total-item">
-                        <span class="sb-tot-label">Forbruk YTD (AC)</span>
-                        <span class="sb-tot-val" id="sb-tot-ac">4 865,9M</span>
-                    </div>
-                    <div class="sidebar-total-item">
-                        <span class="sb-tot-label">Avvik YTD (CV)</span>
-                        <span class="sb-tot-val alert" id="sb-tot-cv">-19,00M</span>
-                    </div>
-                    <div class="sidebar-total-item">
-                        <span class="sb-tot-label">CPI / EAC</span>
-                        <span class="sb-tot-val" id="sb-tot-cpi-eac">0,996 / 7,27 Mrd</span>
-                    </div>
-                </div>
-
-                <!-- MoM Kontekst (Month-over-Month) -->
-                <div class="sidebar-mom-card" id="sb-mom-card">
-                    <div class="sb-mom-header">
-                        <span>MoM Kontekst (M9 vs M8)</span>
-                        <span class="sb-mom-badge alert" id="sb-mom-badge">Δ -3,23M</span>
-                    </div>
-                    <div class="sb-mom-details" id="sb-mom-details">
-                        <!-- Dynamisk fylt via JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Linjediagram av avvik pr måned YTD (M1–M9) -->
-                <div class="sidebar-chart-box">
-                    <div class="sidebar-chart-header">
-                        <span id="sb-chart-title">Akk. merforbruk YTD</span>
-                        <div class="sidebar-chart-tabs">
-                            <button type="button" class="sb-chart-tab active" id="sb-tab-cum" onclick="setSidebarChartMode('CUM')">YTD Akk</button>
-                            <button type="button" class="sb-chart-tab" id="sb-tab-month" onclick="setSidebarChartMode('MONTH')">Mnd</button>
-                        </div>
-                    </div>
-                    <div class="sidebar-chart-svg-wrap" id="sb-chart-container" style="position: relative;">
-                        <!-- Dynamisk SVG tegnet av renderSidebarLineChart() -->
-                        <div id="sb-chart-tooltip" style="position: absolute; display: none; background: #0f172a; color: #ffffff; padding: 4px 8px; border-radius: 3px; font-size: 10px; font-family: var(--font-mono); pointer-events: none; z-index: 1000; box-shadow: 0 2px 6px rgba(0,0,0,0.3); border: 1px solid #334155; white-space: nowrap;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 1. VIRKSOMHETSOMRÅDER (SEKTORER) — KONSERN ØVERST I MENYEN -->
+            <!-- 1. VIRKSOMHETSOMRÅDER (SEKTORER) — REN NAVIGASJON -->
             <div class="sidebar-nav-group">
                 <div class="sidebar-nav-header">
                     <span>Virksomhetsområder</span>
@@ -4940,31 +4890,24 @@
                 </div>
                 <a class="sidebar-nav-item active" id="side-sec-all" onclick="selectSector('ALL')">
                     <span>🌐 Konsern (Alle)</span>
-                    <span class="badge-phase" id="side-sec-badge-all">Total -19.0M</span>
                 </a>
                 <a class="sidebar-nav-item" id="side-sec-helse" onclick="selectSector('HELSE')">
                     <span>🏥 1. Helse og mestring</span>
-                    <span class="badge-phase" id="side-sec-badge-helse" style="background:var(--alert-amber); color:#fff;">-9.85M</span>
                 </a>
                 <a class="sidebar-nav-item" id="side-sec-oppvekst" onclick="selectSector('OPPVEKST')">
                     <span>🏫 2. Oppvekst</span>
-                    <span class="badge-phase" id="side-sec-badge-oppvekst" style="background:var(--alert-red); color:#fff;">-11.87M</span>
                 </a>
                 <a class="sidebar-nav-item" id="side-sec-by" onclick="selectSector('BYUTVIKLING')">
                     <span>🏗️ 3. By- og stedsutvikling</span>
-                    <span class="badge-phase" id="side-sec-badge-byutvikling" style="background:var(--success-green-bg); color:var(--success-green);">+310k</span>
                 </a>
                 <a class="sidebar-nav-item" id="side-sec-kultur" onclick="selectSector('KULTUR')">
                     <span>🎭 4. Kultur og dialog</span>
-                    <span class="badge-phase" id="side-sec-badge-kultur">-45k</span>
                 </a>
                 <a class="sidebar-nav-item" id="side-sec-org" onclick="selectSector('ORG_TEK')">
-                    <span>💻 5. Org & teknologi</span>
-                    <span class="badge-phase" id="side-sec-badge-org_tek">-120k</span>
+                    <span>💻 5. Org &amp; teknologi</span>
                 </a>
                 <a class="sidebar-nav-item" id="side-sec-oko" onclick="selectSector('OKONOMI')">
-                    <span>⚖️ 6. Økonomi & styring</span>
-                    <span class="badge-phase" id="side-sec-badge-okonomi" style="background:var(--success-green-bg); color:var(--success-green);">+2.58M</span>
+                    <span>⚖️ 6. Økonomi &amp; styring</span>
                 </a>
             </div>
 
@@ -5045,11 +4988,19 @@
             <!-- 3. Hjelp & Kvalitetskontroll -->
             <div class="sidebar-nav-group">
                 <div class="sidebar-nav-header">Brukerstøtte & Regelverk</div>
+                <a class="sidebar-nav-item" id="side-nav-system-manual" onclick="openUserGuide('SYSTEMMANUAL')" style="cursor:pointer; font-weight:700; color:var(--navy-dark); background:#f8fafc; border-left:3px solid #0369a1;" title="Åpne komplett Systemmanual &amp; Driftshåndbok">
+                    <span>📖 Systemmanual (SOP)</span>
+                    <span class="badge-phase" style="background:#0369a1; color:#fff;">SOP</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-nav-ordliste" onclick="openUserGuide('ORDLISTE')" style="cursor:pointer; font-weight:700; color:var(--navy-dark); background:#f8fafc; border-left:3px solid #059669;" title="Åpne kommunal og finansiell ordliste (A–Å)">
+                    <span>📚 Finansiell Ordliste (A–Å)</span>
+                    <span class="badge-phase" style="background:#059669; color:#fff;">30+ begrep</span>
+                </a>
                 <a class="sidebar-nav-item" onclick="openUserGuide('START')">
-                    <span>📖 Brukerguide & Håndbok</span>
+                    <span>📘 Hurtigveileder</span>
                 </a>
                 <a href="README.md" target="_blank" class="sidebar-nav-item" title="Åpne README.md (Prosjektoversikt & Arkitektur)">
-                    <span>📘 Prosjekt README.md</span>
+                    <span>📄 Prosjekt README.md</span>
                     <span class="badge-phase" style="background:var(--navy-dark); color:#fff;">.md</span>
                 </a>
                 <a class="sidebar-nav-item" onclick="openUserGuide('NOKKELTALL')">
@@ -5115,10 +5066,26 @@
                     <span>🚀 Antigravity MS Pilot (5)</span>
                 </a>
             </div>
+
+            <!-- 5. SYSTEMARKITEKTUR & MLOPS -->
+            <div class="sidebar-nav-group" style="margin-top:10px; padding-top:8px; border-top:1px solid var(--border-light);">
+                <div class="sidebar-nav-header">
+                    <span>Systemarkitektur</span>
+                    <span style="font-size:9.5px; text-transform:none; color:#059669; font-weight:700;">Backend</span>
+                </div>
+                <a class="sidebar-nav-item" id="side-nav-mlops-backend" onclick="navigateToSection('mlops-lineage-section', '⚙️ Åpner 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)')" style="cursor:pointer;" title="Gå til 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
+                    <span style="font-weight:600; color:var(--navy-dark);">⚙️ 3.4 MLOps &amp; Backend Engine (v2.4)</span>
+                    <span class="badge-phase" style="background:#059669; color:#fff;">v2.4</span>
+                </a>
+            </div>
         </div>
 
         <!-- Sidebar footer -->
         <div class="sidebar-footer">
+            <a class="sidebar-nav-item" id="side-footer-mlops-link" onclick="navigateToSection('mlops-lineage-section', '⚙️ Åpner 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)')" style="cursor:pointer; padding:7px 10px; margin-bottom:10px; background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #059669; border-radius:4px; font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;" title="Gå til 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
+                <span>⚙️ 3.4 MLOps &amp; Backend Engine (v2.4)</span>
+                <span class="badge-phase" style="background:#059669; color:#fff; font-size:9px; font-weight:700;">v2.4</span>
+            </a>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-weight:700; color:var(--navy-dark);">Systemstatus:</span>
                 <span class="status-badge" style="font-size:9.5px;">Port 4 & 9 OK</span>
@@ -5183,23 +5150,6 @@
         </div>
     </nav>
 
-    <header class="hub-header">
-        <div class="hub-title">
-            <h1>🏛️ KRISTIANSAND KOMMUNE — CONTROL OFFICE HUB</h1>
-            <p>Økonomi og Virksomhetsstyring | Beslutningsstøtte, KOSTRA-avstemming og Stage-Gate AI-styring</p>
-        </div>
-        <div class="hub-meta">
-            <div>Bruker: <strong>Frank Ellingsen (Senior Controller)</strong></div>
-            <div style="margin-top: 4px;">
-                <span class="status-badge" id="vdb-badge-header">Vektor-DB: 3 509 biter (43 dok)</span> | 
-                <span class="status-badge">Port 4 & 9 Aktiv</span> | 
-                Motor: <strong id="active-engine-label">Gemini 3.8 Flash (0 % CPU)</strong>
-                <button class="btn btn-secondary btn-sm" onclick="navigateToSection('nettbank-kontoutskrift-seksjon', '🏦 Åpner Kommunal Nettbank & Månedlig Kontoutskrift')" style="font-size:11px; padding:2px 8px; margin-left:6px;" title="Se månedlig kontoutskrift, saldo og økonomiråd for enhetsledere">🏦 Månedlig Kontoutskrift</button>
-                <a class="btn btn-secondary btn-sm" href="reports/monthly_pdf_packets/index.html" target="_blank" style="font-size:11px; padding:2px 8px; margin-left:6px; text-decoration:none;" title="Åpne automatisk genererte månedlige PDF-rapporter og Framsikt-omdisponeringer">📄 Månedsrapporter (PDF)</a>
-                <button class="btn btn-primary btn-sm" onclick="toggleChatDrawer()" style="font-size:11px; padding:2px 8px; margin-left:6px; background:#0056b3; border-color:#0056b3;" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl+Space)">💬 Spør AI-Chatbot</button>
-            </div>
-        </div>
-    </header>
 
     <!-- ============================================================================== -->
     <!-- 👤 ROLLEBASERT HURTIGVEILEDER & INTUITIV BRUKERGUIDE                           -->
@@ -10948,9 +10898,9 @@ RETURN
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span style="font-size:20px;">📖</span>
                     <div>
-                        <div class="modal-title" id="userguide-modal-title">Brukerguide & Controller-Håndbok</div>
+                        <div class="modal-title" id="userguide-modal-title">Systemmanual, Veileder &amp; Ordliste</div>
                         <div style="font-size:11px; color:var(--text-secondary); font-weight:normal;">
-                            Kristiansand Kommune — Økonomirådgiverens Operative Veileder
+                            Kristiansand Kommune — AI Project Controller Hub | Operativ Driftshåndbok
                         </div>
                     </div>
                 </div>
@@ -10959,8 +10909,10 @@ RETURN
 
             <!-- Fanebar -->
             <div class="guide-tabs">
+                <button class="guide-tab-btn" onclick="switchGuideTab('SYSTEMMANUAL')">📘 Systemmanual (SOP)</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('ORDLISTE')">📚 Finansiell Ordliste (A–Å)</button>
                 <button class="guide-tab-btn active" onclick="switchGuideTab('MANED')">📅 Månedssyklusen (Dag 1–30)</button>
-                <button class="guide-tab-btn" onclick="switchGuideTab('NOKKELTALL')">📊 Nøkkeltallsordbok (EVM)</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('NOKKELTALL')">📊 Nøkkeltall (EVM)</button>
                 <button class="guide-tab-btn" onclick="switchGuideTab('KOSTRA')">🏛️ KOSTRA Kontoplan</button>
                 <button class="guide-tab-btn" onclick="switchGuideTab('JUSS')">⚖️ Kommuneloven & Port 9</button>
                 <button class="guide-tab-btn" onclick="switchGuideTab('TUFTE')">📈 Tufte Data-Ink Standard</button>
@@ -11493,10 +11445,12 @@ RETURN
             } else {
                 currentEngine = "Gemini 3.8 Flash (0 % CPU)";
             }
-            document.getElementById("active-engine-label").innerText = currentEngine;
+            const actEng = document.getElementById("active-engine-label");
+            if (actEng) actEng.innerText = currentEngine;
             const sbEng = document.getElementById("sb-engine-label");
             if (sbEng) sbEng.innerText = currentEngine;
-            document.getElementById("engine-btn").innerText = `🔄 Bytt Motor (${currentEngine.split(' ')[0]})`;
+            const engBtn = document.getElementById("engine-btn");
+            if (engBtn) engBtn.innerText = `🔄 Bytt Motor (${currentEngine.split(' ')[0]})`;
         }
 
         function filterEntity(entity) {
@@ -17427,6 +17381,318 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
 
         // 2. Brukerguide & Controller-Håndbok Modal
         const GUIDE_PAGES = {
+            "SYSTEMMANUAL": `
+                <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #0369a1; padding-bottom:8px; margin-bottom:16px;">
+                    <div>
+                        <h2 style="margin:0; font-size:18px; color:var(--navy-dark); font-weight:800;">📘 Systemmanual & Driftshåndbok (SOP)</h2>
+                        <div style="font-size:12px; color:var(--text-secondary);">Standard Operating Procedure for AI Project Controller Hub | Kristiansand Kommune</div>
+                    </div>
+                    <span class="badge-phase" style="background:#0369a1; color:#fff; font-size:11px; padding:4px 10px;">SOP v2.6 — Dok-ID: KK-SOP-2026-01</span>
+                </div>
+
+                <div style="background:#f0f9ff; border-left:4px solid #0369a1; padding:12px 16px; margin-bottom:16px; font-size:12.5px; color:#0c4a6e; line-height:1.5;">
+                    <strong>Formål:</strong> Sikre ensartet, lovmessig og datadrevet økonomistyring på tvers av Kristiansand kommunes 6 tjenesteområder, 81 virksomhetsenheter og 7,24 mrd NOK årsbudsjett. Denne håndboken veileder både desentraliserte enhetsledere (budsjettansvarlige) og sentrale rådgivere/controllere.
+                </div>
+
+                <h3 style="font-size:14px; color:var(--navy-dark); margin-top:16px; margin-bottom:8px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">1. Systemarkitektur & 4-Faset Rollemodell</h3>
+                <p style="font-size:12.5px; color:var(--text-primary); line-height:1.5;">Huben er bygget med en modulær 4-faset navigasjonsmodell som sikrer rollebasert fokus uten kognitiv overbelastning:</p>
+                <div class="guide-card-grid" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-bottom:16px;">
+                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                        <strong style="color:#0369a1; display:block; margin-bottom:4px; font-size:13px;">1. Min Enhet & Min Måned</strong>
+                        <span style="font-size:11.5px; color:var(--text-secondary); line-height:1.4; display:block;">
+                            100% skreddersydd for rektorer, enhetsledere og styrere. Velg din enhet i nedtrekksmenyen for å se kun dine tildelte midler, underposter (lønn, vikarer, overtid, drift, NAV), månedlig run-rate og konkrete handlingsråd.
+                        </span>
+                    </div>
+                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                        <strong style="color:#059669; display:block; margin-bottom:4px; font-size:13px;">2. Sektor & Konsern</strong>
+                        <span style="font-size:11.5px; color:var(--text-secondary); line-height:1.4; display:block;">
+                            For kommunalsjefer, direktører og politisk ledelse. Konsolidert status for 6 sektorer, Top 3 nøkkeltall (Netto drift, Disposisjonsfond, Netto lånegjeld), likviditetsbilde og makrotrender.
+                        </span>
+                    </div>
+                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                        <strong style="color:#b45309; display:block; margin-bottom:4px; font-size:13px;">3. Senior Controller Hub</strong>
+                        <span style="font-size:11.5px; color:var(--text-secondary); line-height:1.4; display:block;">
+                            For økonomirådgivere og controllere. Månedslukkingsorkestrering, avvikstriage, PII-skjerming, tiltakssimulator, kassakreditt/likviditet og automatisk saksfremlegg-generering.
+                        </span>
+                    </div>
+                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                        <strong style="color:#475569; display:block; margin-bottom:4px; font-size:13px;">4. Veiledere & Maler</strong>
+                        <span style="font-size:11.5px; color:var(--text-secondary); line-height:1.4; display:block;">
+                            35 standardiserte maler for Word, Excel FAST, PowerPoint, KOSTRA-regler, Kommunelovens krav og revisjonssjekklister.
+                        </span>
+                    </div>
+                </div>
+
+                <h3 style="font-size:14px; color:var(--navy-dark); margin-top:20px; margin-bottom:8px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">2. Operativ Arbeidsprosess: Enhetsleder / Budsjettansvarlig</h3>
+                <ol style="font-size:12.5px; color:var(--text-primary); line-height:1.6; padding-left:20px; margin-bottom:16px;">
+                    <li><strong>Månedlig innlogging:</strong> Gå til fanen <em>«Min Enhet & Min Måned»</em>.</li>
+                    <li><strong>Velg enhet:</strong> Søk eller velg din skole, sykehjem eller avdeling i nedtrekksmenyen. Dashbordet filtrerer umiddelbart bort alle andre enheter.</li>
+                    <li><strong>Kontroller disponibelt beløp:</strong> Vurder netto disponibel saldo mot gjenstående måneder i regnskapsåret.</li>
+                    <li><strong>Sjekk månedlig Run-Rate:</strong> Sammenlign faktisk forbrukstakt mot tillatt månedsramme for å avdekke merforbruk tidlig.</li>
+                    <li><strong>Følg opp underkonti:</strong>
+                        <ul style="margin-top:4px; padding-left:20px;">
+                            <li><em>Fastlønn (Art 1010):</em> Avstemmes mot faste stillinger og stillingshjemler.</li>
+                            <li><em>Vikarer (Art 1020):</em> Kritiske risikoposter — kontroller om vikarinnleie er forankret i vikarbudsjettet.</li>
+                            <li><em>Overtid (Art 1090):</em> Kartlegg helge- og ulempetillegg.</li>
+                            <li><em>Driftsutgifter (Art 1100–1290):</em> Sjekk at varekjøp og fakturaer er bokført i rett termin.</li>
+                            <li><em>NAV-refusjon (Art 1600):</em> Påse at opptjente sykepenger fra NAV er krevd inn og ført brutto jf. § 14-6.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Iverksett anbefalte tiltak:</strong> Les handlingskortet nederst på kontoutskriften og ta kontakt med tildelt økonomirådgiver ved avvik > 50 000 kr.</li>
+                </ol>
+
+                <h3 style="font-size:14px; color:var(--navy-dark); margin-top:20px; margin-bottom:8px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">3. Operativ Arbeidsprosess: Økonomirådgiver & Controller</h3>
+                <table class="tufte-table" style="width:100%; margin-bottom:16px; font-size:12px;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left; width:15%;">Fase</th>
+                            <th style="text-align:left; width:25%;">Aktivitet</th>
+                            <th style="text-align:left; width:40%;">Operativ handling i Hub</th>
+                            <th style="text-align:left; width:20%;">Regelverk / Standard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dag 1–5</strong></td>
+                            <td>Datafangst & Avstemming</td>
+                            <td>Kjør M10/M-måned staging queue. Avstem bank, mellomregninger og balansekonto 2130 (MVA). Vask PII.</td>
+                            <td>GDPR Port 4 / Visma ERP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dag 6–10</strong></td>
+                            <td>Avvikstriage</td>
+                            <td>Sorter 81 enheter. Grønne godkjennes med ett klikk. Røde avvik flagges for analyse.</td>
+                            <td>Kommuneloven § 14-5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dag 11–18</strong></td>
+                            <td>Lederdialog & Partssamarbeid</td>
+                            <td>Gjennomfør møte med enhetsleder. Utarbeid drøftingsprotokoll ved turnusendringer eller vikarstopp.</td>
+                            <td>HTA § 4 / AML § 10-12</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dag 19–24</strong></td>
+                            <td>Prognose & Simulering</td>
+                            <td>Oppdater EAC/ETC helårsprognose. Kjør Monte Carlo-simulering (P10/P50/P90) og likviditetsanalyse.</td>
+                            <td>FAST Finansiell Standard</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dag 25–30</strong></td>
+                            <td>Politisk Sak & Forsegling</td>
+                            <td>Generer saksfremlegg til Formannskap/Bystyret. Stage-Gate Port 9 godkjenning med SHA-256 forsegling.</td>
+                            <td>Kommuneloven § 13-1 & § 14-5</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="font-size:14px; color:var(--navy-dark); margin-top:20px; margin-bottom:8px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">4. Datakilder, Sikkerhet & Kvalitetssikring</h3>
+                <ul style="font-size:12.5px; color:var(--text-primary); line-height:1.6; padding-left:20px; margin-bottom:16px;">
+                    <li><strong>Lokal Golden Record (SQLite):</strong> Alle transaksjoner lagres lokalt i <code>kommune_golden_record.db</code> i stjernestruktur (Star Schema).</li>
+                    <li><strong>DuckDB Analytics Engine:</strong> Høyhastighets OLAP-spørringer for øyeblikkelig aggregering og periodisering.</li>
+                    <li><strong>Personvern & GDPR:</strong> Fødselsnumre, diagnoser og sensitive data skjermes automatisk før visning eller AI-behandling (Stage-Gate Port 4).</li>
+                    <li><strong>Human-in-the-Loop (Port 9):</strong> AI bistår med forslag og beregninger, men formelle vedtak og meldinger krever alltid godkjenning av navngitt økonomirådgiver.</li>
+                    <li><strong>SHA-256 revisjonslogg:</strong> Alle godkjente handlinger logges kryptografisk for Kommunerevisjonen jf. Eurocities Transparency Standard.</li>
+                </ul>
+            `,
+            "ORDLISTE": `
+                <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #059669; padding-bottom:8px; margin-bottom:16px;">
+                    <div>
+                        <h2 style="margin:0; font-size:18px; color:var(--navy-dark); font-weight:800;">📚 Kommunal & Finansiell Ordliste (A–Å)</h2>
+                        <div style="font-size:12px; color:var(--text-secondary);">Definisjoner, formler og lovhjemler for kommunal økonomistyring og Project Controlling</div>
+                    </div>
+                    <span class="badge-phase" style="background:#059669; color:#fff; font-size:11px; padding:4px 10px;">35 Faglige Begreper</span>
+                </div>
+
+                <div style="background:#f0fdf4; border-left:4px solid #059669; padding:10px 14px; margin-bottom:16px; font-size:12px; color:#065f46; display:flex; justify-content:space-between; align-items:center;">
+                    <span>💡 <strong>Tips:</strong> Hold musepekeren over ethvert nøkkeltall i huben for formel-tooltip, eller slå opp nedenfor for full juridisk og regnskapsmessig tolkning.</span>
+                </div>
+
+                <!-- ALFABETISK INDEKS -->
+                <div style="display:flex; flex-direction:column; gap:16px; font-size:12.5px;">
+
+                    <!-- A -->
+                    <div style="border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                        <h4 style="margin:0 0 8px 0; color:#059669; font-size:14px; font-weight:700;">A</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <strong style="color:var(--navy-dark);">AC (Actual Cost / Påløpt Kostnad):</strong>
+                                <span style="color:var(--text-secondary);">Reelt regnskapsført forbruk per rapporteringsdato, hentet direkte fra hovedboken i Visma ERP.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Art (KOSTRA Art):</strong>
+                                <span style="color:var(--text-secondary);">En 4-sifret kode fastsatt av SSB som spesifiserer hva ressursen gjelder (f.eks. art 1010 Fast lønn, 1020 Vikarer, 1090 Overtid, 1270 Kjøp av konsulenttjenester, 1600 NAV-refusjoner).</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Avvik (Variance):</strong>
+                                <span style="color:var(--text-secondary);">Differansen mellom periodisert budsjett og faktisk regnskap. I huben beregnes kostnadsavvik som <code>CV = PV - AC</code>, hvor negativt tall angir merforbruk.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Avskrivninger:</strong>
+                                <span style="color:var(--text-secondary);">Planmessig verdiforringelse av anleggsmidler over forventet levetid. Føres i driftsregnskapet mot motpost kalkulatoriske avskrivninger for å unngå at lån og avskrivninger belaster driften dobbelt.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- B -->
+                    <div style="border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                        <h4 style="margin:0 0 8px 0; color:#059669; font-size:14px; font-weight:700;">B</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <strong style="color:var(--navy-dark);">BAC (Budget at Completion):</strong>
+                                <span style="color:var(--text-secondary);">Kommunestyrets / Bystyrets opprinnelige vedtatte årsbudsjettramme for regnskapsåret.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Balansekonto 2130 (MVA-kompensasjon):</strong>
+                                <span style="color:var(--text-secondary);">Mellomværende med staten for påløpt kompensasjon for merverdiavgift. Skal avstemmes og nullstilles ved terminvise oppgjør fra Skatteetaten.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Bruttoprinsippet (Kommuneloven § 14-6):</strong>
+                                <span style="color:var(--text-secondary);">Lovkrav om at alle utgifter og inntekter skal budsjetteres og regnskapsføres brutto. Det er ulovlig å motregne vikarutgifter mot sykepengerefusjon før bokføring.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Bystyret:</strong>
+                                <span style="color:var(--text-secondary);">Kommunens øverste folkevalgte organ som vedtar årsbudsjett, økonomiplan (4 år) og bevilger rammeendringer.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- C / D -->
+                    <div style="border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                        <h4 style="margin:0 0 8px 0; color:#059669; font-size:14px; font-weight:700;">C / D</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <strong style="color:var(--navy-dark);">CPI (Cost Performance Index / Kostnadsindeks):</strong>
+                                <span style="color:var(--text-secondary);">Effektivitetsmål beregnet som <code>PV / AC</code>. CPI = 1.000 betyr forbruk i rute. CPI &lt; 0.950 trigger gul advarsel; CPI &lt; 0.900 trigger rød alarm for tiltak.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">CV (Cost Variance / Kostnadsavvik):</strong>
+                                <span style="color:var(--text-secondary);">Kronemessig differanse mellom periodisert budsjett og faktisk regnskap (<code>PV - AC</code>). Negativt fortegn = merforbruk.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Disposisjonsfond:</strong>
+                                <span style="color:var(--text-secondary);">Kommunens frie oppsparte egenkapital i driftsregnskapet. Fungerer som buffer for uforutsette hendelser. Kristiansand kommunes mål er minimum 8–10 % av brutto driftsinntekter.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Driftsregnskap (Kontoklasse 1):</strong>
+                                <span style="color:var(--text-secondary);">Regnskapet for kommunens løpende tjenesteproduksjon, administrasjon, finansutgifter og avdrag jf. Kommuneloven § 14-9.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- E / F -->
+                    <div style="border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                        <h4 style="margin:0 0 8px 0; color:#059669; font-size:14px; font-weight:700;">E / F</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <strong style="color:var(--navy-dark);">EAC (Estimate at Completion / Sluttprognose):</strong>
+                                <span style="color:var(--text-secondary);">Forventet helårsregnskap per 31.12, beregnet som <code>AC + ETC</code> (eller <code>BAC / CPI</code> ved uendrede forutsetninger).</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">ETC (Estimate to Complete / Gjenstående Forbruk):</strong>
+                                <span style="color:var(--text-secondary);">Beregnet kostnad for å drive virksomheten fra rapporteringsdato og ut regnskapsåret.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">EVM (Earned Value Management):</strong>
+                                <span style="color:var(--text-secondary);">Internasjonal standard (ISO 21508) for integrert oppfølging av budsjett, fremdrift og prognoser (PV, AC, EV, CPI, EAC).</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Framsikt EPM:</strong>
+                                <span style="color:var(--text-secondary);">Virksomhetsstyringssystemet som benyttes av Kristiansand kommune for årsbudsjett, handlingsplan og tertialrapportering.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Funksjon (KOSTRA Funksjon):</strong>
+                                <span style="color:var(--text-secondary);">En 3-sifret kode som angir tjenesteområde og formål (f.eks. 202 Grunnskole, 222 SFO, 254 Kommunale boenheter, 261 Institusjonsomsorg).</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- H / I / K -->
+                    <div style="border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                        <h4 style="margin:0 0 8px 0; color:#059669; font-size:14px; font-weight:700;">H / I / K</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <strong style="color:var(--navy-dark);">HTA § 4 (Hovedtariffavtalen):</strong>
+                                <span style="color:var(--text-secondary);">Partssamarbeidets drøftingsplikt. Arbeidsgiver plikter å drøfte bemanningsendringer, turnustiltak, vikarinnstramminger og overtidsstopp med tillitsvalgte før iverksetting.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Investeringsregnskap (Kontoklasse 2):</strong>
+                                <span style="color:var(--text-secondary);">Regnskapet for varige formuesgoder, nybygg, infrastruktur og rehabiliteringsprosjekter finansiert med lån, statstilskudd, momskompensasjon og overføringer fra drift.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Kommuneloven § 14-5 (Budsjettbalanse):</strong>
+                                <span style="color:var(--text-secondary);">Lovpålagt krav om realistisk budsjettering. Dersom det oppstår merforbruk som truer balansen, har Kommunedirektøren en handleplikt til å fremme sak for Bystyret om tilleggsbevilgning eller inndekning.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">KOSTRA (Kommune-Stat-Rapportering):</strong>
+                                <span style="color:var(--text-secondary);">Nasjonalt publiseringssystem for nøkkeltall om kommunal tjenesteproduksjon, ressursbruk og prioriteringer, drevet av Statistisk sentralbyrå (SSB).</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Kassakreditt:</strong>
+                                <span style="color:var(--text-secondary);">Løpende trekkrettighet i banken (Kristiansand har 150 mill. kr) for å sikre betalingsevne ved sesongmessige svingninger mellom skatteinngang og utbetalinger.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- L / M / N -->
+                    <div style="border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+                        <h4 style="margin:0 0 8px 0; color:#059669; font-size:14px; font-weight:700;">L / M / N</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <strong style="color:var(--navy-dark);">Likviditet:</strong>
+                                <span style="color:var(--text-secondary);">Tilgjengelige betalingsmidler (bankinnskudd og ubrukte kredittrammer) for å innfri kortsiktige forpliktelser som lønn, skattetrekk og leverandørfakturaer ved forfall.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Merforbruk:</strong>
+                                <span style="color:var(--text-secondary);">Negativt budsjettavvik der faktiske utgifter overstiger tildelt budsjettramme (motsats til mindreforbruk).</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Netto driftsresultat:</strong>
+                                <span style="color:var(--text-secondary);">Kommunesektorens viktigste styringsindikator: Brutto driftsinntekter minus driftsutgifter, renter og netto avdrag. TBU anbefaler minst 1,75 % over tid for å sikre fondsoppbygging.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Netto lånegjeld:</strong>
+                                <span style="color:var(--text-secondary);">Samlet langsiktig gjeld fratrukket ubundne finansielle eiendeler og utlån, målt i prosent av brutto driftsinntekter. Gir et bilde av rentefølsomhet.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- P / R / S / T -->
+                    <div>
+                        <h4 style="margin:0 0 8px 0; color:#059669; font-size:14px; font-weight:700;">P / R / S / T</h4>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <strong style="color:var(--navy-dark);">Periodisering:</strong>
+                                <span style="color:var(--text-secondary);">Fordeling av inntekter og kostnader til måneden de faktisk ble opptjent eller pådratt, uavhengig av når fakturaen betales.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Port 9 (Stage-Gate Port 9):</strong>
+                                <span style="color:var(--text-secondary);">Menneskelig kontrollport (HITL) der controller signerer AI-beregnede tiltaksforslag før formell saksbehandling jf. EU AI Act Art. 14.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">PV (Planned Value / Planlagt Verdi):</strong>
+                                <span style="color:var(--text-secondary);">Akkumulert periodisert budsjett fram til rapporteringsmåneden.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Run-Rate:</strong>
+                                <span style="color:var(--text-secondary);">Gjennomsnittlig månedlig forbrukshastighet (<code>AC / antall måneder</code>). Brukes til å vurdere om gjenstående budsjett er tilstrekkelig for resten av året.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Selvkost:</strong>
+                                <span style="color:var(--text-secondary);">Prinsipp om at kommunale gebyrer (vann, avløp, renovasjon, feiing, plan- og byggesak) skal dekke de faktiske kostnadene over en 4-årsperiode, uten profitt jf. Selvkostforskriften.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">Tufte Data-Ink Ratio:</strong>
+                                <span style="color:var(--text-secondary);">Edward Tuftes designfilosofi der visualiseringer minimerer grafisk pynt, unødvendige rutenett og skygger, for å maksimere oppmerksomheten på de faktiske dataene.</span>
+                            </div>
+                            <div>
+                                <strong style="color:var(--navy-dark);">VAC (Variance at Completion / Sluttavvik):</strong>
+                                <span style="color:var(--text-secondary);">Forskjellen mellom opprinnelig årsbudsjett og sluttprognose (<code>BAC - EAC</code>). Negativ VAC betyr forventet overskridelse ved årsslutt.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            `,
             "START": `
                 <h3>🏛️ Velkommen til Control Office Hub — Brukerveiledning</h3>
                 <p>Dette verktøyet er utviklet for <strong>økonomirådgivere, controllere og virksomhetsledere i Kristiansand kommune</strong>. Det kombinerer kommunal regnskapskontroll (Visma Enterprise ERP), budsjett- og rammestyring (Framsikt EPM) og kildeforankret AI-beslutningsstøtte (Glass-Box RAG).</p>
