@@ -187,9 +187,12 @@ Eksempler på bruk:
     p_loop.add_argument("--max-attempts", type=int, default=3, help="Maksimalt antall forbedringssykluser (standard: 3)")
     p_loop.add_argument("--json", action="store_true", help="Formatér respons som JSON")
 
-    # 24. Zero-Guide UI Prototype v2 (Streamlit)
-    p_uiv2 = subparsers.add_parser("ui-v2", help="Start Null-Manual Control Hub v2 (Streamlit UI med Triage, Evaluator og Golden Store)")
-    p_uiv2.add_argument("--port", type=int, default=8501, help="Portnummer for Streamlit (standard: 8501)")
+    # 25. Framsikt Omdisponering & Kaskadert/Eskalert Samsvar
+    p_fram = subparsers.add_parser("framsikt", help="Framsikt EPM omdisponering, tiltaksposteringer og kaskadert/eskalert nivåsamvar")
+    p_fram.add_argument("--sector", default="HELSE", help="Sektorkode (HELSE, OPPVEKST, BYUTVIKLING, KULTUR, ORG_TEK, KONSERN, ALL)")
+    p_fram.add_argument("--month", default="M10", help="Periode (f.eks. M10)")
+    p_fram.add_argument("--export-csv", action="store_true", help="Eksporter Framsikt batch CSV-fil")
+    p_fram.add_argument("--json", action="store_true", help="Formatér respons som JSON")
 
     args, unknown = parser.parse_known_args()
 
@@ -373,6 +376,13 @@ Eksempler på bruk:
         if args.json:
             cmd_args.append("--json")
         run_command("loop_engine.py", cmd_args + unknown)
+    elif args.command == "framsikt":
+        cmd_args = ["--sector", args.sector, "--month", args.month]
+        if args.export_csv:
+            cmd_args.append("--export-csv")
+        if args.json:
+            cmd_args.append("--json")
+        run_command("framsikt_omdisponering_engine.py", cmd_args + unknown)
     elif args.command == "ui-v2":
         ui_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "zero_guide_ui_prototype_v2.py")
         cmd = [sys.executable, "-m", "streamlit", "run", ui_path, "--server.port", str(args.port)] + unknown

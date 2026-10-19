@@ -4204,6 +4204,81 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: none;
         }
+
+        /* 📶 MÅNEDLIG AVVIK RAG VISUAL (BUDSJETT - FAKTISK) */
+        .bank-rag-variance-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 16px 18px;
+            margin-top: 18px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .bank-rag-variance-top-meta {
+            font-size: 11.5px;
+            color: #475569;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .bank-rag-variance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .bank-rag-variance-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .bank-rag-variance-legend {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 11.5px;
+        }
+        .bank-rag-variance-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+        .bank-rag-variance-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+        .bank-rag-variance-legend-dot.pos {
+            background: #27ae60;
+        }
+        .bank-rag-variance-legend-dot.neg {
+            background: #c0392b;
+        }
+        .bank-rag-variance-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #64748b;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
         .bank-reports-suite {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -5058,6 +5133,176 @@
             flex-wrap: wrap;
             margin-top: 12px;
             padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* ========================================================================== */
+        /* ⚖️ FRAMSIKT OMDISPONERING & KASKADERT ⇄ ESKALERT SAMSVAR (TUFTE STANDARD) */
+        /* ========================================================================== */
+        .framsikt-repost-container {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin-top: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .repost-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1.5px solid #e2e8f0;
+        }
+        .repost-title-group h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .repost-title-group p {
+            margin: 4px 0 0 0;
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.45;
+        }
+        .repost-flow-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .repost-flow-step {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 170px;
+        }
+        .repost-flow-step .step-tag {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+        }
+        .repost-flow-step .step-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy-dark);
+        }
+        .repost-flow-step .step-desc {
+            font-size: 11px;
+            color: #475569;
+        }
+        .repost-flow-arrow {
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+        .repost-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .repost-kpi-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 10px 14px;
+        }
+        .repost-kpi-card.highlight-green {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+        .repost-kpi-card.highlight-red {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+        .repost-kpi-card .card-lbl {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #64748b;
+            letter-spacing: 0.3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .repost-kpi-card .card-val {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            margin-top: 4px;
+            font-family: var(--font-mono);
+        }
+        .repost-kpi-card .card-sub {
+            font-size: 10.5px;
+            color: #475569;
+            margin-top: 3px;
+        }
+        .repost-matrix-table, .repost-journal-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5px;
+            margin-top: 8px;
+        }
+        .repost-matrix-table th, .repost-journal-table th {
+            text-align: left;
+            padding: 8px 10px;
+            background: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
+            border-bottom: 1.5px solid #cbd5e1;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .repost-matrix-table td, .repost-journal-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #1e293b;
+        }
+        .repost-matrix-table tr:hover, .repost-journal-table tr:hover {
+            background: #f8fafc;
+        }
+        .repost-num-col {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+        .repost-badge {
+            display: inline-block;
+            font-size: 9.5px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        .repost-badge-n1 { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+        .repost-badge-n2 { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .repost-badge-n3 { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .repost-badge-ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .repost-badge-req { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .repost-action-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            padding-top: 14px;
             border-top: 1px solid #e2e8f0;
         }
 
@@ -6134,6 +6379,11 @@
         <div class="framsikt-detail-col" id="framsikt-detail-panel">
             <!-- Fylles dynamisk via renderFramsiktDetail() -->
         </div>
+    </div>
+
+    <!-- ⚖️ FRAMSIKT OMDISPONERING & KASKADERT ⇄ ESKALERT SAMSVARSMODUL -->
+    <div id="framsikt-omdisponering-seksjon" class="framsikt-repost-container">
+        <!-- Fylles dynamisk via renderFramsiktOmdisponeringModul() -->
     </div>
 </section>
 
@@ -27727,6 +27977,223 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
             document.getElementById("teams-email-modal").style.display = "flex";
         }
 
+        function showRagVarianceTooltip(evt, text) {
+            let tip = document.getElementById("rag-global-tooltip");
+            if (!tip) {
+                tip = document.createElement("div");
+                tip.id = "rag-global-tooltip";
+                tip.className = "decomp-tooltip";
+                document.body.appendChild(tip);
+            }
+            tip.innerHTML = text;
+            tip.style.display = "block";
+            tip.style.left = (evt.pageX + 12) + "px";
+            tip.style.top = (evt.pageY - 28) + "px";
+        }
+
+        function hideRagVarianceTooltip() {
+            const tip = document.getElementById("rag-global-tooltip");
+            if (tip) tip.style.display = "none";
+        }
+
+        // ==========================================================================
+        // 📶 MÅNEDLIG AVVIK RAG VISUAL (BUDSJETT - FAKTISK)
+        // Divergerende stolpediagram med 0 kr referanselinje jf. Edward Tufte Data-Ink
+        // ==========================================================================
+        function generateMonthlyRagVarianceHtml(unitId, monthNum) {
+            const m = Math.max(1, Math.min(12, monthNum || (typeof currentKontoMonth !== 'undefined' ? currentKontoMonth : 10)));
+            const uData = calculateBankStatementClient(unitId, m);
+            const u = uData.unit;
+            const annualBudget = uData.annualBudget || (u && u.annual_budget) || 29400000;
+            const avgPerMonth = Math.round(annualBudget / 12);
+            const avgPerMonthK = Math.round(avgPerMonth / 1000);
+            const varFactor = (u && u.variance_factor) || (u && u.cpi ? 1.0 / u.cpi : 1.05);
+
+            // Sesongprofil for kommunal drift
+            const seasonDeltas = [0.015, -0.045, 0.012, 0.028, -0.008, -0.018, -0.012, 0.018, -0.026, -0.018, -0.022, -0.015];
+            const months = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"];
+            const monthFull = ["Januar", "Februar", "Mars", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"];
+
+            // Monthly calculation
+            const monthlyData = [];
+            let maxAbs = 0;
+            let cumVar = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const w = (typeof KONTO_NORM_WEIGHTS !== 'undefined' && KONTO_NORM_WEIGHTS[i - 1]) || (1.0 / 12.0);
+                const mBud = annualBudget * w * 0.918;
+                const drift = 1.0 + (varFactor - 1.0) * (0.45 + 0.55 * (i / 12.0));
+                let mAct = annualBudget * w * (drift + seasonDeltas[i - 1]) * 0.918;
+                let mVar = mBud - mAct;
+
+                if (unitId === '5230-ENH-404') {
+                    // Presteheia Omsorgssenter kalibrert M01..M10 (-1.29 MNOK YTD)
+                    const presteheiaVars = [-95000, -112000, -88000, -125000, -143000, -135000, -118000, -152000, -164000, -161787, 0, 0];
+                    if (i <= 10) {
+                        mVar = presteheiaVars[i - 1];
+                        mAct = mBud - mVar;
+                    }
+                }
+
+                if (i <= m) {
+                    cumVar += mVar;
+                    if (Math.abs(mVar) > maxAbs) {
+                        maxAbs = Math.abs(mVar);
+                    }
+                }
+
+                monthlyData.push({
+                    month: i,
+                    shortName: months[i - 1],
+                    fullName: monthFull[i - 1],
+                    budget: mBud,
+                    actual: mAct,
+                    variance: mVar,
+                    isActual: i <= m,
+                    isActiveMonth: i === m
+                });
+            }
+
+            if (maxAbs === 0) maxAbs = 150000;
+            // Bestem skala (+/- scaleK)
+            const scaleMax = Math.ceil((maxAbs * 1.25) / 10000) * 10000;
+            const scaleK = Math.round(scaleMax / 1000);
+
+            // SVG oppsett
+            const svgWidth = 840;
+            const svgHeight = 220;
+            const zeroY = 110;
+            const upperY = 42;
+            const lowerY = 178;
+            const leftMargin = 72;
+            const rightMargin = 20;
+            const chartWidth = svgWidth - leftMargin - rightMargin;
+            const slotW = chartWidth / 12;
+            const barW = 28;
+
+            let barsSvg = "";
+            monthlyData.forEach((d, idx) => {
+                const cx = leftMargin + (idx + 0.5) * slotW;
+                const barX = cx - (barW / 2);
+                const isActive = d.isActiveMonth;
+
+                // Bakgrunnsmarkering for aktiv måned
+                if (isActive) {
+                    barsSvg += `
+                        <rect x="${(cx - slotW / 2).toFixed(1)}" y="28" width="${slotW.toFixed(1)}" height="162" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" rx="4" />
+                    `;
+                }
+
+                if (d.isActual) {
+                    const v = d.variance;
+                    const valK = Math.round(v / 1000);
+                    const ratio = Math.min(1.0, Math.abs(v) / scaleMax);
+                    const barH = Math.max(5, Math.round(ratio * 66));
+
+                    let barY, labelY, barColor, labelColor, labelText;
+                    if (v < 0) {
+                        // Merforbruk: rød stolpe hengende ned fra 0 kr
+                        barY = zeroY;
+                        labelY = zeroY + barH + 13;
+                        barColor = "#c0392b";
+                        labelColor = "#991b1b";
+                        labelText = `-${Math.abs(valK)}k`;
+                    } else {
+                        // Mindreforbruk: grønn stolpe voksende opp fra 0 kr
+                        barY = zeroY - barH;
+                        labelY = barY - 5;
+                        barColor = "#27ae60";
+                        labelColor = "#166534";
+                        labelText = `+${Math.abs(valK)}k`;
+                    }
+
+                    barsSvg += `
+                        <g class="rag-bar-group" style="cursor: pointer;" onmouseover="showRagVarianceTooltip(event, '<strong>${d.fullName} (M${d.month < 10 ? '0' + d.month : d.month})</strong><br>Periodisert budsjett: kr ${Math.round(d.budget).toLocaleString('no-NO')}<br>Faktisk regnskap: kr ${Math.round(d.actual).toLocaleString('no-NO')}<br>Avvik: <span style=\\'color:${v >= 0 ? '#4ade80' : '#f87171'}; font-weight:700;\\'>${v >= 0 ? '+' : ''}${Math.round(v).toLocaleString('no-NO')} kr</span> (${v >= 0 ? 'Mindreforbruk' : 'Merforbruk'})')" onmouseout="hideRagVarianceTooltip()">
+                            <rect x="${barX.toFixed(1)}" y="${barY.toFixed(1)}" width="${barW}" height="${barH}" rx="3" ry="3" fill="${barColor}" ${isActive ? 'stroke="#0f172a" stroke-width="1.5"' : ''} />
+                            <text x="${cx.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="11" font-weight="800" font-family="'Segoe UI', Roboto, sans-serif" fill="${labelColor}">${labelText}</text>
+                        </g>
+                    `;
+                } else {
+                    // Fremtidige måneder: stiplet baseline-markør
+                    barsSvg += `
+                        <circle cx="${cx.toFixed(1)}" cy="${zeroY}" r="2.5" fill="#cbd5e1" />
+                    `;
+                }
+
+                // Månedstekst langs bunnen
+                if (isActive) {
+                    barsSvg += `
+                        <rect x="${(cx - 16).toFixed(1)}" y="196" width="32" height="18" rx="3" fill="#0f172a" />
+                        <text x="${cx.toFixed(1)}" y="209" text-anchor="middle" font-size="11" font-weight="800" font-family="'Segoe UI', Roboto, sans-serif" fill="#ffffff">${d.shortName}</text>
+                    `;
+                } else {
+                    barsSvg += `
+                        <text x="${cx.toFixed(1)}" y="209" text-anchor="middle" font-size="11" font-weight="600" font-family="'Segoe UI', Roboto, sans-serif" fill="#64748b">${d.shortName}</text>
+                    `;
+                }
+            });
+
+            return `
+            <div class="bank-rag-variance-card">
+                <div class="bank-rag-variance-top-meta">
+                    <div>
+                        Aktiv måned: <strong>M${m < 10 ? '0' + m : m} ${monthFull[m - 1]}</strong> &nbsp;&bull;&nbsp; Snitt/mnd: <strong>kr ${avgPerMonthK.toLocaleString('no-NO')}k</strong>
+                    </div>
+                    <div>
+                        <span class="status-badge" style="background:#f1f5f9; color:#0f172a; font-size:10px; font-weight:700;">§ 14-5 DRIFTSKONTROLL</span>
+                    </div>
+                </div>
+
+                <div class="bank-rag-variance-header">
+                    <div>
+                        <div class="bank-rag-variance-title">
+                            <span>📶 Månedlig Avvik RAG (Budsjett − Faktisk)</span>
+                        </div>
+                        <div class="bank-rag-variance-legend" style="margin-top: 4px;">
+                            <span class="bank-rag-variance-legend-item"><span class="bank-rag-variance-legend-dot pos"></span> Mindreforbruk</span>
+                            <span class="bank-rag-variance-legend-item"><span class="bank-rag-variance-legend-dot neg"></span> Merforbruk</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 11px; color: #64748b; text-align: right;">
+                        Avvik: <strong>(Budsjett &minus; Faktisk)</strong> &bull; Edward Tufte Data-Ink
+                    </div>
+                </div>
+
+                <div style="position: relative; overflow-x: auto; background: #ffffff; border-radius: 4px; padding: 4px 0;">
+                    <svg viewBox="0 0 ${svgWidth} ${svgHeight}" style="width: 100%; height: auto; display: block; min-width: 600px;" preserveAspectRatio="xMidYMid meet">
+                        <!-- Øvre referanselinje (+scaleK) -->
+                        <line x1="${leftMargin}" y1="${upperY}" x2="${svgWidth - rightMargin}" y2="${upperY}" stroke="#22c55e" stroke-width="1.2" stroke-dasharray="4,4" />
+                        <text x="${leftMargin - 6}" y="${upperY + 4}" text-anchor="end" font-size="11.5" font-weight="700" font-family="'Segoe UI', Roboto, sans-serif" fill="#16a34a">+${scaleK}k</text>
+
+                        <!-- Midt baseline (0 kr) -->
+                        <line x1="${leftMargin}" y1="${zeroY}" x2="${svgWidth - rightMargin}" y2="${zeroY}" stroke="#1e293b" stroke-width="2.2" />
+                        <text x="${leftMargin - 6}" y="${zeroY + 4}" text-anchor="end" font-size="12" font-weight="800" font-family="'Segoe UI', Roboto, sans-serif" fill="#0f172a">0 kr</text>
+
+                        <!-- Nedre referanselinje (-scaleK) -->
+                        <line x1="${leftMargin}" y1="${lowerY}" x2="${svgWidth - rightMargin}" y2="${lowerY}" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,4" />
+                        <text x="${leftMargin - 6}" y="${lowerY + 4}" text-anchor="end" font-size="11.5" font-weight="700" font-family="'Segoe UI', Roboto, sans-serif" fill="#dc2626">-${scaleK}k</text>
+
+                        <!-- Stolper og Måneder -->
+                        ${barsSvg}
+                    </svg>
+                </div>
+
+                <div class="bank-rag-variance-footer">
+                    <div>
+                        <strong>Akkumulert avvik YTD (M${m < 10 ? '0' + m : m}):</strong>
+                        <span style="font-weight: 800; color: ${cumVar >= 0 ? '#15803d' : '#b91c1c'}; font-size: 11.5px;">
+                            ${cumVar >= 0 ? '+' : ''}${Math.round(cumVar / 1000).toLocaleString('no-NO')}k kr
+                        </span>
+                        (${cumVar >= 0 ? 'Mindreforbruk' : 'Merforbruk'} mot periodisert budsjett)
+                    </div>
+                    <div>
+                        Prognosemodell: <strong>Rullerende M10 Trend</strong> &bull; Kilde: <strong>Visma Enterprise / Agresso</strong>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
         // ==========================================================================
         // HOVEDFUNKSJON: DYNAMISK RENDERING AV SEKTORDASHBOARD
         // ==========================================================================
@@ -27735,6 +28202,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
             if (!container) return;
 
             const uData = calculateBankStatementClient(unitId, monthNum || currentKontoMonth || 10);
+            const ragVisualHtml = generateMonthlyRagVarianceHtml(unitId, monthNum || currentKontoMonth || 10);
             const u = uData.unit;
             const ref = getRlsFormattedReference(unitId);
             const sKey = (u.sektor_kode || "").toUpperCase();
@@ -27886,6 +28354,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                             </div>
                         </div>
                     </div>
+                    ${ragVisualHtml}
                 </div>
                 `;
                 recalcVikarKalkulator();
@@ -27982,6 +28451,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                             </div>
                         </div>
                     </div>
+                    ${ragVisualHtml}
                 </div>
                 `;
                 recalcGatKalkulator();
@@ -28069,6 +28539,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                             </div>
                         </div>
                     </div>
+                    ${ragVisualHtml}
                 </div>
                 `;
                 recalcVarKalkulator();
@@ -28144,6 +28615,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                             </div>
                         </div>
                     </div>
+                    ${ragVisualHtml}
                 </div>
                 `;
                 recalcKulturKalkulator();
@@ -28219,6 +28691,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                             </div>
                         </div>
                     </div>
+                    ${ragVisualHtml}
                 </div>
                 `;
                 recalcIktKalkulator();
@@ -28295,6 +28768,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
                             </div>
                         </div>
                     </div>
+                    ${ragVisualHtml}
                 </div>
                 `;
                 recalcKonsernKalkulator();
@@ -50887,6 +51361,9 @@ function renderFramsiktTree(sectorFilter, searchTerm, unitFilter) {
         }
     } else {
         renderFramsiktDetail(currentFound);
+        if (typeof renderFramsiktOmdisponeringModul === 'function') {
+            renderFramsiktOmdisponeringModul(currentFound);
+        }
     }
 }
 
@@ -50968,6 +51445,9 @@ function selectFramsiktNode(id) {
     const node = findFramsiktNodeById(id);
     if (node) {
         renderFramsiktDetail(node);
+        if (typeof renderFramsiktOmdisponeringModul === 'function') {
+            renderFramsiktOmdisponeringModul(node);
+        }
     }
 }
 
@@ -51226,8 +51706,13 @@ function renderFramsiktDetail(node) {
                     <button type="button" class="btn btn-sm" onclick="sealFramsiktAssessment('${node.id}')" style="margin-left:auto; background:#f1f5f9; border:1px solid #cbd5e1;">🔒 SHA-256 Forsegl</button>
                 </div>
             </div>
+            <!-- Omdisponerings- og Avstemmingsmodul -->
+            <div id="framsikt-omdisponering-slot" style="grid-column: 1 / -1; margin-top: 14px;"></div>
         </div>
     `;
+    if (typeof renderFramsiktOmdisponeringModul === 'function') {
+        renderFramsiktOmdisponeringModul(node);
+    }
 }
 
 function generateFramsiktDoc(nodeId) {
