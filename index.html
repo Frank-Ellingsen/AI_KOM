@@ -5146,6 +5146,43 @@
 
 <main class="hub-main-content">
 
+    <!-- =======================================================================
+         GLOBAL ROLLEBASERT HOVEDNAVIGASJON (PERSONA-FANER)
+         jf. AI_KOM_layout_og_navigasjon.md
+         ======================================================================= -->
+    <nav class="hub-persona-nav" id="hub-persona-nav" aria-label="Hovednavigasjon etter rolle">
+        <div class="nav-tabs" role="tablist">
+            <button type="button" class="tab-button active" id="tab-btn-min-enhet" onclick="openTab('min-enhet')" role="tab" aria-selected="true" aria-controls="tab-min-enhet">
+                <span class="tab-icon">🏫</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Min Enhet &amp; Min Måned</span>
+                    <span class="tab-sub">Enhetsledere, Rektorer &amp; Avdelingsledere</span>
+                </span>
+            </button>
+            <button type="button" class="tab-button" id="tab-btn-sektor-konsern" onclick="openTab('sektor-konsern')" role="tab" aria-selected="false" aria-controls="tab-sektor-konsern">
+                <span class="tab-icon">🏛️</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Sektor &amp; Konsernstyring</span>
+                    <span class="tab-sub">Kommunalsjefer, Direktører &amp; Bystyret</span>
+                </span>
+            </button>
+            <button type="button" class="tab-button" id="tab-btn-controller-hub" onclick="openTab('controller-hub')" role="tab" aria-selected="false" aria-controls="tab-controller-hub">
+                <span class="tab-icon">📊</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Controller Hub &amp; Analyse</span>
+                    <span class="tab-sub">Økonomirådgivere, DAX &amp; Power BI</span>
+                </span>
+            </button>
+            <button type="button" class="tab-button" id="tab-btn-veiledere-maler" onclick="openTab('veiledere-maler')" role="tab" aria-selected="false" aria-controls="tab-veiledere-maler">
+                <span class="tab-icon">📚</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Veiledere &amp; Maler</span>
+                    <span class="tab-sub">Malbank, Regelverk &amp; Årshjul</span>
+                </span>
+            </button>
+        </div>
+    </nav>
+
     <header class="hub-header">
         <div class="hub-title">
             <h1>🏛️ KRISTIANSAND KOMMUNE — CONTROL OFFICE HUB</h1>
@@ -5207,45 +5244,6 @@
             <!-- Dynamisk fylt av renderPersonaGuidance() -->
         </div>
     </div>
-
-
-
-    <!-- =======================================================================
-         GLOBAL ROLLEBASERT HOVEDNAVIGASJON (PERSONA-FANER)
-         jf. AI_KOM_layout_og_navigasjon.md
-         ======================================================================= -->
-    <nav class="hub-persona-nav" id="hub-persona-nav" aria-label="Hovednavigasjon etter rolle">
-        <div class="nav-tabs" role="tablist">
-            <button type="button" class="tab-button active" id="tab-btn-min-enhet" onclick="openTab('min-enhet')" role="tab" aria-selected="true" aria-controls="tab-min-enhet">
-                <span class="tab-icon">🏫</span>
-                <span class="tab-text-wrap">
-                    <span class="tab-title">Min Enhet &amp; Min Måned</span>
-                    <span class="tab-sub">Enhetsledere, Rektorer &amp; Avdelingsledere</span>
-                </span>
-            </button>
-            <button type="button" class="tab-button" id="tab-btn-sektor-konsern" onclick="openTab('sektor-konsern')" role="tab" aria-selected="false" aria-controls="tab-sektor-konsern">
-                <span class="tab-icon">🏛️</span>
-                <span class="tab-text-wrap">
-                    <span class="tab-title">Sektor &amp; Konsernstyring</span>
-                    <span class="tab-sub">Kommunalsjefer, Direktører &amp; Bystyret</span>
-                </span>
-            </button>
-            <button type="button" class="tab-button" id="tab-btn-controller-hub" onclick="openTab('controller-hub')" role="tab" aria-selected="false" aria-controls="tab-controller-hub">
-                <span class="tab-icon">📊</span>
-                <span class="tab-text-wrap">
-                    <span class="tab-title">Controller Hub &amp; Analyse</span>
-                    <span class="tab-sub">Økonomirådgivere, DAX &amp; Power BI</span>
-                </span>
-            </button>
-            <button type="button" class="tab-button" id="tab-btn-veiledere-maler" onclick="openTab('veiledere-maler')" role="tab" aria-selected="false" aria-controls="tab-veiledere-maler">
-                <span class="tab-icon">📚</span>
-                <span class="tab-text-wrap">
-                    <span class="tab-title">Veiledere &amp; Maler</span>
-                    <span class="tab-sub">Malbank, Regelverk &amp; Årshjul</span>
-                </span>
-            </button>
-        </div>
-    </nav>
 
 
     <!-- =======================================================================
