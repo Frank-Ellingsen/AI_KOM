@@ -5,7 +5,16 @@ import json
 import sqlite3
 import difflib
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Dict, Any, List, Tuple
+import sys
+
+# Ensure root directory is on sys.path
+ROOT_DIR = Path(__file__).resolve().parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from tools.loop_engine import LoopEngine
 
 # Page configuration
 st.set_page_config(
@@ -56,8 +65,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Database Setup
-DB_PATH = "/workspace/scratch/ai_kom_feedback.db"
+# Database Setup (Cross-platform safe)
+SCRATCH_DIR = ROOT_DIR / "scratch"
+SCRATCH_DIR.mkdir(parents=True, exist_ok=True)
+DB_PATH = str(SCRATCH_DIR / "ai_kom_feedback.db")
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -75,6 +86,7 @@ def init_db():
         sha256_seal TEXT
     )
     """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_golden_sector ON golden_exemplars(sector)")
     conn.commit()
     conn.close()
 
@@ -161,40 +173,35 @@ with tab1:
         """, unsafe_allow_html=True)
 
         if st.button("⚡ Løs Avvik (Generer Saksfremlegg via Evaluator-Optimizer Løkke)", type="primary"):
+            loop_engine = LoopEngine(max_attempts=3)
+            with st.spinner("Kjører selvreparerende Evaluator-Optimizer løkke..."):
+                loop_result = loop_engine.run_loop(sector=sector_name, deficit_mnok=deficit, unit_name=unit_name)
+            st.session_state["loop_result"] = loop_result
+
+        if "loop_result" in st.session_state:
+            loop_result = st.session_state["loop_result"]
             st.markdown("### 🔄 Evaluator-Optimizer Løkke i Arbeid")
             
+            traj = loop_result.get("trajectory", [])
             # Step 1: Attempt 1
-            st.markdown("#### 1️⃣ Kjøring 1 (Generator Utkast):")
-            raw_draft_1 = f"SAKSFREMLEGG: Tiltaksplan for {sector_name}\nBakgrunn: Sektoren har et estimert merforbruk på {deficit:.2f} MNOK i M8-prognosen.\nInnstilling: Formannskapet vedtar å omdisponere midler fra Oppvekst.\nSaksbehandler konto: 1234.56.78901."
-            st.code(raw_draft_1, language="markdown")
-            
-            st.error("❌ Evaluator Avviste Kjøring 1:\n• MISSING: Kommuneloven § 14-5 (Handlingsplikt ved merforbruk)\n• MISSING: Kommuneloven § 14-6 (Bruttoprinsippet)\n• GDPR VIOLATION: Umaskert bankkontonummer oppdaget (1234.56.78901)")
+            if len(traj) >= 1:
+                st.markdown("#### 1️⃣ Kjøring 1 (Generator Utkast):")
+                draft_1 = LoopEngine().generate_draft(sector_name, deficit, attempt=1, unit_name=unit_name)
+                st.code(draft_1, language="markdown")
+                st.error("❌ Evaluator Avviste Kjøring 1:\n• " + "\n• ".join(traj[0].get("feedback", [])))
 
             # Step 2: Attempt 2 (Refined with Few-Shot)
-            st.markdown("#### 2️⃣ Kjøring 2 (Refinert med Evaluator-Tilbakemelding & Golden Exemplars):")
-            
-            exemplars = get_golden_exemplars(sector_name)
-            few_shot = ""
-            if exemplars:
-                few_shot = f"\n\n[INCORPORATED GOLDEN EXEMPLAR FROM PREVIOUS SIGN-OFF]\n{exemplars[0]['human_edited_final']}"
+            if len(traj) >= 2:
+                st.markdown("#### 2️⃣ Kjøring 2 (Refinert med Evaluator-Tilbakemelding & Golden Exemplars):")
+                
+                exemplars = get_golden_exemplars(sector_name)
+                if exemplars:
+                    with st.expander(f"💡 Tidligere godkjent gulleksempel brukt som referansekontekst (Few-Shot):"):
+                        st.caption(f"Gulleksempel for {sector_name} (Godkjent av: {exemplars[0]['approved_by']})")
+                        st.code(exemplars[0]['human_edited_final'][:400] + "...", language="markdown")
 
-            refined_draft_2 = f"""SAKSFREMLEGG: Tiltaksplan for {sector_name} (Revidert utkast v2)
-
-1. Bakgrunn og Risiko
-Sektoren {sector_name} viser et projisert merforbruk på {deficit:.2f} MNOK i 2. tertial.
-I henhold til Kommuneloven § 14-5 plikter kommunedirektøren å fremme sak om innsparing 
-eller omdisponering for å opprettholde samlet driftsbalanse.
-
-2. Finansiell Inndekning og Bruttoprinsippet
-Inndekning skjer via omdisponering fra Oppvekst (mindreforbruk) og bruk av disposisjonsfond.
-I henhold til Kommuneloven § 14-6 konteres alle inntekter og utgifter brutto.
-
-3. Forslag til Vedtak
-Formannskapet godkjenner omdisponering av {deficit:.2f} MNOK til {sector_name}.
-Kontakt: [SKJERMET_KONTO]{few_shot}"""
-
-            st.code(refined_draft_2, language="markdown")
-            st.success("✅ Evaluator Godkjente Kjøring 2! Alle juridiske kvalitetsporter og PII-regler er oppfylt.")
+                st.code(loop_result["final_draft"], language="markdown")
+                st.success("✅ Evaluator Godkjente Kjøring 2! Alle juridiske kvalitetsporter (§ 14-5, § 14-6, GDPR Port 4, Vedtaksstruktur) er oppfylt.")
 
             # Step 3: Stage-Gate Port 9 Human Sign-off
             st.markdown("---")
@@ -202,15 +209,18 @@ Kontakt: [SKJERMET_KONTO]{few_shot}"""
             
             user_final_text = st.text_area(
                 "Rediger eller tilføy bemerkninger før endelig publisering:",
-                value=refined_draft_2 + "\n\n4. Tillegg fra Controller:\nInnsparingstiltakene skal evalueres i 3. tertialrapport.",
-                height=250
+                value=loop_result["final_draft"] + "\n\n4. Tillegg fra Controller:\nInnsparingstiltakene skal evalueres i 3. tertialrapport.",
+                height=250,
+                key="memo_text_area"
             )
 
             if st.button("🔒 Signer og Publiser (Generer SHA-256 Audit Seal)"):
-                timestamp = datetime.now(timezone.utc).isoformat()
-                seal_payload = f"{timestamp}|{role}|{sector_name}|APPROVED|{hashlib.sha256(user_final_text.encode()).hexdigest()}"
-                sha_seal = hashlib.sha256(seal_payload.encode()).hexdigest()
+                now_utc = datetime.now(timezone.utc).isoformat()
+                content_hash = hashlib.sha256(user_final_text.encode("utf-8")).hexdigest()
+                seal_payload = f"{now_utc}|{role}|{sector_name}|APPROVED|{content_hash}"
+                sha_seal = hashlib.sha256(seal_payload.encode("utf-8")).hexdigest()
 
+                raw_draft_1 = LoopEngine().generate_draft(sector_name, deficit, attempt=1, unit_name=unit_name)
                 store_golden_exemplar(
                     sector=sector_name,
                     deficit_mnok=deficit,

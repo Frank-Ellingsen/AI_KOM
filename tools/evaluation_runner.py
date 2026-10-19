@@ -37,14 +37,29 @@ def main():
         "--gate", action="store_true", help="Valider og håndhev 90 %% CI/CD kvalitetsport"
     )
     parser.add_argument(
+        "--include-exemplars", action="store_true", help="Inkluder godkjente HITL gulleksempler fra SQLite"
+    )
+    parser.add_argument(
+        "--sync-exemplars", action="store_true", help="Synkroniser og berik golden_evaluation_dataset.json fra SQLite"
+    )
+    parser.add_argument(
         "--json", action="store_true", help="Skriv ut rapport som formatert JSON"
     )
 
     args = parser.parse_args()
     svc = EvaluationService()
 
+    if args.sync_exemplars:
+        synced = svc.sync_exemplars_to_golden_file()
+        if args.json:
+            print(json.dumps({"synced_exemplars": synced, "ok": True}))
+        else:
+            print(f"[*] Synkroniserte {synced} nye HITL gulleksempler inn i golden_evaluation_dataset.json.")
+        if not args.golden and not args.gate:
+            sys.exit(0)
+
     # Standard er å kjøre golden suite
-    report = svc.run_golden_suite()
+    report = svc.run_golden_suite(include_exemplars=args.include_exemplars)
 
     if args.gate:
         try:

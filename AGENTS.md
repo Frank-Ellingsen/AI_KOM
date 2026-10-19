@@ -135,7 +135,8 @@ This repository is fully configured for Antigravity native progressive disclosur
 
 * **Run Full Hub**: Launch `index.html` in browser or run `python tools/hub_api_server.py`.
 * **Run Loop Engineering (Lag 4)**: `python tools/run_tool.py loop --sector "Helse og mestring" --deficit 8.85` (Evaluator-Optimizer løkke med 4 kvalitetsporter og SHA-256 forsegling).
-* **Run Evaluation & QA (Agent 13)**: `python tools/run_tool.py eval --gate` (90 % CI/CD port).
+* **Run Zero-Guide UI Prototype v2**: `python tools/run_tool.py ui-v2` (Streamlit app med unntakstriage, Evaluator-Optimizer løkke og Golden Exemplar SQLite store).
+* **Run Evaluation & QA (Agent 13)**: `python tools/run_tool.py eval --gate` (90 % CI/CD port), `--include-exemplars` (inkluderer HITL gulleksempler fra SQLite), eller `--sync-exemplars`.
 * **Run Database & Schema (Agent 14)**: `python tools/run_tool.py db --inspect-schema` eller `--query "..."`.
 * **Run AI Engineering (Agent 15)**: `python tools/run_tool.py ai-eng --status` eller `--benchmark`.
 * **Run Cash Management**: `python tools/run_tool.py cash --forecast` eller `--compliance`.

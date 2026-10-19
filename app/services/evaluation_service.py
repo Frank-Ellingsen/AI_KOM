@@ -20,21 +20,92 @@ from app.schemas.evaluation import (
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 GOLDEN_DATASET_PATH = ROOT_DIR / "erp_data" / "golden_evaluation_dataset.json"
+FEEDBACK_DB_PATH = ROOT_DIR / "scratch" / "ai_kom_feedback.db"
 
 
 class EvaluationService:
     """Kjerneevalueringsmotor for Kommune AI Guardrails."""
 
-    def __init__(self, dataset_path: Optional[Path] = None):
+    def __init__(self, dataset_path: Optional[Path] = None, feedback_db_path: Optional[Path] = None):
         self.dataset_path = dataset_path or GOLDEN_DATASET_PATH
+        self.feedback_db_path = feedback_db_path or FEEDBACK_DB_PATH
 
-    def load_golden_dataset(self) -> List[GoldenTestCase]:
-        """Laster Golden Dataset fra JSON."""
-        if not self.dataset_path.exists():
+    def load_golden_exemplars_from_db(self, db_path: Optional[Path] = None) -> List[GoldenTestCase]:
+        """Laster godkjente Stage-Gate Port 9 gulleksempler fra SQLite feedback database."""
+        target_db = db_path or self.feedback_db_path
+        if not target_db.exists():
             return []
-        with open(self.dataset_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return [GoldenTestCase(**item) for item in data]
+
+        exemplar_cases = []
+        import sqlite3
+        conn = sqlite3.connect(str(target_db))
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='golden_exemplars'")
+            if not cursor.fetchone():
+                return []
+            cursor.execute("""
+                SELECT id, created_at, sector, deficit_mnok, human_edited_final, approved_by, sha256_seal
+                FROM golden_exemplars
+                ORDER BY id ASC
+            """)
+            rows = cursor.fetchall()
+            for r in rows:
+                exemplar_cases.append(GoldenTestCase(
+                    id=f"EXEMPLAR-{r['id']:03d}",
+                    prompt=f"Utarbeid formelt saksfremlegg og tiltaksplan for {r['sector']} med merforbruk på {r['deficit_mnok']:.2f} MNOK jf. § 14-5",
+                    category="hitl_tiltaksplan",
+                    expected_tool="loop_engine",
+                    expected_keywords=["Kommuneloven § 14-5", "Kommuneloven § 14-6", "Tiltaksplan", "Formannskapet"],
+                    ground_truth_context=r["human_edited_final"],
+                    min_faithfulness=0.90
+                ))
+        finally:
+            conn.close()
+
+        return exemplar_cases
+
+    def sync_exemplars_to_golden_file(self, db_path: Optional[Path] = None, output_path: Optional[Path] = None) -> int:
+        """Synkroniserer nye HITL gulleksempler fra SQLite inn i golden_evaluation_dataset.json."""
+        exemplars = self.load_golden_exemplars_from_db(db_path)
+        if not exemplars:
+            return 0
+
+        out_file = output_path or self.dataset_path
+        existing_data = []
+        if out_file.exists():
+            with open(out_file, "r", encoding="utf-8") as f:
+                existing_data = json.load(f)
+
+        existing_ids = {item["id"] for item in existing_data}
+        added_count = 0
+
+        for ex in exemplars:
+            if ex.id not in existing_ids:
+                existing_data.append(ex.model_dump())
+                existing_ids.add(ex.id)
+                added_count += 1
+
+        if added_count > 0:
+            with open(out_file, "w", encoding="utf-8") as f:
+                json.dump(existing_data, f, indent=2, ensure_ascii=False)
+
+        return added_count
+
+    def load_golden_dataset(self, include_exemplars: bool = False) -> List[GoldenTestCase]:
+        """Laster Golden Dataset fra JSON, med valgfri inkludering av HITL gulleksempler fra SQLite."""
+        cases = []
+        if self.dataset_path.exists():
+            with open(self.dataset_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            cases = [GoldenTestCase(**item) for item in data]
+
+        if include_exemplars:
+            exemplars = self.load_golden_exemplars_from_db()
+            cases.extend(exemplars)
+
+        return cases
 
     def evaluate_rag_retrieval(
         self, query: str, retrieved_chunks: List[str], ground_truth_text: str, k: int = 3
@@ -148,9 +219,9 @@ class EvaluationService:
             passed=passed,
         )
 
-    def run_golden_suite(self) -> EvaluationRunReport:
+    def run_golden_suite(self, include_exemplars: bool = False) -> EvaluationRunReport:
         """Kjører evaluering mot hele Golden Dataset og beregner CI/CD kvalitetsport."""
-        test_cases = self.load_golden_dataset()
+        test_cases = self.load_golden_dataset(include_exemplars=include_exemplars)
         results = []
         total_faithfulness = 0.0
         total_precision = 0.0

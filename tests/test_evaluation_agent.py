@@ -84,3 +84,60 @@ def test_ci_cd_gate_blocks_on_poor_faithfulness():
     )
     with pytest.raises(ValueError, match="CI/CD GATE BLOKKERT"):
         svc.enforce_ci_cd_gate(failing_report)
+
+
+def test_golden_exemplars_feedback_db_integration(tmp_path):
+    """Tester at godkjente Stage-Gate Port 9 gulleksempler fra SQLite beriker Golden Dataset."""
+    import sqlite3
+    db_file = tmp_path / "test_feedback.db"
+    out_json = tmp_path / "test_golden.json"
+
+    # 1. Opprett tabell og sett inn godkjent gulleksempel
+    conn = sqlite3.connect(str(db_file))
+    cursor = conn.cursor()
+    cursor.execute("""
+    CREATE TABLE golden_exemplars (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sector TEXT,
+        deficit_mnok REAL,
+        ai_draft TEXT,
+        human_edited_final TEXT,
+        diff_summary TEXT,
+        approved_by TEXT,
+        created_at TEXT,
+        sha256_seal TEXT
+    )
+    """)
+    cursor.execute("""
+    INSERT INTO golden_exemplars (sector, deficit_mnok, ai_draft, human_edited_final, diff_summary, approved_by, created_at, sha256_seal)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        "Helse og mestring",
+        8.85,
+        "Utkast 1 uten paragrafer",
+        "SAKSFREMLEGG: Tiltaksplan Helse og mestring jf. Kommuneloven § 14-5 og § 14-6. Vedtak: Formannskapet godkjenner omdisponering.",
+        "Diff summary",
+        "Frank Ellingsen (Senior Controller)",
+        "2026-10-19T14:00:00Z",
+        "sha256_test_seal_hash_123"
+    ))
+    conn.commit()
+    conn.close()
+
+    # 2. Test innlasting via EvaluationService
+    svc = EvaluationService(dataset_path=out_json, feedback_db_path=db_file)
+    exemplars = svc.load_golden_exemplars_from_db()
+    assert len(exemplars) == 1
+    assert exemplars[0].id == "EXEMPLAR-001"
+    assert "Helse og mestring" in exemplars[0].prompt
+    assert "§ 14-5" in exemplars[0].ground_truth_context
+
+    # 3. Test synkronisering til JSON fil
+    synced = svc.sync_exemplars_to_golden_file(output_path=out_json)
+    assert synced == 1
+    assert out_json.exists()
+
+    # 4. Verifiser at load_golden_dataset laster synkroniserte caser
+    loaded_cases = svc.load_golden_dataset(include_exemplars=False)
+    assert len(loaded_cases) == 1
+    assert loaded_cases[0].id == "EXEMPLAR-001"

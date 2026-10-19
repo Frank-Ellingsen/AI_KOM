@@ -126,6 +126,8 @@ Eksempler på bruk:
     p_eval = subparsers.add_parser("eval", help="Agent 13: Evaluation & QA Runner (Golden Dataset, RAG-evaluering, 90 %% CI/CD Gate)")
     p_eval.add_argument("--golden", action="store_true", help="Kjør evaluering mot Golden Dataset")
     p_eval.add_argument("--gate", action="store_true", help="Valider og håndhev 90 %% CI/CD kvalitetsport")
+    p_eval.add_argument("--include-exemplars", action="store_true", help="Inkluder godkjente HITL gulleksempler fra SQLite")
+    p_eval.add_argument("--sync-exemplars", action="store_true", help="Synkroniser og berik golden_evaluation_dataset.json fra SQLite")
     p_eval.add_argument("--json", action="store_true", help="Formatér respons som JSON")
 
     # 16. Agent 14: Database & Data Engineering Agent
@@ -184,6 +186,10 @@ Eksempler på bruk:
     p_loop.add_argument("--unit", default="5200 - Sykehjem & Helsehus", help="Spesifikk organisatorisk enhet")
     p_loop.add_argument("--max-attempts", type=int, default=3, help="Maksimalt antall forbedringssykluser (standard: 3)")
     p_loop.add_argument("--json", action="store_true", help="Formatér respons som JSON")
+
+    # 24. Zero-Guide UI Prototype v2 (Streamlit)
+    p_uiv2 = subparsers.add_parser("ui-v2", help="Start Null-Manual Control Hub v2 (Streamlit UI med Triage, Evaluator og Golden Store)")
+    p_uiv2.add_argument("--port", type=int, default=8501, help="Portnummer for Streamlit (standard: 8501)")
 
     args, unknown = parser.parse_known_args()
 
@@ -279,6 +285,10 @@ Eksempler på bruk:
             cmd_args.append("--golden")
         if args.gate:
             cmd_args.append("--gate")
+        if args.include_exemplars:
+            cmd_args.append("--include-exemplars")
+        if args.sync_exemplars:
+            cmd_args.append("--sync-exemplars")
         if args.json:
             cmd_args.append("--json")
         run_command("evaluation_runner.py", cmd_args + unknown)
@@ -363,6 +373,12 @@ Eksempler på bruk:
         if args.json:
             cmd_args.append("--json")
         run_command("loop_engine.py", cmd_args + unknown)
+    elif args.command == "ui-v2":
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "zero_guide_ui_prototype_v2.py")
+        cmd = [sys.executable, "-m", "streamlit", "run", ui_path, "--server.port", str(args.port)] + unknown
+        print(f"[*] Starter Null-Manual UI v2: {' '.join(cmd)}\n" + "-" * 60)
+        result = subprocess.run(cmd)
+        sys.exit(result.returncode)
 
 if __name__ == "__main__":
     main()
