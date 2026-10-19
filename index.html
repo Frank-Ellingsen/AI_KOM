@@ -5853,6 +5853,13 @@
                 <!-- Dynamisk fylt fra updateBankRlsIdentityPanel -->
             </div>
 
+            <!-- ============================================================================== -->
+            <!-- 📶 MÅNEDLIG AVVIK RAG (BUDSJETT − FAKTISK)                                     -->
+            <!-- Edward Tufte Data-Ink Divergerende Stolpediagram jf. Kommuneloven § 14-5       -->
+            <!-- ============================================================================== -->
+            <div id="bank-rag-variance-container" style="margin-top: 14px; margin-bottom: 14px;">
+                <!-- Fylles dynamisk fra renderMonthlyRagVarianceVisual(unitId, monthNum) -->
+            </div>
 
             <!-- ============================================================================== -->
             <!-- 🌳 3C.0 AVVIKSDEKOMPONERING & TRENDLINJE MED PROGNOSE AVVIK EOY UTEN TILTAK     -->
@@ -14483,8 +14490,11 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         };
 
         function formatNok(num) {
-            if (num === null || num === undefined || isNaN(num)) return "0 kr";
-            return Math.round(num).toLocaleString('nb-NO', { maximumFractionDigits: 0 }) + " kr";
+            if (num === null || num === undefined || isNaN(num) || num === 0) return "0 kr";
+            const isNeg = num < 0;
+            const absVal = Math.round(Math.abs(num));
+            const absStr = absVal.toLocaleString('nb-NO', { maximumFractionDigits: 0, minimumFractionDigits: 0 }).replace(/\s/g, ' ');
+            return (isNeg ? `-${absStr}` : absStr) + " kr";
         }
 
         function calculateBankStatementClient(unitId, monthNum) {
@@ -14538,12 +14548,12 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             const curDrift = 1.0 + (varFactor - 1.0) * (0.4 + 0.6 * (m / 12.0));
             const curExp = curBud * curDrift;
             const curInc = curExp * 0.082;
-            const curNet = curExp - curInc;
+            const curNet = Math.round(curExp - curInc);
 
-            const netYtdSpent = ytdActualExp - ytdActualInc;
-            const availableBalance = annualBudget - netYtdSpent;
+            const netYtdSpent = Math.round(ytdActualExp - ytdActualInc);
+            const availableBalance = Math.round(annualBudget - netYtdSpent);
             const remainingMonths = Math.max(1, 12 - m);
-            const monthlyAllowance = availableBalance / remainingMonths;
+            const monthlyAllowance = Math.round(availableBalance / remainingMonths);
 
             const burnRatio = curNet / Math.max(1, monthlyAllowance);
             const projectedYearEndBal = availableBalance - (curNet * remainingMonths);
