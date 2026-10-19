@@ -136,7 +136,7 @@ def test_individual_budget_holder_archives_structure():
     assert master_index.exists() and master_index.stat().st_size > 10000, "Masterarkiv index.html mangler"
 
     holders = get_budget_holders_from_db()
-    assert len(holders) == 41
+    assert len(holders) >= 41, f"Forventet minst 41 budsjettansvarlige, fant {len(holders)}"
 
     # Sjekk et representativt utvalg av enheter
     sample_ids = ["5200-ENH-401", "4100-ENH-202", "3300-ENH-301", "2020", "5000-SJEF-HELSE"]

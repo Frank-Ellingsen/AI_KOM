@@ -43,7 +43,7 @@ def test_office_hub_v2_and_templates_verification():
         "dax-visuals-rag-standards.md", "ai-kom-optimization-plan-v2.md",
         "ai-kom-optimization-plan.md", "user-testing-simulation-plan.md",
         "evaluator-optimizer-gemini.md", "evaluator-optimizer-ollama.md",
-        "code-reviewer-skill.md"
+        "code-reviewer-skill.md", "github-ci-cd-workflow.md"
     }
     root_mds = [f.name for f in ROOT_DIR.glob("*.md")]
     unexpected_root_mds = set(root_mds) - ALLOWED_ROOT_MDS

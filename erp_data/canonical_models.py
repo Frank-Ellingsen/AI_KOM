@@ -100,7 +100,7 @@ class AnsvarCanonical(BaseModel):
     """Dim_Ansvar: Kommunalt ansvarssted / enhet."""
     model_config = ConfigDict(frozen=True)
 
-    ansvar_kode: str = Field(..., min_length=2, max_length=20)
+    ansvar_kode: str = Field(..., min_length=2, max_length=32)
     enhet_navn: str = Field(..., min_length=2)
     sektor: str = Field(..., min_length=2)
     leder_stilling: Optional[str] = None

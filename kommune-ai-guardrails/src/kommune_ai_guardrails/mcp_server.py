@@ -89,9 +89,9 @@ def get_unit_financials(unit_id: str = "202", period: str = "Q2", account_group:
             """
             SELECT SUM(budsjett_belop) as total_budsjett
             FROM Fact_Budsjett
-            WHERE ansvar_key = ?
+            WHERE ansvar_key = ? AND (dato_key IN (SELECT DISTINCT dato_key FROM Fact_Regnskap WHERE ansvar_key = ?) OR dato_key IS NULL)
             """,
-            (ansvar_filter,)
+            (ansvar_filter, ansvar_filter)
         ).fetchone()
 
         act = float(regnskap_row["total_regnskap"] or 0.0) if regnskap_row else 0.0
