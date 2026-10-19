@@ -1,19 +1,19 @@
 # 📁 Personlig Rapportarkiv: Plan- og bygningsetaten
 **Ansvar:** `3200-DIR-PLAN` | **Leder:** Einar Jørgensen (Områdeleder Byplan & Byggesak)  
-**E-post:** einar.jorgensen@kristiansand.kommune.no | **Telefon:** +47 38 00 73 20 | **Kontorsted:** Tangen 8, 4608 Kristiansand  
-**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** 301/302 Plan og byggesak  
+**E-post:** einar.jorgensen@kristiansand.kommune.no | **Telefon:** +47 38 00 73 30 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** Funksjon 301 (Planlegging), Funksjon 312 (Byggesaksbehandling)  
 **Delegeringsfullmakt:** kr 6,000,000  
-**Sektorcontroller:** Knut Arild Vike (knut.arild.vike@kristiansand.kommune.no)  
+**Sektorcontroller:** Knut Arnesen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 95,000,000
-* **Faktisk Regnskap YTD:** kr 67,350,450 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 4,469,550
+* **Tildelt Årsbudsjett:** kr 90,000,000
+* **Faktisk Regnskap YTD:** kr 63,805,689 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 4,234,311
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 91,385,186 (Sluttavvik: kr 3,614,814)
-* **SHA-256 Revisjonsstempel:** `102ef2ef40be4bf94bcc7712183bec241c97605f20d1eee58c37fb11405f465d`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 86,549,005 (Sluttavvik: kr 3,450,995)
+* **SHA-256 Revisjonsstempel:** `f0ccff1c2ca2158dc9a376dab825a3d94a9f10d2cd7fd9b6784362b4479095a9`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.byutvikling@kristiansand.kommune.no`  
-*Returfrist:* **M+7 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

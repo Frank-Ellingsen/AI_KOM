@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Kommunalsjefens stab Org & Tek
+# 📁 Personlig Rapportarkiv: Kommunalsjefens stab Organisasjon og teknologi
 **Ansvar:** `1000-SJEF-ORGTEK` | **Leder:** Geir A. Askvik (Kommunalsjef Organisasjon og teknologi)  
-**E-post:** geir.askvik@kristiansand.kommune.no | **Telefon:** +47 38 00 75 10 | **Kontorsted:** Rådhuskvartalet, 4611 Kristiansand  
-**Sektor:** Organisasjon og teknologi | **KOSTRA-funksjon:** 120/130 IKT, digitalisering og fellestjenester  
+**E-post:** geir.askvik@kristiansand.kommune.no | **Telefon:** +47 38 00 75 10 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Organisasjon og teknologi | **KOSTRA-funksjon:** Funksjon 120, 180  
 **Delegeringsfullmakt:** kr 15,000,000  
-**Sektorcontroller:** Silje Mæland / Frank Ellingsen (okonomi.orgtek@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 340,000,000
-* **Faktisk Regnskap YTD:** kr 241,043,715 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 15,996,285
+* **Tildelt Årsbudsjett:** kr 48,000,000
+* **Faktisk Regnskap YTD:** kr 34,029,701 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 2,258,299
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 327,021,842 (Sluttavvik: kr 12,978,158)
-* **SHA-256 Revisjonsstempel:** `459c679242beb2bc34fb9bb5b0906e4d68c6d69c4ce16c34b5c0d72f0144dd9f`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 46,158,960 (Sluttavvik: kr 1,841,040)
+* **SHA-256 Revisjonsstempel:** `6bd48d38739eb7bc4f3eaad29d5c7919f4d57c9dadbee8fa9c6818592f7b0c7d`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.orgtek@kristiansand.kommune.no / Websak`  
-*Returfrist:* **M+8 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

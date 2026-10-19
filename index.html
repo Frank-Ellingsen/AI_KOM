@@ -3976,6 +3976,130 @@
             border: 1px solid #bae6fd;
         }
         /* ========================================================================== */
+        /* 3B.0 NØKKELTALL (KPI) & MÅNEDLIG STACKED COLUMN (POWER BI VISUALS)         */
+        /* Edward Tufte Data-Ink & Stacked Column Standard jf. § 14-5                  */
+        /* ========================================================================== */
+        .bank-kpi-stack-suite {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .bank-kpi-stack-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .bank-kpi-stack-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .bank-kpi-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        @media (max-width: 1200px) {
+            .bank-kpi-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .bank-kpi-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .bank-kpi-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 10px 12px;
+            position: relative;
+        }
+        .bank-kpi-card-label {
+            font-size: 10px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .bank-kpi-card-val {
+            font-size: 16.5px;
+            font-weight: 800;
+            font-family: var(--font-mono, 'Consolas', monospace);
+            color: #0f172a;
+            margin-top: 4px;
+            line-height: 1.2;
+        }
+        .bank-kpi-card-sub {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+        .stack-chart-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 4px;
+            padding: 12px 14px;
+        }
+        .stack-chart-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .stack-chart-legend {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 11px;
+            color: #475569;
+            flex-wrap: wrap;
+        }
+        .stack-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .stack-legend-swatch {
+            width: 11px;
+            height: 11px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+        .stack-chart-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .stack-col-bar {
+            cursor: pointer;
+            transition: opacity 0.15s ease, filter 0.15s ease;
+        }
+        .stack-col-bar:hover {
+            opacity: 0.82;
+            filter: brightness(1.08);
+        }
+        /* ========================================================================== */
         /* 3C.0 AVVIKSDEKOMPONERING & TRENDLINJE MED EOY PROGNOSE (POWER BI VISUALS)  */
         /* Edward Tufte Data-Ink & Decomposition Tree Standard jf. § 14-5             */
         /* ========================================================================== */
@@ -5483,6 +5607,7 @@
             <div class="bank-rls-strip" id="bank-rls-identity-panel">
                 <!-- Dynamisk fylt fra updateBankRlsIdentityPanel -->
             </div>
+
 
             <!-- ============================================================================== -->
             <!-- 🌳 3C.0 AVVIKSDEKOMPONERING & TRENDLINJE MED PROGNOSE AVVIK EOY UTEN TILTAK     -->
@@ -9495,7 +9620,7 @@ RETURN
                     <div class="doc-desc">Komplett arkitekturspesifikasjon for 3 MCP-verktøy (get_unit_financials, search_municipal_law, calculate_eoy_impact), PII-skjold og 4-punkts format.</div>
                 </div>
                 <div class="doc-actions">
-                    <a href="GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md" target="_blank" class="btn btn-sm btn-primary" style="background: #7c3aed; border-color: #7c3aed;">📖 Åpne Spec (.md)</a>
+                    <a href="spesifikasjoner/GEMINI_FLASH_MCP_CHAT_DEMO_SPEC.md" target="_blank" class="btn btn-sm btn-primary" style="background: #7c3aed; border-color: #7c3aed;">📖 Åpne Spec (.md)</a>
                     <a href="http://localhost:8501" target="_blank" class="btn btn-sm">💬 Test i Chat</a>
                 </div>
             </div>
@@ -15696,7 +15821,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             `;
 
             // =========================================================================
-            // 2. GENERER SVG FOR AVVIK - TREND MED EOY PROGNOSE & USIKKERHETSVIFTE
+            // 2. GENERER SVG FOR AVVIK - TREND (AKKUMULERT) MED EOY PROGNOSE & USIKKERHETSVIFTE
             // =========================================================================
             const svgW = 460;
             const svgH = 235;
@@ -15707,16 +15832,38 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             const plotW = svgW - padL - padR;
             const plotH = svgH - padT - padB;
 
-            // Skaleringsverdier for Y-akse: e.g. -1 500 000 til +1 000 000
-            let minY = -1500000;
-            let maxY = 1000000;
-            if (Math.abs(totVar) > 2000000) {
-                minY = Math.round(totVar * 1.5);
-                maxY = Math.round(Math.abs(minY) * 0.7);
-            } else if (Math.abs(totVar) < 400000) {
-                minY = -600000;
-                maxY = 400000;
+            // Skaleringsfaktor for akkumulerte månedstall slik at måned m treffer eksakt totVar (YTD)
+            const cumAtM = (monthlySeries[m - 1] && monthlySeries[m - 1].cumYtd) ? monthlySeries[m - 1].cumYtd : cumYtd;
+            const cumScale = (cumAtM !== 0) ? (totVar / cumAtM) : 1.0;
+
+            // EOY Akkumulert prognose uten tiltak (M10 -> M12)
+            const eoyVarianceNoTiltak = (totVar / m) * 12; // lineær årsekstrapolasjon uten tiltak
+            const m11CumVal = (totVar / m) * 11;
+            const m12CumVal = eoyVarianceNoTiltak;
+
+            // Usikkerhetsvifte P10–P90 (akkumulert spredning mot årsslutt)
+            const spread11 = Math.abs(totVar / m) * 0.85;
+            const spread12 = Math.abs(totVar / m) * 1.80;
+
+            // Finn min og maks verdi blant alle akkumulerte punkter og prognosevifte
+            const allCumVals = [0, totVar, eoyVarianceNoTiltak, m12CumVal - spread12, m12CumVal + spread12];
+            for (let i = 1; i <= Math.min(10, m); i++) {
+                allCumVals.push(Math.round(monthlySeries[i - 1].cumYtd * cumScale));
             }
+            const minV = Math.min(...allCumVals);
+            const maxV = Math.max(...allCumVals);
+
+            // Gi god visuell margin (Tufte luft rundt data)
+            let minY = minV < 0 ? minV * 1.25 : -Math.abs(maxV) * 0.35;
+            let maxY = maxV > 0 ? maxV * 1.25 : Math.abs(minV) * 0.35;
+
+            // Rund av til pene intervaller (f.eks. 500k eller 250k)
+            const rangeY = maxY - minY;
+            const roughStep = rangeY >= 3500000 ? 1000000 : (rangeY >= 1500000 ? 500000 : 250000);
+            minY = Math.floor(minY / roughStep) * roughStep;
+            maxY = Math.ceil(maxY / roughStep) * roughStep;
+            if (minY >= 0) minY = -roughStep;
+            if (maxY <= 0) maxY = roughStep;
 
             function scaleX(mIdx) { // 1..12
                 return padL + ((mIdx - 1) / 11) * plotW;
@@ -15726,23 +15873,47 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                 return padT + (1.0 - Math.min(1.0, Math.max(0.0, norm))) * plotH;
             }
 
-            const zeroY = scaleY(0);
-            const topY = scaleY(maxY);
-            const botY = scaleY(minY);
+            // Dynamiske gridlines for Y-akse
+            const gridLevels = [];
+            for (let v = minY; v <= maxY; v += roughStep) {
+                gridLevels.push(v);
+            }
+            if (!gridLevels.includes(0)) gridLevels.push(0);
+            gridLevels.sort((a, b) => b - a);
 
-            // Månedspunkter M01..M10
+            let gridSvg = "";
+            gridLevels.forEach(v => {
+                const yPos = scaleY(v);
+                const isZero = (v === 0);
+                if (isZero) {
+                    gridSvg += `
+                        <line x1="${padL}" y1="${yPos.toFixed(1)}" x2="${(svgW - padR)}" y2="${yPos.toFixed(1)}" stroke="#64748b" stroke-dasharray="3,3" stroke-width="1.3" />
+                        <text x="${padL - 8}" y="${(yPos + 3.5).toFixed(1)}" font-weight="700" fill="#334155">0</text>
+                    `;
+                } else {
+                    gridSvg += `
+                        <line x1="${padL}" y1="${yPos.toFixed(1)}" x2="${(svgW - padR)}" y2="${yPos.toFixed(1)}" stroke="#f1f5f9" stroke-width="1" />
+                        <text x="${padL - 8}" y="${(yPos + 3.5).toFixed(1)}">${fmtKr(v)}</text>
+                    `;
+                }
+            });
+
+            // Akkumulerte månedspunkter M01..M10
             const pts = [];
             for (let i = 1; i <= Math.min(10, m); i++) {
                 const item = monthlySeries[i - 1];
+                const cumVal = Math.round(item.cumYtd * cumScale);
                 pts.push({
                     x: scaleX(i),
-                    y: scaleY(item.variance),
+                    y: scaleY(cumVal),
                     month: item.monthName,
-                    val: item.variance
+                    shortMonth: item.monthShort,
+                    val: cumVal,
+                    monthNum: i
                 });
             }
 
-            // Bygg glatt spline gjennom punktene
+            // Bygg glatt spline gjennom akkumulerte punkter
             let splineD = "";
             if (pts.length > 0) {
                 splineD = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
@@ -15759,38 +15930,33 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                 }
             }
 
-            // Sirkler og fargevalg per måned (jf. referansebilde)
-            const dotColors = ["#38bdf8", "#ef4444", "#f97316", "#f97316", "#f97316", "#f472b6", "#f97316", "#f97316", "#f472b6", "#d9531e"];
+            // Sirkler og fargevalg per måned basert på akkumulert avvik
             let dotsSvg = "";
             pts.forEach((p, idx) => {
-                const col = dotColors[idx] || "#d9531e";
+                const col = (p.val < 0) ? (Math.abs(p.val) > 1000000 ? "#b91c1c" : (Math.abs(p.val) > 500000 ? "#ea580c" : "#f97316")) : "#16a34a";
                 const isAct = idx === pts.length - 1;
                 dotsSvg += `
-                    <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${isAct ? 5.5 : 4.5}" fill="${col}" stroke="#ffffff" stroke-width="1.5" class="trend-point" onmouseover="showDecompTooltip(event, '${p.month}: ${fmtKr(p.val)} kr')" onmouseout="hideDecompTooltip()" />
+                    <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${isAct ? 5.5 : 4.0}" fill="${col}" stroke="#ffffff" stroke-width="1.5" class="trend-point" onmouseover="showDecompTooltip(event, '${p.month}: Akkumulert avvik ${fmtKr(p.val)} kr')" onmouseout="hideDecompTooltip()" />
                 `;
             });
 
-            // Trendlinje (stiplet regresjon over historikk)
+            // Trendlinje (stiplet regresjon over akkumulert historikk M01..M10)
             const trendStartX = scaleX(1);
-            const trendStartY = scaleY(pts.length > 0 ? pts[0].val * 0.4 : 0);
-            const lastHist = pts[pts.length - 1] || { x: scaleX(10), y: scaleY(-120000) };
+            const trendStartY = scaleY(pts.length > 0 ? pts[0].val : 0);
+            const lastHist = pts[pts.length - 1] || { x: scaleX(10), y: scaleY(totVar), val: totVar };
             const trendEndX = lastHist.x;
             const trendEndY = lastHist.y;
 
-            // EOY Prognose uten tiltak (M10 -> M12)
-            const eoyVarianceNoTiltak = (totVar / m) * 12; // lineær årsekstrapolasjon uten tiltak
+            // EOY Prognosekoordinater (M10 -> M12)
             const eoyY = scaleY(eoyVarianceNoTiltak);
             const m11X = scaleX(11);
             const m12X = scaleX(12);
-            const m11MidY = scaleY((totVar / m) * 11);
 
             // Usikkerhetsvifte P10–P90
-            const spread11 = Math.abs(totVar) * 0.18;
-            const spread12 = Math.abs(totVar) * 0.32;
-            const p90_11_Y = scaleY(((totVar / m) * 11) + spread11);
-            const p10_11_Y = scaleY(((totVar / m) * 11) - spread11);
-            const p90_12_Y = scaleY(eoyVarianceNoTiltak + spread12);
-            const p10_12_Y = scaleY(eoyVarianceNoTiltak - spread12);
+            const p90_11_Y = scaleY(m11CumVal + spread11);
+            const p10_11_Y = scaleY(m11CumVal - spread11);
+            const p90_12_Y = scaleY(m12CumVal + spread12);
+            const p10_12_Y = scaleY(m12CumVal - spread12);
 
             const fanPath = `
                 M ${lastHist.x.toFixed(1)} ${lastHist.y.toFixed(1)}
@@ -15805,17 +15971,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                 <svg viewBox="0 0 460 235" class="decomp-svg-canvas" preserveAspectRatio="xMidYMid meet">
                     <!-- Bakgrunnsrutenett & Y-akse labels -->
                     <g font-family="'Segoe UI', sans-serif" font-size="10" fill="#64748b" text-anchor="end">
-                        <!-- Topp 1,000,000 -->
-                        <line x1="${padL}" y1="${topY.toFixed(1)}" x2="${(svgW - padR)}" y2="${topY.toFixed(1)}" stroke="#f1f5f9" stroke-width="1" />
-                        <text x="${padL - 8}" y="${(topY + 3.5).toFixed(1)}">${fmtKr(maxY)}</text>
-
-                        <!-- Null-linje (stiplet baseline) -->
-                        <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(svgW - padR)}" y2="${zeroY.toFixed(1)}" stroke="#94a3b8" stroke-dasharray="3,3" stroke-width="1.2" />
-                        <text x="${padL - 8}" y="${(zeroY + 3.5).toFixed(1)}" font-weight="700" fill="#475569">0</text>
-
-                        <!-- Bunn -1,000,000 -->
-                        <line x1="${padL}" y1="${scaleY(-1000000).toFixed(1)}" x2="${(svgW - padR)}" y2="${scaleY(-1000000).toFixed(1)}" stroke="#f1f5f9" stroke-width="1" />
-                        <text x="${padL - 8}" y="${(scaleY(-1000000) + 3.5).toFixed(1)}">${fmtKr(-1000000)}</text>
+                        ${gridSvg}
                     </g>
 
                     <!-- X-akse månedsmerker -->
@@ -15832,7 +15988,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                     <!-- Stiplet lineær trendlinje M01..M10 -->
                     <line x1="${trendStartX.toFixed(1)}" y1="${trendStartY.toFixed(1)}" x2="${trendEndX.toFixed(1)}" y2="${trendEndY.toFixed(1)}" stroke="#c2410c" stroke-dasharray="3,3" stroke-width="1.5" />
 
-                    <!-- Spline kurve M01..M10 -->
+                    <!-- Spline kurve M01..M10 (Akkumulert avvik) -->
                     <path d="${splineD}" fill="none" stroke="#e06a3b" stroke-width="2.5" />
 
                     <!-- Datapunkter for hver måned -->
@@ -15845,7 +16001,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                     <!-- Direkte EOY påskrift (Tufte-prinsipp) -->
                     <g transform="translate(${(m12X - 4).toFixed(1)}, ${(eoyY - 8).toFixed(1)})">
                         <text x="0" y="0" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="800" fill="#0f172a" text-anchor="end">EOY: ${(eoyVarianceNoTiltak / 1000000).toFixed(2).replace('.', ',')} MNOK</text>
-                        <text x="0" y="11" font-family="'Segoe UI', sans-serif" font-size="9" fill="#64748b" text-anchor="end">uten tiltak</text>
+                        <text x="0" y="11" font-family="'Segoe UI', sans-serif" font-size="9" fill="#64748b" text-anchor="end">akkumulert uten tiltak</text>
                     </g>
                 </svg>
             `;
@@ -15861,7 +16017,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                             <span class="status-badge" style="background:#fef2f2; color:#b91c1c; font-size:10px; border:1px solid #fecaca;">§ 14-5 DRIFTSKONTROLL</span>
                         </div>
                         <div style="font-size:11.5px; color:#475569; margin-top:3px;">
-                            ${u.enhet_navn || unitId} &bull; Månedsavvik dekomponert via Power BI nedbrytningstre &bull; Rullerende usikkerhetsvifte P10–P90
+                            ${u.enhet_navn || unitId} &bull; Akkumulert månedsavvik dekomponert via Power BI nedbrytningstre &bull; Rullerende usikkerhetsvifte P10–P90
                         </div>
                     </div>
                     <div style="font-size:11px; color:#64748b; text-align:right;">
@@ -15879,7 +16035,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                     <div class="trend-chart-card">
                         <div class="trend-chart-title">
                             <span>Avvik - trend</span>
-                            <span style="font-size:10.5px; color:#64748b; font-weight:normal;">M01–M12</span>
+                            <span style="font-size:10.5px; color:#64748b; font-weight:normal;">M01–M12 (akkumulert)</span>
                         </div>
                         ${trendChartSvg}
                     </div>
@@ -15901,6 +16057,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             const m = Math.max(1, Math.min(12, monthNum || currentKontoMonth || 10));
             const mStr = String(m).padStart(2, '0');
             const mName = KONTO_MONTH_NAMES[m - 1];
+            const cleanId = unitId.replace(/-/g, "_");
 
             if (unitLabel) {
                 unitLabel.innerHTML = `🔒 <strong>${ref.fullText}</strong> &bull; <span style="color:#059669; font-weight:600;">Kun poster og filer innenfor lederens påvirkningssfære</span>`;
@@ -15909,11 +16066,15 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                 periodLabel.innerHTML = `Gjeldende regnskapsperiode: <strong>${mName} 2026 (M${mStr})</strong>`;
             }
 
-            const activePdf = rls.pdf_path || `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M9_2026.pdf`;
-            const docxFile = rls.docx_path || "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx";
+            const activePdf = `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M${m}_2026.pdf`;
+            const activeHtml = `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M${m}_2026.html`;
+            const activeKonto = `reports/kontoutskrifter/KONTOUTSKRIFT_${cleanId}_M10.html`;
+            const arkivOversikt = `reports/budsjettansvarlige_arkiv/${unitId}/ARKIV_OVERSIKT.html`;
+            const docxFile = `reports/budsjettansvarlige_arkiv/${unitId}/03_Saksdokumenter_og_Maler/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx`;
             const xlsxFile = rls.xlsx_path || "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx";
+            const framsiktCsv = `reports/budsjettansvarlige_arkiv/${unitId}/04_Framsikt_Omdisponering/framsikt_kontering_${unitId}.csv`;
             const pptxFile = rls.pptx_path || "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx";
-            const pbipProject = rls.pbip_project || "powerbi/projects/Bo og Miljø enhet project.pbip";
+            const pbipProject = rls.pbip_project || "powerbi/pbi_reporting_project.pbip";
 
             container.innerHTML = `
                 <!-- 1. POWER BI (PBI) -->
@@ -15941,7 +16102,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         <a class="bank-report-btn secondary" href="${pbipProject}" download title="Last ned Power BI Desktop prosjektfil (.pbip)">
                             ⬇️ Last ned .pbip prosjekt
                         </a>
-                        <a class="bank-report-btn secondary" href="${rls.pbi_url}" target="_blank" style="font-size:10.5px;" title="Åpne direkte i Microsoft Teams rapportfane">
+                        <a class="bank-report-btn secondary" href="${rls.pbi_url || 'https://app.powerbi.com'}" target="_blank" style="font-size:10.5px;" title="Åpne direkte i Microsoft Teams rapportfane">
                             🌐 Teams Månedsfane
                         </a>
                     </div>
@@ -15962,7 +16123,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                             Månedlig kontoutskrift og transaksjonsjournal med periodisert årsramme, lønnsavstemming og vikarkalkyle.
                         </div>
                         <div style="font-size:10px; color:#047857; background:#dcfce7; padding:2px 6px; border-radius:3px; margin-top:6px; font-weight:600;">
-                            🔒 FAST-modell: Kun påvirkbare driftsposter (art 10100–12000, 16900)
+                            🔒 FAST-modell: Kun påvirkbare driftsposter for ${ref.enhetNavn}
                         </div>
                     </div>
                     <div class="bank-report-actions">
@@ -15972,6 +16133,9 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         <button class="bank-report-btn secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned månedens transaksjoner som CSV">
                             📊 Eksporter Transaksjoner (.csv)
                         </button>
+                        <a class="bank-report-btn secondary" href="${framsiktCsv}" download style="font-size:10.5px;" title="Last ned Framsikt omdisponeringsfil for ${unitId}">
+                            📑 Framsikt Omdisponering (.csv)
+                        </a>
                         <a class="bank-report-btn secondary" href="reports/kristiansand_epm_modell_v4_interactive.xlsx" download style="font-size:10.5px;" title="Last ned interaktiv EPM totalmodell">
                             📑 EPM Totalmodell (.xlsx)
                         </a>
@@ -16003,8 +16167,11 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         <button class="bank-report-btn secondary" onclick="openPptxPreviewModal('${unitId}')" title="Forhåndsvis presentasjonslysbildene direkte i nettleseren">
                             👁️ Forhåndsvis Slides
                         </button>
+                        <a class="bank-report-btn secondary" href="reports/Bystyret_M10_Okonomi_Rapport.pptx" download style="font-size:10.5px;" title="Last ned offisiell Bystyret-presentasjon">
+                            🏛️ Bystyret PPTX (.pptx)
+                        </a>
                         <a class="bank-report-btn secondary" href="reports/epm_presentasjon_okonomidirektor_v2.pptx" download style="font-size:10.5px;" title="Last ned topplederpresentasjon">
-                            🏛️ Topplederdekk (.pptx)
+                            📊 Topplederdekk (.pptx)
                         </a>
                     </div>
                 </div>
@@ -16034,8 +16201,8 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         <button class="bank-report-btn secondary" onclick="openWordPreviewModal('${unitId}')" title="Les saksnotatet i klarspråk direkte i huben">
                             📝 Vis Klarspråknotat
                         </button>
-                        <a class="bank-report-btn secondary" href="word/Avviksnotat_og_Handlingsplan_Enhetsleder_2026.docx" download style="font-size:10.5px;" title="Last ned standard handlingsplan">
-                            📄 Handlingsplan (.docx)
+                        <a class="bank-report-btn secondary" href="templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx" download style="font-size:10.5px;" title="Last ned sentral mal for handlingsplan">
+                            📄 Standard Handlingsplan (.docx)
                         </a>
                     </div>
                 </div>
@@ -16049,7 +16216,7 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         </div>
                         <div class="bank-report-title">📕 Offisiell Månedsrapport</div>
                         <div style="font-size:10.5px; color:#b91c1c; font-weight:700; margin-bottom:4px;">
-                            A4 Statuspakke (SHA-256)
+                            A4 Statuspakke (SHA-256) &bull; M${mStr}
                         </div>
                         <div class="bank-report-desc">
                             Formell 2-siders godkjent månedsrapportpakke med sesongjustert prognose, tiltaksstatus og signaturfelt.
@@ -16059,14 +16226,23 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
                         </div>
                     </div>
                     <div class="bank-report-actions">
-                        <a class="bank-report-btn primary" href="${activePdf}" target="_blank" title="Åpne formell månedsrapport i PDF-format i ny fane">
-                            📄 Åpne Formell PDF
+                        <a class="bank-report-btn primary" href="${activePdf}" target="_blank" title="Åpne formell månedsrapport i PDF-format for M${m} i ny fane">
+                            📄 Åpne Formell PDF (M${m})
                         </a>
-                        <button class="bank-report-btn secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre aktiv kontoutskrift som A4 PDF">
-                            🖨️ Skriv ut Kontoutskrift
-                        </button>
-                        <a class="bank-report-btn secondary" href="reports/monthly_pdf_packets/index.html" target="_blank" style="font-size:10.5px;" title="Åpne register over samtlige 81 PDF-rapporter">
-                            📑 Alle 81 Enhetsrapporter
+                        <a class="bank-report-btn secondary" href="${activeHtml}" target="_blank" title="Åpne ren HTML-versjon av månedsrapporten">
+                            🌐 Åpne HTML-Rapport
+                        </a>
+                        <a class="bank-report-btn secondary" href="${activeKonto}" target="_blank" title="Åpne ren A4 kontoutskrift">
+                            🖨️ A4 Kontoutskrift
+                        </a>
+                        <a class="bank-report-btn secondary" href="${arkivOversikt}" target="_blank" title="Åpne dedikert personlig arkiv med samtlige 4 mapper for ${ref.enhetNavn}">
+                            📁 Lederarkiv (M01–M12)
+                        </a>
+                        <a class="bank-report-btn secondary" href="reports/monthly_pdf_packets/index.html" target="_blank" style="font-size:10.5px;" title="Åpne register over samtlige 84 PDF-rapporter">
+                            📑 Alle 84 Enhetsrapporter
+                        </a>
+                        <a class="bank-report-btn secondary" href="reports/budsjettansvarlige_arkiv/index.html" target="_blank" style="font-size:10.5px;" title="Åpne masterarkiv med alle enheters saksdokumenter og omdisponeringer">
+                            🏛️ Masterarkiv Portal
                         </a>
                     </div>
                 </div>
@@ -16553,11 +16729,18 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             const container = document.getElementById("bank-statement-main-card");
             if (!container) return;
 
-            // Oppdater direkte A4-lenke
+            // Oppdater direkte A4-lenke og PDF-knapp
             const directBtn = document.getElementById("bank-direct-html-btn");
             if (directBtn) {
                 const cleanId = currentKontoUnit.replace(/-/g, "_");
                 directBtn.href = `reports/kontoutskrifter/KONTOUTSKRIFT_${cleanId}_M10.html`;
+                directBtn.title = `Åpne ren A4 bankutskrift for ${currentKontoUnit}`;
+            }
+            const pdfBtn = document.getElementById("btn-apne-pdf-rapport");
+            if (pdfBtn) {
+                const m = currentKontoMonth || 10;
+                pdfBtn.href = `reports/monthly_pdf_packets/${currentKontoUnit}_Maanedsrapport_M${m}_2026.pdf`;
+                pdfBtn.title = `Åpne formell 2-siders PDF månedsrapport for ${currentKontoUnit} (M${m}-2026)`;
             }
 
             // Transaksjonsrader

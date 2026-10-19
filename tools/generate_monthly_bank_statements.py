@@ -933,28 +933,16 @@ def main():
             writer.writerows(csv_rows_m10)
         print(f"✓ Eksportert M10 CSV ({len(csv_rows_m10)} enheter): {csv_path}")
 
-    # 3. Generer Print-klare HTML-kontoutskrifter for nøkkelenheter
-    key_units = [
-        "5200-ENH-401",  # Strai Sykehjem
-        "4100-ENH-202",  # Lovisenlev Skole
-        "3300-ENH-301",  # Byggesak og tilsyn
-        "5210-ENH-402",  # Hjemmetjeneste Vågsbygd
-        "4210-ENH-211",  # Lund Barnehage
-        "3100-DIR-VAR",   # VAR Ingeniørvesen
-        "2000-SJEF-KULTUR",# Kultur
-        "1100-DIR-IKT",   # Digitalisering
-        "0000-KOMMDIR"   # Kommunedirektør
-    ]
-
-    for uid in key_units:
-        if uid in all_statements_master:
-            stmt = all_statements_master[uid]["months"][10]
+    # 3. Generer Print-klare HTML-kontoutskrifter for samtlige enheter
+    for uid in all_statements_master:
+        stmt = all_statements_master[uid]["months"].get(10)
+        if stmt:
             clean_id = uid.replace("-", "_")
             html_path = KONTO_DIR / f"KONTOUTSKRIFT_{clean_id}_M10.html"
             html_content = generate_printable_html_statement(stmt)
             with open(html_path, "w", encoding="utf-8") as f:
                 f.write(html_content)
-            print(f"✓ Generert A4 Kontoutskrift HTML: {html_path.name}")
+    print(f"✓ Generert A4 Kontoutskrift HTML for samtlige {len(all_statements_master)} enheter.")
 
     # 4. Generer Excel-mal
     excel_path = KONTO_DIR / "KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx"

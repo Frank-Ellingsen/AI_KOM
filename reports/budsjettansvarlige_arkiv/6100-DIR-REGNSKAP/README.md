@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Konsernregnskap og Lønnssentral
+# 📁 Personlig Rapportarkiv: Konsernregnskap & Finansforvaltning
 **Ansvar:** `6100-DIR-REGNSKAP` | **Leder:** Bente Gundersen (Konsernregnskapssjef)  
-**E-post:** bente.gundersen@kristiansand.kommune.no | **Telefon:** +47 38 00 76 20 | **Kontorsted:** Rådhuset, Torvet 1  
-**Sektor:** Økonomi og virksomhetsstyring | **KOSTRA-funksjon:** 100/170 Konsernregnskap og oppgjør  
+**E-post:** bente.gundersen@kristiansand.kommune.no | **Telefon:** +47 38 00 70 40 | **Kontorsted:** Rådhuset, Rådhusgata 18, 4611 Kristiansand  
+**Sektor:** Økonomi og virksomhetsstyring | **KOSTRA-funksjon:** Funksjon 130 (Økonomisk rådgivning og regnskap)  
 **Delegeringsfullmakt:** kr 10,000,000  
 **Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 95,000,000
-* **Faktisk Regnskap YTD:** kr 67,350,450 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 4,469,550
+* **Tildelt Årsbudsjett:** kr 290,000,000
+* **Faktisk Regnskap YTD:** kr 205,596,110 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 13,643,890
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 91,371,722 (Sluttavvik: kr 3,628,278)
-* **SHA-256 Revisjonsstempel:** `51c65e3e3bec9675d4bd2d91939e3eb188fbf8528e5a3d4d9d8dc5d63a48e132`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 278,864,846 (Sluttavvik: kr 11,135,154)
+* **SHA-256 Revisjonsstempel:** `50860292c04dc96584106fd928c4a13ba700f70fe696bd3d64ed3556dedee370`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `konsernokonomi@kristiansand.kommune.no`  
-*Returfrist:* **M+5 virkedag kl. 15:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

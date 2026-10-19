@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 301: Byggesak og Tilsyn
+# 📁 Personlig Rapportarkiv: Byggesak og Tilsyn
 **Ansvar:** `3300-ENH-301` | **Leder:** Hans Petter Vik (Enhetsleder Byggesak & Tilsyn)  
-**E-post:** hans.petter.vik@kristiansand.kommune.no | **Telefon:** +47 38 00 83 01 | **Kontorsted:** Tangen 8, 4608 Kristiansand  
-**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** 301/302 Byggesak og reguleringsplan  
+**E-post:** hans.petter.vik@kristiansand.kommune.no | **Telefon:** +47 38 00 73 40 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** Funksjon 312  
 **Delegeringsfullmakt:** kr 1,500,000  
-**Sektorcontroller:** Knut Arild Vike (knut.arild.vike@kristiansand.kommune.no)  
+**Sektorcontroller:** Knut Arnesen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 24,150,000
-* **Faktisk Regnskap YTD:** kr 15,876,886 (Forbruksgrad: 87.0 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 2,380,514
+* **Tildelt Årsbudsjett:** kr 38,000,000
+* **Faktisk Regnskap YTD:** kr 24,982,264 (Forbruksgrad: 87.0 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 3,745,736
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 21,362,293 (Sluttavvik: kr 2,787,707)
-* **SHA-256 Revisjonsstempel:** `d00ea42921c17801626ab0f9d279ea1271dee8d7c831a5548047a30e5ca4754c`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 33,608,889 (Sluttavvik: kr 4,391,111)
+* **SHA-256 Revisjonsstempel:** `8bde19a91fb102d54255b32eaaff6747f7f1cabd26bb1a175fa584728debb18a`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.byutvikling@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

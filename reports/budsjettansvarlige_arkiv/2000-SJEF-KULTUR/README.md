@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Kommunalsjefens stab Kultur
+# 📁 Personlig Rapportarkiv: Kommunalsjefens stab Kultur og innbyggerdialog
 **Ansvar:** `2000-SJEF-KULTUR` | **Leder:** Camilla Jarlsby (Kommunalsjef Kultur og innbyggerdialog)  
-**E-post:** camilla.jarlsby@kristiansand.kommune.no | **Telefon:** +47 38 00 74 10 | **Kontorsted:** Gyldenløves gate 23, 4611 Kristiansand  
-**Sektor:** Kultur og innbyggerdialog | **KOSTRA-funksjon:** 380/383/385 Idrett, bibliotek og kulturhus  
+**E-post:** camilla.jarlsby@kristiansand.kommune.no | **Telefon:** +47 38 00 74 10 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Kultur og innbyggerdialog | **KOSTRA-funksjon:** Funksjon 370, 380, 385  
 **Delegeringsfullmakt:** kr 15,000,000  
-**Sektorcontroller:** Silje Mæland (okonomi.kultur@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen / Silje Nordbø (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 290,000,000
-* **Faktisk Regnskap YTD:** kr 205,596,110 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 13,643,890
+* **Tildelt Årsbudsjett:** kr 45,000,000
+* **Faktisk Regnskap YTD:** kr 31,902,845 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 2,117,155
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 278,907,485 (Sluttavvik: kr 11,092,515)
-* **SHA-256 Revisjonsstempel:** `7f6e04762c960e8a6e226b8690735a8c212600eb15fcf2021fa407f65cb57a33`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 43,273,463 (Sluttavvik: kr 1,726,537)
+* **SHA-256 Revisjonsstempel:** `556268ef725135fe3dff9b484982619802477b53f418c3b62b8e6e4c3d169ea8`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.kultur@kristiansand.kommune.no / Websak`  
-*Returfrist:* **M+8 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

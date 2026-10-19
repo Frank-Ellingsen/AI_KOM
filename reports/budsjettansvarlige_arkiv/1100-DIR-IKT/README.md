@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Digitaliseringsavdelingen
+# 📁 Personlig Rapportarkiv: IKT- og Digitaliseringsavdelingen
 **Ansvar:** `1100-DIR-IKT` | **Leder:** Siri Bentsen (IKT- og Digitaliseringsdirektør)  
-**E-post:** siri.bentsen@kristiansand.kommune.no | **Telefon:** +47 38 00 75 20 | **Kontorsted:** Rådhuskvartalet, Tollbodgata 22  
-**Sektor:** Organisasjon og teknologi | **KOSTRA-funksjon:** 130 IKT og fellesløsninger  
+**E-post:** siri.bentsen@kristiansand.kommune.no | **Telefon:** +47 38 00 75 20 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Organisasjon og teknologi | **KOSTRA-funksjon:** Funksjon 120 (Administrasjonslokaler & IKT)  
 **Delegeringsfullmakt:** kr 8,000,000  
-**Sektorcontroller:** Silje Mæland / Frank Ellingsen (okonomi.orgtek@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 95,000,000
-* **Faktisk Regnskap YTD:** kr 67,350,450 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 4,469,550
+* **Tildelt Årsbudsjett:** kr 150,000,000
+* **Faktisk Regnskap YTD:** kr 106,342,815 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 7,057,185
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 91,372,223 (Sluttavvik: kr 3,627,777)
-* **SHA-256 Revisjonsstempel:** `a9a9ebc78564d0396cc2d7a015a06a354a3b6004503fd3e0f720eb47e675cf10`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 144,263,017 (Sluttavvik: kr 5,736,983)
+* **SHA-256 Revisjonsstempel:** `33d2a044e036a4d50129dcc8237e49d353da316758079349d3cddf89b325d6a8`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.orgtek@kristiansand.kommune.no`  
-*Returfrist:* **M+7 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

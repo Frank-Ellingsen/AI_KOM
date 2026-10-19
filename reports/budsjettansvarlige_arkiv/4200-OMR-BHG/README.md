@@ -1,19 +1,19 @@
 # 📁 Personlig Rapportarkiv: Barnehageavdelingen (54 barnehager)
 **Ansvar:** `4200-OMR-BHG` | **Leder:** Anne Lise Tønnessen (Barnehagesjef)  
-**E-post:** anne.lise.tonnessen@kristiansand.kommune.no | **Telefon:** +47 38 00 72 30 | **Kontorsted:** Kvartal 35, Tollbodgata 22  
-**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** 211 Styrket barnehagetilbud  
+**E-post:** anne.lise.tonnessen@kristiansand.kommune.no | **Telefon:** +47 38 00 72 30 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** Funksjon 201 (Barnehager)  
 **Delegeringsfullmakt:** kr 8,000,000  
-**Sektorcontroller:** Erik Halvorsen (erik.halvorsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Erik Henriksen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 95,000,000
-* **Faktisk Regnskap YTD:** kr 67,350,450 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 4,469,550
+* **Tildelt Årsbudsjett:** kr 310,000,000
+* **Faktisk Regnskap YTD:** kr 219,775,152 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 14,584,848
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 91,364,151 (Sluttavvik: kr 3,635,849)
-* **SHA-256 Revisjonsstempel:** `cc102fbf11863d3bf25601cf86beeeb0dd5439106f39df65cee6831212bc11f5`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 298,159,501 (Sluttavvik: kr 11,840,499)
+* **SHA-256 Revisjonsstempel:** `e00206d9bf8a0e21c0108b460e00b187edd66613c1611bc8b4b9db0bec74edf7`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.oppvekst@kristiansand.kommune.no`  
-*Returfrist:* **M+7 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

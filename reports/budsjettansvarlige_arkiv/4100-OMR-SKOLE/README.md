@@ -1,19 +1,19 @@
 # 📁 Personlig Rapportarkiv: Grunnskoleavdelingen (28 skoler)
 **Ansvar:** `4100-OMR-SKOLE` | **Leder:** Svein Tore Kvernes (Skolesjef Grunnskole)  
-**E-post:** svein.tore.kvernes@kristiansand.kommune.no | **Telefon:** +47 38 00 72 20 | **Kontorsted:** Kvartal 35, Tollbodgata 22  
-**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** 202 Grunnskoleopplæring  
+**E-post:** svein.tore.kvernes@kristiansand.kommune.no | **Telefon:** +47 38 00 72 20 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** Funksjon 202, 215  
 **Delegeringsfullmakt:** kr 10,000,000  
-**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Erik Henriksen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 95,000,000
-* **Faktisk Regnskap YTD:** kr 67,350,450 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 4,469,550
+* **Tildelt Årsbudsjett:** kr 420,000,000
+* **Faktisk Regnskap YTD:** kr 297,759,883 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 19,760,117
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 91,356,762 (Sluttavvik: kr 3,643,238)
-* **SHA-256 Revisjonsstempel:** `d24719f37ae93e79d97b181560c964d4852932e9c61018bf6402e85f5d82fb1c`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 403,993,826 (Sluttavvik: kr 16,006,174)
+* **SHA-256 Revisjonsstempel:** `75fc9aec988cfeba64c9c76a0d41ece2974265b70ecc8578255222a30232d388`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.oppvekst@kristiansand.kommune.no`  
-*Returfrist:* **M+7 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

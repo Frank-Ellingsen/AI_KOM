@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 401: Strai Sykehjem & Omsorgsboliger
+# 📁 Personlig Rapportarkiv: Strai Sykehjem & Omsorgsboliger
 **Ansvar:** `5200-ENH-401` | **Leder:** Solveig Grimstad (Enhetsleder Strai Sykehjem)  
-**E-post:** solveig.grimstad@kristiansand.kommune.no | **Telefon:** +47 38 00 84 01 | **Kontorsted:** Strai Helsehus, Setesdalsveien 320, 4618 Kristiansand  
-**Sektor:** Helse og mestring | **KOSTRA-funksjon:** 254 Kommunal Boenhet og Sykehjem  
+**E-post:** solveig.grimstad@kristiansand.kommune.no | **Telefon:** +47 38 06 41 00 | **Kontorsted:** Straisveien 112, 4618 Kristiansand (Torridal)  
+**Sektor:** Helse og mestring | **KOSTRA-funksjon:** Funksjon 254  
 **Delegeringsfullmakt:** kr 2,000,000  
-**Sektorcontroller:** Frank Ellingsen / Marianne Tellefsen (frank.ellingsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 50,339,000
-* **Faktisk Regnskap YTD:** kr 38,658,592 (Forbruksgrad: 101.6 %)
-* **Avvik YTD (Budsjett - Actuals):** kr -602,308
+* **Tildelt Årsbudsjett:** kr 84,000,000
+* **Faktisk Regnskap YTD:** kr 64,509,062 (Forbruksgrad: 101.6 %)
+* **Avvik YTD (Budsjett - Actuals):** kr -1,005,062
 * **Trafikklys:** 🔴 Merforbruk (Kritisk underskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 53,289,352 (Sluttavvik: kr -2,950,352)
-* **SHA-256 Revisjonsstempel:** `388df5798a4aed27d0315cdf00547ca88d96d18219d1af679818e2c8b135cd3d`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 88,954,151 (Sluttavvik: kr -4,954,151)
+* **SHA-256 Revisjonsstempel:** `15b5592f15f4d4a9ec66c2a40a74238ad07e9fab638d0e510ceea424537f9140`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.helse@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

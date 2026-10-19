@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Kommunalsjefens stab Byutvikling
+# 📁 Personlig Rapportarkiv: Kommunalsjefens stab By- og stedsutvikling
 **Ansvar:** `3000-SJEF-BYUTV` | **Leder:** Ragnar Evensen (Kommunalsjef By- og stedsutvikling)  
-**E-post:** ragnar.evensen@kristiansand.kommune.no | **Telefon:** +47 38 00 73 10 | **Kontorsted:** Tangen 8, 4608 Kristiansand  
-**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** 301/340/345 Plan, VAR og samferdsel  
+**E-post:** ragnar.evensen@kristiansand.kommune.no | **Telefon:** +47 38 00 73 10 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** Funksjon 301, 312, 340  
 **Delegeringsfullmakt:** kr 20,000,000  
-**Sektorcontroller:** Knut Arild Vike (okonomi.byutvikling@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen / Knut Arnesen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 620,000,000
-* **Faktisk Regnskap YTD:** kr 439,550,304 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 29,169,696
+* **Tildelt Årsbudsjett:** kr 85,000,000
+* **Faktisk Regnskap YTD:** kr 60,260,929 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 3,999,071
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 596,262,230 (Sluttavvik: kr 23,737,770)
-* **SHA-256 Revisjonsstempel:** `2aa30ffd42c90463126920c0a31a5560e28ab6de3bf0152a7510426f865531a9`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 81,743,139 (Sluttavvik: kr 3,256,861)
+* **SHA-256 Revisjonsstempel:** `0dcc57083131ce6b7a3b9f9dadba1cd0b38bbc7227852ed1ac66435220aae8d2`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.byutvikling@kristiansand.kommune.no / Websak`  
-*Returfrist:* **M+8 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

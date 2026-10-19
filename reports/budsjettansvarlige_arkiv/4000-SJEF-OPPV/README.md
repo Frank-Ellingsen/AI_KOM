@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Kommunalsjefens fagstab Oppvekst
+# 📁 Personlig Rapportarkiv: Kommunalsjefens fagstab Oppvekst og utdanning
 **Ansvar:** `4000-SJEF-OPPV` | **Leder:** Kristin Eidet Robstad (Kommunalsjef Oppvekst og utdanning)  
-**E-post:** kristin.robstad@kristiansand.kommune.no | **Telefon:** +47 38 00 72 10 | **Kontorsted:** Kvartal 35, Tollbodgata 22, 4611 Kristiansand  
-**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** 202/211/222 Grunnskole og barnehage  
+**E-post:** kristin.eidet.robstad@kristiansand.kommune.no | **Telefon:** +47 38 00 72 10 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** Funksjon 201, 202, 211  
 **Delegeringsfullmakt:** kr 25,000,000  
-**Sektorcontroller:** Frank Ellingsen / Erik Halvorsen (okonomi.oppvekst@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen / Erik Henriksen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 2,150,000,000
-* **Faktisk Regnskap YTD:** kr 1,524,247,022 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 101,152,978
+* **Tildelt Årsbudsjett:** kr 150,000,000
+* **Faktisk Regnskap YTD:** kr 106,342,815 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 7,057,185
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 2,067,496,776 (Sluttavvik: kr 82,503,224)
-* **SHA-256 Revisjonsstempel:** `aebd878c51a80c3a4927972f3296bbb38e9c695ac2c319b83d8bcafb17de007d`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 144,261,309 (Sluttavvik: kr 5,738,691)
+* **SHA-256 Revisjonsstempel:** `2b4acd94eeaa45a32e4d7650b16d5590e5a5e052b1b8d67cffaaf28e937eaecd`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.oppvekst@kristiansand.kommune.no / Websak 26/08940`  
-*Returfrist:* **M+8 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

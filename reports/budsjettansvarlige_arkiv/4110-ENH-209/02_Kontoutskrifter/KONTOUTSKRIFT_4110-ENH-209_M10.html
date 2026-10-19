@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>Månedlig Kontoutskrift — Presteheia Skole (Oktober 2026)</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 15mm 15mm 15mm 15mm;
+        }
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background: #ffffff !important;
+                margin: 0;
+                padding: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+        }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            margin: 0;
+            padding: 24px;
+        }
+        .statement-card {
+            max-width: 840px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .bank-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+        .bank-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e3a8a;
+            letter-spacing: -0.3px;
+        }
+        .bank-sub {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        .statement-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            text-align: right;
+        }
+        .statement-meta {
+            font-size: 11px;
+            color: #64748b;
+            text-align: right;
+        }
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .kpi-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px 14px;
+            border-radius: 4px;
+        }
+        .kpi-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            font-weight: 700;
+        }
+        .kpi-val {
+            font-size: 19px;
+            font-weight: 800;
+            font-family: 'Segoe UI', monospace;
+            margin-top: 3px;
+            color: #0f172a;
+        }
+        .kpi-sub {
+            font-size: 10.5px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .saldo-box {
+            background: #fdf2f2;
+            border: 1px solid #fecaca;
+            padding: 14px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .saldo-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #c0392b;
+            letter-spacing: 0.5px;
+        }
+        .saldo-amount {
+            font-size: 24px;
+            font-weight: 800;
+            color: #c0392b;
+            font-family: 'Segoe UI', monospace;
+        }
+        table.trans-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+        table.trans-table th {
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1.5px solid #cbd5e1;
+        }
+        table.trans-table th.num {
+            text-align: right;
+        }
+        .advice-box {
+            background: #f8fafc;
+            border-left: 4px solid #1e3a8a;
+            padding: 16px 18px;
+            border-radius: 0 4px 4px 0;
+            margin-top: 20px;
+        }
+        .advice-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .action-btns {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .btn {
+            background: #1e3a8a;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-secondary {
+            background: #ffffff;
+            color: #1e3a8a;
+            border: 1px solid #cbd5e1;
+        }
+        .btn:hover {
+            opacity: 0.92;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="action-btns no-print" style="max-width:840px; margin:0 auto 12px auto;">
+        <button class="btn btn-secondary" onclick="window.history.back()">⬅ Tilbake til Hub</button>
+        <button class="btn" onclick="window.print()">🖨️ Skriv ut / Lagre som PDF</button>
+    </div>
+
+    <div class="statement-card">
+        <!-- Top Bank Header -->
+        <div class="bank-top">
+            <div>
+                <div class="bank-logo">🏛️ KRISTIANSAND KOMMUNE</div>
+                <div class="bank-sub">Økonomi & Virksomhetsstyring &bull; Kommunal Nettbank</div>
+                <div style="font-size:12px; margin-top:8px; color:#334155;">
+                    <strong>Budsjettkonto:</strong> NO-KRS-2026-4110ENH209<br>
+                    <strong>Kontoeier:</strong> Helge Torvund (Rektor Presteheia Skole)<br>
+                    <strong>Virksomhet / Enhet:</strong> Presteheia Skole<br>
+                    <strong>Sektor / KOSTRA:</strong> Oppvekst og utdanning (Funksjon 202)
+                </div>
+            </div>
+            <div>
+                <div class="statement-title">MÅNEDLIG KONTOUTSKRIFT</div>
+                <div class="statement-meta">
+                    <strong>Utskriftsperiode:</strong> Oktober 2026 (M10)<br>
+                    <strong>Bokføringsdato:</strong> Siste bankvirkedag i måneden<br>
+                    <strong>Tildelt Controller:</strong> Erik Henriksen<br>
+                    <strong>Kontakt:</strong> okonomi.controller@kristiansand.kommune.no
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 Nøkkelbokser -->
+        <div class="kpi-row">
+            <div class="kpi-box">
+                <div class="kpi-label">Tildelt Årsramme (Startkreditt)</div>
+                <div class="kpi-val">22,500,000 kr".replace(",", " ")</div>
+                <div class="kpi-sub">Bystyrets vedtatte budsjettramme 2026</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-label">Hittil Brukt YTD (Netto uttak)</div>
+                <div class="kpi-val" style="color:#c0392b;">19,136,583 kr".replace(",", " ")</div>
+                <div class="kpi-sub">Periodisert plan YTD: 19,012,500 kr".replace(",", " ")</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-label">Månedlig Rådighetsbeløp ut året</div>
+                <div class="kpi-val" style="color:#0369a1;">1,681,709 kr".replace(",", " ")</div>
+                <div class="kpi-sub">Maks tillatt snitt i 2 gjenstående mnd</div>
+            </div>
+        </div>
+
+        <!-- Stor Disponibel Saldo Boks -->
+        <div class="saldo-box">
+            <div>
+                <div class="saldo-label">🔴 Fare for overtrekk (Merforbruk)</div>
+                <div class="saldo-amount">3,363,417 kr".replace(",", " ")</div>
+                <div style="font-size:11px; color:#475569; margin-top:2px;">Disponibel saldo på din budsjettkonto per 31. oktober 2026</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:11px; font-weight:700; color:#c0392b;">Du bruker kr 2,073,229 i måneden, men har bare råd til kr 1,681,709.</div>
+                <div style="font-size:11px; color:#64748b; margin-top:4px;">Forbruk i Oktober: kr 2,073,229".replace(",", " ")</div>
+            </div>
+        </div>
+
+        <!-- Transaksjonstabell -->
+        <div style="font-size:12px; font-weight:700; color:#1e3a8a; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
+            📋 Kontoutskrift for Oktober 2026 (Største uttak og innbetalinger)
+        </div>
+        <table class="trans-table">
+            <thead>
+                <tr>
+                    <th style="width:75px;">Dato</th>
+                    <th>Beskrivelse / Post</th>
+                    <th style="width:130px;">Kategori</th>
+                    <th class="num" style="width:105px;">Uttak (kr)</th>
+                    <th class="num" style="width:105px;">Innskudd (kr)</th>
+                    <th class="num" style="width:115px;">Bokført Saldo</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#334155;">2026-10-05</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#0f172a; font-weight:600;">Fastlønn faste ansatte (grunnbemanning)<br><span style="font-size:10px; color:#64748b; font-weight:normal;">Ordinær månedslønn iht. tariff</span></td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11px; color:#475569;">Lønn fast personell</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#c0392b;">-1 445 388 kr</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#15803d; font-weight:600;">—</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#0f172a; font-weight:600;">3 991 258 kr</td>
+        </tr>
+        
+        <tr>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#334155;">2026-10-12</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#0f172a; font-weight:600;">Vikarer & tilkallingsvakter (bemanningsbyrå/ekstra)<br><span style="font-size:10px; color:#64748b; font-weight:normal;">Kritisk kostnadsdriver ved høyt fravær</span></td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11px; color:#475569;">Vikarinnleie</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#c0392b;">-429 100 kr</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#15803d; font-weight:600;">—</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#0f172a; font-weight:600;">3 562 158 kr</td>
+        </tr>
+        
+        <tr>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#334155;">2026-10-18</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#0f172a; font-weight:600;">Kvelds-/helgetillegg og overtid<br><span style="font-size:10px; color:#64748b; font-weight:normal;">Uforutsette vakter og forskyvninger</span></td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11px; color:#475569;">Overtid & tillegg</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#c0392b;">-112 921 kr</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#15803d; font-weight:600;">—</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#0f172a; font-weight:600;">3 449 237 kr</td>
+        </tr>
+        
+        <tr>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#334155;">2026-10-20</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#0f172a; font-weight:600;">Innbetaling: NAV Sykelønnsrefusjon mottatt<br><span style="font-size:10px; color:#64748b; font-weight:normal;">Refusjon for sykefravær utover arbeidsgiverperioden</span></td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11px; color:#475569;">Innskudd / Refusjon</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#c0392b;">—</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#15803d; font-weight:600;">+129 633 kr</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#0f172a; font-weight:600;">3 578 870 kr</td>
+        </tr>
+        
+        <tr>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#334155;">2026-10-22</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#0f172a; font-weight:600;">Forbruksvarer, medisiner & materiell<br><span style="font-size:10px; color:#64748b; font-weight:normal;">Kjøp av nødvendige driftsmidler</span></td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11px; color:#475569;">Driftskjøp</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#c0392b;">-180 674 kr</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#15803d; font-weight:600;">—</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#0f172a; font-weight:600;">3 398 197 kr</td>
+        </tr>
+        
+        <tr>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#334155;">2026-10-25</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#0f172a; font-weight:600;">Innbetaling: Brukerbetalinger / egenandeler<br><span style="font-size:10px; color:#64748b; font-weight:normal;">Mottatte egenandeler og gebyrer</span></td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11px; color:#475569;">Innskudd / Egenbetaling</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#c0392b;">—</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#15803d; font-weight:600;">+55 557 kr</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#0f172a; font-weight:600;">3 453 754 kr</td>
+        </tr>
+        
+        <tr>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#334155;">2026-10-28</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11.5px; color:#0f172a; font-weight:600;">Intern husleie, strøm og felleskostnader<br><span style="font-size:10px; color:#64748b; font-weight:normal;">Kommunal internleie og energikostnader</span></td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', sans-serif; font-size:11px; color:#475569;">Husleie / Eiendom</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#c0392b;">-90 337 kr</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#15803d; font-weight:600;">—</td>
+            <td style="padding:6px 8px; border-bottom:1px solid #e2e8f0; font-family:'Segoe UI', monospace; font-size:11.5px; text-align:right; color:#0f172a; font-weight:600;">3 363 417 kr</td>
+        </tr>
+        
+            </tbody>
+        </table>
+
+        <!-- Leder-Veiledning & Råd i klarspråk -->
+        <div class="advice-box">
+            <div class="advice-title">
+                <span>💡 Økonomiråd for din enhet (Veiledning for ledere)</span>
+            </div>
+            <div style="font-size:12px; line-height:1.55; color:#334155; margin-bottom:10px;">
+                <strong>Hva betyr dette i praksis?</strong><br>
+                Du har brukt kr 19,136,583 av din tildelte årsramme på kr 22,500,000. Det betyr at du bare har kr 3,363,417 igjen til å drifte enheten i de resterende 2 månedene. Hvis du fortsetter å bruke like mye som i Oktober (kr 2,073,229/mnd), går kontoen i overtrekk før 31. desember!
+            </div>
+            <div style="font-size:12px; line-height:1.55; color:#334155; margin-bottom:10px;">
+                <strong>Hvorfor renner pengene ut?</strong><br>
+                Hovedårsaken til at kontoen tappes er høye utgifter til vikarer (kr 429,100 denne måneden) og forsinket registrering av sykemeldinger som forsinker refusjon fra NAV.
+            </div>
+            <div style="font-size:12px; line-height:1.55; color:#334155; margin-bottom:10px;">
+                <strong>Dine 3 viktigste handlinger denne måneden:</strong>
+                <ul style="margin:4px 0 0 18px; padding:0;">
+                    <li style='margin-bottom:4px;'>1. Innfør ledergodkjenning på alle vikarvakter: Vurder om oppgaver kan omfordeles blant faste ansatte før ekstern vikar ringes inn.</li><li style='margin-bottom:4px;'>2. Gå gjennom sykelønnsrefusjoner i GAT/Visma: Sørg for at alle sykemeldinger fra dag 17 er sendt til NAV slik at kontoen tilføres refusjoner.</li><li style='margin-bottom:4px;'>3. Stillingsfrys på ikke-kritiske poster: Avvent utlysning av ledige stillinger til bemanningsbehovet er avstemt med din controller.</li>
+                </ul>
+            </div>
+            <div style="font-size:11.5px; color:#b91c1c; font-weight:600; margin-bottom:8px;">
+                ⚠️ Hva må du unngå: Ikke inngå nye avtaler med private bemanningsbyråer uten skriftlig godkjenning fra kommunalsjefen.
+            </div>
+            <div style="font-size:11px; color:#64748b; font-style:italic; border-top:1px dashed #cbd5e1; padding-top:6px; margin-top:8px;">
+                Trenger du hjelp til å tolke tallene eller finne innsparingstiltak? Kontakt din controller Erik Henriksen.
+            </div>
+        </div>
+
+        <div style="margin-top:24px; padding-top:12px; border-top:1px solid #e2e8f0; font-size:10px; color:#94a3b8; display:flex; justify-content:space-between;">
+            <span>Dokument generert av Kristiansand Kommune AI Hub &bull; FAST Standard Model</span>
+            <span>Kommuneloven § 14-5 &bull; Elektronisk signert &bull; SHA-256 verifisert</span>
+        </div>
+    </div>
+
+</body>
+</html>

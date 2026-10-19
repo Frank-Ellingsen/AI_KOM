@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 404: Presteheia Omsorgssenter
+# 📁 Personlig Rapportarkiv: Presteheia Omsorgssenter
 **Ansvar:** `5230-ENH-404` | **Leder:** Kari Vesterhus (Enhetsleder Presteheia Omsorgssenter)  
-**E-post:** kari.vesterhus@kristiansand.kommune.no | **Telefon:** +47 38 00 84 04 | **Kontorsted:** Presteheia 1, 4633 Kristiansand  
-**Sektor:** Helse og mestring | **KOSTRA-funksjon:** 254 Sykehjem korttidsplasser  
+**E-post:** kari.vesterhus@kristiansand.kommune.no | **Telefon:** +47 38 10 32 00 | **Kontorsted:** Presteheia 29, 4633 Kristiansand (Lund)  
+**Sektor:** Helse og mestring | **KOSTRA-funksjon:** Funksjon 254  
 **Delegeringsfullmakt:** kr 1,500,000  
-**Sektorcontroller:** Marianne Tellefsen (marianne.tellefsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 29,400,000
-* **Faktisk Regnskap YTD:** kr 20,626,319 (Forbruksgrad: 92.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 1,600,081
+* **Tildelt Årsbudsjett:** kr 76,000,000
+* **Faktisk Regnskap YTD:** kr 53,319,737 (Forbruksgrad: 92.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 4,136,263
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 27,941,032 (Sluttavvik: kr 1,458,968)
-* **SHA-256 Revisjonsstempel:** `2bee6b923f7140ed445cf2774c4474eae638302cc734d1b60d0a0e9048dc76e5`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 72,210,883 (Sluttavvik: kr 3,789,117)
+* **SHA-256 Revisjonsstempel:** `59e5b357da8ced92c56f2a742378832a5a51c3764a3ac91df3f570c7c99402e3`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.helse@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

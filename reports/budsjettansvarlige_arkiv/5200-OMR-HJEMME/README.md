@@ -1,19 +1,19 @@
 # 📁 Personlig Rapportarkiv: Hjemmetjenester og rehabilitering
-**Ansvar:** `5200-OMR-HJEMME` | **Leder:** Arve Sætre (Områdeleder Hjemmebaserte Tjenester)  
-**E-post:** arve.saetre@kristiansand.kommune.no | **Telefon:** +47 38 00 71 30 | **Kontorsted:** Lund Helsehus, Marviksveien 20  
-**Sektor:** Helse og mestring | **KOSTRA-funksjon:** 253 Pleie og omsorg i hjemmet  
+**Ansvar:** `5200-OMR-HJEMME` | **Leder:** Arve Sætre (Områdeleder Hjemmetjenester)  
+**E-post:** arve.saetre@kristiansand.kommune.no | **Telefon:** +47 38 00 71 30 | **Kontorsted:** Kvartal 35, Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Helse og mestring | **KOSTRA-funksjon:** Funksjon 253 (Pleie og omsorg i hjemmet)  
 **Delegeringsfullmakt:** kr 8,000,000  
-**Sektorcontroller:** Marianne Tellefsen (marianne.tellefsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Marianne Tellefsen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 95,000,000
-* **Faktisk Regnskap YTD:** kr 67,350,450 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 4,469,550
+* **Tildelt Årsbudsjett:** kr 240,000,000
+* **Faktisk Regnskap YTD:** kr 170,148,505 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 11,291,495
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 91,379,006 (Sluttavvik: kr 3,620,994)
-* **SHA-256 Revisjonsstempel:** `236e30a4eb45d2eefbf9f4c3b294d290334733e0c9de71ceb914290822af61d5`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 230,760,256 (Sluttavvik: kr 9,239,744)
+* **SHA-256 Revisjonsstempel:** `8100e8637b00fa7ddcb408d6cd976d3ddea6d29b680b4a13dd23851acc51f48c`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.helse@kristiansand.kommune.no`  
-*Returfrist:* **M+7 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

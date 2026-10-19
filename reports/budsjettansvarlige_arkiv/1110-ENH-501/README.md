@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 501: IKT Drift & Brukerstøtte
-**Ansvar:** `1110-ENH-501` | **Leder:** Kenneth Dale (IKT Driftssjef)  
-**E-post:** kenneth.dale@kristiansand.kommune.no | **Telefon:** +47 38 00 85 01 | **Kontorsted:** Rådhuskvartalet, Tollbodgata 22  
-**Sektor:** Organisasjon og teknologi | **KOSTRA-funksjon:** 130 Felles IKT-infrastruktur  
+# 📁 Personlig Rapportarkiv: IKT Brukerstøtte & Applikasjonsdrift
+**Ansvar:** `1110-ENH-501` | **Leder:** Kenneth Dale (IKT Driftssjef Brukerstøtte)  
+**E-post:** kenneth.dale@kristiansand.kommune.no | **Telefon:** +47 38 00 75 50 | **Kontorsted:** Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Organisasjon og teknologi | **KOSTRA-funksjon:** Funksjon 120 (IKT-drift)  
 **Delegeringsfullmakt:** kr 2,500,000  
-**Sektorcontroller:** Silje Mæland / Frank Ellingsen (okonomi.orgtek@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 34,800,000
-* **Faktisk Regnskap YTD:** kr 24,414,827 (Forbruksgrad: 92.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 1,893,973
+* **Tildelt Årsbudsjett:** kr 72,000,000
+* **Faktisk Regnskap YTD:** kr 50,513,435 (Forbruksgrad: 92.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 3,918,565
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 33,069,559 (Sluttavvik: kr 1,730,441)
-* **SHA-256 Revisjonsstempel:** `3ce0ebcefe51f924ce14314b27b922251f6a522b37a2c03ad218fe47ae280275`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 68,421,861 (Sluttavvik: kr 3,578,139)
+* **SHA-256 Revisjonsstempel:** `acb3e2e4638755031810876559040c5f5ca7cbc98cdc12a7a6586fdd1e651ab6`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.orgtek@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

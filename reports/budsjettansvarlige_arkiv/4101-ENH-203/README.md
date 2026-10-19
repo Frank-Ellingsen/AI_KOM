@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 203: Vågsbygd Skole
+# 📁 Personlig Rapportarkiv: Vågsbygd Skole
 **Ansvar:** `4101-ENH-203` | **Leder:** Mona Lindstrøm (Rektor Vågsbygd Skole)  
-**E-post:** mona.lindstrom@kristiansand.kommune.no | **Telefon:** +47 38 00 82 03 | **Kontorsted:** Kirsten Flagstads vei 30, 4621 Kristiansand  
-**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** 202 Grunnskole 1.–10. trinn  
+**E-post:** mona.lindstrom@kristiansand.kommune.no | **Telefon:** +47 38 00 41 00 | **Kontorsted:** Vågsbygd Ringvei 100, 4621 Kristiansand  
+**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** Funksjon 202  
 **Delegeringsfullmakt:** kr 1,800,000  
-**Sektorcontroller:** Erik Halvorsen (erik.halvorsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Erik Henriksen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 31,200,000
-* **Faktisk Regnskap YTD:** kr 23,699,672 (Forbruksgrad: 100.5 %)
-* **Avvik YTD (Budsjett - Actuals):** kr -112,472
+* **Tildelt Årsbudsjett:** kr 48,000,000
+* **Faktisk Regnskap YTD:** kr 36,461,033 (Forbruksgrad: 100.5 %)
+* **Avvik YTD (Budsjett - Actuals):** kr -173,033
 * **Trafikklys:** 🟡 Merforbruk (Moderat observasjon)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 32,494,024 (Sluttavvik: kr -1,294,024)
-* **SHA-256 Revisjonsstempel:** `d9991a3372b0072e7af64078f63ce3b88ecfcc60ec6d0ad1018dc516b2598ab3`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 49,997,132 (Sluttavvik: kr -1,997,132)
+* **SHA-256 Revisjonsstempel:** `8f9f0189e3cbc4ad6e0a7bb80097b212b4e3bd83e628f29db232e8673b893540`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.oppvekst@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

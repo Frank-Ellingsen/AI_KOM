@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Månedsrapport M9 — Kløvertun Omsorgsboliger & Dagsenter (5250-ENH-406)</title>
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --surface: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --border-strong: #1e293b;
+            --green: #166534;
+            --green-bg: #dcfce7;
+            --red: #991b1b;
+            --red-bg: #fee2e2;
+            --amber: #9a3412;
+            --amber-bg: #ffedd5;
+            --accent-navy: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.45;
+            padding: 24px;
+        }
+        .report-sheet {
+            max-width: 960px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 36px 42px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .header-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--border-strong);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .header-title { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+        .header-meta { font-size: 11px; color: var(--text-muted); text-align: right; }
+        .unit-name { font-size: 16px; font-weight: 600; color: var(--accent-navy); margin-bottom: 4px; }
+        .unit-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 20px; }
+        
+        .kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-bottom: 28px;
+        }
+        .kpi-card { text-align: center; }
+        .kpi-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+        .kpi-value { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+        .kpi-sub { font-size: 11px; color: var(--text-secondary); }
+        
+        h2 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent-navy); margin: 24px 0 10px 0; border-bottom: 1px solid var(--border-strong); padding-bottom: 4px; }
+        
+        /* Tufte Tabeller: Null vertikale linjer */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+        th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1.5px solid var(--border-strong);
+            padding: 6px 8px;
+        }
+        td {
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+        tr.total-row td {
+            font-weight: 700;
+            color: var(--text-primary);
+            border-top: 1.5px solid var(--border-strong);
+            border-bottom: 2px solid var(--border-strong);
+            background: #f8fafc;
+        }
+        .num { text-align: right; }
+        .positive { color: var(--green); font-weight: 700; }
+        .negative { color: var(--red); font-weight: 700; }
+        .subtext { font-size: 11px; color: var(--text-muted); }
+        
+        .box-info {
+            background: #f8fafc;
+            border-left: 3px solid var(--accent-navy);
+            padding: 10px 14px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        .signatures {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 36px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--border-light);
+            font-size: 12px;
+        }
+        
+        .print-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--accent-navy);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .print-btn:hover { background: #0f172a; }
+
+        @media print {
+            body { background: #fff; padding: 0; }
+            .report-sheet { border: none; box-shadow: none; padding: 0; max-width: 100%; }
+            .print-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Skriv ut / Lagre som PDF</button>
+
+    <div class="report-sheet">
+        <div class="header-strip">
+            <div>
+                <div class="header-title">🏛️ KRISTIANSAND KOMMUNE</div>
+                <div class="subtext">Økonomi og virksomhetsstyring | AI Project Controller Hub</div>
+            </div>
+            <div class="header-meta">
+                <strong>STATUSRAPPORT M9 / SEPTEMBER 2026</strong><br/>
+                Generert: 17.10.2026 | Utsendelse: Budsjettansvarlig
+            </div>
+        </div>
+
+        <div class="unit-name">Kløvertun Omsorgsboliger & Dagsenter — Ansvar 5250-ENH-406</div>
+        <div class="unit-sub">
+            <strong>Budsjettansvarlig:</strong> Torill Hansen (Enhetsleder Kløvertun) | 
+            <strong>E-post:</strong> torill.hansen@kristiansand.kommune.no | 
+            <strong>Delegeringsfullmakt:</strong> kr 1,400,000 | 
+            <strong>Sektorcontroller:</strong> Marianne Tellefsen
+        </div>
+
+        <!-- KPI Strip -->
+        <div class="kpi-strip">
+            <div class="kpi-card">
+                <div class="kpi-label">Tildelt Årsbudsjett</div>
+                <div class="kpi-value">kr 62,000,000</div>
+                <div class="kpi-sub">Vedtatt ramme 2026</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Periodisert Budsjett YTD</div>
+                <div class="kpi-value">kr 46,872,000</div>
+                <div class="kpi-sub">Andel: 75.6 %</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Faktisk Regnskap YTD</div>
+                <div class="kpi-value">kr 43,497,680</div>
+                <div class="kpi-sub">Forbruksgrad: 92.8 %</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Avvik (Budsjett - Actuals)</div>
+                <div class="kpi-value positive">+kr 3,374,320</div>
+                <div class="kpi-sub">🟢 Mindreforbruk (I balanse / Overskudd)</div>
+            </div>
+        </div>
+
+        <!-- 1. Finansiell Status -->
+        <h2>1. Finansiell Status og Artsavvik (YTD)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>KOSTRA Art</th>
+                    <th>Beskrivelse</th>
+                    <th class="num">Budsjett YTD</th>
+                    <th class="num">Regnskap YTD</th>
+                    <th class="num">Avvik (Budsjett - Actuals)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>Art 1010</code></td>
+                    <td>Fast lønn og faste stillinger</td>
+                    <td class="num">kr 30,466,800</td>
+                    <td class="num">kr 30,899,991</td>
+                    <td class="num negative">kr -433,191</td>
+                    <td>Normal drift</td>
+                </tr>
+                <tr>
+                    <td><code>Art 1020</code></td>
+                    <td>Vikarer og innleie</td>
+                    <td class="num">kr 3,749,760</td>
+                    <td class="num">kr 3,565,384</td>
+                    <td class="num positive">+kr 184,376</td>
+                    <td>🟢 Kontrollert</td>
+                </tr>
+                <tr>
+                    <td><code>Art 1090</code></td>
+                    <td>Overtid og ubekvem tid</td>
+                    <td class="num">kr 1,874,880</td>
+                    <td class="num">kr 2,852,307</td>
+                    <td class="num negative">kr -977,427</td>
+                    <td>Turnusavvik</td>
+                </tr>
+                <tr>
+                    <td><code>Art 1150-1200</code></td>
+                    <td>Varekjøp, inventar og drift</td>
+                    <td class="num">kr 14,530,320</td>
+                    <td class="num">kr 10,220,766</td>
+                    <td class="num positive">+kr 4,309,554</td>
+                    <td>Driftsforbruk</td>
+                </tr>
+                <tr>
+                    <td><code>Art 1690</code></td>
+                    <td>Refusjon sykelønn (NAV)</td>
+                    <td class="num">kr 3,749,760</td>
+                    <td class="num">kr 3,030,576</td>
+                    <td class="num negative">kr -719,184</td>
+                    <td>Ajour</td>
+                </tr>
+                <tr class="total-row">
+                    <td>TOTALT NETTO</td>
+                    <td>Samlet netto ramme YTD</td>
+                    <td class="num">kr 46,872,000</td>
+                    <td class="num">kr 43,497,680</td>
+                    <td class="num positive">+kr 3,374,320</td>
+                    <td>GREEN</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 2. Dybdediagnostikk -->
+        <h2>2. Dybdediagnostikk & Kostnadsdrivere</h2>
+        <div class="box-info">
+            <strong>Nøkkeltall for perioden:</strong><br/>
+            • <strong>Sykefravær:</strong> Registrert til <strong>6.8 %</strong> (kommunens måltall er 6,5 %).<br/>
+            • <strong>Vikarandel:</strong> Vikarkostnader utgjør <strong>7.5 %</strong> av samlet lønnsmasse.<br/>
+            • <strong>NAV-refusjonsgap:</strong> Utestående refusjonskrav er beregnet til <strong>kr 0</strong>. Raskere innsending vil styrke netto drift direkte.
+        </div>
+
+        <!-- 3. Prognoser -->
+        <h2>3. Sesongjustert EOY-Prognose & Monte Carlo Usikkerhet</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Scenario / Modell</th>
+                    <th class="num">P10 (Optimistisk)</th>
+                    <th class="num">P50 (Forventet EOY)</th>
+                    <th class="num">P90 (Konservativt)</th>
+                    <th class="num">Forventet Sluttavvik (31.12)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Driverbasert Monte Carlo (10 000 iterasjoner)</td>
+                    <td class="num">kr 58,335,510</td>
+                    <td class="num"><strong>kr 58,915,332</strong></td>
+                    <td class="num">kr 59,570,106</td>
+                    <td class="num positive"><strong>+kr 3,084,668</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="subtext">Kryptografisk SHA-256 forsegling (Stage-Gate Port 9): <code>33e8860a2aaa581d08666d084925ea07b623f690e99bdd41d1f1d3f392e94791</code></div>
+
+        <!-- 4. Preskripsjoner -->
+        <h2>4. Preskripsjoner & Handlingsplan for Netto Null Avvik (EOY = 0)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tiltak / Handlingsregel</th>
+                    <th>Art</th>
+                    <th>Ansvarlig</th>
+                    <th class="num">Effekt Måned</th>
+                    <th class="num">Helårseffekt</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td>1</td>
+            <td><strong>Vakanskontroll & stabilitetsanalyse</strong><br/><span class="subtext">Kvalitetssikre at mindreforbruket skyldes reelle strukturelle innsparinger og ikke etterslep i fakturamottak.</span></td>
+            <td><code>1010/1020</code></td>
+            <td>Torill Hansen</td>
+            <td class="num">kr 0</td>
+            <td class="num"><strong>kr 0</strong></td>
+        </tr>
+        
+        <tr>
+            <td>2</td>
+            <td><strong>Frigjøring av overskuddsramme til Paraplybufferen</strong><br/><span class="subtext">Melde inn disponibelt overskudd på kr 3,374,320 til Kommunalsjefens paraply for å dekke opp søsterenheter.</span></td>
+            <td><code>RAMME</code></td>
+            <td>Torill Hansen / Sektorcontroller</td>
+            <td class="num">kr 1,124,773</td>
+            <td class="num"><strong>kr 3,374,320</strong></td>
+        </tr>
+        
+                <tr class="total-row">
+                    <td>SUM</td>
+                    <td>Total tiltakseffekt for å lukke avviket</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td class="num">-</td>
+                    <td class="num">kr 3,374,320</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 5. Budsjettparaplyen -->
+        <h2>5. Budsjettparaplyen: Omdisponerings- og Solidaritetsmekanisme</h2>
+        <div class="box-info">
+            Enheten har et positivt avvik (mindreforbruk/overskudd) på kr 3,374,320 YTD. I henhold til Kristiansand kommunes økonomireglement og fullmaktsstruktur for Helse- og mestringsparaplyen, avgis kr 2,868,172 til Kommunalsjef Helse og mestrings sentrale bufferpott (5000-SJEF-HELSE). Dette gjør det mulig å dekke inn akutt merforbruk i utsatte driftsenheter (f.eks. sykehjem og skoler) uten å belaste kommunens felles disposisjonsfond eller utløse bystyresak jf. Kommuneloven § 14-5.
+        </div>
+
+        <!-- 6. Framsikt EPM -->
+        <h2>6. Framsikt EPM: Konkret Konteringsanvisning & Rammeregulering</h2>
+        <p class="subtext" style="margin-bottom: 8px;">
+            Følgende poster registreres i Framsikt EPM (Modul: <em>Tertialoppfølging / Budsjettreguleringer</em>) under Kommunalsjefens fullmakt:
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Posteringstype</th>
+                    <th>Ansvar (KOSTRA)</th>
+                    <th>Art</th>
+                    <th>Fritekst / Begrunnelse i Framsikt</th>
+                    <th class="num">Budsjettjustering</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Avgivende ramme</td>
+                    <td><strong>5250-ENH-406</strong></td>
+                    <td><code>1020 / 1010</code></td>
+                    <td>Reduksjon av utgiftsramme Kløvertun Omsorgsboliger & Dagsenter</td>
+                    <td class="num negative">kr -2,868,172</td>
+                </tr>
+                <tr>
+                    <td>Mottakende ramme</td>
+                    <td><strong>5000-SJEF-HELSE</strong></td>
+                    <td><code>1020</code></td>
+                    <td>Tilførsel til felles reservepott Helse- og mestringsparaplyen</td>
+                    <td class="num positive">+kr 2,868,172</td>
+                </tr>
+                <tr class="total-row">
+                    <td>NETTO ENDRING</td>
+                    <td>Sektorramme balanse</td>
+                    <td>-</td>
+                    <td>Fullmakt: Kommunalsjef (Nivå 1) / Bystyret § 14-5</td>
+                    <td class="num">kr 0,00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 7. Signaturer -->
+        <div class="signatures">
+            <div>
+                <strong>Attestert av Budsjettansvarlig:</strong><br/><br/>
+                ________________________________________<br/>
+                Torill Hansen<br/>
+                Dato: ____ / ____ 2026
+            </div>
+            <div>
+                <strong>Kvalitetssikret av Sektorcontroller:</strong><br/><br/>
+                ________________________________________<br/>
+                Marianne Tellefsen<br/>
+                Dato: ____ / ____ 2026
+            </div>
+        </div>
+    </div>
+</body>
+</html>

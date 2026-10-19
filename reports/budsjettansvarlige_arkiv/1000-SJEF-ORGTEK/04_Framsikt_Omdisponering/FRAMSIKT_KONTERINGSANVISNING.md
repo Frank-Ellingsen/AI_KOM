@@ -1,23 +1,23 @@
-# Framsikt EPM: Konteringsanvisning for Kommunalsjefens stab Org & Tek (Ansvar 1000-SJEF-ORGTEK)
+# Framsikt EPM: Konteringsanvisning for Kommunalsjefens stab Organisasjon og teknologi (Ansvar 1000-SJEF-ORGTEK)
 
 ## 1. Bakgrunn for Rammeregulering
 * **Budsjettansvarlig:** Geir A. Askvik (Kommunalsjef Organisasjon og teknologi)
 * **Sektor / Paraply:** Organisasjons- og teknologiparaplyen
 * **Status YTD:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Beregnet avvik:** kr 15,996,285 (Budsjett - Actuals)
+* **Beregnet avvik:** kr 2,258,299 (Budsjett - Actuals)
 
 ## 2. Omdisponeringsmekanisme i Framsikt EPM
-Enheten har et positivt avvik (mindreforbruk/overskudd) på kr 15,996,285 YTD. I henhold til Kristiansand kommunes økonomireglement og fullmaktsstruktur for Organisasjons- og teknologiparaplyen, avgis kr 13,596,842 til Kommunalsjef Organisasjon og teknologis sentrale bufferpott (1000-SJEF-ORGTEK). Dette gjør det mulig å dekke inn akutt merforbruk i utsatte driftsenheter (f.eks. sykehjem og skoler) uten å belaste kommunens felles disposisjonsfond eller utløse bystyresak jf. Kommuneloven § 14-5.
+Enheten har et positivt avvik (mindreforbruk/overskudd) på kr 2,258,299 YTD. I henhold til Kristiansand kommunes økonomireglement og fullmaktsstruktur for Organisasjons- og teknologiparaplyen, avgis kr 1,919,554 til Kommunalsjef Organisasjon og teknologis sentrale bufferpott (1000-SJEF-ORGTEK). Dette gjør det mulig å dekke inn akutt merforbruk i utsatte driftsenheter (f.eks. sykehjem og skoler) uten å belaste kommunens felles disposisjonsfond eller utløse bystyresak jf. Kommuneloven § 14-5.
 
 ## 3. Konkret Føring i Framsikt EPM (Modul: Tertialoppfølging ➜ Budsjettreguleringer)
 
 | Linje | Postering | Ansvar | Art | Beløp (NOK) | Konteringstekst |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| **1** | Avgiver (Kredit) | `1000-SJEF-ORGTEK` | `1020 / 1010` | **-13,596,842** | Reduksjon av utgiftsramme Kommunalsjefens stab Org & Tek |
-| **2** | Mottaker (Debet) | `1000-SJEF-ORGTEK` | `1020` | **+13,596,842** | Tilførsel til felles reservepott Organisasjons- og teknologiparaplyen |
+| **1** | Avgiver (Kredit) | `1000-SJEF-ORGTEK` | `1020 / 1010` | **-1,919,554** | Reduksjon av utgiftsramme Kommunalsjefens stab Organisasjon og teknologi |
+| **2** | Mottaker (Debet) | `1000-SJEF-ORGTEK` | `1020` | **+1,919,554** | Tilførsel til felles reservepott Organisasjons- og teknologiparaplyen |
 | **SUM** | **Netto Balanse** | - | - | **kr 0,00** | **I balanse innen rammeområdet** |
 
 ## 4. Godkjenningsflyt
-1. **Attestert av fagcontroller:** Silje Mæland / Frank Ellingsen (okonomi.orgtek@kristiansand.kommune.no)
+1. **Attestert av fagcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)
 2. **Signert av ansvarlig leder:** Geir A. Askvik (geir.askvik@kristiansand.kommune.no)
 3. **Endelig rammegodkjenning:** Kommunalsjef Organisasjon og teknologi (Geir A. Askvik)

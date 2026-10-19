@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 403: Sørlandsparken Bo- og Miljøtjeneste
-**Ansvar:** `5220-ENH-403` | **Leder:** Christian Holte (Enhetsleder Bo- og Miljøtjenester)  
-**E-post:** christian.holte@kristiansand.kommune.no | **Telefon:** +47 38 00 84 03 | **Kontorsted:** Skibåsen 12, 4636 Kristiansand  
-**Sektor:** Helse og mestring | **KOSTRA-funksjon:** 254 Heldøgns omsorgsbolig  
+# 📁 Personlig Rapportarkiv: Bo- og Miljøtjenester Sørlandsparken (Enhet 2540)
+**Ansvar:** `5220-ENH-403` | **Leder:** Christian Holte (Enhetsleder Bo & Miljø)  
+**E-post:** christian.holte@kristiansand.kommune.no | **Telefon:** +47 38 00 75 40 | **Kontorsted:** Barstølveien 32, 4636 Kristiansand (Sørlandsparken)  
+**Sektor:** Helse og mestring | **KOSTRA-funksjon:** Funksjon 253 (Brukerstyrt personlig assistanse & bolig)  
 **Delegeringsfullmakt:** kr 1,800,000  
-**Sektorcontroller:** Marianne Tellefsen (marianne.tellefsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 38,600,000
-* **Faktisk Regnskap YTD:** kr 27,080,814 (Forbruksgrad: 92.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 2,100,786
+* **Tildelt Årsbudsjett:** kr 92,000,000
+* **Faktisk Regnskap YTD:** kr 64,544,945 (Forbruksgrad: 92.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 5,007,055
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 36,679,707 (Sluttavvik: kr 1,920,293)
-* **SHA-256 Revisjonsstempel:** `0ae29c85f63f25d76a52fcbb296cc16ac45c17c92b5eb68e11de7d4439c6dfc4`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 87,434,818 (Sluttavvik: kr 4,565,182)
+* **SHA-256 Revisjonsstempel:** `60f21442d06ddd302bd5991d2b9492a80f095c48f84bf7862b6deaea10fc231b`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.helse@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

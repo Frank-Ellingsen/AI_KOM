@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 402: Hjemmetjenesten Vågsbygd
+# 📁 Personlig Rapportarkiv: Hjemmetjenesten Vågsbygd
 **Ansvar:** `5210-ENH-402` | **Leder:** Berit Olsen (Enhetsleder Hjemmetjeneste Vågsbygd)  
-**E-post:** berit.olsen@kristiansand.kommune.no | **Telefon:** +47 38 00 84 02 | **Kontorsted:** Kirsten Flagstads vei 28, 4621 Kristiansand  
-**Sektor:** Helse og mestring | **KOSTRA-funksjon:** 253 Pleie og omsorg i hjemmet  
+**E-post:** berit.olsen@kristiansand.kommune.no | **Telefon:** +47 38 00 61 00 | **Kontorsted:** Kirsten Flagstads vei 30, 4621 Kristiansand  
+**Sektor:** Helse og mestring | **KOSTRA-funksjon:** Funksjon 253  
 **Delegeringsfullmakt:** kr 1,500,000  
-**Sektorcontroller:** Marianne Tellefsen (marianne.tellefsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Marianne Tellefsen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 42,800,000
-* **Faktisk Regnskap YTD:** kr 30,027,431 (Forbruksgrad: 92.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 2,329,369
+* **Tildelt Årsbudsjett:** kr 68,000,000
+* **Faktisk Regnskap YTD:** kr 47,707,133 (Forbruksgrad: 92.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 3,700,867
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 40,675,848 (Sluttavvik: kr 2,124,152)
-* **SHA-256 Revisjonsstempel:** `40c887b8c8b77ed231a0de03ac88cbe76428af4e56cd9f7a30bc9cccc742cdfb`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 64,626,825 (Sluttavvik: kr 3,373,175)
+* **SHA-256 Revisjonsstempel:** `c6cfa04b9a5e947ae6f8b4e4b6e75c002ce094a04f6c2508f0b25ad69b671b4e`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.helse@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

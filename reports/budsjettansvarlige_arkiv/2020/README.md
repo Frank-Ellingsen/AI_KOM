@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Kommunal Skole Enhet 2020
-**Ansvar:** `2020` | **Leder:** Trond Jensen (Rektor / Enhetsleder Kommunal Skole 2020)  
-**E-post:** trond.jensen@kristiansand.kommune.no | **Telefon:** +47 38 00 82 20 | **Kontorsted:** Lovisenlev Skolevei 4, 4633 Kristiansand  
-**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** 202 Grunnskole 1.–10. trinn  
+# 📁 Personlig Rapportarkiv: Lovisenlev Skole (Enhet 2020)
+**Ansvar:** `2020` | **Leder:** Trond Jensen (Rektor / Enhetsleder)  
+**E-post:** trond.jensen@kristiansand.kommune.no | **Telefon:** +47 38 14 42 00 | **Kontorsted:** Marviksveien 90, 4632 Kristiansand (Lund)  
+**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** Funksjon 202 (Grunnskole), Funksjon 215 (SFO)  
 **Delegeringsfullmakt:** kr 2,000,000  
 **Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 33,591,000
-* **Faktisk Regnskap YTD:** kr 25,515,887 (Forbruksgrad: 100.5 %)
-* **Avvik YTD (Budsjett - Actuals):** kr -121,091
+* **Tildelt Årsbudsjett:** kr 52,000,000
+* **Faktisk Regnskap YTD:** kr 39,499,453 (Forbruksgrad: 100.5 %)
+* **Avvik YTD (Budsjett - Actuals):** kr -187,453
 * **Trafikklys:** 🟡 Merforbruk (Moderat observasjon)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 34,984,090 (Sluttavvik: kr -1,393,090)
-* **SHA-256 Revisjonsstempel:** `be31231a48817aa18903bb7a2ea753f7979cb16abe613c15368f348b626dfad8`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 54,151,417 (Sluttavvik: kr -2,151,417)
+* **SHA-256 Revisjonsstempel:** `9cb88673d8c77c19a65531a5bca80b3bf093f854e0f2c201bd71a4da6e552875`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.oppvekst@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

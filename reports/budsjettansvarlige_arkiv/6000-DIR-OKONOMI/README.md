@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Sentral økonomistab
+# 📁 Personlig Rapportarkiv: Sentral Økonomistab & Finansforvaltning
 **Ansvar:** `6000-DIR-OKONOMI` | **Leder:** Terje Fjellvang (Økonomidirektør)  
-**E-post:** terje.fjellvang@kristiansand.kommune.no | **Telefon:** +47 38 00 76 10 | **Kontorsted:** Rådhuset, Torvet 1, 4611 Kristiansand  
-**Sektor:** Økonomi og virksomhetsstyring | **KOSTRA-funksjon:** 170/180/190 Finansforvaltning og konsernregnskap  
+**E-post:** terje.fjellvang@kristiansand.kommune.no | **Telefon:** +47 38 00 70 15 | **Kontorsted:** Rådhuset, Rådhusgata 18, 4611 Kristiansand  
+**Sektor:** Økonomi og virksomhetsstyring | **KOSTRA-funksjon:** Funksjon 100, 130  
 **Delegeringsfullmakt:** kr 50,000,000  
-**Sektorcontroller:** Frank Ellingsen (Senior Controller) (frank.ellingsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 1,160,000,000
-* **Faktisk Regnskap YTD:** kr 822,384,440 (Forbruksgrad: 93.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 54,575,560
+* **Tildelt Årsbudsjett:** kr 261,000,000
+* **Faktisk Regnskap YTD:** kr 185,036,499 (Forbruksgrad: 93.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 12,279,501
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 1,115,727,262 (Sluttavvik: kr 44,272,738)
-* **SHA-256 Revisjonsstempel:** `a08eb7aa797deec771475a4f2ef067ddc5bcba847aa203c654bd2ce9daaf9cd5`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 251,031,112 (Sluttavvik: kr 9,968,888)
+* **SHA-256 Revisjonsstempel:** `e91f0569948ddf931b49cb2682079d3b5f5e5a3656a5b6a88f5a1b6600e848e1`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `konsernokonomi@kristiansand.kommune.no / Websak`  
-*Returfrist:* **M+9 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

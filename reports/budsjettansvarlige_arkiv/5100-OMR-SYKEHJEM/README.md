@@ -1,19 +1,19 @@
 # 📁 Personlig Rapportarkiv: Døgnomsorg og Sykehjem
 **Ansvar:** `5100-OMR-SYKEHJEM` | **Leder:** Mette Syvertsen (Områdeleder Institusjon & Døgnpleie)  
-**E-post:** mette.syvertsen@kristiansand.kommune.no | **Telefon:** +47 38 00 71 20 | **Kontorsted:** Kvartal 35, Tollbodgata 22  
-**Sektor:** Helse og mestring | **KOSTRA-funksjon:** 254 Kommunale sykehjem og heldøgnspleie  
+**E-post:** mette.syvertsen@kristiansand.kommune.no | **Telefon:** +47 38 00 71 20 | **Kontorsted:** Kvartal 35, Tollbodgata 22, 4611 Kristiansand  
+**Sektor:** Helse og mestring | **KOSTRA-funksjon:** Funksjon 254 (Sykehjem & institusjon)  
 **Delegeringsfullmakt:** kr 10,000,000  
-**Sektorcontroller:** Marianne Tellefsen (marianne.tellefsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 95,000,000
-* **Faktisk Regnskap YTD:** kr 72,956,678 (Forbruksgrad: 101.6 %)
-* **Avvik YTD (Budsjett - Actuals):** kr -1,136,678
+* **Tildelt Årsbudsjett:** kr 310,000,000
+* **Faktisk Regnskap YTD:** kr 238,069,159 (Forbruksgrad: 101.6 %)
+* **Avvik YTD (Budsjett - Actuals):** kr -3,709,159
 * **Trafikklys:** 🔴 Merforbruk (Kritisk underskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 100,590,248 (Sluttavvik: kr -5,590,248)
-* **SHA-256 Revisjonsstempel:** `5323e6a3b261c919112b02cf982e231a127d8f3dbe4dc2e7b2d696a1568dd7f7`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 328,217,538 (Sluttavvik: kr -18,217,538)
+* **SHA-256 Revisjonsstempel:** `0b37e9916b4d470a40730bc934512d1702d92d74539f78c243b06481586743be`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.helse@kristiansand.kommune.no`  
-*Returfrist:* **M+7 virkedag kl. 14:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

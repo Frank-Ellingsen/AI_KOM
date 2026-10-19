@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 302: Vann, Avløp og Renovasjon
+# 📁 Personlig Rapportarkiv: VAR Ingeniørvesen
 **Ansvar:** `3100-ENH-302` | **Leder:** Inger Johanne Foss (Enhetsleder VAR Ingeniørvesen)  
-**E-post:** inger.foss@kristiansand.kommune.no | **Telefon:** +47 38 00 83 02 | **Kontorsted:** Rigetjønnveien 18, 4626 Kristiansand  
-**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** 340/345 Selvkost Vann og Avløp  
+**E-post:** inger.johanne.foss@kristiansand.kommune.no | **Telefon:** +47 38 00 73 60 | **Kontorsted:** Marviksveien 120, 4632 Kristiansand  
+**Sektor:** By- og stedsutvikling | **KOSTRA-funksjon:** Funksjon 340, 345 (Selvkost Vann & Avløp)  
 **Delegeringsfullmakt:** kr 3,000,000  
-**Sektorcontroller:** Knut Arild Vike (knut.arild.vike@kristiansand.kommune.no)  
+**Sektorcontroller:** Frank Ellingsen (frank.ellingsen@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 68,400,000
-* **Faktisk Regnskap YTD:** kr 47,584,115 (Forbruksgrad: 92.0 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 4,126,285
+* **Tildelt Årsbudsjett:** kr 145,000,000
+* **Faktisk Regnskap YTD:** kr 100,872,758 (Forbruksgrad: 92.0 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 8,747,242
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 64,291,327 (Sluttavvik: kr 4,108,673)
-* **SHA-256 Revisjonsstempel:** `e3569d7263392745a67a19d2f2ca815b14020695f3660443dfefce7bc1d4581c`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 136,294,546 (Sluttavvik: kr 8,705,454)
+* **SHA-256 Revisjonsstempel:** `45541f3bee1d984da220b5d4e64ee53dc2df0682ae966ce44545776ece508c32`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.byutvikling@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**

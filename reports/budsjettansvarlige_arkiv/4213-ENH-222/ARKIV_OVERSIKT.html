@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapportarkiv — Hånes Barnehage (4213-ENH-222)</title>
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --surface: #ffffff;
+            --navy-dark: #1e293b;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --border-strong: #1e293b;
+            --green: #166534;
+            --green-bg: #dcfce7;
+            --red: #991b1b;
+            --red-bg: #fee2e2;
+            --amber: #9a3412;
+            --amber-bg: #ffedd5;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 28px;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 36px 42px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        .back-link {
+            color: var(--navy-dark);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .header-box {
+            border-bottom: 2px solid var(--navy-dark);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        .unit-title { font-size: 24px; font-weight: 700; color: var(--navy-dark); margin-bottom: 4px; }
+        .unit-meta { font-size: 13px; color: var(--text-secondary); }
+        
+        .kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-bottom: 28px;
+        }
+        .kpi-card { text-align: center; }
+        .kpi-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+        .kpi-value { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+        .kpi-sub { font-size: 11px; color: var(--text-secondary); }
+        .positive { color: var(--green); }
+        .negative { color: var(--red); }
+        
+        h2 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--navy-dark); margin: 28px 0 12px 0; border-bottom: 1px solid var(--navy-dark); padding-bottom: 4px; }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .archive-card {
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            padding: 16px;
+            background: #ffffff;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .archive-card:hover {
+            border-color: var(--navy-dark);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .card-title { font-size: 13px; font-weight: 700; color: var(--navy-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .card-desc { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 12px; }
+        .file-list { list-style: none; font-size: 12px; }
+        .file-list li { margin-bottom: 6px; }
+        .file-link {
+            color: var(--navy-dark);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .file-link:hover { text-decoration: underline; }
+        
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 24px;
+        }
+        .info-table th {
+            text-align: left;
+            padding: 8px 10px;
+            border-bottom: 1.5px solid var(--navy-dark);
+            font-weight: 600;
+        }
+        .info-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+        .info-table tr:hover td { background: #f8fafc; }
+        
+        .footer-strip {
+            margin-top: 36px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-light);
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-nav">
+            <a class="back-link" href="../index.html">⬅️ Tilbake til Hovedregister over alle Budsjettansvarlige</a>
+            <span>Kristiansand Kommune — AI Project Controller Hub</span>
+        </div>
+
+        <div class="header-box">
+            <div class="unit-title">📁 Rapportarkiv: Hånes Barnehage</div>
+            <div class="unit-meta">
+                <strong>Ansvar:</strong> 4213-ENH-222 | <strong>Leder:</strong> Tone Myhre (Styrer Hånes Barnehage) | 
+                <strong>E-post:</strong> tone.myhre@kristiansand.kommune.no | <strong>Telefon:</strong> +47 38 00 65 00 | 
+                <strong>Kontorsted:</strong> Hånestangen 12, 4635 Kristiansand
+            </div>
+            <div class="unit-meta" style="margin-top: 4px;">
+                <strong>Sektor:</strong> Oppvekst og utdanning | <strong>KOSTRA-funksjon:</strong> Funksjon 201 | 
+                <strong>Delegeringsfullmakt:</strong> kr 1,200,000 | 
+                <strong>Sektorcontroller:</strong> Erik Henriksen (okonomi.controller@kristiansand.kommune.no)
+            </div>
+        </div>
+
+        <!-- KPI Strip -->
+        <div class="kpi-strip">
+            <div class="kpi-card">
+                <div class="kpi-label">Tildelt Årsbudsjett</div>
+                <div class="kpi-value">kr 21,000,000</div>
+                <div class="kpi-sub">Vedtatt ramme 2026</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Faktisk Regnskap YTD (M9)</div>
+                <div class="kpi-value">kr 14,733,085</div>
+                <div class="kpi-sub">Forbruksgrad: 92.8 %</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Avvik (Budsjett - Actuals)</div>
+                <div class="kpi-value positive">+kr 1,142,915</div>
+                <div class="kpi-sub">🟢 Mindreforbruk (I balanse / Overskudd)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">EOY Prognose (P50)</div>
+                <div class="kpi-value">kr 19,954,886</div>
+                <div class="kpi-sub">Sluttavvik: kr 1,045,114</div>
+            </div>
+        </div>
+
+        <!-- Dokumentmapper i arkivet -->
+        <h2>Enhetens Dedikerte Rapporter og Dokumentmapper</h2>
+        <div class="archive-grid">
+            <div class="archive-card">
+                <div class="card-title">📄 01. Månedsrapporter</div>
+                <div class="card-desc">Offisielle 2-siders PDF- og HTML-avviksrapporter med status, diagnostikk, Monte Carlo og preskripsjoner.</div>
+                <ul class="file-list">
+                    <li><a class="file-link" href="01_Maanedsrapporter/Maanedsrapport_M09_2026.pdf" target="_blank">📄 Maanedsrapport M09 (PDF)</a></li>
+                    <li><a class="file-link" href="01_Maanedsrapporter/Maanedsrapport_M09_2026.html" target="_blank">🌐 Maanedsrapport M09 (HTML)</a></li>
+                    <li><a class="file-link" href="01_Maanedsrapporter/Maanedsrapport_M10_2026.pdf" target="_blank">📄 Maanedsrapport M10 (PDF)</a></li>
+                    <li><a class="file-link" href="01_Maanedsrapporter/M10_Maanedsrapport_M10_2026.html" target="_blank">🌐 Maanedsrapport M10 (HTML)</a></li>
+                </ul>
+            </div>
+
+            <div class="archive-card">
+                <div class="card-title">🏦 02. Kontoutskrift (Nettbank)</div>
+                <div class="card-desc">Månedlige pedagogiske bankutskrifter for ledere uten økonomiutdanning med disponibel saldo ut året.</div>
+                <ul class="file-list">
+                    <li><a class="file-link" href="02_Kontoutskrifter/KONTOUTSKRIFT_4213-ENH-222_M10.html" target="_blank">🏦 Kontoutskrift M10 (Nettbank)</a></li>
+                </ul>
+            </div>
+
+            <div class="archive-card">
+                <div class="card-title">📝 03. Saksdokumenter &amp; Maler</div>
+                <div class="card-desc">Tilknyttede kommunale maler for avviksnotat, tiltaksplan, HTA § 4 og bemanningsplaner.</div>
+                <ul class="file-list">
+                    <li><a class="file-link" href="03_Saksdokumenter_og_Maler/RAPPORTMAL_RESULTATENHET_LONN_VIKAR.docx" target="_blank">📝 RAPPORTMAL_RESULTATENHET_LONN_VIKAR.docx</a></li>
+                    <li><span class="card-desc">Returkanal: E-post / Public 360 / Teams</span></li>
+                    <li><span class="card-desc">Returfrist: <strong>M+7 virkedager kl. 12:00</strong></span></li>
+                </ul>
+            </div>
+
+            <div class="archive-card">
+                <div class="card-title">🔄 04. Framsikt Rammeregulering</div>
+                <div class="card-desc">Enhetsspesifikke konteringslinjer for omdisponering av overskudd eller dekning av underskudd.</div>
+                <ul class="file-list">
+                    <li><a class="file-link" href="04_Framsikt_Omdisponering/framsikt_kontering_4213-ENH-222.csv" download>📥 Framsikt Batch CSV</a></li>
+                    <li><a class="file-link" href="04_Framsikt_Omdisponering/FRAMSIKT_KONTERINGSANVISNING.md" target="_blank">📖 Konteringsveileder</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Delegeringsavtale og Retningslinjer -->
+        <h2>Delegeringsavtale &amp; Saksbehandlingskrav</h2>
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>Felt</th>
+                    <th>Spesifikasjon</th>
+                    <th>Instruks for leder</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Delegeringsfullmakt</strong></td>
+                    <td>kr 1,200,000</td>
+                    <td>Attestasjonsfullmakt på art 1000–1270. Attestasjon skjer i Visma ERP.</td>
+                </tr>
+                <tr>
+                    <td><strong>Utsendte rapporter</strong></td>
+                    <td>Månedsrapport M10, Tertialrapport T2, Lønns- og vikaravvik, Bemanningsanalyse jf. HTA § 4</td>
+                    <td>Mottas månedlig via e-post og dedikert Microsoft Teams-kanal.</td>
+                </tr>
+                <tr>
+                    <td><strong>Returfrist</strong></td>
+                    <td><strong>M+7 virkedager kl. 12:00</strong></td>
+                    <td>Ved merforbruk (rødt trafikklys) må avviksnotat returneres innen fristen.</td>
+                </tr>
+                <tr>
+                    <td><strong>Returkanal</strong></td>
+                    <td><code>E-post / Public 360 / Teams</code></td>
+                    <td>Sendes til angitt e-postadresse eller via Websak / Public 360.</td>
+                </tr>
+                <tr>
+                    <td><strong>Sektorcontroller</strong></td>
+                    <td>Erik Henriksen (okonomi.controller@kristiansand.kommune.no)</td>
+                    <td>Sparringspartner for turnusjustering, vikarstopp og Framsikt-omdisponeringer.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer-strip">
+            <span>Kristiansand Kommune — Arkiv for Budsjettansvarlig 4213-ENH-222</span>
+            <span>Kryptografisk revisjonssegl (Stage-Gate Port 9): cb4c20028fdcdd5d...</span>
+        </div>
+    </div>
+</body>
+</html>

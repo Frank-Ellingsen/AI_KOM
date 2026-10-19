@@ -1,19 +1,19 @@
-# 📁 Personlig Rapportarkiv: Enhet 204: Grim Ungdomsskole
+# 📁 Personlig Rapportarkiv: Grim Ungdomsskole
 **Ansvar:** `4102-ENH-204` | **Leder:** Espen Birkeland (Rektor Grim Ungdomsskole)  
-**E-post:** espen.birkeland@kristiansand.kommune.no | **Telefon:** +47 38 00 82 04 | **Kontorsted:** Møllevannsveien 48, 4617 Kristiansand  
-**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** 202 Grunnskole 8.–10. trinn  
+**E-post:** espen.birkeland@kristiansand.kommune.no | **Telefon:** +47 38 00 43 00 | **Kontorsted:** Møllevannsveien 52, 4617 Kristiansand  
+**Sektor:** Oppvekst og utdanning | **KOSTRA-funksjon:** Funksjon 202  
 **Delegeringsfullmakt:** kr 1,800,000  
-**Sektorcontroller:** Erik Halvorsen (erik.halvorsen@kristiansand.kommune.no)  
+**Sektorcontroller:** Erik Henriksen (okonomi.controller@kristiansand.kommune.no)  
 
 ---
 
 ## 📊 Finansiell Nøkkelstatus (M9 YTD)
-* **Tildelt Årsbudsjett:** kr 28,900,000
-* **Faktisk Regnskap YTD:** kr 20,275,532 (Forbruksgrad: 92.8 %)
-* **Avvik YTD (Budsjett - Actuals):** kr 1,572,868
+* **Tildelt Årsbudsjett:** kr 51,000,000
+* **Faktisk Regnskap YTD:** kr 35,780,350 (Forbruksgrad: 92.8 %)
+* **Avvik YTD (Budsjett - Actuals):** kr 2,775,650
 * **Trafikklys:** 🟢 Mindreforbruk (I balanse / Overskudd)
-* **Sesongjustert EOY Sluttprognose (P50):** kr 27,462,715 (Sluttavvik: kr 1,437,285)
-* **SHA-256 Revisjonsstempel:** `84626d453ce130739f84084ecff9a64ffd6f7a053a654492fbe058ab6e2f118d`
+* **Sesongjustert EOY Sluttprognose (P50):** kr 48,469,392 (Sluttavvik: kr 2,530,608)
+* **SHA-256 Revisjonsstempel:** `533dbf1de2abb0791cfbe5d2a88297b1d27812c1d866d365428c88a06a1d95f2`
 
 ---
 
@@ -32,5 +32,5 @@
    - Interaktivt nettleserdashboard for denne enheten
 
 ---
-*Returkanal for avviksnotater:* `okonomi.oppvekst@kristiansand.kommune.no`  
-*Returfrist:* **M+6 virkedag kl. 12:00**
+*Returkanal for avviksnotater:* `E-post / Public 360 / Teams`  
+*Returfrist:* **M+7 virkedager kl. 12:00**
