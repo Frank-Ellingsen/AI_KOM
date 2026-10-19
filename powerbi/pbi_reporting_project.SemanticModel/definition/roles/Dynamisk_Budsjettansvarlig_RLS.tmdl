@@ -34,3 +34,6 @@ role Dynamisk_Budsjettansvarlig_RLS
 			        ||
 			        Dim_Ansvar[kommunalsjefomrade] IN UserSectors
 			    )
+
+	annotation PBI_Id = eddbd43be2714ed3aa251d0fbaba965c
+

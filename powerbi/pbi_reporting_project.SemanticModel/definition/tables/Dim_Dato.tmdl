@@ -1,28 +1,46 @@
 table Dim_Dato
+	lineageTag: a41d757b-db5c-43f6-bf33-006f7b6fa302
 
 	column dato
 		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7d30ac64-a6ad-4b20-9910-a4bb467497ce
 		summarizeBy: none
 		sourceColumn: dato
 
+		variation Variation
+			isDefault
+			relationship: f7cf88b0-7afb-416c-b3c6-387e90bdb732
+			defaultHierarchy: LocalDateTable_bbaa4154-6e85-45b8-8fba-59458c48f1ee.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	column ar
 		dataType: int64
-		summarizeBy: none
+		lineageTag: 474be435-b0db-4363-8060-b800d29e639c
+		summarizeBy: sum
 		sourceColumn: ar
+
+		annotation SummarizationSetBy = Automatic
 
 	column maned
 		dataType: int64
-		summarizeBy: none
+		lineageTag: 02a3ebcc-21d6-4d40-8335-0dae0ad90ac4
+		summarizeBy: sum
 		sourceColumn: maned
+
+		annotation SummarizationSetBy = Automatic
 
 	column manedsnavn
 		dataType: string
+		lineageTag: 3f3b282d-c28a-4c15-a09f-72fe48f2e5ab
 		summarizeBy: none
 		sourceColumn: manedsnavn
 		sortByColumn: maned
 
 	column tertial
 		dataType: string
+		lineageTag: 0c6b7db1-9dac-45f6-a8e4-fce859420e69
 		summarizeBy: none
 		sourceColumn: tertial
 
@@ -41,3 +59,4 @@ table Dim_Dato
 				    AddName
 
 	annotation PBI_ResultType = Table
+

@@ -1,92 +1,111 @@
 table Dim_Sikkerhet_RLS
+	lineageTag: 5081c189-cb23-46e3-8f4d-ecaaac47f1d0
 
 	column bruker_upn
 		dataType: string
+		lineageTag: 4aa74573-8cb1-4e59-a0ad-3d2b949f7180
 		summarizeBy: none
 		sourceColumn: bruker_upn
 
 	column navn
 		dataType: string
+		lineageTag: 7d0551d6-9f6b-4444-bfa6-41ed136706b1
 		summarizeBy: none
 		sourceColumn: navn
 
 	column tittel
 		dataType: string
+		lineageTag: 4c02c73f-97bf-4905-920f-5f0ce66f96e6
 		summarizeBy: none
 		sourceColumn: tittel
 
 	column niva
 		dataType: string
+		lineageTag: 17a1da5d-3c2d-4b57-a117-9358d0ea3f8e
 		summarizeBy: none
 		sourceColumn: niva
 
 	column niva_tekst
 		dataType: string
+		lineageTag: 5bfc9c38-e679-49e7-b400-d0520319f7a4
 		summarizeBy: none
 		sourceColumn: niva_tekst
 
 	column sektor_kode
 		dataType: string
+		lineageTag: be05c140-4667-431d-99b0-57149c8e346f
 		summarizeBy: none
 		sourceColumn: sektor_kode
 
 	column kommunalsjefomrade
 		dataType: string
+		lineageTag: 67c58dcf-fd66-4535-82eb-92d60500a347
 		summarizeBy: none
 		sourceColumn: kommunalsjefomrade
 
 	column ansvar_kode
 		dataType: string
+		lineageTag: 54130c2d-e7aa-47c8-a3ac-994683d66b7c
 		summarizeBy: none
 		sourceColumn: ansvar_kode
 
 	column enhet_navn
 		dataType: string
+		lineageTag: 266ed741-7784-4207-bdd9-a3af7a114ac9
 		summarizeBy: none
 		sourceColumn: enhet_navn
 
 	column har_full_tilgang
 		dataType: int64
+		lineageTag: df622a8b-27ad-4012-a569-61fc25c43f27
 		summarizeBy: none
 		sourceColumn: har_full_tilgang
 
 	column rls_rolle
 		dataType: string
+		lineageTag: fc31cbe3-df86-45de-8670-6032dd253653
 		summarizeBy: none
 		sourceColumn: rls_rolle
 
 	column teams_team_navn
 		dataType: string
+		lineageTag: 2a3c42d8-8f0a-4a64-821e-ccecef084779
 		summarizeBy: none
 		sourceColumn: teams_team_navn
 
 	column teams_kanal
 		dataType: string
+		lineageTag: db1e1e77-a44e-4142-a595-8399fb9d4204
 		summarizeBy: none
 		sourceColumn: teams_kanal
 
 	column teams_rapport_fane
 		dataType: string
+		lineageTag: 6aff2e69-e521-4687-abe9-5cb9585586fc
 		summarizeBy: none
 		sourceColumn: teams_rapport_fane
 
 	column powerbi_teams_app_url
 		dataType: string
+		lineageTag: 492aaca4-9ff3-4c92-9a40-11953ae08cf3
 		summarizeBy: none
 		sourceColumn: powerbi_teams_app_url
 
 	column delegeringsfullmakt_nok
 		dataType: double
+		lineageTag: 8cb832fe-ffb3-4b43-bdde-62ff86928ddf
 		summarizeBy: sum
 		sourceColumn: delegeringsfullmakt_nok
 
 	column controller_navn
 		dataType: string
+		lineageTag: 1fbbe10b-bf4e-463c-86e2-2df208e1a43e
 		summarizeBy: none
 		sourceColumn: controller_navn
 
 	column controller_epost
 		dataType: string
+		lineageTag: 3f073e11-a7de-48fa-a7b0-05849f70c122
 		summarizeBy: none
 		sourceColumn: controller_epost
 
@@ -109,3 +128,4 @@ table Dim_Sikkerhet_RLS
 				    Types
 
 	annotation PBI_ResultType = Table
+

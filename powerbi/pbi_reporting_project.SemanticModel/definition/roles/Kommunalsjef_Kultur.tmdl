@@ -2,3 +2,6 @@ role Kommunalsjef_Kultur
 	modelPermission: read
 
 	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Kultur og innbyggerdialog"
+
+	annotation PBI_Id = f63f0cd9388c49bfa798114debfcc5f6
+

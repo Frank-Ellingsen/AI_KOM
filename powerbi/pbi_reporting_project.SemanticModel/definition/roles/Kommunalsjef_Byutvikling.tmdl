@@ -2,3 +2,6 @@ role Kommunalsjef_Byutvikling
 	modelPermission: read
 
 	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "By- og stedsutvikling"
+
+	annotation PBI_Id = 77223afae65446128ebf8495028f806c
+

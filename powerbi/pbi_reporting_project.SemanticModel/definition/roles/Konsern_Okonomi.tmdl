@@ -1,2 +1,5 @@
 role Konsern_Okonomi
 	modelPermission: read
+
+	annotation PBI_Id = feb56cc9d4434e32abfc8880f41bb80d
+

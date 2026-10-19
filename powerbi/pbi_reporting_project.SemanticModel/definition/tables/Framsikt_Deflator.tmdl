@@ -1,12 +1,17 @@
 table Framsikt_Deflator
+	lineageTag: d1022a06-7ac4-416b-afba-0ed4ff18dbb7
 
 	column Value
-		dataType: double
-		summarizeBy: sum
+		dataType: string
+		lineageTag: 9036ee2c-5e48-4db8-af4c-5c41dc4aff5a
+		summarizeBy: none
 		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
 
 	column Label
 		dataType: string
+		lineageTag: da144f27-2474-447f-93a7-760a2d85136c
 		summarizeBy: none
 		sourceColumn: Label
 
@@ -21,3 +26,4 @@ table Framsikt_Deflator
 				    AddLabel
 
 	annotation PBI_ResultType = Table
+

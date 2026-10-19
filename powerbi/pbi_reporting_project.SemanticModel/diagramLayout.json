@@ -7,7 +7,138 @@
         "x": 0,
         "y": 0
       },
-      "nodes": [],
+      "nodes": [
+        {
+          "location": {
+            "x": 1313.3836382040001,
+            "y": 403.18783554598951
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "e9e29b20-e9d6-433b-a6c8-077fb1a6501b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1079.383638204,
+            "y": -50
+          },
+          "nodeIndex": "Audit_AI_Actions",
+          "nodeLineageTag": "8271f9a3-455d-426d-a85c-5d7b2b0d30f2",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 795.21790970943471,
+            "y": 275.47778010187926
+          },
+          "nodeIndex": "Dim_Ansvar",
+          "nodeLineageTag": "617fd971-bcba-42e9-b664-8294548749f4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 832.375671091979
+          },
+          "nodeIndex": "Dim_Art",
+          "nodeLineageTag": "34c2d60f-f594-4406-9c8e-3d63ec380f0d",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50.025085698441217,
+            "y": 1.963636981721038
+          },
+          "nodeIndex": "Dim_Dato",
+          "nodeLineageTag": "a41d757b-db5c-43f6-bf33-006f7b6fa302",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 730.45035059703457,
+            "y": 924.94124353190387
+          },
+          "nodeIndex": "Dim_Funksjon",
+          "nodeLineageTag": "56dbe378-0af8-49f9-ad49-3a70118ddc51",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1597.3836382040001,
+            "y": 403.18783554598951
+          },
+          "nodeIndex": "Dim_Sikkerhet_RLS",
+          "nodeLineageTag": "5081c189-cb23-46e3-8f4d-ecaaac47f1d0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 508.15670769330291,
+            "y": 420.33392609228645
+          },
+          "nodeIndex": "Fact_Regnskap",
+          "nodeLineageTag": "e5374dc1-2fd4-47d6-9870-48f848aaac5e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1881.3836382040001,
+            "y": 489.18783554598951
+          },
+          "nodeIndex": "Framsikt_Deflator",
+          "nodeLineageTag": "d1022a06-7ac4-416b-afba-0ed4ff18dbb7",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2165.383638204,
+            "y": 489.18783554598951
+          },
+          "nodeIndex": "Fravaer_Reduksjon",
+          "nodeLineageTag": "15771cf5-a41a-4843-ae09-bb8fbb3636c1",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
       "name": "All tables",
       "zoomValue": 100,
       "pinKeyFieldsToTop": false,

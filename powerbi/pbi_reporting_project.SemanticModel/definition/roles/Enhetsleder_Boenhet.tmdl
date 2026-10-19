@@ -2,3 +2,6 @@ role Enhetsleder_Boenhet
 	modelPermission: read
 
 	tablePermission Dim_Ansvar = [ansvar_kode] = "2540"
+
+	annotation PBI_Id = f0417fe07ef849e6abf7b8b476ffaab6
+

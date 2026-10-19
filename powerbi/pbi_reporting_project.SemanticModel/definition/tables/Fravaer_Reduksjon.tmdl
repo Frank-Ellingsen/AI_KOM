@@ -1,12 +1,17 @@
 table Fravaer_Reduksjon
+	lineageTag: 15771cf5-a41a-4843-ae09-bb8fbb3636c1
 
 	column Value
-		dataType: double
-		summarizeBy: sum
+		dataType: string
+		lineageTag: 04b3665b-8bd0-4da1-8439-8197c73d9a0e
+		summarizeBy: none
 		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
 
 	column Label
 		dataType: string
+		lineageTag: 3ce2e1a5-bac5-4b0c-aaf6-e707ae968f16
 		summarizeBy: none
 		sourceColumn: Label
 
@@ -21,3 +26,4 @@ table Fravaer_Reduksjon
 				    AddLabel
 
 	annotation PBI_ResultType = Table
+

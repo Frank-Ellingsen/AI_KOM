@@ -1,32 +1,39 @@
 table Dim_Art
+	lineageTag: 34c2d60f-f594-4406-9c8e-3d63ec380f0d
 
 	column art_key
 		dataType: string
+		lineageTag: 2c4fa6b3-6fe7-424b-855b-6d3c09912f13
 		summarizeBy: none
 		sourceColumn: art_key
 
 	column KOSTRA_Art
 		dataType: string
+		lineageTag: cd61cd83-6a13-4a0f-b2af-d1cf01894536
 		summarizeBy: none
 		sourceColumn: KOSTRA_Art
 
 	column Kontokode
 		dataType: string
+		lineageTag: d25eb423-b8b9-4df1-b871-6ca92a45ff8d
 		summarizeBy: none
 		sourceColumn: Kontokode
 
 	column Kontonavn
 		dataType: string
+		lineageTag: 46d6409f-2482-4276-8449-1c8f9c60c6ba
 		summarizeBy: none
 		sourceColumn: Kontonavn
 
 	column Hovedgruppe
 		dataType: string
+		lineageTag: 032fc4dd-0d83-423a-a7b5-a8ade45e8a03
 		summarizeBy: none
 		sourceColumn: Hovedgruppe
 
 	column Undergruppe
 		dataType: string
+		lineageTag: b661be6b-b497-4e7d-a142-26e9e91e9a15
 		summarizeBy: none
 		sourceColumn: Undergruppe
 
@@ -41,3 +48,4 @@ table Dim_Art
 				    Unique
 
 	annotation PBI_ResultType = Table
+

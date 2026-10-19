@@ -2,3 +2,6 @@ role Controller_Admin
 	modelPermission: read
 
 	tablePermission Dim_Ansvar = TRUE()
+
+	annotation PBI_Id = d4774aff255f4542869b5538b4bafe40
+

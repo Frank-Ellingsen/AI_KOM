@@ -2,3 +2,6 @@ role Kommunalsjef_Oppvekst
 	modelPermission: read
 
 	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Oppvekst"
+
+	annotation PBI_Id = c9d7b8fe83c84ecfba2ee7bcfaf995bf
+

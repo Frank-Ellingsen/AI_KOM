@@ -1,47 +1,62 @@
 table Audit_AI_Actions
+	lineageTag: 8271f9a3-455d-426d-a85c-5d7b2b0d30f2
 
 	column Tidsstempel
 		dataType: dateTime
+		lineageTag: d928a6c4-33e9-4018-aa66-bd3b65d81fa3
 		summarizeBy: none
 		sourceColumn: Tidsstempel
 
+		variation Variation
+			isDefault
+			relationship: 5e9b0e61-22e9-45cf-9a20-f5eeb764e098
+			defaultHierarchy: LocalDateTable_6dad48e3-170c-4275-b5c7-55dd9e0b82bb.'Date Hierarchy'
+
 	column Enhetskode
 		dataType: string
+		lineageTag: b4de97ff-fd0d-4164-aa38-19b2e2ea5c8f
 		summarizeBy: none
 		sourceColumn: Enhetskode
 
 	column ansvar_kode
 		dataType: string
+		lineageTag: b9c4b2f2-0135-4b1b-9dd6-5a878b285697
 		summarizeBy: none
 		sourceColumn: ansvar_kode
 
 	column AI_Tiltak
 		dataType: string
+		lineageTag: 4e916196-5c42-4b86-bc96-af9fcce76865
 		summarizeBy: none
 		sourceColumn: AI_Tiltak
 
 	column Konfidens
 		dataType: double
+		lineageTag: cab4a78d-0284-4b0c-9abb-b4079c29a7d5
 		summarizeBy: sum
 		sourceColumn: Konfidens
 
 	column Leder_Beslutning
 		dataType: string
+		lineageTag: 22fd2da5-545f-4952-8e9b-45b3ef9ea909
 		summarizeBy: none
 		sourceColumn: Leder_Beslutning
 
 	column Saksbehandler
 		dataType: string
+		lineageTag: 74edf4de-6f73-4ba0-a31a-9a1b416aac6c
 		summarizeBy: none
 		sourceColumn: Saksbehandler
 
 	column Begrunnelse
 		dataType: string
+		lineageTag: 83aac5d2-5546-4f2d-b41e-9bf630a963ee
 		summarizeBy: none
 		sourceColumn: Begrunnelse
 
 	column SHA256_Hash
 		dataType: string
+		lineageTag: e7b72f3c-c597-42d1-8e77-e6c7db47f06e
 		summarizeBy: none
 		sourceColumn: SHA256_Hash
 
@@ -70,3 +85,4 @@ table Audit_AI_Actions
 				    Source
 
 	annotation PBI_ResultType = Table
+

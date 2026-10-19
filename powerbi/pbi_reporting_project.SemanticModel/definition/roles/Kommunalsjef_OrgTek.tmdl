@@ -2,3 +2,6 @@ role Kommunalsjef_OrgTek
 	modelPermission: read
 
 	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Organisasjon og teknologi"
+
+	annotation PBI_Id = 435bcd8c568d494e92235f116802620a
+

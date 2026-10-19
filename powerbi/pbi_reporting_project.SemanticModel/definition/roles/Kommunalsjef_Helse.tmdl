@@ -2,3 +2,6 @@ role Kommunalsjef_Helse
 	modelPermission: read
 
 	tablePermission Dim_Ansvar = [kommunalsjefomrade] = "Helse og mestring"
+
+	annotation PBI_Id = 2e8d28430b7c4988a9d47f427270e373
+

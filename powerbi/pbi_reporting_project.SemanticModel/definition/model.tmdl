@@ -2,6 +2,15 @@ model Model
 	culture: en-US
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Fact_Regnskap","Dim_Dato","Dim_Ansvar","Dim_Funksjon","Dim_Art","Framsikt_Deflator","Fravaer_Reduksjon","Audit_AI_Actions","_Measures","Dim_Sikkerhet_RLS","DataRoot"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
 
 ref table Fact_Regnskap
 ref table Dim_Dato
@@ -13,6 +22,9 @@ ref table Fravaer_Reduksjon
 ref table Audit_AI_Actions
 ref table _Measures
 ref table Dim_Sikkerhet_RLS
+ref table DateTableTemplate_9dd39cb1-166f-4bd3-bb9f-536fe03a4cf6
+ref table LocalDateTable_bbaa4154-6e85-45b8-8fba-59458c48f1ee
+ref table LocalDateTable_6dad48e3-170c-4275-b5c7-55dd9e0b82bb
 
 ref role Controller_Admin
 ref role Konsern_Okonomi
@@ -24,3 +36,4 @@ ref role Kommunalsjef_OrgTek
 ref role Enhetsleder_Skole
 ref role Enhetsleder_Boenhet
 ref role Dynamisk_Budsjettansvarlig_RLS
+

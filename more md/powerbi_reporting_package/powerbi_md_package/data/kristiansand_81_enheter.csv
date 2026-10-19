@@ -1,0 +1,82 @@
+Virksomhetsomrade,Enhet_Navn,Ansvar,KOSTRA_Funksjon,Budsjett_MNOK,Regnskap_YTD_MNOK,Avvik_MNOK,Avvik_Prosent,RAG_Status
+Oppvekst,Grunnskole Enhet 1,2101,201,51.19,50.54,0.65,1.27,GRØNN
+Oppvekst,Barnehage Enhet 2,2102,202,176.14,159.07,17.07,9.69,GRØNN
+Oppvekst,PPT Enhet 3,2103,203,94.08,106.95,-12.87,-13.68,RØD
+Oppvekst,Barnevern Enhet 4,2104,204,47.69,53.27,-5.58,-11.7,RØD
+Oppvekst,Grunnskole Enhet 5,2105,205,107.11,116.07,-8.96,-8.37,RØD
+Oppvekst,Barnehage Enhet 6,2106,206,64.91,63.83,1.08,1.66,GRØNN
+Oppvekst,PPT Enhet 7,2107,207,63.83,71.01,-7.18,-11.25,RØD
+Oppvekst,Barnevern Enhet 8,2108,208,22.95,22.85,0.1,0.44,GRØNN
+Oppvekst,Grunnskole Enhet 9,2109,209,107.71,104.97,2.74,2.54,GRØNN
+Oppvekst,Barnehage Enhet 10,2110,210,129.59,145.15,-15.56,-12.01,RØD
+Oppvekst,PPT Enhet 11,2111,211,20.05,18.28,1.77,8.83,GRØNN
+Oppvekst,Barnevern Enhet 12,2112,212,53.26,55.77,-2.51,-4.71,RAV
+Oppvekst,Grunnskole Enhet 13,2113,213,53.93,61.02,-7.09,-13.15,RØD
+Oppvekst,Barnehage Enhet 14,2114,214,39.61,35.34,4.27,10.78,GRØNN
+Oppvekst,PPT Enhet 15,2115,215,92.62,97.94,-5.32,-5.74,RØD
+Oppvekst,Barnevern Enhet 16,2116,216,160.1,169.32,-9.22,-5.76,RØD
+Oppvekst,Grunnskole Enhet 17,2117,217,100.85,100.99,-0.14,-0.14,GRØNN
+Oppvekst,Barnehage Enhet 18,2118,218,57.47,58.16,-0.69,-1.2,GRØNN
+Helse og mestring,Sykehjem Enhet 1,5201,301,109.79,110.61,-0.82,-0.75,GRØNN
+Helse og mestring,Hjemmetjeneste Enhet 2,5202,302,49.18,49.04,0.14,0.28,GRØNN
+Helse og mestring,Helsehus Enhet 3,5203,303,170.09,163.47,6.62,3.89,GRØNN
+Helse og mestring,Psykiatri Enhet 4,5204,304,18.8,17.76,1.04,5.53,GRØNN
+Helse og mestring,Kommuneoverlege Enhet 5,5205,305,49.81,46.46,3.35,6.73,GRØNN
+Helse og mestring,Sykehjem Enhet 6,5206,306,125.71,134.88,-9.17,-7.29,RØD
+Helse og mestring,Hjemmetjeneste Enhet 7,5207,307,156.0,140.7,15.3,9.81,GRØNN
+Helse og mestring,Helsehus Enhet 8,5208,308,43.04,48.8,-5.76,-13.38,RØD
+Helse og mestring,Psykiatri Enhet 9,5209,309,15.4,15.38,0.02,0.13,GRØNN
+Helse og mestring,Kommuneoverlege Enhet 10,5210,310,23.32,24.47,-1.15,-4.93,RAV
+Helse og mestring,Sykehjem Enhet 11,5211,311,179.39,179.47,-0.08,-0.04,GRØNN
+Helse og mestring,Hjemmetjeneste Enhet 12,5212,312,76.4,80.38,-3.98,-5.21,RØD
+Helse og mestring,Helsehus Enhet 13,5213,313,126.15,130.61,-4.46,-3.54,RAV
+Helse og mestring,Psykiatri Enhet 14,5214,314,111.94,101.33,10.61,9.48,GRØNN
+Helse og mestring,Kommuneoverlege Enhet 15,5215,315,179.57,187.77,-8.2,-4.57,RAV
+Helse og mestring,Sykehjem Enhet 16,5216,316,53.81,60.1,-6.29,-11.69,RØD
+Helse og mestring,Hjemmetjeneste Enhet 17,5217,317,42.75,41.41,1.34,3.13,GRØNN
+Helse og mestring,Helsehus Enhet 18,5218,318,103.12,100.64,2.48,2.4,GRØNN
+Helse og mestring,Psykiatri Enhet 19,5219,319,98.32,98.49,-0.17,-0.17,GRØNN
+Helse og mestring,Kommuneoverlege Enhet 20,5220,320,59.13,62.89,-3.76,-6.36,RØD
+Helse og mestring,Sykehjem Enhet 21,5221,321,32.67,30.16,2.51,7.68,GRØNN
+Helse og mestring,Hjemmetjeneste Enhet 22,5222,322,150.2,161.52,-11.32,-7.54,RØD
+Stedsutvikling,Byggesak Enhet 1,3101,201,61.08,67.34,-6.26,-10.25,RØD
+Stedsutvikling,Regulering Enhet 2,3102,202,137.13,153.32,-16.19,-11.81,RØD
+Stedsutvikling,Geodata Enhet 3,3103,203,61.78,57.07,4.71,7.62,GRØNN
+Stedsutvikling,Klimakontor Enhet 4,3104,204,53.35,58.34,-4.99,-9.35,RØD
+Stedsutvikling,Byggesak Enhet 5,3105,205,155.69,140.79,14.9,9.57,GRØNN
+Stedsutvikling,Regulering Enhet 6,3106,206,113.59,128.43,-14.84,-13.06,RØD
+Stedsutvikling,Geodata Enhet 7,3107,207,133.14,119.19,13.95,10.48,GRØNN
+Stedsutvikling,Klimakontor Enhet 8,3108,208,114.1,129.32,-15.22,-13.34,RØD
+Stedsutvikling,Byggesak Enhet 9,3109,209,167.66,174.24,-6.58,-3.92,RAV
+Stedsutvikling,Regulering Enhet 10,3110,210,161.95,151.05,10.9,6.73,GRØNN
+Stedsutvikling,Geodata Enhet 11,3111,211,168.8,161.87,6.93,4.11,GRØNN
+Stedsutvikling,Klimakontor Enhet 12,3112,212,168.83,167.58,1.25,0.74,GRØNN
+Kultur og innbyggerdialog,Folkebibliotek Enhet 1,4101,201,68.43,71.64,-3.21,-4.69,RAV
+Kultur og innbyggerdialog,Kulturskole Enhet 2,4102,202,120.3,126.6,-6.3,-5.24,RØD
+Kultur og innbyggerdialog,Innbyggertorg Enhet 3,4103,203,113.47,113.69,-0.22,-0.19,GRØNN
+Kultur og innbyggerdialog,Ungdomsklubber Enhet 4,4104,204,166.51,176.38,-9.87,-5.93,RØD
+Kultur og innbyggerdialog,Folkebibliotek Enhet 5,4105,205,85.17,90.57,-5.4,-6.34,RØD
+Kultur og innbyggerdialog,Kulturskole Enhet 6,4106,206,171.23,153.18,18.05,10.54,GRØNN
+Kultur og innbyggerdialog,Innbyggertorg Enhet 7,4107,207,80.86,74.41,6.45,7.98,GRØNN
+Kultur og innbyggerdialog,Ungdomsklubber Enhet 8,4108,208,169.2,179.51,-10.31,-6.09,RØD
+Kultur og innbyggerdialog,Folkebibliotek Enhet 9,4109,209,129.99,134.06,-4.07,-3.13,RAV
+Kultur og innbyggerdialog,Kulturskole Enhet 10,4110,210,26.37,29.7,-3.33,-12.63,RØD
+Infrastruktur og miljø,Bydrift Enhet 1,6101,201,161.36,177.69,-16.33,-10.12,RØD
+Infrastruktur og miljø,Park og vei Enhet 2,6102,202,55.92,54.14,1.78,3.18,GRØNN
+Infrastruktur og miljø,Vann og avløp Enhet 3,6103,203,91.95,104.49,-12.54,-13.64,RØD
+Infrastruktur og miljø,Renovasjon Enhet 4,6104,204,45.76,46.03,-0.27,-0.59,GRØNN
+Infrastruktur og miljø,Bydrift Enhet 5,6105,205,143.6,155.75,-12.15,-8.46,RØD
+Infrastruktur og miljø,Park og vei Enhet 6,6106,206,110.16,111.03,-0.87,-0.79,GRØNN
+Infrastruktur og miljø,Vann og avløp Enhet 7,6107,207,126.74,121.25,5.49,4.33,GRØNN
+Infrastruktur og miljø,Renovasjon Enhet 8,6108,208,45.04,42.98,2.06,4.57,GRØNN
+Infrastruktur og miljø,Bydrift Enhet 9,6109,209,127.22,121.75,5.47,4.3,GRØNN
+Infrastruktur og miljø,Park og vei Enhet 10,6110,210,53.27,49.14,4.13,7.75,GRØNN
+Infrastruktur og miljø,Vann og avløp Enhet 11,6111,211,152.79,141.89,10.9,7.13,GRØNN
+Organisasjon og styring,Økonomiavdeling Enhet 1,1101,201,113.92,124.74,-10.82,-9.5,RØD
+Organisasjon og styring,HR og Lønn Enhet 2,1102,202,122.12,127.73,-5.61,-4.59,RAV
+Organisasjon og styring,IT og Digitalisering Enhet 3,1103,203,151.0,139.41,11.59,7.68,GRØNN
+Organisasjon og styring,Kommunikasjon Enhet 4,1104,204,177.04,161.26,15.78,8.91,GRØNN
+Organisasjon og styring,Økonomiavdeling Enhet 5,1105,205,133.91,144.28,-10.37,-7.74,RØD
+Organisasjon og styring,HR og Lønn Enhet 6,1106,206,139.0,141.4,-2.4,-1.73,GRØNN
+Organisasjon og styring,IT og Digitalisering Enhet 7,1107,207,168.81,153.51,15.3,9.06,GRØNN
+Organisasjon og styring,Kommunikasjon Enhet 8,1108,208,44.47,40.57,3.9,8.77,GRØNN

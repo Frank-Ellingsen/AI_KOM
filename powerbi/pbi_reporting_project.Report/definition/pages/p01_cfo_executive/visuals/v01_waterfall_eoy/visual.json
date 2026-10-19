@@ -1,17 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "v01_waterfall_eoy",
   "position": {
     "x": 20,
     "y": 525,
     "z": 11,
-    "width": 1560,
     "height": 195,
+    "width": 1560,
     "tabOrder": 11
   },
   "visual": {
     "visualType": "waterfallChart",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Category": {
@@ -29,25 +28,6 @@
               },
               "queryRef": "Dim_Art.Hovedgruppe",
               "nativeQueryRef": "Hovedgruppe",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Avvik YTD"
-                }
-              },
-              "queryRef": "_Measures.Avvik YTD",
-              "nativeQueryRef": "Avvik YTD",
               "active": true
             }
           ]
@@ -85,47 +65,32 @@
               "active": true
             }
           ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avvik YTD"
+                }
+              },
+              "queryRef": "_Measures.Avvik YTD",
+              "nativeQueryRef": "Avvik YTD",
+              "active": true
+            }
+          ]
         }
       }
     },
     "objects": {
       "sentimentColors": [
         {
-          "properties": {
-            "increaseColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#3A8F5C'"
-                    }
-                  }
-                }
-              }
-            },
-            "decreaseColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D64545'"
-                    }
-                  }
-                }
-              }
-            },
-            "totalColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1B365D'"
-                    }
-                  }
-                }
-              }
-            }
-          }
+          "properties": {}
         }
       ]
     },
@@ -150,6 +115,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

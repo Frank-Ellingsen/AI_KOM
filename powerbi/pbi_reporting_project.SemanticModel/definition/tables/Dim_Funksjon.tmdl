@@ -1,7 +1,9 @@
 table Dim_Funksjon
+	lineageTag: 56dbe378-0af8-49f9-ad49-3a70118ddc51
 
 	column funksjon_kode
 		dataType: string
+		lineageTag: 33defd6f-e6a2-4adc-a75a-b57f24587326
 		summarizeBy: none
 		sourceColumn: funksjon_kode
 
@@ -16,3 +18,4 @@ table Dim_Funksjon
 				    Unique
 
 	annotation PBI_ResultType = Table
+

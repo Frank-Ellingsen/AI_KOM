@@ -1,17 +1,21 @@
 table Dim_Ansvar
+	lineageTag: 617fd971-bcba-42e9-b664-8294548749f4
 
 	column ansvar_kode
 		dataType: string
+		lineageTag: 5685efae-e0b2-49f3-a74a-43d7831e62bb
 		summarizeBy: none
 		sourceColumn: ansvar_kode
 
 	column ansvar_navn
 		dataType: string
+		lineageTag: a6c35f3d-f851-4fcd-8632-69d234afbfa7
 		summarizeBy: none
 		sourceColumn: ansvar_navn
 
 	column kommunalsjefomrade
 		dataType: string
+		lineageTag: 96d4d1c0-fd34-49a0-aa69-3a511095fec4
 		summarizeBy: none
 		sourceColumn: kommunalsjefomrade
 
@@ -32,3 +36,4 @@ table Dim_Ansvar
 				    Unique
 
 	annotation PBI_ResultType = Table
+

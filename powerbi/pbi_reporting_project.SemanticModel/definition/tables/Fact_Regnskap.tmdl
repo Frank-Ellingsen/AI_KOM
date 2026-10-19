@@ -1,102 +1,126 @@
 table Fact_Regnskap
+	lineageTag: e5374dc1-2fd4-47d6-9870-48f848aaac5e
 
 	column dato
 		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7992d511-8807-4249-baa8-7d99fec9bca1
 		summarizeBy: none
 		sourceColumn: dato
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column maned
 		dataType: int64
+		lineageTag: 6328a02e-0004-4378-9273-5d98255839f4
 		summarizeBy: none
 		sourceColumn: maned
 
 	column manedsnavn
 		dataType: string
+		lineageTag: d9fde05e-e78e-41c5-b8a1-112dc51353a7
 		summarizeBy: none
 		sourceColumn: manedsnavn
 
 	column Tertial
 		dataType: string
+		lineageTag: 04a1bd0e-0df2-40ed-b835-329b60ddcea5
 		summarizeBy: none
 		sourceColumn: Tertial
 
 	column Status
 		dataType: string
+		lineageTag: 5324dec3-a16a-4b3b-8f19-61e375da5b7d
 		summarizeBy: none
 		sourceColumn: Status
 
 	column ansvar_kode
 		dataType: string
+		lineageTag: 5ac15f5e-c399-42b4-9f33-2ee5c9e162d3
 		summarizeBy: none
 		sourceColumn: ansvar_kode
 
 	column ansvar_navn
 		dataType: string
+		lineageTag: 5b3427e6-d962-49d2-a704-969d9e7dce72
 		summarizeBy: none
 		sourceColumn: ansvar_navn
 
 	column kommunalsjefomrade
 		dataType: string
+		lineageTag: 702a6457-987b-422d-875a-bb3c54c2559a
 		summarizeBy: none
 		sourceColumn: kommunalsjefomrade
 
 	column funksjon_kode
 		dataType: string
+		lineageTag: c29b1581-f223-430f-aa00-2cb903c7b37b
 		summarizeBy: none
 		sourceColumn: funksjon_kode
 
 	column art_key
 		dataType: string
+		lineageTag: 2fd8ffa0-a362-449e-ae13-1a0ebe706603
 		summarizeBy: none
 		sourceColumn: art_key
 
 	column Hovedgruppe
 		dataType: string
+		lineageTag: 065ff29b-b02c-4fee-8c1e-43ef53340770
 		summarizeBy: none
 		sourceColumn: Hovedgruppe
 
 	column Undergruppe
 		dataType: string
+		lineageTag: f7c541ae-9e7d-4eec-9a39-20e3f1819c0f
 		summarizeBy: none
 		sourceColumn: Undergruppe
 
 	column KOSTRA_Art
 		dataType: string
+		lineageTag: f2389b9e-12d2-4f3e-8321-246768304bef
 		summarizeBy: none
 		sourceColumn: KOSTRA_Art
 
 	column Kontokode
 		dataType: string
+		lineageTag: b2918daf-5627-4bb7-acbf-af24e90617e8
 		summarizeBy: none
 		sourceColumn: Kontokode
 
 	column Kontonavn
 		dataType: string
+		lineageTag: 44f85a6a-6dce-4de0-9fa5-82fc799858aa
 		summarizeBy: none
 		sourceColumn: Kontonavn
 
 	column Budsjett
 		dataType: double
+		lineageTag: 20d23a97-fab9-4f60-94e8-7e9922c3caef
 		summarizeBy: sum
 		sourceColumn: Budsjett
 
 	column Regnskap
 		dataType: double
+		lineageTag: 8940de1c-e2d2-42c0-9c46-ac4b7dfe9cd7
 		summarizeBy: sum
 		sourceColumn: Regnskap
 
 	column Avvik
 		dataType: double
+		lineageTag: c4380783-53c8-4cab-8ca6-782195165099
 		summarizeBy: sum
 		sourceColumn: Avvik
 
 	column Merforbruk
 		dataType: double
+		lineageTag: d24406e0-c40f-4c21-8602-1f7ab9e47521
 		summarizeBy: sum
 		sourceColumn: Merforbruk
 
 	column Aarsbudsjett
 		dataType: double
+		lineageTag: 749382f1-c031-4ae6-9140-197e4d6edfb6
 		summarizeBy: sum
 		sourceColumn: Aarsbudsjett
 
@@ -122,7 +146,7 @@ table Fact_Regnskap
 				    AddAnnualBudgetSkole = Table.AddColumn(AddArtKeySkole, "Aarsbudsjett", each [Budsjett] * 1.5, type number),
 				    RenameSkole = Table.RenameColumns(AddAnnualBudgetSkole, {{"Måned_Nr", "maned"}, {"Måned", "manedsnavn"}}),
 				    ColsSkole = Table.SelectColumns(RenameSkole, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"}),
-
+				
 				    // BoMiljø data
 				    SourceBo = Csv.Document(File.Contents(DataRoot & "Visma_ERP_BoMiljo_Transactions_2026.csv"), [Delimiter=",", Columns=15, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    HeadersBo = Table.PromoteHeaders(SourceBo, [PromoteAllScalars=true]),
@@ -143,9 +167,10 @@ table Fact_Regnskap
 				    AddAnnualBudgetBo = Table.AddColumn(AddArtKeyBo, "Aarsbudsjett", each [Budsjett] * 1.5, type number),
 				    RenameBo = Table.RenameColumns(AddAnnualBudgetBo, {{"Måned_Nr", "maned"}, {"Måned", "manedsnavn"}}),
 				    ColsBo = Table.SelectColumns(RenameBo, {"dato", "maned", "manedsnavn", "Tertial", "Status", "ansvar_kode", "ansvar_navn", "kommunalsjefomrade", "funksjon_kode", "art_key", "Hovedgruppe", "Undergruppe", "KOSTRA_Art", "Kontokode", "Kontonavn", "Budsjett", "Regnskap", "Avvik", "Merforbruk", "Aarsbudsjett"}),
-
+				
 				    Combined = Table.Combine({ColsSkole, ColsBo})
 				in
 				    Combined
 
 	annotation PBI_ResultType = Table
+

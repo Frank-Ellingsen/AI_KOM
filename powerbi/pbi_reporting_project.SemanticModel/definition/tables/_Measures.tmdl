@@ -1,8 +1,294 @@
 table _Measures
+	lineageTag: e9e29b20-e9d6-433b-a6c8-077fb1a6501b
+
+	measure 'Regnskap YTD' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
+		formatString: #,##0 "kr"
+		lineageTag: 261f3fd0-de75-4e86-9c16-4a20fd54e6f8
+
+	measure 'Budsjett YTD' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
+		formatString: #,##0 "kr"
+		lineageTag: ef3c9fe8-c097-43ad-b482-aa7e33c83256
+
+	measure 'Avvik YTD' = [Budsjett YTD] - [Regnskap YTD]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: ec15f0a8-03ff-4895-9edf-b4a87866cd79
+
+	measure 'Avvik YTD %' = DIVIDE([Avvik YTD], ABS([Budsjett YTD]), 0)
+		formatString: 0.0%
+		lineageTag: 1d398449-a9cf-4db5-80a2-5b6fb85b0dce
+
+	measure 'Merforbruk YTD' = MAX(-[Avvik YTD], 0)
+		formatString: #,##0 "kr"
+		lineageTag: 8008df83-cbaa-47bd-ba17-b5ee6e8c9b8e
+
+	measure 'Mindreforbruk YTD' = MAX([Avvik YTD], 0)
+		formatString: #,##0 "kr"
+		lineageTag: 3931092f-3ba8-45ff-b1cc-df49bcb05743
+
+	measure 'Vedtatt Årsbudsjett' = CALCULATE(SUM(Fact_Regnskap[Aarsbudsjett]), REMOVEFILTERS(Dim_Dato))
+		formatString: #,##0 "kr"
+		lineageTag: 386f04ec-dd59-4d13-953c-5f23aa8a8586
+
+	measure 'EOY Rullende Prognose' = VAR AnnualBudget = [Vedtatt Årsbudsjett] VAR RemainingBudget = MAX(AnnualBudget - [Budsjett YTD], 0) RETURN [Regnskap YTD] + RemainingBudget + MAX(-[Avvik YTD], 0) * 0.5
+		formatString: #,##0 "kr"
+		lineageTag: 97c5839c-af9b-4ace-984c-d6078ada9c9d
+
+	measure 'EOY Forventet Årsavvik' = [Vedtatt Årsbudsjett] - [EOY Rullende Prognose]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: d4050932-af08-47b4-9afa-9866a5595adb
+
+	measure 'Planlagt Tiltakseffekt T3' = SWITCH(SELECTEDVALUE(Dim_Ansvar[ansvar_kode]), "2540", 1928421, "2020", 863000, 2791421)
+		formatString: #,##0 "kr"
+		lineageTag: 01be24b4-c25c-434a-8707-22719ce0d27a
+
+	measure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] + [Planlagt Tiltakseffekt T3]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: 296c2ca0-98cb-4f33-bd58-8195c5d3d0e0
+
+	measure Tufte_Avvik_Farge_HEX = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "#A0A0A0", avv < 0 && (pct < -0.03 || avv < -250000), "#D64545", avv < 0, "#E6A23C", "#3A8F5C")
+		lineageTag: 693cfb34-a77f-408c-ac57-5379ebff95bb
+
+	measure Tufte_EOY_Avvik_Farge_HEX = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "#A0A0A0", eoyAvv < 0 && (eoyPct < -0.03 || eoyAvv < -500000), "#D64545", eoyAvv < 0, "#E6A23C", "#3A8F5C")
+		lineageTag: fe4d094d-00f8-410f-b41c-1b49a24953de
+
+	measure 'Vikarutgifter Art 1020' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020")
+		formatString: #,##0 "kr"
+		lineageTag: 81034a38-55ff-4b90-b92c-bee238507fc7
+
+	measure 'Overtid Art 1090' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1090")
+		formatString: #,##0 "kr"
+		lineageTag: 14191e78-325f-4ba1-b267-016853494a3f
+
+	measure 'NAV Refusjoner Art 1600' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1600")
+		formatString: #,##0 "kr"
+		lineageTag: 67f9fd80-ed8f-447e-8a79-f0825876ba63
+
+	measure 'Total Lonn' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[Hovedgruppe] IN {"1 Lønn", "Lønn og sosiale utgifter", "10 Fastlønn"})
+		formatString: #,##0 "kr"
+		lineageTag: f69be410-c3c5-4d4b-8bda-8850ee0b08cc
+
+	measure 'Vikarandel Lonn %' = DIVIDE([Vikarutgifter Art 1020], [Total Lonn], 0)
+		formatString: 0.0%
+		lineageTag: 48f32b10-1f7a-439d-8925-cd4d573cc812
+
+	measure 'Overtidsandel %' = DIVIDE([Overtid Art 1090], [Total Lonn], 0)
+		formatString: 0.0%
+		lineageTag: a4761450-5752-46da-b2fa-2bef7b460f5b
+
+	measure 'Netto Driftsutgift Per Elev' = DIVIDE(CALCULATE([Regnskap YTD], Dim_Ansvar[ansvar_kode] = "2020"), 1420, 0)
+		formatString: #,##0 "kr/elev"
+		lineageTag: eb402d87-20ee-464a-91a8-7ecca7148a41
+
+	measure 'Framsikt Deflator Value' = SELECTEDVALUE(Framsikt_Deflator[Value], 0.041)
+		formatString: 0.0%
+		lineageTag: 86c39cae-9e51-477a-9954-a0efca6328eb
+
+	measure 'Fraværstiltak Effektreduksjon Value' = SELECTEDVALUE(Fravaer_Reduksjon[Value], 0.015)
+		formatString: 0.0%
+		lineageTag: 0862d69c-e1a9-4e40-be12-6b2165f20a3a
+
+	measure 'Simulert EOY Netto Driftsresultat' = VAR DeflatorAddition = [Vedtatt Årsbudsjett] * [Framsikt Deflator Value] VAR VikarSavings = [Vikarutgifter Art 1020] * [Fraværstiltak Effektreduksjon Value] RETURN [EOY Rullende Prognose] + DeflatorAddition - VikarSavings
+		formatString: #,##0 "kr"
+		lineageTag: e08d194c-d067-4a2d-9fc9-0a73d1b3c58b
+
+	measure 'Simulert EOY Forventet Avvik' = [Vedtatt Årsbudsjett] - [Simulert EOY Netto Driftsresultat]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: d3179ac7-db58-4cfe-ae6b-92e55429032e
+
+	measure 'Planlagt Verdi (PV)' = [Budsjett YTD]
+		formatString: #,##0 "kr"
+		lineageTag: ae64cfc1-c4d9-4e7f-8768-38f2f8b6a05d
+
+	measure 'Påløpt Kostnad (AC)' = [Regnskap YTD]
+		formatString: #,##0 "kr"
+		lineageTag: 66e85ab8-9120-4269-87ed-eb6b79b64c0c
+
+	measure 'Kostnadsavvik (CV)' = [Planlagt Verdi (PV)] - [Påløpt Kostnad (AC)]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: 580346a3-8747-4075-8802-0cf5417acd2e
+
+	measure 'Kostnadsindeks (CPI)' = DIVIDE([Planlagt Verdi (PV)], [Påløpt Kostnad (AC)], 1.0)
+		formatString: 0.000
+		lineageTag: d57b02ef-fba5-4f04-a2c3-1c57e88d12e2
+
+	measure 'Sluttprognose (EAC)' = DIVIDE([Vedtatt Årsbudsjett], [Kostnadsindeks (CPI)], [Vedtatt Årsbudsjett])
+		formatString: #,##0 "kr"
+		lineageTag: 2bae9517-7295-447d-b808-1b8d594cc624
+
+	measure Dynamisk_Tittel_Nivaa = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Detaljnivå: " & SELECTEDVALUE(Dim_Ansvar[ansvar_navn]), "Samlet Kommunenivå — Kristiansand")
+		lineageTag: cd787087-ff73-482b-b93a-2edf62cc19ff
+
+	measure FT_Aksjonstittel_Avvik = IF([Avvik YTD] < -500000, "Kritisk merforbruk på kr " & FORMAT(-[Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")
+		lineageTag: 4d8a6d0f-0dfd-49a8-979d-2a951e996661
+
+	measure 'EOY Forecast' = [EOY Rullende Prognose]
+		formatString: #,##0 "kr"
+		lineageTag: 46dd626d-cbdd-4f92-a9b1-074f0f1bd600
+
+	measure 'EOY Avvik' = [EOY Forventet Årsavvik]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: 25388b84-567b-4415-b200-901835842a68
+
+	measure 'EOY Avvik %' = DIVIDE([EOY Forventet Årsavvik], ABS([Vedtatt Årsbudsjett]), 0)
+		formatString: 0.0%
+		lineageTag: 787debf6-d5b5-40d4-9f68-991c449d23e2
+
+	measure 'RAG Status' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv < 0 && (pct < -0.03 || avv < -250000), "Red", avv < 0, "Amber", "Green")
+		lineageTag: 4c85f272-9d74-49d6-be64-d67a24848df3
+
+	measure 'RAG Color' = SWITCH([RAG Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
+		lineageTag: b45c8464-3b03-4a53-9b82-7ca2471d2730
+
+	measure 'RAG Symbol' = SWITCH([RAG Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
+		lineageTag: bf62ee44-f720-4ecf-85aa-ad57db49bd2b
+
+	measure 'RAG Tekst' = SWITCH([RAG Status], "Red", "🔴 Krever tiltak (> 3 % / > 250k kr merforbruk)", "Amber", "🟠 Krever oppmerksomhet (merforbruk under terskel)", "Green", "🟢 I balanse / mindreforbruk (innenfor budsjett)", "⚪ Uavklart")
+		lineageTag: 5185637a-321d-4f9d-b813-2c92fc0170f4
+
+	measure 'RAG YTD' = [RAG Symbol]
+		lineageTag: 413cd47d-f20f-4d8e-a55a-ee900ed76025
+
+	measure 'RAG EOY' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "⚪", eoyAvv < 0 && (eoyPct < -0.03 || eoyAvv < -500000), "🔴", eoyAvv < 0, "🟠", "🟢")
+		lineageTag: bee202f6-673b-4da3-9539-82e4b7fbc686
+
+	measure 'KPI Avvik YTD Med RAG' = [RAG YTD] & "  " & FORMAT([Avvik YTD], "#,##0 kr") & " (" & FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & ")"
+		lineageTag: 7e83ca73-aeae-4d40-a186-a915167172b0
+
+	measure 'KPI EOY Prognose Med RAG' = [RAG EOY] & "  " & FORMAT([EOY Forventet Årsavvik], "#,##0 kr") & " (" & FORMAT([EOY Avvik %], "+0.0%;-0.0%;0.0%") & ")"
+		lineageTag: 09fe995c-d9cf-42af-a0c7-53b10b158812
+
+	measure 'KPI Vikarandel Med Benchmark' = VAR vikarPct = [Vikarandel Lonn %] VAR rag = SWITCH(TRUE(), vikarPct > 0.10, "🔴", vikarPct > 0.07, "🟠", "🟢") RETURN rag & "  " & FORMAT(vikarPct, "0.0%") & " (Mål: 7.0 %)"
+		lineageTag: 0def9cca-7339-4667-ad42-a4695490f021
+
+	measure 'KPI Overtid Med Benchmark' = VAR otPct = [Overtidsandel %] VAR rag = SWITCH(TRUE(), otPct > 0.08, "🔴", otPct > 0.05, "🟠", "🟢") RETURN rag & "  " & FORMAT(otPct, "0.0%") & " (Mål: 5.0 %)"
+		lineageTag: f9448da7-3176-4f15-9159-a2f5f1c760a5
+
+	measure 'RAG CPI Status' = VAR cpi = [Kostnadsindeks (CPI)] RETURN SWITCH(TRUE(), ISBLANK(cpi), "N/A", cpi < 0.95, "Red", cpi < 1.00, "Amber", "Green")
+		lineageTag: 6771b5bc-4cda-49a9-8802-ef7ddaf880e5
+
+	measure 'RAG CPI Color' = SWITCH([RAG CPI Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
+		lineageTag: 2d6af209-c63f-4039-b1ad-a89fcf3976c4
+
+	measure 'RAG CPI Symbol' = SWITCH([RAG CPI Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
+		lineageTag: ab11bfa5-2beb-4984-8179-4884081d1049
+
+	measure 'KPI CPI Med RAG' = [RAG CPI Symbol] & "  " & FORMAT([Kostnadsindeks (CPI)], "0.000") & " (Mål: 1.000)"
+		lineageTag: aef5c068-6c57-4994-9142-646b269cf9c4
+
+	measure 'Executive Summary' = VAR Avvik = [Avvik YTD] VAR AvvikPct = [Avvik YTD %] VAR Rag = [RAG Status] VAR StatusTekst = SWITCH(Rag, "Red", "🔴 Ugunstig utvikling: Betydelig merforbruk identifisert. Tiltak og kostnadskontroll kreves jf. Kommuneloven § 14-5.", "Amber", "🟠 Moderat merforbruk: Avviket krever skjerpet oppfølging og kontinuerlig månedskontroll.", "Green", "🟢 Økonomisk drift i balanse eller mindreforbruk innenfor tildelt budsjettramme.", "Status uavklart") RETURN StatusTekst & " | Regnskap YTD: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Budsjett YTD: " & FORMAT([Budsjett YTD], "#,##0 kr") & " | Avvik: " & FORMAT(Avvik, "#,##0 kr") & " (" & FORMAT(AvvikPct, "+0.0%;-0.0%;0.0%") & ") | Sluttprognose EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr")
+		lineageTag: 4b593744-723a-4c80-aeba-a3c4b8f23a18
+
+	measure 'Executive Summary Skole' = VAR avvik = [Avvik YTD] VAR rag = [RAG Status] VAR txt = SWITCH(rag, "Red", "🔴 Merforbruk i grunnskolen drevet av høyt sykefravær og vikarforbruk (Art 1020). Tiltak for omdisponering påkrevd.", "Amber", "🟠 Moderat avvik i skoleenhetene. Følg opp vikarinnleie mot fast stillingsramme.", "🟢 Grunnskoledrift i balanse mot periodisert budsjett.") RETURN txt & " | Regnskap: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Vikarutgift: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " (" & FORMAT([Vikarandel Lonn %], "0.0%") & ") | Kostnad/elev: " & FORMAT([Netto Driftsutgift Per Elev], "#,##0 kr/elev")
+		lineageTag: 78fa5f10-1bf5-49fa-a7ef-d1d8a649b8bd
+
+	measure 'Executive Summary Helse' = VAR avvik = [Avvik YTD] VAR rag = [RAG Status] VAR txt = SWITCH(rag, "Red", "🔴 Turnus- og overtidspress i døgnkontinuerlige botilbud gir vesentlig merforbruk. Turnusomlegging jf. HTA § 4 nødvendig.", "Amber", "🟠 Forhøyet overtid i helse og mestring. Krever tett oppfølging av helgebemanning.", "🟢 Bofellesskap og helsetjenester opererer innenfor budsjettramme.") RETURN txt & " | Regnskap: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " (" & FORMAT([Overtidsandel %], "0.0%") & ") | Sluttavvik etter tiltak: " & FORMAT([EOY Net Zero Sluttavvik], "#,##0 kr")
+		lineageTag: 4d8e72dc-e547-466c-abd4-1f8104097870
+
+	measure 'Executive Summary Lonn' = VAR vikarPct = [Vikarandel Lonn %] VAR txt = SWITCH(TRUE(), vikarPct > 0.08, "🔴 Vikarandel overskrider måltall (7 %). Vikarstopp ved korttidsfravær (< 3 dager) anbefalt.", vikarPct > 0.05, "🟠 Vikarforbruk er moderat forhøyet. Behov for å optimalisere intern vikarpool.", "🟢 Lønns- og vikarforbruk er innenfor budsjetterte rammer.") RETURN txt & " | Total lønn: " & FORMAT([Total Lonn], "#,##0 kr") & " | Vikar: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " | NAV-refusjon: " & FORMAT([NAV Refusjoner Art 1600], "#,##0 kr")
+		lineageTag: 29d86856-1ca6-4488-bd90-a3bb6655fdca
+
+	measure 'Executive Summary Prognose' = VAR sluttAvvik = [Simulert EOY Forventet Avvik] VAR rag = SWITCH(TRUE(), sluttAvvik < -1000000, "Red", sluttAvvik < -250000, "Amber", "Green") VAR txt = SWITCH(rag, "Red", "🔴 Prognosen indikerer kritisk merforbruk ved årsslutt uten ytterligere innsparingstiltak. Kommuneloven § 14-5 utløses.", "Amber", "🟠 Helårsbalansen er sårbar for lønnsvekst og fraværsendringer. T3-tiltak må følges opp månedlig.", "🟢 Simulert helårsresultat er i balanse eller mindreforbruk mot vedtatt årsbudsjett.") RETURN txt & " | Årsbudsjett: " & FORMAT([Vedtatt Årsbudsjett], "#,##0 kr") & " | Rullende EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr") & " | Tiltakseffekt: " & FORMAT([Planlagt Tiltakseffekt T3], "#,##0 kr") & " | Simulert avvik: " & FORMAT(sluttAvvik, "#,##0 kr")
+		lineageTag: e4e67177-e3b8-4960-a9c3-0e6df1a4a1c5
+
+	measure 'Executive Summary EVM' = VAR cpi = [Kostnadsindeks (CPI)] VAR cv = [Kostnadsavvik (CV)] VAR txt = SWITCH([RAG CPI Status], "Red", "🔴 Investeringsprosjekter underpresterer kostnadsmessig (CPI < 0.95). Risiko for overskridelse av prosjektrammer.", "Amber", "🟠 Prosjektporteføljen har moderat kostnadspress (CPI 0.95-1.00). Krever tett oppfølging av entreprenørfakturaer.", "🟢 God prosjektgjennomføring med kostnadsindeks i balanse (CPI >= 1.00).") RETURN txt & " | PV: " & FORMAT([Planlagt Verdi (PV)], "#,##0 kr") & " | AC: " & FORMAT([Påløpt Kostnad (AC)], "#,##0 kr") & " | CV: " & FORMAT(cv, "#,##0 kr") & " | CPI: " & FORMAT(cpi, "0.000") & " | EAC: " & FORMAT([Sluttprognose (EAC)], "#,##0 kr")
+		lineageTag: 0f091d68-228a-400d-9dbe-d612b8344683
+
+	measure 'Executive Summary Audit' = "🔒 Revisjonsstatus: Alle AI-genererte tiltaksforslag er forseglet med SHA-256 kryptografisk sjekksum og signert av saksbehandler (HITL Port 9). Kommunerevisjonen og Kontrollutvalget har full sporbarhet."
+		lineageTag: b8a639a7-d092-4520-93e7-277f829c52ca
+
+	measure 'Regnskap Måned' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
+		formatString: #,##0 "kr"
+		lineageTag: 8a347e6b-570a-4fcb-a135-d309bfa2d23c
+
+	measure 'Budsjett Måned' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
+		formatString: #,##0 "kr"
+		lineageTag: 58ec70bc-1a4e-4899-bed0-64b11dc0a923
+
+	measure 'Avvik Måned' = [Budsjett Måned] - [Regnskap Måned]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: f6050468-5caf-47d3-9f1f-fc0ab6b3aa35
+
+	measure 'Avvik Måned %' = DIVIDE([Avvik Måned], ABS([Budsjett Måned]), 0)
+		formatString: 0.0%
+		lineageTag: 62e1ab1a-3510-4340-92a3-e07afdd4e018
+
+	measure 'Avvik Kumulativt' = VAR maxDato = MAX(Dim_Dato[dato]) RETURN CALCULATE([Avvik YTD], REMOVEFILTERS(Dim_Dato), Dim_Dato[dato] <= maxDato)
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: 11bffb9e-482a-4f09-86fb-9082a6d0b0a3
+
+	measure 'RAG Status Måned' = VAR pct = [Avvik Måned %] VAR avv = [Avvik Måned] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv < 0 && (pct < -0.02 || avv < -100000), "Red", avv < 0, "Amber", "Green")
+		lineageTag: e360873f-59aa-48f0-81f3-0f6a57873da8
+
+	measure 'RAG Label Måned' = SWITCH([RAG Status Måned], "Red", "Ugunstig", "Amber", "Innenfor toleranse", "Green", "Gunstig", "Ikke vurdert")
+		lineageTag: 5d9316e5-cfd5-4be2-b0c1-1efbc733c606
+
+	measure 'Avvik Forrige Måned' = VAR currentMonth = MAX(Dim_Dato[maned]) VAR currentYear = MAX(Dim_Dato[ar]) VAR prevMonth = IF(currentMonth = 1, 12, currentMonth - 1) VAR prevYear = IF(currentMonth = 1, currentYear - 1, currentYear) RETURN CALCULATE([Avvik Måned], REMOVEFILTERS(Dim_Dato), Dim_Dato[maned] = prevMonth, Dim_Dato[ar] = prevYear)
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: 63c97f49-2896-412f-a98b-36327e1a95d1
+
+	measure 'Avvik Endring Måned' = [Avvik Måned] - [Avvik Forrige Måned]
+		formatString: #,##0 "kr";(#,##0 "kr");"-"
+		lineageTag: 84000e6a-0c0d-458f-b411-b20fc010313a
+
+	measure 'Avvik Trend Retning' = VAR ChangeValue = [Avvik Endring Måned] RETURN SWITCH(TRUE(), ISBLANK(ChangeValue), "Ingen sammenligning", ChangeValue > 0, "Forbedring", ChangeValue < 0, "Forverring", "Uendret")
+		lineageTag: 29f409cf-4773-435f-9615-eb311ef4a731
+
+	measure 'RAG Label YTD' = SWITCH([RAG Status], "Red", "Ugunstig (merforbruk)", "Amber", "Innenfor toleranse", "Green", "Gunstig (mindreforbruk)", "Ikke vurdert")
+		lineageTag: 8d214a37-1627-4b31-ac96-c8336d82ab03
+
+	measure 'Avvik YTD Display' = [RAG Symbol] & " " & FORMAT([Avvik YTD], "#,##0 kr")
+		lineageTag: 9d935160-13f7-455a-8861-5cfded9f673b
+
+	measure 'Avvik YTD Prosent Display' = FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & " | " & [RAG Label YTD]
+		lineageTag: 7a00103b-5948-47eb-bf4e-71c4eb326875
+
+	measure 'Valgt Virksomhetsområde' = SELECTEDVALUE(Dim_Ansvar[kommunalsjefomrade], "Alle virksomhetsområder")
+		lineageTag: e86d2257-a7ec-4a9b-ae11-e6d4851216a2
+
+	measure 'Valgt Budsjettnivå' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Enhetsnivå", IF(ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), "Virksomhetsnivå", "Samlet kommunenivå"))
+		lineageTag: c0ed3046-ef0b-48ed-9626-7ebbb2e447cb
+
+	measure 'Tittel Avvikstrend' = "01  HVORDAN UTVIKLER AVVIKET SEG? | " & [Valgt Virksomhetsområde]
+		lineageTag: 208d6efe-bdb1-41b8-af4a-dc1f4bafb39b
+
+	measure 'Tittel Decomposition Tree' = "02  HVA FORKLARER AVVIKET? (Decomposition Tree) | " & [Valgt Virksomhetsområde]
+		lineageTag: 9bad9130-d3a9-450f-ada0-205536525b9e
+
+	measure 'Executive Summary Avvik' = VAR VarianceValue = [Avvik YTD] VAR VariancePct = [Avvik YTD %] VAR StatusLabel = [RAG Label YTD] VAR Area = [Valgt Virksomhetsområde] VAR Direction = IF(VarianceValue > 0, "lavere enn budsjett (mindreforbruk)", IF(VarianceValue < 0, "høyere enn budsjett (merforbruk)", "lik budsjett")) VAR Trend = [Avvik Trend Retning] RETURN "🤖 AI ROOT CAUSE SUMMARY | " & Area & ": Regnskap er " & FORMAT(ABS(VarianceValue), "#,##0 kr") & " " & Direction & " (" & FORMAT(VariancePct, "+0.0%;-0.0%;0.0%") & "). Status: " & [RAG Symbol] & " " & StatusLabel & ". Trendretning siste periode: " & Trend & ". Klikk i Decomposition Tree eller velg enhet for dypere rotårsaksforklaring."
+		lineageTag: 508ee702-f9f6-4972-902b-3019e34a07e2
+
+	measure 'Copilot Q&A Veileder' = "💡 AI COPILOT & NATURLIG SPRÅK | Foreslåtte spørsmål: «Vis avvik YTD per virksomhetsområde» • «Hvilke enheter har størst merforbruk?» • «Hva driver vikarutgiftene i art 1020?» • «Vis avvik måned for måned for Oppvekst» • «Hvilke enheter krever tiltak jf. § 14-5?»"
+		lineageTag: bdb3dbaa-3904-4e98-aa1c-fe6309325cf1
+
+	measure 'Rang Avvik Ugunstig' = RANKX(ALLSELECTED(Dim_Art[Kontonavn]), [Avvik YTD], , ASC, DENSE)
+		lineageTag: c44f8692-4024-426b-9751-6f83726a5acb
+
+	measure 'Vis Top 10 Avvik' = IF([Rang Avvik Ugunstig] <= 10, 1, 0)
+		lineageTag: 4a6398c3-1975-4977-ba64-9c7a563909d6
+
+	measure 'Avvik Andel av Valgt Total' = DIVIDE([Avvik YTD], CALCULATE([Avvik YTD], ALLSELECTED(Dim_Ansvar[ansvar_navn])), 0)
+		formatString: 0.0%
+		lineageTag: 6e6f9286-2cf9-441e-9782-bcd5e1976376
+
+	measure 'Siste Faktiske Dato' = CALCULATE(MAX(Dim_Dato[dato]), FILTER(ALL(Dim_Dato[dato]), NOT ISBLANK(CALCULATE([Regnskap YTD]))))
+		lineageTag: bfd7cd76-8e24-477a-b1f9-21ae057e1302
+
+	measure 'Siste Faktiske Periode' = FORMAT([Siste Faktiske Dato], "MMMM yyyy")
+		lineageTag: fcf7f762-742c-47a4-82bd-956400710c73
+
+	measure 'Gjeldende Bruker UPN' = USERPRINCIPALNAME()
+		lineageTag: 00f3680a-cdc5-4a1e-bd7f-4c4cb3c78c4c
+
+	measure 'RLS Aktiv Sikkerhetskontekst' = VAR CurrentUser = USERPRINCIPALNAME() VAR MatchUser = FILTER(Dim_Sikkerhet_RLS, Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser) VAR UserNavn = SELECTCOLUMNS(MatchUser, "Navn", Dim_Sikkerhet_RLS[navn]) VAR UserTittel = SELECTCOLUMNS(MatchUser, "Tittel", Dim_Sikkerhet_RLS[tittel]) RETURN IF(CurrentUser IN { "frank.ellingsen@kristiansand.kommune.no", "admin@kristiansand.kommune.no" } || CONTAINS(MatchUser, [har_full_tilgang], 1), "Frank Ellingsen (Senior Controller) — Full Konserntilgang (Showcase)", IF(COUNTROWS(MatchUser) > 0, CONCATENATEX(UserNavn, [Navn], ", ") & " (" & CONCATENATEX(UserTittel, [Tittel], ", ") & ")", CurrentUser & " (Standard kommunalt innsyn)"))
+		lineageTag: b52e2672-e299-43c9-b3b7-1541adc583e5
+
+	measure 'Teams Distribusjonskanal Visning' = VAR CurrentUser = USERPRINCIPALNAME() VAR MatchUser = FILTER(Dim_Sikkerhet_RLS, Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser) VAR TeamNavn = SELECTCOLUMNS(MatchUser, "Team", Dim_Sikkerhet_RLS[teams_team_navn]) VAR KanalNavn = SELECTCOLUMNS(MatchUser, "Kanal", Dim_Sikkerhet_RLS[teams_kanal]) RETURN IF(COUNTROWS(MatchUser) > 0, CONCATENATEX(TeamNavn, [Team], ", ") & " ➜ Kanal: " & CONCATENATEX(KanalNavn, [Kanal], ", "), "Teams - Kristiansand Kommune ➜ Kanal: Generell Økonomi")
+		lineageTag: 2e454c72-9ec0-418c-a1e4-f06408bfae47
 
 	column Placeholder
 		dataType: int64
 		isHidden
+		lineageTag: 981ad912-adc9-45a8-8543-441a953cb7fe
 		summarizeBy: none
 		sourceColumn: Placeholder
 
@@ -10,204 +296,3 @@ table _Measures
 		mode: import
 		source = #table(type table [Placeholder = Int64.Type], {{1}})
 
-	measure 'Regnskap YTD' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
-		formatString: #,##0 "kr"
-
-	measure 'Budsjett YTD' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
-		formatString: #,##0 "kr"
-
-	measure 'Avvik YTD' = [Budsjett YTD] - [Regnskap YTD]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Avvik YTD %' = DIVIDE([Avvik YTD], ABS([Budsjett YTD]), 0)
-		formatString: 0.0%
-
-	measure 'Merforbruk YTD' = MAX(-[Avvik YTD], 0)
-		formatString: #,##0 "kr"
-
-	measure 'Mindreforbruk YTD' = MAX([Avvik YTD], 0)
-		formatString: #,##0 "kr"
-
-	measure 'Vedtatt Årsbudsjett' = CALCULATE(SUM(Fact_Regnskap[Aarsbudsjett]), REMOVEFILTERS(Dim_Dato))
-		formatString: #,##0 "kr"
-
-	measure 'EOY Rullende Prognose' = VAR AnnualBudget = [Vedtatt Årsbudsjett] VAR RemainingBudget = MAX(AnnualBudget - [Budsjett YTD], 0) RETURN [Regnskap YTD] + RemainingBudget + MAX(-[Avvik YTD], 0) * 0.5
-		formatString: #,##0 "kr"
-
-	measure 'EOY Forventet Årsavvik' = [Vedtatt Årsbudsjett] - [EOY Rullende Prognose]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Planlagt Tiltakseffekt T3' = SWITCH(SELECTEDVALUE(Dim_Ansvar[ansvar_kode]), "2540", 1928421, "2020", 863000, 2791421)
-		formatString: #,##0 "kr"
-
-	measure 'EOY Net Zero Sluttavvik' = [EOY Forventet Årsavvik] + [Planlagt Tiltakseffekt T3]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Tufte_Avvik_Farge_HEX' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "#A0A0A0", avv < 0 && (pct < -0.03 || avv < -250000), "#D64545", avv < 0, "#E6A23C", "#3A8F5C")
-
-	measure 'Tufte_EOY_Avvik_Farge_HEX' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "#A0A0A0", eoyAvv < 0 && (eoyPct < -0.03 || eoyAvv < -500000), "#D64545", eoyAvv < 0, "#E6A23C", "#3A8F5C")
-
-	measure 'Vikarutgifter Art 1020' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1020")
-		formatString: #,##0 "kr"
-
-	measure 'Overtid Art 1090' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1090")
-		formatString: #,##0 "kr"
-
-	measure 'NAV Refusjoner Art 1600' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[KOSTRA_Art] = "1600")
-		formatString: #,##0 "kr"
-
-	measure 'Total Lonn' = CALCULATE(SUM(Fact_Regnskap[Regnskap]), Fact_Regnskap[Hovedgruppe] IN {"1 Lønn", "Lønn og sosiale utgifter", "10 Fastlønn"})
-		formatString: #,##0 "kr"
-
-	measure 'Vikarandel Lonn %' = DIVIDE([Vikarutgifter Art 1020], [Total Lonn], 0)
-		formatString: 0.0%
-
-	measure 'Overtidsandel %' = DIVIDE([Overtid Art 1090], [Total Lonn], 0)
-		formatString: 0.0%
-
-	measure 'Netto Driftsutgift Per Elev' = DIVIDE(CALCULATE([Regnskap YTD], Dim_Ansvar[ansvar_kode] = "2020"), 1420, 0)
-		formatString: #,##0 "kr/elev"
-
-	measure 'Framsikt Deflator Value' = SELECTEDVALUE(Framsikt_Deflator[Value], 0.041)
-		formatString: 0.0%
-
-	measure 'Fraværstiltak Effektreduksjon Value' = SELECTEDVALUE(Fravaer_Reduksjon[Value], 0.015)
-		formatString: 0.0%
-
-	measure 'Simulert EOY Netto Driftsresultat' = VAR DeflatorAddition = [Vedtatt Årsbudsjett] * [Framsikt Deflator Value] VAR VikarSavings = [Vikarutgifter Art 1020] * [Fraværstiltak Effektreduksjon Value] RETURN [EOY Rullende Prognose] + DeflatorAddition - VikarSavings
-		formatString: #,##0 "kr"
-
-	measure 'Simulert EOY Forventet Avvik' = [Vedtatt Årsbudsjett] - [Simulert EOY Netto Driftsresultat]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Planlagt Verdi (PV)' = [Budsjett YTD]
-		formatString: #,##0 "kr"
-
-	measure 'Påløpt Kostnad (AC)' = [Regnskap YTD]
-		formatString: #,##0 "kr"
-
-	measure 'Kostnadsavvik (CV)' = [Planlagt Verdi (PV)] - [Påløpt Kostnad (AC)]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Kostnadsindeks (CPI)' = DIVIDE([Planlagt Verdi (PV)], [Påløpt Kostnad (AC)], 1.0)
-		formatString: 0.000
-
-	measure 'Sluttprognose (EAC)' = DIVIDE([Vedtatt Årsbudsjett], [Kostnadsindeks (CPI)], [Vedtatt Årsbudsjett])
-		formatString: #,##0 "kr"
-
-	measure 'Dynamisk_Tittel_Nivaa' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Detaljnivå: " & SELECTEDVALUE(Dim_Ansvar[ansvar_navn]), "Samlet Kommunenivå — Kristiansand")
-
-	measure 'FT_Aksjonstittel_Avvik' = IF([Avvik YTD] < -500000, "Kritisk merforbruk på kr " & FORMAT(-[Avvik YTD], "#,##0") & " (" & FORMAT([Avvik YTD %], "+0.0%") & ") — Tiltak iverksatt", "Økonomisk drift i balanse innenfor tildelt budsjettramme")
-
-	measure 'EOY Forecast' = [EOY Rullende Prognose]
-		formatString: #,##0 "kr"
-
-	measure 'EOY Avvik' = [EOY Forventet Årsavvik]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'EOY Avvik %' = DIVIDE([EOY Forventet Årsavvik], ABS([Vedtatt Årsbudsjett]), 0)
-		formatString: 0.0%
-
-	measure 'RAG Status' = VAR avv = [Avvik YTD] VAR pct = [Avvik YTD %] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv < 0 && (pct < -0.03 || avv < -250000), "Red", avv < 0, "Amber", "Green")
-
-	measure 'RAG Color' = SWITCH([RAG Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
-
-	measure 'RAG Symbol' = SWITCH([RAG Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
-
-	measure 'RAG Tekst' = SWITCH([RAG Status], "Red", "🔴 Krever tiltak (> 3 % / > 250k kr merforbruk)", "Amber", "🟠 Krever oppmerksomhet (merforbruk under terskel)", "Green", "🟢 I balanse / mindreforbruk (innenfor budsjett)", "⚪ Uavklart")
-
-	measure 'RAG YTD' = [RAG Symbol]
-
-	measure 'RAG EOY' = VAR eoyAvv = [EOY Forventet Årsavvik] VAR eoyPct = [EOY Avvik %] RETURN SWITCH(TRUE(), ISBLANK(eoyAvv), "⚪", eoyAvv < 0 && (eoyPct < -0.03 || eoyAvv < -500000), "🔴", eoyAvv < 0, "🟠", "🟢")
-
-	measure 'KPI Avvik YTD Med RAG' = [RAG YTD] & "  " & FORMAT([Avvik YTD], "#,##0 kr") & " (" & FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & ")"
-
-	measure 'KPI EOY Prognose Med RAG' = [RAG EOY] & "  " & FORMAT([EOY Forventet Årsavvik], "#,##0 kr") & " (" & FORMAT([EOY Avvik %], "+0.0%;-0.0%;0.0%") & ")"
-
-	measure 'KPI Vikarandel Med Benchmark' = VAR vikarPct = [Vikarandel Lonn %] VAR rag = SWITCH(TRUE(), vikarPct > 0.10, "🔴", vikarPct > 0.07, "🟠", "🟢") RETURN rag & "  " & FORMAT(vikarPct, "0.0%") & " (Mål: 7.0 %)"
-
-	measure 'KPI Overtid Med Benchmark' = VAR otPct = [Overtidsandel %] VAR rag = SWITCH(TRUE(), otPct > 0.08, "🔴", otPct > 0.05, "🟠", "🟢") RETURN rag & "  " & FORMAT(otPct, "0.0%") & " (Mål: 5.0 %)"
-
-	measure 'RAG CPI Status' = VAR cpi = [Kostnadsindeks (CPI)] RETURN SWITCH(TRUE(), ISBLANK(cpi), "N/A", cpi < 0.95, "Red", cpi < 1.00, "Amber", "Green")
-
-	measure 'RAG CPI Color' = SWITCH([RAG CPI Status], "Red", "#D64545", "Amber", "#E6A23C", "Green", "#3A8F5C", "#A0A0A0")
-
-	measure 'RAG CPI Symbol' = SWITCH([RAG CPI Status], "Red", "🔴", "Amber", "🟠", "Green", "🟢", "⚪")
-
-	measure 'KPI CPI Med RAG' = [RAG CPI Symbol] & "  " & FORMAT([Kostnadsindeks (CPI)], "0.000") & " (Mål: 1.000)"
-
-	measure 'Executive Summary' = VAR Avvik = [Avvik YTD] VAR AvvikPct = [Avvik YTD %] VAR Rag = [RAG Status] VAR StatusTekst = SWITCH(Rag, "Red", "🔴 Ugunstig utvikling: Betydelig merforbruk identifisert. Tiltak og kostnadskontroll kreves jf. Kommuneloven § 14-5.", "Amber", "🟠 Moderat merforbruk: Avviket krever skjerpet oppfølging og kontinuerlig månedskontroll.", "Green", "🟢 Økonomisk drift i balanse eller mindreforbruk innenfor tildelt budsjettramme.", "Status uavklart") RETURN StatusTekst & " | Regnskap YTD: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Budsjett YTD: " & FORMAT([Budsjett YTD], "#,##0 kr") & " | Avvik: " & FORMAT(Avvik, "#,##0 kr") & " (" & FORMAT(AvvikPct, "+0.0%;-0.0%;0.0%") & ") | Sluttprognose EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr")
-
-	measure 'Executive Summary Skole' = VAR avvik = [Avvik YTD] VAR rag = [RAG Status] VAR txt = SWITCH(rag, "Red", "🔴 Merforbruk i grunnskolen drevet av høyt sykefravær og vikarforbruk (Art 1020). Tiltak for omdisponering påkrevd.", "Amber", "🟠 Moderat avvik i skoleenhetene. Følg opp vikarinnleie mot fast stillingsramme.", "🟢 Grunnskoledrift i balanse mot periodisert budsjett.") RETURN txt & " | Regnskap: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Vikarutgift: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " (" & FORMAT([Vikarandel Lonn %], "0.0%") & ") | Kostnad/elev: " & FORMAT([Netto Driftsutgift Per Elev], "#,##0 kr/elev")
-
-	measure 'Executive Summary Helse' = VAR avvik = [Avvik YTD] VAR rag = [RAG Status] VAR txt = SWITCH(rag, "Red", "🔴 Turnus- og overtidspress i døgnkontinuerlige botilbud gir vesentlig merforbruk. Turnusomlegging jf. HTA § 4 nødvendig.", "Amber", "🟠 Forhøyet overtid i helse og mestring. Krever tett oppfølging av helgebemanning.", "🟢 Bofellesskap og helsetjenester opererer innenfor budsjettramme.") RETURN txt & " | Regnskap: " & FORMAT([Regnskap YTD], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " (" & FORMAT([Overtidsandel %], "0.0%") & ") | Sluttavvik etter tiltak: " & FORMAT([EOY Net Zero Sluttavvik], "#,##0 kr")
-
-	measure 'Executive Summary Lonn' = VAR vikarPct = [Vikarandel Lonn %] VAR txt = SWITCH(TRUE(), vikarPct > 0.08, "🔴 Vikarandel overskrider måltall (7 %). Vikarstopp ved korttidsfravær (< 3 dager) anbefalt.", vikarPct > 0.05, "🟠 Vikarforbruk er moderat forhøyet. Behov for å optimalisere intern vikarpool.", "🟢 Lønns- og vikarforbruk er innenfor budsjetterte rammer.") RETURN txt & " | Total lønn: " & FORMAT([Total Lonn], "#,##0 kr") & " | Vikar: " & FORMAT([Vikarutgifter Art 1020], "#,##0 kr") & " | Overtid: " & FORMAT([Overtid Art 1090], "#,##0 kr") & " | NAV-refusjon: " & FORMAT([NAV Refusjoner Art 1600], "#,##0 kr")
-
-	measure 'Executive Summary Prognose' = VAR sluttAvvik = [Simulert EOY Forventet Avvik] VAR rag = SWITCH(TRUE(), sluttAvvik < -1000000, "Red", sluttAvvik < -250000, "Amber", "Green") VAR txt = SWITCH(rag, "Red", "🔴 Prognosen indikerer kritisk merforbruk ved årsslutt uten ytterligere innsparingstiltak. Kommuneloven § 14-5 utløses.", "Amber", "🟠 Helårsbalansen er sårbar for lønnsvekst og fraværsendringer. T3-tiltak må følges opp månedlig.", "🟢 Simulert helårsresultat er i balanse eller mindreforbruk mot vedtatt årsbudsjett.") RETURN txt & " | Årsbudsjett: " & FORMAT([Vedtatt Årsbudsjett], "#,##0 kr") & " | Rullende EOY: " & FORMAT([EOY Rullende Prognose], "#,##0 kr") & " | Tiltakseffekt: " & FORMAT([Planlagt Tiltakseffekt T3], "#,##0 kr") & " | Simulert avvik: " & FORMAT(sluttAvvik, "#,##0 kr")
-
-	measure 'Executive Summary EVM' = VAR cpi = [Kostnadsindeks (CPI)] VAR cv = [Kostnadsavvik (CV)] VAR txt = SWITCH([RAG CPI Status], "Red", "🔴 Investeringsprosjekter underpresterer kostnadsmessig (CPI < 0.95). Risiko for overskridelse av prosjektrammer.", "Amber", "🟠 Prosjektporteføljen har moderat kostnadspress (CPI 0.95-1.00). Krever tett oppfølging av entreprenørfakturaer.", "🟢 God prosjektgjennomføring med kostnadsindeks i balanse (CPI >= 1.00).") RETURN txt & " | PV: " & FORMAT([Planlagt Verdi (PV)], "#,##0 kr") & " | AC: " & FORMAT([Påløpt Kostnad (AC)], "#,##0 kr") & " | CV: " & FORMAT(cv, "#,##0 kr") & " | CPI: " & FORMAT(cpi, "0.000") & " | EAC: " & FORMAT([Sluttprognose (EAC)], "#,##0 kr")
-
-	measure 'Executive Summary Audit' = "🔒 Revisjonsstatus: Alle AI-genererte tiltaksforslag er forseglet med SHA-256 kryptografisk sjekksum og signert av saksbehandler (HITL Port 9). Kommunerevisjonen og Kontrollutvalget har full sporbarhet."
-
-	measure 'Regnskap Måned' = CALCULATE(SUM(Fact_Regnskap[Regnskap]))
-		formatString: #,##0 "kr"
-
-	measure 'Budsjett Måned' = CALCULATE(SUM(Fact_Regnskap[Budsjett]))
-		formatString: #,##0 "kr"
-
-	measure 'Avvik Måned' = [Budsjett Måned] - [Regnskap Måned]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Avvik Måned %' = DIVIDE([Avvik Måned], ABS([Budsjett Måned]), 0)
-		formatString: 0.0%
-
-	measure 'Avvik Kumulativt' = VAR maxDato = MAX(Dim_Dato[dato]) RETURN CALCULATE([Avvik YTD], REMOVEFILTERS(Dim_Dato), Dim_Dato[dato] <= maxDato)
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'RAG Status Måned' = VAR pct = [Avvik Måned %] VAR avv = [Avvik Måned] RETURN SWITCH(TRUE(), ISBLANK(avv), "N/A", avv < 0 && (pct < -0.02 || avv < -100000), "Red", avv < 0, "Amber", "Green")
-
-	measure 'RAG Label Måned' = SWITCH([RAG Status Måned], "Red", "Ugunstig", "Amber", "Innenfor toleranse", "Green", "Gunstig", "Ikke vurdert")
-
-	measure 'Avvik Forrige Måned' = VAR currentMonth = MAX(Dim_Dato[maned]) VAR currentYear = MAX(Dim_Dato[ar]) VAR prevMonth = IF(currentMonth = 1, 12, currentMonth - 1) VAR prevYear = IF(currentMonth = 1, currentYear - 1, currentYear) RETURN CALCULATE([Avvik Måned], REMOVEFILTERS(Dim_Dato), Dim_Dato[maned] = prevMonth, Dim_Dato[ar] = prevYear)
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Avvik Endring Måned' = [Avvik Måned] - [Avvik Forrige Måned]
-		formatString: #,##0 "kr";(#,##0 "kr");"-"
-
-	measure 'Avvik Trend Retning' = VAR ChangeValue = [Avvik Endring Måned] RETURN SWITCH(TRUE(), ISBLANK(ChangeValue), "Ingen sammenligning", ChangeValue > 0, "Forbedring", ChangeValue < 0, "Forverring", "Uendret")
-
-	measure 'RAG Label YTD' = SWITCH([RAG Status], "Red", "Ugunstig (merforbruk)", "Amber", "Innenfor toleranse", "Green", "Gunstig (mindreforbruk)", "Ikke vurdert")
-
-	measure 'Avvik YTD Display' = [RAG Symbol] & " " & FORMAT([Avvik YTD], "#,##0 kr")
-
-	measure 'Avvik YTD Prosent Display' = FORMAT([Avvik YTD %], "+0.0%;-0.0%;0.0%") & " | " & [RAG Label YTD]
-
-	measure 'Valgt Virksomhetsområde' = SELECTEDVALUE(Dim_Ansvar[kommunalsjefomrade], "Alle virksomhetsområder")
-
-	measure 'Valgt Budsjettnivå' = IF(ISINSCOPE(Dim_Ansvar[ansvar_navn]), "Enhetsnivå", IF(ISINSCOPE(Dim_Ansvar[kommunalsjefomrade]), "Virksomhetsnivå", "Samlet kommunenivå"))
-
-	measure 'Tittel Avvikstrend' = "01  HVORDAN UTVIKLER AVVIKET SEG? | " & [Valgt Virksomhetsområde]
-
-	measure 'Tittel Decomposition Tree' = "02  HVA FORKLARER AVVIKET? (Decomposition Tree) | " & [Valgt Virksomhetsområde]
-
-	measure 'Executive Summary Avvik' = VAR VarianceValue = [Avvik YTD] VAR VariancePct = [Avvik YTD %] VAR StatusLabel = [RAG Label YTD] VAR Area = [Valgt Virksomhetsområde] VAR Direction = IF(VarianceValue > 0, "lavere enn budsjett (mindreforbruk)", IF(VarianceValue < 0, "høyere enn budsjett (merforbruk)", "lik budsjett")) VAR Trend = [Avvik Trend Retning] RETURN "🤖 AI ROOT CAUSE SUMMARY | " & Area & ": Regnskap er " & FORMAT(ABS(VarianceValue), "#,##0 kr") & " " & Direction & " (" & FORMAT(VariancePct, "+0.0%;-0.0%;0.0%") & "). Status: " & [RAG Symbol] & " " & StatusLabel & ". Trendretning siste periode: " & Trend & ". Klikk i Decomposition Tree eller velg enhet for dypere rotårsaksforklaring."
-
-	measure 'Copilot Q&A Veileder' = "💡 AI COPILOT & NATURLIG SPRÅK | Foreslåtte spørsmål: «Vis avvik YTD per virksomhetsområde» • «Hvilke enheter har størst merforbruk?» • «Hva driver vikarutgiftene i art 1020?» • «Vis avvik måned for måned for Oppvekst» • «Hvilke enheter krever tiltak jf. § 14-5?»"
-
-	measure 'Rang Avvik Ugunstig' = RANKX(ALLSELECTED(Dim_Art[Kontonavn]), [Avvik YTD], , ASC, DENSE)
-
-	measure 'Vis Top 10 Avvik' = IF([Rang Avvik Ugunstig] <= 10, 1, 0)
-
-	measure 'Avvik Andel av Valgt Total' = DIVIDE([Avvik YTD], CALCULATE([Avvik YTD], ALLSELECTED(Dim_Ansvar[ansvar_navn])), 0)
-		formatString: 0.0%
-
-	measure 'Siste Faktiske Dato' = CALCULATE(MAX(Dim_Dato[dato]), FILTER(ALL(Dim_Dato[dato]), NOT ISBLANK(CALCULATE([Regnskap YTD]))))
-
-	measure 'Siste Faktiske Periode' = FORMAT([Siste Faktiske Dato], "MMMM yyyy")
-
-	measure 'Gjeldende Bruker UPN' = USERPRINCIPALNAME()
-
-	measure 'RLS Aktiv Sikkerhetskontekst' = VAR CurrentUser = USERPRINCIPALNAME() VAR MatchUser = FILTER(Dim_Sikkerhet_RLS, Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser) VAR UserNavn = SELECTCOLUMNS(MatchUser, "Navn", Dim_Sikkerhet_RLS[navn]) VAR UserTittel = SELECTCOLUMNS(MatchUser, "Tittel", Dim_Sikkerhet_RLS[tittel]) RETURN IF(CurrentUser IN { "frank.ellingsen@kristiansand.kommune.no", "admin@kristiansand.kommune.no" } || CONTAINS(MatchUser, [har_full_tilgang], 1), "Frank Ellingsen (Senior Controller) — Full Konserntilgang (Showcase)", IF(COUNTROWS(MatchUser) > 0, CONCATENATEX(UserNavn, [Navn], ", ") & " (" & CONCATENATEX(UserTittel, [Tittel], ", ") & ")", CurrentUser & " (Standard kommunalt innsyn)"))
-
-	measure 'Teams Distribusjonskanal Visning' = VAR CurrentUser = USERPRINCIPALNAME() VAR MatchUser = FILTER(Dim_Sikkerhet_RLS, Dim_Sikkerhet_RLS[bruker_upn] == CurrentUser) VAR TeamNavn = SELECTCOLUMNS(MatchUser, "Team", Dim_Sikkerhet_RLS[teams_team_navn]) VAR KanalNavn = SELECTCOLUMNS(MatchUser, "Kanal", Dim_Sikkerhet_RLS[teams_kanal]) RETURN IF(COUNTROWS(MatchUser) > 0, CONCATENATEX(TeamNavn, [Team], ", ") & " ➜ Kanal: " & CONCATENATEX(KanalNavn, [Kanal], ", "), "Teams - Kristiansand Kommune ➜ Kanal: Generell Økonomi")

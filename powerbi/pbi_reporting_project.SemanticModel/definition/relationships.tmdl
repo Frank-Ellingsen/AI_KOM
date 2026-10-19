@@ -1,34 +1,30 @@
 relationship FactDate
 	fromColumn: Fact_Regnskap.dato
 	toColumn: Dim_Dato.dato
-	fromCardinality: many
-	toCardinality: one
-	crossFilteringBehavior: oneDirection
 
 relationship FactAnsvar
 	fromColumn: Fact_Regnskap.ansvar_kode
 	toColumn: Dim_Ansvar.ansvar_kode
-	fromCardinality: many
-	toCardinality: one
-	crossFilteringBehavior: oneDirection
 
 relationship FactFunksjon
 	fromColumn: Fact_Regnskap.funksjon_kode
 	toColumn: Dim_Funksjon.funksjon_kode
-	fromCardinality: many
-	toCardinality: one
-	crossFilteringBehavior: oneDirection
 
 relationship FactArt
 	fromColumn: Fact_Regnskap.art_key
 	toColumn: Dim_Art.art_key
-	fromCardinality: many
-	toCardinality: one
-	crossFilteringBehavior: oneDirection
 
 relationship AuditResponsibility
 	fromColumn: Audit_AI_Actions.ansvar_kode
 	toColumn: Dim_Ansvar.ansvar_kode
-	fromCardinality: many
-	toCardinality: one
-	crossFilteringBehavior: oneDirection
+
+relationship f7cf88b0-7afb-416c-b3c6-387e90bdb732
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Dato.dato
+	toColumn: LocalDateTable_bbaa4154-6e85-45b8-8fba-59458c48f1ee.Date
+
+relationship 5e9b0e61-22e9-45cf-9a20-f5eeb764e098
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Audit_AI_Actions.Tidsstempel
+	toColumn: LocalDateTable_6dad48e3-170c-4275-b5c7-55dd9e0b82bb.Date
+
