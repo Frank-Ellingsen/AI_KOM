@@ -5326,354 +5326,131 @@
 
     <!-- FANE 1: MIN ENHET & MIN MÅNED -->
     <div class="hub-tab-pane active" id="tab-min-enhet" role="tabpanel" aria-labelledby="tab-btn-min-enhet">
-<div class="monthly-cycle-banner" id="workflow-cycle-banner">
-        <div class="monthly-cycle-header">
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰ Meny</button>
-                <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy-dark);">
-                    📅 ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP
-                </span>
-                <span style="font-size:11px; color:var(--text-secondary);">
-                    Gjeldende fase: <strong id="current-phase-label" style="color:var(--navy-dark);">Fase 2: Avviksdeteksjon & Triage (Dag 6–10)</strong>
-                </span>
-            </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-                <button class="btn btn-sm" onclick="openCommandPalette()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Hurtigmeny for søk, enheter og maler (Ctrl+K)">
-                    ⚡ Søk (Ctrl+K)
-                </button>
-                <button class="btn btn-sm" onclick="togglePresentationMode()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Veksle møte-/presentasjonsmodus for storskjerm (Tast P)">
-                    🖥️ Møtemodus (P)
-                </button>
-                <button class="btn btn-sm" onclick="openUserGuide('MANED')" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;">
-                    📖 Månedsveileder
-                </button>
-                <span class="status-badge" id="cycle-month-tag">M9 September (T2)</span>
-            </div>
-        </div>
 
-        <div class="workflow-stepper">
-            <div class="cycle-step-card" id="cycle-card-1" onclick="selectWorkflowPhase(1)">
-                <div class="cycle-step-days">
-                    <span>Fase 1</span>
-                    <span>Dag 1–5</span>
-                </div>
-                <div class="cycle-step-title">1. Månedsstart & Import</div>
-                <div class="cycle-step-sub">Visma ERP data, bankavstemming, EHF-attestasjon og PII-vask til Golden Record.</div>
-            </div>
-
-            <div class="cycle-step-card active" id="cycle-card-2" onclick="selectWorkflowPhase(2)">
-                <div class="cycle-step-days">
-                    <span>Fase 2 ⭐</span>
-                    <span>Dag 6–10</span>
-                </div>
-                <div class="cycle-step-title">2. Avvik & Triage</div>
-                <div class="cycle-step-sub">Z-score screening, 16 enheter triage, artsavvik (vikarer/overtid) og NAV-etterslep.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-3" onclick="selectWorkflowPhase(3)">
-                <div class="cycle-step-days">
-                    <span>Fase 3</span>
-                    <span>Dag 11–18</span>
-                </div>
-                <div class="cycle-step-title">3. Lederdialog & Tiltak</div>
-                <div class="cycle-step-sub">Møter med enhetsledere (Skole/Bo), 4-punkts tiltaksplan og drøfting iht. HTA § 4.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-4" onclick="selectWorkflowPhase(4)">
-                <div class="cycle-step-days">
-                    <span>Fase 4</span>
-                    <span>Dag 19–24</span>
-                </div>
-                <div class="cycle-step-title">4. Prognose (EAC/ETC)</div>
-                <div class="cycle-step-sub">Oppdatere rullende EOY i Framsikt EPM, usikkerhet P10/P50/P90, pensjon & rente.</div>
-            </div>
-
-            <div class="cycle-step-card" id="cycle-card-5" onclick="selectWorkflowPhase(5)">
-                <div class="cycle-step-days">
-                    <span>Fase 5</span>
-                    <span>Dag 25–30</span>
-                </div>
-                <div class="cycle-step-title">5. Politisk Sak & Vedtak</div>
-                <div class="cycle-step-sub">Formannskapssak jf. § 14-5, Bystyrets bord, saksnotat, SHA-256 revisjonsstempel.</div>
-            </div>
-        </div>
-
-        <!-- Operativ Controller Sjekkliste for den valgte fasen -->
-        <div class="controller-checklist-panel" id="checklist-panel">
-            <div class="checklist-header">
+    <!-- ============================================================================== -->
+    <!-- KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT FOR BUDSJETTANSVARLIGE              -->
+    <!-- jf. Kommuneloven § 14-5, HTA § 4 og Edward Tufte Data-Ink Ratio                -->
+    <!-- ============================================================================== -->
+    <section class="workflow-section" id="nettbank-kontoutskrift-seksjon" style="margin-bottom: 24px;">
+        <!-- Enhetsvelger Toppkort: Fokus for Budsjettansvarlig -->
+        <div class="bank-unit-selector-card" style="background:#ffffff; border:1.5px solid var(--navy-dark); border-radius:6px; padding:18px 22px; margin-bottom:18px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border-light);">
                 <div>
-                    <strong id="checklist-title">🛡️ Fase 2 Controller Sjekkliste: Avviksdeteksjon & Triage</strong>
-                    <span style="font-size:11px; color:var(--text-secondary); margin-left:8px;" id="checklist-counter">4 av 5 oppgaver fullført</span>
+                    <div style="font-size:17px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
+                        <span>🏢 Finn ditt budsjettområde &amp; resultatenhet</span>
+                        <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">81 Enheter</span>
+                        <span class="status-badge" style="background:#ecfdf5; color:#15803d; font-weight:700;">§ 14-5 Klarspråk</span>
+                    </div>
+                    <div style="font-size:12.5px; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+                        Velg ditt budsjettområde eller resultatenhet fra nedtrekksmenyen. Visningen isolerer <strong>kun data for ditt ansvarsområde</strong>, slik at du som budsjettansvarlig har fullt fokus på eget budsjett, månedlig forbruk, disponibel saldo for resten av året og handlingsplan.
+                    </div>
                 </div>
-                <div style="display:flex; gap:6px;">
-                    <button class="btn btn-sm" onclick="resetCurrentChecklist()" style="font-size:10.5px; padding:2px 7px;">Tilbakestill</button>
-                    <button class="btn btn-sm btn-primary" onclick="markAllChecklistDone()" style="font-size:10.5px; padding:2px 7px;">✓ Merk alle fullført</button>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <span style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Visningsmodus:</span>
+                    <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
+                    <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
                 </div>
             </div>
-            <div class="checklist-progress-bar">
-                <div class="checklist-progress-fill" id="checklist-progress" style="width: 80%;"></div>
-            </div>
-            <div id="checklist-items-container">
-                <!-- Dynamisk fylt via JavaScript -->
-            </div>
-        </div>
-    </div>
 
-    <!-- =======================================================================
-         AUTOMATISK MÅNEDSSLUTT & FLERKANALS RAPPORTORKESTRERING (SSOT)
-         jf. Kommuneloven § 14-5, FAST-standard og ISO 21508 EVM
-         ======================================================================= -->
-    <section class="workflow-section" id="monthend-orchestration-seksjon" style="margin-bottom: 24px; border: 1px solid var(--border-light); border-top: 3px solid var(--navy-dark); border-radius: 4px; padding: 18px 20px; background: #ffffff;">
-        <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid var(--border-light);">
-            <div>
-                <div style="font-size:15px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
-                    <span>🚀 Automatisk Månedsslutt &amp; Flerkanals Rapportorkestrering</span>
-                    <span class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Single Source of Truth</span>
-                    <span class="status-badge" id="monthend-status-badge" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:10px; font-weight:700;">M10 OKTOBER: FULLFØRT (100 % SYNK)</span>
-                </div>
-                <div style="font-size:12px; color:var(--text-secondary); margin-top:3px;">
-                    Genererer dynamiske og konsistente rapporter på tvers av Power BI, Excel, PowerPoint, PDF og Office Hub direkte fra SQLite Golden Record (<code>kommune_golden_record.db</code>).
-                </div>
+            <!-- Sektor Hurtigfilter Bar -->
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:14px; background:#f8fafc; padding:8px 12px; border-radius:4px; border:1px solid var(--border-light);">
+                <span style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-right:4px;">Filter:</span>
+                <button type="button" class="btn btn-sm bank-sector-pill active" onclick="filterBankSector('ALL')" id="bank-sec-btn-ALL" style="background: var(--navy-dark); color: #ffffff; font-weight: 700;">Alle sektorer (81 enheter)</button>
+                <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('HELSE')" id="bank-sec-btn-HELSE" style="background: #ffffff; border:1px solid #cbd5e1; color: var(--text-primary);">🏥 Helse &amp; Mestring</button>
+                <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('OPPVEKST')" id="bank-sec-btn-OPPVEKST" style="background: #ffffff; border:1px solid #cbd5e1; color: var(--text-primary);">🏫 Oppvekst &amp; Skole</button>
+                <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('BYUTVIKLING')" id="bank-sec-btn-BYUTVIKLING" style="background: #ffffff; border:1px solid #cbd5e1; color: var(--text-primary);">🏗️ Byutvikling &amp; VAR</button>
+                <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KULTUR')" id="bank-sec-btn-KULTUR" style="background: #ffffff; border:1px solid #cbd5e1; color: var(--text-primary);">🎭 Kultur &amp; Idrett</button>
+                <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('ORG_TEK')" id="bank-sec-btn-ORG_TEK" style="background: #ffffff; border:1px solid #cbd5e1; color: var(--text-primary);">💻 Org &amp; IKT</button>
+                <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('OKONOMI')" id="bank-sec-btn-OKONOMI" style="background: #ffffff; border:1px solid #cbd5e1; color: var(--text-primary);">🏛️ Økonomi &amp; Ledelse</button>
             </div>
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                <button type="button" class="btn btn-sm" onclick="triggerMonthEndOrchestration()" id="btn-trigger-monthend" style="background:var(--navy-dark); color:#ffffff; font-weight:700; padding:6px 12px; border-radius:3px; cursor:pointer;" title="Kjør full automatisert rapportorkestrering fra SSOT">
-                    <span>⚡ Kjør Månedlig Rapportgenerering Nå</span>
-                </button>
-                <button type="button" class="btn btn-sm" onclick="refreshMonthEndStatus()" style="background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; padding:6px 10px; border-radius:3px; cursor:pointer;" title="Sjekk status for siste kjøring mot manifest">
-                    <span>🔄 Oppdater Status</span>
-                </button>
-            </div>
-        </div>
 
-        <!-- 5 Kanaler Grid (Tufte Data-Ink) -->
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin-bottom:16px;">
-            <!-- Kanal 1: Power BI -->
-            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📊 Power BI Enterprise</span>
-                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">.pbip Klar</span>
+            <!-- Kontrollpanel: Enhetsvelger (Drop Down) & Månedsvelger -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:12px;">
+                <div style="flex:1; min-width:320px; max-width:700px; display:flex; align-items:center; gap:8px;">
+                    <label for="bank-unit-dropdown" class="bank-select-label" style="font-size:12px; font-weight:700; color:var(--navy-dark); margin-right:4px; white-space:nowrap;">
+                        🔍 Budsjettområde:
+                    </label>
+                    <select class="bank-unit-select" id="bank-unit-dropdown" onchange="onBankUnitChange(this.value)" style="flex:1; width:100%; font-weight:600; font-size:13px; padding:8px 12px; border:2px solid var(--navy-dark); border-radius:4px; background:#ffffff;" title="Velg enhet for å se kun ditt ansvarsområde">
+                        <!-- Fylles dynamisk fra ALL_81_UNITS_DATA -->
+                    </select>
                 </div>
-                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
-                    TMDL Stjerneskjema, semantisk modell, DAX-målinger for EVM &amp; KOSTRA.
+
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Måned:</span>
+                    <div class="bank-month-pills" id="bank-month-pills-bar">
+                        <!-- M01 til M12 knapper genereres dynamisk -->
+                    </div>
                 </div>
-                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
-                    Fil: <code>pbi_reporting_project.pbip</code>
-                </div>
-                <a href="powerbi/pbi_reporting_project.pbip" download class="btn btn-sm" style="display:block; text-align:center; font-size:11px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 8px; border-radius:2px;">
-                    📥 Åpne Power BI (.pbip)
+            </div>
+
+            <!-- Handlingsknapper Rad -->
+            <div style="display:flex; justify-content:flex-end; align-items:center; gap:8px; flex-wrap:wrap; padding-top:10px; border-top:1px dashed var(--border-light);">
+                <button class="btn btn-sm" onclick="openShareModal('email')" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe; font-weight:600;" title="Send månedlig status og kontoutskrift på e-post til leder og controller">
+                    📧 Send E-post
+                </button>
+                <button class="btn btn-sm" onclick="openShareModal('teams')" style="background:#f3e8ff; color:#6b21a8; border-color:#e9d5ff; font-weight:600;" title="Del månedlig status og kontoutskrift direkte i Microsoft Teams">
+                    💬 Del i Teams
+                </button>
+                <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
+                    🖨️ Skriv ut / PDF
+                </button>
+                <button class="btn btn-sm btn-secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned transaksjoner som Excel/CSV">
+                    📊 Last ned CSV
+                </button>
+                <a class="btn btn-sm btn-secondary" id="bank-direct-html-btn" href="reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html" target="_blank" title="Åpne ren A4 bankutskrift i fullskjerm">
+                    📄 Åpne A4
                 </a>
-            </div>
-
-            <!-- Kanal 2: Excel Suite -->
-            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📗 Excel Finanssuite</span>
-                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">6 Modeller</span>
-                </div>
-                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
-                    FAST Finansiell modell, Capex EVM, CFO Konsern og HR Vikarmonitor.
-                </div>
-                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
-                    Fil: <code>Excel_Master_Report.xlsx</code>
-                </div>
-                <div style="display:flex; gap:4px;">
-                    <a href="excel/Excel_Master_Report_Latest.xlsx" download class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;" title="Last ned Excel Master Report">
-                        📥 Master (.xlsx)
-                    </a>
-                    <a href="reports/Kommune_Project_Controller_Reporting_2026.xlsx" download class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;" title="Last ned Project Controller rapport">
-                        📥 Controller
-                    </a>
-                </div>
-            </div>
-
-            <!-- Kanal 3: PowerPoint -->
-            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📙 PowerPoint Dekk</span>
-                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">16:9 Klar</span>
-                </div>
-                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
-                    Offisiell presentasjon for Bystyret &amp; Formannskapet med Tufte Top 3-takometre.
-                </div>
-                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
-                    Fil: <code>Bystyret_M10_Okonomi.pptx</code>
-                </div>
-                <a href="reports/Bystyret_M10_Okonomi_Rapport.pptx" download class="btn btn-sm" style="display:block; text-align:center; font-size:11px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 8px; border-radius:2px;">
-                    📥 Last ned Bystyret PPTX
+                <a class="btn btn-sm" id="btn-apne-pdf-rapport" href="reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf" target="_blank" style="background: #1e293b; color: #ffffff; text-decoration: none; font-weight: 700;" title="Åpne formell 2-siders PDF månedsrapport med prognoser og tiltak">
+                    📄 PDF Rapport
                 </a>
-            </div>
-
-            <!-- Kanal 4: PDF & Framsikt -->
-            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📕 PDF &amp; Framsikt</span>
-                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">20 Pakker</span>
-                </div>
-                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
-                    Skreddersydde PDF-rapporter for enheter og batch-CSV for Framsikt EPM.
-                </div>
-                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
-                    Mappe: <code>monthly_pdf_packets/</code>
-                </div>
-                <div style="display:flex; gap:4px;">
-                    <a href="reports/monthly_pdf_packets/index.html" target="_blank" class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;">
-                        🌐 PDF Portal
-                    </a>
-                    <a href="reports/monthly_pdf_packets/FRAMSIKT_BATCH_OMDISPONERING_M10_2026.csv" download class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;">
-                        📥 CSV Batch
-                    </a>
-                </div>
-            </div>
-
-            <!-- Kanal 5: Office Hub -->
-            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">🏛️ Office Hub Web</span>
-                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">Sanntid</span>
-                </div>
-                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
-                    Sanntids visning av Netto drift, Disposisjonsfond og Lånegjeld for 6 sektorer.
-                </div>
-                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
-                    Kilde: <code>Fact_Regnskap &amp; Fact_Budsjett</code>
-                </div>
-                <button type="button" class="btn btn-sm" onclick="navigateToSection('top3-kpi-seksjon')" style="width:100%; font-size:11px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; padding:4px 8px; border-radius:2px; cursor:pointer;">
-                    👁️ Vis Topp 3 Nøkkeltall
+                <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
+                    💬 Spør Controller
                 </button>
             </div>
         </div>
 
-        <!-- Automatisk Kjøring & Revisjonsbekreftelse -->
-        <div style="background:#f8fafc; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:0 4px 4px 0; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:11.5px;">
-            <div>
-                <span style="font-weight:700; color:var(--navy-dark);">🔒 Uforanderlig Månedsslutt-Forsegling (Stage-Gate Port 9 HITL):</span>
-                <span style="color:#64748b; margin-left:6px;" id="monthend-audit-seal-text">SHA-256: <code>781e4672a7b65220941c18a8eeaf23a8cf729f55b54baf699e65a7776f630900</code></span>
+        <div class="bank-wrapper">
+            <!-- RLS Kontekst & Budsjettansvarlig Identitetspanel -->
+            <div class="bank-rls-strip" id="bank-rls-identity-panel">
+                <!-- Dynamisk fylt fra updateBankRlsIdentityPanel -->
             </div>
-            <div style="color:var(--text-secondary); font-size:11px;">
-                Siste automatiske kjøring: <strong id="monthend-last-executed">2026-10-18T17:08:58Z</strong> | Godkjent av: <strong>Frank Ellingsen</strong>
+
+            <!-- Månedsrapportpakke for Budsjettansvarlig (5 Formater: PBI, Excel, PowerPoint, Word, PDF) -->
+            <div class="bank-reports-suite" id="bank-monthly-reports-suite">
+                <div class="bank-reports-suite-header">
+                    <div>
+                        <div class="bank-reports-suite-title">
+                            <span>📁 MÅNEDSRAPPORTER FOR VALGT BUDSJETTANSVARLIG (M01–M12)</span>
+                            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">5 KORRESPONDERENDE FORMATER &bull; RLS AKTIV</span>
+                        </div>
+                        <div class="bank-reports-suite-sub" id="bank-reports-suite-unit-label">
+                            Tilpasset Row-Level Security for Enhet
+                        </div>
+                    </div>
+                    <div style="font-size:11px; color:#64748b;" id="bank-reports-period-label">
+                        Gjeldende regnskapsperiode: <strong>Oktober 2026 (M10)</strong>
+                    </div>
+                </div>
+                <div class="bank-reports-grid" id="bank-reports-grid-cards">
+                    <!-- Rendres dynamisk for valgt budsjettansvarlig -->
+                </div>
+            </div>
+
+            <!-- Aktiv Kontoutskrift Hovedkort -->
+            <div class="bank-card" id="bank-statement-main-card">
+                <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                    Laster kontoutskrift og saldo...
+                </div>
+            </div>
+
+            <!-- Sektor-tilpasset Driftsdashboard (Rektorens Skole-Dashboard & Pleie/Omsorg Dashboard) -->
+            <div id="sektor-spesifikk-leder-modul" style="margin-top: 18px;">
+                <!-- Rendres dynamisk basert på valgt enhet (Skoleleder vs Sykehjemsleder) -->
             </div>
         </div>
     </section>
 
-<section class="workflow-section" id="mote-rapportering-seksjon">
-        <div class="section-header">
-            <span>👥 Månedsmøter & Nivårapportering — Økonomirådgiverens Oppfølging</span>
-            <span class="status-badge" id="meeting-header-badge">Månedssyklus M10 (Oktober) | Port 9 HITL</span>
-        </div>
-        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
-            Hver måned følger økonomirådgiveren opp hver budsjettansvarlig med skreddersydd status, kritiske avvik og handlingsplan for å sikre budsjettbalanse ved årets slutt (EOY per 31.12) jf. <strong>Kommuneloven § 14-5</strong>. Rapporteringen er organisert i 3 styringsnivåer tilpasset beslutningsmyndighet og lovpålagte rammer.
-        </p>
-
-        <!-- Nivåvelger Faner (Nivå 1, Nivå 2, Nivå 3) -->
-        <div class="level-pills-bar" id="level-pills-bar">
-            <button class="level-pill-btn active" id="btn-lvl-niva1" onclick="switchMeetingLevel('NIVA1')">
-                <span>👤 Nivå 1: Avdelings- / Seksjonsleder</span>
-                <span class="level-badge">Operativ Enhet</span>
-            </button>
-            <button class="level-pill-btn" id="btn-lvl-niva2" onclick="switchMeetingLevel('NIVA2')">
-                <span>👥 Nivå 2: Kommunalsjef</span>
-                <span class="level-badge">Taktisk Sektor</span>
-            </button>
-            <button class="level-pill-btn" id="btn-lvl-niva3" onclick="switchMeetingLevel('NIVA3')">
-                <span>🏛️ Nivå 3: Kommunaldirektør</span>
-                <span class="level-badge">Toppledelse</span>
-            </button>
-        </div>
-
-        <!-- Møtedetaljer Hovedkort (Innhold injiseres dynamisk) -->
-        <div class="meeting-card" id="meeting-main-card">
-            <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
-                Laster møtepakke for valgt nivå og sektor...
-            </div>
-        </div>
-    
-        <!-- =======================================================================
-             3B. REGISTER OVER BUDSJETTANSVARLIGE & DELEGERINGSHIERARKI (NIVÅ 1–4)
-             Sikrer korrekt utsendelse av rapporter, skjemaer og returflyt
-             ======================================================================= -->
-        <div class="panel" id="budsjettansvarlige-panel" style="margin-top: 24px; border: 1px solid var(--border-light); background: #ffffff; padding: 18px; border-radius: 4px;">
-            <div class="section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 15px; font-weight: 700; color: var(--navy-dark);">👥 Register over Budsjettansvarlige & Delegeringshierarki (Nivå 1–4)</span>
-                    <span class="status-badge" id="budget-holders-count-badge" style="background: #e0f2fe; color: #0369a1; font-size: 11px;">Viser: 39 ansvarlige</span>
-                </div>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <a href="erp_data/budsjettansvarlige_register.csv" download class="btn btn-sm" title="Last ned som CSV til Excel / Power Query">
-                        📊 Last ned CSV
-                    </a>
-                    <a href="erp_data/budsjettansvarlige_register.json" download class="btn btn-sm" title="Last ned rådata i JSON format">
-                        📦 Last ned JSON
-                    </a>
-                    <a href="bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md" target="_blank" class="btn btn-sm btn-primary">
-                        📖 Full Veileder (.md)
-                    </a>
-                </div>
-            </div>
-
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
-                Oversikt over alle budsjett- og anvisningsmyndige ledere i Kristiansand kommune. Benyttes for automatisert utsendelse av månedlige avviksrapporter og maler fra Visma ERP, samt kvalitetssikret oppfølging og retur jf. <strong>Kommuneloven § 13-1 og § 14-5</strong>.
-            </p>
-
-            <!-- Filter og Søkebar -->
-            <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; background: #f8fafc; padding: 10px 14px; border-radius: 4px; border: 1px solid var(--border-subtle);">
-                <div style="flex: 1; min-width: 220px;">
-                    <input type="text" id="budget-holder-search" class="form-control" placeholder="🔍 Søk på navn, stilling, enhet, ansvar (f.eks. 202, Strai, Lovisenlev)..." 
-                           style="width: 100%; padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;"
-                           oninput="filterBudgetHoldersTable()">
-                </div>
-                <div>
-                    <select id="budget-holder-level-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
-                        <option value="ALL">Alle Styringsnivåer</option>
-                        <option value="NIVA1">🏛️ Nivå 1: Toppledelse (Kommunedirektør & Kommunalsjef)</option>
-                        <option value="NIVA2">👥 Nivå 2: Områdedirektør / Avdelingssjef</option>
-                        <option value="NIVA3">👤 Nivå 3: Enhetsleder / Rektor (KOSTRA-ansvar)</option>
-                        <option value="NIVA4">📋 Nivå 4: Avdelingsleder / Turnusleder</option>
-                        <option value="CONTROLLER">👔 Controllerteamet & Rådgivere</option>
-                    </select>
-                </div>
-                <div>
-                    <select id="budget-holder-sector-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
-                        <option value="ALL">🌐 Alle Virksomhetsområder</option>
-                        <option value="HELSE">🏥 1. Helse og mestring</option>
-                        <option value="OPPVEKST">🏫 2. Oppvekst og utdanning</option>
-                        <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
-                        <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
-                        <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
-                        <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
-                    </select>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm" onclick="resetBudgetHolderFilters()">Nullstill filter</button>
-                </div>
-            </div>
-
-            <!-- Tabell (Tufte Data-Ink Standard) -->
-            <div class="table-responsive" style="max-height: 480px; overflow-y: auto; border: 1px solid var(--border-subtle); border-radius: 3px;">
-                <table class="data-table" id="budget-holders-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                    <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 2; border-bottom: 1.5px solid var(--navy-dark);">
-                        <tr>
-                            <th style="padding: 8px 10px; text-align: left;">Ansvar / ID</th>
-                            <th style="padding: 8px 10px; text-align: left;">Budsjettansvarlig Leder</th>
-                            <th style="padding: 8px 10px; text-align: left;">Nivå & Sektor</th>
-                            <th style="padding: 8px 10px; text-align: left;">Kontaktinformasjon</th>
-                            <th style="padding: 8px 10px; text-align: right;">Fullmakt (NOK)</th>
-                            <th style="padding: 8px 10px; text-align: left;">Utsendte Maler / Skjema</th>
-                            <th style="padding: 8px 10px; text-align: left;">Returkanal & Frist</th>
-                            <th style="padding: 8px 10px; text-align: center;">Operativ Handling</th>
-                        </tr>
-                    </thead>
-                    <tbody id="budget-holders-tbody">
-                        <!-- Genereres fra JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            <div id="budget-holders-empty-msg" style="display: none; padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
-                Ingen budsjettansvarlige matcher valgt filter.
-            </div>
-        </div>
-
-    </section>
-    </div>
+</div>
 
     <!-- FANE 2: SEKTORE & KONSERNSTYRING -->
     <div class="hub-tab-pane" id="tab-sektor-konsern" role="tabpanel" aria-labelledby="tab-btn-sektor-konsern" style="display: none;">
@@ -6420,6 +6197,356 @@
 
     <!-- FANE 3: CONTROLLER HUB & ANALYSE -->
     <div class="hub-tab-pane" id="tab-controller-hub" role="tabpanel" aria-labelledby="tab-btn-controller-hub" style="display: none;">
+
+<div class="monthly-cycle-banner" id="workflow-cycle-banner">
+        <div class="monthly-cycle-header">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰ Meny</button>
+                <span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy-dark);">
+                    📅 ØKONOMIRÅDGIVERENS MÅNEDSHJUL — PROSESSFORLØP
+                </span>
+                <span style="font-size:11px; color:var(--text-secondary);">
+                    Gjeldende fase: <strong id="current-phase-label" style="color:var(--navy-dark);">Fase 2: Avviksdeteksjon & Triage (Dag 6–10)</strong>
+                </span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button class="btn btn-sm" onclick="openCommandPalette()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Hurtigmeny for søk, enheter og maler (Ctrl+K)">
+                    ⚡ Søk (Ctrl+K)
+                </button>
+                <button class="btn btn-sm" onclick="togglePresentationMode()" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;" title="Veksle møte-/presentasjonsmodus for storskjerm (Tast P)">
+                    🖥️ Møtemodus (P)
+                </button>
+                <button class="btn btn-sm" onclick="openUserGuide('MANED')" style="background:#f1f5f9; border-color:#cbd5e1; font-weight:600;">
+                    📖 Månedsveileder
+                </button>
+                <span class="status-badge" id="cycle-month-tag">M9 September (T2)</span>
+            </div>
+        </div>
+
+        <div class="workflow-stepper">
+            <div class="cycle-step-card" id="cycle-card-1" onclick="selectWorkflowPhase(1)">
+                <div class="cycle-step-days">
+                    <span>Fase 1</span>
+                    <span>Dag 1–5</span>
+                </div>
+                <div class="cycle-step-title">1. Månedsstart & Import</div>
+                <div class="cycle-step-sub">Visma ERP data, bankavstemming, EHF-attestasjon og PII-vask til Golden Record.</div>
+            </div>
+
+            <div class="cycle-step-card active" id="cycle-card-2" onclick="selectWorkflowPhase(2)">
+                <div class="cycle-step-days">
+                    <span>Fase 2 ⭐</span>
+                    <span>Dag 6–10</span>
+                </div>
+                <div class="cycle-step-title">2. Avvik & Triage</div>
+                <div class="cycle-step-sub">Z-score screening, 16 enheter triage, artsavvik (vikarer/overtid) og NAV-etterslep.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-3" onclick="selectWorkflowPhase(3)">
+                <div class="cycle-step-days">
+                    <span>Fase 3</span>
+                    <span>Dag 11–18</span>
+                </div>
+                <div class="cycle-step-title">3. Lederdialog & Tiltak</div>
+                <div class="cycle-step-sub">Møter med enhetsledere (Skole/Bo), 4-punkts tiltaksplan og drøfting iht. HTA § 4.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-4" onclick="selectWorkflowPhase(4)">
+                <div class="cycle-step-days">
+                    <span>Fase 4</span>
+                    <span>Dag 19–24</span>
+                </div>
+                <div class="cycle-step-title">4. Prognose (EAC/ETC)</div>
+                <div class="cycle-step-sub">Oppdatere rullende EOY i Framsikt EPM, usikkerhet P10/P50/P90, pensjon & rente.</div>
+            </div>
+
+            <div class="cycle-step-card" id="cycle-card-5" onclick="selectWorkflowPhase(5)">
+                <div class="cycle-step-days">
+                    <span>Fase 5</span>
+                    <span>Dag 25–30</span>
+                </div>
+                <div class="cycle-step-title">5. Politisk Sak & Vedtak</div>
+                <div class="cycle-step-sub">Formannskapssak jf. § 14-5, Bystyrets bord, saksnotat, SHA-256 revisjonsstempel.</div>
+            </div>
+        </div>
+
+        <!-- Operativ Controller Sjekkliste for den valgte fasen -->
+        <div class="controller-checklist-panel" id="checklist-panel">
+            <div class="checklist-header">
+                <div>
+                    <strong id="checklist-title">🛡️ Fase 2 Controller Sjekkliste: Avviksdeteksjon & Triage</strong>
+                    <span style="font-size:11px; color:var(--text-secondary); margin-left:8px;" id="checklist-counter">4 av 5 oppgaver fullført</span>
+                </div>
+                <div style="display:flex; gap:6px;">
+                    <button class="btn btn-sm" onclick="resetCurrentChecklist()" style="font-size:10.5px; padding:2px 7px;">Tilbakestill</button>
+                    <button class="btn btn-sm btn-primary" onclick="markAllChecklistDone()" style="font-size:10.5px; padding:2px 7px;">✓ Merk alle fullført</button>
+                </div>
+            </div>
+            <div class="checklist-progress-bar">
+                <div class="checklist-progress-fill" id="checklist-progress" style="width: 80%;"></div>
+            </div>
+            <div id="checklist-items-container">
+                <!-- Dynamisk fylt via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================================
+         AUTOMATISK MÅNEDSSLUTT & FLERKANALS RAPPORTORKESTRERING (SSOT)
+         jf. Kommuneloven § 14-5, FAST-standard og ISO 21508 EVM
+         ======================================================================= -->
+    <section class="workflow-section" id="monthend-orchestration-seksjon" style="margin-bottom: 24px; border: 1px solid var(--border-light); border-top: 3px solid var(--navy-dark); border-radius: 4px; padding: 18px 20px; background: #ffffff;">
+        <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid var(--border-light);">
+            <div>
+                <div style="font-size:15px; font-weight:800; color:var(--navy-dark); display:flex; align-items:center; gap:8px;">
+                    <span>🚀 Automatisk Månedsslutt &amp; Flerkanals Rapportorkestrering</span>
+                    <span class="status-badge" style="background:#0f172a; color:#fff; font-size:10px;">Single Source of Truth</span>
+                    <span class="status-badge" id="monthend-status-badge" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:10px; font-weight:700;">M10 OKTOBER: FULLFØRT (100 % SYNK)</span>
+                </div>
+                <div style="font-size:12px; color:var(--text-secondary); margin-top:3px;">
+                    Genererer dynamiske og konsistente rapporter på tvers av Power BI, Excel, PowerPoint, PDF og Office Hub direkte fra SQLite Golden Record (<code>kommune_golden_record.db</code>).
+                </div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <button type="button" class="btn btn-sm" onclick="triggerMonthEndOrchestration()" id="btn-trigger-monthend" style="background:var(--navy-dark); color:#ffffff; font-weight:700; padding:6px 12px; border-radius:3px; cursor:pointer;" title="Kjør full automatisert rapportorkestrering fra SSOT">
+                    <span>⚡ Kjør Månedlig Rapportgenerering Nå</span>
+                </button>
+                <button type="button" class="btn btn-sm" onclick="refreshMonthEndStatus()" style="background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; padding:6px 10px; border-radius:3px; cursor:pointer;" title="Sjekk status for siste kjøring mot manifest">
+                    <span>🔄 Oppdater Status</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 5 Kanaler Grid (Tufte Data-Ink) -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin-bottom:16px;">
+            <!-- Kanal 1: Power BI -->
+            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📊 Power BI Enterprise</span>
+                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">.pbip Klar</span>
+                </div>
+                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
+                    TMDL Stjerneskjema, semantisk modell, DAX-målinger for EVM &amp; KOSTRA.
+                </div>
+                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
+                    Fil: <code>pbi_reporting_project.pbip</code>
+                </div>
+                <a href="powerbi/pbi_reporting_project.pbip" download class="btn btn-sm" style="display:block; text-align:center; font-size:11px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 8px; border-radius:2px;">
+                    📥 Åpne Power BI (.pbip)
+                </a>
+            </div>
+
+            <!-- Kanal 2: Excel Suite -->
+            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📗 Excel Finanssuite</span>
+                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">6 Modeller</span>
+                </div>
+                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
+                    FAST Finansiell modell, Capex EVM, CFO Konsern og HR Vikarmonitor.
+                </div>
+                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
+                    Fil: <code>Excel_Master_Report.xlsx</code>
+                </div>
+                <div style="display:flex; gap:4px;">
+                    <a href="excel/Excel_Master_Report_Latest.xlsx" download class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;" title="Last ned Excel Master Report">
+                        📥 Master (.xlsx)
+                    </a>
+                    <a href="reports/Kommune_Project_Controller_Reporting_2026.xlsx" download class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;" title="Last ned Project Controller rapport">
+                        📥 Controller
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kanal 3: PowerPoint -->
+            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📙 PowerPoint Dekk</span>
+                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">16:9 Klar</span>
+                </div>
+                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
+                    Offisiell presentasjon for Bystyret &amp; Formannskapet med Tufte Top 3-takometre.
+                </div>
+                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
+                    Fil: <code>Bystyret_M10_Okonomi.pptx</code>
+                </div>
+                <a href="reports/Bystyret_M10_Okonomi_Rapport.pptx" download class="btn btn-sm" style="display:block; text-align:center; font-size:11px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 8px; border-radius:2px;">
+                    📥 Last ned Bystyret PPTX
+                </a>
+            </div>
+
+            <!-- Kanal 4: PDF & Framsikt -->
+            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📕 PDF &amp; Framsikt</span>
+                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">20 Pakker</span>
+                </div>
+                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
+                    Skreddersydde PDF-rapporter for enheter og batch-CSV for Framsikt EPM.
+                </div>
+                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
+                    Mappe: <code>monthly_pdf_packets/</code>
+                </div>
+                <div style="display:flex; gap:4px;">
+                    <a href="reports/monthly_pdf_packets/index.html" target="_blank" class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;">
+                        🌐 PDF Portal
+                    </a>
+                    <a href="reports/monthly_pdf_packets/FRAMSIKT_BATCH_OMDISPONERING_M10_2026.csv" download class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;">
+                        📥 CSV Batch
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kanal 5: Office Hub -->
+            <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">🏛️ Office Hub Web</span>
+                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">Sanntid</span>
+                </div>
+                <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
+                    Sanntids visning av Netto drift, Disposisjonsfond og Lånegjeld for 6 sektorer.
+                </div>
+                <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
+                    Kilde: <code>Fact_Regnskap &amp; Fact_Budsjett</code>
+                </div>
+                <button type="button" class="btn btn-sm" onclick="navigateToSection('top3-kpi-seksjon')" style="width:100%; font-size:11px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; padding:4px 8px; border-radius:2px; cursor:pointer;">
+                    👁️ Vis Topp 3 Nøkkeltall
+                </button>
+            </div>
+        </div>
+
+        <!-- Automatisk Kjøring & Revisjonsbekreftelse -->
+        <div style="background:#f8fafc; border:1px solid var(--border-light); border-left:4px solid var(--navy-dark); border-radius:0 4px 4px 0; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:11.5px;">
+            <div>
+                <span style="font-weight:700; color:var(--navy-dark);">🔒 Uforanderlig Månedsslutt-Forsegling (Stage-Gate Port 9 HITL):</span>
+                <span style="color:#64748b; margin-left:6px;" id="monthend-audit-seal-text">SHA-256: <code>781e4672a7b65220941c18a8eeaf23a8cf729f55b54baf699e65a7776f630900</code></span>
+            </div>
+            <div style="color:var(--text-secondary); font-size:11px;">
+                Siste automatiske kjøring: <strong id="monthend-last-executed">2026-10-18T17:08:58Z</strong> | Godkjent av: <strong>Frank Ellingsen</strong>
+            </div>
+        </div>
+    </section>
+
+<section class="workflow-section" id="mote-rapportering-seksjon">
+        <div class="section-header">
+            <span>👥 Månedsmøter & Nivårapportering — Økonomirådgiverens Oppfølging</span>
+            <span class="status-badge" id="meeting-header-badge">Månedssyklus M10 (Oktober) | Port 9 HITL</span>
+        </div>
+        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
+            Hver måned følger økonomirådgiveren opp hver budsjettansvarlig med skreddersydd status, kritiske avvik og handlingsplan for å sikre budsjettbalanse ved årets slutt (EOY per 31.12) jf. <strong>Kommuneloven § 14-5</strong>. Rapporteringen er organisert i 3 styringsnivåer tilpasset beslutningsmyndighet og lovpålagte rammer.
+        </p>
+
+        <!-- Nivåvelger Faner (Nivå 1, Nivå 2, Nivå 3) -->
+        <div class="level-pills-bar" id="level-pills-bar">
+            <button class="level-pill-btn active" id="btn-lvl-niva1" onclick="switchMeetingLevel('NIVA1')">
+                <span>👤 Nivå 1: Avdelings- / Seksjonsleder</span>
+                <span class="level-badge">Operativ Enhet</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva2" onclick="switchMeetingLevel('NIVA2')">
+                <span>👥 Nivå 2: Kommunalsjef</span>
+                <span class="level-badge">Taktisk Sektor</span>
+            </button>
+            <button class="level-pill-btn" id="btn-lvl-niva3" onclick="switchMeetingLevel('NIVA3')">
+                <span>🏛️ Nivå 3: Kommunaldirektør</span>
+                <span class="level-badge">Toppledelse</span>
+            </button>
+        </div>
+
+        <!-- Møtedetaljer Hovedkort (Innhold injiseres dynamisk) -->
+        <div class="meeting-card" id="meeting-main-card">
+            <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                Laster møtepakke for valgt nivå og sektor...
+            </div>
+        </div>
+    
+        <!-- =======================================================================
+             3B. REGISTER OVER BUDSJETTANSVARLIGE & DELEGERINGSHIERARKI (NIVÅ 1–4)
+             Sikrer korrekt utsendelse av rapporter, skjemaer og returflyt
+             ======================================================================= -->
+        <div class="panel" id="budsjettansvarlige-panel" style="margin-top: 24px; border: 1px solid var(--border-light); background: #ffffff; padding: 18px; border-radius: 4px;">
+            <div class="section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 15px; font-weight: 700; color: var(--navy-dark);">👥 Register over Budsjettansvarlige & Delegeringshierarki (Nivå 1–4)</span>
+                    <span class="status-badge" id="budget-holders-count-badge" style="background: #e0f2fe; color: #0369a1; font-size: 11px;">Viser: 39 ansvarlige</span>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="erp_data/budsjettansvarlige_register.csv" download class="btn btn-sm" title="Last ned som CSV til Excel / Power Query">
+                        📊 Last ned CSV
+                    </a>
+                    <a href="erp_data/budsjettansvarlige_register.json" download class="btn btn-sm" title="Last ned rådata i JSON format">
+                        📦 Last ned JSON
+                    </a>
+                    <a href="bruker-guides/BUDSJETTANSVARLIGE_OG_DELEGERINGSKATALOG_2026.md" target="_blank" class="btn btn-sm btn-primary">
+                        📖 Full Veileder (.md)
+                    </a>
+                </div>
+            </div>
+
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
+                Oversikt over alle budsjett- og anvisningsmyndige ledere i Kristiansand kommune. Benyttes for automatisert utsendelse av månedlige avviksrapporter og maler fra Visma ERP, samt kvalitetssikret oppfølging og retur jf. <strong>Kommuneloven § 13-1 og § 14-5</strong>.
+            </p>
+
+            <!-- Filter og Søkebar -->
+            <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; background: #f8fafc; padding: 10px 14px; border-radius: 4px; border: 1px solid var(--border-subtle);">
+                <div style="flex: 1; min-width: 220px;">
+                    <input type="text" id="budget-holder-search" class="form-control" placeholder="🔍 Søk på navn, stilling, enhet, ansvar (f.eks. 202, Strai, Lovisenlev)..." 
+                           style="width: 100%; padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;"
+                           oninput="filterBudgetHoldersTable()">
+                </div>
+                <div>
+                    <select id="budget-holder-level-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
+                        <option value="ALL">Alle Styringsnivåer</option>
+                        <option value="NIVA1">🏛️ Nivå 1: Toppledelse (Kommunedirektør & Kommunalsjef)</option>
+                        <option value="NIVA2">👥 Nivå 2: Områdedirektør / Avdelingssjef</option>
+                        <option value="NIVA3">👤 Nivå 3: Enhetsleder / Rektor (KOSTRA-ansvar)</option>
+                        <option value="NIVA4">📋 Nivå 4: Avdelingsleder / Turnusleder</option>
+                        <option value="CONTROLLER">👔 Controllerteamet & Rådgivere</option>
+                    </select>
+                </div>
+                <div>
+                    <select id="budget-holder-sector-filter" class="form-select" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-light); border-radius: 3px;" onchange="filterBudgetHoldersTable()">
+                        <option value="ALL">🌐 Alle Virksomhetsområder</option>
+                        <option value="HELSE">🏥 1. Helse og mestring</option>
+                        <option value="OPPVEKST">🏫 2. Oppvekst og utdanning</option>
+                        <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
+                        <option value="KULTUR">🎭 4. Kultur og innbyggerdialog</option>
+                        <option value="ORG_TEK">💻 5. Organisasjon og teknologi</option>
+                        <option value="OKONOMI">⚖️ 6. Økonomi og virksomhetsstyring</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm" onclick="resetBudgetHolderFilters()">Nullstill filter</button>
+                </div>
+            </div>
+
+            <!-- Tabell (Tufte Data-Ink Standard) -->
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto; border: 1px solid var(--border-subtle); border-radius: 3px;">
+                <table class="data-table" id="budget-holders-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                    <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 2; border-bottom: 1.5px solid var(--navy-dark);">
+                        <tr>
+                            <th style="padding: 8px 10px; text-align: left;">Ansvar / ID</th>
+                            <th style="padding: 8px 10px; text-align: left;">Budsjettansvarlig Leder</th>
+                            <th style="padding: 8px 10px; text-align: left;">Nivå & Sektor</th>
+                            <th style="padding: 8px 10px; text-align: left;">Kontaktinformasjon</th>
+                            <th style="padding: 8px 10px; text-align: right;">Fullmakt (NOK)</th>
+                            <th style="padding: 8px 10px; text-align: left;">Utsendte Maler / Skjema</th>
+                            <th style="padding: 8px 10px; text-align: left;">Returkanal & Frist</th>
+                            <th style="padding: 8px 10px; text-align: center;">Operativ Handling</th>
+                        </tr>
+                    </thead>
+                    <tbody id="budget-holders-tbody">
+                        <!-- Genereres fra JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="budget-holders-empty-msg" style="display: none; padding: 20px; text-align: center; color: var(--text-muted); font-size: 12px;">
+                Ingen budsjettansvarlige matcher valgt filter.
+            </div>
+        </div>
+
+    </section>
+
+
 <div class="panel" id="avvik-seksjon" style="margin-bottom: 24px;">
         <div class="section-header">
             <span>🚨 Kritiske Kostnadsavvik på KOSTRA Art (Golden Record)</span>
@@ -8581,176 +8708,7 @@ RETURN
     
     <!-- ============================================================================== -->
     <!-- KOMMUNAL NETTBANK & MÅNEDLIG KONTOUTSKRIFT (EDWARD TUFTE STYLE)                -->
-    <!-- ============================================================================== -->
-<section class="workflow-section" id="nettbank-kontoutskrift-seksjon" style="margin-bottom: 24px;">
-        <div class="section-header">
-            <span>🏦 Kommunal Nettbank & Månedlig Kontoutskrift for Budsjettansvarlige</span>
-            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">Fast Månedsoppsett (M01–M12) | § 14-5 Klarspråk</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.55;">
-            Spesialtilpasset virksomhetsledere, rektorer, avdelingsledere og styrere uten økonomibakgrunn. 
-            Rapporten fungerer som en <strong>nettbank</strong>: Kontonummer, tildelt årsramme (startkreditt), månedens faktiske uttak og innbetalinger, 
-            <strong>disponibel saldo for resten av året</strong>, samt konkrete leder-råd for å overholde budsjettbalansen jf. <strong>Kommuneloven § 14-5</strong>.
-        </p>
-
-        <div class="bank-wrapper">
-            <!-- Sektor Hurtigvelger & Visningsmodus for Budsjettansvarlige -->
-            <div class="bank-sector-filter-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding: 10px 14px; background: #ffffff; border: 1px solid var(--border-light); border-radius: 4px;">
-                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-right: 4px;">Sektor:</span>
-                    <button type="button" class="btn btn-sm bank-sector-pill active" onclick="filterBankSector('ALL')" id="bank-sec-btn-ALL" style="background: var(--navy-dark); color: #ffffff; font-weight: 700;">Alle sektorer (81 enheter)</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('HELSE')" id="bank-sec-btn-HELSE" style="background: #f1f5f9; color: var(--text-primary);">🏥 Helse &amp; Omsorg</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('OPPVEKST')" id="bank-sec-btn-OPPVEKST" style="background: #f1f5f9; color: var(--text-primary);">🎓 Oppvekst &amp; Skole</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('BYUTVIKLING')" id="bank-sec-btn-BYUTVIKLING" style="background: #f1f5f9; color: var(--text-primary);">🏗️ Byutvikling &amp; VAR</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KULTUR')" id="bank-sec-btn-KULTUR" style="background: #f1f5f9; color: var(--text-primary);">🎭 Kultur &amp; Idrett</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('ORG_TEK')" id="bank-sec-btn-ORG_TEK" style="background: #f1f5f9; color: var(--text-primary);">💻 Org &amp; IKT</button>
-                    <button type="button" class="btn btn-sm bank-sector-pill" onclick="filterBankSector('KONSERN')" id="bank-sec-btn-KONSERN" style="background: #f1f5f9; color: var(--text-primary);">🏛️ Konsern</button>
-                </div>
-                <div style="display: flex; gap: 6px; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Visning:</span>
-                    <button type="button" class="btn btn-sm" onclick="openCashManagementSection()" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; font-weight:700; margin-right:6px;" title="Cash Management, rullende likviditetsprognose og kassakredittramme jf. § 14-14">💳 Cash Management &amp; Likviditet</button>
-                    <button type="button" class="btn btn-sm" onclick="openProsjektregnskapSection()" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-weight:700; margin-right:6px;" title="Søk statlige støtteordninger (ENOVA, Udir, IMDi, Helsedir) og prosjektregnskap">🏛️ Støtteordninger &amp; Prosjektregnskap</button>
-                    <button type="button" class="btn btn-sm" id="btn-visning-klarsprak" onclick="toggleVisningsModus('KLARSPRAK')" style="background: #15803d; color: #ffffff; font-weight: 700;" title="Klarspråk for virksomhetsledere uten regnskapsbakgrunn">🟢 Leder Klarspråk</button>
-                    <button type="button" class="btn btn-sm" id="btn-visning-detalj" onclick="toggleVisningsModus('DETALJ')" style="background: #f1f5f9; color: var(--text-primary);" title="Vis detaljerte KOSTRA-artskontoer og EVM-indekser">📊 Controller Detaljer</button>
-                    <a class="btn btn-sm" id="btn-apne-pdf-rapport" href="reports/monthly_pdf_packets/5200-ENH-401_Maanedsrapport_M9_2026.pdf" target="_blank" style="background: #1e293b; color: #ffffff; text-decoration: none; font-weight: 700;" title="Åpne formell 2-siders PDF månedsrapport med prognoser og tiltak">📄 Månedsrapport (PDF)</a>
-                </div>
-            </div>
-
-            <!-- Kontrollpanel: Enhetsvelger & Månedsvelger (M01–M12) -->
-            <div class="bank-controls-bar">
-                <div class="bank-controls-left">
-                    <span class="bank-select-label">Budsjettkonto:</span>
-                    <select class="bank-unit-select" id="bank-unit-dropdown" onchange="onBankUnitChange(this.value)">
-                        <optgroup label="🏥 Helse og mestring">
-                            <option value="5200-ENH-401" selected>Enhet 401: Strai Sykehjem (Solveig Grimstad)</option>
-                            <option value="5210-ENH-402">Enhet 402: Hjemmetjenesten Vågsbygd (Berit Olsen)</option>
-                            <option value="5220-ENH-403">Enhet 403: Sørlandsparken Bo & Miljø (Christian Holte)</option>
-                            <option value="5230-ENH-404">Enhet 404: Presteheia Omsorgssenter (Kari Vesterhus)</option>
-                            <option value="5100-OMR-SYKEHJEM">Område Døgnomsorg & Sykehjem (Mette Syvertsen)</option>
-                            <option value="5000-SJEF-HELSE">Kommunalsjef Helse og mestring (Brede Skeie)</option>
-                        </optgroup>
-                        <optgroup label="🎓 Oppvekst og utdanning">
-                            <option value="4100-ENH-202">Enhet 202: Lovisenlev Skole (Trond Jensen)</option>
-                            <option value="4101-ENH-203">Enhet 203: Vågsbygd Skole (Mona Lindstrøm)</option>
-                            <option value="4102-ENH-204">Enhet 204: Grim Ungdomsskole (Espen Birkeland)</option>
-                            <option value="4210-ENH-211">Enhet 211: Lund Kommunale Barnehage (Grete Hovden)</option>
-                            <option value="4100-OMR-SKOLE">Grunnskoleavdelingen (Svein Tore Kvernes)</option>
-                            <option value="4000-SJEF-OPPV">Kommunalsjef Oppvekst (Kristin Eidet Robstad)</option>
-                        </optgroup>
-                        <optgroup label="🏗️ By- og stedsutvikling">
-                            <option value="3300-ENH-301">Enhet 301: Byggesak og Tilsyn (Hans Petter Vik)</option>
-                            <option value="3100-DIR-VAR">Ingeniørvesenet VAR Selvkost (Helge Møller)</option>
-                            <option value="3000-SJEF-BYUTV">Kommunalsjef Byutvikling (Ragnar Evensen)</option>
-                        </optgroup>
-                        <optgroup label="🎭 Kultur og innbyggerdialog">
-                            <option value="2100-ENH-501">Enhet 501: Kultur & Bibliotek (Camilla Jarlsby)</option>
-                            <option value="2000-SJEF-KULTUR">Kommunalsjef Kultur (Camilla Jarlsby)</option>
-                        </optgroup>
-                        <optgroup label="💻 Organisasjon og teknologi">
-                            <option value="1100-DIR-IKT">Digitaliseringsavdelingen (Siri Bentsen)</option>
-                            <option value="1000-SJEF-ORGTEK">Kommunalsjef Org & Tek (Geir Askvik)</option>
-                        </optgroup>
-                        <optgroup label="🏛️ Konsern og toppledelse">
-                            <option value="0000-KOMMDIR">Kommunedirektørens stab (Camilla Dunsæd)</option>
-                            <option value="6000-DIR-OKONOMI">Sentral økonomistab (Terje Fjellvang)</option>
-                            <option value="6001-CTRL-FRANK">Senior Controller Stab (Frank Ellingsen)</option>
-                        </optgroup>
-                    </select>
-
-                    <div class="bank-month-pills" id="bank-month-pills-bar">
-                        <!-- M01 til M12 knapper genereres dynamisk -->
-                    </div>
-                </div>
-
-                <div class="bank-controls-right">
-                    <button class="btn btn-sm" onclick="openShareModal('email')" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe; font-weight:600;" title="Send månedlig status og kontoutskrift på e-post til leder og controller">
-                        📧 Send E-post
-                    </button>
-                    <button class="btn btn-sm" onclick="openShareModal('teams')" style="background:#f3e8ff; color:#6b21a8; border-color:#e9d5ff; font-weight:600;" title="Del månedlig status og kontoutskrift direkte i Microsoft Teams">
-                        💬 Del i Teams
-                    </button>
-                    <button class="btn btn-sm btn-secondary" onclick="printActiveBankStatement()" title="Skriv ut eller lagre A4 kontoutskrift som PDF">
-                        🖨️ Skriv ut / PDF
-                    </button>
-                    <button class="btn btn-sm btn-secondary" onclick="downloadActiveBankStatementCsv()" title="Last ned transaksjoner som Excel/CSV">
-                        📊 Last ned CSV
-                    </button>
-                    <a class="btn btn-sm btn-secondary" id="bank-direct-html-btn" href="reports/kontoutskrifter/KONTOUTSKRIFT_5200_ENH_401_M10.html" target="_blank" title="Åpne ren A4 bankutskrift i fullskjerm">
-                        📄 Åpne A4
-                    </a>
-                    <button class="btn btn-sm btn-primary" onclick="askChatbotAboutCurrentKonto()" title="Få personlig økonomirådgivning fra AI Controller i chat">
-                        💬 Spør Controller
-                    </button>
-                </div>
-            </div>
-
-            <!-- RLS Kontekst & Budsjettansvarlig Identitetspanel -->
-            <div class="bank-rls-strip" id="bank-rls-identity-panel">
-                <div class="bank-rls-info-group">
-                    <div class="bank-rls-item">
-                        <span style="font-size:14px;">👤</span>
-                        <span><strong>Solveig Grimstad</strong> (Enhetsleder Strai Sykehjem)</span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">🔒</span>
-                        <span>RLS-Rolle:</span>
-                        <span class="bank-rls-badge">Enhetsleder_Boenhet</span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">📧</span>
-                        <span style="font-family:'Segoe UI',monospace; font-size:11px; color:#475569;">solveig.grimstad@kristiansand.kommune.no</span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">💳</span>
-                        <span>Fullmakt: <strong>kr 2 000 000 NOK</strong></span>
-                    </div>
-                    <div class="bank-rls-item">
-                        <span style="font-size:13px;">🛡️</span>
-                        <span>Filter: <code style="background:#e2e8f0; padding:1px 5px; border-radius:3px; font-size:10.5px;">Dim_Ansvar[ansvar_kode] == "5200-ENH-401"</code></span>
-                    </div>
-                </div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <span style="font-size:11px; color:#64748b;">Fast Controller: <strong>Frank Ellingsen / Marianne Tellefsen</strong></span>
-                    <button class="btn btn-sm" onclick="askChatbotAboutCurrentKonto()" style="font-size:10.5px; padding:3px 8px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; font-weight:600;">
-                        💬 Spør om 5200-ENH-401
-                    </button>
-                </div>
-            </div>
-
-            <!-- Månedsrapportpakke for Budsjettansvarlig (5 Formater: PBI, Excel, PowerPoint, Word, PDF) -->
-            <div class="bank-reports-suite" id="bank-monthly-reports-suite">
-                <div class="bank-reports-suite-header">
-                    <div>
-                        <div class="bank-reports-suite-title">
-                            <span>📁 MÅNEDSRAPPORTER FOR VALGT BUDSJETTANSVARLIG (M01–M12)</span>
-                            <span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size:10px;">5 KORRESPONDERENDE FORMATER &bull; RLS AKTIV</span>
-                        </div>
-                        <div class="bank-reports-suite-sub" id="bank-reports-suite-unit-label">
-                            Tilpasset Row-Level Security for Enhet 401: Strai Sykehjem (Solveig Grimstad)
-                        </div>
-                    </div>
-                    <div style="font-size:11px; color:#64748b;" id="bank-reports-period-label">
-                        Gjeldende regnskapsperiode: <strong>Oktober 2026 (M10)</strong>
-                    </div>
-                </div>
-                <div class="bank-reports-grid" id="bank-reports-grid-cards">
-                    <!-- Rendres dynamisk for valgt budsjettansvarlig -->
-                </div>
-            </div>
-
-            <!-- Aktiv Kontoutskrift Hovedkort -->
-            <div class="bank-card" id="bank-statement-main-card">
-                <div style="text-align: center; padding: 24px; color: var(--text-secondary);">
-                    Laster kontoutskrift og saldo...
-                </div>
-            </div>
-
-            <!-- Sektor-tilpasset Driftsdashboard (Rektorens Skole-Dashboard & Pleie/Omsorg Dashboard) -->
-            <div id="sektor-spesifikk-leder-modul" style="margin-top: 18px;">
-                <!-- Rendres dynamisk basert på valgt enhet (Skoleleder vs Sykehjemsleder) -->
-            </div>
-        </div>
-    </section>
+    
 
     <!-- ============================================================================== -->
     <!-- 3.4 MLOPS, DATA LINEAGE & ANTIGRAVITY BACKEND ENGINE (AI_KOM ARCHITECTURE)    -->
@@ -14073,7 +14031,29 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         }
 
         function calculateBankStatementClient(unitId, monthNum) {
-            const u = KONTO_UNITS_REGISTRY[unitId] || KONTO_UNITS_REGISTRY["5200-ENH-401"];
+            let u = KONTO_UNITS_REGISTRY[unitId];
+            if (!u && typeof ALL_81_UNITS_DATA !== 'undefined') {
+                const raw = ALL_81_UNITS_DATA.find(x => x.id === unitId || x.ansvar === unitId);
+                if (raw) {
+                    u = {
+                        ansvar_id: raw.id,
+                        navn: raw.leder || "Budsjettansvarlig Leder",
+                        tittel: raw.tittel || raw.name,
+                        sektor_kode: raw.sectorKey || "HELSE",
+                        sektor_navn: raw.sectorKey || "Virksomhetsområde",
+                        enhet_navn: raw.name,
+                        kostra_funksjon: raw.kostra || "Kommunal tjeneste",
+                        annual_budget: raw.ramme || 25000000,
+                        variance_factor: raw.cpi ? (1.0 / raw.cpi) : 1.0,
+                        controller_navn: raw.controller || "Frank Ellingsen",
+                        controller_epost: raw.epost ? `${(raw.controller || "frank.ellingsen").toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no` : "frank.ellingsen@kristiansand.kommune.no",
+                        clean_html_file: `KONTOUTSKRIFT_${raw.id.replace(/-/g, '_')}_M10.html`
+                    };
+                }
+            }
+            if (!u) {
+                u = KONTO_UNITS_REGISTRY["5200-ENH-401"];
+            }
             const m = Math.max(1, Math.min(12, monthNum || 10));
             const annualBudget = u.annual_budget;
             const varFactor = u.variance_factor || 1.0;
@@ -15311,7 +15291,35 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
         function updateBankRlsIdentityPanel(unitId) {
             const panel = document.getElementById("bank-rls-identity-panel");
             if (!panel) return;
-            const rls = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            let rls = KONTO_RLS_REGISTRY[unitId];
+            if (!rls && typeof ALL_81_UNITS_DATA !== 'undefined') {
+                const raw = ALL_81_UNITS_DATA.find(x => x.id === unitId || x.ansvar === unitId);
+                if (raw) {
+                    rls = {
+                        upn: raw.epost || `${raw.leder.toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no`,
+                        navn: raw.leder,
+                        tittel: raw.tittel || raw.name,
+                        niva: raw.niva === 1 ? "NIVA1" : (raw.niva === 2 ? "NIVA2" : "NIVA3"),
+                        niva_tekst: raw.nivaTekst || "Nivå 3: Enhetsleder",
+                        sektor_kode: raw.sectorKey,
+                        kommunalsjefomrade: raw.sectorKey,
+                        ansvar_kode: raw.id,
+                        enhet_navn: raw.name,
+                        har_full_tilgang: false,
+                        rls_rolle: `Enhetsleder_${raw.sectorKey}`,
+                        fullmakt_nok: raw.fullmakt || 2000000,
+                        controller_navn: raw.controller || "Frank Ellingsen",
+                        controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                        pdf_path: `reports/monthly_pdf_packets/${raw.id}_Maanedsrapport_M9_2026.pdf`,
+                        docx_path: "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+                        xlsx_path: "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+                        csv_path: `reports/budsjettansvarlige_arkiv/${raw.id}/04_Framsikt_Omdisponering/framsikt_kontering_${raw.id}.csv`,
+                        pptx_path: "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+                        pbip_project: "powerbi/pbi_reporting_project.pbip"
+                    };
+                }
+            }
+            if (!rls) rls = KONTO_RLS_REGISTRY["5200-ENH-401"];
             const formattedFullmakt = "kr " + Math.round(rls.fullmakt_nok || 2000000).toLocaleString('nb-NO') + " NOK";
 
             panel.innerHTML = `
@@ -15353,7 +15361,35 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
             const periodLabel = document.getElementById("bank-reports-period-label");
             if (!container) return;
 
-            const rls = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
+            let rls = KONTO_RLS_REGISTRY[unitId];
+            if (!rls && typeof ALL_81_UNITS_DATA !== 'undefined') {
+                const raw = ALL_81_UNITS_DATA.find(x => x.id === unitId || x.ansvar === unitId);
+                if (raw) {
+                    rls = {
+                        upn: raw.epost || `${raw.leder.toLowerCase().replace(/ /g, '.')}@kristiansand.kommune.no`,
+                        navn: raw.leder,
+                        tittel: raw.tittel || raw.name,
+                        niva: raw.niva === 1 ? "NIVA1" : (raw.niva === 2 ? "NIVA2" : "NIVA3"),
+                        niva_tekst: raw.nivaTekst || "Nivå 3: Enhetsleder",
+                        sektor_kode: raw.sectorKey,
+                        kommunalsjefomrade: raw.sectorKey,
+                        ansvar_kode: raw.id,
+                        enhet_navn: raw.name,
+                        har_full_tilgang: false,
+                        rls_rolle: `Enhetsleder_${raw.sectorKey}`,
+                        fullmakt_nok: raw.fullmakt || 2000000,
+                        controller_navn: raw.controller || "Frank Ellingsen",
+                        controller_epost: "frank.ellingsen@kristiansand.kommune.no",
+                        pdf_path: `reports/monthly_pdf_packets/${raw.id}_Maanedsrapport_M9_2026.pdf`,
+                        docx_path: "templates/MAL_AVVIKSNOTAT_OG_TILTAKSPLAN_ENHETSLEDER.docx",
+                        xlsx_path: "reports/kontoutskrifter/KONTOUTSKRIFT_MAL_ENHETSLEDER_2026.xlsx",
+                        csv_path: `reports/budsjettansvarlige_arkiv/${raw.id}/04_Framsikt_Omdisponering/framsikt_kontering_${raw.id}.csv`,
+                        pptx_path: "reports/Kristiansand_EPM_Status_Prognose_Tiltaksrapport.pptx",
+                        pbip_project: "powerbi/pbi_reporting_project.pbip"
+                    };
+                }
+            }
+            if (!rls) rls = KONTO_RLS_REGISTRY["5200-ENH-401"];
             const m = Math.max(1, Math.min(12, monthNum || currentKontoMonth || 10));
             const mStr = String(m).padStart(2, '0');
             const mName = KONTO_MONTH_NAMES[m - 1];
@@ -16154,14 +16190,64 @@ Kryptografisk Hash: <code>SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5
 
         function onBankUnitChange(unitId) {
             currentKontoUnit = unitId;
+            currentActiveUnitId = unitId;
+            try {
+                localStorage.setItem("aikom_selected_unit", unitId);
+            } catch(e) {}
+
+            const dropdown = document.getElementById("bank-unit-dropdown");
+            if (dropdown && dropdown.value !== unitId) {
+                dropdown.value = unitId;
+            }
+
             renderBankStatement(currentKontoUnit, currentKontoMonth);
             const pdfBtn = document.getElementById("btn-apne-pdf-rapport");
             if (pdfBtn) {
-                const rls = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
-                pdfBtn.href = rls?.pdf_path || `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M9_2026.pdf`;
+                let rls = KONTO_RLS_REGISTRY[unitId];
+                if (!rls && typeof ALL_81_UNITS_DATA !== 'undefined') {
+                    const raw = ALL_81_UNITS_DATA.find(x => x.id === unitId || x.ansvar === unitId);
+                    if (raw) pdfBtn.href = `reports/monthly_pdf_packets/${raw.id}_Maanedsrapport_M9_2026.pdf`;
+                } else {
+                    pdfBtn.href = rls?.pdf_path || `reports/monthly_pdf_packets/${unitId}_Maanedsrapport_M9_2026.pdf`;
+                }
             }
-            const rlsInfo = KONTO_RLS_REGISTRY[unitId] || KONTO_RLS_REGISTRY["5200-ENH-401"];
-            showToast(`🏛️ Viser kontoutskrift og 5 månedsrapporter for ${rlsInfo?.enhet_navn || unitId} (RLS: ${rlsInfo?.rls_rolle || 'Aktiv'})`);
+            const rlsInfo = KONTO_RLS_REGISTRY[unitId] || (typeof ALL_81_UNITS_DATA !== 'undefined' ? ALL_81_UNITS_DATA.find(x => x.id === unitId) : null);
+            showToast(`🏛️ Viser kun data for ${rlsInfo?.enhet_navn || rlsInfo?.name || unitId}`);
+        }
+
+        function populateBankUnitDropdown(selectedUnitId, filterSector) {
+            const dropdown = document.getElementById("bank-unit-dropdown");
+            if (!dropdown) return;
+            if (!selectedUnitId) selectedUnitId = currentKontoUnit || localStorage.getItem('aikom_selected_unit') || "5200-ENH-401";
+
+            const sMapNames = {
+                "HELSE": "🏥 1. Helse og mestring",
+                "OPPVEKST": "🏫 2. Oppvekst og utdanning",
+                "BYUTVIKLING": "🏗️ 3. By- og stedsutvikling",
+                "KULTUR": "🎭 4. Kultur og innbyggerdialog",
+                "ORG_TEK": "💻 5. Organisasjon og teknologi",
+                "OKONOMI": "🏛️ 6. Økonomi og virksomhetsstyring"
+            };
+
+            let html = "";
+            const secKeys = ["HELSE", "OPPVEKST", "BYUTVIKLING", "KULTUR", "ORG_TEK", "OKONOMI"];
+            secKeys.forEach(sk => {
+                if (filterSector && filterSector !== "ALL" && filterSector !== sk) return;
+                const secUnits = (typeof ALL_81_UNITS_DATA !== 'undefined') ? ALL_81_UNITS_DATA.filter(u => u.sectorKey === sk) : [];
+                if (secUnits.length > 0) {
+                    html += `<optgroup label="${sMapNames[sk]} (${secUnits.length} enheter)">`;
+                    secUnits.forEach(u => {
+                        const isSel = (u.id === selectedUnitId) ? " selected" : "";
+                        html += `<option value="${u.id}"${isSel}>${u.name} — ${u.leder} (${u.nivaTekst})</option>`;
+                    });
+                    html += `</optgroup>`;
+                }
+            });
+
+            dropdown.innerHTML = html;
+            if (selectedUnitId) {
+                dropdown.value = selectedUnitId;
+            }
         }
 
         function onBankMonthClick(monthNum) {
@@ -25523,56 +25609,34 @@ Tlf: +47 38 00 76 50 | frank.ellingsen@kristiansand.kommune.no`;
         let currentVisningsModus = "KLARSPRAK";
 
         function filterBankSector(sectorCode) {
-            activeBankSectorFilter = sectorCode;
             const pills = document.querySelectorAll(".bank-sector-pill");
             pills.forEach(p => {
-                if (p.id === `bank-sec-btn-${sectorCode}`) {
+                if (p.id === "bank-sec-btn-" + sectorCode) {
+                    p.classList.add("active");
                     p.style.background = "var(--navy-dark)";
                     p.style.color = "#ffffff";
                     p.style.fontWeight = "700";
                 } else {
-                    p.style.background = "#f1f5f9";
+                    p.classList.remove("active");
+                    p.style.background = "#ffffff";
                     p.style.color = "var(--text-primary)";
                     p.style.fontWeight = "normal";
                 }
             });
 
+            populateBankUnitDropdown(currentKontoUnit, sectorCode);
             const dropdown = document.getElementById("bank-unit-dropdown");
-            if (!dropdown) return;
-            const optgroups = dropdown.querySelectorAll("optgroup");
-            
-            const sectorKeywords = {
-                "HELSE": "Helse",
-                "OPPVEKST": "Oppvekst",
-                "BYUTVIKLING": "By- og stedsutvikling",
-                "KULTUR": "Kultur",
-                "ORG_TEK": "Organisasjon",
-                "KONSERN": "Konsern"
-            };
-
-            const defaultUnits = {
-                "HELSE": "5200-ENH-401",
-                "OPPVEKST": "4100-ENH-202",
-                "BYUTVIKLING": "3300-ENH-301",
-                "KULTUR": "2100-ENH-501",
-                "ORG_TEK": "1100-DIR-IKT",
-                "KONSERN": "0000-KOMMDIR"
-            };
-
-            if (sectorCode === "ALL") {
-                optgroups.forEach(og => og.style.display = "");
-                showToast("🌐 Viser samtlige sektorer i Kristiansand kommune.");
-            } else {
-                optgroups.forEach(og => {
-                    if (og.label && og.label.includes(sectorKeywords[sectorCode])) {
-                        og.style.display = "";
-                    } else {
-                        og.style.display = "none";
+            if (dropdown && dropdown.options.length > 0) {
+                let exists = false;
+                for (let i = 0; i < dropdown.options.length; i++) {
+                    if (dropdown.options[i].value === currentKontoUnit) {
+                        exists = true;
+                        break;
                     }
-                });
-                if (defaultUnits[sectorCode]) {
-                    dropdown.value = defaultUnits[sectorCode];
-                    onBankUnitChange(defaultUnits[sectorCode]);
+                }
+                if (!exists) {
+                    dropdown.selectedIndex = 0;
+                    onBankUnitChange(dropdown.value);
                 }
             }
         }
@@ -26862,8 +26926,11 @@ const HUB_PERSONA_TABS = ['min-enhet', 'sektor-konsern', 'controller-hub', 'veil
 const SECTION_TO_TAB_MAP = {
     'top3-kpi-seksjon': 'sektor-konsern',
     'nettbank-kontoutskrift-seksjon': 'min-enhet',
-    'workflow-cycle-banner': 'min-enhet',
-    'mote-rapportering-seksjon': 'min-enhet',
+    'workflow-cycle-banner': 'controller-hub',
+    'checklist-panel': 'controller-hub',
+    'monthend-orchestration-seksjon': 'controller-hub',
+    'mote-rapportering-seksjon': 'controller-hub',
+    'budsjettansvarlige-panel': 'controller-hub',
     'sektor-seksjon': 'sektor-konsern',
     'kpi-seksjon-container': 'sektor-konsern',
     'kpi-seksjon': 'sektor-konsern',
@@ -26873,8 +26940,12 @@ const SECTION_TO_TAB_MAP = {
     'budsjett-modul-seksjon': 'controller-hub',
     'prosjektregnskap-seksjon': 'controller-hub',
     'powerbi-showcase': 'controller-hub',
+    'cash-management-seksjon': 'controller-hub',
+    'mlops-lineage-section': 'controller-hub',
     'rag-seksjon': 'controller-hub',
     'vectordb-panel': 'controller-hub',
+    'okonomiradgiver-handbok-seksjon': 'veiledere-maler',
+    'advisor-calculators-seksjon': 'veiledere-maler',
     'dokumentbank': 'veiledere-maler',
     'timeline-section': 'veiledere-maler'
 };
@@ -26915,6 +26986,26 @@ function openTab(tabKey, updateHash) {
             }
         }
     });
+
+    // Skjul / vis felles toppelementer basert på aktiv fane:
+    // I "Min Enhet & Min Måned" skal budsjettansvarlig KUN ha fokus på sitt område
+    const personaBox = document.getElementById('hub-persona-guidance-container');
+    const sectorBar = document.getElementById('global-sector-selector-bar');
+    if (tabKey === 'min-enhet') {
+        if (personaBox) personaBox.style.display = 'none';
+        if (sectorBar) sectorBar.style.display = 'none';
+        if (typeof populateBankUnitDropdown === 'function') {
+            const savedUnit = localStorage.getItem('aikom_selected_unit') || currentKontoUnit || '5200-ENH-401';
+            populateBankUnitDropdown(savedUnit);
+        }
+        if (typeof renderBankStatement === 'function') {
+            const activeUnit = currentKontoUnit || localStorage.getItem('aikom_selected_unit') || '5200-ENH-401';
+            renderBankStatement(activeUnit, currentKontoMonth || 10);
+        }
+    } else {
+        if (personaBox) personaBox.style.display = 'block';
+        if (sectorBar) sectorBar.style.display = 'block';
+    }
 
     try {
         localStorage.setItem('aikom_active_tab', tabKey);
@@ -26960,6 +27051,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem('aikom_active_tab');
             if (HUB_PERSONA_TABS.includes(saved)) initialTab = saved;
         } catch (e) {}
+    }
+    if (typeof populateBankUnitDropdown === 'function') {
+        const initialUnit = localStorage.getItem('aikom_selected_unit') || '5200-ENH-401';
+        populateBankUnitDropdown(initialUnit);
     }
     openTab(initialTab, false);
     if (hash && SECTION_TO_TAB_MAP[hash]) {
@@ -49121,10 +49216,12 @@ window.selectUnit = function(unitId) {
         }
     } catch(e) {}
 
-    // Sørg for at Sektor & Konsernstyring fanen er aktiv så hierarkiet og enheten vises
+    // Sørg for at fanen oppdateres korrekt
     if (typeof openTab === "function") {
         const activeTab = localStorage.getItem("aikom_active_tab") || "min-enhet";
-        if (activeTab !== "sektor-konsern") {
+        if (activeTab === "min-enhet") {
+            if (typeof onBankUnitChange === 'function') onBankUnitChange(unitId);
+        } else if (activeTab !== "sektor-konsern") {
             openTab("sektor-konsern", false);
         }
     }
