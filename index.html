@@ -3144,6 +3144,28 @@
             white-space: nowrap;
         }
 
+        .btn-lvl-pill {
+            padding: 1px 6px;
+            font-size: 8.5px;
+            font-weight: 700;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+            background: #ffffff;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-lvl-pill:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            background: #f8fafc;
+        }
+        .btn-lvl-pill.active {
+            background: var(--navy-dark);
+            color: #ffffff;
+            border-color: var(--navy-dark);
+        }
+
         /* ==========================================================================
            RAG CONDITIONAL FORMATTING DESIGN SYSTEM (TUFTE / OFFICE BI STANDARD)
            Light Red (#fef2f2 / #991b1b), Light Yellow (#fefce8 / #854d0e), Light Green (#f0fdf4 / #166534)
@@ -5542,18 +5564,32 @@
                     <span class="status-badge" id="sb-ov-status" style="font-size:9px; padding:1px 5px;">M9 OK</span>
                 </div>
 
-                <!-- BUDSJETTNIVÅ FILTER DROPDOWN -->
+                <!-- VIRKSOMHETSOMRÅDE & KONSERN FILTER DROPDOWN (DYNAMISK FOR HELE SIDEN) -->
                 <div style="margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid var(--border-subtle);">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
-                        <span class="sb-tot-label">🏛️ Budsjettnivå</span>
-                        <span id="sb-level-badge" class="framsikt-level-badge lvl-1" style="font-size:9px; padding:1px 6px;">Nivå 1</span>
+                        <span class="sb-tot-label">🏛️ Virksomhetsområde</span>
+                        <span id="sb-level-badge" class="framsikt-level-badge lvl-1" style="font-size:9px; padding:1px 6px;">Konsern</span>
                     </div>
-                    <select id="sidebar-budget-level-select" onchange="setBudgetLevel(this.value)" style="width:100%; font-size:10.5px; padding:3px 5px; border:1px solid #cbd5e1; border-radius:3px; background:#fff; font-weight:600; color:var(--navy-dark); cursor:pointer;" title="Filtrer hele huben på budsjettnivå">
-                        <option value="1">🌐 Nivå 1: Konsern (Kommunedirektør)</option>
-                        <option value="2">🏛️ Nivå 2: Virksomhetsområde (Kommunalsjefer)</option>
-                        <option value="3">🏢 Nivå 3: Tjenesteområde (Områdeledere)</option>
-                        <option value="4">🏫 Nivå 4: Resultatenhet (Enhetsledere / 81)</option>
+                    <select id="sidebar-sector-select" onchange="onSidebarSectorSelect(this.value)" style="width:100%; font-size:10.5px; padding:4px 6px; border:1px solid #cbd5e1; border-radius:4px; background:#fff; font-weight:600; color:var(--navy-dark); cursor:pointer;" title="Velg Konsern eller ett av de 6 Virksomhetsområdene">
+                        <option value="ALL">🌐 Konsern (Alle 6 områder)</option>
+                        <option value="HELSE">🏥 1. Helse og mestring</option>
+                        <option value="OPPVEKST">🏫 2. Oppvekst</option>
+                        <option value="BYUTVIKLING">🏗️ 3. By- og stedsutvikling</option>
+                        <option value="KULTUR">🎭 4. Kultur og dialog</option>
+                        <option value="ORG_TEK">💻 5. Org &amp; teknologi</option>
+                        <option value="OKONOMI">⚖️ 6. Økonomi &amp; styring</option>
                     </select>
+
+                    <!-- Hurtigknapper for budsjettnivå (Nivå 1–4) -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px; gap:4px;">
+                        <span style="font-size:9px; color:var(--text-muted); font-weight:600;">Budsjettnivå:</span>
+                        <div style="display:flex; gap:3px;">
+                            <button type="button" class="btn-lvl-pill active" id="btn-lvl-1" onclick="setBudgetLevel(1)" title="Nivå 1: Konsern (Kommunedirektør)">N1</button>
+                            <button type="button" class="btn-lvl-pill" id="btn-lvl-2" onclick="setBudgetLevel(2)" title="Nivå 2: Virksomhetsområde (Kommunalsjefer)">N2</button>
+                            <button type="button" class="btn-lvl-pill" id="btn-lvl-3" onclick="setBudgetLevel(3)" title="Nivå 3: Tjenesteområde (Områdeledere)">N3</button>
+                            <button type="button" class="btn-lvl-pill" id="btn-lvl-4" onclick="setBudgetLevel(4)" title="Nivå 4: Resultatenhet (Enhetsledere / 81)">N4</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- KJERNETOTALER FOR VALGT FILTER -->
@@ -19693,10 +19729,60 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
             renderSidebarLineChart(activeSidebarSector);
         }
 
+        function onSidebarSectorSelect(sectorKey) {
+            if (!sectorKey) return;
+            try {
+                localStorage.setItem("aikom_selected_sector", sectorKey);
+            } catch(e) {}
+
+            // 1. Synkroniser aktivt budsjettnivå: Konsern = Nivå 1, Sektor = Nivå 2
+            const targetLvl = sectorKey === 'ALL' ? 1 : 2;
+            if (typeof setBudgetLevel === "function") {
+                setBudgetLevel(targetLvl, false);
+            }
+
+            // 2. Oppdater oversiktskortet i venstre sidebar
+            updateSidebarOverview(sectorKey);
+
+            // 3. Oppdater resten av huben (Sektor-fane, KPI-er, KOSTRA-artsavvik tabell)
+            if (typeof selectSector === "function") {
+                selectSector(sectorKey);
+            }
+
+            const secTitle = SEKTOR_DATA[sectorKey]?.title || (sectorKey === 'ALL' ? 'Konsern (Alle)' : sectorKey);
+            showToast(`🎯 Viser ${secTitle}`);
+        }
+
         function updateSidebarOverview(sectorKey) {
             activeSidebarSector = sectorKey;
+            try {
+                localStorage.setItem("aikom_selected_sector", sectorKey);
+            } catch(e) {}
             const data = SEKTOR_DATA[sectorKey] || SEKTOR_DATA["ALL"];
             if (!data) return;
+
+            // 0. Synkroniser sidebar dropdown, nivå-merke og hurtigknapper
+            const sbSectorSelect = document.getElementById("sidebar-sector-select");
+            if (sbSectorSelect && sbSectorSelect.value !== sectorKey) {
+                sbSectorSelect.value = sectorKey;
+            }
+
+            const sbLevelBadge = document.getElementById("sb-level-badge");
+            if (sbLevelBadge) {
+                if (sectorKey === 'ALL') {
+                    sbLevelBadge.textContent = "Konsern";
+                    sbLevelBadge.className = "framsikt-level-badge lvl-1";
+                } else {
+                    sbLevelBadge.textContent = "Sektor";
+                    sbLevelBadge.className = "framsikt-level-badge lvl-2";
+                }
+            }
+
+            const activeLvl = sectorKey === 'ALL' ? 1 : 2;
+            for (let l = 1; l <= 4; l++) {
+                const btn = document.getElementById(`btn-lvl-${l}`);
+                if (btn) btn.classList.toggle("active", l === activeLvl);
+            }
 
             // Oppdater tittel på linjediagram
             const chartTitleEl = document.getElementById("sb-chart-title");
@@ -19736,14 +19822,14 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
             const eac_val = cpi_val > 0 ? Math.round(bac_val / cpi_val) : bac_val;
 
             const bacEl = document.getElementById("sb-tot-bac");
-            if (bacEl) bacEl.textContent = formatNOK(bac_val, 2).replace("+", "");
+            if (bacEl) bacEl.textContent = formatNOK(bac_val, bac_val >= 1000000000 ? 2 : 0).replace("+", "");
 
             const acEl = document.getElementById("sb-tot-ac");
-            if (acEl) acEl.textContent = formatNOK(ytd_ac, 1).replace("+", "");
+            if (acEl) acEl.textContent = formatNOK(ytd_ac, ytd_ac >= 1000000000 ? 2 : 1).replace("+", "");
 
             const cvEl = document.getElementById("sb-tot-cv");
             if (cvEl) {
-                cvEl.textContent = formatNOK(ytd_cv, 2);
+                cvEl.textContent = formatNOK(ytd_cv, Math.abs(ytd_cv) >= 1000000 ? 2 : 0);
                 if (ytd_cv < 0) {
                     cvEl.className = "sb-tot-val alert";
                 } else if (ytd_cv > 0) {
@@ -19755,7 +19841,7 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
 
             const cpiEacEl = document.getElementById("sb-tot-cpi-eac");
             if (cpiEacEl) {
-                cpiEacEl.textContent = `${cpi_val.toFixed(3)} / ${formatNOK(eac_val, 2).replace("+", "")}`;
+                cpiEacEl.textContent = `${cpi_val.toFixed(3)} / ${formatNOK(eac_val, eac_val >= 1000000000 ? 2 : 1).replace("+", "")}`;
                 cpiEacEl.style.color = cpi_val < 0.995 ? "var(--alert-red)" : (cpi_val > 1.002 ? "var(--success-green)" : "var(--navy-dark)");
             }
 
@@ -52410,7 +52496,7 @@ function closeMlopsModalOnBackdrop(e) {
 }
 
 // 4. Budsjettnivå filtreringsmotor (Nivå 1–4)
-function setBudgetLevel(level) {
+function setBudgetLevel(level, syncSector = true) {
     currentBudgetLevel = parseInt(level, 10) || 1;
     try {
         localStorage.setItem("aikom_budget_level", currentBudgetLevel);
@@ -52429,9 +52515,11 @@ function setBudgetLevel(level) {
         4: "Nivå 4"
     };
 
-    // A. Synkroniser sidebar dropdown & badge
-    const sbSelect = document.getElementById("sidebar-budget-level-select");
-    if (sbSelect && sbSelect.value != currentBudgetLevel) sbSelect.value = currentBudgetLevel;
+    // A. Synkroniser budsjettnivå knapper (N1-N4)
+    for (let l = 1; l <= 4; l++) {
+        const btn = document.getElementById(`btn-lvl-${l}`);
+        if (btn) btn.classList.toggle("active", l === currentBudgetLevel);
+    }
     const sbBadge = document.getElementById("sb-level-badge");
     if (sbBadge) {
         sbBadge.textContent = lvlShort[currentBudgetLevel] || `Nivå ${currentBudgetLevel}`;
@@ -52457,10 +52545,20 @@ function setBudgetLevel(level) {
     // E. Oppdater Min Enhet & Nettbank
     applyBudgetLevelToBank(currentBudgetLevel);
 
-    // F. Oppdater Sidebar Oversiktskort med live tall
-    const sec = localStorage.getItem("aikom_selected_sector") || "ALL";
-    if (typeof updateSidebarOverview === "function") {
-        updateSidebarOverview(sec);
+    // F. Hvis syncSector er aktiv
+    if (syncSector) {
+        if (currentBudgetLevel === 1) {
+            onSidebarSectorSelect('ALL');
+        } else if (currentBudgetLevel === 2) {
+            const currentSec = localStorage.getItem("aikom_selected_sector") || "ALL";
+            const targetSec = currentSec === 'ALL' ? 'HELSE' : currentSec;
+            onSidebarSectorSelect(targetSec);
+        }
+    } else {
+        const sec = localStorage.getItem("aikom_selected_sector") || "ALL";
+        if (typeof updateSidebarOverview === "function") {
+            updateSidebarOverview(sec);
+        }
     }
 
     showToast(`🎯 Filtrert til ${lvlNames[currentBudgetLevel]}`);
@@ -52509,7 +52607,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const savedSector = localStorage.getItem("aikom_selected_sector") || "ALL";
 
     setTimeout(() => {
-        setBudgetLevel(savedLevel);
+        setBudgetLevel(savedLevel, false);
         if (typeof updateSidebarOverview === "function") {
             updateSidebarOverview(savedSector);
         }
