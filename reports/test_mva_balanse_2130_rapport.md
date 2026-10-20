@@ -1,7 +1,7 @@
 # Automatisk MVA-Balansekontroll (Konto 2130)
 
 **Status:** `PASSED`  
-**Tidspunkt:** `2026-10-17T18:35:20.396045`  
+**Tidspunkt:** `2026-10-20T09:35:59.397408`  
 **Filnavn:** `Ompostering_Korreksjonsfil_ERP_Eksport_v2.xlsx`  
 **SHA-256 Checksum:** `a0aa5bc17a4f1fd8adf57ad96a3d84fab357d47dfe54e9cb60c1163952074030`  
 

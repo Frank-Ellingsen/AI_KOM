@@ -302,7 +302,8 @@ def ingest_all(
     
     # Håndter slettede filer dersom noen ble fjernet fra data_dir
     current_names = {f.name for f in raw_files}
-    deleted_sources = existing_sources - current_names
+    raw_sources_in_db = {s for s in existing_sources if "/" not in s and "\\" not in s}
+    deleted_sources = raw_sources_in_db - current_names
     if deleted_sources:
         for ds in deleted_sources:
             ids = [r[0] for r in cursor.execute("SELECT id FROM legal_chunks WHERE source_file = ?", (ds,)).fetchall()]
