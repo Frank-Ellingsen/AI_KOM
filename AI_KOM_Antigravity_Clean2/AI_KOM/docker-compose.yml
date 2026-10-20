@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  ai_kom:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
