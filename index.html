@@ -5527,8 +5527,80 @@
             <span class="status-badge" style="font-size:10px; padding:2px 5px;">M9 Aktiv</span>
         </div>
 
-        
         <div class="hub-sidebar-scroll">
+
+            <!-- DYNAMISK OVERSIKTSKORT OG BUDSJETTNIVÅ-VELGER (TUFTE STANDARD) -->
+            <div class="sidebar-overview-card" id="sidebar-overview-card">
+                <div class="sidebar-overview-header">
+                    <div class="sidebar-overview-title-wrap">
+                        <span class="sidebar-overview-icon" id="sb-ov-icon">🌐</span>
+                        <div style="min-width:0;">
+                            <div class="sidebar-overview-label">Filter &amp; Kontekst</div>
+                            <div class="sidebar-overview-title" id="sb-ov-title" title="Konsern (Alle)">Konsern (Alle)</div>
+                        </div>
+                    </div>
+                    <span class="status-badge" id="sb-ov-status" style="font-size:9px; padding:1px 5px;">M9 OK</span>
+                </div>
+
+                <!-- BUDSJETTNIVÅ FILTER DROPDOWN -->
+                <div style="margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid var(--border-subtle);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                        <span class="sb-tot-label">🏛️ Budsjettnivå</span>
+                        <span id="sb-level-badge" class="framsikt-level-badge lvl-1" style="font-size:9px; padding:1px 6px;">Nivå 1</span>
+                    </div>
+                    <select id="sidebar-budget-level-select" onchange="setBudgetLevel(this.value)" style="width:100%; font-size:10.5px; padding:3px 5px; border:1px solid #cbd5e1; border-radius:3px; background:#fff; font-weight:600; color:var(--navy-dark); cursor:pointer;" title="Filtrer hele huben på budsjettnivå">
+                        <option value="1">🌐 Nivå 1: Konsern (Kommunedirektør)</option>
+                        <option value="2">🏛️ Nivå 2: Virksomhetsområde (Kommunalsjefer)</option>
+                        <option value="3">🏢 Nivå 3: Tjenesteområde (Områdeledere)</option>
+                        <option value="4">🏫 Nivå 4: Resultatenhet (Enhetsledere / 81)</option>
+                    </select>
+                </div>
+
+                <!-- KJERNETOTALER FOR VALGT FILTER -->
+                <div class="sidebar-totals-grid">
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">Årsbudsjett (BAC)</span>
+                        <span class="sb-tot-val" id="sb-tot-bac">7 240 Mkr</span>
+                    </div>
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">YTD Faktisk (AC)</span>
+                        <span class="sb-tot-val" id="sb-tot-ac">4 851 Mkr</span>
+                    </div>
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">Avvik YTD (CV)</span>
+                        <span class="sb-tot-val alert" id="sb-tot-cv">-21.8 Mkr</span>
+                    </div>
+                    <div class="sidebar-total-item">
+                        <span class="sb-tot-label">CPI / EAC</span>
+                        <span class="sb-tot-val" id="sb-tot-cpi-eac">0.995 / 7 272M</span>
+                    </div>
+                </div>
+
+                <!-- MoM Kontekst -->
+                <div class="sidebar-mom-card">
+                    <div class="sb-mom-header">
+                        <span>MoM Avvikstakt</span>
+                        <span class="sb-mom-badge alert" id="sb-mom-badge">Δ -1.3M</span>
+                    </div>
+                    <div class="sb-mom-details" id="sb-mom-details">
+                        <!-- Fylles dynamisk -->
+                    </div>
+                </div>
+
+                <!-- Linjediagram Sparkline -->
+                <div class="sidebar-chart-box">
+                    <div class="sidebar-chart-header">
+                        <span id="sb-chart-title">Akk. merforbruk YTD</span>
+                        <div class="sidebar-chart-tabs">
+                            <button type="button" class="sb-chart-tab active" id="sb-tab-cum" onclick="setSidebarChartMode('CUM')">Akk.</button>
+                            <button type="button" class="sb-chart-tab" id="sb-tab-month" onclick="setSidebarChartMode('MONTH')">Mnd</button>
+                        </div>
+                    </div>
+                    <div class="sidebar-chart-svg-wrap" id="sb-chart-container">
+                        <!-- Genereres dynamisk -->
+                    </div>
+                </div>
+            </div>
 
             <!-- 0. HOVEDROLLER / PERSONAS (jf. AI_KOM_layout_og_navigasjon.md) -->
             <div class="sidebar-nav-group" style="margin-bottom: 12px;">
@@ -5536,16 +5608,16 @@
                     <span>Hovedrolle / Visning</span>
                     <span style="font-size:9.5px; text-transform:none; color:var(--accent-blue); font-weight:700;">4 Faner</span>
                 </div>
-                <a class="sidebar-nav-item active" id="side-tab-min-enhet" onclick="openTab('min-enhet')">
+                <a class="sidebar-nav-item active" id="side-tab-min-enhet" onclick="openTab('min-enhet')" style="cursor:pointer;">
                     <span>🏫 Min Enhet &amp; Måned</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-tab-sektor-konsern" onclick="openTab('sektor-konsern')">
+                <a class="sidebar-nav-item" id="side-tab-sektor-konsern" onclick="openTab('sektor-konsern')" style="cursor:pointer;">
                     <span>🏛️ Sektor &amp; Konsern</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-tab-controller-hub" onclick="openTab('controller-hub')">
+                <a class="sidebar-nav-item" id="side-tab-controller-hub" onclick="openTab('controller-hub')" style="cursor:pointer;">
                     <span>📊 Controller Hub</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-tab-veiledere-maler" onclick="openTab('veiledere-maler')">
+                <a class="sidebar-nav-item" id="side-tab-veiledere-maler" onclick="openTab('veiledere-maler')" style="cursor:pointer;">
                     <span>📚 Veiledere &amp; Maler</span>
                 </a>
             </div>
@@ -5556,25 +5628,25 @@
                     <span>Virksomhetsområder</span>
                     <span style="font-size:9.5px; text-transform:none; color:var(--text-muted); font-weight:600;">6 Sektorer</span>
                 </div>
-                <a class="sidebar-nav-item active" id="side-sec-all" onclick="selectSector('ALL')">
+                <a class="sidebar-nav-item active" id="side-sec-all" onclick="selectSector('ALL')" style="cursor:pointer;">
                     <span>🌐 Konsern (Alle)</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-sec-helse" onclick="selectSector('HELSE')">
+                <a class="sidebar-nav-item" id="side-sec-helse" onclick="selectSector('HELSE')" style="cursor:pointer;">
                     <span>🏥 1. Helse og mestring</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-sec-oppvekst" onclick="selectSector('OPPVEKST')">
+                <a class="sidebar-nav-item" id="side-sec-oppvekst" onclick="selectSector('OPPVEKST')" style="cursor:pointer;">
                     <span>🏫 2. Oppvekst</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-sec-by" onclick="selectSector('BYUTVIKLING')">
+                <a class="sidebar-nav-item" id="side-sec-by" onclick="selectSector('BYUTVIKLING')" style="cursor:pointer;">
                     <span>🏗️ 3. By- og stedsutvikling</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-sec-kultur" onclick="selectSector('KULTUR')">
+                <a class="sidebar-nav-item" id="side-sec-kultur" onclick="selectSector('KULTUR')" style="cursor:pointer;">
                     <span>🎭 4. Kultur og dialog</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-sec-org" onclick="selectSector('ORG_TEK')">
+                <a class="sidebar-nav-item" id="side-sec-org" onclick="selectSector('ORG_TEK')" style="cursor:pointer;">
                     <span>💻 5. Org &amp; teknologi</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-sec-oko" onclick="selectSector('OKONOMI')">
+                <a class="sidebar-nav-item" id="side-sec-oko" onclick="selectSector('OKONOMI')" style="cursor:pointer;">
                     <span>⚖️ 6. Økonomi &amp; styring</span>
                 </a>
             </div>
@@ -5585,77 +5657,77 @@
                     <span>Månedlig Arbeidsflyt</span>
                     <span style="font-size:9.5px; text-transform:none; color:var(--accent-blue); cursor:pointer; font-weight:700;" onclick="openUserGuide('MANED')">Veileder ℹ</span>
                 </div>
-                <a class="sidebar-nav-item" id="side-step-1" onclick="selectWorkflowPhase(1)">
-                    <span>1️⃣ Månedsstart & Import</span>
+                <a class="sidebar-nav-item" id="side-step-1" onclick="navigateToWorkflowPhase(1)" style="cursor:pointer;">
+                    <span>1️⃣ Månedsstart &amp; Import</span>
                     <span class="badge-phase">Dag 1–5</span>
                 </a>
-                <a class="sidebar-nav-item active" id="side-step-2" onclick="selectWorkflowPhase(2)">
-                    <span>2️⃣ Avvik & Triage</span>
+                <a class="sidebar-nav-item active" id="side-step-2" onclick="navigateToWorkflowPhase(2)" style="cursor:pointer;">
+                    <span>2️⃣ Avvik &amp; Triage</span>
                     <span class="badge-phase">Dag 6–10</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-step-3" onclick="selectWorkflowPhase(3)">
-                    <span>3️⃣ Lederdialog & Tiltak</span>
+                <a class="sidebar-nav-item" id="side-step-3" onclick="navigateToWorkflowPhase(3)" style="cursor:pointer;">
+                    <span>3️⃣ Lederdialog &amp; Tiltak</span>
                     <span class="badge-phase">Dag 11–18</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-step-4" onclick="selectWorkflowPhase(4)">
+                <a class="sidebar-nav-item" id="side-step-4" onclick="navigateToWorkflowPhase(4)" style="cursor:pointer;">
                     <span>4️⃣ Prognose (EAC/ETC)</span>
                     <span class="badge-phase">Dag 19–24</span>
                 </a>
-                <a class="sidebar-nav-item" id="side-step-5" onclick="selectWorkflowPhase(5)">
-                    <span>5️⃣ Politisk Sak & Vedtak</span>
+                <a class="sidebar-nav-item" id="side-step-5" onclick="navigateToWorkflowPhase(5)" style="cursor:pointer;">
+                    <span>5️⃣ Politisk Sak &amp; Vedtak</span>
                     <span class="badge-phase">Dag 25–30</span>
                 </a>
             </div>
 
-            <!-- 2. Verktøy & Moduler -->
+            <!-- 3. Verktøy & Moduler -->
             <div class="sidebar-nav-group">
-                <div class="sidebar-nav-header">Verktøy & Analyse</div>
-                <a href="#kpi-seksjon" class="sidebar-nav-item">
+                <div class="sidebar-nav-header">Verktøy &amp; Analyse</div>
+                <a class="sidebar-nav-item" onclick="navigateToSection('kpi-seksjon'); return false;" style="cursor:pointer;">
                     <span>📈 Nøkkeltall (EVM / KPI)</span>
                 </a>
-                <a href="#avvik-seksjon" class="sidebar-nav-item">
+                <a class="sidebar-nav-item" onclick="navigateToSection('avvik-seksjon'); return false;" style="cursor:pointer;">
                     <span>🚨 KOSTRA Artsavvik</span>
                 </a>
-                <a href="#mote-rapportering-seksjon" class="sidebar-nav-item" id="side-mote-rapportering">
+                <a class="sidebar-nav-item" id="side-mote-rapportering" onclick="navigateToSection('mote-rapportering-seksjon'); return false;" style="cursor:pointer;">
                     <span>👥 Månedsmøter (Nivå 1–3)</span>
                     <span class="badge-phase" style="background:var(--navy-dark); color:#fff;">M10</span>
                 </a>
-                <a href="#rag-seksjon" class="sidebar-nav-item">
-                    <span>🤖 Glass-Box RAG & Juss</span>
+                <a class="sidebar-nav-item" onclick="navigateToSection('rag-seksjon'); return false;" style="cursor:pointer;">
+                    <span>🤖 Glass-Box RAG &amp; Juss</span>
                 </a>
-                <a href="#triage-seksjon" class="sidebar-nav-item">
+                <a class="sidebar-nav-item" onclick="navigateToSection('triage-seksjon'); return false;" style="cursor:pointer;">
                     <span>📋 Smart Triage (16 Enheter)</span>
                 </a>
-                <a href="#saksflyt" class="sidebar-nav-item">
-                    <span>🔄 Saksgenerator & Notat</span>
+                <a class="sidebar-nav-item" onclick="navigateToSection('saksflyt'); return false;" style="cursor:pointer;">
+                    <span>🔄 Saksgenerator &amp; Notat</span>
                 </a>
-                                <a href="#cash-management-seksjon" class="sidebar-nav-item" id="side-cash-mgmt">
-                    <span>💰 Likviditet & Kreditt</span>
+                <a class="sidebar-nav-item" id="side-cash-mgmt" onclick="navigateToSection('cash-management-seksjon'); return false;" style="cursor:pointer;">
+                    <span>💰 Likviditet &amp; Kreditt</span>
                     <span class="badge-phase" style="background:#059669; color:#fff;">K-lov § 14-13</span>
                 </a>
-                <a href="#top3-kpi-seksjon" class="sidebar-nav-item" id="side-top3-kpi" onclick="if(typeof navigateToSection==='function'){navigateToSection('top3-kpi-seksjon');return false;}">
-                    <span>🏛️ Top 3 KPIs & Bystyret</span>
+                <a class="sidebar-nav-item" id="side-top3-kpi" onclick="navigateToSection('top3-kpi-seksjon'); return false;" style="cursor:pointer;">
+                    <span>🏛️ Top 3 KPIs &amp; Bystyret</span>
                     <span class="badge-phase" style="background:#0f172a; color:#fff;">TBU PPTX</span>
                 </a>
-                <a href="#powerbi-showcase" class="sidebar-nav-item">
-                    <span>📊 Power BI & DAX Hub</span>
+                <a class="sidebar-nav-item" onclick="navigateToSection('powerbi-showcase'); return false;" style="cursor:pointer;">
+                    <span>📊 Power BI &amp; DAX Hub</span>
                 </a>
-                <a href="#budsjett-modul-seksjon" class="sidebar-nav-item" id="side-budsjett-modul" onclick="switchBudsjettModulTab('LONN')">
+                <a class="sidebar-nav-item" id="side-budsjett-modul" onclick="navigateToSection('budsjett-modul-seksjon'); if(typeof switchBudsjettModulTab==='function') switchBudsjettModulTab('LONN'); return false;" style="cursor:pointer;">
                     <span>🏛️ Budsjettmodul (Framsikt)</span>
                     <span class="badge-phase" style="background:#0369a1; color:#fff;">HØP 26</span>
                 </a>
-                <a href="#dokumentbank" class="sidebar-nav-item">
-                    <span>📂 Dokument- & Malbank (35)</span>
+                <a class="sidebar-nav-item" onclick="navigateToSection('dokumentbank'); return false;" style="cursor:pointer;">
+                    <span>📂 Dokument- &amp; Malbank (35)</span>
                 </a>
-                <a class="sidebar-nav-item active-chat-trigger" onclick="toggleChatDrawer()" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl+Space)" style="background: linear-gradient(90deg, #eff6ff, #ffffff); border-left: 3px solid #0056b3; font-weight:600;">
+                <a class="sidebar-nav-item active-chat-trigger" onclick="toggleChatDrawer(); return false;" title="Åpne AI Controller Chatbot (Hurtigtast: Ctrl+Space)" style="background: linear-gradient(90deg, #eff6ff, #ffffff); border-left: 3px solid #0056b3; font-weight:600; cursor:pointer;">
                     <span>💬 AI Controller Chatbot</span>
                     <span class="badge-phase" style="background:#0056b3; color:#fff;">LIVE ⚡</span>
                 </a>
             </div>
 
-            <!-- 3. Hjelp & Kvalitetskontroll -->
+            <!-- 4. Hjelp & Kvalitetskontroll -->
             <div class="sidebar-nav-group">
-                <div class="sidebar-nav-header">Brukerstøtte & Regelverk</div>
+                <div class="sidebar-nav-header">Brukerstøtte &amp; Regelverk</div>
                 <a class="sidebar-nav-item" id="side-nav-system-manual" onclick="openUserGuide('SYSTEMMANUAL')" style="cursor:pointer; font-weight:700; color:var(--navy-dark); background:#f8fafc; border-left:3px solid #0369a1;" title="Åpne komplett Systemmanual &amp; Driftshåndbok">
                     <span>📖 Systemmanual (SOP)</span>
                     <span class="badge-phase" style="background:#0369a1; color:#fff;">SOP</span>
@@ -5664,39 +5736,39 @@
                     <span>📚 Finansiell Ordliste (A–Å)</span>
                     <span class="badge-phase" style="background:#059669; color:#fff;">30+ begrep</span>
                 </a>
-                <a class="sidebar-nav-item" onclick="openUserGuide('START')">
+                <a class="sidebar-nav-item" onclick="openUserGuide('START')" style="cursor:pointer;">
                     <span>📘 Hurtigveileder</span>
                 </a>
-                <a href="README.md" target="_blank" class="sidebar-nav-item" title="Åpne README.md (Prosjektoversikt & Arkitektur)">
+                <a class="sidebar-nav-item" onclick="openUserGuide('README')" style="cursor:pointer;" title="Åpne prosjektoversikt og arkitekturguide">
                     <span>📄 Prosjekt README.md</span>
                     <span class="badge-phase" style="background:var(--navy-dark); color:#fff;">.md</span>
                 </a>
-                <a class="sidebar-nav-item" onclick="openUserGuide('NOKKELTALL')">
+                <a class="sidebar-nav-item" onclick="openUserGuide('NOKKELTALL')" style="cursor:pointer;">
                     <span>ℹ️ Nøkkeltallsordbok (EVM)</span>
                 </a>
-                <a class="sidebar-nav-item" onclick="openUserGuide('KOSTRA')">
-                    <span>🏛️ KOSTRA Struktur & Regler</span>
+                <a class="sidebar-nav-item" onclick="openUserGuide('KOSTRA')" style="cursor:pointer;">
+                    <span>🏛️ KOSTRA Struktur &amp; Regler</span>
                 </a>
-                <a class="sidebar-nav-item" onclick="openUserGuide('JUSS')">
-                    <span>⚖️ Kommuneloven & Port 9</span>
+                <a class="sidebar-nav-item" onclick="openUserGuide('JUSS')" style="cursor:pointer;">
+                    <span>⚖️ Kommuneloven &amp; Port 9</span>
                 </a>
-                <a class="sidebar-nav-item" onclick="openUserGuide('TUFTE')">
+                <a class="sidebar-nav-item" onclick="openUserGuide('TUFTE')" style="cursor:pointer;">
                     <span>📊 Tufte Data-Ink Standard</span>
                 </a>
-                <a href="bruker-guides/STYRINGSKALENDER_OG_ARSHJUL_2026.md" target="_blank" class="sidebar-nav-item">
+                <a class="sidebar-nav-item" onclick="openUserGuide('KALENDER')" style="cursor:pointer;" title="Åpne styringskalender og årshjul 2026/27">
                     <span>📅 Styringskalender 2026/27</span>
                 </a>
-                <a href="revisjon-og-kontroll/CONTROLLER_CHECKLIST_OG_PERIODELUKKING.md" target="_blank" class="sidebar-nav-item">
-                    <span>🛡️ Sjekkliste & Lukking</span>
+                <a class="sidebar-nav-item" onclick="openUserGuide('LUKKING')" style="cursor:pointer;" title="Åpne sjekkliste for periodelukking">
+                    <span>🛡️ Sjekkliste &amp; Lukking</span>
                 </a>
-                <a href="revisjon-og-kontroll/TERTIALRAPPORT_NOTAT_OG_SAKSFREMLEGG.md" target="_blank" class="sidebar-nav-item">
+                <a class="sidebar-nav-item" onclick="openUserGuide('NOTAT')" style="cursor:pointer;" title="Åpne formelt politisk tertialnotat T2">
                     <span>📝 Politisk Notat (T2)</span>
                 </a>
             </div>
 
-            <!-- 4. Maler & Hurtignedlasting -->
+            <!-- 5. Maler & Hurtignedlasting -->
             <div class="sidebar-nav-group">
-                <div class="sidebar-nav-header">Maler & Hurtignedlasting</div>
+                <div class="sidebar-nav-header">Maler &amp; Hurtignedlasting</div>
                 <a href="excel/Kommune_FAST_Finansiell_Modell_2026.xlsx" download class="sidebar-nav-item" title="Last ned 5-tabs FAST finansiell modell i Excel">
                     <span>📊 Excel FAST Modell</span>
                     <span class="badge-phase" style="background:#107c41; color:#fff;">.xlsx</span>
@@ -5721,27 +5793,27 @@
                     <span>📑 Saksbehandlingsmodell</span>
                     <span class="badge-phase" style="background:#107c41; color:#fff;">.xlsx</span>
                 </a>
-                <a href="#dokumentbank" onclick="filterDocs('AIPAKKE')" class="sidebar-nav-item" title="Filter for 9 AI-implementeringsmaler">
+                <a class="sidebar-nav-item" onclick="navigateToSection('dokumentbank'); filterDocs('AIPAKKE'); return false;" style="cursor:pointer;" title="Filter for 9 AI-implementeringsmaler">
                     <span>🎯 AI-Implementering (9)</span>
                 </a>
-                <a href="#dokumentbank" onclick="filterDocs('MLOPS')" class="sidebar-nav-item" title="Filter for 6 MLOps-maler">
+                <a class="sidebar-nav-item" onclick="navigateToSection('dokumentbank'); filterDocs('MLOPS'); return false;" style="cursor:pointer;" title="Filter for 6 MLOps-maler">
                     <span>⚙️ MLOps-Pakke (6)</span>
                 </a>
-                <a href="#dokumentbank" onclick="filterDocs('PILOT')" class="sidebar-nav-item" title="Leverandøruavhengig Enterprise AI Pilot-pakke">
+                <a class="sidebar-nav-item" onclick="navigateToSection('dokumentbank'); filterDocs('PILOT'); return false;" style="cursor:pointer;" title="Leverandøruavhengig Enterprise AI Pilot-pakke">
                     <span>🌐 Generisk AI Pilot (9)</span>
                 </a>
-                <a href="#dokumentbank" onclick="filterDocs('MS_PILOT')" class="sidebar-nav-item" title="Operasjonelt Antigravity & M365 Copilot subprosjekt">
+                <a class="sidebar-nav-item" onclick="navigateToSection('dokumentbank'); filterDocs('MS_PILOT'); return false;" style="cursor:pointer;" title="Operasjonelt Antigravity &amp; M365 Copilot subprosjekt">
                     <span>🚀 Antigravity MS Pilot (5)</span>
                 </a>
             </div>
 
-            <!-- 5. SYSTEMARKITEKTUR & MLOPS -->
+            <!-- 6. SYSTEMARKITEKTUR & MLOPS -->
             <div class="sidebar-nav-group" style="margin-top:10px; padding-top:8px; border-top:1px solid var(--border-light);">
                 <div class="sidebar-nav-header">
                     <span>Systemarkitektur</span>
                     <span style="font-size:9.5px; text-transform:none; color:#059669; font-weight:700;">Backend</span>
                 </div>
-                <a class="sidebar-nav-item" id="side-nav-mlops-backend" onclick="openMlopsModal()" style="cursor:pointer;" title="Åpne 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
+                <a class="sidebar-nav-item" id="side-nav-mlops-backend" onclick="openMlopsModal(); return false;" style="cursor:pointer;" title="Åpne 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
                     <span style="font-weight:600; color:var(--navy-dark);">⚙️ 3.4 MLOps &amp; Backend Engine (v2.4)</span>
                     <span class="badge-phase" style="background:#059669; color:#fff;">v2.4</span>
                 </a>
@@ -5750,13 +5822,13 @@
 
         <!-- Sidebar footer -->
         <div class="sidebar-footer">
-            <a class="sidebar-nav-item" id="side-footer-mlops-link" onclick="openMlopsModal()" style="cursor:pointer; padding:7px 10px; margin-bottom:10px; background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #059669; border-radius:4px; font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;" title="Åpne 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
+            <a class="sidebar-nav-item" id="side-footer-mlops-link" onclick="openMlopsModal(); return false;" style="cursor:pointer; padding:7px 10px; margin-bottom:10px; background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #059669; border-radius:4px; font-size:11px; font-weight:700; color:var(--navy-dark); display:flex; justify-content:space-between; align-items:center;" title="Åpne 3.4 MLOps, Data Lineage &amp; Antigravity Backend Engine (v2.4)">
                 <span>⚙️ 3.4 MLOps &amp; Backend Engine (v2.4)</span>
                 <span class="badge-phase" style="background:#059669; color:#fff; font-size:9px; font-weight:700;">v2.4</span>
             </a>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-weight:700; color:var(--navy-dark);">Systemstatus:</span>
-                <span class="status-badge" style="font-size:9.5px;">Port 4 & 9 OK</span>
+                <span class="status-badge" style="font-size:9.5px;">Port 4 &amp; 9 OK</span>
             </div>
             <div style="font-size:10.5px; color:var(--text-secondary); line-height:1.4;">
                 • Vektor-DB: <strong>sqlite-vec</strong> (3 509 biter)<br>
@@ -11482,11 +11554,16 @@ RETURN
             <div class="guide-tabs">
                 <button class="guide-tab-btn" onclick="switchGuideTab('SYSTEMMANUAL')">📘 Systemmanual (SOP)</button>
                 <button class="guide-tab-btn" onclick="switchGuideTab('ORDLISTE')">📚 Finansiell Ordliste (A–Å)</button>
-                <button class="guide-tab-btn active" onclick="switchGuideTab('MANED')">📅 Månedssyklusen (Dag 1–30)</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('START')">ℹ️ Hurtigveileder</button>
+                <button class="guide-tab-btn active" onclick="switchGuideTab('MANED')">📅 Månedssyklus (Dag 1–30)</button>
                 <button class="guide-tab-btn" onclick="switchGuideTab('NOKKELTALL')">📊 Nøkkeltall (EVM)</button>
                 <button class="guide-tab-btn" onclick="switchGuideTab('KOSTRA')">🏛️ KOSTRA Kontoplan</button>
                 <button class="guide-tab-btn" onclick="switchGuideTab('JUSS')">⚖️ Kommuneloven & Port 9</button>
-                <button class="guide-tab-btn" onclick="switchGuideTab('TUFTE')">📈 Tufte Data-Ink Standard</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('TUFTE')">📈 Tufte Standard</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('KALENDER')">📅 Styringskalender 26/27</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('LUKKING')">🛡️ Periodelukking</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('NOTAT')">📝 Politisk Notat T2</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('README')">📄 Prosjekt README</button>
             </div>
 
             <!-- Innholdsområde -->
@@ -19118,6 +19195,75 @@ Mottok spørsmål: *"**${text}**"* innenfor kontekst **${persona}**.
                     <li><strong>Venstrejustert tekst:</strong> Tekstkolonner og kontobeskrivelser er venstrejustert for optimal lesbarhet.</li>
                     <li><strong>Dempede farger — Rød og amber kun for reell risiko:</strong> Farge brukes utelukkende semantisk. Rød (<span style="color:var(--alert-red); font-weight:700;">#c0392b</span>) betyr aktiv overskridelse som krever handling; amber betyr advarsel; grønn betyr at alt er innenfor terskel.</li>
                 </ol>
+            `,
+            "KALENDER": `
+                <h3>📅 Styringskalender & Årshjul 2026/2027</h3>
+                <p><strong>Forankret i Kommuneloven §§ 14-2, 14-3, 14-5, 14-6 og Kristiansand Bystyres Økonomireglement.</strong></p>
+                <table class="guide-table" style="width:100%; border-collapse:collapse; margin-top:8px;">
+                    <thead>
+                        <tr style="border-bottom:1.5px solid var(--navy-dark); text-align:left;">
+                            <th style="padding:6px;">Kvartal</th>
+                            <th style="padding:6px;">Frist</th>
+                            <th style="padding:6px;">Leveranse & Hendelse</th>
+                            <th style="padding:6px;">Ansvarlig</th>
+                            <th style="padding:6px;">Hjemmel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q1</strong></td><td style="padding:6px;">15. jan</td><td>KOSTRA Foreløpig innsending SSB</td><td>Senior Controller</td><td>Kommuneloven § 16-1</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q1</strong></td><td style="padding:6px;">23. feb</td><td>KOSTRA Endelig filleveranse med art og funksjon</td><td>Regnskap / Controller</td><td>Forskrift om øk-plan</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q1</strong></td><td style="padding:6px;">31. mar</td><td>Årsregnskap & Årsberetning fremlegges</td><td>Kommunedirektør</td><td>Kommuneloven § 14-6</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q2</strong></td><td style="padding:6px;">15. mai</td><td>Revidert nasjonalbudsjett (RNB) vurdering</td><td>Sjeføkonom / Controller</td><td>Nasjonale rammer</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q2</strong></td><td style="padding:6px;">25. mai</td><td>1. Tertialrapport (T1) til Bystyret</td><td>Senior Controller</td><td>Kommuneloven § 14-5</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q3</strong></td><td style="padding:6px;">23. sep</td><td>Kommunedirektørens HØP 2027–2030 forslag</td><td>Økonomidirektør</td><td>Kommuneloven § 14-2</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q3</strong></td><td style="padding:6px;">28. sep</td><td>2. Tertialrapport (T2) til Formannskapet</td><td>Senior Controller</td><td>Kommuneloven § 14-5</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q4</strong></td><td style="padding:6px;">25. nov</td><td>Formannskapets innstilling til HØP og Årsbudsjett</td><td>Formannskapet</td><td>Kommuneloven § 14-3</td></tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:6px;"><strong>Q4</strong></td><td style="padding:6px;">18. des</td><td>Bystyrets endelige vedtak av Årsbudsjett 2027</td><td>Bystyret</td><td>Kommuneloven § 14-3</td></tr>
+                    </tbody>
+                </table>
+            `,
+            "LUKKING": `
+                <h3>🛡️ Controller Sjekkliste & Periodelukkingsrutine</h3>
+                <p><strong>Månedlig rutine for kontroll, avstemming og SHA-256 forsegling:</strong></p>
+                <div style="background:#f8fafc; padding:10px; border-left:3px solid #059669; border-radius:3px; margin-bottom:10px;">
+                    <strong>M-01 Bankavstemming (Virkedag 3):</strong> Avstemme samtlige drifts- og skattetrekkskontoer mot bankkontoutskrift. Null uforklarte differanser.<br>
+                    <strong>M-02 Mellomregningskontoer (Virkedag 4):</strong> Gjennomgå balansekontoer (2100–2190). Ingen uoppgjorte poster over 30 dager.<br>
+                    <strong>M-03 Lønn & A-melding (Virkedag 5):</strong> Avstemme Visma Lønn mot Skatteetatens A-melding kvittering.<br>
+                    <strong>M-04 Fakturaer & EHF (Virkedag 5):</strong> Påse at alle mottatte EHF-fakturaer er attestert og bokført i rett periode.<br>
+                    <strong>M-05 Periodiseringer (Virkedag 6):</strong> Foreta manuelle avsetninger for kjente vesentlige kostnader og inntekter.<br>
+                    <strong>M-06 Månedsavvik & Triage (Virkedag 8):</strong> Kjøre automatisk avvikssjekk (> 500k kr / CPI < 0.95) og utarbeide tiltak jf. § 14-5.
+                </div>
+            `,
+            "NOTAT": `
+                <h3>📝 Politisk Notat & Saksframlegg (T2)</h3>
+                <p><strong>Formelt maloppsett til Formannskapet og Bystyret:</strong></p>
+                <div style="background:#ffffff; border:1px solid #cbd5e1; padding:12px; border-radius:4px; font-size:11px;">
+                    <div style="font-weight:700; color:var(--navy-dark); margin-bottom:6px;">SAK: 2. Tertialrapport (T2) 2026 — Finansiell Status, Avviksanalyse og Tiltaksplan</div>
+                    <p><strong>Lovhjemmel:</strong> Kommuneloven § 14-5 (krav om realisme og budsjettbalanse ved vesentlige avvik).</p>
+                    <p><strong>Hovedtall (Konsern YTD M9):</strong></p>
+                    <ul>
+                        <li>Vedtatt årsramme (BAC): <strong>7 240 Mkr</strong></li>
+                        <li>Påløpt regnskap YTD (AC): <strong>4 851 Mkr</strong></li>
+                        <li>Bokført kostnadsavvik YTD (CV): <strong>-21.8 Mkr</strong> (Merforbruk)</li>
+                        <li>Kostnadsindeks (CPI): <strong>0.995</strong></li>
+                        <li>Rullende EOY Prognose (EAC): <strong>7 272 Mkr</strong> (Forventet årsmerforbruk: -32 Mkr)</li>
+                    </ul>
+                    <p><strong>Forslag til vedtak:</strong> Kommunedirektøren pålegges å iverksette korrigerende innstrammingstiltak innen bemanningsinnleie og vikarforbruk jf. HTA § 4 for å gjenopprette budsjettbalanse.</p>
+                </div>
+            `,
+            "README": `
+                <h3>🏛️ Kristiansand Kommune — AI Project Controller Hub</h3>
+                <p><strong>Lokal, skjermet og etterrettelig AI- og EPM-plattform for Prosjektcontrolling og Virksomhetsstyring.</strong></p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;">
+                    <div style="background:#f8fafc; padding:8px; border:1px solid #cbd5e1; border-radius:3px;">
+                        <strong>🏛️ 6 Virksomhetsområder</strong><br>
+                        Helse, Oppvekst, Byutvikling, Kultur, Org/Tek, Økonomi. 81 resultatenheter og 7.24 mrd NOK årsbudsjett.
+                    </div>
+                    <div style="background:#f8fafc; padding:8px; border:1px solid #cbd5e1; border-radius:3px;">
+                        <strong>🔒 Port 4 &amp; 9 Sikkerhet</strong><br>
+                        Lokal PII-skjerming (GDPR) og Human-in-the-Loop godkjenning med SHA-256 kryptografisk revisjonsstempel.
+                    </div>
+                </div>
             `
         };
 
@@ -32823,13 +32969,18 @@ function initPersonaGuidance() {
     selectHubPersona(currentHubPersona);
 }
 
-function navigateToSection(sectionId) {
+// Delegere til overordnet tverrfane navigatormotor
+function navigateToSection(sectionId, toastMsg) {
+    if (typeof window.navigateToSection === "function") {
+        return window.navigateToSection(sectionId, toastMsg);
+    }
     const el = document.getElementById(sectionId);
     if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         el.classList.add("element-highlight-pulse");
         setTimeout(() => el.classList.remove("element-highlight-pulse"), 2500);
     }
+    if (toastMsg && typeof showToast === 'function') showToast(toastMsg);
 }
 
 async function refreshMonthEndStatus() {
@@ -52174,6 +52325,196 @@ if (document.readyState === "loading") {
 } else {
     if (typeof initTop3KpiDashboard === "function") initTop3KpiDashboard();
 }
+
+
+// ==============================================================================
+// 🏛️ MASTER SIDEBAR & BUDSJETTNIVÅ FILTER MOTOR
+// Støtter Nivå 1 (Konsern), Nivå 2 (Virksomhetsområde), Nivå 3 (Tjenesteområde), Nivå 4 (Resultatenhet)
+// jf. Kommuneloven §§ 13-1, 14-5, 14-6, HTA § 4 og Edward Tufte Data-Ink Standard
+// ==============================================================================
+
+let currentBudgetLevel = 1;
+
+// 1. Tverr-fane navigasjon
+window.navigateToSection = function(sectionId, toastMsg) {
+    if (!sectionId) return;
+
+    // Finn målfane
+    let targetTab = null;
+    if (typeof SECTION_TO_TAB_MAP !== "undefined" && SECTION_TO_TAB_MAP[sectionId]) {
+        targetTab = SECTION_TO_TAB_MAP[sectionId];
+    } else {
+        const sec = document.getElementById(sectionId);
+        if (sec) {
+            const pane = sec.closest(".hub-tab-pane");
+            if (pane && pane.id) {
+                targetTab = pane.id.replace("tab-", "");
+            }
+        }
+    }
+
+    // Bytt fane ved behov
+    if (targetTab && typeof openTab === "function") {
+        const activePane = document.querySelector(".hub-tab-pane.active");
+        const currentTabKey = activePane ? activePane.id.replace("tab-", "") : null;
+        if (currentTabKey !== targetTab) {
+            openTab(targetTab, false);
+        }
+    }
+
+    setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            el.classList.remove("element-highlight-pulse");
+            void el.offsetWidth;
+            el.classList.add("element-highlight-pulse");
+            setTimeout(() => el.classList.remove("element-highlight-pulse"), 2500);
+        }
+        if (toastMsg && typeof showToast === "function") showToast(toastMsg);
+    }, 70);
+};
+
+// 2. Månedlig arbeidsflyt hurtignavigasjon
+function navigateToWorkflowPhase(phaseNum) {
+    if (typeof selectWorkflowPhase === "function") {
+        selectWorkflowPhase(phaseNum, false);
+    }
+    const phaseTargetMap = {
+        1: { tab: 'controller-hub', id: 'monthend-orchestration-seksjon', msg: '1️⃣ Månedsstart & M10 Data Ingestion' },
+        2: { tab: 'controller-hub', id: 'avvik-seksjon', msg: '2️⃣ KOSTRA Artsavvik & Smart Triage' },
+        3: { tab: 'controller-hub', id: 'mote-rapportering-seksjon', msg: '3️⃣ Lederdialog & Månedsmøter (Nivå 1–3)' },
+        4: { tab: 'sektor-konsern', id: 'kpi-seksjon', msg: '4️⃣ Rullende Prognose (EAC/ETC)' },
+        5: { tab: 'sektor-konsern', id: 'saksflyt', msg: '5️⃣ Politisk Sak jf. Kommuneloven § 14-5' }
+    };
+    const target = phaseTargetMap[phaseNum];
+    if (target) {
+        if (typeof openTab === "function") openTab(target.tab, false);
+        setTimeout(() => {
+            window.navigateToSection(target.id, target.msg);
+        }, 80);
+    }
+}
+
+// 3. MLOps modal kontrollere
+function openMlopsModal() {
+    const m = document.getElementById("mlops-modal");
+    if (m) m.style.display = "flex";
+}
+function closeMlopsModal() {
+    const m = document.getElementById("mlops-modal");
+    if (m) m.style.display = "none";
+}
+function closeMlopsModalOnBackdrop(e) {
+    if (e.target && e.target.id === "mlops-modal") closeMlopsModal();
+}
+
+// 4. Budsjettnivå filtreringsmotor (Nivå 1–4)
+function setBudgetLevel(level) {
+    currentBudgetLevel = parseInt(level, 10) || 1;
+    try {
+        localStorage.setItem("aikom_budget_level", currentBudgetLevel);
+    } catch(e) {}
+
+    const lvlNames = {
+        1: "Nivå 1: Konsern (Kommunedirektør)",
+        2: "Nivå 2: Virksomhetsområde (Kommunalsjefer)",
+        3: "Nivå 3: Tjenesteområde (Områdeledere)",
+        4: "Nivå 4: Resultatenhet (Enhetsledere / 81)"
+    };
+    const lvlShort = {
+        1: "Nivå 1",
+        2: "Nivå 2",
+        3: "Nivå 3",
+        4: "Nivå 4"
+    };
+
+    // A. Synkroniser sidebar dropdown & badge
+    const sbSelect = document.getElementById("sidebar-budget-level-select");
+    if (sbSelect && sbSelect.value != currentBudgetLevel) sbSelect.value = currentBudgetLevel;
+    const sbBadge = document.getElementById("sb-level-badge");
+    if (sbBadge) {
+        sbBadge.textContent = lvlShort[currentBudgetLevel] || `Nivå ${currentBudgetLevel}`;
+        sbBadge.className = `framsikt-level-badge lvl-${currentBudgetLevel}`;
+    }
+
+    // B. Synkroniser toppbar enhets-badge
+    const globalUnitLvlBadge = document.getElementById("global-unit-lvl-badge");
+    if (globalUnitLvlBadge) {
+        globalUnitLvlBadge.textContent = lvlNames[currentBudgetLevel] || `Nivå ${currentBudgetLevel}`;
+        globalUnitLvlBadge.className = `framsikt-level-badge lvl-${currentBudgetLevel}`;
+    }
+
+    // C. Oppdater Månedsmøter (Nivå 1–3) i Controller Hub
+    if (typeof switchMeetingLevel === "function") {
+        const meetLvl = currentBudgetLevel >= 3 ? "NIVA3" : (currentBudgetLevel === 2 ? "NIVA2" : "NIVA1");
+        switchMeetingLevel(meetLvl);
+    }
+
+    // D. Drilldown i Framsikt-treet
+    applyBudgetLevelToTree(currentBudgetLevel);
+
+    // E. Oppdater Min Enhet & Nettbank
+    applyBudgetLevelToBank(currentBudgetLevel);
+
+    // F. Oppdater Sidebar Oversiktskort med live tall
+    const sec = localStorage.getItem("aikom_selected_sector") || "ALL";
+    if (typeof updateSidebarOverview === "function") {
+        updateSidebarOverview(sec);
+    }
+
+    showToast(`🎯 Filtrert til ${lvlNames[currentBudgetLevel]}`);
+}
+
+function applyBudgetLevelToTree(level) {
+    if (typeof framsiktTreeState === "undefined") return;
+    const sec = localStorage.getItem("aikom_selected_sector") || "ALL";
+
+    if (level === 1) {
+        // Konsern: lukk mapper for oversikt
+        if (typeof collapseAllFramsiktTree === "function") collapseAllFramsiktTree();
+    } else if (level === 2) {
+        // Sektornivå: åpne virksomhetsområdene
+        if (typeof expandAllFramsiktTree === "function") {
+            expandAllFramsiktTree();
+        }
+    } else if (level >= 3) {
+        // Tjeneste/Enhet: fold ut alt for fullstendig innsyn
+        if (typeof expandAllFramsiktTree === "function") expandAllFramsiktTree();
+    }
+
+    // Scroll og highlight nivå-indikator i Framsikt hvis synlig
+    const headerScope = document.getElementById("framsikt-header-scope");
+    if (headerScope) {
+        headerScope.innerHTML = `📍 <strong>Aktivt Budsjettnivå ${level}:</strong> Viser struktur tilpasset ${level === 1 ? 'Konsern/Kommunedirektør' : (level === 2 ? 'Kommunalsjefer' : (level === 3 ? 'Områdeledere' : 'Enhetsledere (81 resultatenheter)'))}`;
+    }
+}
+
+function applyBudgetLevelToBank(level) {
+    const levelAccountMap = {
+        1: "5000-KONS-001",
+        2: "5000-SJEF-HELSE",
+        3: "5100-OMR-SYKEHJEM",
+        4: "5200-ENH-401"
+    };
+    const targetAcc = levelAccountMap[level] || "5200-ENH-401";
+    if (typeof onBankUnitChange === "function") {
+        onBankUnitChange(targetAcc);
+    }
+}
+
+// 5. Initialisering ved oppstart
+document.addEventListener("DOMContentLoaded", function() {
+    const savedLevel = localStorage.getItem("aikom_budget_level") || "1";
+    const savedSector = localStorage.getItem("aikom_selected_sector") || "ALL";
+
+    setTimeout(() => {
+        setBudgetLevel(savedLevel);
+        if (typeof updateSidebarOverview === "function") {
+            updateSidebarOverview(savedSector);
+        }
+    }, 150);
+});
 
 </script>
 </body>
