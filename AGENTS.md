@@ -134,6 +134,7 @@ This repository is fully configured for Antigravity native progressive disclosur
 ## 5. Quick Commands & Operations
 
 * **Run Full Hub**: Launch `index.html` in browser or run `python tools/hub_api_server.py`.
+* **Visual Sandbox (FT & Tufte)**: Navigate to `index.html#visual-sandbox` or click **Visual Sandbox** in the top navigation or sidebar. Features 8 pure SVG best-practice diagrams aligned with the Financial Times Visual Vocabulary and Edward Tufte's Data-Ink standards.
 * **Run Loop Engineering (Lag 4)**: `python tools/run_tool.py loop --sector "Helse og mestring" --deficit 8.85` (Evaluator-Optimizer løkke med 4 kvalitetsporter og SHA-256 forsegling).
 * **Run Zero-Guide UI Prototype v2**: `python tools/run_tool.py ui-v2` (Streamlit app med unntakstriage, Evaluator-Optimizer løkke og Golden Exemplar SQLite store).
 * **Run Evaluation & QA (Agent 13)**: `python tools/run_tool.py eval --gate` (90 % CI/CD port), `--include-exemplars` (inkluderer HITL gulleksempler fra SQLite), eller `--sync-exemplars`.
@@ -151,4 +152,5 @@ This repository is fully configured for Antigravity native progressive disclosur
 * **Run Advisor Decision Calculators**: `python tools/run_tool.py advisor-calc --calc nav-gap` / `--calc krs4` / `--calc selvkost` / `--calc mva-10y`.
 * **Run Advisor Full-Year Stress Test**: `python tools/run_tool.py advisor-stress` (helårssimulering av 52 rådgiverhendelser på tvers av 6 sektorer og 12 måneder).
 * **Unified Tool Runner**: `python tools/run_tool.py --help`.
-* **Run Master Test Suite**: `pytest -v` (kjører samtlige 75+ tester på tvers av master og piloter).
+* **Run Master Test Suite**: `pytest -v` (kjører samtlige 76 tester på tvers av master og piloter).
+

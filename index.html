@@ -5522,6 +5522,316 @@
             border-top: 1px solid #e2e8f0;
         }
 
+
+
+/* ==============================================================================
+   🎨 VISUAL SANDBOX — FINANCIAL TIMES & TUFTE STANDARDS
+   ============================================================================== */
+.vs-container {
+    padding: 16px 20px 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.vs-header-card {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle, #e2e8f0);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.vs-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.vs-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.vs-icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1b365d 0%, #0369a1 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.vs-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--navy-dark, #1b365d);
+    margin: 0 0 2px 0;
+    letter-spacing: -0.01em;
+}
+
+.vs-subtitle {
+    font-size: 12px;
+    color: var(--text-muted, #64748b);
+    margin: 0;
+}
+
+.vs-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.vs-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+}
+.vs-badge-ft { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.vs-badge-tufte { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+.vs-badge-law { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+
+.vs-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle, #f1f5f9);
+}
+
+.vs-filter-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--text-muted, #64748b);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-right: 4px;
+}
+
+.vs-pill-btn {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.vs-pill-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #0f172a;
+}
+.vs-pill-btn.active {
+    background: #1b365d;
+    border-color: #1b365d;
+    color: #ffffff;
+}
+.vs-pill-btn.active .vs-pill-count {
+    background: rgba(255,255,255,0.25);
+    color: #ffffff;
+}
+
+.vs-pill-count {
+    font-size: 9.5px;
+    font-family: var(--font-mono, monospace);
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+/* Kategori fargekoder jf. Financial Times Visual Vocabulary */
+.ft-cat-deviation { border-left: 3px solid #dc2626 !important; }
+.ft-cat-time { border-left: 3px solid #0284c7 !important; }
+.ft-cat-ranking { border-left: 3px solid #ca8a04 !important; }
+.ft-cat-distribution { border-left: 3px solid #9333ea !important; }
+.ft-cat-part-to-whole { border-left: 3px solid #059669 !important; }
+.ft-cat-correlation { border-left: 3px solid #ea580c !important; }
+.ft-cat-magnitude { border-left: 3px solid #475569 !important; }
+.ft-cat-flow { border-left: 3px solid #0891b2 !important; }
+
+.ft-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+}
+.ft-tag-deviation { background: #fee2e2; color: #991b1b; }
+.ft-tag-time { background: #e0f2fe; color: #075985; }
+.ft-tag-ranking { background: #fef9c3; color: #854d0e; }
+.ft-tag-distribution { background: #f3e8ff; color: #6b21a8; }
+.ft-tag-part-to-whole { background: #dcfce7; color: #166534; }
+.ft-tag-correlation { background: #ffedd5; color: #9a3412; }
+.ft-tag-magnitude { background: #f1f5f9; color: #334155; }
+.ft-tag-flow { background: #cffafe; color: #155e75; }
+
+/* Grid layout for Visual Cards */
+.vs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(470px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.vs-chart-card {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle, #e2e8f0);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.vs-chart-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.vs-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    gap: 8px;
+}
+
+.vs-card-title-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.vs-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--navy-dark, #1b365d);
+    margin: 0 0 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.vs-card-desc {
+    font-size: 11px;
+    color: var(--text-muted, #64748b);
+    line-height: 1.35;
+    margin: 0;
+}
+
+.vs-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.vs-action-btn {
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 3px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #475569;
+    cursor: pointer;
+    font-weight: 600;
+}
+.vs-action-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.vs-svg-container {
+    width: 100%;
+    height: 185px;
+    background: #ffffff;
+    border: 1px solid #f1f5f9;
+    border-radius: 4px;
+    margin: 8px 0;
+    position: relative;
+}
+
+.vs-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid #f8fafc;
+    font-size: 10.5px;
+    color: var(--text-muted, #64748b);
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.vs-stakeholder-tag {
+    font-size: 9.5px;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 1px 6px;
+    border-radius: 3px;
+}
+
+.vs-rationale-note {
+    font-size: 10px;
+    color: #475569;
+    font-style: italic;
+}
+
+/* Stakeholder Decision Matrix Table */
+.vs-matrix-card {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle, #e2e8f0);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-top: 20px;
+}
+
+.vs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    margin-top: 12px;
+}
+.vs-table th {
+    text-align: left;
+    font-weight: 700;
+    color: var(--navy-dark, #1b365d);
+    padding: 8px 10px;
+    border-bottom: 2px solid #cbd5e1;
+    background: #f8fafc;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.vs-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    vertical-align: middle;
+}
+.vs-table tr:hover td {
+    background: #f8fafc;
+}
+
 </style>
 </head>
 <body>
@@ -5642,7 +5952,7 @@
             <div class="sidebar-nav-group" style="margin-bottom: 12px;">
                 <div class="sidebar-nav-header">
                     <span>Hovedrolle / Visning</span>
-                    <span style="font-size:9.5px; text-transform:none; color:var(--accent-blue); font-weight:700;">4 Faner</span>
+                    <span style="font-size:9.5px; text-transform:none; color:var(--accent-blue); font-weight:700;">5 Faner</span>
                 </div>
                 <a class="sidebar-nav-item active" id="side-tab-min-enhet" onclick="openTab('min-enhet')" style="cursor:pointer;">
                     <span>🏫 Min Enhet &amp; Måned</span>
@@ -5655,6 +5965,10 @@
                 </a>
                 <a class="sidebar-nav-item" id="side-tab-veiledere-maler" onclick="openTab('veiledere-maler')" style="cursor:pointer;">
                     <span>📚 Veiledere &amp; Maler</span>
+                </a>
+                <a class="sidebar-nav-item" id="side-tab-visual-sandbox" onclick="openTab('visual-sandbox')" style="cursor:pointer;">
+                    <span>🎨 Visual Sandbox (FT &amp; Tufte)</span>
+                    <span class="badge-phase" style="background:#0284c7; color:#fff;">FT VIZ</span>
                 </a>
             </div>
 
@@ -5921,6 +6235,13 @@
                 <span class="tab-text-wrap">
                     <span class="tab-title">Veiledere &amp; Maler</span>
                     <span class="tab-sub">Malbank, Regelverk &amp; Årshjul</span>
+                </span>
+            </button>
+            <button type="button" class="tab-button" id="tab-btn-visual-sandbox" onclick="openTab('visual-sandbox')" role="tab" aria-selected="false" aria-controls="tab-visual-sandbox">
+                <span class="tab-icon">🎨</span>
+                <span class="tab-text-wrap">
+                    <span class="tab-title">Visual Sandbox</span>
+                    <span class="tab-sub">FT Visual Vocabulary &amp; Tufte Best Practice</span>
                 </span>
             </button>
         </div>
@@ -11134,6 +11455,377 @@ RETURN
             </div>
         </div>
     </section>
+    </div>
+
+
+    <!-- ==============================================================================
+         5. VISUAL SANDBOX (FT-VISUAL VOCABULARY & TUFTE DATA-INK BEST PRACTICES)
+         jf. C:\Users\frank\Desktop\AI_KOM\FT-Visual Guide.pdf & ft-Viz-Guide.png
+         ============================================================================== -->
+    <div class="hub-tab-pane" id="tab-visual-sandbox" role="tabpanel" aria-labelledby="tab-btn-visual-sandbox" style="display:none;">
+        <div class="vs-container">
+
+            <!-- HOVEDBANNER OG STYRINGSKONTEKST -->
+            <div class="vs-header-card">
+                <div class="vs-header-top">
+                    <div class="vs-title-wrap">
+                        <div class="vs-icon-badge">🎨</div>
+                        <div>
+                            <h2 class="vs-title">Visual Sandbox — Best-Practice Datakommunikasjon</h2>
+                            <p class="vs-subtitle">
+                                Kobler kommunale nøkkeltall, KOSTRA-drivere og EVM-avvik til <strong>Financial Times Visual Vocabulary</strong> (Alan Smith) og <strong>Edward Tufte Data-Ink Ratio</strong>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="vs-badge-group">
+                        <span class="vs-badge vs-badge-ft">FT Visual Vocabulary 2026</span>
+                        <span class="vs-badge vs-badge-tufte">Tufte Data-Ink: Max</span>
+                        <span class="vs-badge vs-badge-law">K-lov §§ 13-1 / 14-5</span>
+                        <button type="button" class="btn-lvl-pill" onclick="copyAllSandboxReport()" title="Kopier oppsummering av alle 8 diagrammer til saksfremlegg">
+                            📋 Kopier Saksnotat
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FILTER 1: FT KATEGORIER (8 KJERNEKATEGORIER) -->
+                <div class="vs-filter-bar" id="vs-cat-pills" style="margin-bottom:8px;">
+                    <span class="vs-filter-label">FT Kategori:</span>
+                    <button type="button" class="vs-pill-btn active" onclick="filterVisualSandbox('ALL', this)">
+                        Alle <span class="vs-pill-count">8</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('DEVIATION', this)">
+                        Deviation <span class="vs-pill-count">1</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('TIME', this)">
+                        Change over Time <span class="vs-pill-count">1</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('RANKING', this)">
+                        Ranking <span class="vs-pill-count">1</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('DISTRIBUTION', this)">
+                        Distribution <span class="vs-pill-count">1</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('PART_TO_WHOLE', this)">
+                        Part-to-Whole <span class="vs-pill-count">1</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('CORRELATION', this)">
+                        Correlation <span class="vs-pill-count">1</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('MAGNITUDE', this)">
+                        Magnitude <span class="vs-pill-count">1</span>
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterVisualSandbox('FLOW', this)">
+                        Flow <span class="vs-pill-count">1</span>
+                    </button>
+                </div>
+
+                <!-- FILTER 2: MÅLGRUPPE / INTERESSENT-LINSE (STAKEHOLDER BEST PRACTICES) -->
+                <div class="vs-filter-bar" id="vs-stakeholder-pills">
+                    <span class="vs-filter-label">Målgruppe:</span>
+                    <button type="button" class="vs-pill-btn active" onclick="filterStakeholderLens('ALL', this)">
+                        Alle Roller
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterStakeholderLens('BYSTYRET', this)" title="Fokus: Realitetsbalanse § 14-5, handlingsrom, lånegjeld">
+                        🏛️ Bystyret &amp; Formannskapet
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterStakeholderLens('LEDELSE', this)" title="Fokus: EAC usikkerhet, sektor-ranking, tiltak">
+                        👔 Kommunedirektøren &amp; Toppledelse
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterStakeholderLens('ENHETER', this)" title="Fokus: Sykefravær, vikarforbruk, enhetsbudsjetter">
+                        🏫 Enhetsledere &amp; Skole/Helse
+                    </button>
+                    <button type="button" class="vs-pill-btn" onclick="filterStakeholderLens('REVISJON', this)" title="Fokus: SHA-256 forsegling, etterrettelighet, pengestrøm">
+                        🔍 Kommunerevisjonen &amp; Kontroll
+                    </button>
+                </div>
+            </div>
+
+            <!-- VISUAL SANDBOX GRID (8 DIAGRAMMER) -->
+            <div class="vs-grid" id="vs-cards-grid">
+
+                <!-- 1. DEVIATION: Diverging Bar Chart -->
+                <div class="vs-chart-card ft-cat-deviation" data-ft-cat="DEVIATION" data-stakeholder="BYSTYRET,LEDELSE,REVISJON">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-deviation">Deviation</span>
+                                <span>Avvik YTD per Virksomhetsområde (CV)</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Diverging Bar:</strong> Viser variasjon (+/-) mot null-punktet. Tydeliggjør merforbruk under § 14-5 uten å forvirre med unødvendige 3D-effekter.
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-deviation', 'Avvik Diverging Bar')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-deviation"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">Bystyret</strong> <strong class="vs-stakeholder-tag">Ledelse</strong></span>
+                        <span class="vs-rationale-note">Tufte: Null-referanselinje &amp; direkte tallmerking</span>
+                    </div>
+                </div>
+
+                <!-- 2. CHANGE OVER TIME: Monte Carlo Fan Chart -->
+                <div class="vs-chart-card ft-cat-time" data-ft-cat="TIME" data-stakeholder="BYSTYRET,LEDELSE">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-time">Change over Time</span>
+                                <span>Helårsprognose EAC (Monte Carlo Fan Chart)</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Fan Chart:</strong> Viser rullende faktisk forbruk (M1–M9) og 80 % usikkerhetskonvolutt mot årsslutt (P10/P50/P90) målt mot BAC (7 240 Mkr).
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-time', 'EAC Fan Chart')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-time"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">Formannskapet</strong> <strong class="vs-stakeholder-tag">Direktør</strong></span>
+                        <span class="vs-rationale-note">FT-standard: Usikkerhetsbånd fremfor falsk presisjon</span>
+                    </div>
+                </div>
+
+                <!-- 3. RANKING: Lollipop Chart -->
+                <div class="vs-chart-card ft-cat-ranking" data-ft-cat="RANKING" data-stakeholder="LEDELSE,ENHETER">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-ranking">Ranking</span>
+                                <span>Cost Performance Index (CPI) Rangering</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Lollipop Chart:</strong> Reduserer «heavy ink» fra brede stolper. Viser hvilke sektorer og enheter som presterer under budsjettbalansen (CPI &lt; 1.000).
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-ranking', 'CPI Lollipop')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-ranking"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">Kommunalsjefer</strong> <strong class="vs-stakeholder-tag">Enhetsledere</strong></span>
+                        <span class="vs-rationale-note">Tufte: Høyere data-ink ratio enn tradisjonelle stolpediagrammer</span>
+                    </div>
+                </div>
+
+                <!-- 4. DISTRIBUTION: Box Plot & Outlier Whiskers -->
+                <div class="vs-chart-card ft-cat-distribution" data-ft-cat="DISTRIBUTION" data-stakeholder="LEDELSE,ENHETER,REVISJON">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-distribution">Distribution</span>
+                                <span>Sykefraværsvarians i Enheter (Box Plot)</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Box &amp; Whisker:</strong> Avdekker skjevhet, median og ekstreme uteliggere (&gt; 12 %) blant 81 resultatenheter. Kritisk for HTA § 4 drøftinger.
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-distribution', 'Sykefravær Box Plot')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-distribution"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">HR/Tillitsvalgte</strong> <strong class="vs-stakeholder-tag">Enhetsledere</strong></span>
+                        <span class="vs-rationale-note">FT-standard: Viser reell spredning, ikke bare villedende snittall</span>
+                    </div>
+                </div>
+
+                <!-- 5. PART-TO-WHOLE: Financial Waterfall Chart -->
+                <div class="vs-chart-card ft-cat-part-to-whole" data-ft-cat="PART_TO_WHOLE" data-stakeholder="BYSTYRET,LEDELSE,REVISJON">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-part-to-whole">Part-to-Whole</span>
+                                <span>Budsjettbro fra BAC til EAC (Waterfall)</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Waterfall:</strong> Forklarer broen fra opprinnelig årsbudsjett 7 240 Mkr til sluttprognose 7 268 Mkr dekomponert på lønn, vikar, rente og innsparingstiltak.
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-part-to-whole', 'Budsjettbro Waterfall')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-part-to-whole"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">Formannskapet</strong> <strong class="vs-stakeholder-tag">Kommunerevisjonen</strong></span>
+                        <span class="vs-rationale-note">Tufte: Dekomponerer akkumulert endring med direkte flytkobling</span>
+                    </div>
+                </div>
+
+                <!-- 6. CORRELATION: Driver Scatterplot -->
+                <div class="vs-chart-card ft-cat-correlation" data-ft-cat="CORRELATION" data-stakeholder="LEDELSE,ENHETER">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-correlation">Correlation</span>
+                                <span>Sykefravær vs. Ekstraordinære Vikarkostnader</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Scatterplot med regresjonslinje:</strong> Dokumenterer årsakssammenheng mellom høyt sykefravær og overskridelse på vikarbudsjett (R² = 0.74).
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-correlation', 'Sykefravær/Vikar Scatter')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-correlation"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">Enhetsledere</strong> <strong class="vs-stakeholder-tag">Kommunalsjefer</strong></span>
+                        <span class="vs-rationale-note">FT-standard: Identifiserer risikokvadrant (Fravær &gt; 8 % &amp; Vikar &gt; 50k)</span>
+                    </div>
+                </div>
+
+                <!-- 7. MAGNITUDE: Bullet Graphs for Top 3 Kommunale Nøkkeltall -->
+                <div class="vs-chart-card ft-cat-magnitude" data-ft-cat="MAGNITUDE" data-stakeholder="BYSTYRET,LEDELSE">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-magnitude">Magnitude</span>
+                                <span>Top 3 Kommunale Nøkkeltall (Bullet Graphs)</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Stephen Few / Tufte Bullet Graph:</strong> Erstatter sirkulære speedometre med lineær presisjon. Viser faktisk oppnåelse mot TBU-krav og lovtak.
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-magnitude', 'Top 3 Bullet Graphs')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-magnitude"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">Bystyret</strong> <strong class="vs-stakeholder-tag">Kommunedirektøren</strong></span>
+                        <span class="vs-rationale-note">Måloppnåelse: Netto drift (1.42 % / 1.75 %), Fond (6.7 % / 6.0 %), Gjeld (78.4 % / 80.0 %)</span>
+                    </div>
+                </div>
+
+                <!-- 8. FLOW: Sankey Diagram for Kommunekassen -->
+                <div class="vs-chart-card ft-cat-flow" data-ft-cat="FLOW" data-stakeholder="BYSTYRET,LEDELSE,REVISJON">
+                    <div class="vs-card-header">
+                        <div class="vs-card-title-group">
+                            <div class="vs-card-title">
+                                <span class="ft-tag ft-tag-flow">Flow</span>
+                                <span>Pengestrøm 7.24 Mrd (Sankey-Diagram)</span>
+                            </div>
+                            <p class="vs-card-desc">
+                                <strong>Sankey Diagram:</strong> Visualiserer inntektskilder (Skatt, Rammetilskudd, Gebyrer, MVA) gjennom kommunekassen til tjenesteområdene.
+                            </p>
+                        </div>
+                        <div class="vs-card-actions">
+                            <button type="button" class="vs-action-btn" onclick="copyCardSvg('vs-svg-flow', 'Sankey Pengestrøm')">Kopier SVG</button>
+                        </div>
+                    </div>
+                    <div class="vs-svg-container" id="vs-svg-flow"></div>
+                    <div class="vs-card-footer">
+                        <span>Målgruppe: <strong class="vs-stakeholder-tag">Bystyret</strong> <strong class="vs-stakeholder-tag">Innbyggere</strong> <strong class="vs-stakeholder-tag">Revisjon</strong></span>
+                        <span class="vs-rationale-note">FT Flow-standard: Tydeliggjør bruttoprinsippet jf. Kommuneloven § 14-6</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BEST-PRACTICE BESLUTNINGSMATRISE FOR INTERESSENTKOMMUNIKASJON -->
+            <div class="vs-matrix-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <div>
+                        <h3 style="font-size:14px; font-weight:800; color:var(--navy-dark); margin:0 0 2px 0;">
+                            📐 Beslutningsmatrise: Valg av Visualisering etter Datatype og Målgruppe
+                        </h3>
+                        <p style="font-size:11px; color:var(--text-muted); margin:0;">
+                            Hvordan velge riktig diagramtype for politiske saksfremlegg og administrativ kontroll jf. FT Visual Vocabulary.
+                        </p>
+                    </div>
+                    <span class="vs-badge vs-badge-ft">SOP Standard</span>
+                </div>
+
+                <div style="overflow-x:auto;">
+                    <table class="vs-table">
+                        <thead>
+                            <tr>
+                                <th>FT Kategori</th>
+                                <th>Anbefalt Diagram</th>
+                                <th>Underliggende Datatype</th>
+                                <th>Primær Målgruppe</th>
+                                <th>Hvorfor Beste Praksis?</th>
+                                <th>Lovhjemmel / Standard</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-deviation">Deviation</span></td>
+                                <td><strong>Diverging Bar</strong></td>
+                                <td>Differanse mot fast nullpunkt (MNOK)</td>
+                                <td>Bystyret &amp; Formannskapet</td>
+                                <td>Fokuserer øyeblikkelig på overskridelser uten visuell støy fra 3D eller unødvendige rutenett.</td>
+                                <td>Kommuneloven § 14-5 (Balansekrav)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-time">Change over Time</span></td>
+                                <td><strong>Monte Carlo Fan Chart</strong></td>
+                                <td>Tidsserie med stokastisk usikkerhet</td>
+                                <td>Kommunedirektøren</td>
+                                <td>Unngår illusjonen av deterministisk presisjon; viser P10/P50/P90 spenn.</td>
+                                <td>Økonomiforskriftens krav til prognoser</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-ranking">Ranking</span></td>
+                                <td><strong>Lollipop Chart</strong></td>
+                                <td>Ordnede forholdstall (CPI indeks)</td>
+                                <td>Kommunalsjefer</td>
+                                <td>Høyere data-ink ratio enn tradisjonelle stolper; leder oppmerksomheten til datapunktet.</td>
+                                <td>EVM PMI Standard (CPI)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-distribution">Distribution</span></td>
+                                <td><strong>Box Plot (IQR &amp; Whiskers)</strong></td>
+                                <td>Kontinuerlig prosentfordeling (81 enheter)</td>
+                                <td>HR &amp; Tillitsvalgte</td>
+                                <td>Viser faktisk spredning og identifiserer uteliggere som trekker opp vikarutgifter.</td>
+                                <td>HTA § 4 &amp; AML § 10-12</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-part-to-whole">Part-to-Whole</span></td>
+                                <td><strong>Financial Waterfall Chart</strong></td>
+                                <td>Additiv sekvens av budsjettendringer</td>
+                                <td>Formannskapet</td>
+                                <td>Forklarer nøyaktig hva som spiser opp budsjettmarginene mellom BAC og EAC.</td>
+                                <td>Kommuneloven § 14-4 (Budsjettendringer)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-correlation">Correlation</span></td>
+                                <td><strong>Scatterplot med Faresone</strong></td>
+                                <td>Bi-variat kontinuerlig (Fravær vs Vikar)</td>
+                                <td>Enhetsledere</td>
+                                <td>Dokumenterer at sykefravær er den direkte økonomiske driveren for merforbruk.</td>
+                                <td>Årsaksorientert controller-dialog</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-magnitude">Magnitude</span></td>
+                                <td><strong>Bullet Graph (Stephen Few)</strong></td>
+                                <td>Måltall mot kvalitative terskelbånd</td>
+                                <td>Bystyret (Ordfører)</td>
+                                <td>Bruker 80 % mindre plass enn speedometre og gir presis visning av TBU-mål.</td>
+                                <td>TBU &amp; Kommunalbanken lånekrav</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ft-tag ft-tag-flow">Flow</span></td>
+                                <td><strong>Sankey Diagram</strong></td>
+                                <td>Allokering fra kilde til formål (MNOK)</td>
+                                <td>Innbyggere &amp; Revisjon</td>
+                                <td>Gjør det 7.24 milliarder store konsernbudsjettet intuitivt og transparent for alle.</td>
+                                <td>Kommuneloven § 14-6 (Bruttoprinsippet)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 </main>
@@ -29234,7 +29926,7 @@ Frank Ellingsen (Senior Controller) / Terje Fjellvang (Finansdirektør)`;
 // ROLLEBASERT HOVEDNAVIGASJON (4 PERSONA-FANER)
 // jf. AI_KOM_layout_og_navigasjon.md
 // ==============================================================================
-const HUB_PERSONA_TABS = ['min-enhet', 'sektor-konsern', 'controller-hub', 'veiledere-maler'];
+const HUB_PERSONA_TABS = ['min-enhet', 'sektor-konsern', 'controller-hub', 'veiledere-maler', 'visual-sandbox'];
 
 const SECTION_TO_TAB_MAP = {
     'top3-kpi-seksjon': 'sektor-konsern',
@@ -29260,7 +29952,8 @@ const SECTION_TO_TAB_MAP = {
     'okonomiradgiver-handbok-seksjon': 'veiledere-maler',
     'advisor-calculators-seksjon': 'veiledere-maler',
     'dokumentbank': 'veiledere-maler',
-    'timeline-section': 'veiledere-maler'
+    'timeline-section': 'veiledere-maler',
+    'visual-sandbox-seksjon': 'visual-sandbox'
 };
 
 function openTab(tabKey, updateHash) {
@@ -29304,6 +29997,11 @@ function openTab(tabKey, updateHash) {
     // I "Min Enhet & Min Måned" skal budsjettansvarlig KUN ha fokus på sitt område
     const personaBox = document.getElementById('hub-persona-guidance-container');
     const sectorBar = document.getElementById('global-sector-selector-bar');
+    if (tabKey === 'visual-sandbox') {
+        if (typeof initVisualSandbox === 'function') {
+            setTimeout(initVisualSandbox, 30);
+        }
+    }
     if (tabKey === 'min-enhet') {
         if (personaBox) personaBox.style.display = 'none';
         if (sectorBar) sectorBar.style.display = 'none';
@@ -52613,6 +53311,696 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }, 150);
 });
+
+
+
+// ==============================================================================
+// 🎨 VISUAL SANDBOX — FINANCIAL TIMES VISUAL VOCABULARY ENGINE
+// jf. FT-Visual Guide & Edward Tufte Data-Ink Ratio
+// ==============================================================================
+
+let currentVsCategory = 'ALL';
+let currentVsStakeholder = 'ALL';
+let currentVsSector = 'ALL';
+
+function initVisualSandbox() {
+    renderVsDeviation();
+    renderVsTime();
+    renderVsRanking();
+    renderVsDistribution();
+    renderVsPartToWhole();
+    renderVsCorrelation();
+    renderVsMagnitude();
+    renderVsFlow();
+}
+
+// 1. Filter funksjoner
+function filterVisualSandbox(catKey, btn) {
+    currentVsCategory = catKey;
+    const pills = document.querySelectorAll("#vs-cat-pills .vs-pill-btn");
+    pills.forEach(p => p.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    applyVisualSandboxFilters();
+}
+
+function filterStakeholderLens(stakeholderKey, btn) {
+    currentVsStakeholder = stakeholderKey;
+    const pills = document.querySelectorAll("#vs-stakeholder-pills .vs-pill-btn");
+    pills.forEach(p => p.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    applyVisualSandboxFilters();
+}
+
+function setVisualSandboxSector(sectorKey, btn) {
+    currentVsSector = sectorKey;
+    const pills = document.querySelectorAll("#vs-scope-pills .vs-pill-btn");
+    pills.forEach(p => p.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    
+    // Oppdater diagrammer med valgt sektor-kontekst
+    renderVsDeviation();
+    renderVsTime();
+    renderVsRanking();
+    renderVsPartToWhole();
+    showToast(`🎨 Visual Sandbox oppdatert for ${sectorKey === 'ALL' ? 'Konsern' : sectorKey}`);
+}
+
+function applyVisualSandboxFilters() {
+    const cards = document.querySelectorAll("#vs-cards-grid .vs-chart-card");
+    cards.forEach(card => {
+        const cat = card.getAttribute("data-ft-cat");
+        const stakeholders = card.getAttribute("data-stakeholder") || "";
+        
+        const catMatch = (currentVsCategory === 'ALL' || cat === currentVsCategory);
+        const stakeholderMatch = (currentVsStakeholder === 'ALL' || stakeholders.includes(currentVsStakeholder));
+        
+        if (catMatch && stakeholderMatch) {
+            card.style.display = "flex";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+
+function copyCardSvg(containerId, chartName) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    const svg = el.querySelector("svg");
+    if (!svg) return;
+    
+    const svgCode = svg.outerHTML;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(svgCode).then(() => {
+            showToast(`📋 Kopierte ren SVG for ${chartName}! Klar for Word/PPTX saksfremlegg.`);
+        });
+    } else {
+        showToast(`📋 SVG generert for ${chartName}`);
+    }
+}
+
+function copyAllSandboxReport() {
+    const report = `# KRISTIANSAND KOMMUNE — BEST-PRACTICE VISUAL BRIEFING
+Kilde: Financial Times Visual Vocabulary (Alan Smith) & Edward Tufte Data-Ink Ratio
+Målgruppe: Bystyret, Formannskapet og Kommunedirektøren jf. Kommuneloven §§ 13-1 og 14-5
+
+1. DEVIATION (Avvik): Diverging Bar er valgt fremfor standard stolpediagram for å tydeliggjøre handleplikt etter § 14-5.
+   - Oppvekst: -11.87 MNOK (🔴 Merforbruk)
+   - Helse og mestring: -9.85 MNOK (🔴 Merforbruk)
+   - Finans & Økonomi: +2.58 MNOK (🟢 Positiv buffer)
+   - Samlet Netto Avvik: -19.00 MNOK
+
+2. CHANGE OVER TIME (Tidsutvikling): Fan Chart viser P10/P50/P90 Monte Carlo usikkerhetsvifte for EAC.
+   - P10 (Optimistisk): 7 245 Mkr (+5M avvik)
+   - P50 (Forventet base-case): 7 268 Mkr (+28M avvik dekkes av disposisjonsfond)
+   - P90 (Konservativt): 7 295 Mkr (+55M avvik)
+
+3. PART-TO-WHOLE (Helhet): Waterfall chart gir full dekomponering av budsjettbro fra 7.24 Mrd til 7.27 Mrd.
+
+4. MAGNITUDE (Nøkkeltall): Bullet graphs erstatter speedometre og sikrer presis måloppnåelse mot TBU-krav.
+   - Netto driftsresultat: 1.42 % (Mål: 1.75 %)
+   - Disposisjonsfond: 6.7 % (Lovkrav: 6.0 %)
+   - Netto lånegjeld: 78.4 % (Tak: 80.0 %)`;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(report).then(() => {
+            showToast("📋 Best-practice saksnotat kopiert til utklippstavlen!");
+        });
+    }
+}
+
+// ==============================================================================
+// 2. SVG RENDERING FUNKSJONER (8 FT KATEGORIER)
+// ==============================================================================
+
+// 1. DEVIATION — Diverging Bar Chart
+function renderVsDeviation() {
+    const el = document.getElementById("vs-svg-deviation");
+    if (!el) return;
+
+    const items = [
+        { name: "2. Oppvekst", val: -11.87 },
+        { name: "1. Helse & mestring", val: -9.85 },
+        { name: "5. Org & teknologi", val: -0.12 },
+        { name: "4. Kultur & dialog", val: -0.05 },
+        { name: "3. By- & stedsutvikling", val: 0.31 },
+        { name: "6. Økonomi & styring", val: 2.58 },
+        { name: "Konsern Total", val: -19.00, isTotal: true }
+    ];
+
+    const w = 460, h = 180, padL = 120, padR = 60, top = 20, rowH = 22;
+    const midX = padL + (w - padL - padR) * 0.72; // Plasser 0-akse mot høyre siden de fleste er negative
+    const scale = (w - padL - padR) * 0.035; // 1 MNOK = scale px
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">
+        <!-- Null-linje (Referanse jf. FT Deviation) -->
+        <line x1="${midX}" y1="${top - 6}" x2="${midX}" y2="${top + items.length * rowH + 4}" stroke="#64748b" stroke-width="1.2" stroke-dasharray="2,2"/>
+        <text x="${midX}" y="${top - 9}" font-size="8.5" font-weight="700" fill="#64748b" text-anchor="middle">0 kr (Balanse)</text>
+    `;
+
+    items.forEach((item, i) => {
+        const y = top + i * rowH;
+        const barW = Math.abs(item.val) * scale;
+        const isNeg = item.val < 0;
+        const color = item.isTotal ? (isNeg ? "#991b1b" : "#166534") : (isNeg ? "#c0392b" : "#27ae60");
+        const barX = isNeg ? (midX - barW) : midX;
+
+        // Tekstlabel venstrejustert jf. Tufte
+        svg += `
+            <text x="${padL - 8}" y="${y + 11}" font-size="9" font-weight="${item.isTotal ? '800' : '600'}" fill="${item.isTotal ? 'var(--navy-dark)' : 'var(--text-primary)'}" text-anchor="end">${item.name}</text>
+            <rect x="${barX}" y="${y + 2}" width="${barW}" height="${item.isTotal ? 14 : 11}" fill="${color}" rx="2" opacity="${item.isTotal ? '1' : '0.85'}"/>
+        `;
+
+        // Direkte tallverdi på enden
+        const labelX = isNeg ? (barX - 4) : (barX + barW + 4);
+        const labelAnchor = isNeg ? "end" : "start";
+        const sign = item.val > 0 ? "+" : "";
+        svg += `
+            <text x="${labelX}" y="${y + 11}" font-size="8.5" font-family="var(--font-mono)" font-weight="700" fill="${color}" text-anchor="${labelAnchor}">
+                ${sign}${item.val.toFixed(2)}M
+            </text>
+        `;
+    });
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+}
+
+// 2. CHANGE OVER TIME — Fan Chart (Monte Carlo EAC)
+function renderVsTime() {
+    const el = document.getElementById("vs-svg-time");
+    if (!el) return;
+
+    const w = 460, h = 180, padL = 36, padR = 86, padTop = 16, padBottom = 22;
+    const plotW = w - padL - padR;
+    const plotH = h - padTop - padBottom;
+
+    // 12 måneder: M1-M9 faktisk, M10-M12 vifte
+    const actuals = [790, 1590, 2390, 3190, 3990, 4800, 5210, 6080, 7268 - 2400]; // M1-M9
+    // Sep (M9) er utgangspunkt ~4865 Mkr
+    // M12: BAC = 7240, P10 = 7245, P50 = 7268, P90 = 7295
+    const months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+    
+    // Normalisert Y (0 til 7500 Mkr)
+    const minY = 0, maxY = 7500;
+    const getX = (m) => padL + (m / 11) * plotW;
+    const getY = (val) => padTop + plotH - (val / maxY) * plotH;
+
+    // Regn ut punkter for historisk forbruk
+    // M1 til M9 kurve
+    const mPoints = [
+        {m: 0, val: 540}, {m: 1, val: 1080}, {m: 2, val: 1625},
+        {m: 3, val: 2170}, {m: 4, val: 2715}, {m: 5, val: 3260},
+        {m: 6, val: 3800}, {m: 7, val: 4335}, {m: 8, val: 4866}
+    ];
+
+    let pathActual = `M ${getX(0)},${getY(mPoints[0].val)}`;
+    for (let i = 1; i < mPoints.length; i++) {
+        pathActual += ` L ${getX(mPoints[i].m)},${getY(mPoints[i].val)}`;
+    }
+
+    // Viftepunkter for M9 -> M12
+    const p90 = [{m: 8, val: 4866}, {m: 9, val: 5680}, {m: 10, val: 6490}, {m: 11, val: 7295}];
+    const p50 = [{m: 8, val: 4866}, {m: 9, val: 5665}, {m: 10, val: 6465}, {m: 11, val: 7268}];
+    const p10 = [{m: 8, val: 4866}, {m: 9, val: 5650}, {m: 10, val: 6445}, {m: 11, val: 7245}];
+
+    // Fan polygon P10 til P90
+    let fanArea = `M ${getX(8)},${getY(4866)}`;
+    for (let i = 1; i < p90.length; i++) fanArea += ` L ${getX(p90[i].m)},${getY(p90[i].val)}`;
+    for (let i = p10.length - 1; i >= 0; i--) fanArea += ` L ${getX(p10[i].m)},${getY(p10[i].val)}`;
+    fanArea += ` Z`;
+
+    let pathP50 = `M ${getX(8)},${getY(4866)}`;
+    for (let i = 1; i < p50.length; i++) pathP50 += ` L ${getX(p50[i].m)},${getY(p50[i].val)}`;
+
+    let pathP90 = `M ${getX(8)},${getY(4866)}`;
+    for (let i = 1; i < p90.length; i++) pathP90 += ` L ${getX(p90[i].m)},${getY(p90[i].val)}`;
+
+    let pathP10 = `M ${getX(8)},${getY(4866)}`;
+    for (let i = 1; i < p10.length; i++) pathP10 += ` L ${getX(p10[i].m)},${getY(p10[i].val)}`;
+
+    const yBac = getY(7240);
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">
+        <!-- Vedtatt Budsjettramme (BAC) -->
+        <line x1="${padL}" y1="${yBac}" x2="${w - padR + 4}" y2="${yBac}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="${w - padR + 6}" y="${yBac + 3}" font-size="8" font-family="var(--font-mono)" fill="#64748b">BAC: 7 240M</text>
+
+        <!-- Viftefelt (Usikkerhetskonvolutt) -->
+        <path d="${fanArea}" fill="rgba(27, 54, 93, 0.08)"/>
+
+        <!-- P10 stiplet grønn linje -->
+        <path d="${pathP10}" fill="none" stroke="#27ae60" stroke-width="1.2" stroke-dasharray="3,2"/>
+        <text x="${w - padR + 6}" y="${getY(7245) + 3}" font-size="8" font-family="var(--font-mono)" fill="#27ae60" font-weight="700">P10: 7 245M</text>
+
+        <!-- P90 stiplet rød linje -->
+        <path d="${pathP90}" fill="none" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="3,2"/>
+        <text x="${w - padR + 6}" y="${getY(7295) + 3}" font-size="8" font-family="var(--font-mono)" fill="#c0392b" font-weight="700">P90: 7 295M</text>
+
+        <!-- P50 hel marine linje -->
+        <path d="${pathP50}" fill="none" stroke="#1b365d" stroke-width="1.8"/>
+        <text x="${w - padR + 6}" y="${getY(7268) + 3}" font-size="8.5" font-family="var(--font-mono)" fill="#1b365d" font-weight="800">P50: 7 268M</text>
+
+        <!-- Faktisk kurve M1-M9 -->
+        <path d="${pathActual}" fill="none" stroke="#1b365d" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="${getX(8)}" cy="${getY(4866)}" r="3.5" fill="#1b365d"/>
+        <text x="${getX(8) - 4}" y="${getY(4866) - 6}" font-size="8" font-weight="700" fill="#1b365d" text-anchor="end">M9: 4 866M</text>
+
+        <!-- X-akse måneder -->
+        ${months.map((m, idx) => `
+            <text x="${getX(idx)}" y="${h - 4}" font-size="8" fill="${idx <= 8 ? '#1e293b' : '#94a3b8'}" font-weight="${idx <= 8 ? '700' : '400'}" text-anchor="middle">${m}</text>
+        `).join('')}
+    </svg>`;
+
+    el.innerHTML = svg;
+}
+
+// 3. RANKING — Lollipop Chart (CPI)
+function renderVsRanking() {
+    const el = document.getElementById("vs-svg-ranking");
+    if (!el) return;
+
+    const units = [
+        { name: "5200 Sykehjem & Helsehus", cpi: 0.988 },
+        { name: "2020 Grunnskoler (KRS)", cpi: 0.991 },
+        { name: "2010 Kommunale Barnehager", cpi: 0.993 },
+        { name: "3800 Kultur & Idrett", cpi: 1.000 },
+        { name: "1800 IKT & Fellestjenester", cpi: 1.000 },
+        { name: "3300 Samferdsel & VAR", cpi: 1.001 },
+        { name: "8000 Finans & Gjeldsforv.", cpi: 1.003 }
+    ];
+
+    const w = 460, h = 180, padL = 140, padR = 50, top = 16, rowH = 22;
+    // Skala for CPI fra 0.980 til 1.010
+    const minCpi = 0.980, maxCpi = 1.010;
+    const getX = (val) => padL + ((val - minCpi) / (maxCpi - minCpi)) * (w - padL - padR);
+    const xBase = getX(1.000);
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">
+        <!-- Referanselinje ved CPI = 1.000 -->
+        <line x1="${xBase}" y1="${top - 4}" x2="${xBase}" y2="${top + units.length * rowH + 2}" stroke="#64748b" stroke-width="1.2" stroke-dasharray="2,2"/>
+        <text x="${xBase}" y="${top - 6}" font-size="8" font-weight="700" fill="#64748b" text-anchor="middle">1.000 (I Balanse)</text>
+    `;
+
+    units.forEach((u, i) => {
+        const y = top + i * rowH;
+        const xVal = getX(u.cpi);
+        const isAlert = u.cpi < 0.995;
+        const color = isAlert ? "#c0392b" : (u.cpi >= 1.000 ? "#27ae60" : "#d35400");
+
+        svg += `
+            <text x="${padL - 8}" y="${y + 11}" font-size="9" font-weight="600" fill="var(--text-primary)" text-anchor="end">${u.name}</text>
+            <!-- Lollipop stem -->
+            <line x1="${Math.min(xBase, xVal)}" y1="${y + 8}" x2="${Math.max(xBase, xVal)}" y2="${y + 8}" stroke="${color}" stroke-width="1.8"/>
+            <!-- Lollipop dot -->
+            <circle cx="${xVal}" cy="${y + 8}" r="4.5" fill="${color}"/>
+            <!-- Verdi label -->
+            <text x="${xVal + (u.cpi >= 1.0 ? 7 : -7)}" y="${y + 11}" font-size="8.5" font-family="var(--font-mono)" font-weight="700" fill="${color}" text-anchor="${u.cpi >= 1.0 ? 'start' : 'end'}">
+                ${u.cpi.toFixed(3)}
+            </text>
+        `;
+    });
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+}
+
+// 4. DISTRIBUTION — Box Plot (Sykefravær)
+function renderVsDistribution() {
+    const el = document.getElementById("vs-svg-distribution");
+    if (!el) return;
+
+    const data = [
+        { name: "Helse & mestring", min: 5.2, q1: 7.8, med: 9.2, q3: 11.4, max: 13.5, outliers: [14.8] },
+        { name: "Oppvekst", min: 4.8, q1: 6.9, med: 8.1, q3: 9.6, max: 11.2, outliers: [12.4] },
+        { name: "By- & stedsutvikling", min: 2.8, q1: 3.8, med: 4.8, q3: 5.9, max: 7.2, outliers: [] },
+        { name: "Kultur & dialog", min: 3.1, q1: 4.1, med: 5.2, q3: 6.4, max: 7.8, outliers: [] },
+        { name: "Org & teknologi", min: 2.9, q1: 3.9, med: 4.9, q3: 5.8, max: 7.0, outliers: [] },
+        { name: "Økonomi & styring", min: 2.2, q1: 3.1, med: 3.9, q3: 4.6, max: 5.5, outliers: [] }
+    ];
+
+    const w = 460, h = 180, padL = 125, padR = 40, top = 16, rowH = 24;
+    const minVal = 0, maxVal = 16;
+    const getX = (val) => padL + (val / maxVal) * (w - padL - padR);
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">
+        <!-- Kritisk grense for vikartrøkk (8.0 %) jf. HTA § 4 -->
+        <line x1="${getX(8.0)}" y1="${top - 4}" x2="${getX(8.0)}" y2="${top + data.length * rowH + 2}" stroke="#fca5a5" stroke-width="1.2" stroke-dasharray="2,2"/>
+        <text x="${getX(8.0)}" y="${top - 6}" font-size="8" font-weight="700" fill="#dc2626" text-anchor="middle">8.0 % Faresone (Vikartakt)</text>
+    `;
+
+    data.forEach((d, i) => {
+        const y = top + i * rowH;
+        const xMin = getX(d.min), xMax = getX(d.max);
+        const xQ1 = getX(d.q1), xQ3 = getX(d.q3);
+        const xMed = getX(d.med);
+        const isHigh = d.med >= 8.0;
+        const boxColor = isHigh ? "rgba(239, 68, 68, 0.15)" : "rgba(30, 41, 59, 0.08)";
+        const strokeColor = isHigh ? "#c0392b" : "#334155";
+
+        svg += `
+            <text x="${padL - 8}" y="${y + 11}" font-size="9" font-weight="600" fill="var(--text-primary)" text-anchor="end">${d.name}</text>
+            <!-- Whisker line -->
+            <line x1="${xMin}" y1="${y + 7}" x2="${xMax}" y2="${y + 7}" stroke="#94a3b8" stroke-width="1.2"/>
+            <line x1="${xMin}" y1="${y + 3}" x2="${xMin}" y2="${y + 11}" stroke="#94a3b8" stroke-width="1.2"/>
+            <line x1="${xMax}" y1="${y + 3}" x2="${xMax}" y2="${y + 11}" stroke="#94a3b8" stroke-width="1.2"/>
+            
+            <!-- IQR Box -->
+            <rect x="${xQ1}" y="${y + 1}" width="${xQ3 - xQ1}" height="12" fill="${boxColor}" stroke="${strokeColor}" stroke-width="1.2" rx="1"/>
+            
+            <!-- Median mark -->
+            <line x1="${xMed}" y1="${y}" x2="${xMed}" y2="${y + 14}" stroke="${strokeColor}" stroke-width="2.2"/>
+            
+            <!-- Median tekst -->
+            <text x="${xMed}" y="${y - 2}" font-size="7.5" font-family="var(--font-mono)" font-weight="700" fill="${strokeColor}" text-anchor="middle">${d.med.toFixed(1)}%</text>
+        `;
+
+        // Outliers
+        d.outliers.forEach(outVal => {
+            svg += `<circle cx="${getX(outVal)}" cy="${y + 7}" r="3" fill="#ef4444" stroke="#991b1b" stroke-width="0.8"/>`;
+        });
+    });
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+}
+
+// 5. PART-TO-WHOLE — Financial Waterfall Chart (BAC til EAC)
+function renderVsPartToWhole() {
+    const el = document.getElementById("vs-svg-part-to-whole");
+    if (!el) return;
+
+    const steps = [
+        { label: "Vedtatt BAC", val: 7240, type: "base", runVal: 7240 },
+        { label: "+ Lønnsoppgjør", val: 185, type: "pos", runVal: 7425 },
+        { label: "+ Vikar/overtid", val: 42, type: "pos", runVal: 7467 },
+        { label: "+ Renter/pris", val: 28, type: "pos", runVal: 7495 },
+        { label: "- Triage tiltak", val: -227, type: "neg", runVal: 7268 },
+        { label: "Estimat EAC", val: 7268, type: "total", runVal: 7268 }
+    ];
+
+    const w = 460, h = 180, padL = 36, padR = 24, padTop = 22, padBottom = 26;
+    const minVal = 7000, maxVal = 7600; // Zoom inn på toppen jf. Tufte for presisjon
+    const colW = (w - padL - padR) / steps.length;
+    const getY = (val) => padTop + (h - padTop - padBottom) - ((val - minVal) / (maxVal - minVal)) * (h - padTop - padBottom);
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">
+        <!-- Nullreferanse ved BAC 7240 -->
+        <line x1="${padL}" y1="${getY(7240)}" x2="${w - padR}" y2="${getY(7240)}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="${w - padR + 2}" y="${getY(7240) + 3}" font-size="7.5" font-family="var(--font-mono)" fill="#64748b">BAC</text>
+    `;
+
+    steps.forEach((s, i) => {
+        const x = padL + i * colW + 6;
+        const bw = colW - 12;
+        let yTop, yHeight, color;
+
+        if (s.type === "base" || s.type === "total") {
+            yTop = getY(s.val);
+            yHeight = (h - padBottom) - yTop;
+            color = "#1b365d";
+        } else if (s.type === "pos") {
+            const prevVal = s.runVal - s.val;
+            yTop = getY(s.runVal);
+            yHeight = getY(prevVal) - yTop;
+            color = "#c0392b"; // Rød for kostnadsøkning
+        } else {
+            const prevVal = s.runVal - s.val;
+            yTop = getY(prevVal);
+            yHeight = getY(s.runVal) - yTop;
+            color = "#27ae60"; // Grønn for innsparing
+        }
+
+        svg += `
+            <rect x="${x}" y="${yTop}" width="${bw}" height="${Math.max(yHeight, 2)}" fill="${color}" rx="2"/>
+            <text x="${x + bw / 2}" y="${yTop - 5}" font-size="8" font-family="var(--font-mono)" font-weight="700" fill="${color}" text-anchor="middle">
+                ${s.val > 0 && s.type !== 'base' && s.type !== 'total' ? '+' : ''}${s.val}M
+            </text>
+            <text x="${x + bw / 2}" y="${h - 8}" font-size="7.5" font-weight="600" fill="#334155" text-anchor="middle">
+                ${s.label}
+            </text>
+        `;
+
+        // Stiplet forbindelseslinje til neste trinn
+        if (i < steps.length - 1) {
+            const nextX = padL + (i + 1) * colW + 6;
+            const lineY = getY(s.runVal);
+            svg += `<line x1="${x + bw}" y1="${lineY}" x2="${nextX}" y2="${lineY}" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2"/>`;
+        }
+    });
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+}
+
+// 6. CORRELATION — Scatterplot (Sykefravær vs Vikar)
+function renderVsCorrelation() {
+    const el = document.getElementById("vs-svg-correlation");
+    if (!el) return;
+
+    // 16 representasjonsenheter
+    const points = [
+        { name: "Valhall Sykehjem", frav: 11.8, vik: 98, size: 6 },
+        { name: "Strai Omsorg", frav: 10.4, vik: 84, size: 5 },
+        { name: "Lunderød Bo", frav: 9.6, vik: 76, size: 4 },
+        { name: "Torridal Skole", frav: 8.9, vik: 68, size: 6 },
+        { name: "Vågsbygd Skole", frav: 8.2, vik: 58, size: 7 },
+        { name: "Hellemyr Barnehage", frav: 8.6, vik: 62, size: 4 },
+        { name: "Grim Skole", frav: 7.4, vik: 48, size: 5 },
+        { name: "Søm Barnehage", frav: 7.1, vik: 44, size: 4 },
+        { name: "Krossen Skole", frav: 6.8, vik: 38, size: 5 },
+        { name: "Oddernes Barnehage", frav: 6.2, vik: 32, size: 4 },
+        { name: "VAR-drift", frav: 4.4, vik: 18, size: 5 },
+        { name: "Parkvesen", frav: 4.8, vik: 22, size: 4 },
+        { name: "Kilden Teater", frav: 5.1, vik: 24, size: 5 },
+        { name: "IKT Drift", frav: 4.2, vik: 16, size: 4 },
+        { name: "Lønn/Regnskap", frav: 3.8, vik: 12, size: 4 },
+        { name: "Kommuneadvokaten", frav: 3.2, vik: 8, size: 3 }
+    ];
+
+    const w = 460, h = 180, padL = 42, padR = 24, padTop = 18, padBottom = 26;
+    const plotW = w - padL - padR;
+    const plotH = h - padTop - padBottom;
+
+    const minX = 2, maxX = 14; // Fravær %
+    const minY = 0, maxY = 110; // Vikar k kr/årsverk
+    const getX = (val) => padL + ((val - minX) / (maxX - minX)) * plotW;
+    const getY = (val) => padTop + plotH - ((val - minY) / (maxY - minY)) * plotH;
+
+    // Regresjonslinje: y = 8.4x - 14
+    const regX1 = 3, regY1 = 8.4 * 3 - 14;
+    const regX2 = 13, regY2 = 8.4 * 13 - 14;
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">
+        <!-- Høyrisiko-kvadrant: Fravær > 8% & Vikar > 50k -->
+        <rect x="${getX(8.0)}" y="${getY(110)}" width="${getX(14) - getX(8.0)}" height="${getY(50) - getY(110)}" fill="rgba(239, 68, 68, 0.06)" rx="2"/>
+        <text x="${w - padR - 6}" y="${padTop + 14}" font-size="8" font-weight="700" fill="#dc2626" text-anchor="end">⚠️ Faresone: Fravær &gt; 8 % &amp; Vikar &gt; 50k</text>
+
+        <!-- Akser -->
+        <line x1="${padL}" y1="${getY(0)}" x2="${w - padR}" y2="${getY(0)}" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="${padL}" y1="${padTop}" x2="${padL}" y2="${getY(0)}" stroke="#cbd5e1" stroke-width="1"/>
+
+        <!-- Trendlinje (R² = 0.74) -->
+        <line x1="${getX(regX1)}" y1="${getY(regY1)}" x2="${getX(regX2)}" y2="${getY(regY2)}" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="3,2"/>
+        <text x="${getX(regX2) - 8}" y="${getY(regY2) + 12}" font-size="8" font-family="var(--font-mono)" fill="#c0392b" font-weight="700">R² = 0.74</text>
+
+        <!-- Punkter -->
+        ${points.map(p => {
+            const isHigh = p.frav >= 8.0 && p.vik >= 50;
+            const col = isHigh ? "#c0392b" : "#1b365d";
+            return `
+                <circle cx="${getX(p.frav)}" cy="${getY(p.vik)}" r="${p.size}" fill="${col}" opacity="0.8" stroke="#ffffff" stroke-width="1">
+                    <title>${p.name}: ${p.frav}% fravær, ${p.vik}k kr vikar</title>
+                </circle>
+            `;
+        }).join('')}
+
+        <!-- Akse-titler -->
+        <text x="${w - padR}" y="${h - 6}" font-size="8" fill="#64748b" font-weight="600" text-anchor="end">Sykefravær (%) →</text>
+        <text x="${padL - 4}" y="${padTop - 4}" font-size="8" fill="#64748b" font-weight="600" text-anchor="start">↑ Vikar/overtid (k kr per årsverk)</text>
+    </svg>`;
+
+    el.innerHTML = svg;
+}
+
+// 7. MAGNITUDE — Bullet Graphs (Top 3 Kommunale Nøkkeltall)
+function renderVsMagnitude() {
+    const el = document.getElementById("vs-svg-magnitude");
+    if (!el) return;
+
+    const w = 460, h = 180, padL = 135, padR = 40, top = 16, rowH = 46;
+    const barH = 14;
+
+    const bullets = [
+        {
+            title: "Netto driftsresultat",
+            unit: "%",
+            val: 1.42,
+            target: 1.75,
+            min: 0,
+            max: 3.0,
+            ranges: [
+                { val: 1.0, color: "#fee2e2" },  // Rød tone
+                { val: 1.75, color: "#fef3c7" }, // Gul tone
+                { val: 3.0, color: "#dcfce7" }   // Grønn tone
+            ]
+        },
+        {
+            title: "Disposisjonsfond",
+            unit: "% (485M)",
+            val: 6.70,
+            target: 6.00,
+            min: 0,
+            max: 10.0,
+            ranges: [
+                { val: 4.0, color: "#fee2e2" },
+                { val: 6.0, color: "#fef3c7" },
+                { val: 10.0, color: "#dcfce7" }
+            ]
+        },
+        {
+            title: "Netto lånegjeld",
+            unit: "% (5.68 Mrd)",
+            val: 78.4,
+            target: 80.0, // Tak
+            min: 50,
+            max: 100,
+            ranges: [
+                { val: 75.0, color: "#dcfce7" },
+                { val: 80.0, color: "#fef3c7" },
+                { val: 100.0, color: "#fee2e2" }
+            ]
+        }
+    ];
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">`;
+
+    bullets.forEach((b, i) => {
+        const y = top + i * rowH;
+        const plotW = w - padL - padR;
+        const getX = (val) => padL + Math.max(0, Math.min(1, (val - b.min) / (b.max - b.min))) * plotW;
+
+        // Tittel
+        svg += `
+            <text x="${padL - 8}" y="${y + 10}" font-size="9" font-weight="700" fill="var(--navy-dark)" text-anchor="end">${b.title}</text>
+            <text x="${padL - 8}" y="${y + 20}" font-size="8" fill="#64748b" text-anchor="end">${b.unit}</text>
+        `;
+
+        // Kvalitative bakgrunnsbånd
+        let prevX = padL;
+        b.ranges.forEach(r => {
+            const rx = getX(r.val);
+            svg += `<rect x="${prevX}" y="${y + 2}" width="${rx - prevX}" height="${barH + 8}" fill="${r.color}"/>`;
+            prevX = rx;
+        });
+
+        // Faktisk stolpe (Mørk marineblå)
+        const valX = getX(b.val);
+        svg += `<rect x="${padL}" y="${y + 6}" width="${valX - padL}" height="${barH}" fill="#1b365d" rx="1"/>`;
+
+        // Måltall vertikal markør (Svart strek)
+        const targetX = getX(b.target);
+        svg += `
+            <line x1="${targetX}" y1="${y}" x2="${targetX}" y2="${y + barH + 12}" stroke="#0f172a" stroke-width="2.5"/>
+            <text x="${valX + 4}" y="${y + 16}" font-size="8.5" font-family="var(--font-mono)" font-weight="800" fill="#1b365d">${b.val.toFixed(1)}${b.unit.includes('%') ? '%' : ''}</text>
+        `;
+    });
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+}
+
+// 8. FLOW — Sankey Diagram (Pengestrøm 7.24 Mrd)
+function renderVsFlow() {
+    const el = document.getElementById("vs-svg-flow");
+    if (!el) return;
+
+    const w = 460, h = 180, padL = 10, padR = 10, top = 10, bot = 10;
+    const availH = h - top - bot;
+
+    // Venstre (Inntekter): Skatt 3420, Ramme 2610, Gebyrer 780, MVA 430 = 7240
+    const inNodes = [
+        { name: "Skatt", val: 3420, color: "#0369a1" },
+        { name: "Ramme", val: 2610, color: "#0284c7" },
+        { name: "Gebyrer", val: 780, color: "#0ea5e9" },
+        { name: "MVA-komp", val: 430, color: "#38bdf8" }
+    ];
+
+    // Høyre (Utgifter): Oppvekst 2120, Helse 1850, Finans 1490, By 940, Org 460, Kultur 380 = 7240
+    const outNodes = [
+        { name: "Oppvekst", val: 2120, color: "#b91c1c" },
+        { name: "Helse", val: 1850, color: "#c2410c" },
+        { name: "Finans", val: 1490, color: "#1e293b" },
+        { name: "Byutvikling", val: 940, color: "#15803d" },
+        { name: "Org/Tek", val: 460, color: "#475569" },
+        { name: "Kultur", val: 380, color: "#7e22ce" }
+    ];
+
+    const totalVal = 7240;
+    const scaleY = (availH - (inNodes.length - 1) * 4) / totalVal;
+
+    let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; font-family:var(--font-sans);">`;
+
+    // Venstre noder (X = 14 til 24)
+    let curY = top;
+    inNodes.forEach(n => {
+        n.h = n.val * scaleY;
+        n.y = curY;
+        curY += n.h + 4;
+        svg += `
+            <rect x="14" y="${n.y}" width="10" height="${n.h}" fill="${n.color}" rx="1"/>
+            <text x="28" y="${n.y + Math.max(n.h / 2 + 3, 7)}" font-size="7.5" font-weight="700" fill="#334155">${n.name} (${n.val}M)</text>
+        `;
+    });
+
+    // Senter kasse (X = 220 til 234)
+    const midX = 220, midW = 14;
+    const midH = totalVal * scaleY + (inNodes.length - 1) * 2;
+    const midY = top + (availH - midH) / 2;
+    svg += `
+        <rect x="${midX}" y="${midY}" width="${midW}" height="${midH}" fill="#1b365d" rx="2"/>
+        <text x="${midX + midW / 2}" y="${midY - 4}" font-size="8" font-weight="800" fill="#1b365d" text-anchor="middle">Kommurekassen (7 240M)</text>
+    `;
+
+    // Høyre noder (X = 436 til 446)
+    const outScaleY = (availH - (outNodes.length - 1) * 3) / totalVal;
+    let outCurY = top;
+    outNodes.forEach(n => {
+        n.h = n.val * outScaleY;
+        n.y = outCurY;
+        outCurY += n.h + 3;
+        svg += `
+            <rect x="436" y="${n.y}" width="10" height="${n.h}" fill="${n.color}" rx="1"/>
+            <text x="430" y="${n.y + Math.max(n.h / 2 + 3, 7)}" font-size="7.5" font-weight="700" fill="#334155" text-anchor="end">${n.name} (${n.val}M)</text>
+        `;
+    });
+
+    // Bånd fra venstre til senter
+    inNodes.forEach(n => {
+        const x1 = 24, y1 = n.y;
+        const x2 = midX, y2 = midY + (n.y - top) * 0.95;
+        const cpX1 = x1 + (x2 - x1) * 0.5;
+        const cpX2 = x2 - (x2 - x1) * 0.5;
+        svg += `
+            <path d="M ${x1},${y1} C ${cpX1},${y1} ${cpX2},${y2} ${x2},${y2} L ${x2},${y2 + n.h} C ${cpX2},${y2 + n.h} ${cpX1},${y1 + n.h} ${x1},${y1 + n.h} Z"
+                  fill="${n.color}" fill-opacity="0.28"/>
+        `;
+    });
+
+    // Bånd fra senter til høyre
+    outNodes.forEach(n => {
+        const x1 = midX + midW, y1 = midY + (n.y - top) * 0.95;
+        const x2 = 436, y2 = n.y;
+        const cpX1 = x1 + (x2 - x1) * 0.5;
+        const cpX2 = x2 - (x2 - x1) * 0.5;
+        svg += `
+            <path d="M ${x1},${y1} C ${cpX1},${y1} ${cpX2},${y2} ${x2},${y2} L ${x2},${y2 + n.h} C ${cpX2},${y2 + n.h} ${cpX1},${y1 + n.h} ${x1},${y1 + n.h} Z"
+                  fill="${n.color}" fill-opacity="0.25"/>
+        `;
+    });
+
+    svg += `</svg>`;
+    el.innerHTML = svg;
+}
 
 </script>
 </body>
