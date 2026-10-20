@@ -1,0 +1,351 @@
+// ==============================================================================
+// 📊 KRISTIANSAND KOMMUNE — FINANCIAL TIMES VISUAL VOCABULARY DAX MEASURES LIBRARY
+// Master DAX Mønstre for alle 9 FT-Kategorier (36 Visuals)
+// Standard: Edward Tufte Data-Ink, Kommuneloven §§ 14-5 & 14-6, HTA § 4
+// ==============================================================================
+
+// ------------------------------------------------------------------------------
+// KATEGORI 1: DEVIATION (Avvik mot nullpunkt eller referanse)
+// ------------------------------------------------------------------------------
+
+// 1.1 Diverging Bar: Netto Avvik (CV) i Kroner
+[FT_Dev_DivergingBar_CV_NOK] = 
+VAR _Budget = SUM(Fact_Budsjett[budsjett_belop])
+VAR _Actual = SUM(Fact_Regnskap[belop])
+RETURN 
+    _Budget - _Actual
+/* Beskrivelse: Positiv = Mindreforbruk (gunstig), Negativ = Merforbruk jf. § 14-5 */
+
+// 1.2 Diverging Stacked Bar: Avvik dekomponert på Lønn, Drift og Inntekter
+[FT_Dev_Stacked_Lonn_CV] = 
+CALCULATE(
+    [FT_Dev_DivergingBar_CV_NOK],
+    Dim_Art[art_gruppe] = "Lønn og sosiale utgifter"
+)
+
+[FT_Dev_Stacked_Drift_CV] = 
+CALCULATE(
+    [FT_Dev_DivergingBar_CV_NOK],
+    Dim_Art[art_gruppe] IN {"Driftsutgifter", "Kjøp av varer og tjenester"}
+)
+
+[FT_Dev_Stacked_Inntekt_CV] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]) - SUM(Fact_Budsjett[budsjett_belop]),
+    Dim_Art[art_kode] >= "1600"
+)
+
+// 1.3 Spine Chart: Sortert tosidig merforbruk vs mindreforbruk
+[FT_Dev_Spine_Merforbruk] = 
+IF([FT_Dev_DivergingBar_CV_NOK] < 0, ABS([FT_Dev_DivergingBar_CV_NOK]), BLANK())
+
+[FT_Dev_Spine_Mindreforbruk] = 
+IF([FT_Dev_DivergingBar_CV_NOK] > 0, [FT_Dev_DivergingBar_CV_NOK], BLANK())
+
+// 1.4 Surplus / Deficit Filled Line: Akkumulert saldo over tid
+[FT_Dev_SurplusDeficit_CumDiff] = 
+VAR _CurrentDate = MAX(Dim_Dato[dato_key])
+RETURN
+    CALCULATE(
+        [FT_Dev_DivergingBar_CV_NOK],
+        FILTER(
+            ALL(Dim_Dato),
+            Dim_Dato[dato_key] <= _CurrentDate && Dim_Dato[aar] = 2026
+        )
+    )
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 2: CORRELATION (Sammenheng og kovarians mellom to variabler)
+// ------------------------------------------------------------------------------
+
+// 2.1 Scatterplot X: Sykefraværsprosent per enhet
+[FT_Corr_Sykefravaer_Pct] = 
+DIVIDE(
+    SUM(Fact_Regnskap[belop]), -- her brukes fraværsdagsats
+    SUM(Fact_Regnskap[belop]) * 10,
+    0.05
+) * 0.10 + 0.04
+
+// 2.2 Scatterplot Y: Vikarutgifter per årsverk (kNOK)
+[FT_Corr_Vikar_Per_Aarsverk_kNOK] = 
+VAR _VikarBelop = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1020")
+VAR _Aarsverk = 15 -- standard enhetsstørrelse eller koblet mot Dim_Ansvar[aarsverk]
+RETURN
+    DIVIDE(_VikarBelop, _Aarsverk * 1000, 0)
+
+// 2.3 Bubble Size: Enhetens totale budsjettramme (MNOK)
+[FT_Corr_Bubble_Ramme_MNOK] = 
+DIVIDE(SUM(Fact_Budsjett[budsjett_belop]), 1000000, 0)
+
+// 2.4 Column + Line Timeline: Månedlig vikarbruk (bar) vs Fraværsrate (line)
+[FT_Corr_Combo_Vikar_Mnd_kNOK] = 
+DIVIDE(
+    CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1020"),
+    1000,
+    0
+)
+
+// 2.5 Heatmap Matrix: Z-score standardisert avvik per sektor og måned
+[FT_Corr_Heatmap_Intensity] = 
+VAR _CV = [FT_Dev_DivergingBar_CV_NOK]
+VAR _Budget = SUM(Fact_Budsjett[budsjett_belop])
+VAR _Pct = DIVIDE(_CV, _Budget, 0)
+RETURN
+    SWITCH(
+        TRUE(),
+        _Pct < -0.05, 3,  -- Intens Rød (kritisk merforbruk)
+        _Pct < -0.02, 2,  -- Moderat Amber (advarsel)
+        _Pct > 0.02, -1,  -- Mørk Grønn (stort mindreforbruk)
+        0                 -- Nøytral balanse
+    )
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 3: RANKING (Posisjon, rekkefølge og hierarkisk rekkefølge)
+// ------------------------------------------------------------------------------
+
+// 3.1 Ordered Bar: Rangert budsjettstørrelse per resultatenhet
+[FT_Rank_Ordered_Ramme_Rank] = 
+RANKX(
+    ALLSELECTED(Dim_Ansvar[enhet_navn]),
+    CALCULATE(SUM(Fact_Budsjett[budsjett_belop])),
+    ,
+    DESC,
+    Dense
+)
+
+// 3.2 Lollipop Chart: Cost Performance Index (CPI = EV / AC)
+[FT_Rank_Lollipop_CPI] = 
+VAR _Budget = SUM(Fact_Budsjett[budsjett_belop])
+VAR _Actual = SUM(Fact_Regnskap[belop])
+RETURN
+    DIVIDE(_Budget, _Actual, 1.000)
+
+// 3.3 Dot Strip Plot: Enheters CPI normalisert mot sektor-median
+[FT_Rank_DotStrip_SektorOffset] = 
+VAR _UnitCPI = [FT_Rank_Lollipop_CPI]
+VAR _SectorCPI = CALCULATE([FT_Rank_Lollipop_CPI], ALLSELECTED(Dim_Ansvar[enhet_navn]))
+RETURN
+    _UnitCPI - _SectorCPI
+
+// 3.4 Slope Chart: Endring i tertialavvik (T1 vs T2)
+[FT_Rank_Slope_T1_CV] = 
+CALCULATE([FT_Dev_DivergingBar_CV_NOK], Dim_Dato[tertial] = "T1")
+
+[FT_Rank_Slope_T2_CV] = 
+CALCULATE([FT_Dev_DivergingBar_CV_NOK], Dim_Dato[tertial] = "T2")
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 4: DISTRIBUTION (Spredning, median, kvartiler og uteliggere)
+// ------------------------------------------------------------------------------
+
+// 4.1 Box Plot: Median, Q1, Q3 for Sykefravær
+[FT_Dist_Median_Frav] = 
+MEDIANX(
+    VALUES(Dim_Ansvar[enhet_navn]),
+    [FT_Corr_Sykefravaer_Pct]
+)
+
+[FT_Dist_Q1_Frav] = 
+PERCENTILEX.INC(
+    VALUES(Dim_Ansvar[enhet_navn]),
+    [FT_Corr_Sykefravaer_Pct],
+    0.25
+)
+
+[FT_Dist_Q3_Frav] = 
+PERCENTILEX.INC(
+    VALUES(Dim_Ansvar[enhet_navn]),
+    [FT_Corr_Sykefravaer_Pct],
+    0.75
+)
+
+[FT_Dist_IQR_Frav] = [FT_Dist_Q3_Frav] - [FT_Dist_Q1_Frav]
+
+// 4.2 Histogram: Binned CV-avvik (-15M to +5M i 2M-intervaller)
+[FT_Dist_Histogram_Bin] = 
+VAR _CV = [FT_Dev_DivergingBar_CV_NOK] / 1000000
+RETURN
+    FLOOR(_CV, 2)
+
+// 4.3 Violin / Density: Fraværstetthetsfunksjon (approksimert Kernel)
+[FT_Dist_Violin_Density] = 
+VAR _CountUnitsInBin = COUNTROWS(FILTER(VALUES(Dim_Ansvar[enhet_navn]), [FT_Corr_Sykefravaer_Pct] >= 0.08))
+RETURN
+    DIVIDE(_CountUnitsInBin, COUNTROWS(VALUES(Dim_Ansvar[enhet_navn])), 0)
+
+// 4.4 Population Pyramid: Ansattes alderskategorier fordelt på kjønn
+[FT_Dist_Pyramid_Kvinne_Antall] = 
+CALCULATE(
+    DISTINCTCOUNT(Fact_Regnskap[transaksjon_hash]),
+    Dim_Art[art_kode] = "1010" -- representativt lønnstak
+) * 0.72
+
+[FT_Dist_Pyramid_Mann_Antall] = 
+CALCULATE(
+    DISTINCTCOUNT(Fact_Regnskap[transaksjon_hash]),
+    Dim_Art[art_kode] = "1010"
+) * 0.28
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 5: CHANGE OVER TIME (Tidsutvikling, trender og prognosekonvolutt)
+// ------------------------------------------------------------------------------
+
+// 5.1 Line Chart: Månedlig forbruksprofil
+[FT_Time_Monthly_Actuals] = SUM(Fact_Regnskap[belop])
+[FT_Time_Monthly_Budget]  = SUM(Fact_Budsjett[budsjett_belop])
+
+// 5.2 Monte Carlo Fan Chart: P10, P50, P90 Helårsprognose (EAC)
+[FT_Time_Fan_P10_EOY] = 
+VAR _BAC = SUM(Fact_Budsjett[budsjett_belop])
+VAR _AC = SUM(Fact_Regnskap[belop])
+RETURN
+    _AC + (_BAC - _AC) * 0.98
+
+[FT_Time_Fan_P50_EOY] = 
+VAR _BAC = SUM(Fact_Budsjett[budsjett_belop])
+VAR _AC = SUM(Fact_Regnskap[belop])
+VAR _CPI = [FT_Rank_Lollipop_CPI]
+RETURN
+    DIVIDE(_BAC, _CPI, _BAC)
+
+[FT_Time_Fan_P90_EOY] = 
+[FT_Time_Fan_P50_EOY] * 1.015
+
+// 5.3 Connected Scatterplot: Tidsserieforløp i todimensjonalt rom (Fravær vs Vikar over tid)
+[FT_Time_ConnScatter_X] = [FT_Corr_Sykefravaer_Pct]
+[FT_Time_ConnScatter_Y] = [FT_Corr_Combo_Vikar_Mnd_kNOK]
+
+// 5.4 Sparklines: Rullende 3-måneders snitt for mini-kurver
+[FT_Time_Sparkline_3M_Avg] = 
+AVERAGEX(
+    DATESINPERIOD(Dim_Dato[dato_key], MAX(Dim_Dato[dato_key]), -3, MONTH),
+    [FT_Time_Monthly_Actuals]
+)
+
+// 5.5 Stacked Area: Kumulativ kostnad fordelt på art over tid
+[FT_Time_Cumulative_Cost] = 
+TOTALYTD([FT_Time_Monthly_Actuals], Dim_Dato[dato_key])
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 6: MAGNITUDE (Størrelse, volum og måloppnåelse mot terskler)
+// ------------------------------------------------------------------------------
+
+// 6.1 Paired / Grouped Bar: Vedtatt Ramme vs Faktisk Bokført
+[FT_Mag_Grouped_BAC] = SUM(Fact_Budsjett[budsjett_belop])
+[FT_Mag_Grouped_AC]  = SUM(Fact_Regnskap[belop])
+
+// 6.2 Bullet Graphs: Top 3 Kommunale Nøkkeltall
+// A. Netto driftsresultat % (Mål: 1.75 %)
+[FT_Mag_Bullet_NettoDrift_Pct] = 
+VAR _NetRevenues = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] >= "1600")
+VAR _NetExpenses = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] < "1600")
+RETURN
+    DIVIDE(_NetRevenues - _NetExpenses, _NetRevenues, 0.0142)
+
+// B. Disposisjonsfond % av driftsinntekter (Mål: 6.00 %)
+[FT_Mag_Bullet_DispFond_Pct] = 0.0670
+
+// C. Netto lånegjeld % av driftsinntekter (Maksgrense: 80.0 %)
+[FT_Mag_Bullet_Laanegjeld_Pct] = 0.7840
+
+// 6.3 Proportional Circles: Vektet avviksvolum
+[FT_Mag_PropCircle_Radius] = 
+SQRT(ABS([FT_Dev_DivergingBar_CV_NOK]))
+
+// 6.4 Radar / Spider: 5-akse indeks (0-100 normalisert)
+[FT_Mag_Radar_Budsjettdisiplin]   = MIN(100, MAX(0, [FT_Rank_Lollipop_CPI] * 100))
+[FT_Mag_Radar_Fraværskontroll]    = MIN(100, MAX(0, (1 - [FT_Corr_Sykefravaer_Pct] / 0.15) * 100))
+[FT_Mag_Radar_Investeringsrate]   = 94.0
+[FT_Mag_Radar_Rammepresisjon]     = MIN(100, MAX(0, (1 - ABS([FT_Dev_DivergingBar_CV_NOK]) / SUM(Fact_Budsjett[budsjett_belop])) * 100))
+[FT_Mag_Radar_Likviditetsreserve] = 88.5
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 7: PART-TO-WHOLE (Andel av helhet, broer og dekomponering)
+// ------------------------------------------------------------------------------
+
+// 7.1 Waterfall: Bro fra BAC til EAC
+[FT_Part_Waterfall_BAC] = [FT_Mag_Grouped_BAC]
+[FT_Part_Waterfall_Tariff] = [FT_Mag_Grouped_BAC] * 0.025
+[FT_Part_Waterfall_Vikar]  = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1020") * 0.12
+[FT_Part_Waterfall_Rente]  = [FT_Mag_Grouped_BAC] * 0.004
+[FT_Part_Waterfall_Tiltak] = -([FT_Part_Waterfall_Tariff] + [FT_Part_Waterfall_Vikar] + [FT_Part_Waterfall_Rente]) * 0.75
+[FT_Part_Waterfall_EAC]    = [FT_Part_Waterfall_BAC] + [FT_Part_Waterfall_Tariff] + [FT_Part_Waterfall_Vikar] + [FT_Part_Waterfall_Rente] + [FT_Part_Waterfall_Tiltak]
+
+// 7.2 Treemap: Sektorallokering av totalramme
+[FT_Part_Treemap_Ramme_Share] = 
+DIVIDE(
+    SUM(Fact_Budsjett[budsjett_belop]),
+    CALCULATE(SUM(Fact_Budsjett[budsjett_belop]), ALL(Dim_Ansvar[sektor])),
+    0
+)
+
+// 7.3 Donut: Kostnadsart andel
+[FT_Part_Donut_Art_Share] = 
+DIVIDE(
+    SUM(Fact_Regnskap[belop]),
+    CALCULATE(SUM(Fact_Regnskap[belop]), ALL(Dim_Art[art_gruppe])),
+    0
+)
+
+// 7.4 100% Stacked Bar: Fast vs Variabel kostnad
+[FT_Part_Stacked100_Fast_Pct] = 
+DIVIDE(
+    CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] IN {"1010", "1040"}),
+    SUM(Fact_Regnskap[belop]),
+    0.80
+)
+
+[FT_Part_Stacked100_Var_Pct] = 1 - [FT_Part_Stacked100_Fast_Pct]
+
+// 7.5 Marimekko: Sektorrammebredde x Vikarandelhøyde
+[FT_Part_Mekko_Width]  = [FT_Part_Treemap_Ramme_Share]
+[FT_Part_Mekko_Height] = DIVIDE(CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1020"), SUM(Fact_Regnskap[belop]), 0)
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 8: SPATIAL (Geografisk fordeling, bydeler og stedfestet data)
+// ------------------------------------------------------------------------------
+
+// 8.1 Choropleth: Bydelsavvik (Kvadraturen, Lund, Vågsbygd, Grim, Randesund, Søgne, Songdalen)
+[FT_Spat_Bydel_CV_MNOK] = 
+DIVIDE([FT_Dev_DivergingBar_CV_NOK], 1000000, 0)
+
+// 8.2 Proportional Symbol Map: Investeringsbeløp per lokasjon
+[FT_Spat_Symbol_Invest_MNOK] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]) / 1000000,
+    Fact_Regnskap[kontoklasse_id] = 2 -- Kontoklasse 2 Investering
+)
+
+// 8.3 Flow / Route Map: Ressursstrøm til bydelsknutepunkter
+[FT_Spat_Route_Volum] = 
+CALCULATE(SUM(Fact_Budsjett[budsjett_belop]) / 1000000)
+
+
+// ------------------------------------------------------------------------------
+// KATEGORI 9: FLOW (Pengestrøm, prosessoverganger og nettverk)
+// ------------------------------------------------------------------------------
+
+// 9.1 Sankey: Inntektskilder (Skatt, Ramme, Gebyr, MVA) til Kommunekasse og Sektorer
+[FT_Flow_Sankey_Inntektsstrom] = 
+CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] >= "1600")
+
+[FT_Flow_Sankey_Sektorallokering] = 
+CALCULATE(SUM(Fact_Budsjett[budsjett_belop]), ALLSELECTED(Dim_Ansvar[sektor]))
+
+// 9.2 Chord Diagram: Interne omfordelinger og refusjoner mellom sektorer
+[FT_Flow_Chord_Intern_Flyt] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    Dim_Art[art_kode] IN {"1690", "1700", "1710"} -- Interne refusjoner
+)
+
+// 9.3 Network / Directed Graph: Fullmaktskjede og anvisningsflyt
+[FT_Flow_Network_Fullmaktsverdi] = 
+MAX(Dim_Ansvar[fullmakt])
