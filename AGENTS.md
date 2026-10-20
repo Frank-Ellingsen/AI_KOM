@@ -134,7 +134,10 @@ This repository is fully configured for Antigravity native progressive disclosur
 ## 5. Quick Commands & Operations
 
 * **Run Full Hub**: Launch `index.html` in browser or run `python tools/hub_api_server.py`.
-* **Visual Sandbox (FT & Tufte)**: Navigate to `index.html#visual-sandbox` or click **Visual Sandbox** in the top navigation or sidebar. Features 8 pure SVG best-practice diagrams aligned with the Financial Times Visual Vocabulary and Edward Tufte's Data-Ink standards.
+* **Run Clean AI Økonomirådgiver (Streamlit)**: `streamlit run app/frontend.py` (7 interaktive faner: Rådgiver, Månedsrapport, FT Visuals, EOY, 6-Nivås Drill-Down, Omdisponering § 14-5, Audit-Logg).
+* **Run Docker Container**: `docker compose up --build` (starter containerisert AI Control Office Hub på port 8501).
+* **Initialize Clean Database**: `python app/build_rag_index.py`.
+* **Visual Sandbox (FT & Tufte)**: Navigate to `index.html#visual-sandbox` or click **Visual Sandbox** in the top navigation or sidebar. Features 36 pure SVG best-practice diagrams across all 9 Financial Times categories with interactive DAX drawer.
 * **Run Loop Engineering (Lag 4)**: `python tools/run_tool.py loop --sector "Helse og mestring" --deficit 8.85` (Evaluator-Optimizer løkke med 4 kvalitetsporter og SHA-256 forsegling).
 * **Run Zero-Guide UI Prototype v2**: `python tools/run_tool.py ui-v2` (Streamlit app med unntakstriage, Evaluator-Optimizer løkke og Golden Exemplar SQLite store).
 * **Run Evaluation & QA (Agent 13)**: `python tools/run_tool.py eval --gate` (90 % CI/CD port), `--include-exemplars` (inkluderer HITL gulleksempler fra SQLite), eller `--sync-exemplars`.

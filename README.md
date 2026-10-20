@@ -87,7 +87,24 @@ Det interaktive hoveddashboardet kan startes på to måter:
 
 ---
 
-### 2. Unified CLI Tool Runner (`tools/run_tool.py`)
+### 2. Streamlit AI Økonomirådgiver & Containerisering (`app/`)
+Ny konsolidert applikasjonsarkitektur for enhetsledere og controllere med **7 interaktive faner**:
+* **Alternativ A: Docker Container (Anbefalt for drift)**:
+  ```bash
+  docker compose up --build
+  ```
+  Åpne nettleseren på `http://localhost:8501`.
+* **Alternativ B: Lokal Python-kjøring**:
+  ```bash
+  pip install -r requirements.txt
+  python app/build_rag_index.py
+  streamlit run app/frontend.py
+  ```
+  *Faner:* 💬 AI-Økonomirådgiver | 📊 Månedlig Rapport & RAG | 📈 FT Visual Vocabulary | 🔮 EOY Prognose | 🔍 6-Nivås Drill-Down | 🔄 Omdisponering § 14-5 | 📜 Audit-Logg (Revisor).
+
+---
+
+### 3. Unified CLI Tool Runner (`tools/run_tool.py`)
 Alle operative kontrollmotorer kan kjøres via et felles kommandolinjegrensesnitt:
 
 ```powershell

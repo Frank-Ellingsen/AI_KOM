@@ -39,6 +39,14 @@ from .ai_engineering import (
     SemanticCacheStats,
     LatencyBenchmarkReport,
 )
+from .advisor import (
+    UserContext,
+    AuditLogEntry,
+    ERPSQLQueryInput,
+    MonthlyUnitReportInput,
+    BudgetReallocationInput,
+    EOYForecastInput,
+)
 
 __all__ = [
     "TriageCategory",
@@ -69,4 +77,10 @@ __all__ = [
     "ContextCompactionResponse",
     "SemanticCacheStats",
     "LatencyBenchmarkReport",
+    "UserContext",
+    "AuditLogEntry",
+    "ERPSQLQueryInput",
+    "MonthlyUnitReportInput",
+    "BudgetReallocationInput",
+    "EOYForecastInput",
 ]
