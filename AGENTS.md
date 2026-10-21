@@ -137,7 +137,7 @@ This repository is fully configured for Antigravity native progressive disclosur
 * **Run Clean AI Økonomirådgiver (Streamlit)**: `streamlit run app/frontend.py` (7 interaktive faner: Rådgiver, Månedsrapport, FT Visuals, EOY, 6-Nivås Drill-Down, Omdisponering § 14-5, Audit-Logg).
 * **Run Docker Container**: `docker compose up --build` (starter containerisert AI Control Office Hub på port 8501).
 * **Initialize Clean Database**: `python app/build_rag_index.py`.
-* **Visual Sandbox (FT & Tufte)**: Navigate to `index.html#visual-sandbox` or click **Visual Sandbox** in the top navigation or sidebar. Features 36 pure SVG best-practice diagrams across all 9 Financial Times categories with interactive DAX drawer.
+* **Visual Sandbox (FT & Kriebel Time EDA)**: Navigate to `index.html#visual-sandbox` or click **Visual Sandbox** in the top navigation or sidebar. Features 96 pure SVG best-practice diagrams: 36 Financial Times Visual Vocabulary diagrams across 9 categories + 60 Andy Kriebel Time Visuals for Exploratory Data Analysis (EDA) with interactive DAX drawer and copyable SVG code. Dedicated DAX libraries: `powerbi/08_FT_Visual_Vocabulary_DAX_Measures.dax` and `powerbi/09_Andy_Kriebel_60_Time_Visuals_EDA_Measures.dax`.
 * **Run Loop Engineering (Lag 4)**: `python tools/run_tool.py loop --sector "Helse og mestring" --deficit 8.85` (Evaluator-Optimizer løkke med 4 kvalitetsporter og SHA-256 forsegling).
 * **Run Zero-Guide UI Prototype v2**: `python tools/run_tool.py ui-v2` (Streamlit app med unntakstriage, Evaluator-Optimizer løkke og Golden Exemplar SQLite store).
 * **Run Evaluation & QA (Agent 13)**: `python tools/run_tool.py eval --gate` (90 % CI/CD port), `--include-exemplars` (inkluderer HITL gulleksempler fra SQLite), eller `--sync-exemplars`.

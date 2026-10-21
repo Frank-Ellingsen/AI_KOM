@@ -136,17 +136,18 @@ with tab2:
     st.table(cost_data)
 
 # ------------------------------------------------------------------------------
-# TAB 3: 📈 FT Visual Vocabulary
+# TAB 3: 📈 FT Visual Vocabulary & 60 Time Visuals EDA Suite
 # ------------------------------------------------------------------------------
 with tab3:
-    st.header("📈 Financial Times Visual Vocabulary Suite")
+    st.header("📈 Financial Times & Andy Kriebel 60 Time Visuals (Master Sandbox Suite)")
     st.markdown("""
-    Visualiseringene følger **Financial Times Visual Vocabulary** og **Edward Tufte Data-Ink** prinsipper:
+    Visualiseringene følger **Financial Times Visual Vocabulary** (Alan Smith), **Andy Kriebel 60 Ways to Visualize Time** (EDA) og **Edward Tufte Data-Ink** prinsipper:
+    * **96 Master Visuals**: 36 Financial Times kjernevisuals + 60 Andy Kriebel Exploratory Data Analysis (EDA) tidsserievisuals.
     * 0 unødige 3D-elementer, 0 vertikale rutenett i tabeller, direkte merking på akser.
-    * Muted municipal fargepalett (`#1b365d`) med rød/gul kun for aktive avvik.
+    * Muted municipal fargepalett (`#1b365d`) med rød/gul kun for aktive avvik (§ 14-5).
     """)
-    st.success("✨ **Master Visual Sandbox er fullt integrert i portalen!** Åpne [index.html#visual-sandbox](index.html#visual-sandbox) for å utforske alle 36 SVG-diagrammer på tvers av alle 9 FT-kategorier med innebygget DAX-drawer.")
-    
+    st.success("✨ **Master Visual Sandbox er fullt integrert i portalen!** Åpne [index.html#visual-sandbox](index.html#visual-sandbox) for å utforske alle **96 SVG-diagrammer** med interaktiv DAX-drawer for hver enkelt visual.")
+
     col_v1, col_v2 = st.columns(2)
     with col_v1:
         st.subheader("1. Deviation: Netto Kostnadsavvik (CV)")
@@ -165,6 +166,64 @@ with tab3:
         }).set_index("Sykefravær %")
         st.line_chart(corr_data)
         st.caption("Sterk korrelasjon mellom sykefravær og overtid/vikarer i helse og mestring (HTA § 4).")
+
+    st.markdown("---")
+    st.subheader("⏱️ Andy Kriebel: 60 Ways to Visualize Time — EDA Explorer")
+    st.caption("Utforsk de 60 visualiseringene fra Time-Visuals.pdf optimalisert for kommunal Exploratory Data Analysis (EDA).")
+
+    eda_cats = {
+        "1. Linjer & Trender (01–10)": [
+            ("01 Discrete Line Chart", "Viser diskrete tertial-/kvartalsnivåer (T1–T3) uten kunstig interpolering.", "[EDA_01_Discrete_Line_NOK] = CALCULATE(SUM(Fact_Regnskap[belop]), ALLEXCEPT(Dim_Dato, Dim_Dato[tertial], Dim_Dato[aar]))"),
+            ("02 Continuous Line Chart", "Kontinuerlig månedskurve for helhetlig driftstrend over hele året.", "[EDA_02_Continuous_Line_NOK] = SUM(Fact_Regnskap[belop])"),
+            ("05 Dashed Line Chart", "Skiller faktisk bokførte måneder (solid) fra usikre framtidige prognosemåneder (stiplet).", "[EDA_05_Dashed_Forecast_NOK] = VAR _M = MAX(Dim_Dato[maned_nr]) RETURN IF(_M > 10, CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[maned_nr] <= 10) * 1.02, BLANK())"),
+            ("07 Stepped Line Chart", "Trappetrinnsgraf som viser at bevilgede rammer er faste inntil formelt Bystyrevedtak.", "[EDA_07_Stepped_BudgetCap_NOK] = CALCULATE(SUM(Fact_Budsjett[budsjett_belop]), FILTER(ALL(Dim_Dato), Dim_Dato[dato_key] <= MAX(Dim_Dato[dato_key])))"),
+            ("10 Line Ends of Line Labels", "Tufte direkte merking ved kurvens høyre ende uten separat tegnforklaring.", "[EDA_10_EndLabel_Val] = IF(MAX(Dim_Dato[maned_nr]) = 10, SUM(Fact_Regnskap[belop]), BLANK())")
+        ],
+        "2. Arealer & Glatting (11–18)": [
+            ("11 Moving Average", "Glidende 3-måneders snitt som demper månedlig støy fra feriepenger og sesongtopper.", "[EDA_11_MovingAvg_3M_NOK] = AVERAGEX(DATESINPERIOD(Dim_Dato[dato_key], MAX(Dim_Dato[dato_key]), -3, MONTH), SUM(Fact_Regnskap[belop]))"),
+            ("16 Stacked Area Chart", "Viser hvordan lønn, vikarer og drift bygger opp den samlede kostnadsprofilen.", "[EDA_16_Stacked_Area_Art] = CALCULATE(SUM(Fact_Regnskap[belop]), KEEPFILTERS(Dim_Art[art_gruppe]))"),
+            ("17 % of Total Area Chart", "Normaliserer månedene til 100 % for å avdekke strukturell forskyvning i kostnadsmiksen.", "[EDA_17_Pct_Total_Area] = DIVIDE(SUM(Fact_Regnskap[belop]), CALCULATE(SUM(Fact_Regnskap[belop]), ALL(Dim_Art[art_gruppe])), 0)")
+        ],
+        "3. Avvik & Vekstrater (19–25)": [
+            ("19 Difference from Previous", "Måned-for-måned nominell differanse (MoM Δ) for å fange brå kostnadshopp.", "[EDA_19_Diff_From_Previous_MoM] = VAR _Prev = CALCULATE(SUM(Fact_Regnskap[belop]), DATEADD(Dim_Dato[dato_key], -1, MONTH)) RETURN SUM(Fact_Regnskap[belop]) - _Prev"),
+            ("20 % Difference from Previous", "Månedlig vekstrate i prosent som måler om forbruket akselererer eller bremser opp.", "[EDA_20_Pct_Diff_From_Previous] = VAR _Prev = CALCULATE(SUM(Fact_Regnskap[belop]), DATEADD(Dim_Dato[dato_key], -1, MONTH)) RETURN DIVIDE(SUM(Fact_Regnskap[belop]) - _Prev, _Prev, 0)"),
+            ("23 Running Total", "Akkumulert YTD-kostnadskurve som viser gjenstående budsjettrom fram mot årsslutt.", "[EDA_23_Running_Total_YTD] = TOTALYTD(SUM(Fact_Regnskap[belop]), Dim_Dato[dato_key])")
+        ],
+        "4. Stolper & Referanser (26–33)": [
+            ("29 Paired Column Chart", "Faktisk vs. Periodisert budsjett side-om-side per måned for umiddelbar visuell avstemming.", "[EDA_29_Paired_Actual] = SUM(Fact_Regnskap[belop])\n[EDA_29_Paired_Budget] = SUM(Fact_Budsjett[budsjett_belop])"),
+            ("31 Lollipop Chart", "Slank søyle med topp-sirkel; minimerer blekkmengden og leder blikket presist til måleverdien.", "[EDA_31_Lollipop_Value_NOK] = SUM(Fact_Regnskap[belop])"),
+            ("32 Bar-in-Bar Chart", "Smal faktisk søyle inni en bredere budsjettsøyle; kompakt måloppnåelse uten behov for to diagrammer.", "[EDA_32_BarInBar_Actual] = SUM(Fact_Regnskap[belop])\n[EDA_32_BarInBar_Budget] = SUM(Fact_Budsjett[budsjett_belop])")
+        ],
+        "5. Multi-Mål & Snitt (34–39)": [
+            ("34 Dual Axis w/ Different Measures", "Forbruk i Mkr på venstre akse mot sykefravær i % på høyre akse for å avdekke samvariasjon.", "[EDA_34_DualAxis_Spend_MNOK] = DIVIDE(SUM(Fact_Regnskap[belop]), 1000000, 0)\n[EDA_34_DualAxis_Frav_Pct] = [FT_Corr_Sykefravaer_Pct]"),
+            ("35 Dual Axis w/ Related Measures", "Brutto utgifter og inntekter på felles synkronisert skala jf. bruttoprinsippet § 14-6.", "[EDA_35_DualAxis_Expenses] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] < '1600')\n[EDA_35_DualAxis_Revenues] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] >= '1600')"),
+            ("38 Cycle Plot", "Sammenligner alle januarmåneder, februarmåneder osv. over 3 regnskapsår for å skille sann sesong fra tilfeldigheter.", "[EDA_38_Cycle_Plot_Seasonal_Mean] = AVERAGEX(KEEPFILTERS(VALUES(Dim_Dato[aar])), SUM(Fact_Regnskap[belop]))")
+        ],
+        "6. Helning & Sommerfugl (40–45)": [
+            ("40 Discrete Slope Graph", "Sammenligner sektorenes kostnadsnivå mellom T1 og T2 med rette linjer for å vise endringshastighet.", "[EDA_40_Slope_Start] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[tertial] = 'T1')\n[EDA_40_Slope_End] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[tertial] = 'T2')"),
+            ("42 Butterfly Chart Single Axis", "Speilvendte stolper på felles nullakse: Utgifter til venstre, inntekter til høyre for selvkostområder.", "[EDA_42_Butterfly_Expense] = -ABS(CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] < '1600'))\n[EDA_42_Butterfly_Revenue] = ABS(CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] >= '1600'))"),
+            ("45 Barcode Chart", "Tette vertikale linjer der linjetettheten gjenspeiler fakturafrekvens og periodiseringspropper.", "[EDA_45_Barcode_Tx_Density] = DISTINCTCOUNT(Fact_Regnskap[transaksjon_hash])")
+        ],
+        "7. Mikro & Forløp (46–51)": [
+            ("46 Sparklines", "Aksefrie miniatyrkurver designet for tabeller; gir 81 enhetsledere en umiddelbar 12-måneders visuell puls.", "[EDA_46_Sparkline_Monthly] = SUM(Fact_Regnskap[belop])"),
+            ("49 Connected Dot Plot", "Viser spennet fra M1 til M10 for hver sektor med direkte forbindelsesstrek mellom punktene.", "[EDA_49_Dumbbell_Start] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[maned_nr] = 1)\n[EDA_49_Dumbbell_End] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[maned_nr] = 10)"),
+            ("51 Circle Timeline", "Sirkler skalert proporsjonalt med budsjettavvikets størrelse plassert langs tidslinjen.", "[EDA_51_Circle_Timeline_Radius] = SQRT(ABS(SUM(Fact_Regnskap[belop]) - SUM(Fact_Budsjett[budsjett_belop])))")
+        ],
+        "8. Avansert EDA & Volatilitet (52–60)": [
+            ("52 Bump Chart", "Viser hvordan de 6 sektorenes rangering etter merforbruk endrer seg fra M1 til M10.", "[EDA_52_Bump_Sector_Rank] = RANKX(ALL(Dim_Ansvar[sektor]), SUM(Fact_Regnskap[belop]), , DESC, Dense)"),
+            ("53 Seismogram", "Høyfrekvente svingninger rundt null; fanger likviditetsbølger, skattetrekk og store momsoppgjør.", "[EDA_53_Seismogram_Daily_Shock] = SUM(Fact_Regnskap[belop]) - AVERAGEX(ALL(Dim_Dato[dato_key]), SUM(Fact_Regnskap[belop]))"),
+            ("60 Stock Chart (High-Low-Close)", "Minste dagsforbruk, høyeste dagsforbruk og saldo ved månedsslutt; overvåker likviditetsrisiko.", "[EDA_60_Stock_High] = MAXX(VALUES(Dim_Dato[dato_key]), CALCULATE(SUM(Fact_Regnskap[belop])))\n[EDA_60_Stock_Low] = MINX(VALUES(Dim_Dato[dato_key]), CALCULATE(SUM(Fact_Regnskap[belop])))\n[EDA_60_Stock_Close] = CALCULATE(SUM(Fact_Regnskap[belop]), LASTDATE(Dim_Dato[dato_key]))")
+        ]
+    }
+
+    sel_eda_cat = st.selectbox("Velg EDA Gruppe", list(eda_cats.keys()))
+    chart_opts = eda_cats[sel_eda_cat]
+    sel_chart_name = st.selectbox("Velg Visual fra Andy Kriebels liste", [c[0] for c in chart_opts])
+    sel_chart_obj = next(c for c in chart_opts if c[0] == sel_chart_name)
+
+    st.info(f"**EDA Formål:** {sel_chart_obj[1]}")
+    st.code(sel_chart_obj[2], language="sql")
+    st.caption("Komplett masterfil med samtlige 60 DAX-mål finnes i `powerbi/09_Andy_Kriebel_60_Time_Visuals_EDA_Measures.dax`.")
 
 # ------------------------------------------------------------------------------
 # TAB 4: 🔮 EOY Prognose

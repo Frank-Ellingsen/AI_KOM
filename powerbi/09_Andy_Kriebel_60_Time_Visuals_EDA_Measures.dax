@@ -1,0 +1,499 @@
+// ==============================================================================
+// 📊 KRISTIANSAND KOMMUNE — ANDY KRIEBEL 60 WAYS TO VISUALIZE TIME
+// Master DAX Measures Suite for Exploratory Data Analysis (EDA) & Project Controlling
+// Based on: "60 Ways to Visualize Time — The Complete List!" (Andy Kriebel)
+// Standard: Edward Tufte Data-Ink, Kommuneloven §§ 14-5 & 14-6, FAST Financial Standard
+// Lead Controller: Frank Ellingsen
+// ==============================================================================
+
+/*
+================================================================================
+KONTROLLERS EDA-FORMÅL & ANVENDELSE:
+Dette målesettet dekker samtlige 60 tidsserievisualiseringer fra Andy Kriebels guide.
+I kommunal økonomistyring og prosjektcontrolling brukes disse målene primært til
+Exploratory Data Analysis (EDA):
+  1. Identifisere skjulte sesongsvingninger og månedlige taktskifter.
+  2. Dekomponere avvik (CV/CPI) i hastighet (MoM-vekst) og akkumulert effekt (YTD S-kurver).
+  3. Oppdage uteliggere, transaksjonstoppper og periodiseringsfeil jf. bruttoprinsippet § 14-6.
+  4. Sikre tidlig varsling før ubalanser krever formelt saksfremlegg jf. § 14-5.
+================================================================================
+*/
+
+
+// ==============================================================================
+// 📈 DEL 1: LINJER & TRENDER (VISUALS 01–10)
+// ==============================================================================
+
+// 01. Discrete Line Chart: Diskrete tidsintervaller (kvartal/tertial)
+// EDA Formål: Avdekker nivåskift mellom formelle rapporteringsperioder (T1, T2, T3) uten å antyde jevn daglig flyt.
+[EDA_01_Discrete_Line_NOK] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    ALLEXCEPT(Dim_Dato, Dim_Dato[tertial], Dim_Dato[aar])
+)
+
+// 02. Continuous Line Chart: Kontinuerlig datoakse
+// EDA Formål: Glatt trendforløp for å evaluere langsiktig kostnadsdrift og fravær av uventede knekker.
+[EDA_02_Continuous_Line_NOK] = 
+SUM(Fact_Regnskap[belop])
+
+// 03. Line Chart with Markers: Linje med datapunktsmarkører
+// EDA Formål: Verifiserer at hver måned er formelt bokført og at det ikke finnes "huller" i bokføringskjeden.
+[EDA_03_Line_Markers_NOK] = 
+IF(
+    NOT ISBLANK(SUM(Fact_Regnskap[belop])),
+    SUM(Fact_Regnskap[belop]),
+    BLANK()
+)
+
+// 04. Line Chart with Circle Markers: Tydelige sirkler ved månedsslutt
+// EDA Formål: Tydeliggjør avstemmingspunkter ved månedsoppgjør (M1–M12) for politisk rapportering.
+[EDA_04_Circle_Markers_NOK] = 
+SUM(Fact_Regnskap[belop])
+
+// 05. Dashed Line Chart: Stiplet prognoselinje
+// EDA Formål: Skiller historisk bokførte måneder fra framskrevet prognose (f.eks. M11–M12).
+[EDA_05_Dashed_Forecast_NOK] = 
+VAR _CurrentMonth = MAX(Dim_Dato[maned_nr])
+VAR _LastClosedMonth = 10 -- M10 er siste lukkede måned
+VAR _BAC = SUM(Fact_Budsjett[budsjett_belop])
+VAR _ActualYTD = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[maned_nr] <= _LastClosedMonth)
+VAR _RemainingMonths = 12 - _LastClosedMonth
+RETURN
+    IF(
+        _CurrentMonth > _LastClosedMonth,
+        _ActualYTD + (_BAC - _ActualYTD) * DIVIDE(_CurrentMonth - _LastClosedMonth, _RemainingMonths, 1),
+        BLANK()
+    )
+
+// 06. Dotted Line Chart: Prikket fjorårsreferanse (Prior Year)
+// EDA Formål: Gir umiddelbar visuell benchmarking mot samme periode i fjor for å skille vekst fra inflasjon.
+[EDA_06_Dotted_PriorYear_NOK] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    SAMEPERIODLASTYEAR(Dim_Dato[dato_key])
+)
+
+// 07. Stepped Line Chart: Trappetrinnsgraf for budsjettrammer og vedtak
+// EDA Formål: Viser at budsjettrammer gjelder som et fast nivå inntil formelt tilleggsbevilgningsvedtak fattes i Bystyret.
+[EDA_07_Stepped_BudgetCap_NOK] = 
+CALCULATE(
+    SUM(Fact_Budsjett[budsjett_belop]),
+    FILTER(
+        ALL(Dim_Dato),
+        Dim_Dato[dato_key] <= MAX(Dim_Dato[dato_key]) &&
+        Dim_Dato[aar] = MAX(Dim_Dato[aar])
+    )
+)
+
+// 08. Line Chart Multiple Dimensions: Flerdimensjonal linje (per Sektor)
+// EDA Formål: Rask komparativ analyse av hvilke sektorer som divergerer fra forutsatt bane.
+[EDA_08_MultiDim_Line_NOK] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    ALLEXCEPT(Dim_Ansvar, Dim_Ansvar[sektor]),
+    VALUES(Dim_Dato[maned_nr])
+)
+
+// 09. Line Chart Multiple Measures: Fler-metrikk linjegraf
+// EDA Formål: Sammenligner Faktisk, Budsjett, Forpliktelser og EAC i samme koordinatsystem.
+[EDA_09_MultiMeasure_Actual] = SUM(Fact_Regnskap[belop])
+[EDA_09_MultiMeasure_Budget] = SUM(Fact_Budsjett[budsjett_belop])
+[EDA_09_MultiMeasure_EAC]    = 
+VAR _BAC = SUM(Fact_Budsjett[budsjett_belop])
+VAR _AC = SUM(Fact_Regnskap[belop])
+VAR _CPI = DIVIDE(_BAC, _AC, 1.0)
+RETURN DIVIDE(_BAC, _CPI, _BAC)
+
+// 10. Line Chart Ends of Line Labels: Tufte direkte linjeende-etiketter
+// EDA Formål: Eliminerer separat tegnforklaring; plasserer sluttverdi og kallenavn direkte ved kurvens høyre ende.
+[EDA_10_EndLabel_Val] = 
+VAR _MaxMonthWithData = CALCULATE(MAX(Dim_Dato[maned_nr]), NOT ISBLANK(Fact_Regnskap[belop]))
+RETURN
+    IF(
+        MAX(Dim_Dato[maned_nr]) = _MaxMonthWithData,
+        SUM(Fact_Regnskap[belop]),
+        BLANK()
+    )
+
+
+// ==============================================================================
+// 🌊 DEL 2: AREALER & GLATTING (VISUALS 11–18)
+// ==============================================================================
+
+// 11. Moving Average: 3-måneders glidende gjennomsnitt
+// EDA Formål: Glatter ut månedlige tilfeldigheter (f.eks. 3 lønnskjøringer i enkelte måneder) for å se reell trend.
+[EDA_11_MovingAvg_3M_NOK] = 
+AVERAGEX(
+    DATESINPERIOD(Dim_Dato[dato_key], MAX(Dim_Dato[dato_key]), -3, MONTH),
+    SUM(Fact_Regnskap[belop])
+)
+
+// 12. Area Chart: Arealgraf for samlet ressursbruk
+// EDA Formål: Fremhever den absolutte volumtyngden i kommunens pengebruk over kalenderåret.
+[EDA_12_Area_Volume_NOK] = 
+SUM(Fact_Regnskap[belop])
+
+// 13. Area Chart + Line Chart: Arealramme med faktisk linje
+// EDA Formål: Viser periodisert budsjettramme som et lyst areal, med faktisk forbrukslinje oppå.
+[EDA_13_Area_Budget_Base] = SUM(Fact_Budsjett[budsjett_belop])
+[EDA_13_Line_Actual]      = SUM(Fact_Regnskap[belop])
+
+// 14. Area Chart + Dashed Line: Faktisk areal med stiplet prognosetak
+// EDA Formål: Synliggjør risikoen for at faktisk areal bryter gjennom det stiplede taket ved årsslutt.
+[EDA_14_Area_Actual]          = SUM(Fact_Regnskap[belop])
+[EDA_14_Dashed_Ceiling_Limit] = SUM(Fact_Budsjett[budsjett_belop]) * 1.02 -- 2% toleranse
+
+// 15. Area Chart + Dotted Line: Faktisk areal med prikket fjorårslinje
+// EDA Formål: Vurderer om årets sesongprofil avviker fra fjorårets etablerte mønster.
+[EDA_15_Area_Actual]    = SUM(Fact_Regnskap[belop])
+[EDA_15_Dotted_PY_Line] = CALCULATE(SUM(Fact_Regnskap[belop]), SAMEPERIODLASTYEAR(Dim_Dato[dato_key]))
+
+// 16. Stacked Area Chart: Stablet areal per driftsart
+// EDA Formål: Viser hvordan lønn (art 1010), vikarer (art 1020) og driftsutgifter bygger opp månedsforbruket.
+[EDA_16_Stacked_Area_Art] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    KEEPFILTERS(Dim_Art[art_gruppe])
+)
+
+// 17. % of Total Area Chart: 100 % normalisert kostnadsmiks
+// EDA Formål: Avdekker strukturell forskyvning over tid (f.eks. om vikarbruk spiser en voksende andel av budsjettet).
+[EDA_17_Pct_Total_Area] = 
+VAR _ArtSpend = SUM(Fact_Regnskap[belop])
+VAR _TotalSpend = CALCULATE(SUM(Fact_Regnskap[belop]), ALL(Dim_Art[art_gruppe]))
+RETURN
+    DIVIDE(_ArtSpend, _TotalSpend, 0)
+
+// 18. Line Chart + Moving Avg: Rådata overlagt med glattet kurve
+// EDA Formål: Lar controlleren verifisere om et hopp i M6 (feriepenger) er et normalt avvik eller en permanent trend.
+[EDA_18_Line_Actual_Raw] = SUM(Fact_Regnskap[belop])
+[EDA_18_MovingAvg_Trend] = [EDA_11_MovingAvg_3M_NOK]
+
+
+// ==============================================================================
+// ⚡ DEL 3: AVVIK & VEKSTRATER (VISUALS 19–25)
+// ==============================================================================
+
+// 19. Difference from Previous: Måned-til-måned nominell differanse (MoM Δ)
+// EDA Formål: Fanger brå kostnadshopp mellom påfølgende måneder for umiddelbar bilagsrevisjon.
+[EDA_19_Diff_From_Previous_MoM] = 
+VAR _Current = SUM(Fact_Regnskap[belop])
+VAR _Previous = CALCULATE(SUM(Fact_Regnskap[belop]), DATEADD(Dim_Dato[dato_key], -1, MONTH))
+RETURN
+    IF(NOT ISBLANK(_Previous), _Current - _Previous, BLANK())
+
+// 20. % Difference from Previous: Måned-til-måned prosentvis vekstrate (MoM % Δ)
+// EDA Formål: Måler om kostnadsveksten akselererer eller bremser opp uavhengig av underliggende beløpsstørrelse.
+[EDA_20_Pct_Diff_From_Previous] = 
+VAR _Current = SUM(Fact_Regnskap[belop])
+VAR _Previous = CALCULATE(SUM(Fact_Regnskap[belop]), DATEADD(Dim_Dato[dato_key], -1, MONTH))
+RETURN
+    DIVIDE(_Current - _Previous, _Previous, 0)
+
+// 21. Difference vs. First: Nominell differanse mot grunnperiode M1 (t - M1)
+// EDA Formål: Viser kumulativ kostnadsdrift relativt til årets åpningsmåned.
+[EDA_21_Diff_Vs_First] = 
+VAR _Current = SUM(Fact_Regnskap[belop])
+VAR _FirstMonthSpend = 
+    CALCULATE(
+        SUM(Fact_Regnskap[belop]),
+        FILTER(ALL(Dim_Dato), Dim_Dato[maned_nr] = 1 && Dim_Dato[aar] = 2026)
+    )
+RETURN
+    _Current - _FirstMonthSpend
+
+// 22. % Difference vs. First: Prosentvis indeksvekst mot M1 (M1 = 0 %)
+// EDA Formål: Indekserer enhetene til samme startpunkt slik at vekstrater kan sammenlignes direkte.
+[EDA_22_Pct_Diff_Vs_First] = 
+VAR _Current = SUM(Fact_Regnskap[belop])
+VAR _FirstMonthSpend = 
+    CALCULATE(
+        SUM(Fact_Regnskap[belop]),
+        FILTER(ALL(Dim_Dato), Dim_Dato[maned_nr] = 1 && Dim_Dato[aar] = 2026)
+    )
+RETURN
+    DIVIDE(_Current - _FirstMonthSpend, _FirstMonthSpend, 0)
+
+// 23. Running Total: Løpende kumulativ YTD-forbrukssum
+// EDA Formål: Sporer kumulativ pengebruk mot årsbudsjettet (BAC) for å vurdere gjenværende handlingsrom.
+[EDA_23_Running_Total_YTD] = 
+TOTALYTD(SUM(Fact_Regnskap[belop]), Dim_Dato[dato_key])
+
+// 24. Running Total Area Chart: Fylt kumulativ S-kurve
+// EDA Formål: Klassisk EVM S-kurve som visualiserer det akkumulerte forbruket opp mot årsbevilgningen.
+[EDA_24_Running_Total_Area] = 
+TOTALYTD(SUM(Fact_Regnskap[belop]), Dim_Dato[dato_key])
+
+// 25. Running Total from 1st Sale / Project Start: Kumulativ fra prosjektstart
+// EDA Formål: For flerårige investeringsprosjekter (§ 14-9) hvor framdriften måles fra oppstart uavhengig av kalenderår.
+[EDA_25_Running_Total_From_Start] = 
+VAR _FirstDate = CALCULATE(MIN(Fact_Regnskap[bokforingsdato]), ALL(Dim_Dato))
+RETURN
+    CALCULATE(
+        SUM(Fact_Regnskap[belop]),
+        FILTER(
+            ALL(Dim_Dato),
+            Dim_Dato[dato_key] >= _FirstDate &&
+            Dim_Dato[dato_key] <= MAX(Dim_Dato[dato_key])
+        )
+    )
+
+
+// ==============================================================================
+// 📊 DEL 4: STOLPER, SØYLER & REFERANSER (VISUALS 26–33)
+// ==============================================================================
+
+// 26. Bar Chart: Horisontale stolper per måned/kategori
+// EDA Formål: Gir god plass til lange enhets- eller månedsnavn uten forkortelser; ideelt for sorterte oversikter.
+[EDA_26_Horizontal_Bar_NOK] = 
+SUM(Fact_Regnskap[belop])
+
+// 27. Stacked Bar Chart: Horisontal stablet stolpegraf
+// EDA Formål: Dekomponerer hver måneds utgifter i faste og variable poster horisontalt.
+[EDA_27_Stacked_Bar_Art_NOK] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    Dim_Art[art_gruppe] = SELECTEDVALUE(Dim_Art[art_gruppe])
+)
+
+// 28. % of Total Stacked Bars: 100 % normaliserte horisontale stolper
+// EDA Formål: Viser proporsjonal fordeling av kostnadsposter for hver enkelt måned.
+[EDA_28_Pct_Stacked_Bars] = 
+DIVIDE(
+    SUM(Fact_Regnskap[belop]),
+    CALCULATE(SUM(Fact_Regnskap[belop]), ALLEXCEPT(Dim_Dato, Dim_Dato[maned_nr])),
+    0
+)
+
+// 29. Paired Column Chart: Sidestilte søyler (Faktisk vs. Budsjett per måned)
+// EDA Formål: Direkte visuell sammenligning av forbruk mot periodisert ramme måned for måned.
+[EDA_29_Paired_Actual] = SUM(Fact_Regnskap[belop])
+[EDA_29_Paired_Budget] = SUM(Fact_Budsjett[budsjett_belop])
+
+// 30. Column Chart: Klassiske vertikale månedssøyler
+// EDA Formål: Standard oversikt over periodens forbruk; lettlest for politikere og enhetsledere.
+[EDA_30_Monthly_Column_NOK] = 
+SUM(Fact_Regnskap[belop])
+
+// 31. Lollipop Chart: Tufte slank søyle med topp-sirkel
+// EDA Formål: Høyere Data-Ink Ratio enn tunge fylte stolper; gjør det enklere å skille verdier nær hverandre.
+[EDA_31_Lollipop_Value_NOK] = 
+SUM(Fact_Regnskap[belop])
+
+// 32. Bar-in-Bar Chart: Smal faktisk søyle inni bred budsjettsøyle
+// EDA Formål: Kompakt bullet-mønster som viser om den faktiske søylen "fyller opp" eller "sprenger" budsjettrammen.
+[EDA_32_BarInBar_Actual] = SUM(Fact_Regnskap[belop])
+[EDA_32_BarInBar_Budget] = SUM(Fact_Budsjett[budsjett_belop])
+
+// 33. Bar Chart w/ Reference Line: Månedssøyler med horisontal gjennomsnittsreferanse
+// EDA Formål: Vurderer hvilke måneder som ligger over eller under normal månedlig driftskvote (BAC / 12).
+[EDA_33_RefLine_Target] = 
+AVERAGEX(
+    ALLSELECTED(Dim_Dato[maned_nr]),
+    SUM(Fact_Budsjett[budsjett_belop])
+)
+
+
+// ==============================================================================
+// ⚖️ DEL 5: MULTI-MÅL & AVVIK MOT SNITT (VISUALS 34–39)
+// ==============================================================================
+
+// 34. Dual Axis w/ Different Measures: To ulike enheter (Mkr forbruk vs. % Sykefravær)
+// EDA Formål: Undersøker korrelasjon mellom fraværstopp i influensasesongen og eksplosjon i overtidsutgifter.
+[EDA_34_DualAxis_Spend_MNOK] = DIVIDE(SUM(Fact_Regnskap[belop]), 1000000, 0)
+[EDA_34_DualAxis_Frav_Pct]    = [FT_Corr_Sykefravaer_Pct]
+
+// 35. Dual Axis w/ Related Measures: Relaterte måltall (Brutto Utgifter vs. Brutto Inntekter)
+// EDA Formål: Sikrer overholdelse av bruttoprinsippet jf. Kommuneloven § 14-6 ved å vise begge sider på felles skala.
+[EDA_35_DualAxis_Expenses] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] < "1600")
+[EDA_35_DualAxis_Revenues] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] >= "1600")
+
+// 36. Variance to Overall Average: Månedlig avvik fra årets gjennomsnittsmåned
+// EDA Formål: Fjerner grunnnivået for å isolere perioder med unormal over- eller underbelastning.
+[EDA_36_Variance_To_Overall_Avg] = 
+VAR _OverallAvg = AVERAGEX(ALL(Dim_Dato[maned_nr]), SUM(Fact_Regnskap[belop]))
+RETURN
+    SUM(Fact_Regnskap[belop]) - _OverallAvg
+
+// 37. Variance to Pane Average: Avvik fra tertialets/kvartalets lokale gjennomsnitt
+// EDA Formål: Avslører om et avvik oppsto plutselig innenfor et tertial eller var jevnt fordelt.
+[EDA_37_Variance_To_Pane_Avg] = 
+VAR _PaneAvg = AVERAGEX(ALLEXCEPT(Dim_Dato, Dim_Dato[tertial]), SUM(Fact_Regnskap[belop]))
+RETURN
+    SUM(Fact_Regnskap[belop]) - _PaneAvg
+
+// 38. Cycle Plot: Flerårig sesongsyklus (alle januartall sammen, alle februartall sammen)
+// EDA Formål: Den mest presise metoden for å skille ekte sesongmønstre fra enkelthendelser over 3–5 regnskapsår.
+[EDA_38_Cycle_Plot_Seasonal_Mean] = 
+AVERAGEX(
+    KEEPFILTERS(VALUES(Dim_Dato[aar])),
+    SUM(Fact_Regnskap[belop])
+)
+
+// 39. Single Month Calendar: Daglig kalendermatrise (dag 1–31)
+// EDA Formål: Avslører ukedagseffekter, helgetillegg og fakturahoper før forfall ved månedsslutt.
+[EDA_39_Daily_Spend_Intensity] = 
+SUM(Fact_Regnskap[belop])
+
+
+// ==============================================================================
+// 📐 DEL 6: HELNING, SOMMERFUGL & MILEPÆLER (VISUALS 40–45)
+// ==============================================================================
+
+// 40. Discrete Slope Graph: Helningsgraf mellom to milepæler (T1 vs. T2)
+// EDA Formål: Viser retning og hastighet på kostnadsendring for alle 6 sektorer mellom tertialrapporter.
+[EDA_40_Slope_Start] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[tertial] = "T1")
+[EDA_40_Slope_End]   = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[tertial] = "T2")
+
+// 41. Continuous Slope Graph: Flertrinns kontinuerlig helning (T1 -> T2 -> T3)
+// EDA Formål: Identifiserer om en enhets forverring er lineær, avtagende eller akselererende.
+[EDA_41_Continuous_Slope] = 
+SUM(Fact_Regnskap[belop])
+
+// 42. Butterfly Chart Single Axis: Speilvendte stolper på felles nullakse
+// EDA Formål: Setter utgifter (venstre) opp mot tilknyttede refusjoner/inntekter (høyre) for selvkostområder.
+[EDA_42_Butterfly_Expense] = -ABS(CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] < "1600"))
+[EDA_42_Butterfly_Revenue] = ABS(CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] >= "1600"))
+
+// 43. Butterfly Chart Dual Axis: Speilvendte stolper med uavhengige enheter
+// EDA Formål: Sammenligner vikarforbruk i kroner mot overtidstimer i antall timer per måned.
+[EDA_43_Butterfly_Vikar_NOK]     = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1020")
+[EDA_43_Butterfly_Overtid_Timer] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1040") / 550 -- standard timesats
+
+// 44. Dot Plot: Milepælspunkter langs en tidsakse
+// EDA Formål: Fremhever ekstraordinære engangsposteringer eller statstilskudd over en definert beløpsterskel.
+[EDA_44_Milestone_Event_NOK] = 
+IF(
+    SUM(Fact_Regnskap[belop]) >= 800000000,
+    SUM(Fact_Regnskap[belop]),
+    BLANK()
+)
+
+// 45. Barcode Chart: Strekkodediagram for transaksjonsfrekvens
+// EDA Formål: Viser tettheten av bokførte bilag over tid; avdekker propper i fakturamottaket.
+[EDA_45_Barcode_Tx_Density] = 
+DISTINCTCOUNT(Fact_Regnskap[transaksjon_hash])
+
+
+// ==============================================================================
+// ✨ DEL 7: MIKRO-VISUALS & FORLØP (VISUALS 46–51)
+// ==============================================================================
+
+// 46. Sparklines: Minimalistisk trendkurve for tabellrader
+// EDA Formål: Gir 81 enhetsledere en umiddelbar 12-måneders visuell puls i regnskapstabeller uten akser.
+[EDA_46_Sparkline_Monthly] = 
+SUM(Fact_Regnskap[belop])
+
+// 47. Sparkbars: Miniatyrsøyler i tabellceller
+// EDA Formål: Rask lokalisering av årets topp- og bunnmåned per resultatenhet.
+[EDA_47_Sparkbar_Monthly] = 
+SUM(Fact_Regnskap[belop])
+
+// 48. Spark Area Chart: Miniatyrareal for akkumulert volum
+// EDA Formål: Kompakt visning av akkumulert bevilgningsforbruk i kompakte ledelsesrapporter.
+[EDA_48_SparkArea_Monthly] = 
+TOTALYTD(SUM(Fact_Regnskap[belop]), Dim_Dato[dato_key])
+
+// 49. Connected Dot Plot (Dumbbell): Koblet punktgraf for endringsspenn
+// EDA Formål: Viser spennet fra M1 til M10 for hver sektor med direkte strek mellom punktene.
+[EDA_49_Dumbbell_Start] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[maned_nr] = 1)
+[EDA_49_Dumbbell_End]   = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Dato[maned_nr] = 10)
+
+// 50. Enclosed Dot Plot: Punktgraf omsluttet av toleransebånd (konfidensintervall)
+// EDA Formål: Viser faktisk månedsforbruk med et statistisk bånd (±1 standardavvik) for normalvariasjon.
+[EDA_50_Enclosed_Center] = SUM(Fact_Regnskap[belop])
+[EDA_50_Enclosed_Band]   = STDEVX.P(ALL(Dim_Dato[maned_nr]), SUM(Fact_Regnskap[belop]))
+
+// 51. Circle Timeline: Sirkler skalert etter avviksstørrelse kronologisk
+// EDA Formål: Kvantifiserer alvorlighetsgraden av månedlige budsjettavvik som sirkelstørrelse langs tidslinjen.
+[EDA_51_Circle_Timeline_Radius] = 
+SQRT(ABS(SUM(Fact_Regnskap[belop]) - SUM(Fact_Budsjett[budsjett_belop])))
+
+
+// ==============================================================================
+// 🔬 DEL 8: AVANSERT EDA & VOLATILITET (VISUALS 52–60)
+// ==============================================================================
+
+// 52. Bump Chart: Rangskift over 12 måneder
+// EDA Formål: Overvåker hvordan de 6 sektorenes innbyrdes rangering (etter avvik eller forbruk) endres over tid.
+[EDA_52_Bump_Sector_Rank] = 
+RANKX(
+    ALL(Dim_Ansvar[sektor]),
+    SUM(Fact_Regnskap[belop]),
+    ,
+    DESC,
+    Dense
+)
+
+// 53. Seismogram: Seismografiske sjokkutslag rundt null
+// EDA Formål: Avdekker uventede likviditetsbølger eller korrigeringsposteringer i kassekreditten.
+[EDA_53_Seismogram_Daily_Shock] = 
+VAR _Actual = SUM(Fact_Regnskap[belop])
+VAR _Mean = AVERAGEX(ALL(Dim_Dato[dato_key]), SUM(Fact_Regnskap[belop]))
+RETURN
+    _Actual - _Mean
+
+// 54. Parallel Coordinates: Flerdimensjonalt forløp over påfølgende år
+// EDA Formål: Sammenligner 2024, 2025 og 2026 på tvers av nøkkeltall for å verifisere omstruktureringsmål.
+[EDA_54_Parallel_Metric_Yr] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    Dim_Dato[aar] = SELECTEDVALUE(Dim_Dato[aar])
+)
+
+// 55. Small Multiple Donut Charts: Kvartalsvise smultringer for kostnadsmiks
+// EDA Formål: Viser den gradvise rotasjonen mellom lønn, drift og vikarer fra kvartal til kvartal.
+[EDA_55_Donut_Art_Share] = 
+DIVIDE(
+    SUM(Fact_Regnskap[belop]),
+    CALCULATE(SUM(Fact_Regnskap[belop]), ALLEXCEPT(Dim_Dato, Dim_Dato[tertial])),
+    0
+)
+
+// 56. Connected Scatterplot: 2D fasebane over tid (Vikarer vs. Overtid)
+// EDA Formål: Avdekker om innleie og overtid beveger seg i sykliske baner eller eskalerer sammen over 10 måneder.
+[EDA_56_Scatter_X_Vikar]   = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1020")
+[EDA_56_Scatter_Y_Overtid] = CALCULATE(SUM(Fact_Regnskap[belop]), Dim_Art[art_kode] = "1040")
+
+// 57. Connected Scatterplot Dotted Lines: Fasebane med stiplet framtidskurve
+// EDA Formål: Viser historisk bane (solid) koblet til framskrevet prognosesti (stiplet) for M11–M12.
+[EDA_57_Scatter_Future_Track] = 
+IF(MAX(Dim_Dato[maned_nr]) > 10, 1, 0)
+
+// 58. Animated / Step-Through Connected Scatterplot: Trinnvis tidsnavigasjon
+// EDA Formål: Gir controlleren interaktiv kontroll til å bla måned for måned gjennom samvariasjonsmønsteret.
+[EDA_58_Animation_Frame] = 
+MAX(Dim_Dato[maned_nr])
+
+// 59. Waterfall Chart (Time Bridge): Månedlig kontant- og budsjettbro
+// EDA Formål: Viser hvordan månedlige nettoendringer bygger fra inngående likviditetsreserve til utgående saldo.
+[EDA_59_Waterfall_Monthly_Flow] = 
+VAR _Current = SUM(Fact_Regnskap[belop])
+VAR _Previous = CALCULATE(SUM(Fact_Regnskap[belop]), DATEADD(Dim_Dato[dato_key], -1, MONTH))
+RETURN
+    IF(NOT ISBLANK(_Previous), _Current - _Previous, _Current)
+
+// 60. Stock Chart (High-Low-Close): Dagsforbrukets spredning per måned
+// EDA Formål: Viser månedens laveste dagsforbruk, høyeste dagsforbruk og saldo ved månedsslutt for likviditetsrisiko.
+[EDA_60_Stock_High] = 
+MAXX(
+    VALUES(Dim_Dato[dato_key]),
+    CALCULATE(SUM(Fact_Regnskap[belop]))
+)
+
+[EDA_60_Stock_Low] = 
+MINX(
+    VALUES(Dim_Dato[dato_key]),
+    CALCULATE(SUM(Fact_Regnskap[belop]))
+)
+
+[EDA_60_Stock_Close] = 
+CALCULATE(
+    SUM(Fact_Regnskap[belop]),
+    LASTDATE(Dim_Dato[dato_key])
+)
+
+// ==============================================================================
+// SLUTT PÅ MASTER DAX MEAUSRES SUITE FOR 60 TIME VISUALS (EDA)
+// ==============================================================================
