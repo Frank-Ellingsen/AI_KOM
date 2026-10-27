@@ -678,6 +678,179 @@ def ingest_komskole(conn: sqlite3.Connection) -> None:
 
 
 # ==========================================
+# 5b. INGESTION AV POWER BI KOSTRA DATAMODELL (PBIP)
+# ==========================================
+def ingest_powerbi_kostra_datamodell(conn: sqlite3.Connection) -> None:
+    """
+    Ingester det offisielle datasettet fra pbi-rep-project-rapport.pbip:
+    - Dimensjoner: dim_ansvar (39 rader), dim_kostra_funksjon (61 rader),
+      dim_kostra_kontoplan (172 rader), dim_date (366 rader).
+    - Faktatabeller: 16 månedlige CSV-filer (2024_01 til 2024_08 for BoMiljø og Komskole)
+      med 2 256 normaliserte transaksjoner.
+    """
+    datamodell_dir = BASE_DIR / "powerbi_kostra_datamodell"
+    if not datamodell_dir.exists():
+        print("  ⚠️ Fant ikke powerbi_kostra_datamodell i erp_data.")
+        return
+
+    print("📁 Ingesting Power BI KOSTRA Datamodell (pbi-rep-project-rapport.pbip)...")
+    cursor = conn.cursor()
+
+    # 1. Dim_Ansvar (39 enheter)
+    ansvar_csv = datamodell_dir / "dimensjoner" / "dim_ansvar.csv"
+    if ansvar_csv.exists():
+        ansvar_rows = []
+        with open(ansvar_csv, "r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                aid = str(r["Ansvar_Kode"]).strip().replace(".0", "")
+                enavn = str(r.get("Enhet_Navn") or "").strip()
+                snavn = str(r.get("Omrade_Navn") or "").strip()
+                stilling = str(r.get("Ansvar_Navn") or "").strip()
+                if aid:
+                    ansvar_rows.append((aid, enavn, snavn, stilling))
+        cursor.executemany("INSERT OR REPLACE INTO Dim_Ansvar VALUES (?, ?, ?, ?)", ansvar_rows)
+        print(f"  ✓ Dim_Ansvar beriket med {len(ansvar_rows)} ansvarsenheter fra PBIP.")
+
+    # 2. Dim_Funksjon (61 funksjoner)
+    funksjon_csv = datamodell_dir / "dimensjoner" / "dim_kostra_funksjon.csv"
+    if funksjon_csv.exists():
+        funksjon_rows = []
+        with open(funksjon_csv, "r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                fid = str(r.get("KOSTRA_Funksjonsgruppe_Kode") or r.get("KOSTRA_Funksjon_ID") or "").strip().replace(".0", "")
+                fnavn = str(r.get("KOSTRA_Funksjonsgruppe_Navn") or r.get("KOSTRA_Funksjon_Navn") or "").strip()
+                tomr = str(r.get("Tjenesteomrade_Navn") or "").strip()
+                hfun = str(r.get("Hovedfunksjon_Navn") or "").strip()
+                if fid:
+                    funksjon_rows.append((fid, fnavn, tomr, hfun))
+        cursor.executemany("INSERT OR REPLACE INTO Dim_Funksjon VALUES (?, ?, ?, ?)", funksjon_rows)
+        print(f"  ✓ Dim_Funksjon beriket med {len(funksjon_rows)} KOSTRA-funksjoner fra PBIP.")
+
+    # 3. Dim_Art (172 kontokoder)
+    kontoplan_csv = datamodell_dir / "dimensjoner" / "dim_kostra_kontoplan.csv"
+    if kontoplan_csv.exists():
+        art_rows = []
+        with open(kontoplan_csv, "r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                k6 = str(r.get("Kontokode_6Siffer") or "").strip().replace(".0", "")
+                knavn = str(r.get("Kontonavn") or "").strip()
+                hgruppe = str(r.get("Hovedgruppe_Navn") or r.get("Hovedkategori_Navn") or "Driftsart").strip()
+                if k6:
+                    art_rows.append((k6, knavn, hgruppe))
+                art4 = str(r.get("KOSTRA_Art_4Siffer") or "").strip().replace(".0", "")
+                art4_navn = str(r.get("KOSTRA_Art_Navn") or knavn).strip()
+                if art4:
+                    art_rows.append((art4, art4_navn, hgruppe))
+        cursor.executemany("INSERT OR REPLACE INTO Dim_Art VALUES (?, ?, ?)", art_rows)
+        print(f"  ✓ Dim_Art beriket med {len(art_rows)} kontoplan-arter fra PBIP.")
+
+    # 4. Faktatabeller (16 månedlige CSV-filer)
+    fact_dir = datamodell_dir / "faktatabeller"
+    if fact_dir.exists():
+        fact_files = sorted(fact_dir.glob("*.csv"))
+        regnskap_fact = []
+        budsjett_fact = []
+        stg_rows = []
+
+        for ff in fact_files:
+            with open(ff, "r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    raw_d = str(row.get("Dato") or "").strip()
+                    try:
+                        if "-" in raw_d:
+                            parts = raw_d.split("-")
+                            norm_periode = f"{parts[0]}-{int(parts[1]):02d}"
+                        elif "/" in raw_d:
+                            parts = raw_d.split("/")
+                            if len(parts[2]) == 4:
+                                norm_periode = f"{parts[2]}-{int(parts[0]):02d}"
+                            else:
+                                norm_periode = f"2024-{int(parts[0]):02d}"
+                        else:
+                            norm_periode = "2024-01"
+                    except Exception:
+                        norm_periode = "2024-01"
+
+                    funksjon = str(row.get("KOSTRA_Funksjonsgruppe_Kode") or "").strip().replace(".0", "")
+                    kontokode = str(row.get("Kontokode_6Siffer") or "").strip().replace(".0", "")
+                    ansvar = str(row.get("Ansvar_Kode") or "").strip().replace(".0", "")
+                    sektor = str(row.get("Sektor") or "").strip()
+                    budsjett = float(row.get("Budsjett") or 0.0)
+                    regnskap = float(row.get("Regnskap") or 0.0)
+
+                    # Staging
+                    stg_rows.append((
+                        f"PBIP_{ff.stem}",
+                        kontokode,
+                        norm_periode,
+                        kontokode,
+                        funksjon,
+                        ansvar,
+                        regnskap,
+                        f"{sektor} - post {kontokode}",
+                        1.0
+                    ))
+
+                    # SHA-256 nøkler
+                    r_payload = f"PBIP|REGNSKAP|{norm_periode}|{funksjon}|{kontokode}|{ansvar}|{regnskap}|{ff.name}"
+                    r_hash = hashlib.sha256(r_payload.encode("utf-8")).hexdigest()
+                    regnskap_fact.append((
+                        r_hash,
+                        f"PBIP_{ff.stem}",
+                        1,
+                        funksjon,
+                        kontokode,
+                        ansvar,
+                        norm_periode,
+                        regnskap,
+                        0
+                    ))
+
+                    b_payload = f"PBIP|BUDSJETT|{norm_periode}|{funksjon}|{kontokode}|{ansvar}|{budsjett}|{ff.name}"
+                    b_hash = hashlib.sha256(b_payload.encode("utf-8")).hexdigest()
+                    budsjett_fact.append((
+                        b_hash,
+                        f"PBIP_{ff.stem}",
+                        "VEDTATT_MND",
+                        2024,
+                        funksjon,
+                        kontokode,
+                        ansvar,
+                        norm_periode,
+                        budsjett,
+                        0
+                    ))
+
+        cursor.executemany("""
+        INSERT INTO stg_erp_transactions (
+            source_system, voucher_number, accounting_date, account_code,
+            function_code, cost_center_code, amount, description, scale_factor
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, stg_rows)
+
+        cursor.executemany("""
+        INSERT OR REPLACE INTO Fact_Regnskap (
+            transaksjon_hash, kilde_system, kontoklasse_id, funksjon_key,
+            art_key, ansvar_key, dato_key, belop, er_akkumulert_ytd
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, regnskap_fact)
+
+        cursor.executemany("""
+        INSERT OR REPLACE INTO Fact_Budsjett (
+            budsjett_hash, kilde_system, budsjett_type, aar, funksjon_key,
+            art_key, ansvar_key, dato_key, budsjett_belop, er_akkumulert_ytd
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, budsjett_fact)
+
+        conn.commit()
+        print(f"  ✓ PBIP Faktatabeller: {len(regnskap_fact)} regnskapsposter og {len(budsjett_fact)} budsjettposter lastet fra {len(fact_files)} filer.")
+
+
+# ==========================================
 # 6. REVISJONSSPOR & AUDIT TRAIL (STAGE-GATE PORT 9)
 # ==========================================
 def seed_audit_trail(conn: sqlite3.Connection) -> None:
@@ -880,6 +1053,7 @@ def main() -> None:
         ingest_kostra_masterdata(conn)
         ingest_bomiljo(conn)
         ingest_komskole(conn)
+        ingest_powerbi_kostra_datamodell(conn)
         seed_audit_trail(conn)
         verify_golden_record(conn)
     finally:
@@ -889,6 +1063,23 @@ def main() -> None:
     if run_forecast_pipeline:
         print("\n🔮 Kjører prediktiv prognose- og EVM-beregning...")
         run_forecast_pipeline()
+
+    # Eksporterer DuckDB Controller views og Parquet-filer
+    try:
+        import shutil
+        from erp_data.duckdb_controller_views import run_controller_analytics
+        print("\n📦 Kjører DuckDB analytisk lag og Parquet-eksport...")
+        run_controller_analytics()
+        # Synkroniser parquet_exports til parquet
+        pq_src = BASE_DIR / "parquet_exports"
+        pq_dst = BASE_DIR / "parquet"
+        if pq_src.exists():
+            pq_dst.mkdir(parents=True, exist_ok=True)
+            for pf in pq_src.glob("*.parquet"):
+                shutil.copy2(pf, pq_dst / pf.name)
+        print("  ✓ Parquet-arkiv synkronisert i både parquet_exports/ og parquet/.")
+    except Exception as e:
+        print(f"  ⚠️ DuckDB Parquet-eksport feilet: {e}")
 
     elapsed = time.time() - start_time
     print(f"\n🎉 Golden Record vellykket bygget på {elapsed:.2f} sekunder!")

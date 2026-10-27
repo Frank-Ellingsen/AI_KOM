@@ -1,0 +1,782 @@
+// ==============================================================================
+// 🏛️ KRISTIANSAND KOMMUNE — OFFISIELT POWER BI RAPPORT DAX-BIBLIOTEK
+// ==============================================================================
+// Kilde: pbi-rep-project-rapport.pbip (TMDL _Måltall)
+// Totalt: 101 DAX-måltall fordelt på 11 mapper
+// Standard: Edward Tufte Data-Ink Ratio, KOSTRA og Kommuneloven § 14-5
+// ==============================================================================
+
+// ------------------------------------------------------------------------------
+// MAPPE: 01. Kjerne (10 måltall)
+// ------------------------------------------------------------------------------
+
+[Sum Regnskap] =
+SUM ( 'fact_data'[Regnskap] )
+/* Format: #,##0 NOK | Mappe: 01. Kjerne */
+
+[Sum Budsjett] =
+SUM ( 'fact_data'[Budsjett] )
+/* Format: #,##0 NOK | Mappe: 01. Kjerne */
+
+[Årsbudsjett] =
+CALCULATE (
+    [Sum Budsjett],
+    ALL ( 'dim_date' ),
+    VALUES ( 'dim_date'[Ar] )
+)
+/* Format: #,##0 NOK | Mappe: 01. Kjerne */
+
+[Avvik Kr] =
+[Sum Budsjett] - [Sum Regnskap]
+/* Format: #,##0 NOK | Mappe: 01. Kjerne */
+
+[Forbruk %] =
+DIVIDE ( [Sum Regnskap], [Sum Budsjett], 0 )
+/* Format: 0.0 % | Mappe: 01. Kjerne */
+
+[Avvik %] =
+DIVIDE ( [Avvik Kr], [Sum Budsjett], 0 )
+/* Format: 0.0 % | Mappe: 01. Kjerne */
+
+[abs Avvik] =
+ABS([Avvik Kr])
+/* Format: #,0 | Mappe: 01. Kjerne */
+
+[abs Avvik %] =
+ABS([Avvik %])
+/* Format: 0.0%;-0.0%;0.0% | Mappe: 01. Kjerne */
+
+[Max avvik %] =
+1.2
+/* Format: 0 | Mappe: 01. Kjerne */
+
+[Target Avvik %] =
+1
+/* Format: 0 | Mappe: 01. Kjerne */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 02. MoM & Trend (6 måltall)
+// ------------------------------------------------------------------------------
+
+[Regnskap PM] =
+CALCULATE (
+    [Sum Regnskap],
+    DATEADD ( 'dim_date'[Dato], -1, MONTH )
+)
+/* Format: #,##0 NOK | Mappe: 02. MoM & Trend */
+
+[Budsjett PM] =
+CALCULATE (
+    [Sum Budsjett],
+    DATEADD ( 'dim_date'[Dato], -1, MONTH )
+)
+/* Format: #,##0 NOK | Mappe: 02. MoM & Trend */
+
+[Regnskap MoM Endring Kr] =
+IF (
+    NOT ISBLANK ( [Regnskap PM] ),
+    [Sum Regnskap] - [Regnskap PM]
+)
+/* Format: #,##0 NOK | Mappe: 02. MoM & Trend */
+
+[Regnskap MoM Endring %] =
+DIVIDE ( [Regnskap MoM Endring Kr], [Regnskap PM], 0 )
+/* Format: 0.0 % | Mappe: 02. MoM & Trend */
+
+[Regnskap 3M Moving Average] =
+AVERAGEX (
+    DATESINPERIOD (
+        'dim_date'[Dato],
+        LASTDATE ( 'dim_date'[Dato] ),
+        -3,
+        MONTH
+    ),
+    [Sum Regnskap]
+)
+/* Format: #,##0 NOK | Mappe: 02. MoM & Trend */
+
+[Regnskap Base 100] =
+VAR _Base =
+    CALCULATE (
+        [Sum Regnskap],
+        'dim_date'[Maned_Nummer] = 1,
+        ALL ( 'dim_date'[Maned_Navn], 'dim_date'[month], 'dim_date'[Maned_Nummer], 'dim_date'[Dato] )
+    )
+RETURN
+    IF ( NOT ISBLANK ( [Sum Regnskap] ) && _Base > 0, DIVIDE ( [Sum Regnskap], _Base, 1 ) * 100 )
+/* Format: 0.0 | Mappe: 02. MoM & Trend */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 03. YTD (4 måltall)
+// ------------------------------------------------------------------------------
+
+[Regnskap YTD] =
+TOTALYTD ( [Sum Regnskap], 'dim_date'[Dato] )
+/* Format: #,##0 NOK | Mappe: 03. YTD */
+
+[Budsjett YTD] =
+TOTALYTD ( [Sum Budsjett], 'dim_date'[Dato] )
+/* Format: #,##0 NOK | Mappe: 03. YTD */
+
+[Avvik YTD Kr] =
+[Budsjett YTD] - [Regnskap YTD]
+/* Format: #,##0 NOK | Mappe: 03. YTD */
+
+[Avvik YTD %] =
+DIVIDE ( [Avvik YTD Kr], [Budsjett YTD], 0 )
+/* Format: 0.0 % | Mappe: 03. YTD */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 04. Prognose & EOY (9 måltall)
+// ------------------------------------------------------------------------------
+
+[Budsjett Resten av Året] =
+CALCULATE (
+    [Sum Budsjett],
+    DATESBETWEEN (
+        'dim_date'[Dato],
+        MAX ( 'dim_date'[Dato] ) + 1,
+        ENDOFYEAR ( 'dim_date'[Dato] )
+    )
+)
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+[EOY Estimat Lineær] =
+[Regnskap YTD] + [Budsjett Resten av Året]
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+[EOY Estimert Avvik Kr] =
+[Årsbudsjett] - [EOY Estimat Lineær]
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+[EOY Estimert Avvik %] =
+DIVIDE ( [EOY Estimert Avvik Kr], [Årsbudsjett], 0 )
+/* Format: 0.0 % | Mappe: 04. Prognose & EOY */
+
+[Bullet Target 80%] =
+[Budsjett YTD] * 0.80
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+[Bullet Target 110%] =
+[Budsjett YTD] * 1.10
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+[EOY Årsbudsjett] =
+[Årsbudsjett]
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+[EOY Run Rate Avvik] =
+[EOY Estimert Avvik Kr]
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+[ERP EOY Run Rate] =
+[EOY Estimat Lineær]
+/* Format: #,##0 NOK | Mappe: 04. Prognose & EOY */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 05. RAG & Formatering (4 måltall)
+// ------------------------------------------------------------------------------
+
+[RAG Farge Avvik] =
+VAR _AvvikPct = [Avvik YTD %]
+RETURN
+    SWITCH (
+        TRUE (),
+        _AvvikPct < -0.05, "#D13438", // Muted rød: Merforbruk > 5%
+        _AvvikPct < 0.00,  "#FFB900", // Muted amber: Mindre merforbruk (0-5%)
+        _AvvikPct >= 0.05, "#0078D4", // Stålblå: Betydelig mindreforbruk (> 5%)
+        "#107C41"                    // Skogsgrønn: I rute / Mindreforbruk
+    )
+/* Mappe: 05. RAG & Formatering */
+
+[RAG Ikon Avvik] =
+VAR _AvvikPct = [Avvik YTD %]
+RETURN
+    SWITCH (
+        TRUE (),
+        _AvvikPct < -0.05, "🔴",
+        _AvvikPct < 0.00,  "🟡",
+        _AvvikPct >= 0.05, "🔵",
+        "🟢"
+    )
+/* Mappe: 05. RAG & Formatering */
+
+[Status Indikator] =
+VAR _AvvikPct = [Avvik YTD %]
+RETURN
+    SWITCH (
+        TRUE (),
+        _AvvikPct < -0.05, "🔴 Vesentlig merforbruk (>5%)",
+        _AvvikPct < 0.00,  "🟡 Mindre merforbruk (0-5%)",
+        _AvvikPct >= 0.05, "🔵 Betydelig mindreforbruk (>5%)",
+        "🟢 I rute / Mindreforbruk"
+    )
+/* Mappe: 05. RAG & Formatering */
+
+[Avvik Bar Farge] =
+IF ( [Avvik Kr] < 0, "#D13438", "#107C41" )
+/* Mappe: 05. RAG & Formatering */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 06. Driveranalyse (15 måltall)
+// ------------------------------------------------------------------------------
+
+[Merforbruk Kr] =
+VAR _Avvik = [Avvik Kr]
+RETURN
+    IF ( _Avvik < 0, ABS ( _Avvik ), 0 )
+/* Format: #,##0 NOK | Mappe: 06. Driveranalyse */
+
+[Mindreforbruk Kr] =
+VAR _Avvik = [Avvik Kr]
+RETURN
+    IF ( _Avvik > 0, _Avvik, 0 )
+/* Format: #,##0 NOK | Mappe: 06. Driveranalyse */
+
+[Pct Bidrag til Totalt Merforbruk] =
+VAR _TotaltMerforbruk =
+    CALCULATE (
+        [Merforbruk Kr],
+        ALLSELECTED ( 'dim_ansvar' ),
+        ALLSELECTED ( 'dim_kostra_kontoplan' ),
+        ALLSELECTED ( 'dim_kostra_funksjon' )
+    )
+RETURN
+    DIVIDE ( [Merforbruk Kr], _TotaltMerforbruk, 0 )
+/* Format: 0.0 % | Mappe: 06. Driveranalyse */
+
+[Pct Bidrag til Total Regnskap] =
+VAR _TotalRegnskap =
+    CALCULATE (
+        [Sum Regnskap],
+        ALLSELECTED ( 'dim_ansvar' ),
+        ALLSELECTED ( 'dim_kostra_kontoplan' ),
+        ALLSELECTED ( 'dim_kostra_funksjon' )
+    )
+RETURN
+    DIVIDE ( [Sum Regnskap], _TotalRegnskap, 0 )
+/* Format: 0.0 % | Mappe: 06. Driveranalyse */
+
+[Rangering Merforbruk] =
+IF (
+    [Merforbruk Kr] > 0,
+    RANKX (
+        ALLSELECTED ( 'dim_kostra_kontoplan'[Konto_Kode_Navn] ),
+        [Merforbruk Kr],
+        ,
+        DESC,
+        Dense
+    )
+)
+/* Format: 0 | Mappe: 06. Driveranalyse */
+
+[Kostnad Vikarer Kr] =
+CALCULATE (
+    [Sum Regnskap],
+    'dim_kostra_kontoplan'[Kontokode_6Siffer] IN { "102000", "102013", "127040" }
+)
+/* Format: #,##0 NOK | Mappe: 06. Driveranalyse */
+
+[Kostnad Overtid Kr] =
+CALCULATE (
+    [Sum Regnskap],
+    'dim_kostra_kontoplan'[Kontokode_6Siffer] = "104000"
+)
+/* Format: #,##0 NOK | Mappe: 06. Driveranalyse */
+
+[Overforbruk Kr] =
+[Merforbruk Kr]
+/* Format: #,##0 NOK | Mappe: 06. Driveranalyse */
+
+[Pct Bidrag til Totalt Overforbruk] =
+[Pct Bidrag til Totalt Merforbruk]
+/* Format: 0.0 % | Mappe: 06. Driveranalyse */
+
+[Rangering Overforbruk] =
+[Rangering Merforbruk]
+/* Format: 0 | Mappe: 06. Driveranalyse */
+
+[ERP Negativ Kostnadsdriver] =
+[Merforbruk Kr]
+/* Format: #,##0 NOK | Mappe: 06. Driveranalyse */
+
+[ERP Negativ Driver Andel %] =
+[Pct Bidrag til Totalt Merforbruk]
+/* Format: 0.0 % | Mappe: 06. Driveranalyse */
+
+[ERP Største Kostnadsdriver] =
+"Konto 101000 Fastlønn / 102013 Vikarer"
+/* Mappe: 06. Driveranalyse */
+
+[ERP Største Kostnadsdriver Beløp] =
+1414000
+/* Format: #,##0 NOK | Mappe: 06. Driveranalyse */
+
+[ERP Pareto Kumulativ %] =
+VAR CurrentDriver = [Merforbruk Kr]
+VAR TotalDriver = CALCULATE ( [Merforbruk Kr], ALLSELECTED ( 'dim_kostra_kontoplan' ) )
+RETURN
+    IF (
+        CurrentDriver > 0,
+        DIVIDE (
+            CALCULATE (
+                [Merforbruk Kr],
+                FILTER (
+                    ALLSELECTED ( 'dim_kostra_kontoplan'[Konto_Kode_Navn] ),
+                    [Merforbruk Kr] >= CurrentDriver
+                )
+            ),
+            TotalDriver,
+            0
+        )
+    )
+/* Format: 0.0 % | Mappe: 06. Driveranalyse */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 07. Dynamisk Tekst (13 måltall)
+// ------------------------------------------------------------------------------
+
+[Txt Valgt År] =
+SELECTEDVALUE ( 'dim_date'[Ar], "Alle År (2024)" )
+/* Mappe: 07. Dynamisk Tekst */
+
+[Txt Valgt Måned] =
+IF (
+    ISFILTERED ( 'dim_date'[Maned_Navn] ),
+    CONCATENATEX ( VALUES ( 'dim_date'[Maned_Navn] ), 'dim_date'[Maned_Navn], ", " ),
+    "Alle Måneder (Jan - Aug)"
+)
+/* Mappe: 07. Dynamisk Tekst */
+
+[Txt Valgt Område] =
+IF (
+    ISFILTERED ( 'dim_ansvar'[Omrade_Navn] ),
+    CONCATENATEX ( VALUES ( 'dim_ansvar'[Omrade_Navn] ), 'dim_ansvar'[Omrade_Navn], ", " ),
+    "Alle Områder / Konsern"
+)
+/* Mappe: 07. Dynamisk Tekst */
+
+[Txt Valgt Ansvar] =
+IF (
+    ISFILTERED ( 'dim_ansvar'[Enhet_Navn] ),
+    CONCATENATEX ( VALUES ( 'dim_ansvar'[Enhet_Navn] ), 'dim_ansvar'[Enhet_Navn], ", " ),
+    "Alle Ansvarsenheter"
+)
+/* Mappe: 07. Dynamisk Tekst */
+
+[Txt Master Selection Header] =
+"KOSTRA Rapport | År: " & [Txt Valgt År] &
+" | Periode: " & [Txt Valgt Måned] &
+" | Område: " & [Txt Valgt Område] &
+" | Enhet: " & [Txt Valgt Ansvar] &
+" | Status: " & [Status Indikator]
+/* Mappe: 07. Dynamisk Tekst */
+
+[Dynamisk Rapporttittel] =
+[Txt Master Selection Header]
+/* Mappe: 07. Dynamisk Tekst */
+
+[Story Executive Summary] =
+VAR AvvikYTD = [Avvik YTD Kr]
+VAR AvvikPct = [Avvik YTD %]
+RETURN
+    IF (
+        AvvikYTD < 0,
+        "MERFORBRUK: Regnskap overskrider budsjett med " & FORMAT ( ABS ( AvvikYTD ), "#,##0 kr" ) & " (" & FORMAT ( ABS ( AvvikPct ), "0.0%" ) & ") YTD. Kostnadspresset drives av eksterne vikarer og overtid.",
+        "MINDREFORBRUK: Regnskap viser et samlet mindreforbruk på " & FORMAT ( AvvikYTD, "#,##0 kr" ) & " (" & FORMAT ( AvvikPct, "0.0%" ) & ") YTD."
+    )
+/* Mappe: 07. Dynamisk Tekst */
+
+[Story Time Narrative] =
+"TIDSTREND | Rapportert t.o.m. august 2024. Gjennomsnittlig månedlig forbruk er 3,94 MNOK. 3-måneders glidende snitt viser vedvarende høyt kostnadsnivå i skolesektoren."
+/* Mappe: 07. Dynamisk Tekst */
+
+[Story Forecast Narrative] =
+VAR RunRate = [EOY Estimat Lineær]
+VAR Budget = [Årsbudsjett]
+VAR Gap = [EOY Estimert Avvik Kr]
+RETURN "PROGNOSE EOY | Ved uendret driftstakt lander året på " & FORMAT ( RunRate, "#,##0 kr" ) & " mot årsbudsjett på " & FORMAT ( Budget, "#,##0 kr" ) & ", som tilsier et estimert avvik på " & FORMAT ( Gap, "+#,##0 kr;-#,##0 kr;0 kr" ) & "."
+/* Mappe: 07. Dynamisk Tekst */
+
+[Story Root Cause Detail] =
+"AVVIKSANALYSE | Ubesatte faste stillinger i Helse (+2,95 MNOK) står i kontrast til høyt overforbruk på vikarer (-381 kNOK) og overtid (-230 kNOK) i Oppvekst og Utdanning."
+/* Mappe: 07. Dynamisk Tekst */
+
+[Forecast Action Summary] =
+VAR Gap = [EOY Estimert Avvik Kr]
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( Gap ), "Ingen prognose tilgjengelig.",
+        Gap >= 0, "Prognosen indikerer balanse eller mindreforbruk ved årets slutt.",
+        "Prognosert merforbruk krever tiltak for å oppnå balanse innen 31.12.2024."
+    )
+/* Mappe: 07. Dynamisk Tekst */
+
+[Txt Valgt Tjeneste og Funksjon] =
+```
+
+VAR _TjenesteAntall = COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ) )
+VAR _TjenesteTotalt = CALCULATE ( COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ) ), ALL ( 'dim_kostra_funksjon' ) )
+
+VAR _TjenesteTekst = 
+    IF (
+        NOT ISFILTERED ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ) || _TjenesteAntall = _TjenesteTotalt,
+        "Alle tjenesteområder",
+        IF (
+            _TjenesteAntall = 1,
+            SELECTEDVALUE ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ),
+            _TjenesteAntall & " tjenesteområder valgt"
+        )
+    )
+
+VAR _FunksjonAntall = COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ) )
+VAR _FunksjonTotalt = CALCULATE ( COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ) ), ALL ( 'dim_kostra_funksjon' ) )
+
+VAR _FunksjonTekst = 
+    IF (
+        NOT ISFILTERED ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ) || _FunksjonAntall = _FunksjonTotalt,
+        "Alle funksjonsgrupper",
+        IF (
+            _FunksjonAntall = 1,
+            SELECTEDVALUE ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ),
+            _FunksjonAntall & " funksjonsgrupper valgt"
+        )
+    )
+
+RETURN
+    "Tjenesteområde: " & _TjenesteTekst & " | Funksjonsgruppe: " & _FunksjonTekst
+```
+/* Mappe: 07. Dynamisk Tekst */
+
+[Dynamisk Rapportittel Komplett] =
+```
+
+-- 1. Periode-kontekst
+VAR _Ar = SELECTEDVALUE ( 'dim_date'[Ar], "2024" )
+VAR _Maned = SELECTEDVALUE ( 'dim_date'[Maned_Navn], "Alle måneder" )
+
+-- 2. Tjenesteområde-kontekst
+VAR _TjenesteAntall = COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ) )
+VAR _TjenesteTotalt = CALCULATE ( COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ) ), ALL ( 'dim_kostra_funksjon' ) )
+VAR _TjenesteTekst = 
+    IF (
+        NOT ISFILTERED ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ) || _TjenesteAntall = _TjenesteTotalt,
+        "Alle tjenesteområder",
+        IF (
+            _TjenesteAntall = 1,
+            SELECTEDVALUE ( 'dim_kostra_funksjon'[Tjenesteomrade_Kode_Navn] ),
+            _TjenesteAntall & " tjenesteområder"
+        )
+    )
+
+-- 3. Funksjonsgruppe-kontekst
+VAR _FunksjonAntall = COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ) )
+VAR _FunksjonTotalt = CALCULATE ( COUNTROWS ( VALUES ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ) ), ALL ( 'dim_kostra_funksjon' ) )
+VAR _FunksjonTekst = 
+    IF (
+        NOT ISFILTERED ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ) || _FunksjonAntall = _FunksjonTotalt,
+        "Alle funksjonsgrupper",
+        IF (
+            _FunksjonAntall = 1,
+            SELECTEDVALUE ( 'dim_kostra_funksjon'[Funksjonsgruppe_Kode_Navn] ),
+            _FunksjonAntall & " funksjonsgrupper"
+        )
+    )
+
+-- 4. Finansiell status
+VAR _AvvikBelop = FORMAT ( [Avvik Kr], "#,##0 NOK;-#,##0 NOK;0 NOK" )
+VAR _StatusIkon = [Status Indikator]
+
+RETURN
+    "Status " & _Ar & " (" & _Maned & ") — " & _TjenesteTekst & " / " & _FunksjonTekst & " | Avvik: " & _AvvikBelop & " " & _StatusIkon
+```
+/* Mappe: 07. Dynamisk Tekst */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 08. What-If Simulering (8 måltall)
+// ------------------------------------------------------------------------------
+
+[Simulert Kutt Hoveddrivere Kr] =
+// 50% reduksjon i vikar og overtid (konto 102013, 102000, 104000)
+CALCULATE (
+    [Merforbruk Kr] * 0.50,
+    'dim_kostra_kontoplan'[Kontokode_6Siffer] IN { "102013", "102000", "104000" }
+)
+/* Format: #,##0 NOK | Mappe: 08. What-If Simulering */
+
+[Simulert Frigjort Mindreforbruk Kr] =
+// Frigjør inntil 20% av mindreforbruk på ordinær lønn til omdisponering
+CALCULATE (
+    [Mindreforbruk Kr] * 0.20,
+    'dim_kostra_kontoplan'[Kontokode_6Siffer] IN { "101000", "109000" }
+)
+/* Format: #,##0 NOK | Mappe: 08. What-If Simulering */
+
+[Simulert EOY Avvik Etter Tiltak Kr] =
+[EOY Estimert Avvik Kr] + [Simulert Totale Tiltak Kr]
+/* Format: #,##0 NOK | Mappe: 08. What-If Simulering */
+
+[Simulert Totale Tiltak Kr] =
+[Simulert Kutt Hoveddrivere Kr] + [Simulert Frigjort Mindreforbruk Kr]
+/* Format: #,##0 NOK | Mappe: 08. What-If Simulering */
+
+[Simulert EOY Status Indikator] =
+VAR _NyttAvvik = [Simulert EOY Avvik Etter Tiltak Kr]
+RETURN
+    SWITCH (
+        TRUE (),
+        _NyttAvvik >= 0, "🟢 I Balanse / Overskudd (" & FORMAT ( _NyttAvvik, "#,##0 kr" ) & ")",
+        _NyttAvvik >= -100000, "🟡 Nær Balanse (" & FORMAT ( _NyttAvvik, "#,##0 kr" ) & ")",
+        "🔴 Fortsatt Underskudd (" & FORMAT ( _NyttAvvik, "#,##0 kr" ) & ")"
+    )
+/* Mappe: 08. What-If Simulering */
+
+[ERP Driver Tiltaksbehov Måned] =
+DIVIDE ( [Merforbruk Kr], 4, 0 )
+/* Format: #,##0 NOK | Mappe: 08. What-If Simulering */
+
+[ERP Driver Tiltaksbehov Restår] =
+[Merforbruk Kr]
+/* Format: #,##0 NOK | Mappe: 08. What-If Simulering */
+
+[ERP Driver Tiltaksgrad %] =
+0.50
+/* Format: 0.0 % | Mappe: 08. What-If Simulering */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 09. Tufte S-Curve (5 måltall)
+// ------------------------------------------------------------------------------
+
+[Avvik Akkumulert S-Curve] =
+TOTALYTD ( [Avvik Kr], 'dim_date'[Dato] )
+/* Format: #,##0 NOK | Mappe: 09. Tufte S-Curve */
+
+[ERP Actual Historical] =
+VAR LastActualDate = LASTDATE ( 'fact_data'[Dato] )
+VAR CurrentDate = MAX ( 'dim_date'[Dato] )
+RETURN IF ( CurrentDate <= LastActualDate, [Sum Regnskap], BLANK () )
+/* Format: #,##0 NOK | Mappe: 09. Tufte S-Curve */
+
+[ERP Forecast Trend] =
+VAR LastActualDate = LASTDATE ( 'fact_data'[Dato] )
+VAR CurrentDate = MAX ( 'dim_date'[Dato] )
+RETURN IF ( CurrentDate > LastActualDate, [Regnskap 3M Moving Average], BLANK () )
+/* Format: #,##0 NOK | Mappe: 09. Tufte S-Curve */
+
+[ERP Resterende Ramme] =
+[Budsjett Resten av Året]
+/* Format: #,##0 NOK | Mappe: 09. Tufte S-Curve */
+
+[ERP Nødvendig Månedlig Nivå] =
+DIVIDE ( [Budsjett Resten av Året], 4, 0 )
+/* Format: #,##0 NOK | Mappe: 09. Tufte S-Curve */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 10. FT Visuals (10 måltall)
+// ------------------------------------------------------------------------------
+
+[FT_Dev_Diverging_Avvik_Kr] =
+[Avvik YTD Kr]
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[FT_Corr_Scatter_Size] =
+ABS ( [Avvik YTD Kr] )
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[FT_Time_Cumulative_Actual] =
+[Regnskap YTD]
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[FT_Time_Cumulative_Budget] =
+[Budsjett YTD]
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[FT_Time_Cumulative_EAC] =
+[EOY Estimat Lineær]
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[FT_Time_Diverging_Deficit] =
+IF ( [Avvik Kr] < 0, [Avvik Kr], BLANK () )
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[FT_Time_Diverging_Surplus] =
+IF ( [Avvik Kr] > 0, [Avvik Kr], BLANK () )
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[FT_Time_Stepped_Budget] =
+CALCULATE ( [Sum Budsjett], ALLEXCEPT ( 'dim_date', 'dim_date'[Dato] ) )
+/* Format: #,##0 NOK | Mappe: 10. FT Visuals */
+
+[Corr Regnskap vs Budsjett] =
+VAR T =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( 'dim_date'[Maned_Navn] ),
+            "@Regnskap", CALCULATE ( [Sum Regnskap] ),
+            "@Budsjett", CALCULATE ( [Sum Budsjett] )
+        ),
+        NOT ISBLANK ( [@Regnskap] ) && NOT ISBLANK ( [@Budsjett] )
+    )
+VAR AvgX = AVERAGEX ( T, [@Budsjett] )
+VAR AvgY = AVERAGEX ( T, [@Regnskap] )
+VAR Cov = SUMX ( T, ( [@Budsjett] - AvgX ) * ( [@Regnskap] - AvgY ) )
+VAR VarX = SUMX ( T, ( [@Budsjett] - AvgX ) ^ 2 )
+VAR VarY = SUMX ( T, ( [@Regnskap] - AvgY ) ^ 2 )
+VAR Denom = SQRT ( VarX * VarY )
+RETURN IF ( Denom > 0, DIVIDE ( Cov, Denom ) )
+/* Format: 0.00 | Mappe: 10. FT Visuals */
+
+[Correlation Strength] =
+VAR R = [Corr Regnskap vs Budsjett]
+VAR AbsR = ABS ( R )
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( R ), "Ingen data",
+        AbsR >= 0.80, "Svært sterk",
+        AbsR >= 0.60, "Sterk",
+        AbsR >= 0.40, "Moderat",
+        AbsR >= 0.20, "Svak",
+        "Svært svak"
+    )
+/* Mappe: 10. FT Visuals */
+
+// ------------------------------------------------------------------------------
+// MAPPE: 11. DQA Kontroller (17 måltall)
+// ------------------------------------------------------------------------------
+
+[QA Har Regnskap] =
+IF ( NOT ISBLANK ( SUM ( 'fact_data'[Regnskap] ) ), 1, 0 )
+/* Format: 0 | Mappe: 11. DQA Kontroller */
+
+[QA Har Budsjett] =
+IF ( NOT ISBLANK ( SUM ( 'fact_data'[Budsjett] ) ), 1, 0 )
+/* Format: 0 | Mappe: 11. DQA Kontroller */
+
+[QA Dekningsstatus Indikator] =
+VAR _HarRegnskap = [QA Har Regnskap]
+VAR _HarBudsjett = [QA Har Budsjett]
+RETURN
+    SWITCH (
+        TRUE (),
+        _HarRegnskap = 1 && _HarBudsjett = 1, "🟢 OK (Regnskap & Budsjett)",
+        _HarRegnskap = 1 && _HarBudsjett = 0, "🟡 Kun Regnskap (Mangler Budsjett)",
+        _HarRegnskap = 0 && _HarBudsjett = 1, "🔵 Kun Budsjett (Mangler Regnskap)",
+        "🔴 Mangler Data"
+    )
+/* Mappe: 11. DQA Kontroller */
+
+[QA Dekningsgrad %] =
+DIVIDE (
+    CALCULATE (
+        COUNTROWS ( 'fact_data' ),
+        NOT ISBLANK ( 'fact_data'[Regnskap] ) && NOT ISBLANK ( 'fact_data'[Budsjett] )
+    ),
+    COUNTROWS ( 'fact_data' ),
+    0
+)
+/* Format: 0.0 % | Mappe: 11. DQA Kontroller */
+
+[QA Umappede Kontokoder Antall] =
+CALCULATE (
+    COUNTROWS ( 'fact_data' ),
+    FILTER (
+        'fact_data',
+        ISBLANK ( RELATED ( 'dim_kostra_kontoplan'[Kontonavn] ) )
+    )
+)
+/* Format: #,##0 | Mappe: 11. DQA Kontroller */
+
+[QA Umappede Kontokoder Regnskap Kr] =
+CALCULATE (
+    SUM ( 'fact_data'[Regnskap] ),
+    FILTER (
+        'fact_data',
+        ISBLANK ( RELATED ( 'dim_kostra_kontoplan'[Kontonavn] ) )
+    )
+)
+/* Format: #,##0 NOK | Mappe: 11. DQA Kontroller */
+
+[QA Umappede Ansvar Antall] =
+CALCULATE (
+    COUNTROWS ( 'fact_data' ),
+    FILTER (
+        'fact_data',
+        ISBLANK ( RELATED ( 'dim_ansvar'[Ansvar_Navn] ) )
+    )
+)
+/* Format: #,##0 | Mappe: 11. DQA Kontroller */
+
+[QA Umappede Funksjoner Antall] =
+CALCULATE (
+    COUNTROWS ( 'fact_data' ),
+    FILTER (
+        'fact_data',
+        ISBLANK ( RELATED ( 'dim_kostra_funksjon'[KOSTRA_Funksjonsgruppe_Navn] ) )
+    )
+)
+/* Format: #,##0 | Mappe: 11. DQA Kontroller */
+
+[QA Nøkkelstatus Sammendrag] =
+VAR _Konto = [QA Umappede Kontokoder Antall]
+VAR _Ansvar = [QA Umappede Ansvar Antall]
+VAR _Funksjon = [QA Umappede Funksjoner Antall]
+VAR _Total = COALESCE ( _Konto, 0 ) + COALESCE ( _Ansvar, 0 ) + COALESCE ( _Funksjon, 0 )
+RETURN
+    IF ( _Total = 0, "🟢 Alle relasjoner intakt (0 orphan keys)", "🔴 " & _Total & " feilende relasjonskoblinger funnet" )
+/* Mappe: 11. DQA Kontroller */
+
+[QA Antall Filer Importert] =
+DISTINCTCOUNT ( 'fact_data'[Source.Name] )
+/* Format: 0 | Mappe: 11. DQA Kontroller */
+
+[QA Antall Rader Per Fil] =
+COUNTROWS ( 'fact_data' )
+/* Format: #,##0 | Mappe: 11. DQA Kontroller */
+
+[QA Duplikatsjekk Filnavn] =
+VAR _AntallFilerPerPeriodeOgSektor =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            SUMMARIZE ( 'fact_data', 'dim_date'[yyyy-mm], 'fact_data'[Sektor] ),
+            "@FilCount", CALCULATE ( DISTINCTCOUNT ( 'fact_data'[Source.Name] ) )
+        ),
+        ALL ( 'fact_data'[Source.Name] )
+    )
+VAR _MaksFiler = MAXX ( _AntallFilerPerPeriodeOgSektor, [@FilCount] )
+RETURN
+    IF ( _MaksFiler > 1, "⚠️ ADVARSEL: Dupliserte filer for samme periode!", "🟢 Ingen filduplikater" )
+/* Mappe: 11. DQA Kontroller */
+
+[QA Ubudsjetterte Kostnader Kr] =
+CALCULATE (
+    SUM ( 'fact_data'[Regnskap] ),
+    'fact_data'[Budsjett] = 0 && 'fact_data'[Regnskap] > 0
+)
+/* Format: #,##0 NOK | Mappe: 11. DQA Kontroller */
+
+[QA Ubudsjetterte Poster Antall] =
+CALCULATE (
+    COUNTROWS ( 'fact_data' ),
+    'fact_data'[Budsjett] = 0 && 'fact_data'[Regnskap] > 0
+)
+/* Format: #,##0 | Mappe: 11. DQA Kontroller */
+
+[QA Ekstreme MoM Endringer] =
+VAR _Endring = [Regnskap MoM Endring Kr]
+VAR _Snitt = CALCULATE ( AVERAGE ( 'fact_data'[Regnskap] ), ALL ( 'dim_date' ) )
+RETURN
+    IF ( ABS ( _Endring ) > ( _Snitt * 2 ), "⚠️ Uvanlig stort avvik MoM", "OK" )
+/* Mappe: 11. DQA Kontroller */
+
+[QA Negativt Regnskap Antall] =
+CALCULATE (
+    COUNTROWS ( 'fact_data' ),
+    'fact_data'[Regnskap] < 0
+)
+/* Format: #,##0 | Mappe: 11. DQA Kontroller */
+
+[QA Sist Oppdatert] =
+MAX ( 'dim_oppdatering'[Sist_Oppdatert] )
+/* Format: General Date | Mappe: 11. DQA Kontroller */

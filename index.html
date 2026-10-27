@@ -7437,17 +7437,22 @@
             <div style="border:1px solid var(--border-light); border-radius:3px; padding:12px; background:#f8fafc;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                     <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">📊 Power BI Enterprise</span>
-                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">.pbip Klar</span>
+                    <span style="font-size:10px; font-weight:700; color:#27ae60; background:#ecfdf5; padding:2px 6px; border-radius:2px;">.pbip &amp; .pbix</span>
                 </div>
                 <div style="font-size:11px; color:#475569; margin-bottom:8px; line-height:1.4;">
-                    TMDL Stjerneskjema, semantisk modell, DAX-målinger for EVM &amp; KOSTRA.
+                    10 PBIR-sider, 101 DAX-mål, DQA-kvalitetskontroll, 16 faktatabeller (2 256 rader).
                 </div>
                 <div style="font-size:10.5px; font-family:var(--font-mono); color:#64748b; margin-bottom:10px;">
-                    Fil: <code>pbi_reporting_project.pbip</code>
+                    Fil: <code>pbi-rep-project-rapport.pbip</code>
                 </div>
-                <a href="powerbi/pbi_reporting_project.pbip" download class="btn btn-sm" style="display:block; text-align:center; font-size:11px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 8px; border-radius:2px;">
-                    📥 Åpne Power BI (.pbip)
-                </a>
+                <div style="display:flex; gap:4px;">
+                    <a href="pbi-rep-project-rapport.pbip" download class="btn btn-sm btn-primary" style="flex:1; text-align:center; font-size:10.5px; background:#b45309; border-color:#b45309; color:#ffffff; text-decoration:none; padding:4px 6px; border-radius:2px;" title="Åpne Power BI prosjekt (.pbip)">
+                        📥 Åpne .pbip
+                    </a>
+                    <a href="pbi-rep-project-rapport.pbix" download class="btn btn-sm" style="flex:1; text-align:center; font-size:10.5px; background:#ffffff; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; padding:4px 6px; border-radius:2px;" title="Last ned Power BI (.pbix)">
+                        📥 .pbix Desktop
+                    </a>
+                </div>
             </div>
 
             <!-- Kanal 2: Excel Suite -->
@@ -10465,6 +10470,25 @@ RETURN
                 <div class="doc-actions">
                     <a href="word/Avviksnotat_og_Handlingsplan_Enhetsleder_2026.docx" download class="btn btn-sm btn-primary" style="background: #0056b3; border-color: #0056b3;">⬇️ Last ned (.docx)</a>
                     <a href="bruker-guides/MANEDLIG_AVVIKSRAPPORT_RAMMEVERK.md" target="_blank" class="btn btn-sm">📖 Se Veileder</a>
+                </div>
+            </div>
+
+            <!-- KORT: POWER BI RAPPORTPROSJEKT MED DQA (.PBIP / .PBIX) -->
+            <div class="doc-card" data-category="POWERBI">
+                <div>
+                    <div class="doc-header-row">
+                        <span class="format-badge" style="background: #16a34a; color: #fff; font-weight: 700;">.PBIP / PBIR v2</span>
+                        <span style="font-size: 11px; color: #166534; font-weight: 700;">10 Sider &amp; 101 DAX-mål</span>
+                    </div>
+                    <div class="doc-title">Power BI Rapportprosjekt (pbi-rep-project-rapport.pbip)</div>
+                    <div class="doc-law">Standard: PBIR Format, TMDL Star Schema &amp; DQA Datakvalitetskontroll</div>
+                    <div class="doc-desc">Komplett Power BI-rapporteringsløsning med 10 interaktive sider: DQA 0 Filkontroll, DQA 1 Dekning, 01 Hovedrapport, 03 Tidsserie, 04 Rotårsak, 041 Decomposition Tree, 05 Avvik/S-kurve, FT 01 Deviation, 06 Avvik-drivere og 07 What-If Scenario. Inkluderer 101 DAX-måltall og 16 normaliserte månedlige faktatabeller (2 256 transaksjoner).</div>
+                </div>
+                <div class="doc-actions">
+                    <a href="pbi-rep-project-rapport.pbip" download class="btn btn-sm btn-primary" style="background: #b45309; border-color: #b45309;">⬇️ Åpne (.pbip)</a>
+                    <a href="pbi-rep-project-rapport.pbix" download class="btn btn-sm">⬇️ Last ned (.pbix)</a>
+                    <a href="docs/07_Data_Quality_and_Assurance_Rapport.md" target="_blank" class="btn btn-sm">📖 DQA Rapport</a>
+                    <a href="powerbi/10_PBIP_Rapport_DAX_Measures.dax" target="_blank" class="btn btn-sm">📐 101 DAX-Mål</a>
                 </div>
             </div>
 

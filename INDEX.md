@@ -145,7 +145,10 @@ Repositoryet følger Antigravity sin oppdagelsesstandard for lokale agenter:
 * **DAX Mål & Beregningsmotor**: [`power_bi_kommune_spec_bundle_v1/POWER_BI_DAX_MEASURES_LIBRARY.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DAX_MEASURES_LIBRARY.md)
 * **Dashboards & 7 Rapportoppsett**: [`power_bi_kommune_spec_bundle_v1/POWER_BI_DASHBOARDS_AND_LAYOUTS.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_DASHBOARDS_AND_LAYOUTS.md)
 * **Visuals & Tufte Storytelling**: [`power_bi_kommune_spec_bundle_v1/POWER_BI_VISUALS_AND_STORYTELLING.md`](./powerbi/power_bi_kommune_spec_bundle_v1/POWER_BI_VISUALS_AND_STORYTELLING.md)
-* **Teams Embedded Dynamisk RLS DAX**: [`06_PowerBI_Teams_Embedded_Dynamic_RLS.dax`](./powerbi/06_PowerBI_Teams_Embedded_Dynamic_RLS.dax) *(Row-Level Security tilpasset UPN/leder)*
+* **Power BI Hovedrapport (PBIP v2 med DQA & 10 PBIR-sider)**: [`pbi-rep-project-rapport.pbip`](./pbi-rep-project-rapport.pbip) *(101 DAX-mål, 16 månedlige faktatabeller, DQA 0/1 kvalitetskontroll)*
+* **Power BI Desktop Kopi (.pbix)**: [`pbi-rep-project-rapport.pbix`](./pbi-rep-project-rapport.pbix)
+* **Power BI 101 DAX Measures Library**: [`10_PBIP_Rapport_DAX_Measures.dax`](./powerbi/10_PBIP_Rapport_DAX_Measures.dax)
+* **Power BI DQA Kontrollrapport**: [`07_Data_Quality_and_Assurance_Rapport.md`](./docs/07_Data_Quality_and_Assurance_Rapport.md)
 * **Power BI Prosjekt (PBIP Developer Format)**: [`pbi_reporting_project.pbip`](./powerbi/pbi_reporting_project.pbip)
 
 ---

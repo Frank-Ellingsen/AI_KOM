@@ -110,12 +110,12 @@ This repository is fully configured for Antigravity native progressive disclosur
 | **`budsjett-framsikt/`** | Framsikt EPM & KOSTRA Master Package | `budsjettering-kristiansand-kommune.md`, `lonnsbudsjettering-kristiansand-framsikt.md`, driftsarter, selvkost |
 | **`data/`** | Reposting & Staging Artifacts | `data/repostings/` (Ompostering korreksjonsfiler, MVA-avstemminger) |
 | **`docs/`** | Unified Documentation | Architecture, user guides, specifications, and PDF publications |
-| **`erp_data/`** | Municipal Data Lake | `kommune_golden_record.db`, staging queue, Visma ERP CSVs, Golden Evaluation Dataset |
+| **`erp_data/`** | Municipal Data Lake | `kommune_golden_record.db`, `powerbi_kostra_datamodell` (16 faktatabeller, dimensjoner), staging queue, Visma ERP CSVs |
 | **`excel/`** | Financial Modeling | FAST models, `Kommune_Project_Controller_Reporting_2026.xlsx` |
 | **`generic-ai-pilot-pakke/`** | Vendor-Neutral Enterprise AI Pilot | Generisk malverk (`enterprise-ai-pilot/`), DAX, prompts, evals, målarkitektur |
 | **`mlops-implementeringspakke/`** | MLOps & LLMOps Procurement Package | 6-part specification for municipal AI operations, observability & tenders |
 | **`mvp-pilot/`** | Bo og Miljø Operational Pilot | Streamlit interactive app, DuckDB analytics, EAC engine |
-| **`powerbi/`** | Power BI Enterprise Assets | `pbi_reporting_project.pbip`, DAX library, Teams RLS, semantic models |
+| **`powerbi/`** | Power BI Enterprise Assets | `pbi-rep-project-rapport.pbip`, `pbi_reporting_project.pbip`, 101 DAX measures library, Teams RLS, semantic models |
 | **`powerpoint/`** | Presentation Decks | 16:9 executive decks for Bystyret, Kommunedirektøren, Oppvekst |
 | **`reports/`** | Published Reports & Nettbank | Kontoutskrifter (81 units), executive briefings, waterfall charts, Bystyret PPTX |
 | **`revisjon-og-kontroll/`** | Audit & Control Standards | Checklists for Kommunerevisjonen, tertialnotater, § 14-5 |

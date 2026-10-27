@@ -1,0 +1,40 @@
+﻿Ansvar_Kode,Enhet_Navn,Ansvar_Navn,Omrade_Kode,Omrade_Navn,Omrade_Kode_Navn,Ansvar_Kode_Navn,Er_Aktiv
+10000,Sentralledelse og politisk sekretariat,10000 - Sentralledelse og politisk sekretariat,10,Kommunedirektøren,10 - Kommunedirektøren,10000 - Sentralledelse og politisk sekretariat,True
+10100,Kommuneadvokaten og juridisk tjeneste,10100 - Kommuneadvokaten og juridisk tjeneste,10,Kommunedirektøren,10 - Kommunedirektøren,10100 - Kommuneadvokaten og juridisk tjeneste,True
+10200,Dokumentsenter og arkiv,10200 - Dokumentsenter og arkiv,10,Kommunedirektøren,10 - Kommunedirektøren,10200 - Dokumentsenter og arkiv,True
+10300,Kommunikasjon og innbyggerkontakt,10300 - Kommunikasjon og innbyggerkontakt,10,Kommunedirektøren,10 - Kommunedirektøren,10300 - Kommunikasjon og innbyggerkontakt,True
+11100,HR og arbeidsgiverpolitikk,11100 - HR og arbeidsgiverpolitikk,11,Organisasjon og teknologi,11 - Organisasjon og teknologi,11100 - HR og arbeidsgiverpolitikk,True
+11200,IT-drift og digitalisering,11200 - IT-drift og digitalisering,11,Organisasjon og teknologi,11 - Organisasjon og teknologi,11200 - IT-drift og digitalisering,True
+11300,Kompetanse og rekruttering,11300 - Kompetanse og rekruttering,11,Organisasjon og teknologi,11 - Organisasjon og teknologi,11300 - Kompetanse og rekruttering,True
+12100,Sentral økonomiavdeling og innkjøp,12100 - Sentral økonomiavdeling og innkjøp,12,Økonomi og virksomhetsstyring,12 - Økonomi og virksomhetsstyring,12100 - Sentral økonomiavdeling og innkjøp,True
+12200,Regnskap og lønn,12200 - Regnskap og lønn,12,Økonomi og virksomhetsstyring,12 - Økonomi og virksomhetsstyring,12200 - Regnskap og lønn,True
+12300,Virksomhetsstyring og analyse,12300 - Virksomhetsstyring og analyse,12,Økonomi og virksomhetsstyring,12 - Økonomi og virksomhetsstyring,12300 - Virksomhetsstyring og analyse,True
+20110,Kommunal barnehage A,20110 - Kommunal barnehage A,2,Oppvekst og utdanning,2 - Oppvekst og utdanning,20110 - Kommunal barnehage A,True
+20120,Kommunal barnehage B,20120 - Kommunal barnehage B,2,Oppvekst og utdanning,2 - Oppvekst og utdanning,20120 - Kommunal barnehage B,True
+20130,Kommunal barnehage C,20130 - Kommunal barnehage C,2,Oppvekst og utdanning,2 - Oppvekst og utdanning,20130 - Kommunal barnehage C,True
+20210,Grunnskole A (1-10 trinn),20210 - Grunnskole A (1-10 trinn),2,Oppvekst og utdanning,2 - Oppvekst og utdanning,20210 - Grunnskole A (1-10 trinn),True
+20220,Grunnskole B (1-10 trinn),20220 - Grunnskole B (1-10 trinn),2,Oppvekst og utdanning,2 - Oppvekst og utdanning,20220 - Grunnskole B (1-10 trinn),True
+20230,Grunnskole C (1-10 trinn),20230 - Grunnskole C (1-10 trinn),2,Oppvekst og utdanning,2 - Oppvekst og utdanning,20230 - Grunnskole C (1-10 trinn),True
+21110,Skolefritidsordning (SFO) A,21110 - Skolefritidsordning (SFO) A,2,Oppvekst og utdanning,2 - Oppvekst og utdanning,21110 - Skolefritidsordning (SFO) A,True
+21310,Voksenopplæringssenter,21310 - Voksenopplæringssenter,2,Oppvekst og utdanning,2 - Oppvekst og utdanning,21310 - Voksenopplæringssenter,True
+22110,PPT og pedagogisk oppfølging,22110 - PPT og pedagogisk oppfølging,2,Oppvekst og utdanning,2 - Oppvekst og utdanning,22110 - PPT og pedagogisk oppfølging,True
+23110,Barnevernstjenesten,23110 - Barnevernstjenesten,2,Oppvekst og utdanning,2 - Oppvekst og utdanning,23110 - Barnevernstjenesten,True
+24110,Helsestasjon og skolehelsetjeneste,24110 - Helsestasjon og skolehelsetjeneste,3,Helse og mestring,3 - Helse og mestring,24110 - Helsestasjon og skolehelsetjeneste,True
+25310,Omsorgssenter / Sykehjem A,25310 - Omsorgssenter / Sykehjem A,3,Helse og mestring,3 - Helse og mestring,25310 - Omsorgssenter / Sykehjem A,True
+25320,Omsorgssenter / Sykehjem B,25320 - Omsorgssenter / Sykehjem B,3,Helse og mestring,3 - Helse og mestring,25320 - Omsorgssenter / Sykehjem B,True
+25710,Hjemmetjenesten Sone Nord,25710 - Hjemmetjenesten Sone Nord,3,Helse og mestring,3 - Helse og mestring,25710 - Hjemmetjenesten Sone Nord,True
+25720,Hjemmetjenesten Sone Sør,25720 - Hjemmetjenesten Sone Sør,3,Helse og mestring,3 - Helse og mestring,25720 - Hjemmetjenesten Sone Sør,True
+26110,Kommunehelsetjeneste og legevakt,26110 - Kommunehelsetjeneste og legevakt,3,Helse og mestring,3 - Helse og mestring,26110 - Kommunehelsetjeneste og legevakt,True
+40100,Hovedbibliotek og filialer,40100 - Hovedbibliotek og filialer,4,Kultur og innbyggerdialog,4 - Kultur og innbyggerdialog,40100 - Hovedbibliotek og filialer,True
+40200,Kulturskole og ung kultur,40200 - Kulturskole og ung kultur,4,Kultur og innbyggerdialog,4 - Kultur og innbyggerdialog,40200 - Kulturskole og ung kultur,True
+40300,Idrettsanlegg og friluftsliv,40300 - Idrettsanlegg og friluftsliv,4,Kultur og innbyggerdialog,4 - Kultur og innbyggerdialog,40300 - Idrettsanlegg og friluftsliv,True
+40400,Frivillighetssentraler,40400 - Frivillighetssentraler,4,Kultur og innbyggerdialog,4 - Kultur og innbyggerdialog,40400 - Frivillighetssentraler,True
+33200,"Vei, park og grøntarealer","33200 - Vei, park og grøntarealer",5,By- og stedsutvikling,5 - By- og stedsutvikling,"33200 - Vei, park og grøntarealer",True
+34000,Kommunalteknikk og VAR (Vann/Avløp),34000 - Kommunalteknikk og VAR (Vann/Avløp),5,By- og stedsutvikling,5 - By- og stedsutvikling,34000 - Kommunalteknikk og VAR (Vann/Avløp),True
+35000,Renovasjon og gjenvinning,35000 - Renovasjon og gjenvinning,5,By- og stedsutvikling,5 - By- og stedsutvikling,35000 - Renovasjon og gjenvinning,True
+36500,Eiendomsforvaltning og formålsbygg,36500 - Eiendomsforvaltning og formålsbygg,5,By- og stedsutvikling,5 - By- og stedsutvikling,36500 - Eiendomsforvaltning og formålsbygg,True
+27100,NAV lokalmottak og rådgivning,27100 - NAV lokalmottak og rådgivning,6,NAV og næring,6 - NAV og næring,27100 - NAV lokalmottak og rådgivning,True
+27300,Kvalifiseringssenter og tiltak,27300 - Kvalifiseringssenter og tiltak,6,NAV og næring,6 - NAV og næring,27300 - Kvalifiseringssenter og tiltak,True
+28100,Næringsutvikling og etablerersenter,28100 - Næringsutvikling og etablerersenter,6,NAV og næring,6 - NAV og næring,28100 - Næringsutvikling og etablerersenter,True
+90000,Felles faste finansposter og skatt,90000 - Felles faste finansposter og skatt,9,Finans og rammetilskudd,9 - Finans og rammetilskudd,90000 - Felles faste finansposter og skatt,True
+91000,"Avdrag, renter og finansforvaltning","91000 - Avdrag, renter og finansforvaltning",9,Finans og rammetilskudd,9 - Finans og rammetilskudd,"91000 - Avdrag, renter og finansforvaltning",True
